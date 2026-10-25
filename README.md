@@ -49,3 +49,6 @@ GitHub像一本有修改记录的研究文件夹。网页可直接看文件、�
 ## 原件与结果分开存
 
 **Google Drive存原件，GitHub存结论和证据索引，本机作临时缓存。** [归档流程](docs/Google%20Drive资料归档流程.md)包含建议目录、上传登记、去重、历史版本与AI读取方式。截至2026-10-25，Drive已找到72份PDF：64份旧去重资料、7份新补年报及威贸电子年报。已将真实文件ID/URL写入[data/document_registry.csv](data/document_registry.csv)；仅8份新文件已读到正文，所有72份的云端哈希、原公告URL/版本等仍需按要求复验。旧文件本地路径可查[本地PDF上传位置清单](docs/本地PDF上传位置清单.md)。
+
+
+当前进度（2026-10-25）：C00_PILOT_01网页/镜像层来源复核建议3 ADVANCE、6 HOLD、1 DEFER；9家2025年报原件尚未在Drive归档，所有结论仍REVIEW_PENDING，C01未开放。
