@@ -18,9 +18,9 @@
     "conditional_detail_packages": 9
   },
   "first_actions": [
-    "C00_PILOT_01逐公司核读与独立验收",
-    "核对Drive真实已上传文件并更新统一登记表",
-    "C00验收通过后放行后续C包"
+    "先对C00 10家公司进行独立原文核读并生成独立review.json验收版本",
+    "C00-D01到D12文档云端归档按实际Drive file ID更新，不冒充已上传",
+    "独立审查通过后按公司局部放行C01业务细筛候选"
   ],
   "legacy_R1_status": "REVIEW_PENDING",
   "scheduling_change": "按公司验收后局部推进，不宣称旧R1已全池通过",
@@ -45,13 +45,17 @@
     "execution_date": "2026-10-25",
     "company_count": 10,
     "completed_initial_screening": 10,
-    "advance": 4,
-    "hold": 4,
+    "advance": 5,
+    "hold": 3,
     "defer": 2,
     "review_status": "REVIEW_PENDING",
     "review_type": "SELF_CHECK",
     "accepted_companies": 0,
     "source_caveat": "920346 issuer annual report PDF supplied by user, 155 pages and SHA256 verified; original host URL optional verification, commercialization facts still HOLD",
-    "manual_document_request_status": "MANUAL-008_CLOSED_FILE_RECEIVED"
+    "manual_document_request_status": "MANUAL-008_CLOSED_FILE_RECEIVED",
+    "evidence_count": 19,
+    "source_count": 12,
+    "source_registry": "C00-D01..C00-D12 in data/document_registry.csv (NOT_UPLOADED unless actually verified)",
+    "key_change": "688698 upgraded HOLD->ADVANCE after 2026H1 embodied-intelligence recognized income; 920211 2025 actual category 23133.66 ten-thousand CNY; 600845 2025 demos exist but remains HOLD"
   }
 }
