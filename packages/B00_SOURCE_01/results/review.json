@@ -4,7 +4,7 @@
   "checked_on": "2026-10-25",
   "executor": "ChatGPT",
   "review_mode": "INDEPENDENT_REVIEW_OF_SUBMITTED_SELF_CHECK",
-  "audit_status": "REVIEW_PENDING_PARTIAL_COMPANY_RELEASE",
+  "audit_status": "REVIEW_PENDING_SUPPLEMENTAL_H1_CONTRACT_EVIDENCE",
   "independent_review_complete": false,
   "assignment_codes": [
     "920198",
@@ -13,8 +13,8 @@
     "920263"
   ],
   "source_pdf_readable_count": 4,
-  "source_quote_count": 11,
-  "quote_exact_match_count": 7,
+  "source_quote_count": 12,
+  "quote_exact_match_count": 8,
   "quote_check_method": "Normalize whitespace and compare each 2025 annual report quotation to Google Drive-fetched complete extracted PDF text",
   "evidence_files": [
     "results/evidence.csv",
@@ -24,11 +24,12 @@
     "results/交接.md"
   ],
   "limitations": [
-    "原2025年报7条引文均在Drive原始PDF登记物理页找到；4份PDF的Drive二进制SHA-256均与仓库登记值一致，但尚未与发行人官方二进制逐一比对。",
-    "微创光电2026H1报告官方BSE PDF URL已定位，公开全文镜像显示主业仍为交通监控信息化产品/解决方案且未检索到机器人关键词；原始H1 PDF未归档，物理页/版本未核，故目前只形成DEFER倾向，实际状态仍HOLD。",
-    "众诚科技2026H1报告编号2026-053和披露日期2026-08-06由官方董事会决议确认；全文镜像显示收入按数字化解决方案/信息技术服务/信息设备销售分类，未单列机器人收入。元体智能为参股公司，其收入不并入上市主体；场地租金不能算机器人销售收入。官方原件未归档，物理页待核。",
-    "倍益康2025年报直达官方PDF URL仍未定位；其他3家公司2025年报官方URL和披露日期已定位，但Drive副本与官方二进制哈希尚未比对。",
-    "本包整体仍REVIEW_PENDING；部分公司可进入下一步不代表机器人收入、财务拐点或估值通过。"
+    "2025年报Drive原件已读并核验关键物理页；官方年报二进制与Drive副本的SHA-256尚未逐一比对。",
+    "微创光电2026H1 PDF已归档并提取全文；主要产品仍列交通监控信息化产品和解决方案，全文文本未命中机器人/人形关键词。该结果支持暂缓/倾向DEFER，但不单独证明永久不存在机器人业务；视觉核页待补。",
+    "众诚科技2026H1 PDF已归档并提取全文，官方BSE直达URL已定位。新增重大事实：公司中标并签署具身智能产业基地数据采集中心设备配套及运营服务项目合同，83,123,260元/年、服务期36个月。该项目是机器人相关使能/配套服务，不能当作机器人本体销售收入；合同金额不是已确认收入，项目履约和收入确认待核。",
+    "众诚科技2026H1产品收入分类未单列机器人收入；参股公司元体智能收入不并入上市主体，向其收取的275,229.36元是场地租金。",
+    "三份H1 PDF均已归档并完成文本提取，但印刷页视觉核验及与官方二进制SHA-256比对未完成；众诚科技官网4条合作/展示页面仍未归档Drive。",
+    "本包仍REVIEW_PENDING；补充合同证据需要更新后的独立复核，不能据此直接判定机器人销售收入、财务拐点或估值通过。"
   ],
   "companies": [
     {
@@ -51,15 +52,16 @@
       "code": "920207",
       "name": "众诚科技",
       "screening_decision_proposed": "ADVANCE",
-      "review_result": "ACCEPTED_WITH_LIMITS",
-      "reason": "2025年报披露全国渠道合作及人形机器人销售、租赁、运维职责；2026H1未单列机器人收入，增长主要来自数字化解决方案重大项目验收；参股公司元体智能收入/亏损不能并入上市主体。可进入业务细筛，但合同、交付与结算仍待证。",
-      "independent_verdict": "ACCEPTED_WITH_LIMITS",
+      "review_result": "SUPPLEMENTAL_H1_DRIVE_READ_REVIEW_PENDING",
+      "reason": "2025年报及公司官网披露正式人形机器人渠道/服务合作；2026H1报告新增已签署的具身智能产业基地数据采集中心设备配套及运营服务项目合同（83,123,260元/年、36个月）。这是机器人产业相关使能/配套服务的商业合同，但不等于机器人本体销售收入；项目收入确认/履约待核，H1产品分类未单列机器人收入，参股元体智能不并表。",
+      "independent_verdict": "REVIEW_PENDING_NEW_SIGNED_CONTRACT_EVIDENCE",
       "evidence_ids": [
         "B00_SOURCE_01-EV-920207-1",
         "B00_SOURCE_01-EV-920207-2",
         "B00_SOURCE_01-EV-920207-H1-01",
         "B00_SOURCE_01-EV-920207-H1-02",
-        "B00_SOURCE_01-EV-920207-H1-03"
+        "B00_SOURCE_01-EV-920207-H1-03",
+        "B00_SOURCE_01-EV-920207-H1-04"
       ]
     },
     {
@@ -78,9 +80,9 @@
     "920207": "86eed5c4be4c1e1be67cce9bae452b8ec503be089d6a5bcf60bb04a542849e27",
     "920263": "adac46b94e9ab3c1ee82cf0364309c89b41f027c0e9fc975f0985dc5609031fd"
   },
-  "review_summary": "二次复核继续推进：已补查微创光电、众诚科技2026H1可读全文，并找到官方年报URL/披露日（倍益康直达PDF仍待定位）。微创光电仍HOLD，初步倾向DEFER但需H1官方原件归档和核页；众诚科技按限制ADVANCE至业务细筛，实际机器人收入仍未证实。包整体仍REVIEW_PENDING。",
-  "supplemental_h1_source_rows": 4,
-  "supplemental_h1_original_pdf_archived": false,
+  "review_summary": "三份2026H1 PDF现已全部归档Drive并提取全文。微创光电报告全文文本未命中机器人/人形关键词，主业仍为交通监控信息化；众诚科技H1报告确认具身智能产业基地数据采集中心设备配套及运营服务项目已中标并签约，金额83,123,260元/年、服务期36个月。该项目属于机器人相关使能服务，不可等同机器人本体销售收入，履约/收入确认待核。由于新增重大证据，众诚科技最新独立复核待完成；包整体仍REVIEW_PENDING。",
+  "supplemental_h1_source_rows": 5,
+  "supplemental_h1_original_pdf_archived": true,
   "source_integrity": {
     "official_annual_source_metadata": {
       "920198": "BSE URL/date located; binary comparison to Drive copy pending",
@@ -89,8 +91,9 @@
       "920263": "BSE URL/date located; binary comparison to Drive copy pending"
     },
     "supplemental_2026H1": {
-      "920198": "official BSE PDF URL located; readable full-text mirror checked; original PDF not archived; physical page/version pending",
-      "920207": "official board resolution confirms report 2026-053/date 2026-08-06; readable full-text mirror checked; direct report PDF URL and original archive pending"
-    }
+      "920198": "Drive H1 PDF uploaded and full text extracted; official BSE URL known; main product description traffic-monitoring information products/solutions; zero matches for robot/humanoid terms in extracted text; visual page verification and official binary SHA comparison pending.",
+      "920207": "Drive H1 PDF uploaded and full text extracted; official BSE URL located. Printed page 8 reports a signed 36-month data-collection-centre equipment/operations contract worth 83,123,260 CNY/year. This is robot-adjacent enabling service, not direct robot hardware revenue; visual page verification and official binary SHA comparison pending."
+    },
+    "official_company_site_pages_archived_drive": false
   }
 }
