@@ -20,11 +20,11 @@
 |新粗筛名单|984|先10家校准，其余974家按组每包最多20|
 |合计|1054|互不重复的主任务名单；非全市场完整企业库|
 
-已建58个主任务/参考包和9个条件细筛包。分组见[分组计数](data/group_summary.csv)与[分组解释](docs/分组说明.md)。截至2026-10-25，已额外执行B00_SOURCE_01/02七家公司旧原文复核：7份年报PDF已下载核文件SHA256、14条证据已定位PDF物理页，提交候选结论2 ADVANCE/3 HOLD/2 DEFER。**目前为SELF_CHECK / REVIEW_PENDING，尚无独立验收通过公司**；C00校准已提交10家公司初筛（5 ADVANCE/4 HOLD/1 DEFER），仅1份完整PDF在本轮复核到物理页，另9家的正式PDF和独立验收尚待完成；C01仍未开始。
+已建58个主任务/参考包和9个条件细筛包。分组见[分组计数](data/group_summary.csv)与[分组解释](docs/分组说明.md)。截至2026-10-25，B00_SOURCE_01/02七家公司旧原文复核已有7份年报PDF、14条物理页证据，候选结论2 ADVANCE/3 HOLD/2 DEFER；仍为SELF_CHECK/REVIEW_PENDING，尚无独立验收通过公司。C00_PILOT_01来源复核建议3 ADVANCE/6 HOLD/1 DEFER，仍REVIEW_PENDING；9份2025年报和5份用于判断的2026H1报告尚未上传Drive，C01未开放。
 
 ## 今天可以做的两件事
 
-- AI先领 [C00_PILOT_01](packages/C00_PILOT_01/TASK.md)，只做10家，验收后再扩大。
+- AI先领 [C00_PILOT_01](packages/C00_PILOT_01/TASK.md)，只做10家，验收后再扩大。资料保存按[分级规则](docs/资料保存分级规则.md)：L1全池索引、L2原件归档、L3关键证据链。
 - 7家原缺2025年报已在Drive并已读到报告正文，见[人工补件进度](data/manual_requests.csv)；接下来由AI复核原始披露、具体业务断言及缺口，必要时再补2026中报/IR。
 
 本机deliveries/已准备67个单包ZIP，首包是C00_PILOT_01.zip。它们含任务、名单、规则、模板与本包已有证据文本，默认不含PDF；原文需另附。deliveries不上传GitHub，GitHub网页“Download ZIP”下载的是整个仓库。
@@ -48,7 +48,7 @@ GitHub像一本有修改记录的研究文件夹。网页可直接看文件、�
 
 ## 原件与结果分开存
 
-**Google Drive存原件，GitHub存结论和证据索引，本机作临时缓存。** [归档流程](docs/Google%20Drive资料归档流程.md)包含建议目录、上传登记、去重、历史版本与AI读取方式。截至2026-10-25，Drive已找到72份PDF：64份旧去重资料、7份新补年报及威贸电子年报。已将真实文件ID/URL写入[data/document_registry.csv](data/document_registry.csv)；仅8份新文件已读到正文，所有72份的云端哈希、原公告URL/版本等仍需按要求复验。旧文件本地路径可查[本地PDF上传位置清单](docs/本地PDF上传位置清单.md)。
+**Google Drive存原件，GitHub存结论和证据索引，本机作临时缓存。** 采用[资料保存分级规则 v1.1](docs/资料保存分级规则.md)：1054家候选池只做L1来源索引；本轮实际用于判断的文件做L2原件归档；关键结论做L3证据链。Drive当前已有72份PDF；本轮另创建9家公司的文件夹及报告期子文件夹，但没有成功上传新增PDF。8份此前新归档年报已读到正文；其余文件的官方来源/版本/哈希需按规则复验。详见[归档流程](docs/Google%20Drive资料归档流程.md)、[统一文件索引](data/document_registry.csv)与[本机PDF清单](docs/本地PDF上传位置清单.md)。
 
 
-当前进度（2026-10-25）：C00_PILOT_01网页/镜像层来源复核建议3 ADVANCE、6 HOLD、1 DEFER；9家2025年报原件尚未在Drive归档，所有结论仍REVIEW_PENDING，C01未开放。
+当前进度（2026-10-25）：C00_PILOT_01网页/镜像层来源复核建议3 ADVANCE、6 HOLD、1 DEFER；9家2025年报与5家2026H1相关原件未上传Drive，目标文件夹已建立，详见[归档执行清单](packages/C00_PILOT_01/results/归档执行清单.csv)。当前工具链无法从外部URL获取PDF二进制，且本地Remote Desktop Commander设备离线；所有结论仍REVIEW_PENDING，C01未开放。
