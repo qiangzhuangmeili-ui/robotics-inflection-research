@@ -1,6 +1,6 @@
 # 本地PDF上传位置清单
 
-Drive项目主目录已建立：[机器人行业拐点研究](https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ)。已建5个分类目录及首个包的交接目录；没有上传PDF，也没有移动或删除原文件。
+Drive项目主目录已建立：[机器人行业拐点研究](https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ)。已建5个分类目录及首个包的交接目录；截至2026-10-25，已在Drive找到旧64份PDF及8份新增年报（共72份），本清单保留最初本地取件位置作历史溯源；本次索引同步未删除或移动原文件。
 
 ## 现在最省事的上传方法
 
@@ -27,7 +27,7 @@ Drive项目主目录已建立：[机器人行业拐点研究](https://drive.goog
 
 ## 原始PDF在哪些本地目录
 
-下面3处包含优先上传的64份唯一原件，已统一复制到上面的待上传目录；不必再逐处翻找。02A补证_normalized/sources和tmp/verify02b_*中的22份重复副本不用另传。
+下面3处是先前64份唯一原件的本地准备来源，目前这些文件已在Drive找到并写入真实文件ID；不必再逐处翻找或重复上传。02A补证_normalized/sources和tmp/verify02b_*中的22份重复副本不用另传。
 
 - `C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\R1_parallel_parent_reviewed_20261024\sources`：22份。
 - `C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\tmp\chat02a_parent_sources`：21份。
