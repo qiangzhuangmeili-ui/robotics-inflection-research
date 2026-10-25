@@ -12,7 +12,7 @@
     "003032"
   ],
   "source_pdf_readable_count": 3,
-  "source_quote_count": 7,
+  "source_quote_count": 8,
   "quote_exact_match_count": 7,
   "quote_check_method": "Normalize whitespace and compare each 2025 annual report quotation to Google Drive-fetched complete extracted PDF text",
   "evidence_files": [
@@ -23,9 +23,10 @@
     "results/交接.md"
   ],
   "limitations": [
-    "7条引文均在对应Drive原始PDF中核验；3份PDF二进制SHA-256均与document_registry.csv登记值一致。",
-    "B00_SOURCE_02-EV-002354-3的物理页从163更正为91；旧值是页码错误，不影响子公司名称确实存在，但应修正证据CSV。",
-    "巨能股份机器人自动线收入同比下降38.98%，不支持当前确认业绩拐点；后续需核项目构成、应收及现金回款。",
+    "原2025年报7条引文均在Drive原始PDF中核验；3份PDF的Drive二进制SHA-256均与仓库登记值一致，但尚未与发行人官方二进制逐一比对。",
+    "巨能股份2025年报官方BSE URL/披露日已定位。2026H1全文镜像显示机器人自动化生产线收入84,703,834.75元、毛利率29.32%、收入同比下降16.95%；公司整体收入下降、扣非利润改善但经营现金流显著下降、合同负债下降，且披露新合同订单增长低于订单转收入幅度。H1官方PDF未归档、物理页和官方版本未核。",
+    "2025/2026H1机器人自动化产线收入属于系统集成产品口径，不等同机器人本体收入；客户项目构成和订单补充仍需进一步核实。",
+    "天娱数科子公司名单的物理页已由163纠正为91；其他两家公司分类结论仍有业务范围限制。",
     "本包整体仍REVIEW_PENDING；仅对标明ACCEPTED_WITH_LIMITS的公司分类边界作有限采用，不代表收入归因、财务拐点或估值通过。"
   ],
   "companies": [
@@ -34,8 +35,13 @@
       "name": "巨能股份",
       "screening_decision_proposed": "ADVANCE",
       "review_result": "ACCEPTED_WITH_LIMITS",
-      "reason": "2025年报物理第17页及第127页列机器人自动线产品收入142,296,714.12元、成本105,123,410.03元；2024年收入233,200,400.84元。2025年同比下降38.98%，属于系统集成/自动化产线收入，不等同机器人本体收入。",
-      "independent_verdict": "ACCEPTED_WITH_LIMITS"
+      "reason": "2025年机器人自动线产品收入142,296,714.12元，同比下降38.98%；2026H1机器人自动化生产线收入84,703,834.75元、毛利率29.32%，收入同比下降16.95%。H1整体净利润/扣非利润改善，但营业收入下降12.29%、经营现金流下降94.52%、合同负债下降34.59%，公司称新合同订单增长低于订单转收入幅度。可进入业务细筛，但不构成拐点结论；H1官方原件仍待归档。",
+      "independent_verdict": "ACCEPTED_WITH_LIMITS_H1_ARCHIVE_PENDING",
+      "evidence_ids": [
+        "B00_SOURCE_02-EV-920578-1",
+        "B00_SOURCE_02-EV-920578-2",
+        "B00_SOURCE_02-EV-920578-H1-01"
+      ]
     },
     {
       "code": "002354",
@@ -60,5 +66,12 @@
     "002354": "ae0e49fc44231d1a1b1a9ba06f8bb8a06de98ad74739d37e8a58e4b09e927f88",
     "003032": "11c1c5a477a75a4ac41baab4b4ef779f1cf4116c2ffcaa67a7709a504f0a201b"
   },
-  "review_summary": "已完成二次实质复核及原始PDF物理页核验。920578明确有机器人自动线收入，可按限制ADVANCE进入业务细筛；002354维持HOLD；003032的DEFER仅限机器人设备供应商队列。发现并纠正一项物理页错误：天娱数科子公司名单在PDF物理第91页，不是第163页。"
+  "review_summary": "已补核巨能股份2026H1可读全文：机器人自动化生产线收入84,703,834.75元，同比下降16.95%，毛利率29.32%；公司整体收入下降、扣非利润改善但经营现金流明显下降、合同负债下降，且披露新合同订单增长低于订单转收入幅度。业务存在且收入可量化，但持续性拐点不成立；H1官方PDF原件/物理页待归档。包整体仍REVIEW_PENDING。",
+  "supplemental_h1_source_rows": 1,
+  "supplemental_h1_original_pdf_archived": false,
+  "source_integrity": {
+    "supplemental_2026H1": {
+      "920578": "full-text mirror reviewed; robot automation line revenue/COGS/margin and YoY change found; official direct PDF URL and Drive original archive pending"
+    }
+  }
 }
