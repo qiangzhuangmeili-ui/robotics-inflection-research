@@ -4,7 +4,7 @@
   "checked_on": "2026-10-25",
   "executor": "ChatGPT",
   "review_mode": "SELF_CHECK",
-  "audit_status": "REVIEW_PENDING",
+  "audit_status": "SELF_CHECK_PDF_PHYSICAL_PAGES_CONFIRMED_REVIEW_PENDING",
   "independent_review_complete": false,
   "assignment_codes": [
     "920198",
@@ -24,18 +24,19 @@
     "results/交接.md"
   ],
   "limitations": [
-    "All page_physical fields deliberately UNKNOWN until exact PDF physical-page verification; printed-page clues retained in evidence limitations",
     "Old source-pending classification is not automatically adopted; each screening decision is a research proposal",
     "Some issuer official URLs and publication dates still unavailable; version and hash validation pending",
     "2025 annual report confirms only statements identified in evidence, not every prior proposal",
-    "R1 still REVIEW_PENDING; does not unlock valuation or claimed earnings inflection"
+    "R1 still REVIEW_PENDING; does not unlock valuation or claimed earnings inflection",
+    "All cited evidence physical pages verified against the original Google Drive PDFs via PyMuPDF; SHA256 verifies downloaded Drive bytes but not issuer canonical version.",
+    "Independent substantive issuer/financial review remains pending; SELF_CHECK does not authorize acceptance."
   ],
   "companies": [
     {
       "code": "920198",
       "name": "微创光电",
       "screening_decision_proposed": "DEFER",
-      "review_result": "SELF_CHECK_SOURCE_TEXT_MATCH_ONLY",
+      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
       "reason": "2025年报主营为交通监控；全文机器人关键词0命中。受已查资料范围限制",
       "independent_verdict": "PENDING"
     },
@@ -43,7 +44,7 @@
       "code": "920199",
       "name": "倍益康",
       "screening_decision_proposed": "HOLD",
-      "review_result": "SELF_CHECK_SOURCE_TEXT_MATCH_ONLY",
+      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
       "reason": "六轴理疗机器人小批量生产；独立销售/收入缺证",
       "independent_verdict": "PENDING"
     },
@@ -51,7 +52,7 @@
       "code": "920207",
       "name": "众诚科技",
       "screening_decision_proposed": "ADVANCE",
-      "review_result": "SELF_CHECK_SOURCE_TEXT_MATCH_ONLY",
+      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
       "reason": "人形机器人全国渠道合作；机器人营业收入未知；元体智能为参股",
       "independent_verdict": "PENDING"
     },
@@ -59,9 +60,16 @@
       "code": "920263",
       "name": "中航泰达",
       "screening_decision_proposed": "HOLD",
-      "review_result": "SELF_CHECK_SOURCE_TEXT_MATCH_ONLY",
+      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
       "reason": "工业机器人战略合作及土地储备；无已核验收入",
       "independent_verdict": "PENDING"
     }
-  ]
+  ],
+  "physical_page_verified_count": 7,
+  "pdf_binary_sha256_verified": {
+    "920198": "8c7e35cbb84a8928c478ca41c8be0b232f45d2b775340c4462808b0250bf2edb",
+    "920199": "f5bc859e3b29f27f442559f6104584571dc554d25f2a45321d48196d06490e68",
+    "920207": "86eed5c4be4c1e1be67cce9bae452b8ec503be089d6a5bcf60bb04a542849e27",
+    "920263": "adac46b94e9ab3c1ee82cf0364309c89b41f027c0e9fc975f0985dc5609031fd"
+  }
 }
