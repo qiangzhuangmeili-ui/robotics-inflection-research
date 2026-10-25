@@ -10,7 +10,7 @@
 2. 先读仓库 AGENTS.md、docs/执行规则.md、docs/阶段与验收.md。继承材料见 archive/，查找入口见 data/resource_map.csv。
 3. 每处理一家公司就保存结果，不必等全包完成。新结果写本包 results/，原 assignment.csv 和 archive 不覆盖。
 4. 粗筛提交 results/screening.csv；补证/细筛提交 results/evidence.csv 和 results/product_lines.csv；所有包提交 results/缺口.csv 与 results/交接.md。使用 templates/ 的表头。
-5. 完整PDF、扫描件、大型表格和交接ZIP归档Google Drive，按docs/Google Drive资料归档流程.md执行；sources/inbox只作可选本机缓存。先查data/document_registry.csv避免重复下载，登记document_id、官方URL、真实Drive链接/ID、报告期、披露日和物理页。AI通过已连接Drive获取完整原文；读不到记ACCESS_BLOCKED/HOLD并补本包附件，不要求公开分享。GitHub仅放关键证据与索引，不能把链接或摘要当全文已读。
+5. 归档严格按docs/资料保存分级规则.md和docs/Google Drive资料归档流程.md执行：全池候选只做L1索引；本包实际用于判断的文件达到L2原件归档；关键判断达到L3证据链。先查document_registry和Drive防重复，再由AI优先尝试下载官方全文PDF并上传。只有拿到PDF二进制、上传成功并回读核验后才可标已归档；网页文字/镜像/链接不算原件。工具链失败时记录错误、官方入口和目标Drive文件夹，再提出精确人工补件。归档状态和AI读取状态分开填写；保持Drive受限权限。
 6. 找不到路径先看 data/resource_map.csv；找不到原文约15分钟就登记 data/manual_requests.csv，状态 HOLD，不编造、不以失败作无业务。
 7. 交付状态只写 REVIEW_PENDING。验收人逐项核原文后另写 review.json；通过的公司单独进入下一步，有缺口的公司留在本步骤。
 
