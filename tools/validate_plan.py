@@ -7,6 +7,7 @@ import json
 import re
 import sys
 import zipfile
+from urllib.parse import unquote
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -237,7 +238,7 @@ link_pattern = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 for rel in ("docs/新手执行手册.md", "docs/手动补资料指南.md"):
     text = read_text(rel)
     for target in link_pattern.findall(text):
-        target = target.split("#", 1)[0]
+        target = unquote(target.split("#", 1)[0])
         if not target or re.match(r"^[A-Za-z][A-Za-z0-9+.-]*://", target) or target.startswith("mailto:"):
             continue
         if "<" in target or ">" in target:

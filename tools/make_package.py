@@ -47,12 +47,13 @@ def build(package_id, include_sources=False):
                 archive.writestr(path.relative_to(ROOT).as_posix(), '\ufeff'+output.getvalue())
             elif path.suffix in {'.md','.json'}:
                 archive.write(path,path.relative_to(ROOT).as_posix())
-        for data_file in ['company_master.csv','manual_requests.csv','financial_gaps.csv']:
+        for data_file in ['company_master.csv','manual_requests.csv','financial_gaps.csv','document_registry.csv']:
             path=ROOT/'data'/data_file
             original=rows(path)
-            if original:
+            if original or data_file == 'document_registry.csv':
                 output=io.StringIO(newline='')
-                writer=csv.DictWriter(output,fieldnames=list(original[0]))
+                fields=list(original[0]) if original else (ROOT/'data'/data_file).read_text(encoding='utf-8-sig').splitlines()[0].split(',')
+                writer=csv.DictWriter(output,fieldnames=fields)
                 writer.writeheader()
                 writer.writerows(r for r in original if r['security_id'] in ids)
                 archive.writestr('data/'+data_file,'\ufeff'+output.getvalue())
@@ -75,7 +76,7 @@ def build(package_id, include_sources=False):
 
 只上传附件不会授权全池调查。若收到此包，先读任务卡和docs/执行规则.md。
 
-包含PDF：{len(included)}份。没有PDF只表示尚未随包附上原文；仓库和历史URL可能需要访问权限。缺文件请列明确标题、证券代码和报告期，等待用户补件。
+包含PDF：{len(included)}份。默认原件归档Google Drive；先查本包data/document_registry.csv的真实文件链接/ID，通过已连接Drive取得完整原文。没有PDF不表示原文已被删除；用户可读不等于AI可读。读取失败记HOLD并列标题、证券代码和报告期，等待本包附件。不要求公开分享。
 
 resource_map中的哈希属于完整原始快照；本ZIP已按公司裁剪的CSV不能与原始完整表哈希直接比较。目录列表中的绝对路径只是历史位置，不表示云端可读。
 ''')

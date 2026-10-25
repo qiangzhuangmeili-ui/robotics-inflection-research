@@ -5,7 +5,7 @@
 ## 你先看这三处
 
 1. [新手执行手册](docs/新手执行手册.md)：从哪里开始、每一步为什么做、交什么。
-2. [手动补资料指南](docs/手动补资料指南.md)：AI卡住时，你用软件怎么补PDF和财务。
+2. [手动补资料指南](docs/手动补资料指南.md)：AI卡住时，你用软件怎么补PDF和财务；[Google Drive归档流程](docs/Google%20Drive资料归档流程.md)说明原文存哪里。
 3. [包顺序总表](data/package_index.csv)：按顺序开一个包；包里的TASK.md可直接交给AI。
 
 看公司分组请打开[公司分组与包总览](docs/公司分组与包总览.md)。看可勾选待办请打开[总路线卡](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1)。让下一位AI接手时，可复制[启动指令](docs/给AI的启动指令.md)。
@@ -25,7 +25,7 @@
 ## 今天可以做的两件事
 
 - AI先领 [C00_PILOT_01](packages/C00_PILOT_01/TASK.md)，只做10家，验收后再扩大。
-- 你先补 [人工补资料清单](data/manual_requests.csv) 的7家公司；保存到inbox/对应证券代码目录，或把PDF附给AI。
+- 你先补 [人工补资料清单](data/manual_requests.csv) 的7家公司；下载后归档Google Drive并填写文件索引，AI读不到再把本包必要PDF作为附件发送。本机inbox可暂存。
 
 本机deliveries/已准备67个单包ZIP，首包是C00_PILOT_01.zip。它们含任务、名单、规则、模板与本包已有证据文本，默认不含PDF；原文需另附。deliveries不上传GitHub，GitHub网页“Download ZIP”下载的是整个仓库。
 
@@ -38,7 +38,14 @@
 - templates/：可直接填的结果、证据、来源和缺口表。
 - archive/：旧采用事实与证据快照，只读；旧提议、旧阶段和旧进度不自动变成新结论。
 - data/resource_map.csv：资料路径地图，标明哪些已在仓库、哪些只在你的电脑。
-- sources/、inbox/：本地原文和人工补件，不上传GitHub；远程AI需要附件。
+- Google Drive：原始PDF、扫描图、大型表格和交接ZIP的正式归档位置；GitHub不放这些大附件。
+- data/document_registry.csv：统一文件索引，保留官方URL、真实Drive URL/ID和归档/访问状态。
+- sources/、inbox/：本机临时收集或可选缓存；AI通过已连接Drive读取，读不到再补附件。
 - [阶段与验收](docs/阶段与验收.md)、[执行规则](docs/执行规则.md)：AI与验收者共同遵守。
 
 GitHub像一本有修改记录的研究文件夹。网页可直接看文件、下载ZIP；Issues是待办卡。当前不需要懂编程或安装新软件。不能把概念标签当业务证据，也不能把没有找到资料当业务不存在。
+
+
+## 原件与结果分开存
+
+**Google Drive存原件，GitHub存结论和证据索引，本机作临时缓存。** [归档流程](docs/Google%20Drive资料归档流程.md)包含建议目录、上传登记、去重、历史版本与AI读取方式。当前Drive目录尚未实际创建、旧原件尚未迁移；不把写好流程说成归档完成。

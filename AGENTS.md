@@ -11,3 +11,14 @@ data/company_master.csv是调度总表；archive/latest_universe.csv是旧验收
 路径：用仓库相对路径，不依赖用户名/D盘。先查data/resource_map.csv。缺原文检索约15分钟后登记人工请求/HOLD；不得用摘要补成原文。不要声称云端AI能读本机盘或本机127.0.0.1。
 
 先粗筛，后每包5家业务细筛与财务验证，再每包3家研究拐点。粗筛不估值；预计收入不当作已实现收入。所有日期、主体、报告口径按docs/执行规则.md。
+
+
+## 原件存储：Google Drive为归档位置
+
+原始PDF、扫描图、财务Excel和交接大ZIP归档Google Drive；GitHub仅存小型文本、证据摘录、关键数字、document_id、官方原文URL与Drive文件ID/链接。sources/inbox为可选本地收集与读取缓存，未归档原件不能因已有摘要就删除。按docs/Google Drive资料归档流程.md执行。
+
+先查data/document_registry.csv，再查官方站点，避免重复下载。原文登记继承templates/来源登记.csv：document_id稳定，drive_file_id与drive_url真实取得才填；同一原文复用ID，不因被多个包引用就重复上传。更正版另存另ID并在limitations关联旧版，不覆盖追溯原件。
+
+AI先通过已连接Drive按真实URL/ID查元数据，再取得完整原文核页码和短引文。用户能打开不代表AI可读；OWNER_ONLY_CHECKED不可当作AI_READ_CONFIRMED，摘要可读不表示完整PDF已核读。无权限或无法取得原文写ACCESS_BLOCKED/HOLD并列补件，不能声称已核实。不要要求将Drive公开，不扩大分享权限。
+
+本次仅更新归档流程；Drive根目录URL/ID尚未配置，既有PDF迁移尚未执行。不得编造链接、上传成功或已完成迁移。
