@@ -4,7 +4,7 @@
   "checked_on": "2026-10-25",
   "executor": "ChatGPT",
   "review_mode": "SELF_CHECK",
-  "audit_status": "REVIEW_PENDING",
+  "audit_status": "SELF_CHECK_PDF_PHYSICAL_PAGES_CONFIRMED_REVIEW_PENDING",
   "independent_review_complete": false,
   "assignment_codes": [
     "920578",
@@ -23,18 +23,19 @@
     "results/交接.md"
   ],
   "limitations": [
-    "All page_physical fields deliberately UNKNOWN until exact PDF physical-page verification; printed-page clues retained in evidence limitations",
     "Old source-pending classification is not automatically adopted; each screening decision is a research proposal",
     "Some issuer official URLs and publication dates still unavailable; version and hash validation pending",
     "2025 annual report confirms only statements identified in evidence, not every prior proposal",
-    "R1 still REVIEW_PENDING; does not unlock valuation or claimed earnings inflection"
+    "R1 still REVIEW_PENDING; does not unlock valuation or claimed earnings inflection",
+    "All cited evidence physical pages verified against the original Google Drive PDFs via PyMuPDF; SHA256 verifies downloaded Drive bytes but not issuer canonical version.",
+    "Independent substantive issuer/financial review remains pending; SELF_CHECK does not authorize acceptance."
   ],
   "companies": [
     {
       "code": "920578",
       "name": "巨能股份",
       "screening_decision_proposed": "ADVANCE",
-      "review_result": "SELF_CHECK_SOURCE_TEXT_MATCH_ONLY",
+      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
       "reason": "机器人自动线2025年收入142296714.12元；同比下降，集成口径",
       "independent_verdict": "PENDING"
     },
@@ -42,7 +43,7 @@
       "code": "002354",
       "name": "天娱数科",
       "screening_decision_proposed": "HOLD",
-      "review_result": "SELF_CHECK_SOURCE_TEXT_MATCH_ONLY",
+      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
       "reason": "VLA具身数据集、平台可适配机器人；数据资产登记不等于收入",
       "independent_verdict": "PENDING"
     },
@@ -50,9 +51,15 @@
       "code": "003032",
       "name": "传智教育",
       "screening_decision_proposed": "DEFER",
-      "review_result": "SELF_CHECK_SOURCE_TEXT_MATCH_ONLY",
+      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
       "reason": "机器人职业培训和教学实训，非机器人设备对外商业销售",
       "independent_verdict": "PENDING"
     }
-  ]
+  ],
+  "physical_page_verified_count": 7,
+  "pdf_binary_sha256_verified": {
+    "920578": "25b1cc4cde419894afbb55038c38654f8d87276089fc07dc27e720bc4414f082",
+    "002354": "ae0e49fc44231d1a1b1a9ba06f8bb8a06de98ad74739d37e8a58e4b09e927f88",
+    "003032": "11c1c5a477a75a4ac41baab4b4ef779f1cf4116c2ffcaa67a7709a504f0a201b"
+  }
 }
