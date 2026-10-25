@@ -13,7 +13,7 @@
     "920263"
   ],
   "source_pdf_readable_count": 4,
-  "source_quote_count": 7,
+  "source_quote_count": 11,
   "quote_exact_match_count": 7,
   "quote_check_method": "Normalize whitespace and compare each 2025 annual report quotation to Google Drive-fetched complete extracted PDF text",
   "evidence_files": [
@@ -24,19 +24,20 @@
     "results/交接.md"
   ],
   "limitations": [
-    "7条引文均已在对应Drive原始PDF登记物理页找到；4份PDF二进制SHA-256均与document_registry.csv登记值一致。",
-    "报告原件身份、页数和证据页已核；但微创光电、倍益康、众诚科技、中航泰达的发行人官方URL、正式披露日和修订版本尚未全部交叉核验。",
-    "2026H1/正式IR未核完的公司不能因为未发现证据就判定无机器人业务。",
-    "本包整体仍REVIEW_PENDING；仅对标明ACCEPTED_WITH_LIMITS的公司分类边界作有限采用，不代表收入、财务拐点或估值通过。"
+    "原2025年报7条引文均在Drive原始PDF登记物理页找到；4份PDF的Drive二进制SHA-256均与仓库登记值一致，但尚未与发行人官方二进制逐一比对。",
+    "微创光电2026H1报告官方BSE PDF URL已定位，公开全文镜像显示主业仍为交通监控信息化产品/解决方案且未检索到机器人关键词；原始H1 PDF未归档，物理页/版本未核，故目前只形成DEFER倾向，实际状态仍HOLD。",
+    "众诚科技2026H1报告编号2026-053和披露日期2026-08-06由官方董事会决议确认；全文镜像显示收入按数字化解决方案/信息技术服务/信息设备销售分类，未单列机器人收入。元体智能为参股公司，其收入不并入上市主体；场地租金不能算机器人销售收入。官方原件未归档，物理页待核。",
+    "倍益康2025年报直达官方PDF URL仍未定位；其他3家公司2025年报官方URL和披露日期已定位，但Drive副本与官方二进制哈希尚未比对。",
+    "本包整体仍REVIEW_PENDING；部分公司可进入下一步不代表机器人收入、财务拐点或估值通过。"
   ],
   "companies": [
     {
       "code": "920198",
       "name": "微创光电",
       "screening_decision_proposed": "HOLD",
-      "review_result": "INDEPENDENT_REVIEW_PENDING_LATEST_SOURCE",
-      "reason": "2025年报物理第7页列主要产品为交通监控信息化产品和解决方案；全文“机器人”零命中只描述已查文档，不能证明不存在机器人业务。因2026H1及截止日前正式IR未核完，暂不接受DEFER。",
-      "independent_verdict": "HOLD_PENDING_2026H1_AND_OFFICIAL_SOURCE_METADATA"
+      "review_result": "SUPPLEMENTAL_H1_TEXT_REVIEWED_ARCHIVE_PENDING",
+      "reason": "2025年报及2026H1可读全文均将主业列为交通监控信息化产品和解决方案，2026H1全文镜像未检索到机器人关键词；定向公开检索未找到可确认的机器人正式IR。初步倾向DEFER，但H1官方PDF未归档且物理页/版本未核，故本轮仍HOLD。",
+      "independent_verdict": "HOLD_PENDING_L2_ARCHIVE_AND_PHYSICAL_PAGE"
     },
     {
       "code": "920199",
@@ -51,15 +52,22 @@
       "name": "众诚科技",
       "screening_decision_proposed": "ADVANCE",
       "review_result": "ACCEPTED_WITH_LIMITS",
-      "reason": "2025年报物理第13页明确其成为具身智能企业全国合作伙伴并承担人形机器人销售、租赁、运维及场景落地职责；足以进入渠道/服务业务细筛，但未证明履约规模或机器人收入。参股公司元体智能业务不得并入上市主体。",
-      "independent_verdict": "ACCEPTED_WITH_LIMITS"
+      "reason": "2025年报披露全国渠道合作及人形机器人销售、租赁、运维职责；2026H1未单列机器人收入，增长主要来自数字化解决方案重大项目验收；参股公司元体智能收入/亏损不能并入上市主体。可进入业务细筛，但合同、交付与结算仍待证。",
+      "independent_verdict": "ACCEPTED_WITH_LIMITS",
+      "evidence_ids": [
+        "B00_SOURCE_01-EV-920207-1",
+        "B00_SOURCE_01-EV-920207-2",
+        "B00_SOURCE_01-EV-920207-H1-01",
+        "B00_SOURCE_01-EV-920207-H1-02",
+        "B00_SOURCE_01-EV-920207-H1-03"
+      ]
     },
     {
       "code": "920263",
       "name": "中航泰达",
       "screening_decision_proposed": "HOLD",
       "review_result": "ACCEPTED_WITH_LIMITS",
-      "reason": "2025年报物理第2页是战略合作意向，第24页是机器人业务土地储备；没有已核实机器人订单、交付或收入证据。",
+      "reason": "2025年报物理第2页是战略合作意向、第24页是机器人业务土地储备；官方年报URL及披露日期现已定位，但仍无实际机器人订单、交付或收入证据。",
       "independent_verdict": "ACCEPTED_WITH_LIMITS"
     }
   ],
@@ -70,5 +78,19 @@
     "920207": "86eed5c4be4c1e1be67cce9bae452b8ec503be089d6a5bcf60bb04a542849e27",
     "920263": "adac46b94e9ab3c1ee82cf0364309c89b41f027c0e9fc975f0985dc5609031fd"
   },
-  "review_summary": "已完成二次实质复核与原始PDF物理页核验；本包仍未整体验收。920207按限制ADVANCE进入业务细筛，920199及920263维持HOLD；920198由原提议DEFER调整为HOLD，因截至研究截止日的2026H1/正式IR尚未核完，不能把资料范围不足当作无业务。"
+  "review_summary": "二次复核继续推进：已补查微创光电、众诚科技2026H1可读全文，并找到官方年报URL/披露日（倍益康直达PDF仍待定位）。微创光电仍HOLD，初步倾向DEFER但需H1官方原件归档和核页；众诚科技按限制ADVANCE至业务细筛，实际机器人收入仍未证实。包整体仍REVIEW_PENDING。",
+  "supplemental_h1_source_rows": 4,
+  "supplemental_h1_original_pdf_archived": false,
+  "source_integrity": {
+    "official_annual_source_metadata": {
+      "920198": "BSE URL/date located; binary comparison to Drive copy pending",
+      "920199": "report date 2026-04-15 confirmed by official notice; direct report PDF URL pending",
+      "920207": "BSE URL/date located; binary comparison to Drive copy pending",
+      "920263": "BSE URL/date located; binary comparison to Drive copy pending"
+    },
+    "supplemental_2026H1": {
+      "920198": "official BSE PDF URL located; readable full-text mirror checked; original PDF not archived; physical page/version pending",
+      "920207": "official board resolution confirms report 2026-053/date 2026-08-06; readable full-text mirror checked; direct report PDF URL and original archive pending"
+    }
+  }
 }
