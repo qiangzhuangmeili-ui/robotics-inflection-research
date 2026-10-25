@@ -1,0 +1,7 @@
+# 旧成果如何使用
+
+这里是本轮整理时复制的只读快照，文件来源和SHA256见data/resource_map.csv。latest_universe.csv为旧主表；early_sample_proposals.csv为局部断言抽样；unaccepted_source_pending_proposals.csv是7家公司尚未采用的提议。
+
+旧证据表的每一行复核状态必须单独看，已取得原文不等于每条断言验收通过。若旧表与latest_review.md的限缩/撤回说明冲突，按最新验收限制处理，必要时HOLD并再核原文。旧主表商业阶段仍有6处历史公司级数值，新调度总表commercial_stage统一UNKNOWN，并用legacy_company_stage保留旧值。
+
+旧报告中的“下一步”和“不进入R2”等文字是历史时点状态。本轮只调整为逐公司验收后局部推进，不宣称整个旧R1已通过。旧文件所写D盘和用户名路径只是追溯，不是运行依赖。旧标准中的禁止上传属于历史任务，本轮用户已要求建仓库，按当前AGENTS.md执行。
