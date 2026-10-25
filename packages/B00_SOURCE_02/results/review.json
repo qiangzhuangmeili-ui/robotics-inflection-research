@@ -3,8 +3,8 @@
   "research_as_of": "2026-10-24",
   "checked_on": "2026-10-25",
   "executor": "ChatGPT",
-  "review_mode": "SELF_CHECK",
-  "audit_status": "SELF_CHECK_PDF_PHYSICAL_PAGES_CONFIRMED_REVIEW_PENDING",
+  "review_mode": "INDEPENDENT_REVIEW_OF_SUBMITTED_SELF_CHECK",
+  "audit_status": "REVIEW_PENDING_PARTIAL_COMPANY_RELEASE",
   "independent_review_complete": false,
   "assignment_codes": [
     "920578",
@@ -23,37 +23,35 @@
     "results/交接.md"
   ],
   "limitations": [
-    "Old source-pending classification is not automatically adopted; each screening decision is a research proposal",
-    "Some issuer official URLs and publication dates still unavailable; version and hash validation pending",
-    "2025 annual report confirms only statements identified in evidence, not every prior proposal",
-    "R1 still REVIEW_PENDING; does not unlock valuation or claimed earnings inflection",
-    "All cited evidence physical pages verified against the original Google Drive PDFs via PyMuPDF; SHA256 verifies downloaded Drive bytes but not issuer canonical version.",
-    "Independent substantive issuer/financial review remains pending; SELF_CHECK does not authorize acceptance."
+    "7条引文均在对应Drive原始PDF中核验；3份PDF二进制SHA-256均与document_registry.csv登记值一致。",
+    "B00_SOURCE_02-EV-002354-3的物理页从163更正为91；旧值是页码错误，不影响子公司名称确实存在，但应修正证据CSV。",
+    "巨能股份机器人自动线收入同比下降38.98%，不支持当前确认业绩拐点；后续需核项目构成、应收及现金回款。",
+    "本包整体仍REVIEW_PENDING；仅对标明ACCEPTED_WITH_LIMITS的公司分类边界作有限采用，不代表收入归因、财务拐点或估值通过。"
   ],
   "companies": [
     {
       "code": "920578",
       "name": "巨能股份",
       "screening_decision_proposed": "ADVANCE",
-      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
-      "reason": "机器人自动线2025年收入142296714.12元；同比下降，集成口径",
-      "independent_verdict": "PENDING"
+      "review_result": "ACCEPTED_WITH_LIMITS",
+      "reason": "2025年报物理第17页及第127页列机器人自动线产品收入142,296,714.12元、成本105,123,410.03元；2024年收入233,200,400.84元。2025年同比下降38.98%，属于系统集成/自动化产线收入，不等同机器人本体收入。",
+      "independent_verdict": "ACCEPTED_WITH_LIMITS"
     },
     {
       "code": "002354",
       "name": "天娱数科",
       "screening_decision_proposed": "HOLD",
-      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
-      "reason": "VLA具身数据集、平台可适配机器人；数据资产登记不等于收入",
-      "independent_verdict": "PENDING"
+      "review_result": "ACCEPTED_WITH_LIMITS",
+      "reason": "2025年报物理第13、16页支持具身机器人数据集登记及平台适配能力，但没有机器人独立销售/许可收费/交付收入证据。全资子公司天娱机器人（深圳）有限公司列于PDF物理第91页。",
+      "independent_verdict": "ACCEPTED_WITH_LIMITS"
     },
     {
       "code": "003032",
       "name": "传智教育",
       "screening_decision_proposed": "DEFER",
-      "review_result": "SELF_CHECK_QUOTE_AND_PHYSICAL_PAGE_VERIFIED",
-      "reason": "机器人职业培训和教学实训，非机器人设备对外商业销售",
-      "independent_verdict": "PENDING"
+      "review_result": "ACCEPTED_WITH_LIMITS",
+      "reason": "2025年报物理第11页有机器人开发培训课程，第25页的差速服务机器人教学实训平台仍在进行中；当前证据支持教育培训和教学研发，不支持将其作为机器人整机/核心部件供应商。DEFER只针对机器人产品供应商盈利拐点队列。",
+      "independent_verdict": "ACCEPTED_WITH_LIMITS"
     }
   ],
   "physical_page_verified_count": 7,
@@ -61,5 +59,6 @@
     "920578": "25b1cc4cde419894afbb55038c38654f8d87276089fc07dc27e720bc4414f082",
     "002354": "ae0e49fc44231d1a1b1a9ba06f8bb8a06de98ad74739d37e8a58e4b09e927f88",
     "003032": "11c1c5a477a75a4ac41baab4b4ef779f1cf4116c2ffcaa67a7709a504f0a201b"
-  }
+  },
+  "review_summary": "已完成二次实质复核及原始PDF物理页核验。920578明确有机器人自动线收入，可按限制ADVANCE进入业务细筛；002354维持HOLD；003032的DEFER仅限机器人设备供应商队列。发现并纠正一项物理页错误：天娱数科子公司名单在PDF物理第91页，不是第163页。"
 }
