@@ -3,7 +3,7 @@
   "research_as_of": "2026-10-24",
   "run_date": "2026-10-25",
   "review_mode": "SELF_CHECK_SOURCE_REVIEW",
-  "status": "REVIEW_PENDING_INDEPENDENT_BUSINESS_EVIDENCE_REVIEW",
+  "status": "REVIEW_PENDING_INDEPENDENT_ACCEPTANCE",
   "independent_accepted": false,
   "companies": [
     {
@@ -11,9 +11,10 @@
       "name": "汉宇集团",
       "decision_proposed": "DEFER",
       "evidence_ids": [
-        "C00-EV-300403-01"
+        "C00-EV-300403-01",
+        "C00-EV-300403-02"
       ],
-      "reason": "2025年报将机器人执行器产品明确归于36.02%参股的同川科技；在已读年报中没有证据证明上市主体/并表子公司直接对外销售机器人产品。拟作DEFER示例，但2026H1全文尚未逐页核实，故仍待验收。",
+      "reason": "2025年报第9页显示同川科技的机器人执行器/关节产品属于36.02%参股公司；2026H1第9页确认持股降至34.71%，仍是参股公司。未找到上市主体/并表子公司直接销售机器人产品的证据，拟DEFER。",
       "review_status": "REVIEW_PENDING"
     },
     {
@@ -41,23 +42,25 @@
     {
       "code": "603933",
       "name": "睿能科技",
-      "decision_proposed": "HOLD",
+      "decision_proposed": "ADVANCE",
       "evidence_ids": [
         "C00-EV-603933-01",
-        "C00-EV-603933-02"
+        "C00-EV-603933-02",
+        "C00-EV-603933-03"
       ],
-      "reason": "2025年报的机器人表述主要是通用工业自动化产品的下游行业和IC分销应用领域；2026年5月正式IR材料称机器人电机方案进入头部客户验证阶段。客户验证不是商业交付，故HOLD。",
+      "reason": "2025年报第19/218页披露GaN高功率密度电机方案进入人形机器人头部客户验证；2026H1第17/183页进一步披露机器人专用多轴驱动器向头部客户小批量供货、人形机器人关节相关产品小批量交付。已有直接供货/交付线索，拟ADVANCE进入细筛。",
       "review_status": "REVIEW_PENDING"
     },
     {
       "code": "605555",
       "name": "德昌股份",
-      "decision_proposed": "HOLD",
+      "decision_proposed": "ADVANCE",
       "evidence_ids": [
         "C00-EV-605555-01",
-        "C00-EV-605555-02"
+        "C00-EV-605555-02",
+        "C00-EV-605555-03"
       ],
-      "reason": "2025年报全文检索未找到“机器人”或“关节”命中；2026H1出现“新兴产业相关电机核心关节”泛化表述，仍未指明机器人用途或外部机器人客户。此前将其写成已明确布局机器人关节产品的说法证据不足，撤回。",
+      "reason": "2026H1第11/165页明确将割草机器人列为园林工具新品并称新品顺利推进量产。该具体机器人产品线索足以进入细筛，但产品制造范围、客户、外部交付和机器人收入尚未披露。",
       "review_status": "REVIEW_PENDING"
     },
     {
@@ -78,7 +81,7 @@
         "C00-EV-920211-01",
         "C00-EV-920211-02"
       ],
-      "reason": "2025年报全文镜像列示工业机器人控制系统及部件收入231.34百万元、占主营收入73.09%、毛利率38.33%，构成明确的实际产品收入证据；该公司2025年报告使用旧代码874510，2026年转为920211，为同一主体。",
+      "reason": "2025年报Drive文本列示工业机器人控制系统及部件收入231.34百万元、毛利率38.33%；北交所官方上市页面确认同一法定主体2026年以920211上市。业务线索强，但2025年报PDF的官方来源和收入表物理页仍待核验。",
       "review_status": "REVIEW_PENDING"
     },
     {
@@ -159,7 +162,7 @@
       "Container direct downloads of official CNINFO and DFCFW PDFs failed",
       "Remote Desktop Commander device LAPTOP-L3RJK1S3 is offline"
     ],
-    "result": "All 14 required PDFs are present in their designated Drive folders, MIME type is application/pdf, and full text extraction succeeded. Company/report-period identity matches for all 14; 新睿电子 report shows historical NEEQ code 874510, so its mapping to current code 920211 and original-source provenance remain pending. C00 independent business-evidence review is still pending; no physical-page image verification or SHA-256 calculation was performed.",
+    "result": "14/14 required PDFs found in designated Drive folders; PDF MIME and full-text extraction confirmed. Source intake and evidence rows updated. Independent acceptance remains pending because visual page verification and source provenance for the 2025 新睿电子 report are incomplete.",
     "source_correction": "The official SSE PDF URL previously labeled as a formal IR Q&A (603933_20260509_EPQA.pdf) is actually 2025 annual shareholder meeting material. It is now reference-only; the robot customer-validation claim is provisionally pointed to the 2025 annual report and needs page-level confirmation. The 2026H1 report is added as the relevant update source.",
     "followup": "Proceed with independent C00 business-evidence review using the now-readable Drive PDFs. Keep provisional company decisions unaccepted until source passages, page numbers, business entity and commercialization stage are checked.",
     "target_folders_rechecked": 14,
@@ -396,5 +399,25 @@
         "sha256": "NOT_CALCULATED"
       }
     ]
+  },
+  "business_evidence_review": {
+    "status": "TEXT_CROSSCHECK_COMPLETED_PAGE_IMAGE_AND_SOURCE_PROVENANCE_PENDING",
+    "proposed_counts": {
+      "ADVANCE": 5,
+      "HOLD": 4,
+      "DEFER": 1
+    },
+    "material_corrections": [
+      "603933睿能科技: 2025年报第19/218页为GaN方案头部客户验证；2026H1第17/183页明确机器人专用多轴驱动器小批量供货及人形机器人关节相关产品小批量交付，HOLD调整为ADVANCE候选。",
+      "605555德昌股份: 2026H1第11/165页明确提及割草机器人新品推进量产，HOLD调整为ADVANCE候选；客户、产品制造范围及收入仍需细筛。",
+      "605555德昌股份: 更正2025年报检索记录；全文未命中“机器人”，但“新兴产业相关电机核心关节领域”确实出现于第10/195页。",
+      "300403汉宇集团: 2026H1第9页确认同川科技持股34.71%，仍属参股公司。",
+      "920211新睿电子: 北交所官方上市页面确认当前代码920211与历史报告主体一致；2025年报原始来源/二进制同源性仍待核。"
+    ],
+    "physical_page_visual_verification_count": 0,
+    "source_provenance_pending": [
+      "DOC-C00-2025-920211"
+    ],
+    "next_action": "视觉核对关键页并验证新睿电子2025年报官方原始来源后，完成逐家公司独立验收。"
   }
 }
