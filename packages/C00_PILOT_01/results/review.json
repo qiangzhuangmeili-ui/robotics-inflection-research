@@ -3,7 +3,7 @@
   "research_as_of": "2026-10-24",
   "run_date": "2026-10-25",
   "review_mode": "SELF_CHECK_SOURCE_REVIEW",
-  "status": "REVIEW_PENDING",
+  "status": "REVIEW_PENDING_ARCHIVE_TOOLCHAIN_BLOCKED",
   "independent_accepted": false,
   "companies": [
     {
@@ -140,6 +140,26 @@
     "8份完整PDF可通过web文本读取并定位部分物理页，但尚未下载原始二进制计算SHA256；新睿电子2025年报目前仅有全文镜像数据。",
     "宝信、宁波韵升、德昌、睿能的2026H1/IR证据有镜像或搜索摘录，尚未核原始PDF物理页。",
     "汉宇集团拟DEFER只依据2025年报所示参股公司边界；2026H1全文需补核后方可正式接受DEFER。",
-    "机器人收入未单列时，不把通用产品总收入、产能、库存、研发、送样、客户验证或基金投资算成已实现机器人收入。"
-  ]
+    "机器人收入未单列时，不把通用产品总收入、产能、库存、研发、送样、客户验证或基金投资算成已实现机器人收入。",
+    "归档规则已改为L1来源索引/L2原件归档/L3关键证据链。当前尝试了公开PDF下载和Drive上传链路；外部URL下载失败，Drive上传接口不接收原始网页URL，且本地Remote Desktop Commander设备离线。9份2025年报和5份2026H1报告本轮均未上传。",
+    "睿能科技2026-05-09官方PDF链接实际为2025年年度股东会材料，不是正式IR问答；已纠正来源身份。2026H1文本镜像显示小批量供货/交付线索，但须官方原件核页后重新评估。"
+  ],
+  "archive_audit": {
+    "rule_version": "L1-L3 v1.1",
+    "audit_date": "2026-10-25",
+    "existing_drive_pdf_count": 72,
+    "new_pdf_uploaded_this_run": 0,
+    "company_folders_created": 9,
+    "report_period_folders_created": 15,
+    "required_c00_2025_annual_reports_not_uploaded": 9,
+    "required_c00_2026_h1_reports_not_uploaded": 5,
+    "automatic_download_attempts": [
+      "Google Drive fetch rejected external PDF URLs as invalid Drive URLs",
+      "Container direct downloads of official CNINFO and DFCFW PDFs failed",
+      "Remote Desktop Commander device LAPTOP-L3RJK1S3 is offline"
+    ],
+    "result": "Target folders and source index prepared; no new PDF binary was uploaded. Manual actions are listed in results/归档执行清单.csv and data/manual_requests.csv.",
+    "source_correction": "The official SSE PDF URL previously labeled as a formal IR Q&A (603933_20260509_EPQA.pdf) is actually 2025 annual shareholder meeting material. It is now reference-only; the robot customer-validation claim is provisionally pointed to the 2025 annual report and needs page-level confirmation. The 2026H1 report is added as the relevant update source.",
+    "followup": "The 2026H1 text mirror for Ruineng mentions small-batch supply/delivery of robot-specific products; reconsider its provisional HOLD only after official original PDF and physical pages are verified."
+  }
 }
