@@ -1,6 +1,6 @@
 # C00_PILOT_01：粗筛尺度校准
 
-状态：REVIEW_PENDING（14份必需PDF已在Drive找到并可提取全文；当前建议分类5 ADVANCE、4 HOLD、1 DEFER；仍待独立验收）。依赖：无；先完成并验收再开其余C包。公司数：10。截止日：2026-10-24。
+状态：REVIEW_PENDING（14份本轮必需PDF已在Drive回读，另有威贸电子2025年报此前已存在；C00共15份报告PDF。15/15已计算SHA-256，22个物理页已图像复核。当前自检建议分类6 ADVANCE、3 HOLD、1 DEFER；仍待独立验收）。依赖：无；先完成并验收再开其余C包。公司数：10。截止日：2026-10-24。
 
 10个线索组各选1家试跑，只回答是否有明确对外机器人业务、具体产品和原文，确定ADVANCE/HOLD/DEFER规则。
 
@@ -17,4 +17,4 @@
 完成标准：每家公司都有状态；每个非未知结论都有同主体、同产品、同时间原文依据；列清完成/待补/未处理数量。包名表示计划，不表示研究已执行。
 
 
-2026-10-25更新：本轮已通过网页PDF/文本镜像纠正若干过强业务断言，但按仓库规则，网页全文/镜像不替代Drive原件核验；本包仍REVIEW_PENDING，C01未开放。详见results/交接.md与data/manual_requests.csv。
+2026-10-25更新：C00已完成同一AI的SELF_CHECK，不是独立验收。14份本轮必需PDF均已归档回读，另有威贸电子2025年报已存在Drive；共15份报告PDF完成SHA-256计算、22个关键物理页图像复核。分类自检为6 ADVANCE、3 HOLD、1 DEFER；宁波韵升依据2026H1第11/178页“长期协议、样品交付与供货”由HOLD调整为ADVANCE候选。新睿电子年报官方NEEQ来源链、威贸电子完整年报官方来源链仍待核；新睿电子CNINFO招股说明书二进制未归档。C00包级状态仍REVIEW_PENDING，C01不得开放。详见results/交接.md、results/review.json、results/归档执行清单.csv与data/manual_requests.csv。
