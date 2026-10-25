@@ -23,7 +23,7 @@ def build(package_id, include_sources=False):
     destination = ROOT/'deliveries'/f'{package_id}.zip'
     destination.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(destination, 'w', zipfile.ZIP_DEFLATED) as archive:
-        for name in ['AGENTS.md','PROJECT_STATE.json','data/resource_map.csv']:
+        for name in ['AGENTS.md','PROJECT_STATE.json','data/resource_map.csv','data/drive_folders.csv']:
             archive.write(ROOT/name, name)
         for folder in ['docs','templates']:
             for path in sorted((ROOT/folder).glob('*')):

@@ -21,4 +21,4 @@ data/company_master.csv是调度总表；archive/latest_universe.csv是旧验收
 
 AI先通过已连接Drive按真实URL/ID查元数据，再取得完整原文核页码和短引文。用户能打开不代表AI可读；OWNER_ONLY_CHECKED不可当作AI_READ_CONFIRMED，摘要可读不表示完整PDF已核读。无权限或无法取得原文写ACCESS_BLOCKED/HOLD并列补件，不能声称已核实。不要要求将Drive公开，不扩大分享权限。
 
-本次仅更新归档流程；Drive根目录URL/ID尚未配置，既有PDF迁移尚未执行。不得编造链接、上传成功或已完成迁移。
+Drive根目录和分类目录已创建，真实URL/ID见PROJECT_STATE.json与data/drive_folders.csv。64份唯一PDF已本地整理，见data/pdf_transfer_plan.csv，尚未实际上传；不得将目标目录ID冒充文件ID，也不得把目录创建说成原文迁移或核读完成。
