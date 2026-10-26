@@ -1,10 +1,10 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 13,
-  "active_issue_key": "P02",
+  "active_issue_number": 14,
+  "active_issue_key": "P03",
   "executor": "Codex",
-  "started_at": "2026-10-26 06:32:42 UTC",
-  "status": "IN_PROGRESS_P02_DRIVE_FOLLOWUP",
+  "started_at": "2026-10-26T06:56:46.362Z",
+  "status": "IN_PROGRESS_P03_SOURCE_HEALTH",
   "next_recommended_issue_number": 15,
   "next_recommended_issue_key": "P04",
   "last_completed": {
@@ -26,16 +26,22 @@
       "financial_snapshot_rows": 1054,
       "financial_snapshot_columns": 50,
       "financial_snapshot_sha256": "0c34f59567117b859ca57e9993f7a9fb8422598819274e4943ef331fa566b063"
+    },
+    "drive_followup": {
+      "completed_at": "2026-10-26T06:56:46.362Z",
+      "decision": "SELF_CHECK_PASS",
+      "drive_pdf_readbacks": 90,
+      "baseline_hash_matches": 87,
+      "no_baseline_hash": 3,
+      "summary_file": "runs/issues/P02/drive_followup_summary.json"
     }
   },
   "next_recommended_reason": "P04 财务口径定义不依赖 Drive，且 P02 已把快照 40 个字段逐列摊开，可直接照 existing_field_coverage.csv 写规则。P03 次之（通通道）。",
   "open_followups_from_P02": [
-    "Drive 二进制回读受阻：90 条有 drive_file_id 的记录无法核哈希，73 条 UPLOADED_UNVERIFIED 无法转 VERIFIED；需装 Drive 连接器或手动下载。",
-    "64 份本机 PDF 全为机器绝对路径、位于仓库外，换机即失效；建议迁入 sources/ 或上传 Drive 后清理缓存（不得删唯一原件）。",
     "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
     "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
     "重复文件夹 3 组（920418 2025年度×3、920207 2026H1×3、920491 IR×3），去重时不得当多份文件。",
     "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
   ],
-  "note": "一次只占一张执行卡。P02 为 SELF_CHECK，非独立验收；本文件不表示研究完成，完成状态以 runs/issues/<key>/review.json 为准。"
+  "note": "P02 Drive补验已完成，90份回读可解析；仅文件技术自检，不改变业务采用。用户指定由Codex继续P03；P07仍需全部依赖通过。"
 }

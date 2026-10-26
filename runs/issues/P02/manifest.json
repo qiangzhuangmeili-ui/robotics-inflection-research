@@ -1,109 +1,95 @@
 {
-  "manifest_version": 1,
-  "issue_number": 13,
   "issue_key": "P02",
   "plan_version": "20261026_collection_first_v2",
-  "phase": "准备",
-  "executor": "WorkBuddy AI (executor=AI, review=SELF_CHECK)",
-  "generated_at_utc": "2026-10-26T06:05:20+00:00",
-  "base_commit": "555f416",
-  "scope": "盘点 Drive 目录快照、本机缓存、旧研究库与财务快照，建立可复用资产索引与逐字段财务覆盖。不重新认定业务，不移动或删除原件，不改 document_registry。",
+  "executor": "Codex",
+  "generated_at": "2026-10-26T06:46:08.281132+00:00",
+  "review_nature": "SELF_CHECK",
+  "scope": "Supplement original P02 with authenticated Drive binary readback; preserve original baseline",
   "files": [
     {
+      "path": "runs/issues/P02/drive_followup_summary.json",
+      "bytes": 761,
+      "sha256": "33d1a5fc1b4c34aa1a4092a0eefdd7a574e80ab0174b19caad37aa1a735d9d3b"
+    },
+    {
+      "path": "runs/issues/P02/drive_metadata_readback.json",
+      "bytes": 106645,
+      "sha256": "ae37bbb8454a6d3136d5369165a20a823d9f9bdbf50bf6fb80f1c1b4f9804141"
+    },
+    {
+      "path": "runs/issues/P02/drive_readback_checks.csv",
+      "bytes": 86792,
+      "sha256": "32785206579df0728499943f8cc17381ba0e6a7e11c4f4c72990282fcaa9da16"
+    },
+    {
+      "path": "runs/issues/P02/drive_readback_checks.json",
+      "bytes": 129440,
+      "sha256": "453e54ff2d66979daa07aedfda82e95c1ce6a05d47142b865f7916a6a4c53127"
+    },
+    {
       "path": "runs/issues/P02/existing_assets.csv",
-      "role": "交付物1：226 条资产，26 列（位置/DriveID/哈希/五轴状态/复用判定/限制/下一步）",
-      "bytes": 123507,
-      "sha256": "f33358db8b38e8a1eb4a79d19181a832ee1f554b8e912ca96388d48bb3266946"
+      "bytes": 138872,
+      "sha256": "d2be35f234bc8630cc78dee56480a68f74988627c3d8f5db68ff6c3bed432c81"
     },
     {
       "path": "runs/issues/P02/existing_field_coverage.csv",
-      "role": "交付物2：47 个字段的逐字段覆盖（40 个快照字段 + 7 个契约要求但缺失的字段）",
       "bytes": 6864,
       "sha256": "9e3cdeb3dd106c92413e722156922226a490469a844bd9e9c93c5f812f628a8a"
     },
     {
+      "path": "runs/issues/P02/handoff.md",
+      "bytes": 7807,
+      "sha256": "12e959fc8750fa013f1534decbce4ad858d731c818e089a6a948495d3a6f412a"
+    },
+    {
+      "path": "runs/issues/P02/input_drive_inventory.csv",
+      "bytes": 6069,
+      "sha256": "296e9550701f9a995f2b7f374f0b9bc42b044bdd7d4cf697e076003f6c0960c9"
+    },
+    {
       "path": "runs/issues/P02/reuse_manifest.json",
-      "role": "交付物3：汇总、四项验收计数、阻断项、快照元数据",
+      "bytes": 5476,
+      "sha256": "7566b9bcc017da4961131e2af22f5eafa308f20ea9af096aae8e000f3de0b867"
+    },
+    {
+      "path": "runs/issues/P02/review.json",
+      "bytes": 8431,
+      "sha256": "9f4c40cfeddac361d24361a9f1e4cb103f143f2bf66708cdac46eb93f6bea172"
+    },
+    {
+      "path": "runs/issues/P02/workbuddy_baseline_existing_assets.csv",
+      "bytes": 123507,
+      "sha256": "f33358db8b38e8a1eb4a79d19181a832ee1f554b8e912ca96388d48bb3266946"
+    },
+    {
+      "path": "runs/issues/P02/workbuddy_baseline_manifest.json",
+      "bytes": 4155,
+      "sha256": "6caa5f8551ee94518e2c0cfabbfaf7a1a0e2cf77a46efc4337bd507dbc356f30"
+    },
+    {
+      "path": "runs/issues/P02/workbuddy_baseline_reuse_manifest.json",
       "bytes": 4374,
       "sha256": "d4bcc9e8c89f5dbe1fcf48e201700d6079179a37c624558325165a46f745dd9c"
     },
     {
-      "path": "runs/issues/P02/manifest.json",
-      "role": "本清单",
-      "sha256": "SELF"
+      "path": "runs/issues/P02/workbuddy_baseline_review.json",
+      "bytes": 6861,
+      "sha256": "eae85e3186ffe74eb2984da3289d914d8995c58966d76fefcf50cc2a036faffc"
     },
     {
-      "path": "runs/issues/P02/handoff.md",
-      "role": "交接记录",
-      "sha256": "SELF"
+      "path": "tools/p02_drive_followup.py",
+      "bytes": 5945,
+      "sha256": "3c23dc37cbe3a448122db323789af46bb538261beeb48de36f7c55f984799203"
     },
     {
-      "path": "runs/issues/P02/review.json",
-      "role": "自检记录（SELF_CHECK）",
-      "sha256": "SELF"
+      "path": "tools/p02_finalize_followup.py",
+      "bytes": 5564,
+      "sha256": "96e500dc3a102dc8fad24d62a2401d5e8a6e8ea218d97a73d362393db23f930e"
     },
     {
-      "path": "tools/p02_inventory.py",
-      "role": "支撑工具：只读生成上述三份交付，可复算",
-      "bytes": 28430,
-      "sha256": "4d652148969aec96f0f5449f75cce18190bdb46334f3525190e20e2165db80ca"
-    },
-    {
-      "path": "runs/issues/P02/input_drive_inventory.csv",
-      "role": "输入快照：用户 2026-10-26 提供的 Drive 目录清单（原件同时存 inbox/，该目录不进 Git）",
-      "bytes": 6069,
-      "sha256": "296e9550701f9a995f2b7f374f0b9bc42b044bdd7d4cf697e076003f6c0960c9"
+      "path": "tools/drive_verify_download.py",
+      "bytes": 1920,
+      "sha256": "3db9c8e2c0b31fbccccc24cf9e9c163643bd23372626d984027202e3c901cd7c"
     }
-  ],
-  "inputs": [
-    {
-      "path": "data/document_registry.csv",
-      "sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed",
-      "rows": 100,
-      "read_only": true
-    },
-    {
-      "path": "data/company_master.csv",
-      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
-      "rows": 1054,
-      "read_only": true
-    },
-    {
-      "path": "data/resource_map.csv",
-      "rows": 28,
-      "read_only": true,
-      "note": "27 条有 repo_path，已逐条核哈希"
-    },
-    {
-      "path": "inbox/drive_inventory_20261026.csv",
-      "rows": 73,
-      "read_only": true,
-      "note": "用户 2026-10-26 提供的 Drive 目录快照，非 API 列举"
-    },
-    {
-      "path": "runs/issues/P01/migration_dryrun.csv",
-      "role": "依赖卡交付：提供 100 条文档的五轴状态",
-      "read_only": true
-    },
-    {
-      "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\collection_run_20261026\\raw\\既有候选池财务快照.csv",
-      "sha256": "0c34f59567117b859ca57e9993f7a9fb8422598819274e4943ef331fa566b063",
-      "rows": 1054,
-      "columns": 50,
-      "read_only": true,
-      "note": "机器绝对路径，仓库外"
-    }
-  ],
-  "reproduce": {
-    "command": "python tools/p02_inventory.py",
-    "deterministic": ["existing_assets.csv 全部字段", "existing_field_coverage.csv", "reuse_manifest.json 除 generated_at_utc 外"],
-    "note": "本机缓存路径与 Drive 快照为环境输入，换机后需同步更新路径常量"
-  },
-  "not_included": [
-    "未修改 data/document_registry.csv",
-    "未执行 P01 的迁移方案（未加列、未建 document_sources.csv）",
-    "未访问 Google Drive（无连接器），未下载任何文件",
-    "未移动、未删除任何原件或缓存",
-    "未改写任何公司研究结论或采用状态"
   ]
 }

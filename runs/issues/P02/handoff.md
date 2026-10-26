@@ -101,3 +101,14 @@
 1. **P04（#15）建议优先**：财务口径定义不依赖 Drive，且本卡已把快照的真实字段摊开——P04 可以直接照这 47 行写规则。
 2. P03（#14）通通道，解决「新文件怎么下来」。
 3. 装 Drive 连接器后，建议开一张补验卡，把 73 条 `UPLOADED_UNVERIFIED` 逐个转 `VERIFIED`。
+
+
+## 2026-10-26 Codex 接续收尾（以本节更新Drive阻断项）
+
+用户明确指定由Codex补完Drive部分。使用已连接的私有Drive工具读取90条登记文件的真实元数据，取得90份原始PDF并保存到仓库忽略的sources/drive_readback_20261026/。90/90可解析且大小匹配；87/87旧SHA-256及87/87旧页数匹配，另3份此前无哈希/页数，本轮实算并保留NO_BASELINE_HASH。51份首页登记标题精确匹配，39份在前6物理页核对主体、年份及报告类型要素。
+
+未精读业务、不新增业务独立验收、不改原登记表或旧归档/AI读取状态。官方源同源性和完整正文/关键页核读仍独立记录。P02原先的Drive访问阻断在Codex当前会话已解除；不能推断WorkBuddy也获得了连接能力。
+
+计数澄清：原登记表73条UPLOADED_UNVERIFIED，另3条UPLOADED_AND_TEXT_READ经P01保守归一后，P02清单计76条。90条Drive记录=73+14+3。旧交接中的87个文件名匹配说法由reuse_manifest的90个唯一文件名匹配口径更正；87为已有内容哈希数，非Drive记录总数。
+
+本卡范围已收尾，技术核验结论SELF_CHECK_PASS。P07仍需其余依赖全部通过，不因P02单卡通过而提前放行。下一步按用户指定转P03 #14；P04仍待办。详情见drive_followup_summary.json、drive_readback_checks.csv/json；旧输出在workbuddy_baseline_*保留。

@@ -16,12 +16,38 @@
     "allows_p02": true
   },
   "input_versions": [
-    {"path": "data/document_registry.csv", "sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed", "rows": 100, "read_only": true},
-    {"path": "data/company_master.csv", "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6", "read_only": true},
-    {"path": "data/resource_map.csv", "rows": 28, "read_only": true},
-    {"path": "inbox/drive_inventory_20261026.csv", "rows": 73, "read_only": true, "note": "用户提供的目录快照"},
-    {"path": "runs/issues/P01/migration_dryrun.csv", "note": "五轴状态来源"},
-    {"path": "既有候选池财务快照.csv", "sha256": "0c34f59567117b859ca57e9993f7a9fb8422598819274e4943ef331fa566b063", "rows": 1054, "columns": 50}
+    {
+      "path": "data/document_registry.csv",
+      "sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed",
+      "rows": 100,
+      "read_only": true
+    },
+    {
+      "path": "data/company_master.csv",
+      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+      "read_only": true
+    },
+    {
+      "path": "data/resource_map.csv",
+      "rows": 28,
+      "read_only": true
+    },
+    {
+      "path": "inbox/drive_inventory_20261026.csv",
+      "rows": 73,
+      "read_only": true,
+      "note": "用户提供的目录快照"
+    },
+    {
+      "path": "runs/issues/P01/migration_dryrun.csv",
+      "note": "五轴状态来源"
+    },
+    {
+      "path": "既有候选池财务快照.csv",
+      "sha256": "0c34f59567117b859ca57e9993f7a9fb8422598819274e4943ef331fa566b063",
+      "rows": 1054,
+      "columns": 50
+    }
   ],
   "actual_output_files": [
     "runs/issues/P02/existing_assets.csv",
@@ -120,7 +146,45 @@
   ],
   "allows_next_stage": true,
   "allows_next_stage_scope": "放行 P06(#17) 与 P07(#18)。不放行任何业务结论采用、指标筛选或公司深研。",
-  "next_recommended_issue": {"number": 15, "key": "P04"},
+  "next_recommended_issue": {
+    "number": 15,
+    "key": "P04"
+  },
   "next_recommended_reason": "P04 财务口径定义不依赖 Drive，且本卡已把快照的真实字段逐列摊开，P04 可直接照 existing_field_coverage.csv 写规则。",
-  "notes": "两条验收标准逐条对照通过（AC1—AC8）。本记录不构成独立验收。关闭 issue 不替代本记录。"
+  "notes": "两条验收标准逐条对照通过（AC1—AC8）。本记录不构成独立验收。关闭 issue 不替代本记录。",
+  "drive_followup": {
+    "executor": "Codex",
+    "reviewer": "Codex",
+    "method": "SELF_CHECK_FILE_VALIDATION_ONLY",
+    "reviewed_at": "2026-10-26T06:46:08.281132+00:00",
+    "decision": "SELF_CHECK_PASS",
+    "results": {
+      "checked_at": "2026-10-26T06:46:08.183076+00:00",
+      "executor": "Codex",
+      "review_nature": "SELF_CHECK_FILE_VALIDATION_ONLY",
+      "documents": 100,
+      "drive_documents": 90,
+      "downloaded": 90,
+      "status": {
+        "PDF_PARSED": 90
+      },
+      "hash_comparison": {
+        "MATCH": 87,
+        "NO_BASELINE_HASH": 3
+      },
+      "identity_check": {
+        "REGISTERED_TITLE_EXACT_IN_FIRST_TWO_PAGES": 51,
+        "ENTITY_PERIOD_TYPE_TOKENS_IN_FIRST_SIX_PAGES": 39
+      },
+      "page_count_comparison": {
+        "MATCH": 87,
+        "NOT_RECORDED": 3
+      },
+      "business_evidence_independently_verified_added": 0,
+      "registry_unchanged": true,
+      "note": "Homepage-only identity check never upgrades AI_READ_CONFIRMED. Official-source provenance remains separately unverified."
+    },
+    "checks_file": "runs/issues/P02/drive_readback_checks.json",
+    "legacy_review_preserved": "runs/issues/P02/workbuddy_baseline_review.json"
+  }
 }
