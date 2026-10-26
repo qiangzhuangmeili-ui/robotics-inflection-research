@@ -15,6 +15,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import sys
 import time
 import unicodedata
@@ -697,6 +698,137 @@ class Collector:
             doc = record.get("document") or {}
             if doc.get("sha256"):
                 self._content_index.setdefault(doc["sha256"], f"{security_id}/{slot_id}")
+        # M00 起启用登记表级幂等（P05 config idempotency.lookup_order 第 2 条）。
+        # 目的：登记表里已有同哈希原件的槽位不再发 HTTP，避免全池重下 2025 年报。
+        self._registry = self._load_registry()
+
+    # -- 登记表幂等
+    @staticmethod
+    def registry_period_key(period_covered: str) -> str | None:
+        """把登记表里杂乱的 period_covered 归一到槽位 period_label。
+
+        实测历史值：2025年度 / 2023年度 / 2026H1 / 2026半年度 / 2026Q1 /
+        2026年度_投资者关系 等。后缀（_投资者关系、_上市前材料）不参与匹配。
+        """
+        text = normalize_text(period_covered or "").split("_")[0].strip()
+        if not text:
+            return None
+        m = re.match(r"(\d{4})\s*年度", text)
+        if m:
+            return f"FY{m.group(1)}"
+        m = re.match(r"(\d{4})\s*半年度", text)
+        if m:
+            return f"{m.group(1)}H1"
+        m = re.match(r"(\d{4})\s*[Hh]1", text)
+        if m:
+            return f"{m.group(1)}H1"
+        m = re.match(r"(\d{4})\s*[Qq]([13])", text)
+        if m:
+            return f"{m.group(1)}Q{m.group(2)}"
+        return None
+
+    def _load_registry(self) -> dict[tuple[str, str], list[dict]]:
+        path = self.root / "data/document_registry.csv"
+        index: dict[tuple[str, str], list[dict]] = {}
+        if not path.exists():
+            return index
+        import csv
+
+        with path.open(encoding="utf-8-sig", newline="") as fh:
+            for row in csv.DictReader(fh):
+                if not (row.get("sha256") or "").strip():
+                    continue
+                # 摘要是目录件不是全文：不得当作核心槽全文复用
+                if "摘要" in (row.get("period_covered") or "") or "摘要" in (row.get("original_title") or ""):
+                    continue
+                key = self.registry_period_key(row.get("period_covered", ""))
+                if not key:
+                    continue
+                index.setdefault((row.get("security_id", ""), key), []).append(row)
+        return index
+
+    def reuse_from_registry(self, company: CompanyRef, slot: dict, local_rel: Path,
+                            local_path: Path, now: str, revision_no: int = 0) -> dict | None:
+        """登记表命中即复用：不发出任何 HTTP 请求，但仍在本地复检身份。
+
+        命中条件（全部满足）：security_id + 报告期一致、登记表有 sha256、
+        local_file 存在且本地哈希与登记值一致。身份复检不通过（MISMATCH）时
+        放弃复用，交回正常下载路径，避免把错件当既有资料。
+        """
+        rows = self._registry.get((company.security_id, slot["period_label"])) or []
+        for row in rows:
+            raw = (row.get("local_file") or "").strip()
+            if not raw:
+                continue
+            src = Path(raw)
+            if not src.is_absolute():
+                src = self.root / src
+            if not src.exists() or src.is_dir():
+                self._event("registry_miss", security_id=company.security_id, slot_id=slot["slot_id"],
+                            reason="LOCAL_FILE_MISSING", document_id=row.get("document_id"))
+                continue
+            digest = sha256_file(src)
+            if digest != row["sha256"]:
+                self._event("registry_miss", security_id=company.security_id, slot_id=slot["slot_id"],
+                            reason="HASH_MISMATCH", document_id=row.get("document_id"))
+                continue
+            local_path.parent.mkdir(parents=True, exist_ok=True)
+            if not local_path.exists() or sha256_file(local_path) != digest:
+                shutil.copy2(src, local_path)
+            slot_ctx = dict(slot, _selected_title=row.get("original_title") or "")
+            verdict = validate_pdf(local_path, slot_ctx, stock_name=company.stock_name,
+                                   stock_code=company.stock_code, config=self.config)
+            if verdict["identity_status"] == VD_MISMATCH:
+                self._event("registry_miss", security_id=company.security_id, slot_id=slot["slot_id"],
+                            reason="IDENTITY_MISMATCH", document_id=row.get("document_id"))
+                continue
+            ident = self.build_document_identity(
+                company, slot, {"revision_no": revision_no,
+                                "title": row.get("original_title") or "",
+                                "published_on": row.get("published_on") or ""})
+            record = self.ledger.slot(company.security_id, company.stock_code, slot["slot_id"]) or {
+                "security_id": company.security_id,
+                "slot_id": slot["slot_id"],
+                "report_type": slot["report_type"],
+                "period_label": slot["period_label"],
+                "period_end": slot["period_end"],
+                "statutory_deadline": slot["statutory_deadline"],
+                "status": ST_PENDING,
+                "status_reason": None,
+                "attempt_count": 0,
+                "source_attempts": [],
+            }
+            record.setdefault("source_attempts", [])
+            record["document"] = {
+                **ident,
+                "title": row.get("original_title") or "",
+                "published_on": row.get("published_on") or "",
+                "primary_url": row.get("primary_url") or "",
+                "local_file": local_rel.as_posix(),
+                "sha256": digest,
+                "bytes": local_path.stat().st_size,
+                "page_count": verdict.get("page_count"),
+                "form": verdict.get("form"),
+                "identity_checks": verdict["checks"],
+                "canonical_document_id": row.get("document_id") or ident["document_id"],
+                "reuse_source": "REGISTRY",
+            }
+            record["validation"] = verdict
+            record["status"] = verdict["identity_status"]
+            record["status_reason"] = "登记表已有同哈希原件，本地复检后复用（未发出 HTTP）"
+            record["last_action"] = ST_SKIPPED
+            record["last_action_reason"] = "REGISTRY_HASH_MATCH"
+            record["skip_count"] = int(record.get("skip_count", 0)) + 1
+            record["last_http_status"] = None
+            record["next_action"] = "NONE"
+            record["last_checked_at"] = now
+            record["updated_at"] = now
+            self.ledger.put_slot(company.security_id, company.stock_code, record)
+            self._content_index.setdefault(digest, f"{company.security_id}/{slot['slot_id']}")
+            self._event("slot_skip", security_id=company.security_id, slot_id=slot["slot_id"],
+                        reason="REGISTRY_HASH_MATCH", document_id=row.get("document_id"))
+            return record
+        return None
 
     # -- 事件日志
     def _event(self, kind: str, **payload) -> None:
@@ -1007,6 +1139,17 @@ class Collector:
             })
             self.ledger.put_slot(company.security_id, code, record)
             return record
+
+        # 2.5) 登记表幂等（P05 config idempotency.lookup_order 第 2 条）
+        #      登记表已有同 security_id + 报告期 + 同哈希原件 → 本地复检后复用，不发 HTTP。
+        ident_preview = self.build_document_identity(company, slot, full_row)
+        local_rel_preview = (Path(self.config["storage"]["local_original_root"]) / code / slot_id
+                             / f"{ident_preview['document_id']}.pdf")
+        reused = self.reuse_from_registry(company, slot, local_rel_preview,
+                                          self.root / local_rel_preview, now,
+                                          revision_no=full_row.get("revision_no", 0))
+        if reused is not None:
+            return reused
 
         if int(record["attempt_count"]) >= int(self.config["transport"]["max_slot_attempts"]):
             record.update({"status": ST_SOURCE_FAILED, "status_reason": "超过单槽重试预算",

@@ -1,0 +1,184 @@
+{
+  "issue_key": "M00_01",
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_at": "2026-10-26T21:32:07+08:00",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS",
+  "acceptance": [
+    {
+      "item": "分配名单精确 N 家，证券ID一致、代码六位文本、无换名漏人",
+      "result": "PASS",
+      "evidence": "assignment_freeze.json：100 家，checks 全 true"
+    },
+    {
+      "item": "计划槽全部有真实状态（取得/不适用/未披露/失败/未尝试）",
+      "result": "PASS",
+      "evidence": "coverage.csv 700 行 = 100×7"
+    },
+    {
+      "item": "成功必须有真实文件与来源；未尝试/源停摆显式列出",
+      "result": "PASS",
+      "evidence": "document_receipts.csv 逐份含 URL+sha256+本地路径；automatic_failures.csv 单列未取得项"
+    },
+    {
+      "item": "运行记录对账：尝试/成功/未披露/不适用/失败/未尝试与总槽数一致",
+      "result": "PASS",
+      "evidence": "reconciliation={'obtained_verified': 674, 'obtained_pending_identity': 8, 'not_disclosed_by_issuer': 0, 'not_applicable_pre_listing': 0, 'not_yet_disclosed': 0, 'failed_source': 0, 'not_tried': 18, 'duplicate_or_other': 0}，合计 700 = 700"
+    }
+  ],
+  "reconciliation": {
+    "slot_total": 700,
+    "buckets": {
+      "obtained_verified": 674,
+      "obtained_pending_identity": 8,
+      "not_disclosed_by_issuer": 0,
+      "not_applicable_pre_listing": 0,
+      "not_yet_disclosed": 0,
+      "failed_source": 0,
+      "not_tried": 18,
+      "duplicate_or_other": 0
+    },
+    "sum_of_buckets": 700,
+    "reconciles": true,
+    "http_attempted_slots": 676,
+    "reused_without_http_slots": 33,
+    "note": "已尝试=发出过下载请求的槽；复用=命中台账/登记表且零 HTTP；两者都计入成功时不得重复计数。"
+  },
+  "coverage_summary": {
+    "companies": 100,
+    "slots_per_company": 7,
+    "slot_total": 700,
+    "status_counts": {
+      "COLLECTED_IDENTITY_VERIFIED": 674,
+      "COLLECTED_PENDING_IDENTITY": 8,
+      "NOT_TRIED": 18
+    },
+    "obtained": 682,
+    "by_market": {
+      "SZ": {
+        "slots": 700,
+        "obtained": 682
+      }
+    },
+    "by_slot": {
+      "annual_2023": {
+        "slots": 100,
+        "obtained": 96
+      },
+      "annual_2024": {
+        "slots": 100,
+        "obtained": 96
+      },
+      "annual_2025": {
+        "slots": 100,
+        "obtained": 98
+      },
+      "h1_2024": {
+        "slots": 100,
+        "obtained": 96
+      },
+      "h1_2025": {
+        "slots": 100,
+        "obtained": 98
+      },
+      "h1_2026": {
+        "slots": 100,
+        "obtained": 100
+      },
+      "q1_2026": {
+        "slots": 100,
+        "obtained": 98
+      }
+    }
+  },
+  "identity_pending": {
+    "count": 8,
+    "note": "文件已取得但前 8 页抽不出主体/报告期（多为扫描件或图片封面），不得写成已核实；待人工看封面或补 OCR。",
+    "items": [
+      {
+        "security_id": "SZ:000333",
+        "stock_code": "000333",
+        "slot_id": "annual_2023",
+        "bytes": "8910865",
+        "page_count": "373",
+        "local_file": "sources/collection/originals/000333/annual_2023/DOC-49CD2FC91AF36EA7.pdf"
+      },
+      {
+        "security_id": "SZ:000856",
+        "stock_code": "000856",
+        "slot_id": "q1_2026",
+        "bytes": "5299024",
+        "page_count": "10",
+        "local_file": "sources/collection/originals/000856/q1_2026/DOC-568DDDCF8BB99C79.pdf"
+      },
+      {
+        "security_id": "SZ:002083",
+        "stock_code": "002083",
+        "slot_id": "annual_2025",
+        "bytes": "48150997",
+        "page_count": "123",
+        "local_file": "sources/collection/originals/002083/annual_2025/DOC-41A995E12934526B.pdf"
+      },
+      {
+        "security_id": "SZ:002083",
+        "stock_code": "002083",
+        "slot_id": "h1_2026",
+        "bytes": "37487272",
+        "page_count": "93",
+        "local_file": "sources/collection/originals/002083/h1_2026/DOC-D7F653B0C5C02C09.pdf"
+      },
+      {
+        "security_id": "SZ:002083",
+        "stock_code": "002083",
+        "slot_id": "q1_2026",
+        "bytes": "2533653",
+        "page_count": "7",
+        "local_file": "sources/collection/originals/002083/q1_2026/DOC-3F5CD36F615E3BC4.pdf"
+      },
+      {
+        "security_id": "SZ:002139",
+        "stock_code": "002139",
+        "slot_id": "annual_2023",
+        "bytes": "1994367",
+        "page_count": "273",
+        "local_file": "sources/collection/originals/002139/annual_2023/DOC-9D694A769548C115.pdf"
+      },
+      {
+        "security_id": "SZ:002139",
+        "stock_code": "002139",
+        "slot_id": "annual_2024",
+        "bytes": "5044169",
+        "page_count": "322",
+        "local_file": "sources/collection/originals/002139/annual_2024/DOC-6489828151F6EE2D.pdf"
+      },
+      {
+        "security_id": "SZ:002139",
+        "stock_code": "002139",
+        "slot_id": "annual_2025",
+        "bytes": "2246044",
+        "page_count": "298",
+        "local_file": "sources/collection/originals/002139/annual_2025/DOC-503809AB6375AA96.pdf"
+      }
+    ]
+  },
+  "failures": {
+    "count": 18,
+    "by_status": {
+      "NOT_TRIED": 18
+    }
+  },
+  "limitations": [
+    "本卡只做资料采集与文件身份校验，不做财务字段精读、不做业务结论、不估值。",
+    "listing_date 仍 1054/1054 UNKNOWN：空目录只能记 NOT_TRIED，不能判上市前不适用或未披露。",
+    "无 Drive 连接器：原件只落本机 D 盘，archive_status 不写 VERIFIED，配额未核。",
+    "自检由执行者本人完成，不等于独立审计；业务采用仍需后续独立复核。"
+  ],
+  "allows_next_stage_scope": "放行 M00_01 之后的下一个采集批次；不放行业务结论/指标筛选/估值",
+  "not_allowed": [
+    "业务结论",
+    "指标筛选",
+    "估值",
+    "把未尝试写成缺件"
+  ]
+}

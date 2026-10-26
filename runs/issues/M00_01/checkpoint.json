@@ -1,0 +1,30 @@
+{
+  "batch_id": "M00_01",
+  "plan_version": "20261026_collection_first_v2",
+  "config": "runs/issues/P07/collection_config_v1.json",
+  "config_sha256": "b9faaae8d5131d9f0d2daafd5bffb40d5511a6b25cffa6e784ccb85dd2a033a1",
+  "assignment_sha256": "57ab48a9d534e70412b509baa3c7461eb0b3e4e411a78f16fb2a62734278cce7",
+  "ledger_dir": "runs/collection/checkpoint",
+  "slots": [
+    "annual_2023",
+    "annual_2024",
+    "annual_2025",
+    "h1_2024",
+    "h1_2025",
+    "h1_2026",
+    "q1_2026"
+  ],
+  "companies_total": 100,
+  "companies_done": 100,
+  "companies_pending": [],
+  "company_errors": [],
+  "slot_total": 700,
+  "status_counts": {
+    "COLLECTED_IDENTITY_VERIFIED": 674,
+    "COLLECTED_PENDING_IDENTITY": 8,
+    "NOT_TRIED": 18
+  },
+  "obtained": 682,
+  "updated_at": "2026-10-26T13:32:07Z",
+  "resume_rule": "重跑同一命令即从台账续跑：已 COLLECTED_* 且本地哈希一致的槽位不发 HTTP。"
+}
