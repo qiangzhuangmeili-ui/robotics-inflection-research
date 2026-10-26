@@ -1,0 +1,56 @@
+{
+  "template_only": false,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 14,
+  "issue_key": "P03",
+  "executor": "Codex",
+  "reviewer": "Codex",
+  "review_method": "SELF_CHECK_LIVE_SAMPLE_PROBES_AND_FAULT_TESTS",
+  "reviewed_at": "2026-10-26T07:08:21.895565+00:00",
+  "decision": "SELF_CHECK_PASS",
+  "dependency_review": {
+    "key": "P00",
+    "review_file": "runs/issues/P00/review.json",
+    "decision": "SELF_CHECK_PASS"
+  },
+  "checks": [
+    {
+      "criterion": "沪深北探针与失败路径实测，北交所独立路由",
+      "result": "PASS",
+      "evidence": [
+        "source_health.json",
+        "probe_records.json",
+        "adapter_smoke.json"
+      ]
+    },
+    {
+      "criterion": "全局故障只生成源事故，不生成1054条人工补件",
+      "result": "PASS",
+      "evidence": [
+        "source_circuit_policy.json",
+        "circuit_tests.txt",
+        "tools/test_source_access.py"
+      ]
+    }
+  ],
+  "coverage": {
+    "known_companies": 3,
+    "financial_report_periods_per_company": 1,
+    "official_pdf_files": 3,
+    "full_universe_processed": 0
+  },
+  "allows_next_stage": true,
+  "allows_next_stage_scope": "Only P03 technical dependency for P05/P07; all their other dependencies must separately pass. No full-universe or business adoption release.",
+  "next_recommended_issue": {
+    "number": 15,
+    "key": "P04"
+  },
+  "limitations": [
+    "3 known samples, one financial report period only",
+    "Sina is non-official; no field/unit/business acceptance",
+    "Old workbench remains SH/SZ-only; BJ uses adapter",
+    "SSE/SZSE exchange-site fallback not directly probed; CNINFO official dissemination URLs were probed",
+    "No account, proxy, sharing or existing AKShare source modifications",
+    "SELF_CHECK, not independent business audit"
+  ]
+}

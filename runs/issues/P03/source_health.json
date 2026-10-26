@@ -1,0 +1,169 @@
+{
+  "plan_version": "20261026_collection_first_v2",
+  "issue_key": "P03",
+  "checked_at": "2026-10-26T07:08:21.895565+00:00",
+  "status": "MINIMAL_PROBES_PASS_NOT_FULL_COVERAGE",
+  "local_workbench": {
+    "page_http_status": 200,
+    "catalog_http_status": 200,
+    "SH_finance_http_status": 200,
+    "SZ_finance_http_status": 200,
+    "BJ_finance_http_status": 400,
+    "BJ_route": "EXPLICIT_SOURCE_ADAPTER_REQUIRED",
+    "lifecycle": "CURRENT_EXECUTION_SESSION_NOT_GUARANTEED_AUTOSTART"
+  },
+  "direct_adapter_samples": [
+    {
+      "security_id": "SH:688218",
+      "checked_at": "2026-10-26T07:06:29.755609+00:00",
+      "financial_periods": [
+        "20260630"
+      ],
+      "annual_index_total": 2,
+      "index_column": "sse",
+      "returned_security_codes": [
+        "688218"
+      ],
+      "status": "PASS",
+      "research_accepted": false
+    },
+    {
+      "security_id": "SZ:002031",
+      "checked_at": "2026-10-26T07:06:30.457675+00:00",
+      "financial_periods": [
+        "20260630"
+      ],
+      "annual_index_total": 2,
+      "index_column": "szse",
+      "returned_security_codes": [
+        "002031"
+      ],
+      "status": "PASS",
+      "research_accepted": false
+    },
+    {
+      "security_id": "BJ:920207",
+      "checked_at": "2026-10-26T07:06:31.033468+00:00",
+      "financial_periods": [
+        "20260630"
+      ],
+      "annual_index_total": 2,
+      "index_column": "szse",
+      "returned_security_codes": [
+        "920207"
+      ],
+      "status": "PASS",
+      "research_accepted": false
+    }
+  ],
+  "official_pdf_samples": [
+    {
+      "exchange": "SH",
+      "stock_code": "688218",
+      "status": "PDF_BINARY_OBTAINED",
+      "sha256": "055eaaf729bdba32dcab99188f35d0828e987b8a503a183b82367f21b5bb4506",
+      "matches_registered_binary": true
+    },
+    {
+      "exchange": "SZ",
+      "stock_code": "002031",
+      "status": "PDF_BINARY_OBTAINED",
+      "sha256": "bca689c22e6f146ac4b47fe62797381450177f9cb60059224d6466017ee5a265",
+      "matches_registered_binary": true
+    },
+    {
+      "exchange": "BJ",
+      "stock_code": "920207",
+      "status": "PDF_BINARY_OBTAINED",
+      "sha256": "86eed5c4be4c1e1be67cce9bae452b8ec503be089d6a5bcf60bb04a542849e27",
+      "matches_registered_binary": true
+    }
+  ],
+  "failures_preserved": [
+    {
+      "probe_id": "toolbox_before_recovery",
+      "status": "TRANSPORT_FAILURE",
+      "http_status": null,
+      "error_class": "ConnectionError"
+    },
+    {
+      "probe_id": "toolbox_after_recovery",
+      "status": "TRANSPORT_FAILURE",
+      "http_status": null,
+      "error_class": "ConnectionError"
+    },
+    {
+      "probe_id": "toolbox_catalog",
+      "status": "TRANSPORT_FAILURE",
+      "http_status": null,
+      "error_class": "ConnectionError"
+    },
+    {
+      "probe_id": "toolbox_recovery_confirm",
+      "status": "TRANSPORT_FAILURE",
+      "http_status": null,
+      "error_class": "ConnectionError"
+    },
+    {
+      "probe_id": "toolbox_catalog_confirm",
+      "status": "TRANSPORT_FAILURE",
+      "http_status": null,
+      "error_class": "ConnectionError"
+    },
+    {
+      "probe_id": "cninfo_index_SH",
+      "status": "JSON_OBTAINED",
+      "http_status": 200,
+      "error_class": null
+    },
+    {
+      "probe_id": "cninfo_index_SZ",
+      "status": "JSON_OBTAINED",
+      "http_status": 200,
+      "error_class": null
+    },
+    {
+      "probe_id": "cninfo_index_BJ",
+      "status": "JSON_OBTAINED",
+      "http_status": 200,
+      "error_class": null
+    },
+    {
+      "probe_id": "cninfo_fixed_BJ",
+      "status": "HTTP_FAILURE",
+      "http_status": 500,
+      "error_class": null
+    },
+    {
+      "probe_id": "toolbox_BJ_actual_validation",
+      "status": "HTTP_FAILURE",
+      "http_status": 400,
+      "error_class": null
+    }
+  ],
+  "drive_readback": {
+    "checked_in": "P02",
+    "registered_pdfs_readable": 90,
+    "hash_baseline_matches": 87,
+    "new_hashes": 3,
+    "scope": "CODEX_CONNECTOR_ONLY_NOT_WORKBUDDY"
+  },
+  "circuit_tests": {
+    "count": 6,
+    "result": "PASS",
+    "global_incident_not_company_manual_request": true
+  },
+  "collection_gate": {
+    "full_universe_allowed": false,
+    "reason": "P04,P05,P06,P07 not yet accepted",
+    "manual_requests_created": 0,
+    "company_collection_started": false
+  },
+  "limitations": [
+    "3 known samples, one financial report period only",
+    "Sina is non-official; no field/unit/business acceptance",
+    "Old workbench remains SH/SZ-only; BJ uses adapter",
+    "SSE/SZSE exchange-site fallback not directly probed; CNINFO official dissemination URLs were probed",
+    "No account, proxy, sharing or existing AKShare source modifications"
+  ]
+}

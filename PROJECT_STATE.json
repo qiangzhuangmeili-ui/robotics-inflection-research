@@ -220,21 +220,14 @@
     "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/15",
     "execution_started": true,
     "last_completed_issue": {
-      "number": 13,
-      "key": "P02",
-      "completed_at": "2026-10-26T06:05:20Z",
-      "review_file": "runs/issues/P02/review.json",
+      "issue_number": 14,
+      "issue_key": "P03",
+      "completed_at": "2026-10-26T07:09:14.809Z",
+      "review_file": "runs/issues/P03/review.json",
       "decision": "SELF_CHECK_PASS",
-      "review_nature": "SELF_CHECK_NOT_INDEPENDENT_AUDIT",
-      "allows_next_stage_scope": "P06(#17)、P07(#18)",
-      "drive_followup": {
-        "completed_at": "2026-10-26T06:56:46.362Z",
-        "decision": "SELF_CHECK_PASS",
-        "drive_pdf_readbacks": 90,
-        "baseline_hash_matches": 87,
-        "no_baseline_hash": 3,
-        "summary_file": "runs/issues/P02/drive_followup_summary.json"
-      }
+      "allows_next_stage_scope": "P05/P07的P03技术依赖；其余依赖仍须分别验收",
+      "sample_companies": 3,
+      "circuit_tests_passed": 6
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -246,10 +239,21 @@
       "scope_file": "runs/issues/P00/collection_scope.json"
     },
     "legacy_issues": "#2-#9 deferred historical work; new company research after S08/R00",
-    "active_issue": {
-      "number": 14,
-      "key": "P03",
-      "executor": "Codex"
+    "active_issue": null,
+    "p02_drive_followup": {
+      "completed_at": "2026-10-26T06:56:46.362Z",
+      "decision": "SELF_CHECK_PASS",
+      "drive_pdf_readbacks": 90,
+      "baseline_hash_matches": 87,
+      "no_baseline_hash": 3,
+      "summary_file": "runs/issues/P02/drive_followup_summary.json"
+    },
+    "p03_source_health": {
+      "status": "MINIMAL_PROBES_PASS_NOT_FULL_COVERAGE",
+      "source_health_file": "runs/issues/P03/source_health.json",
+      "explicit_market_adapter": "tools/source_access.py",
+      "full_universe_allowed": false,
+      "review_nature": "SELF_CHECK"
     }
   },
   "pre_issue_breakdown_first_actions": [

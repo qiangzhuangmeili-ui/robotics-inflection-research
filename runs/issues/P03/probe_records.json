@@ -1,0 +1,592 @@
+[
+  {
+    "probe_id": "toolbox_before_recovery",
+    "url": "http://127.0.0.1:8774/toolbox",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:12.431774+00:00",
+    "status": "TRANSPORT_FAILURE",
+    "error_class": "ConnectionError",
+    "elapsed_seconds": 0.0
+  },
+  {
+    "probe_id": "cninfo_legacy_http_dictionary",
+    "url": "http://www.cninfo.com.cn/new/data/szse_stock.json",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:15.604190+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 2.016,
+    "content_type": "application/json",
+    "size_bytes": 592685,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "stockList"
+    ],
+    "stock_count": 6261,
+    "sample_org_ids": {
+      "002031": "gssz0002031",
+      "688218": "gfbj0836084",
+      "920207": "gfbj0835207"
+    },
+    "provider_status": null,
+    "response_sha256": "89797d3bb9504ad120162e99765d3d1a565200009ecb3fa62b41aacaa3e10703"
+  },
+  {
+    "probe_id": "cninfo_https_dictionary",
+    "url": "https://www.cninfo.com.cn/new/data/szse_stock.json",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:17.628157+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 2.125,
+    "content_type": "application/json",
+    "size_bytes": 592685,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "stockList"
+    ],
+    "stock_count": 6261,
+    "sample_org_ids": {
+      "002031": "gssz0002031",
+      "688218": "gfbj0836084",
+      "920207": "gfbj0835207"
+    },
+    "provider_status": null,
+    "response_sha256": "89797d3bb9504ad120162e99765d3d1a565200009ecb3fa62b41aacaa3e10703"
+  },
+  {
+    "probe_id": "sina_SH",
+    "url": "https://quotes.sina.cn/cn/api/openapi.php/CompanyFinanceService.getFinanceReport2022",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:19.763851+00:00",
+    "parameters": {
+      "paperCode": "sh688218",
+      "source": "lrb",
+      "type": "0",
+      "page": "1",
+      "num": "1"
+    },
+    "http_status": 200,
+    "elapsed_seconds": 1.125,
+    "content_type": "application/json; charset=utf-8",
+    "size_bytes": 19634,
+    "final_host": "quotes.sina.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "result"
+    ],
+    "provider_status": {
+      "code": 0
+    },
+    "report_date_count": 1,
+    "report_periods": [
+      "20260630"
+    ],
+    "response_sha256": "8871733e6eb7983ae9fae79b9163e89ad48544409f2a33cd75f4961dbceba4a8"
+  },
+  {
+    "probe_id": "sina_SZ",
+    "url": "https://quotes.sina.cn/cn/api/openapi.php/CompanyFinanceService.getFinanceReport2022",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:20.901080+00:00",
+    "parameters": {
+      "paperCode": "sz002031",
+      "source": "lrb",
+      "type": "0",
+      "page": "1",
+      "num": "1"
+    },
+    "http_status": 200,
+    "elapsed_seconds": 0.265,
+    "content_type": "application/json; charset=utf-8",
+    "size_bytes": 19670,
+    "final_host": "quotes.sina.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "result"
+    ],
+    "provider_status": {
+      "code": 0
+    },
+    "report_date_count": 1,
+    "report_periods": [
+      "20260630"
+    ],
+    "response_sha256": "24369e4bddcde15430eb23b9705b90cfa64ce9e5c0096a38e0e000b62cba664b"
+  },
+  {
+    "probe_id": "sina_BJ",
+    "url": "https://quotes.sina.cn/cn/api/openapi.php/CompanyFinanceService.getFinanceReport2022",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:21.176426+00:00",
+    "parameters": {
+      "paperCode": "bj920207",
+      "source": "lrb",
+      "type": "0",
+      "page": "1",
+      "num": "1"
+    },
+    "http_status": 200,
+    "elapsed_seconds": 0.297,
+    "content_type": "application/json; charset=utf-8",
+    "size_bytes": 19547,
+    "final_host": "quotes.sina.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "result"
+    ],
+    "provider_status": {
+      "code": 0
+    },
+    "report_date_count": 1,
+    "report_periods": [
+      "20260630"
+    ],
+    "response_sha256": "1461961099cb8fabbb91fa739002c8024f44f2ced8c1ad3fc51e727cbdb65816"
+  },
+  {
+    "probe_id": "official_pdf_SH",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225259116.PDF",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:21.470044+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 2.422,
+    "content_type": "application/pdf",
+    "size_bytes": 3951900,
+    "final_host": "static.cninfo.com.cn",
+    "status": "PDF_BINARY_OBTAINED",
+    "sha256": "055eaaf729bdba32dcab99188f35d0828e987b8a503a183b82367f21b5bb4506"
+  },
+  {
+    "probe_id": "official_pdf_SZ",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225260516.PDF",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:23.891748+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 1.016,
+    "content_type": "application/pdf",
+    "size_bytes": 2317799,
+    "final_host": "static.cninfo.com.cn",
+    "status": "PDF_BINARY_OBTAINED",
+    "sha256": "bca689c22e6f146ac4b47fe62797381450177f9cb60059224d6466017ee5a265"
+  },
+  {
+    "probe_id": "official_pdf_BJ",
+    "url": "https://www.bse.cn/disclosure/2026/2026-04-27/603f0a2510b5428fb9ba4e397ba23b2e.pdf",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:58:24.912913+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 4.61,
+    "content_type": "application/pdf",
+    "size_bytes": 3110800,
+    "final_host": "www.bse.cn",
+    "status": "PDF_BINARY_OBTAINED",
+    "sha256": "86eed5c4be4c1e1be67cce9bae452b8ec503be089d6a5bcf60bb04a542849e27"
+  },
+  {
+    "probe_id": "toolbox_after_recovery",
+    "url": "http://127.0.0.1:8774/toolbox",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:59:10.066691+00:00",
+    "status": "TRANSPORT_FAILURE",
+    "error_class": "ConnectionError",
+    "elapsed_seconds": 0.016
+  },
+  {
+    "probe_id": "toolbox_catalog",
+    "url": "http://127.0.0.1:8774/api/toolbox/catalog",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:59:10.088863+00:00",
+    "status": "TRANSPORT_FAILURE",
+    "error_class": "ConnectionError",
+    "elapsed_seconds": 0.0
+  },
+  {
+    "probe_id": "toolbox_recovery_confirm",
+    "url": "http://127.0.0.1:8774/toolbox",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:59:23.622065+00:00",
+    "status": "TRANSPORT_FAILURE",
+    "error_class": "ConnectionError",
+    "elapsed_seconds": 0.0
+  },
+  {
+    "probe_id": "toolbox_catalog_confirm",
+    "url": "http://127.0.0.1:8774/api/toolbox/catalog",
+    "method": "GET",
+    "checked_at": "2026-10-26T06:59:23.644411+00:00",
+    "status": "TRANSPORT_FAILURE",
+    "error_class": "ConnectionError",
+    "elapsed_seconds": 0.0
+  },
+  {
+    "probe_id": "cninfo_index_SH",
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "method": "POST",
+    "checked_at": "2026-10-26T06:59:26.844288+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 0.891,
+    "content_type": "application/json;charset=UTF-8",
+    "size_bytes": 165,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "classifiedAnnouncements",
+      "totalSecurities",
+      "totalAnnouncement",
+      "totalRecordNum",
+      "announcements",
+      "categoryList",
+      "hasMore",
+      "totalpages"
+    ],
+    "total_announcements": 0,
+    "sample_announcements": [],
+    "provider_status": null,
+    "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114"
+  },
+  {
+    "probe_id": "cninfo_index_SZ",
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "method": "POST",
+    "checked_at": "2026-10-26T06:59:27.749399+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 0.859,
+    "content_type": "application/json;charset=UTF-8",
+    "size_bytes": 165,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "classifiedAnnouncements",
+      "totalSecurities",
+      "totalAnnouncement",
+      "totalRecordNum",
+      "announcements",
+      "categoryList",
+      "hasMore",
+      "totalpages"
+    ],
+    "total_announcements": 0,
+    "sample_announcements": [],
+    "provider_status": null,
+    "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114"
+  },
+  {
+    "probe_id": "cninfo_index_BJ",
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "method": "POST",
+    "checked_at": "2026-10-26T06:59:28.622007+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 0.437,
+    "content_type": "application/json;charset=UTF-8",
+    "size_bytes": 165,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "classifiedAnnouncements",
+      "totalSecurities",
+      "totalAnnouncement",
+      "totalRecordNum",
+      "announcements",
+      "categoryList",
+      "hasMore",
+      "totalpages"
+    ],
+    "total_announcements": 0,
+    "sample_announcements": [],
+    "provider_status": null,
+    "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114"
+  },
+  {
+    "probe_id": "toolbox_session_recovery",
+    "url": "http://127.0.0.1:8774/toolbox",
+    "method": "GET",
+    "checked_at": "2026-10-26T07:00:03.091252+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 0.0,
+    "content_type": "text/html; charset=utf-8",
+    "size_bytes": 8246,
+    "final_host": "127.0.0.1",
+    "status": "HTML_OR_NON_JSON"
+  },
+  {
+    "probe_id": "toolbox_session_catalog",
+    "url": "http://127.0.0.1:8774/api/toolbox/catalog",
+    "method": "GET",
+    "checked_at": "2026-10-26T07:00:03.104767+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 1.375,
+    "content_type": "application/json; charset=utf-8",
+    "size_bytes": 385883,
+    "final_host": "127.0.0.1",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "ok",
+      "items",
+      "groups",
+      "documented_count",
+      "local_available_count",
+      "version",
+      "scope"
+    ],
+    "provider_status": null,
+    "response_sha256": "91e08040f21d8595428f57f19a0b6485ac27337311550533df27b76518948a32"
+  },
+  {
+    "probe_id": "cninfo_index_unfiltered_SH",
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "method": "POST",
+    "checked_at": "2026-10-26T07:00:07.374412+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 1.203,
+    "content_type": "application/json;charset=UTF-8",
+    "size_bytes": 2385,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "classifiedAnnouncements",
+      "totalSecurities",
+      "totalAnnouncement",
+      "totalRecordNum",
+      "announcements",
+      "categoryList",
+      "hasMore",
+      "totalpages"
+    ],
+    "total_announcements": 85,
+    "sample_announcements": [
+      {
+        "secCode": "688218",
+        "secName": "江苏北人",
+        "announcementTitle": "关于董事、高级管理人员减持股份结果公告",
+        "adjunctUrl": "finalpage/2026-09-11/1225557079.PDF",
+        "announcementTime": 1789056000000
+      },
+      {
+        "secCode": "688218",
+        "secName": "江苏北人",
+        "announcementTitle": "关于终止运营综合能源管理建设项目的进展公告",
+        "adjunctUrl": "finalpage/2026-09-05/1225548352.PDF",
+        "announcementTime": 1788537600000
+      }
+    ],
+    "provider_status": null,
+    "response_sha256": "fb258c014b82507236e5ac297973b542a47789400d961957cf48f61560f5bc08"
+  },
+  {
+    "probe_id": "cninfo_fixed_SH",
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "method": "POST",
+    "checked_at": "2026-10-26T07:00:37.087194+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 0.766,
+    "content_type": "application/json;charset=UTF-8",
+    "size_bytes": 1386,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "classifiedAnnouncements",
+      "totalSecurities",
+      "totalAnnouncement",
+      "totalRecordNum",
+      "announcements",
+      "categoryList",
+      "hasMore",
+      "totalpages"
+    ],
+    "total_announcements": 2,
+    "sample_announcements": [
+      {
+        "secCode": "688218",
+        "secName": "江苏北人",
+        "announcementTitle": "2025年年度报告全文",
+        "adjunctUrl": "finalpage/2026-04-30/1225259116.PDF",
+        "announcementTime": 1777478400000
+      },
+      {
+        "secCode": "688218",
+        "secName": "江苏北人",
+        "announcementTitle": "2025年年度报告摘要",
+        "adjunctUrl": "finalpage/2026-04-30/1225258899.PDF",
+        "announcementTime": 1777478400000
+      }
+    ],
+    "provider_status": null,
+    "response_sha256": "2fd94cbf91b781a20cc1e1f7cde0f0fe07f94b09565731b9fe0b32474b5d01cb"
+  },
+  {
+    "probe_id": "cninfo_fixed_SZ",
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "method": "POST",
+    "checked_at": "2026-10-26T07:00:37.868088+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 0.437,
+    "content_type": "application/json;charset=UTF-8",
+    "size_bytes": 1391,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "classifiedAnnouncements",
+      "totalSecurities",
+      "totalAnnouncement",
+      "totalRecordNum",
+      "announcements",
+      "categoryList",
+      "hasMore",
+      "totalpages"
+    ],
+    "total_announcements": 2,
+    "sample_announcements": [
+      {
+        "secCode": "002031",
+        "secName": "巨轮智能",
+        "announcementTitle": "2025年年度报告",
+        "adjunctUrl": "finalpage/2026-04-30/1225260516.PDF",
+        "announcementTime": 1777478400000
+      },
+      {
+        "secCode": "002031",
+        "secName": "巨轮智能",
+        "announcementTitle": "2025年年度报告摘要",
+        "adjunctUrl": "finalpage/2026-04-30/1225260515.PDF",
+        "announcementTime": 1777478400000
+      }
+    ],
+    "provider_status": null,
+    "response_sha256": "1439ebdb85c3f90e77273b714816402d78e5d40017c8cfecfbaa271ac74be10b"
+  },
+  {
+    "probe_id": "cninfo_fixed_BJ",
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "method": "POST",
+    "checked_at": "2026-10-26T07:00:38.318218+00:00",
+    "http_status": 500,
+    "elapsed_seconds": 0.672,
+    "content_type": "text/html;charset=utf-8",
+    "size_bytes": 32579,
+    "final_host": "www.cninfo.com.cn",
+    "status": "HTTP_FAILURE"
+  },
+  {
+    "probe_id": "cninfo_BJ_supported_column",
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "method": "POST",
+    "checked_at": "2026-10-26T07:00:59.426855+00:00",
+    "http_status": 200,
+    "elapsed_seconds": 1.422,
+    "content_type": "application/json;charset=UTF-8",
+    "size_bytes": 1310,
+    "final_host": "www.cninfo.com.cn",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "classifiedAnnouncements",
+      "totalSecurities",
+      "totalAnnouncement",
+      "totalRecordNum",
+      "announcements",
+      "categoryList",
+      "hasMore",
+      "totalpages"
+    ],
+    "total_announcements": 2,
+    "sample_announcements": [
+      {
+        "secCode": "920207",
+        "secName": "众诚科技",
+        "announcementTitle": "2025年年度报告",
+        "adjunctUrl": "finalpage/2026-04-27/1225221058.PDF",
+        "announcementTime": 1777219200000
+      },
+      {
+        "secCode": "920207",
+        "secName": "众诚科技",
+        "announcementTitle": "2025年年度报告摘要",
+        "adjunctUrl": "finalpage/2026-04-27/1225221054.PDF",
+        "announcementTime": 1777219200000
+      }
+    ],
+    "provider_status": null,
+    "response_sha256": "59c1fd718ab29e4dbf71f0f24727945a3104bb3cf1aff8815307d0ced723e5e5"
+  },
+  {
+    "probe_id": "toolbox_BJ_actual_validation",
+    "url": "http://127.0.0.1:8774/api/finance/report",
+    "method": "GET",
+    "checked_at": "2026-10-26T07:01:00.852565+00:00",
+    "parameters": {
+      "symbol": "920207",
+      "kind": "profit",
+      "period": "20260630"
+    },
+    "http_status": 400,
+    "elapsed_seconds": 0.016,
+    "content_type": "application/json; charset=utf-8",
+    "size_bytes": 134,
+    "final_host": "127.0.0.1",
+    "status": "HTTP_FAILURE"
+  },
+  {
+    "probe_id": "toolbox_SH_finance",
+    "url": "http://127.0.0.1:8774/api/finance/report",
+    "method": "GET",
+    "checked_at": "2026-10-26T07:01:03.543591+00:00",
+    "parameters": {
+      "symbol": "688218",
+      "kind": "profit",
+      "period": "20260630"
+    },
+    "http_status": 200,
+    "elapsed_seconds": 2.047,
+    "content_type": "application/json; charset=utf-8",
+    "size_bytes": 5508,
+    "final_host": "127.0.0.1",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "ok",
+      "symbol",
+      "kind",
+      "title",
+      "source",
+      "fetched_at",
+      "period",
+      "periods",
+      "items",
+      "non_empty",
+      "message"
+    ],
+    "provider_status": null,
+    "response_sha256": "5c4110c610d8285530c7c2dea5437503cb065538ee12df5ae8e853e42532c872"
+  },
+  {
+    "probe_id": "toolbox_SZ_finance",
+    "url": "http://127.0.0.1:8774/api/finance/report",
+    "method": "GET",
+    "checked_at": "2026-10-26T07:01:05.605254+00:00",
+    "parameters": {
+      "symbol": "002031",
+      "kind": "profit",
+      "period": "20260630"
+    },
+    "http_status": 200,
+    "elapsed_seconds": 1.359,
+    "content_type": "application/json; charset=utf-8",
+    "size_bytes": 6158,
+    "final_host": "127.0.0.1",
+    "status": "JSON_OBTAINED",
+    "top_level_keys": [
+      "ok",
+      "symbol",
+      "kind",
+      "title",
+      "source",
+      "fetched_at",
+      "period",
+      "periods",
+      "items",
+      "non_empty",
+      "message"
+    ],
+    "provider_status": null,
+    "response_sha256": "a76312392dab7f4dff08bf5e20d19b29e9296b4e0822249a73a8a1081285b7e1"
+  }
+]

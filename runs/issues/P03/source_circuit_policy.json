@@ -1,0 +1,25 @@
+{
+  "plan_version": "20261026_collection_first_v2",
+  "issue_key": "P03",
+  "connect_timeout_seconds": 8,
+  "read_timeout_seconds": 20,
+  "pdf_read_timeout_seconds": 45,
+  "max_attempts_per_call": 2,
+  "retry_delay_seconds": 2,
+  "transport_failure_threshold": 2,
+  "source_failure_threshold": 3,
+  "cooldown_seconds": 900,
+  "half_open_rule": "Cooldown expires AND one explicitly tagged known-good probe succeeds before closing the provider circuit; company queue remains paused meanwhile.",
+  "immediate_open_http_statuses": [401, 403, 429],
+  "document_only_http_statuses": [404],
+  "source_failure_codes": ["TLS_ERROR", "PROXY_ERROR", "CONNECTION_ERROR", "TIMEOUT", "HTTP_5XX", "INVALID_JSON", "INVALID_SCHEMA", "NON_PDF_RESPONSE"],
+  "empty_result_rule": "Not a missing report, not zero. Stop scheduling this query route and check one known-good reference with corrected parameters. Resume only after semantic validation; no issuer-level manual requests.",
+  "failure_aggregation": "One environment incident per provider route; affected companies remain NOT_ATTEMPTED_SOURCE_BLOCKED. Never create 1054 manual requests.",
+  "fallbacks": {
+    "official_report_pdf": ["Already registered official URL", "CNINFO adjunctUrl from validated issuer index", "BSE official issuer disclosure for BJ; SSE/SZSE official issuer disclosure for SH/SZ (latter two not live-probed in this card)"],
+    "financial_data": ["Explicit SH/SZ/BJ Sina paperCode; non-official structured data, official reconciliation deferred to P05/P07", "Official report tables; extraction not implemented in P03"],
+    "archived_original": ["Private connected Google Drive, lookup existing document_id/file_id first", "Existing local cache; never delete unique originals"]
+  },
+  "whole_universe_gate": "P03 validates 3 known samples only. P04/P05/P06/P07 remain required. Any required route without a healthy known-good probe blocks the associated full collection.",
+  "scope": "Small transport/routing adapter only; no pagination, no universe loop, no report-slot collection or business research."
+}

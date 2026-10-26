@@ -1,13 +1,31 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 14,
-  "active_issue_key": "P03",
-  "executor": "Codex",
-  "started_at": "2026-10-26T06:56:46.362Z",
-  "status": "IN_PROGRESS_P03_SOURCE_HEALTH",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
+  "started_at": null,
+  "status": "IDLE_P03_SELF_CHECK_PASS",
   "next_recommended_issue_number": 15,
   "next_recommended_issue_key": "P04",
   "last_completed": {
+    "issue_number": 14,
+    "issue_key": "P03",
+    "completed_at": "2026-10-26T07:09:14.809Z",
+    "review_file": "runs/issues/P03/review.json",
+    "decision": "SELF_CHECK_PASS",
+    "allows_next_stage_scope": "P05/P07的P03技术依赖；其余依赖仍须分别验收",
+    "sample_companies": 3,
+    "circuit_tests_passed": 6
+  },
+  "next_recommended_reason": "按用户指定完成P02 Drive收尾和P03最小沪深北连通/故障熔断。下一步P04冻结财务字段与口径；P05/P07尚未整体放行。",
+  "open_followups_from_P02": [
+    "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
+    "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
+    "重复文件夹 3 组（920418 2025年度×3、920207 2026H1×3、920491 IR×3），去重时不得当多份文件。",
+    "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
+  ],
+  "note": "P02/P03均为SELF_CHECK技术核验。全池采集未启动；业务证据未新增独立验收。WorkBuddy可继续P04，北交所采集必须用显式三市场适配器，不能沿用旧工作台沪深校验。",
+  "previous_completed": {
     "issue_number": 13,
     "issue_key": "P02",
     "completed_at": "2026-10-26T06:05:20Z",
@@ -35,13 +53,5 @@
       "no_baseline_hash": 3,
       "summary_file": "runs/issues/P02/drive_followup_summary.json"
     }
-  },
-  "next_recommended_reason": "P04 财务口径定义不依赖 Drive，且 P02 已把快照 40 个字段逐列摊开，可直接照 existing_field_coverage.csv 写规则。P03 次之（通通道）。",
-  "open_followups_from_P02": [
-    "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
-    "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
-    "重复文件夹 3 组（920418 2025年度×3、920207 2026H1×3、920491 IR×3），去重时不得当多份文件。",
-    "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
-  ],
-  "note": "P02 Drive补验已完成，90份回读可解析；仅文件技术自检，不改变业务采用。用户指定由Codex继续P03；P07仍需全部依赖通过。"
+  }
 }
