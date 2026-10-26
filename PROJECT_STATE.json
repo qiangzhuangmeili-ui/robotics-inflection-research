@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "P06_STORAGE_PLAN_SELF_CHECK_PASS",
+  "status": "P07_CALIBRATION_SELF_CHECK_PASS",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -128,7 +128,10 @@
     "archive_pdf_text_extracted": 14,
     "archive_identity_matched": 14,
     "archive_source_provenance_pending": 1,
-    "archive_physical_page_visual_verified": 0
+    "archive_physical_page_visual_verified": 0,
+    "local_original_root": "sources/collection/originals -> D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals (junction)",
+    "local_original_drive": "D:",
+    "collection_ledger": "runs/collection/checkpoint (COLLECTION_LEDGER_V1, shared by P07 and M00_01-M00_11)"
   },
   "current_packages": {
     "B00_SOURCE_01": "REVIEW_PENDING",
@@ -217,19 +220,21 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18",
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/19",
     "execution_started": true,
     "last_completed_issue": {
-      "issue_number": 17,
-      "issue_key": "P06",
-      "completed_at": "2026-10-26T09:04:00+00:00",
-      "review_file": "runs/issues/P06/review.json",
+      "issue_number": 18,
+      "issue_key": "P07",
+      "completed_at": "2026-10-26T11:45:00+00:00",
+      "review_file": "runs/issues/P07/review.json",
       "decision": "SELF_CHECK_PASS",
-      "allows_next_stage_scope": "放行 P07(#18)；不放行 M00 全池批次（仍等 P07）、不放行业务结论或指标筛选",
-      "acceptance": "6/6",
-      "self_check": "11/11",
-      "storage_plan": "runs/issues/P06/storage_plan.json",
-      "capacity_status": "PRE_CALIBRATION_ESTIMATE_NOT_FACT"
+      "allows_next_stage_scope": "放行 M00_01—M00_11（沿用 runs/collection/checkpoint 与 D 盘原件根）；不放行业务结论、指标筛选或估值",
+      "acceptance": "2/2",
+      "self_check": "10/10",
+      "calibration": "10 家 × 7 槽 = 70；65 VERIFIED / 5 NOT_TRIED（920011 上市前空目录）",
+      "capacity_status": "CALIBRATED_FROM_10_COMPANIES",
+      "collector_patches": 6,
+      "drive_status": "ACCESS_BLOCKED"
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -365,5 +370,60 @@
     "先做采集格式/接口校准，再按data/intake_batch_index.csv分技术批次自动处理；故障留断点，不逐家催用户手补。",
     "整轮自动尝试/有限重试后，统一输出按网站/软件、报告期分组的人工补缺表。",
     "资料基本可用后先按指标宽筛和逐轮收紧，再对少量公司核验业务。此前企业跟进事项保存在company_followups_after_intake，不丢失。"
-  ]
+  ],
+  "p07_calibration": {
+    "issue": 18,
+    "assignment": "runs/issues/P07/calibration_assignment.csv",
+    "coverage": "runs/issues/P07/calibration_coverage.csv",
+    "slots_total": 70,
+    "verified": 65,
+    "not_tried": 5,
+    "pending": 0,
+    "identity_mismatch": 0,
+    "by_market": {
+      "SZ": "35/35",
+      "SH": "21/21",
+      "BJ": "9/14"
+    },
+    "reuse": {
+      "p05_ledger_slots": 4,
+      "registry_seed_slots": 3,
+      "p07_download_slots": 63,
+      "http_calls_for_reuse": 0
+    },
+    "unit_bytes": {
+      "annual_median": 2819684,
+      "annual_n": 27,
+      "h1_median": 2111476,
+      "h1_n": 28,
+      "quarterly_median": 225413,
+      "quarterly_n": 10
+    },
+    "core_envelope_gib": 14.52,
+    "resume_test": {
+      "http_status": 206,
+      "resumed_from": 19548843,
+      "hash_equal": true
+    },
+    "drive": {
+      "verdict": "ACCESS_BLOCKED",
+      "list": 302,
+      "api": 403,
+      "upload": 400,
+      "readback": 401
+    },
+    "collector_patches": [
+      "F1 quarterly title variant",
+      "F2 text extraction floor",
+      "F3 issuer match fallback",
+      "F4 no destructive delete",
+      "F5 issuer search scope",
+      "F6 mismatch semantics"
+    ],
+    "storage": {
+      "originals_root": "D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection",
+      "this_run_originals_bytes": 183000000,
+      "c_drive_free_gib_after": 38
+    }
+  }
 }

@@ -1,0 +1,58 @@
+{
+ "probed_at": "2026-10-26T19:42:23+0800",
+ "root_folder_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+ "credential": "NONE",
+ "connector": "本会话只装有 GitHub 连接器，无 Google Drive 连接器/凭据",
+ "steps": [
+  {
+   "step": "1_list_folder_page",
+   "method": "GET",
+   "url": "https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+   "http_status": 302,
+   "location": "https://accounts.google.com/ServiceLogin?service=wise&passive=1209600&osid=1&continue=https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ&followup=https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+   "outcome": "BLOCKED"
+  },
+  {
+   "step": "1_list_api",
+   "method": "GET",
+   "url": "https://www.googleapis.com/drive/v3/files/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ?fields=id,name,mimeType",
+   "http_status": 403,
+   "location": null,
+   "outcome": "BLOCKED"
+  },
+  {
+   "step": "2_upload_metadata_probe",
+   "method": "POST",
+   "url": "https://www.googleapis.com/upload/drive/v3/files?uploadType=metadata",
+   "http_status": 400,
+   "location": null,
+   "outcome": "BLOCKED"
+  },
+  {
+   "step": "3_readback_children",
+   "method": "GET",
+   "url": "https://www.googleapis.com/drive/v3/files?q='1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ'+in+parents&fields=files(id,name)",
+   "http_status": 403,
+   "location": null,
+   "outcome": "BLOCKED"
+  },
+  {
+   "step": "3_readback_file_page",
+   "method": "GET",
+   "url": "https://drive.google.com/file/d/1oREDQ9KYl3FKaOOW5As-XhpFy-DBefL1/view",
+   "http_status": 401,
+   "location": null,
+   "outcome": "BLOCKED"
+  }
+ ],
+ "list_ok": false,
+ "upload_ok": false,
+ "readback_ok": false,
+ "verdict": "ACCESS_BLOCKED",
+ "action": "记 ACCESS_BLOCKED；本卡不上传、不声称任何目录“已核实”，归档回执保持 UPLOADED_UNVERIFIED/未产生。",
+ "forbidden": [
+  "未尝试登录",
+  "未要求公开分享",
+  "未扩大任何权限"
+ ]
+}

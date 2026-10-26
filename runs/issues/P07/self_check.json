@@ -1,0 +1,644 @@
+{
+ "issue_key": "P07",
+ "issue_number": 18,
+ "checked_at": "2026-10-26T19:47:30+0800",
+ "review_nature": "SELF_CHECK",
+ "checks": [
+  {
+   "id": "SC1",
+   "item": "10 家冻结且市场/代码段覆盖充分",
+   "detail": "家数 10；市场 {'SZ': {'slots': 35, 'obtained': 35}, 'SH': {'slots': 21, 'obtained': 21}, 'BJ': {'slots': 14, 'obtained': 9}}；代码段 ['000', '001', '002', '300', '301', '600', '603', '688', '920']",
+   "pass": true
+  },
+  {
+   "id": "SC2",
+   "item": "每家每槽都有采集状态，无 PENDING/NOT_RUN 残留",
+   "detail": "槽位 70；待定 0",
+   "pass": true
+  },
+  {
+   "id": "SC3",
+   "item": "队列证券总数仍为 1054（10 家不重复计入）",
+   "detail": {
+    "rows": 1054,
+    "unique": 1054,
+    "pass": true
+   },
+   "pass": true
+  },
+  {
+   "id": "SC4",
+   "item": "原件根在 D 盘，不占 C 盘",
+   "detail": {
+    "configured": "sources/collection/originals",
+    "resolved": "D:\\StockResearchLab\\IndustryInflectionLab\\robotics_data\\collection\\originals",
+    "on_d_drive": true,
+    "pass": true
+   },
+   "pass": true
+  },
+  {
+   "id": "SC5",
+   "item": "复用的既有原件 0 次 HTTP（跳过量 > 0，且本轮未对同一 URL 发下载）",
+   "detail": {
+    "skipped_slots": [
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 13,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 10,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 6,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 6,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 6,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 13,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 13,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920011",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920011",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     }
+    ],
+    "skipped_count": 65,
+    "pdf_downloads_this_run": 0,
+    "newly_downloaded_slots": 58,
+    "reuse_violations": []
+   },
+   "pass": true
+  },
+  {
+   "id": "SC6",
+   "item": "断点续传实测：截断后 Range 续传且哈希一致",
+   "detail": {
+    "tested_at": "2026-10-26T19:42:00+0800",
+    "security_id": "SZ:002031",
+    "slot_id": "h1_2024",
+    "original_bytes": 48872108,
+    "truncated_bytes": 19548843,
+    "resumed_from": 19548843,
+    "http_status": 206,
+    "final_status": "COLLECTED_IDENTITY_VERIFIED",
+    "sha256_before": "6d9132bfed6319a277577aca7e4de5bc6a9ae0e204fa71f2573103b1918ba3d2",
+    "sha256_after": "6d9132bfed6319a277577aca7e4de5bc6a9ae0e204fa71f2573103b1918ba3d2",
+    "hash_equal": true,
+    "part_left": false,
+    "http_calls": 1,
+    "verdict": "PASS"
+   },
+   "pass": true
+  },
+  {
+   "id": "SC7",
+   "item": "容量按实测重算并带样本量，季度不再是 UNMEASURED",
+   "detail": {
+    "ANNUAL_REPORT": {
+     "n": 27,
+     "median": 2819684
+    },
+    "SEMI_ANNUAL_REPORT": {
+     "n": 28,
+     "median": 2111476
+    },
+    "QUARTERLY_REPORT": {
+     "n": 10,
+     "median": 225413
+    }
+   },
+   "pass": true
+  },
+  {
+   "id": "SC8",
+   "item": "Drive 三步探测有结论（不假装已归档）",
+   "detail": {
+    "verdict": "ACCESS_BLOCKED",
+    "list_ok": false,
+    "upload_ok": false,
+    "readback_ok": false
+   },
+   "pass": true
+  },
+  {
+   "id": "SC9",
+   "item": "仓库不提交二进制",
+   "detail": {
+    "tracked_files": 349,
+    "binary_tracked": [],
+    "pass": true
+   },
+   "pass": true
+  },
+  {
+   "id": "SC10",
+   "item": "未做业务判断（无客户/订单/盈利归因字段）",
+   "detail": "交付字段仅含采集状态、文件字节、哈希、页码、身份校验结论",
+   "pass": true
+  }
+ ],
+ "passed": 10,
+ "total": 10,
+ "all_pass": true
+}

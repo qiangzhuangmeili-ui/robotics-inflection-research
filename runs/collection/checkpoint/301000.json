@@ -1,0 +1,1515 @@
+{
+ "security_id": "SZ:301000",
+ "slots": {
+  "annual_2023": {
+   "security_id": "SZ:301000",
+   "slot_id": "annual_2023",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2023",
+   "period_end": "2023-12-31",
+   "statutory_deadline": "2024-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-10/1219554854.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 939,
+     "at": "2026-10-26T19:33:18+08:00",
+     "response_sha256": null,
+     "bytes": 1562444,
+     "resumed_from": 0
+    },
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-10/1219554854.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1180,
+     "at": "2026-10-26T19:36:58+08:00",
+     "response_sha256": null,
+     "bytes": 1562444,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-10/1219554854.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1180,
+    "at": "2026-10-26T19:36:58+08:00",
+    "response_sha256": null,
+    "bytes": 1562444,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T19:36:58+08:00",
+    "bytes_written": 1562444
+   },
+   "document": {
+    "document_id": "DOC-EF9FD6E52FFE4FC0",
+    "identity_key": "SZ:301000|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2023年年度报告",
+    "published_on": "2024-04-09",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-10/1219554854.PDF",
+    "local_file": "sources/collection/originals/301000/annual_2023/DOC-EF9FD6E52FFE4FC0.pdf",
+    "sha256": "1d6a4bed677d79bcbea994b2bdf992d945d89525fc85314692e73c4c08dbe373",
+    "bytes": 1562444,
+    "page_count": 232,
+    "form": null,
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1562444 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "232 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "232 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足（封面 75 字 < 100），无法核对主体"
+     },
+     "PERIOD_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法核对报告期"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法判断全文/摘要"
+     }
+    },
+    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301000\\annual_2023\\DOC-EF9FD6E52FFE4FC0.pdf",
+    "bytes": 1562444,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1562444 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "232 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "232 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=肇民科技 代码=301000 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2023年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 232,
+    "text_chars": 1985,
+    "issues": [],
+    "sha256": "1d6a4bed677d79bcbea994b2bdf992d945d89525fc85314692e73c4c08dbe373",
+    "cover_text_chars": 69,
+    "identity_probe_chars": 5600,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T19:47:21+0800",
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+   "skip_count": 4,
+   "last_checked_at": "2026-10-26T19:41:27+08:00",
+   "status_history": [
+    {
+     "at": "2026-10-26T19:39:29+0800",
+     "from": "COLLECTED_PENDING_IDENTITY",
+     "to": "COLLECTED_IDENTITY_VERIFIED",
+     "why": "P07_VALIDATOR_FIX_REVALIDATION",
+     "issuer_mode": "CORE_NAME",
+     "issuer_scope": "P1-3",
+     "cover_chars": 69
+    }
+   ]
+  },
+  "annual_2024": {
+   "security_id": "SZ:301000",
+   "slot_id": "annual_2024",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2024",
+   "period_end": "2024-12-31",
+   "statutory_deadline": "2025-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-10/1223044334.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 800,
+     "at": "2026-10-26T19:33:20+08:00",
+     "response_sha256": null,
+     "bytes": 1654826,
+     "resumed_from": 0
+    },
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-10/1223044334.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1050,
+     "at": "2026-10-26T19:36:59+08:00",
+     "response_sha256": null,
+     "bytes": 1654826,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-10/1223044334.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1050,
+    "at": "2026-10-26T19:36:59+08:00",
+    "response_sha256": null,
+    "bytes": 1654826,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T19:36:59+08:00",
+    "bytes_written": 1654826
+   },
+   "document": {
+    "document_id": "DOC-7E4DA71A15C36B83",
+    "identity_key": "SZ:301000|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年年度报告",
+    "published_on": "2025-04-09",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-10/1223044334.PDF",
+    "local_file": "sources/collection/originals/301000/annual_2024/DOC-7E4DA71A15C36B83.pdf",
+    "sha256": "b65e7dd97e2d85bfeac85cf69790b64a4242630103393c93afb4fbd4e847e80b",
+    "bytes": 1654826,
+    "page_count": 267,
+    "form": null,
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1654826 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "267 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "267 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足（封面 75 字 < 100），无法核对主体"
+     },
+     "PERIOD_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法核对报告期"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法判断全文/摘要"
+     }
+    },
+    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301000\\annual_2024\\DOC-7E4DA71A15C36B83.pdf",
+    "bytes": 1654826,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1654826 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "267 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "267 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=肇民科技 代码=301000 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 267,
+    "text_chars": 2313,
+    "issues": [],
+    "sha256": "b65e7dd97e2d85bfeac85cf69790b64a4242630103393c93afb4fbd4e847e80b",
+    "cover_text_chars": 69,
+    "identity_probe_chars": 4132,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T19:47:22+0800",
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+   "skip_count": 4,
+   "last_checked_at": "2026-10-26T19:41:27+08:00",
+   "status_history": [
+    {
+     "at": "2026-10-26T19:39:29+0800",
+     "from": "COLLECTED_PENDING_IDENTITY",
+     "to": "COLLECTED_IDENTITY_VERIFIED",
+     "why": "P07_VALIDATOR_FIX_REVALIDATION",
+     "issuer_mode": "CORE_NAME",
+     "issuer_scope": "P1-3",
+     "cover_chars": 69
+    }
+   ]
+  },
+  "annual_2025": {
+   "security_id": "SZ:301000",
+   "slot_id": "annual_2025",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2025",
+   "period_end": "2025-12-31",
+   "statutory_deadline": "2026-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225153101.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 924,
+     "at": "2026-10-26T19:33:21+08:00",
+     "response_sha256": null,
+     "bytes": 1802925,
+     "resumed_from": 0
+    },
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225153101.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1074,
+     "at": "2026-10-26T19:37:00+08:00",
+     "response_sha256": null,
+     "bytes": 1802925,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225153101.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1074,
+    "at": "2026-10-26T19:37:00+08:00",
+    "response_sha256": null,
+    "bytes": 1802925,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T19:37:00+08:00",
+    "bytes_written": 1802925
+   },
+   "document": {
+    "document_id": "DOC-940241CD170A01E9",
+    "identity_key": "SZ:301000|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年年度报告",
+    "published_on": "2026-04-22",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225153101.PDF",
+    "local_file": "sources/collection/originals/301000/annual_2025/DOC-940241CD170A01E9.pdf",
+    "sha256": "c0da9f2ad20ebdd26ceb3bbe5f0e6a8440a5223ca850d8bfa9b9329e0c1498b5",
+    "bytes": 1802925,
+    "page_count": 269,
+    "form": null,
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1802925 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "269 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "269 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足（封面 75 字 < 100），无法核对主体"
+     },
+     "PERIOD_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法核对报告期"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法判断全文/摘要"
+     }
+    },
+    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301000\\annual_2025\\DOC-940241CD170A01E9.pdf",
+    "bytes": 1802925,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1802925 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "269 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "269 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=肇民科技 代码=301000 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 269,
+    "text_chars": 2067,
+    "issues": [],
+    "sha256": "c0da9f2ad20ebdd26ceb3bbe5f0e6a8440a5223ca850d8bfa9b9329e0c1498b5",
+    "cover_text_chars": 69,
+    "identity_probe_chars": 3613,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T19:47:22+0800",
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+   "skip_count": 4,
+   "last_checked_at": "2026-10-26T19:41:27+08:00",
+   "status_history": [
+    {
+     "at": "2026-10-26T19:39:29+0800",
+     "from": "COLLECTED_PENDING_IDENTITY",
+     "to": "COLLECTED_IDENTITY_VERIFIED",
+     "why": "P07_VALIDATOR_FIX_REVALIDATION",
+     "issuer_mode": "CORE_NAME",
+     "issuer_scope": "P1-3",
+     "cover_chars": 69
+    }
+   ]
+  },
+  "h1_2024": {
+   "security_id": "SZ:301000",
+   "slot_id": "h1_2024",
+   "report_type": "SEMI_ANNUAL_REPORT",
+   "period_label": "2024H1",
+   "period_end": "2024-06-30",
+   "statutory_deadline": "2024-08-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221002684.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 953,
+     "at": "2026-10-26T19:33:23+08:00",
+     "response_sha256": null,
+     "bytes": 1318310,
+     "resumed_from": 0
+    },
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221002684.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 939,
+     "at": "2026-10-26T19:37:01+08:00",
+     "response_sha256": null,
+     "bytes": 1318310,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221002684.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 939,
+    "at": "2026-10-26T19:37:01+08:00",
+    "response_sha256": null,
+    "bytes": 1318310,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T19:37:01+08:00",
+    "bytes_written": 1318310
+   },
+   "document": {
+    "document_id": "DOC-F8EA1F531EEACB15",
+    "identity_key": "SZ:301000|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年半年度报告",
+    "published_on": "2024-08-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221002684.PDF",
+    "local_file": "sources/collection/originals/301000/h1_2024/DOC-F8EA1F531EEACB15.pdf",
+    "sha256": "510e40c830dc997bf867fd9049dafee32899297d5ca0174f677d067412243347",
+    "bytes": 1318310,
+    "page_count": 184,
+    "form": null,
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1318310 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "184 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "184 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足（封面 75 字 < 100），无法核对主体"
+     },
+     "PERIOD_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法核对报告期"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法判断全文/摘要"
+     }
+    },
+    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301000\\h1_2024\\DOC-F8EA1F531EEACB15.pdf",
+    "bytes": 1318310,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1318310 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "184 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "184 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=肇民科技 代码=301000 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 184,
+    "text_chars": 2296,
+    "issues": [],
+    "sha256": "510e40c830dc997bf867fd9049dafee32899297d5ca0174f677d067412243347",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 4423,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T19:47:22+0800",
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+   "skip_count": 4,
+   "last_checked_at": "2026-10-26T19:41:27+08:00",
+   "status_history": [
+    {
+     "at": "2026-10-26T19:39:29+0800",
+     "from": "COLLECTED_PENDING_IDENTITY",
+     "to": "COLLECTED_IDENTITY_VERIFIED",
+     "why": "P07_VALIDATOR_FIX_REVALIDATION",
+     "issuer_mode": "CORE_NAME",
+     "issuer_scope": "P1-3",
+     "cover_chars": 71
+    }
+   ]
+  },
+  "h1_2025": {
+   "security_id": "SZ:301000",
+   "slot_id": "h1_2025",
+   "report_type": "SEMI_ANNUAL_REPORT",
+   "period_label": "2025H1",
+   "period_end": "2025-06-30",
+   "statutory_deadline": "2025-08-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224599174.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 961,
+     "at": "2026-10-26T19:33:24+08:00",
+     "response_sha256": null,
+     "bytes": 1430552,
+     "resumed_from": 0
+    },
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224599174.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1260,
+     "at": "2026-10-26T19:37:03+08:00",
+     "response_sha256": null,
+     "bytes": 1430552,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224599174.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1260,
+    "at": "2026-10-26T19:37:03+08:00",
+    "response_sha256": null,
+    "bytes": 1430552,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T19:37:03+08:00",
+    "bytes_written": 1430552
+   },
+   "document": {
+    "document_id": "DOC-55DB5EA19A32F78B",
+    "identity_key": "SZ:301000|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年半年度报告",
+    "published_on": "2025-08-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224599174.PDF",
+    "local_file": "sources/collection/originals/301000/h1_2025/DOC-55DB5EA19A32F78B.pdf",
+    "sha256": "c4faff893e1d5b4447ab5bca7f7d87b2cacbc011432f69304168d220a73aefb0",
+    "bytes": 1430552,
+    "page_count": 179,
+    "form": null,
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1430552 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "179 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "179 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足（封面 75 字 < 100），无法核对主体"
+     },
+     "PERIOD_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法核对报告期"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法判断全文/摘要"
+     }
+    },
+    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301000\\h1_2025\\DOC-55DB5EA19A32F78B.pdf",
+    "bytes": 1430552,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1430552 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "179 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "179 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=肇民科技 代码=301000 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 179,
+    "text_chars": 1868,
+    "issues": [],
+    "sha256": "c4faff893e1d5b4447ab5bca7f7d87b2cacbc011432f69304168d220a73aefb0",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 5038,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T19:47:22+0800",
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+   "skip_count": 4,
+   "last_checked_at": "2026-10-26T19:41:27+08:00",
+   "status_history": [
+    {
+     "at": "2026-10-26T19:39:29+0800",
+     "from": "COLLECTED_PENDING_IDENTITY",
+     "to": "COLLECTED_IDENTITY_VERIFIED",
+     "why": "P07_VALIDATOR_FIX_REVALIDATION",
+     "issuer_mode": "CORE_NAME",
+     "issuer_scope": "P1-3",
+     "cover_chars": 71
+    }
+   ]
+  },
+  "h1_2026": {
+   "security_id": "SZ:301000",
+   "slot_id": "h1_2026",
+   "report_type": "SEMI_ANNUAL_REPORT",
+   "period_label": "2026H1",
+   "period_end": "2026-06-30",
+   "statutory_deadline": "2026-08-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499720.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 780,
+     "at": "2026-10-26T19:33:25+08:00",
+     "response_sha256": null,
+     "bytes": 1413523,
+     "resumed_from": 0
+    },
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499720.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1099,
+     "at": "2026-10-26T19:37:04+08:00",
+     "response_sha256": null,
+     "bytes": 1413523,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499720.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1099,
+    "at": "2026-10-26T19:37:04+08:00",
+    "response_sha256": null,
+    "bytes": 1413523,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T19:37:04+08:00",
+    "bytes_written": 1413523
+   },
+   "document": {
+    "document_id": "DOC-97862C563CA5E2EF",
+    "identity_key": "SZ:301000|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2026年半年度报告",
+    "published_on": "2026-08-24",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499720.PDF",
+    "local_file": "sources/collection/originals/301000/h1_2026/DOC-97862C563CA5E2EF.pdf",
+    "sha256": "fa16dd830bf353eea7eff312e72875b0a4100101089fc14123337d44b9cc5615",
+    "bytes": 1413523,
+    "page_count": 173,
+    "form": null,
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1413523 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "173 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "173 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足（封面 73 字 < 100），无法核对主体"
+     },
+     "PERIOD_MATCH": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法核对报告期"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "UNKNOWN",
+      "detail": "正文抽取不足，无法判断全文/摘要"
+     }
+    },
+    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301000\\h1_2026\\DOC-97862C563CA5E2EF.pdf",
+    "bytes": 1413523,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1413523 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "173 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "173 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=肇民科技 代码=301000 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 173,
+    "text_chars": 1988,
+    "issues": [],
+    "sha256": "fa16dd830bf353eea7eff312e72875b0a4100101089fc14123337d44b9cc5615",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 3799,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T19:47:22+0800",
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+   "skip_count": 4,
+   "last_checked_at": "2026-10-26T19:41:27+08:00",
+   "status_history": [
+    {
+     "at": "2026-10-26T19:39:29+0800",
+     "from": "COLLECTED_PENDING_IDENTITY",
+     "to": "COLLECTED_IDENTITY_VERIFIED",
+     "why": "P07_VALIDATOR_FIX_REVALIDATION",
+     "issuer_mode": "CORE_NAME",
+     "issuer_scope": "P1-3",
+     "cover_chars": 71
+    }
+   ]
+  },
+  "q1_2026": {
+   "security_id": "SZ:301000",
+   "slot_id": "q1_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q1",
+   "period_end": "2026-03-31",
+   "statutory_deadline": "2026-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217527.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 882,
+     "at": "2026-10-26T19:37:05+08:00",
+     "response_sha256": null,
+     "bytes": 269505,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217527.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 882,
+    "at": "2026-10-26T19:37:05+08:00",
+    "response_sha256": null,
+    "bytes": 269505,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T19:37:05+08:00",
+    "bytes_written": 269505
+   },
+   "document": {
+    "document_id": "DOC-0B2FBF401AA63E95",
+    "identity_key": "SZ:301000|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2026年一季度报告",
+    "published_on": "2026-04-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217527.PDF",
+    "local_file": "sources/collection/originals/301000/q1_2026/DOC-0B2FBF401AA63E95.pdf",
+    "sha256": "888cda482ed40f3c47cb28b30508b1a97c27cf65d0384de8d5fb534d163181b2",
+    "bytes": 269505,
+    "page_count": 11,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "269505 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=肇民科技 代码=301000 方式=FULL_ABBR"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; title=2026年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年一季度报告"
+     }
+    },
+    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+   },
+   "updated_at": "2026-10-26T19:47:23+0800",
+   "reason_code": "LISTING_DATE_UNKNOWN_EMPTY_INDEX",
+   "index_ref": {
+    "category": "category_yjdbg_szsh",
+    "fetched_at": "2026-10-26T19:33:27+08:00",
+    "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301000\\q1_2026\\DOC-0B2FBF401AA63E95.pdf",
+    "bytes": 269505,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "269505 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=肇民科技 代码=301000 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 11,
+    "text_chars": 2614,
+    "issues": [],
+    "sha256": "888cda482ed40f3c47cb28b30508b1a97c27cf65d0384de8d5fb534d163181b2",
+    "cover_text_chars": 254,
+    "identity_probe_chars": 5962,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+   "skip_count": 4,
+   "last_checked_at": "2026-10-26T19:41:27+08:00"
+  }
+ },
+ "indexes": {
+  "category_ndbg_szsh": {
+   "security_id": "SZ:301000",
+   "category": "category_ndbg_szsh",
+   "column": "szse",
+   "org_id": "nssc1000306",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_ndbg_szsh",
+    "stock": "301000,nssc1000306",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 8,
+   "rows_fetched": 8,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 8,
+     "new_rows": 8,
+     "total_announcement": 8,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "f62ae1a8e3f69346ff3d2f72e8ffe429aa5debe43eaf48500245f456f4c2f559",
+     "response_bytes": 5206,
+     "raw_path": "sources/collection/raw/301000/category_ndbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_ndbg_szsh",
+      "stock": "301000,nssc1000306",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-26T19:33:17+08:00",
+     "elapsed_ms": 1021
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225153101",
+     "title": "2025年年度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2026-04-22",
+     "adjunct_url": "finalpage/2026-04-23/1225153101.PDF"
+    },
+    {
+     "announcement_id": "1225153100",
+     "title": "2025年年度报告摘要",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2026-04-22",
+     "adjunct_url": "finalpage/2026-04-23/1225153100.PDF"
+    },
+    {
+     "announcement_id": "1223044334",
+     "title": "2024年年度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2025-04-09",
+     "adjunct_url": "finalpage/2025-04-10/1223044334.PDF"
+    },
+    {
+     "announcement_id": "1223044300",
+     "title": "2024年年度报告摘要",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2025-04-09",
+     "adjunct_url": "finalpage/2025-04-10/1223044300.PDF"
+    },
+    {
+     "announcement_id": "1219554893",
+     "title": "2023年年度报告摘要",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2024-04-09",
+     "adjunct_url": "finalpage/2024-04-10/1219554893.PDF"
+    },
+    {
+     "announcement_id": "1219554854",
+     "title": "2023年年度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2024-04-09",
+     "adjunct_url": "finalpage/2024-04-10/1219554854.PDF"
+    },
+    {
+     "announcement_id": "1216355516",
+     "title": "2022年年度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2023-04-09",
+     "adjunct_url": "finalpage/2023-04-10/1216355516.PDF"
+    },
+    {
+     "announcement_id": "1216355496",
+     "title": "2022年年度报告摘要",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2023-04-09",
+     "adjunct_url": "finalpage/2023-04-10/1216355496.PDF"
+    }
+   ],
+   "fetched_at": "2026-10-26T19:33:17+08:00"
+  },
+  "category_bndbg_szsh": {
+   "security_id": "SZ:301000",
+   "category": "category_bndbg_szsh",
+   "column": "szse",
+   "org_id": "nssc1000306",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_bndbg_szsh",
+    "stock": "301000,nssc1000306",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 8,
+   "rows_fetched": 8,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 8,
+     "new_rows": 8,
+     "total_announcement": 8,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "5366a1f9fdde8fd325837ec3ae94c5e43c587cb77dcadb6e575b418f9eab44eb",
+     "response_bytes": 5252,
+     "raw_path": "sources/collection/raw/301000/category_bndbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_bndbg_szsh",
+      "stock": "301000,nssc1000306",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-26T19:33:22+08:00",
+     "elapsed_ms": 539
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225499720",
+     "title": "2026年半年度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2026-08-24",
+     "adjunct_url": "finalpage/2026-08-25/1225499720.PDF"
+    },
+    {
+     "announcement_id": "1225499719",
+     "title": "2026年半年度报告摘要",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2026-08-24",
+     "adjunct_url": "finalpage/2026-08-25/1225499719.PDF"
+    },
+    {
+     "announcement_id": "1224599178",
+     "title": "2025年半年度报告摘要",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2025-08-27",
+     "adjunct_url": "finalpage/2025-08-28/1224599178.PDF"
+    },
+    {
+     "announcement_id": "1224599174",
+     "title": "2025年半年度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2025-08-27",
+     "adjunct_url": "finalpage/2025-08-28/1224599174.PDF"
+    },
+    {
+     "announcement_id": "1221002684",
+     "title": "2024年半年度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2024-08-27",
+     "adjunct_url": "finalpage/2024-08-28/1221002684.PDF"
+    },
+    {
+     "announcement_id": "1221002675",
+     "title": "2024年半年度报告摘要",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2024-08-27",
+     "adjunct_url": "finalpage/2024-08-28/1221002675.PDF"
+    },
+    {
+     "announcement_id": "1217634763",
+     "title": "2023年半年度报告摘要",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2023-08-24",
+     "adjunct_url": "finalpage/2023-08-25/1217634763.PDF"
+    },
+    {
+     "announcement_id": "1217634761",
+     "title": "2023年半年度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2023-08-24",
+     "adjunct_url": "finalpage/2023-08-25/1217634761.PDF"
+    }
+   ],
+   "fetched_at": "2026-10-26T19:33:22+08:00"
+  },
+  "category_yjdbg_szsh": {
+   "security_id": "SZ:301000",
+   "category": "category_yjdbg_szsh",
+   "column": "szse",
+   "org_id": "nssc1000306",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_yjdbg_szsh",
+    "stock": "301000,nssc1000306",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 4,
+   "rows_fetched": 4,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 4,
+     "new_rows": 4,
+     "total_announcement": 4,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "d728bc72ae97b6edb3e58d81b99e16f04d234746d70258ee99a495e5d25813bf",
+     "response_bytes": 2682,
+     "raw_path": "sources/collection/raw/301000/category_yjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_yjdbg_szsh",
+      "stock": "301000,nssc1000306",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-26T19:33:27+08:00",
+     "elapsed_ms": 764
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225217527",
+     "title": "2026年一季度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2026-04-27",
+     "adjunct_url": "finalpage/2026-04-28/1225217527.PDF"
+    },
+    {
+     "announcement_id": "1223365134",
+     "title": "2025年一季度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2025-04-28",
+     "adjunct_url": "finalpage/2025-04-29/1223365134.PDF"
+    },
+    {
+     "announcement_id": "1219786570",
+     "title": "2024年一季度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2024-04-24",
+     "adjunct_url": "finalpage/2024-04-25/1219786570.PDF"
+    },
+    {
+     "announcement_id": "1216548714",
+     "title": "2023年一季度报告",
+     "sec_code": "301000",
+     "sec_name": "肇民科技",
+     "published_on": "2023-04-24",
+     "adjunct_url": "finalpage/2023-04-25/1216548714.PDF"
+    }
+   ],
+   "fetched_at": "2026-10-26T19:33:27+08:00"
+  }
+ },
+ "updated_at": "2026-10-26T19:41:27+08:00"
+}

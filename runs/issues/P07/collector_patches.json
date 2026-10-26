@@ -1,0 +1,74 @@
+{
+ "patched_file": "tools/p05_collector.py",
+ "patched_at": "2026-10-26T19:47:30+0800",
+ "trigger": "P07 首轮实跑 70 槽出现 9 个 IDENTITY_MISMATCH、12 个 NOT_TRIED；按 issue「字段/身份/分页错误先修采集器再复跑校准」处理，不是为凑成功率放宽阈值。",
+ "patches": [
+  {
+   "id": "F1",
+   "kind": "TITLE_VARIANT",
+   "location": "Collector._period_of",
+   "symptom": "深市/北交所季度报告标题为「2026年一季度报告」，沪市为「2026年第一季度报告」；原正则要求「第」字，SZ/BJ 季度槽全部判为无该期全文。",
+   "evidence": "sources/collection/raw/000026/category_yjdbg_szsh_p1.json 4 条标题均为「一季度报告」；600699 同分类为「第一季度报告」；920207/920011 亦为「一季度报告」。",
+   "fix": "正则改为 年第?[一三]季度报告；validate_pdf 的报告期模式同步放宽。",
+   "scope": "SZ 602 家 + BJ 62 家 = 664 家 × 4 个季度槽 = 2656 槽受影响（按 P5 季度开关默认关时不计入核心，但影响季度 PDF 与单季数据取证）",
+   "risk": "只增加匹配形态，不改变“报告期必须等于槽位报告期”的判定方向。"
+  },
+  {
+   "id": "F2",
+   "kind": "TEXT_EXTRACTION_FLOOR",
+   "location": "validate_pdf",
+   "symptom": "北交所 2024/2025 半年报封面为版式化排版，前两页抽不出字、第 3 页目录近千字；原规则只看 3 页合计 200 字，于是拿空格去比证券简称 → 误判 IDENTITY_MISMATCH。",
+   "evidence": "920207 h1_2024 前 3 页抽取 47/98/972 字（封面有效字符 0）；h1_2026（新版式）封面 35 字。",
+   "fix": "新增前 8 页有效字符（汉字/字母/数字）下限 min_identity_probe_chars=200；不足则记 COLLECTED_PENDING_IDENTITY（待人工看封面），不再判 MISMATCH。",
+   "scope": "北交所 62 家 2024/2025 报告期，以及任何版式化封面；全池未知比例",
+   "risk": "把“判错”改为“待核”，宁可少判 VERIFIED，不多判 MISMATCH。"
+  },
+  {
+   "id": "F3",
+   "kind": "ISSUER_MATCH_FALLBACK",
+   "location": "validate_pdf",
+   "symptom": "深市年报封面只印公司全称、不印股票代码；简称常是全称的缩写（肇民科技 / 上海肇民新材料科技股份有限公司），连续子串匹配必然失败。",
+   "evidence": "301000 6 个核心槽全部 ISSUER_MATCH=FAIL，正文首页实为「上海肇民新材料科技股份有限公司 2025年年度报告」。",
+   "fix": "连续简称 → 股票代码 → 字号（简称去通用后缀，≥2 字）三级匹配；命中方式写入 checks.ISSUER_MATCH.detail 与 validation.issuer_match_mode，可审计。",
+   "scope": "简称非全称连续子串的公司；10 家校准里 1 家（301000，6 槽）命中，全池比例未知",
+   "risk": "字号匹配比全称弱；靠“目录已按 orgId 过滤 + 报告期匹配 + 全文字形”三重约束兜底，且命中方式留痕。"
+  },
+  {
+   "id": "F4",
+   "kind": "DESTRUCTIVE_DISPOSAL",
+   "location": "Collector.collect_slot",
+   "symptom": "身份不匹配时直接 unlink 已下载原件；一旦判定是误判（F2/F3 已证明会发生），原件无法复核。",
+   "evidence": "301000 6 份、920207 2 份原件在首轮被删除，只能重下。",
+   "fix": "改为改名为 <DOC-ID>.pdf.rejected 保留，路径写入 checkpoint.rejected_file；仍不计入已取得。",
+   "scope": "全部采集",
+   "risk": "会多占磁盘；.rejected 文件不参与统计，归档前按人工复核结论处理。"
+  },
+  {
+   "id": "F5",
+   "kind": "ISSUER_SEARCH_SCOPE",
+   "location": "validate_pdf",
+   "symptom": "北交所 2026 年半年报封面是“未填充的模板”，只印「证券简称 / 证券代码 / 公司全称（中英文）」字样，主体信息在第 6 页「第二节 公司概况」。",
+   "evidence": "920207 h1_2026 第 1 页抽取内容为模板占位符；第 6 页含「证券简称 众诚科技 证券代码 920207」。",
+   "fix": "主体检索范围放宽到前 8 页（issuer_pages_probe=8）；报告期连续短语仍只用前 3 页。",
+   "scope": "北交所 62 家 2026 年半年报及同类模板式封面",
+   "risk": "主体核对范围变宽，但报告期判定范围不变，两件事分开记录在 validation.issuer_search_scope。"
+  },
+  {
+   "id": "F6",
+   "kind": "MISMATCH_SEMANTICS",
+   "location": "validate_pdf",
+   "symptom": "原规则把“前 3 页找不到主体/报告期”直接判 IDENTITY_MISMATCH；但“没找到”不是反证，版式化、模板封面、简称非连续都会导致找不到。",
+   "evidence": "首轮 9 个 MISMATCH 中 8 个经人工看正文确认是本公司文件；只有 0 个是真错件。",
+   "fix": "MISMATCH 只在出现反证时成立：正文出现“别的年份 + 同类报告”短语。其余找不到的情况记 COLLECTED_PENDING_IDENTITY + MANUAL_IDENTITY_CHECK。",
+   "scope": "全部采集",
+   "risk": "PENDING 会变多，需要人工看封面；但不会再把本公司文件误删。"
+  }
+ ],
+ "not_changed": [
+  "槽位定义",
+  "分页与 totalAnnouncement 对账",
+  "限速与熔断",
+  "重试预算",
+  "P05 collector_config.json（仍为冻结参数源）"
+ ]
+}

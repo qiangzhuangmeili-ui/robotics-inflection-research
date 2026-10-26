@@ -1,0 +1,776 @@
+{
+ "issue_key": "P07",
+ "issue_number": 18,
+ "plan_version": "20261026_collection_first_v2",
+ "reviewed_at": "2026-10-26T19:47:30+0800",
+ "reviewer": "WorkBuddy AI",
+ "review_nature": "SELF_CHECK",
+ "decision": "SELF_CHECK_PASS",
+ "acceptance": [
+  {
+   "criterion": "10 家均有采集状态，市场覆盖与特殊边界充分；只核文件/数据可用性",
+   "result": "PASS",
+   "evidence": {
+    "coverage": "runs/issues/P07/calibration_coverage.csv",
+    "by_market": {
+     "SZ": {
+      "slots": 35,
+      "obtained": 35
+     },
+     "SH": {
+      "slots": 21,
+      "obtained": 21
+     },
+     "BJ": {
+      "slots": 14,
+      "obtained": 9
+     }
+    },
+    "status_counts": {
+     "COLLECTED_IDENTITY_VERIFIED": 65,
+     "NOT_TRIED": 5
+    },
+    "obtained_slots": 65,
+    "slot_total": 70,
+    "boundaries": {
+     "leading_zero_codes": [
+      "SZ:000026",
+      "SZ:002031",
+      "SZ:001306"
+     ],
+     "bj_historical_code": [
+      "BJ:920207"
+     ],
+     "prelisting": [
+      "SZ:001306"
+     ],
+     "missing_financials": [
+      "BJ:920011"
+     ],
+     "reuse_p05_ledger": [
+      "SZ:002031",
+      "SH:688218",
+      "BJ:920207"
+     ],
+     "reuse_registry_local": [
+      "SZ:001306",
+      "SH:600699",
+      "SH:603667"
+     ]
+    }
+   }
+  },
+  {
+   "criterion": "校准命中的文档后续不重复下载，队列证券总数仍为 1054",
+   "result": "PASS",
+   "evidence": {
+    "shared_ledger": "runs/collection/checkpoint（COLLECTION_LEDGER_V1，M00_01—M00_11 沿用）",
+    "reused_slots": {
+     "P05_LEDGER": 4,
+     "REGISTRY_SEED": 3,
+     "P07_DOWNLOAD": 63
+    },
+    "skip_slots": [
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:000026",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 13,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 10,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:002031",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 6,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:001306",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:300024",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SZ:301000",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 6,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:600699",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 6,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:603667",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 13,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "SH:688218",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "annual_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 13,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "annual_2023",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "annual_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "h1_2024",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "h1_2025",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920207",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920011",
+      "slot_id": "h1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 5,
+      "local_exists": true,
+      "hash_matches": true
+     },
+     {
+      "security_id": "BJ:920011",
+      "slot_id": "q1_2026",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "skip_count": 4,
+      "local_exists": true,
+      "hash_matches": true
+     }
+    ],
+    "reuse_violations": [],
+    "queue_rows": 1054
+   }
+  }
+ ],
+ "self_check": {
+  "passed": 10,
+  "total": 10
+ },
+ "coverage_summary": {
+  "companies": 10,
+  "slots_per_company": 7,
+  "slot_total": 70,
+  "status_counts": {
+   "COLLECTED_IDENTITY_VERIFIED": 65,
+   "NOT_TRIED": 5
+  },
+  "obtained": 65,
+  "by_market": {
+   "SZ": {
+    "slots": 35,
+    "obtained": 35
+   },
+   "SH": {
+    "slots": 21,
+    "obtained": 21
+   },
+   "BJ": {
+    "slots": 14,
+    "obtained": 9
+   }
+  },
+  "reuse_counts": {
+   "P05_LEDGER": 4,
+   "REGISTRY_SEED": 3,
+   "P07_DOWNLOAD": 63
+  },
+  "local_validation_pass": 65
+ },
+ "capacity": {
+  "status": "CALIBRATED_FROM_10_COMPANIES",
+  "unit_bytes_samples": {
+   "ANNUAL_REPORT": {
+    "n": 27,
+    "median": 2819684,
+    "p25": 1613250,
+    "p75": 4583114
+   },
+   "SEMI_ANNUAL_REPORT": {
+    "n": 28,
+    "median": 2111476,
+    "p25": 1324499,
+    "p75": 3662142
+   },
+   "QUARTERLY_REPORT": {
+    "n": 10,
+    "median": 225413,
+    "p25": 163279,
+    "p75": 384508
+   }
+  },
+  "core_envelope": {
+   "core_slots_bytes": 15592327920,
+   "core_slots_gib": 14.52,
+   "formula": "1054 × (3×annual_median + 3×h1_median)",
+   "excludes": [
+    "季度 PDF（P5 默认关，本卡实测样本仅作参考）",
+    "公告原件",
+    "财务导出"
+   ]
+  }
+ },
+ "drive": {
+  "verdict": "ACCESS_BLOCKED",
+  "steps": [
+   {
+    "step": "1_list_folder_page",
+    "method": "GET",
+    "url": "https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+    "http_status": 302,
+    "location": "https://accounts.google.com/ServiceLogin?service=wise&passive=1209600&osid=1&continue=https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ&followup=https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+    "outcome": "BLOCKED"
+   },
+   {
+    "step": "1_list_api",
+    "method": "GET",
+    "url": "https://www.googleapis.com/drive/v3/files/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ?fields=id,name,mimeType",
+    "http_status": 403,
+    "location": null,
+    "outcome": "BLOCKED"
+   },
+   {
+    "step": "2_upload_metadata_probe",
+    "method": "POST",
+    "url": "https://www.googleapis.com/upload/drive/v3/files?uploadType=metadata",
+    "http_status": 400,
+    "location": null,
+    "outcome": "BLOCKED"
+   },
+   {
+    "step": "3_readback_children",
+    "method": "GET",
+    "url": "https://www.googleapis.com/drive/v3/files?q='1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ'+in+parents&fields=files(id,name)",
+    "http_status": 403,
+    "location": null,
+    "outcome": "BLOCKED"
+   },
+   {
+    "step": "3_readback_file_page",
+    "method": "GET",
+    "url": "https://drive.google.com/file/d/1oREDQ9KYl3FKaOOW5As-XhpFy-DBefL1/view",
+    "http_status": 401,
+    "location": null,
+    "outcome": "BLOCKED"
+   }
+  ]
+ },
+ "resume_test": {
+  "verdict": "PASS",
+  "resumed_from": 19548843,
+  "hash_equal": true
+ },
+ "findings": [
+  {
+   "id": "F1",
+   "level": "HIGH",
+   "finding": "深市/北交所季度报告标题是「2026年一季度报告」，沪市是「2026年第一季度报告」；采集器正则要求「第」字，SZ 602 家 + BJ 62 家共 2656 个季度槽会被判“无该期全文”。",
+   "impact": "若不开校准直接跑 M00，664 家公司的季度资料会静默缺失，且表现为 NOT_TRIED 而非报错。",
+   "action": "已修（tools/p05_collector.py::_period_of 改为 年第?[一三]季度报告），本次 6 个季度槽因此成功取得。"
+  },
+  {
+   "id": "F2",
+   "level": "HIGH",
+   "finding": "身份校验把“前 3 页找不到主体/报告期”直接判 IDENTITY_MISMATCH，并删除已下载原件。首轮 9 个 MISMATCH 经人工看正文全部是本公司的文件（简称非连续、版式化封面、模板封面三种成因）。",
+   "impact": "按此规则跑全池，会把大量真原件判死并删除；且失败原因显示为“主体不符”，极难发现。",
+   "action": "已修（F2/F3/F5/F6 四条）：主体检索到前 8 页、简称→代码→字号三级匹配、抽取不足记 PENDING、只有“正文出现别的年份同类报告”才判 MISMATCH、不再删除原件。"
+  },
+  {
+   "id": "F3",
+   "level": "HIGH",
+   "finding": "P05 配置 idempotency.lookup_order[2]（先查登记表同 security_id + period + sha256 + 本地文件存在）在代码里没有实现，只实现了台账与内容索引。",
+   "impact": "若直接开 M00，登记表里已有的 68 份 2025 年度原件会被重下；本卡在台账层补了种子，M00 必须沿用 runs/collection/checkpoint，否则复用失效。",
+   "action": "P07 已用 ledger seed 兜住（3 家 3 槽 0 次 HTTP）；建议 M00 前把该分支补进采集器。"
+  },
+  {
+   "id": "F4",
+   "level": "MEDIUM",
+   "finding": "校验器修正后对已落地原件复检，本次状态变化 0 条（全部为 PENDING/MISMATCH → VERIFIED 或反向），逐条写入 status_history，why=P07_VALIDATOR_FIX_REVALIDATION。",
+   "impact": "校准结论依赖复检，必须能解释每一条变化；revalidation.json 与状态历史均可逐条追溯。",
+   "action": "M00 起不再需要复检步骤；该步骤只在“校验器改版”时使用。"
+  },
+  {
+   "id": "F5",
+   "level": "MEDIUM",
+   "finding": "Drive 仍无凭据：目录页 302→ServiceLogin、API 403、上传 400/403、回读 401/403，三步全不可用。",
+   "impact": "本卡没有产生任何 VERIFIED 回执；P06 要求的“首个 VERIFIED 回执落库”未达成，属外部权限阻断，不是采集器缺陷。",
+   "action": "接 Drive 连接器或提供凭据后补做三步探测；在此之前 M00 只能落本地 D 盘原件 + 索引。"
+  },
+  {
+   "id": "F6",
+   "level": "LOW",
+   "finding": "listing_date 仍 1054/1054 UNKNOWN，空目录只能记 NOT_TRIED。",
+   "impact": "上市前不适用与未披露无法区分，容量仍是尝试上界。本卡 920011 的 5 个空槽即此类。",
+   "action": "M00 期间用巨潮“上市日期”字段回填后重算。"
+  }
+ ],
+ "limitations": [
+  "n=10 是校准样本，不是全池普查；字节中位数对外引用必须带 n。",
+  "季度只跑了 q1_2026 一个槽，q3_2026 法定披露期晚于截止日，未跑。",
+  "ST/*ST 简称变更、退市整理、B 股、CDR 未纳入本次 10 家，属未覆盖边界。",
+  "断点续传只测了 1 份（最大文件，40% 截断），未做网络中断与 5xx 中途失败注入（P05 已做 10 项故障注入）。",
+  "本卡不做客户/订单/盈利归因，不构成任何业务结论。",
+  "执行与自检同一主体，review_nature=SELF_CHECK，不是独立审计。"
+ ],
+ "allows_next_stage_scope": "放行 M00_01—M00_11（沿用 runs/collection/checkpoint 与 D 盘原件根）；不放行业务结论、指标筛选或估值",
+ "not_allowed": [
+  "把 10 家校准当成 1054 家已采",
+  "把 UPLOADED_UNVERIFIED 当已归档",
+  "用校准样本推断全池容量事实",
+  "在无 Drive 凭据时声称已归档"
+ ]
+}

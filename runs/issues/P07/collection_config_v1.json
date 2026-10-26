@@ -1,0 +1,401 @@
+{
+ "config_code": "COLLECTOR_V1",
+ "plan_version": "20261026_collection_first_v2",
+ "issue_key": "P05",
+ "issue_number": 16,
+ "frozen_at": "2026-10-26T19:47:14+0800",
+ "derived_from": {
+  "path": "runs/issues/P05/collector_config.json",
+  "config_code": "COLLECTOR_V1",
+  "sha256": "2cfdb37685b0ab44a307bbad2271172d991a7d33ff0ed842de115479fc67e594",
+  "note": "P05 配置是冻结参数源，本卡不修改它；本文件只声明覆盖项，未覆盖项全部继承。"
+ },
+ "overrides": [
+  {
+   "path": "storage.local_original_root",
+   "from": "sources/p05_validation",
+   "to": "sources/collection/originals",
+   "why": "用户 2026-10-26 指示：C 盘剩余不足，原件改存 D 盘。sources/collection 为指向 D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection 的目录联接。"
+  },
+  {
+   "path": "storage.local_raw_index_root",
+   "from": "sources/p05_raw",
+   "to": "sources/collection/raw",
+   "why": "原始响应与原件同盘，避免占 C 盘。"
+  },
+  {
+   "path": "storage.cache_root",
+   "from": "sources/p05_cache",
+   "to": "sources/collection/cache",
+   "why": "缓存同盘，便于整目录清理与容量核算。"
+  },
+  {
+   "path": "routes.cninfo_org_index.cache_path",
+   "from": "sources/p05_cache/szse_stock.json",
+   "to": "sources/collection/cache/szse_stock.json",
+   "why": "orgId 全市场表随缓存根迁移。"
+  },
+  {
+   "path": "storage.tracked_ledger_dir",
+   "from": "runs/issues/P05/checkpoint",
+   "to": "runs/collection/checkpoint",
+   "why": "P07 起台账改为全池共享台账（COLLECTION_LEDGER_V1），M00_01—M00_11 继承同一台账，校准命中即天然复用，不需要二次导入。"
+  },
+  {
+   "path": "storage.tracked_index",
+   "from": "runs/issues/P05/collection_index.csv",
+   "to": "runs/collection/collection_index.csv",
+   "why": "同上，索引与台账同源。"
+  },
+  {
+   "path": "storage.tracked_runlog",
+   "from": "runs/issues/P05/run_log.jsonl",
+   "to": "runs/collection/run_log.jsonl",
+   "why": "同上，事件流合并到共享目录。"
+  },
+  {
+   "path": "pdf_validation.issuer_pages_probe",
+   "from": "（P05 未设此键，固定 3 页）",
+   "to": 8,
+   "why": "P07 F5：北交所 2026 年半年报封面是未填充模板，主体信息在第 6 页“公司概况”。主体检索放宽到前 8 页；报告期仍只用前 3 页，两件事不共用范围。"
+  },
+  {
+   "path": "pdf_validation.min_identity_probe_chars",
+   "from": "（P05 未设此键）",
+   "to": 200,
+   "why": "P07 F2：前 8 页有效字符不足 200 时只能记 PENDING（正文抽取不足），不得判 MISMATCH。"
+  }
+ ],
+ "storage_layout": {
+  "repo_root": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research",
+  "data_root": "D:\\StockResearchLab\\IndustryInflectionLab\\robotics_data\\collection",
+  "junction": "sources/collection",
+  "resolved_original_root": "D:\\StockResearchLab\\IndustryInflectionLab\\robotics_data\\collection\\originals",
+  "drive": "D:",
+  "why": "C 盘 2026-10-26 实测剩余约 24—38 GiB 且已用 80% 以上；P06 估算核心槽中位 13.43 GiB，放 C 盘会触发硬水位。D 盘剩余 150 GiB 以上，作为原件与缓存根。"
+ },
+ "config_version": 1,
+ "frozen_at_utc": "2026-10-26T08:20:00+00:00",
+ "purpose": "实现可断点续跑的公告/定期报告采集器与下载校验；只做采集能力与小样本验证，不做全池批量、不做业务判断。",
+ "scope_note": "本文件是采集器唯一参数源。改参数必须另存版本并重算，不得为凑数量放宽校验。",
+ "time_axis": {
+  "knowledge_as_of": "2026-10-25",
+  "collection_date": "2026-10-26",
+  "cutoff_rule": "公告披露日 <= knowledge_as_of 才可进入本轮证据链；晚于截止日记 AFTER_CUTOFF_DISCLOSED，只作增量候选。",
+  "date_source": "runs/issues/P00/collection_scope.json#time_axis"
+ },
+ "routes": {
+  "cninfo_org_index": {
+   "method": "GET",
+   "url": "https://www.cninfo.com.cn/new/data/szse_stock.json",
+   "purpose": "按股票代码解析巨潮 orgId 与证券简称；一次取全市场，本地缓存。",
+   "cache_path": "sources/collection/cache/szse_stock.json",
+   "cache_ttl_seconds": 86400,
+   "measured_coverage": "1054/1054（SH 390、SZ 602、BJ 62）",
+   "note": "orgId 猜错会返回 0 条，空结果不等于未披露。必须用本表解析，不得按代码前缀拼 orgId。"
+  },
+  "cninfo_issuer_index": {
+   "method": "POST",
+   "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+   "column_by_exchange": {
+    "SH": "sse",
+    "SZ": "szse",
+    "BJ": "szse"
+   },
+   "column_note": "BJ 使用 szse 列。P03 实测 bjse 列返回 500，属无效路由，不得再用；也不得因平台不同判北交所不适用。",
+   "base_params": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true"
+   },
+   "stock_param_format": "{stock_code},{org_id}",
+   "page_size": 30,
+   "max_pages": 30
+  },
+  "cninfo_pdf": {
+   "method": "GET",
+   "url_template": "https://static.cninfo.com.cn/{adjunct_url}",
+   "supports_range": true,
+   "range_measured": "实测 HTTP 206 + Content-Range，可按字节续传"
+  }
+ },
+ "categories": {
+  "ANNUAL_REPORT": "category_ndbg_szsh",
+  "SEMI_ANNUAL_REPORT": "category_bndbg_szsh",
+  "QUARTERLY_REPORT_Q1": "category_yjdbg_szsh",
+  "QUARTERLY_REPORT_Q3": "category_sjdbg_szsh"
+ },
+ "slots": [
+  {
+   "slot_id": "annual_2023",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2023",
+   "period_end": "2023-12-31",
+   "statutory_deadline": "2024-04-30",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*年度报告",
+   "pdf_download": "REQUIRED",
+   "core_slot": true,
+   "min_pages": 20
+  },
+  {
+   "slot_id": "annual_2024",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2024",
+   "period_end": "2024-12-31",
+   "statutory_deadline": "2025-04-30",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*年度报告",
+   "pdf_download": "REQUIRED",
+   "core_slot": true,
+   "min_pages": 20
+  },
+  {
+   "slot_id": "annual_2025",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2025",
+   "period_end": "2025-12-31",
+   "statutory_deadline": "2026-04-30",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*年度报告",
+   "pdf_download": "REQUIRED",
+   "core_slot": true,
+   "min_pages": 20
+  },
+  {
+   "slot_id": "h1_2024",
+   "report_type": "SEMI_ANNUAL_REPORT",
+   "period_label": "2024H1",
+   "period_end": "2024-06-30",
+   "statutory_deadline": "2024-08-31",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*半年度报告",
+   "pdf_download": "REQUIRED",
+   "core_slot": true,
+   "min_pages": 10
+  },
+  {
+   "slot_id": "h1_2025",
+   "report_type": "SEMI_ANNUAL_REPORT",
+   "period_label": "2025H1",
+   "period_end": "2025-06-30",
+   "statutory_deadline": "2025-08-31",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*半年度报告",
+   "pdf_download": "REQUIRED",
+   "core_slot": true,
+   "min_pages": 10
+  },
+  {
+   "slot_id": "h1_2026",
+   "report_type": "SEMI_ANNUAL_REPORT",
+   "period_label": "2026H1",
+   "period_end": "2026-06-30",
+   "statutory_deadline": "2026-08-31",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*半年度报告",
+   "pdf_download": "REQUIRED",
+   "core_slot": true,
+   "min_pages": 10
+  },
+  {
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*第一季度报告",
+   "pdf_download": "OPTIONAL",
+   "core_slot": false,
+   "min_pages": 3
+  },
+  {
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*第三季度报告",
+   "pdf_download": "OPTIONAL",
+   "core_slot": false,
+   "min_pages": 3
+  },
+  {
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*第一季度报告",
+   "pdf_download": "OPTIONAL",
+   "core_slot": false,
+   "min_pages": 3
+  },
+  {
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*第三季度报告",
+   "pdf_download": "OPTIONAL",
+   "core_slot": false,
+   "min_pages": 3
+  },
+  {
+   "slot_id": "q1_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q1",
+   "period_end": "2026-03-31",
+   "statutory_deadline": "2026-04-30",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*第一季度报告",
+   "pdf_download": "OPTIONAL",
+   "core_slot": false,
+   "min_pages": 3
+  },
+  {
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "title_regex": "(?P<year>\\d{4})\\s*年\\s*第三季度报告",
+   "pdf_download": "OPTIONAL",
+   "core_slot": false,
+   "min_pages": 3,
+   "pre_cutoff_status": "NOT_YET_DISCLOSED"
+  }
+ ],
+ "pagination_rules": {
+  "stop_conditions": [
+   "某页返回 0 条 → 停止翻页",
+   "累计行数 >= totalAnnouncement → 停止翻页",
+   "pageNum > max_pages → 停止并记 INDEX_INCOMPLETE_PAGINATION"
+  ],
+  "reconcile_rule": "累计去重后的行数必须等于 totalAnnouncement；不等即 INDEX_INCOMPLETE_PAGINATION，不得当作已完整检索。",
+  "authoritative_fields": [
+   "totalAnnouncement"
+  ],
+  "non_authoritative_fields": [
+   "hasMore",
+   "totalpages"
+  ],
+  "non_authoritative_reason": "实测：pageSize=30、8 条结果时 totalpages=0 且 hasMore=false；pageSize=3 时 totalpages=2 但第 3 页仍返回 2 条。以 totalAnnouncement + 累计行数为准。",
+  "dedupe_key": "announcementId",
+  "index_cache_ttl_seconds": 21600,
+  "index_cache_note": "同一 (security_id, category) 的目录在 6 小时内复用台账缓存，避免断点续跑重复翻页；过期必须重取。",
+  "raw_response_policy": "每页原始 JSON 落 sources/p05_raw/<security_id>/<category>_p<N>.json，台账只记 sha256、字节数、行数、游标与请求参数。"
+ },
+ "transport": {
+  "circuit_policy_file": "runs/issues/P03/source_circuit_policy.json",
+  "circuit_routes": [
+   "cninfo_org_index",
+   "cninfo_issuer_index",
+   "cninfo_pdf"
+  ],
+  "connect_timeout_seconds": 8,
+  "read_timeout_seconds": 20,
+  "pdf_read_timeout_seconds": 45,
+  "max_http_attempts_per_request": 2,
+  "retry_delay_seconds": 2,
+  "max_slot_attempts": 3,
+  "slot_attempt_rule": "同一槽位最多 3 次采集尝试；超限置 SOURCE_FAILED + next_action=MANUAL_REVIEW，不再自动重试。",
+  "concurrency": 1,
+  "concurrency_hard_cap": 2,
+  "min_interval_per_host_seconds": 1.2,
+  "max_download_bytes": 83886080,
+  "user_agent": "Mozilla/5.0 (compatible; robotics-inflection-research P05 collector)",
+  "forbidden": [
+   "不得提高并发绕过失败",
+   "不得无限重试",
+   "不得读取或改动系统代理配置",
+   "不得把 401/403/429 当作公司未披露"
+  ]
+ },
+ "download": {
+  "partial_suffix": ".part",
+  "resume_via_range": true,
+  "max_resume_attempts": 2,
+  "verify_content_length": true,
+  "on_mismatch": "保留 .part 供续传，记 PARTIAL_CONTENT，不计成功"
+ },
+ "pdf_validation": {
+  "magic": "%PDF-",
+  "min_bytes": 20000,
+  "min_text_chars_first_pages": 200,
+  "text_pages_probe": 3,
+  "checks": [
+   "MAGIC_HEADER",
+   "SIZE_FLOOR",
+   "PDF_OPENABLE",
+   "PAGE_COUNT_FLOOR",
+   "ISSUER_MATCH",
+   "PERIOD_MATCH",
+   "FORM_FULL_TEXT",
+   "CONTENT_LENGTH"
+  ],
+  "issuer_match_rule": "规范化（去空格/全角转半角）后，证券简称出现在前 N 页正文，或股票代码出现。两者都无 → IDENTITY_MISMATCH。",
+  "period_match_rule": "前 N 页正文出现『{year} 年年度报告』/『{year} 年半年度报告』/『{year} 年第[一三]季度报告』（允许空格）。",
+  "summary_rule": "标题含『摘要』→ SUMMARY_ONLY，不得计入核心槽全文。",
+  "revision_rule": "标题含『更正』『修订』『补充』→ revision_no >= 1，另存另 ID，不覆盖原版。",
+  "unreadable_policy": "PDF 能打开但正文抽取不足 → COLLECTED_PENDING_IDENTITY（文件已取得、身份未核），不得写成 COLLECTED_IDENTITY_VERIFIED。",
+  "issuer_pages_probe": 8,
+  "min_identity_probe_chars": 200
+ },
+ "identity": {
+  "scheme": "IDENTITY_V1",
+  "source": "runs/issues/P01/document_identity_rules.json#document_id_rules.new_scheme",
+  "key_template": "{security_id}|{issuer_scope}|{document_type}|{period_key}|{revision_no}",
+  "algorithm": "DOC- + sha256(identity_key)[:16].upper()",
+  "issuer_scope_default": "CONSOLIDATED_LISTED_ISSUER",
+  "note": "下载前即可分配 ID；同一原件跨批次复用，不因多包引用重复分配。"
+ },
+ "idempotency": {
+  "lookup_order": [
+   "1. 台账：同 (security_id, slot_id) 已 COLLECTED_* 且本地文件存在且 sha256 一致 → SKIPPED_ALREADY_HAVE",
+   "2. 登记表：data/document_registry.csv 同 security_id + period_covered + sha256 且 local_file 存在 → SKIPPED_ALREADY_HAVE（source=REGISTRY）",
+   "3. 本次运行内容索引：sha256 已出现 → DUPLICATE_SAME_CONTENT（记来源，不重复计数）",
+   "4. 以上皆无 → 正常下载"
+  ],
+  "skip_must_be_http_free": true
+ },
+ "status_taxonomy": {
+  "source": "runs/issues/P00/collection_scope.json#status_taxonomy",
+  "p00_codes": [
+   "COLLECTED_IDENTITY_VERIFIED",
+   "COLLECTED_PENDING_IDENTITY",
+   "NOT_APPLICABLE_PRE_LISTING",
+   "SUBSTITUTED_BY_PROSPECTUS",
+   "NOT_DISCLOSED_BY_ISSUER",
+   "AFTER_CUTOFF_DISCLOSED",
+   "NOT_YET_DISCLOSED",
+   "SOURCE_FAILED",
+   "ACCESS_BLOCKED",
+   "NOT_TRIED"
+  ],
+  "collector_internal_codes": {
+   "PENDING": "已排期、尚未发出请求（台账初始值，不得计入完成）",
+   "IN_PROGRESS": "正在采集，断点已落盘",
+   "SKIPPED_ALREADY_HAVE": "幂等跳过：本地已有同哈希原件，未发出 HTTP 请求",
+   "DUPLICATE_SAME_CONTENT": "与本次运行另一槽位字节相同，记重复但不重复计数",
+   "INDEX_INCOMPLETE_PAGINATION": "分页累计行数 != totalAnnouncement，检索不完整",
+   "SUMMARY_ONLY": "只找到摘要，核心槽全文缺失",
+   "IDENTITY_MISMATCH": "文件主体/报告期与登记不符，已拒收"
+  },
+  "counting_rule": "只有 COLLECTED_IDENTITY_VERIFIED / COLLECTED_PENDING_IDENTITY / SKIPPED_ALREADY_HAVE 计为已取得原件；NOT_TRIED 与 SOURCE_FAILED 不计完成。"
+ },
+ "precondition": {
+  "listing_date_status": "UNKNOWN_FOR_1054_OF_1054",
+  "rule": "listing_date 未知时，空目录不得判 NOT_APPLICABLE_PRE_LISTING，也不得判 NOT_DISCLOSED_BY_ISSUER；保持 NOT_TRIED，reason_code=LISTING_DATE_UNKNOWN_EMPTY_INDEX，next_action=RESOLVE_LISTING_DATE。",
+  "why": "P00 not_applicable_decision_table 规定 UNKNOWN → NOT_TRIED；P04 已确认 1054 家全 UNKNOWN。"
+ },
+ "storage": {
+  "local_original_root": "sources/collection/originals",
+  "local_raw_index_root": "sources/collection/raw",
+  "cache_root": "sources/collection/cache",
+  "tracked_index": "runs/collection/collection_index.csv",
+  "tracked_runlog": "runs/collection/run_log.jsonl",
+  "tracked_ledger_dir": "runs/collection/checkpoint",
+  "git_policy": "原件 PDF 与原始响应不入库（.gitignore 已排除 sources/**、*.pdf）；GitHub 只存小型索引、台账与运行记录。本卡起原件根位于 D 盘（经 sources/collection 目录联接），仓库内不保留二进制副本。"
+ },
+ "out_of_scope": [
+  "全池 1054 家批量下载（属 M00_01—M00_11）",
+  "10 家采集校准（属 P07）",
+  "业务结论、拐点判断、估值",
+  "改动原始输入、既有研究采用状态或他人结果"
+ ]
+}

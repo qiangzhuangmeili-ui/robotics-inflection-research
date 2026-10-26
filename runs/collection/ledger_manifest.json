@@ -1,0 +1,106 @@
+{
+ "ledger_code": "COLLECTION_LEDGER_V1",
+ "plan_version": "20261026_collection_first_v2",
+ "created_by": "P07",
+ "created_at": "2026-10-26T19:41:26+0800",
+ "directory": "runs/collection/checkpoint",
+ "why": "P07 起全池共用一本台账；M00_01—M00_11 必须沿用本目录，校准命中即复用，不得重下。",
+ "imported_from_p05": [],
+ "seeded_from_registry": [],
+ "not_seeded": [
+  {
+   "security_id": "SZ:002031",
+   "reason": "LEDGER_ALREADY_PRESENT"
+  },
+  {
+   "security_id": "SH:688218",
+   "reason": "LEDGER_ALREADY_PRESENT"
+  },
+  {
+   "security_id": "BJ:920207",
+   "reason": "LEDGER_ALREADY_PRESENT"
+  },
+  {
+   "security_id": "SZ:002031",
+   "reason": "SLOT_ALREADY_IN_LEDGER"
+  },
+  {
+   "security_id": "SZ:001306",
+   "reason": "SLOT_ALREADY_IN_LEDGER"
+  },
+  {
+   "security_id": "SH:600699",
+   "reason": "SLOT_ALREADY_IN_LEDGER"
+  },
+  {
+   "security_id": "SH:603667",
+   "reason": "SLOT_ALREADY_IN_LEDGER"
+  },
+  {
+   "security_id": "SH:688218",
+   "reason": "SLOT_ALREADY_IN_LEDGER"
+  },
+  {
+   "security_id": "BJ:920207",
+   "reason": "SLOT_ALREADY_IN_LEDGER"
+  }
+ ],
+ "rules": [
+  "台账只记录“是否已取得原件 + 身份校验结果”，不记录业务结论。",
+  "SKIPPED_ALREADY_HAVE 是动作，不改写原取得状态；跳过必须 0 次 HTTP。",
+  "登记表种子行的状态保持 COLLECTED_PENDING_IDENTITY，仅当本地七项校验全过才提升为 VERIFIED，并在 document.identity_verified_via 留痕。"
+ ],
+ "derived_from_ledger": {
+  "p05_ledger_slots": [
+   {
+    "security_id": "SZ:002031",
+    "slot_id": "annual_2025",
+    "document_id": "DOC-025C7ECA3181B362",
+    "bytes": 2317799
+   },
+   {
+    "security_id": "SZ:002031",
+    "slot_id": "h1_2026",
+    "document_id": "DOC-70CF025B687209D5",
+    "bytes": 4608089
+   },
+   {
+    "security_id": "SH:688218",
+    "slot_id": "annual_2025",
+    "document_id": "DOC-F61E57277E3A31BD",
+    "bytes": 3951900
+   },
+   {
+    "security_id": "BJ:920207",
+    "slot_id": "annual_2025",
+    "document_id": "DOC-42A96A84780EB94B",
+    "bytes": 3110800
+   }
+  ],
+  "registry_seed_slots": [
+   {
+    "security_id": "SZ:001306",
+    "slot_id": "annual_2025",
+    "document_id": "DOC-CE148F8883F6A7C6",
+    "bytes": 1612360
+   },
+   {
+    "security_id": "SH:600699",
+    "slot_id": "annual_2025",
+    "document_id": "DOC-79C0EF823036FFB7",
+    "bytes": 2525000
+   },
+   {
+    "security_id": "SH:603667",
+    "slot_id": "annual_2025",
+    "document_id": "DOC-9BA3202226409764",
+    "bytes": 1597878
+   }
+  ]
+ },
+ "derived_counts": {
+  "p05_ledger_slots": 4,
+  "registry_seed_slots": 3
+ },
+ "action_lists_note": "imported_from_p05 / seeded_from_registry 只记“本次 --freeze 新增了什么”，重跑时为空是正常的；判断复用了哪些槽，以 derived_from_ledger 为准（从台账逐条反推，不依赖动作日志）。"
+}

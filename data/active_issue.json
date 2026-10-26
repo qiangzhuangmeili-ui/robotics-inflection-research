@@ -4,18 +4,18 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_P06_SELF_CHECK_PASS",
-  "claim_note": "P06 已完成：容量三层口径、13 条归档路由、传输回执 schema 与 10 条不变量落地；自检 11/11、验收 6/6。下一张建议 P07(#18)，M00 全池批次仍等 P07。",
+  "status": "IDLE_P07_SELF_CHECK_PASS",
+  "claim_note": "P07 已完成：10 家 × 7 槽校准，65 VERIFIED / 5 NOT_TRIED；修 6 个采集器缺陷；原件根迁到 D 盘；Drive 仍 ACCESS_BLOCKED。下一张 M00_01(#19)。",
   "last_completed": {
-    "issue_number": 17,
-    "issue_key": "P06",
-    "completed_at": "2026-10-26T09:04:00+00:00",
-    "review_file": "runs/issues/P06/review.json",
+    "issue_number": 18,
+    "issue_key": "P07",
+    "completed_at": "2026-10-26T11:45:00+00:00",
+    "review_file": "runs/issues/P07/review.json",
     "decision": "SELF_CHECK_PASS",
-    "allows_next_stage_scope": "放行 P07(#18)；不放行 M00 全池批次、业务结论或指标筛选",
-    "acceptance": "6/6",
-    "self_check": "11/11",
-    "capacity_status": "PRE_CALIBRATION_ESTIMATE_NOT_FACT"
+    "allows_next_stage_scope": "放行 M00_01—M00_11；不放行业务结论/指标筛选/估值",
+    "acceptance": "2/2",
+    "self_check": "10/10",
+    "capacity_status": "CALIBRATED_FROM_10_COMPANIES"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -24,9 +24,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 18,
-  "next_recommended_issue_key": "P07",
-  "next_recommended_reason": "P07 依赖 P02/P03/P04/P05/P06 五张卡均具备可读验收记录；P06 已把容量水位、归档路由与回执 schema 交给 P07 校准实测。",
+  "next_recommended_issue_number": 19,
+  "next_recommended_issue_key": "M00_01",
+  "next_recommended_reason": "P07 采集校准已 SELF_CHECK_PASS；M00_01 依赖 P07 已满足。开跑前须沿用 runs/issues/P07/collection_config_v1.json 的参数与 runs/collection/checkpoint 台账。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",

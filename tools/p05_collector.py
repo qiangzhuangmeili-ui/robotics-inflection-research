@@ -88,6 +88,29 @@ def normalize_text(text: str) -> str:
     return re.sub(r"\s+", "", unicodedata.normalize("NFKC", text)).lower()
 
 
+# P07 校准修正（F3）：简称去掉通用后缀后的“字号”。仅当“连续简称”和“股票代码”都匹配不上时兜底使用。
+GENERIC_NAME_TOKENS = (
+    "股份有限公司", "有限责任公司", "有限公司", "集团", "控股", "股份", "科技", "精密",
+    "智能", "电子", "新材料", "新材", "材料", "技术", "制造", "实业", "自动化", "信息",
+    "网络", "软件", "装备", "机械", "电器", "电气", "工业", "机器人",
+)
+
+
+def core_name_of(stock_name: str) -> str:
+    """返回 ≥2 字的字号；去不出字号（如简称本身就是“机器人”）则返回空串，不参与兜底。"""
+    norm = normalize_text(stock_name)
+    core = norm
+    changed = True
+    while changed and len(core) > 2:
+        changed = False
+        for token in GENERIC_NAME_TOKENS:
+            if core.endswith(token) and len(core) - len(token) >= 2:
+                core = core[: -len(token)]
+                changed = True
+                break
+    return core if core != norm and len(core) >= 2 else ""
+
+
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -530,27 +553,49 @@ def validate_pdf(path: Path, slot: dict, *, stock_name: str, stock_code: str, co
     add("PAGE_COUNT_FLOOR", page_count >= min_pages, f"{page_count} >= {min_pages}")
 
     probe = min(int(rules["text_pages_probe"]), page_count)
-    text = ""
+    pages_text: list[str] = []
     for i in range(probe):
         try:
-            text += reader.pages[i].extract_text() or ""
+            pages_text.append(reader.pages[i].extract_text() or "")
         except Exception:
-            continue
+            pages_text.append("")
+    text = "".join(pages_text)
     result["text_chars"] = len(text)
     norm = normalize_text(text)
 
-    if result["text_chars"] < int(rules["min_text_chars_first_pages"]):
-        add("ISSUER_MATCH", None, "正文抽取不足，无法核对主体")
-        add("PERIOD_MATCH", None, "正文抽取不足，无法核对报告期")
-        add("FORM_FULL_TEXT", None, "正文抽取不足，无法判断全文/摘要")
-        result["identity_status"] = VD_PENDING
-        return result
+    # P07 校准修正（F2/F5）：主体与报告期分开取范围。
+    # 主体：前 8 页（北交所 2026 半年报封面是未填充模板，简称/代码出现在第 6 页“公司概况”）；
+    # 报告期：仍只用前 3 页，避免“报告期靠后文目录凑出来”。
+    wide = min(int(rules.get("issuer_pages_probe", 8)), page_count)
+    wide_parts = list(pages_text)
+    for i in range(probe, wide):
+        try:
+            wide_parts.append(reader.pages[i].extract_text() or "")
+        except Exception:
+            wide_parts.append("")
+    wide_norm = normalize_text("".join(wide_parts))
+    probe_chars = len(re.findall(r"[\u4e00-\u9fff0-9a-z]", wide_norm))
+    cover_chars = len(re.findall(r"[\u4e00-\u9fff0-9a-z]",
+                                 normalize_text(pages_text[0] if pages_text else "")))
+    result.update({"cover_text_chars": cover_chars, "identity_probe_chars": probe_chars,
+                   "issuer_search_scope": f"P1-{wide}"})
 
     name_norm = normalize_text(stock_name)
-    issuer_ok = bool(name_norm) and name_norm in norm
-    if not issuer_ok:
-        issuer_ok = stock_code in norm
-    add("ISSUER_MATCH", issuer_ok, f"证券简称={stock_name} 代码={stock_code}")
+    core = core_name_of(stock_name)
+
+    def issuer_lookup(text_norm: str) -> str:
+        if name_norm and name_norm in text_norm:
+            return "FULL_ABBR"
+        if stock_code in text_norm:
+            return "STOCK_CODE"
+        if core and core in text_norm:
+            return "CORE_NAME"
+        return ""
+
+    issuer_mode = issuer_lookup(wide_norm)
+    result["issuer_match_mode"] = issuer_mode or "NONE"
+    add("ISSUER_MATCH", bool(issuer_mode),
+        f"证券简称={stock_name} 代码={stock_code} 方式={issuer_mode or 'NONE'} 范围=P1-{wide}")
 
     m_year = re.search(r"(\d{4})", slot["period_label"])
     if not m_year:
@@ -560,29 +605,40 @@ def validate_pdf(path: Path, slot: dict, *, stock_name: str, stock_code: str, co
     year = m_year.group(1)
     if slot["report_type"] == "ANNUAL_REPORT":
         pattern = rf"{year}年年度报告"
+        kind = r"年度报告"
     elif slot["report_type"] == "SEMI_ANNUAL_REPORT":
         pattern = rf"{year}年半年度报告"
+        kind = r"半年度报告"
     else:
-        pattern = rf"{year}年第[一三]季度报告"
+        pattern = rf"{year}年第?[一三]季度报告"
+        kind = r"第?[一三]季度报告"
     title = slot.get("_selected_title") or ""
     body_phrase = re.search(pattern, norm) is not None
-    year_in_body = year in norm
+    # 年份存在性用“前 8 页”判断：北交所版式化封面第 1—3 页只有目录，年份出现在后一页。
+    # 连续短语（更严的那条）仍只用前 3 页。
+    year_in_body = year in wide_norm
     title_norm = normalize_text(title)
     keyword = {"ANNUAL_REPORT": "年度报告", "SEMI_ANNUAL_REPORT": "半年度报告"}.get(
         slot["report_type"], "季度报告")
     title_period_ok = f"{year}年" in title_norm and keyword in title_norm
+    # 反证：正文里出现“别的年份 + 同类报告”，才算报告期不符；只是找不到，不算反证
+    other_years = sorted({y for y in re.findall(r"(\d{4})\s*年\s*" + kind, wide_norm) if y != year})
     if body_phrase:
         period_method = "BODY_PHRASE"
-        period_ok = True
+        period_state = "PASS"
     elif year_in_body and title_period_ok:
         # 版式化封面的 PDF 正文常无连续短语；用官方目录标题+正文年份交叉确认，并留痕
         period_method = "TITLE_PLUS_YEAR_IN_BODY"
-        period_ok = True
+        period_state = "PASS"
+    elif other_years:
+        period_method = "CONTRADICTED_BY_OTHER_YEAR"
+        period_state = "FAIL"
     else:
         period_method = "NONE"
-        period_ok = False
-    add("PERIOD_MATCH", period_ok,
-        f"pattern={pattern}; method={period_method}; year_in_body={year_in_body}; title={title}")
+        period_state = "UNKNOWN"
+    add("PERIOD_MATCH", None if period_state == "UNKNOWN" else period_state == "PASS",
+        f"pattern={pattern}; method={period_method}; year_in_body={year_in_body}; "
+        f"other_years={other_years}; title={title}")
     result["period_match_method"] = period_method
 
     form = "SUMMARY" if "摘要" in title else "FULL_TEXT"
@@ -593,9 +649,11 @@ def validate_pdf(path: Path, slot: dict, *, stock_name: str, stock_code: str, co
                 "ISSUER_MATCH", "PERIOD_MATCH", "FORM_FULL_TEXT")
     if all(checks[k]["result"] == "PASS" for k in critical):
         result["identity_status"] = VD_VERIFIED
-    elif checks["ISSUER_MATCH"]["result"] == "FAIL" or checks["PERIOD_MATCH"]["result"] == "FAIL":
+    elif checks["PERIOD_MATCH"]["result"] == "FAIL":
+        # 只有“正文出现别的年份同类报告”这种反证才判 MISMATCH
         result["identity_status"] = VD_MISMATCH
     else:
+        # 主体/报告期在前 N 页没出现，或正文抽取不足 → 待人工核，不判 MISMATCH、不删原件
         result["identity_status"] = VD_PENDING
     return result
 
@@ -793,6 +851,9 @@ class Collector:
     # -- 行 → 槽位
     @staticmethod
     def _period_of(title: str, report_type: str) -> str | None:
+        # P07 校准修正（F1）：深市/北交所季度报告标题为「2026年一季度报告」，
+        # 沪市为「2026年第一季度报告」；原正则要求「第」字，导致 SZ 602 家 + BJ 62 家
+        # 全部季度槽被误判为“无该期全文”。改为「第?」后两式兼容。
         norm = normalize_text(title)
         if report_type == "ANNUAL_REPORT":
             m = re.search(r"(\d{4})年年度报告", norm)
@@ -800,7 +861,7 @@ class Collector:
         if report_type == "SEMI_ANNUAL_REPORT":
             m = re.search(r"(\d{4})年半年度报告", norm)
             return f"{m.group(1)}H1" if m else None
-        m = re.search(r"(\d{4})年第([一三])季度报告", norm)
+        m = re.search(r"(\d{4})\s*年第?([一三])季度报告", norm)
         if not m:
             return None
         return f"{m.group(1)}Q{'1' if m.group(2) == '一' else '3'}"
@@ -1044,8 +1105,12 @@ class Collector:
                                "bytes_written": part_path.stat().st_size if part_path.exists() else 0},
                 "updated_at": utc_now(),
             })
-            if verdict["identity_status"] == VD_MISMATCH:
-                part_path.unlink(missing_ok=True)
+            if verdict["identity_status"] == VD_MISMATCH and part_path.exists():
+                # P07 校准修正（F4）：身份不匹配也不删原件。2026-10-26 实测 301000 因“简称不是全称的
+                # 连续子串”被误判，原件删除后只能重下。改为改名保留供人工复核，且不计入已取得。
+                rejected = part_path.with_suffix(".pdf.rejected")
+                os.replace(part_path, rejected)
+                record["checkpoint"]["rejected_file"] = rejected.relative_to(self.root).as_posix()
             self.ledger.put_slot(company.security_id, code, record)
             self._event("pdf_rejected", security_id=company.security_id, slot_id=slot_id,
                         verdict=verdict["identity_status"], issues=verdict["issues"])
@@ -1063,7 +1128,8 @@ class Collector:
         })
         record.update({
             "status": verdict["identity_status"],
-            "status_reason": "校验通过" if verdict["identity_status"] == VD_VERIFIED else "正文抽取不足，身份待核",
+            "status_reason": "校验通过" if verdict["identity_status"] == VD_VERIFIED
+            else "身份未完全核实（正文抽取不足或主体未在前 8 页出现），待人工看封面",
             "next_action": "NONE" if verdict["identity_status"] == VD_VERIFIED else "MANUAL_IDENTITY_CHECK",
             "last_error": None,
             "checkpoint": {"stage": "DONE", "at": utc_now(), "bytes_written": local_path.stat().st_size},
