@@ -4,10 +4,53 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_P03_SELF_CHECK_PASS",
-  "next_recommended_issue_number": 15,
-  "next_recommended_issue_key": "P04",
+  "status": "IDLE_P04_SELF_CHECK_PASS",
+  "claim_note": "按用户指定接续Codex完成P02/P03后执行P04；本卡只做字段/单位/报表/时间口径冻结与来源映射，不做财务筛选、不采全池。",
+  "claimed_base_commit": "c5ce8b3",
+  "input_baseline": {
+    "PROJECT_STATE.json": "332fcbe491782eda1904179af2fd537e8504cb6ba0d799e6b94ea7379890f131",
+    "data/company_master.csv": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+    "data/document_registry.csv": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed",
+    "data/intake_company_queue.csv": "cf86db6c10810019b2efcd55b03e56940799ba98e2493afe12cfa480e88fe893",
+    "data/intake_batch_index.csv": "ab990b8b787398d1472dd3b1a492de6993817da6dcecc8cfa2940642410580c8",
+    "data/resource_map.csv": "9876c6e47f414c36a975bf8e21acb2c2aa5bff246863c822f17a00c8d17b3a26",
+    "data/drive_folders.csv": "9d76b3b6e75a4cd98f6569ed6082a3dcbd5a3ffc77d327f577d84626b2e0c7c3",
+    "data/financial_gaps.csv": "a3464b5b5d81c5e24dc73d3aa753ac5f5664b0211346fca858b10e32d68a95a4",
+    "runs/issues/P00/collection_scope.json": "f5e31dc053b9d7a020ffd0db15fb8d7cad44e2c04f6baa76d396c41a519a4e3b"
+  },
+  "next_recommended_issue_number": 16,
+  "next_recommended_issue_key": "P05",
   "last_completed": {
+    "issue_number": 15,
+    "issue_key": "P04",
+    "completed_at": "2026-10-26T07:37:33+00:00",
+    "review_file": "runs/issues/P04/review.json",
+    "decision": "SELF_CHECK_PASS",
+    "allows_next_stage_scope": "P05(#16) 的 P04 依赖成立；P07(#18) 仍需 P05、P06 各自验收",
+    "canonical_fields": 33,
+    "mapping_rows": 52,
+    "gap_rows": 63
+  },
+  "next_recommended_reason": "P04 已冻结字段/单位/报表/时间口径并给出52条来源映射；P05 采集器所需的字段口径与校验规则已具备。",
+  "open_followups_from_P02": [
+    "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
+    "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
+    "重复文件夹 3 组（920418 2025年度×3、920207 2026H1×3、920491 IR×3），去重时不得当多份文件。",
+    "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
+  ],
+  "note": "P04 为 SELF_CHECK 口径冻结，未做任何财务筛选与业务判断。全池采集仍未启动；业务证据未新增独立验收。",
+  "previous_completed": {
+    "issue_number": 15,
+    "issue_key": "P04",
+    "completed_at": "2026-10-26T07:36:29+00:00",
+    "review_file": "runs/issues/P04/review.json",
+    "decision": "SELF_CHECK_PASS",
+    "allows_next_stage_scope": "P05(#16) 的 P04 依赖成立；P07(#18) 仍需 P05、P06 各自验收",
+    "canonical_fields": 33,
+    "mapping_rows": 52,
+    "gap_rows": 63
+  },
+  "p02_completed": {
     "issue_number": 14,
     "issue_key": "P03",
     "completed_at": "2026-10-26T07:09:14.809Z",
@@ -17,41 +60,11 @@
     "sample_companies": 3,
     "circuit_tests_passed": 6
   },
-  "next_recommended_reason": "按用户指定完成P02 Drive收尾和P03最小沪深北连通/故障熔断。下一步P04冻结财务字段与口径；P05/P07尚未整体放行。",
-  "open_followups_from_P02": [
-    "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
-    "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
-    "重复文件夹 3 组（920418 2025年度×3、920207 2026H1×3、920491 IR×3），去重时不得当多份文件。",
-    "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
-  ],
-  "note": "P02/P03均为SELF_CHECK技术核验。全池采集未启动；业务证据未新增独立验收。WorkBuddy可继续P04，北交所采集必须用显式三市场适配器，不能沿用旧工作台沪深校验。",
-  "previous_completed": {
-    "issue_number": 13,
-    "issue_key": "P02",
-    "completed_at": "2026-10-26T06:05:20Z",
-    "review_file": "runs/issues/P02/review.json",
-    "decision": "SELF_CHECK_PASS",
-    "allows_next_stage_scope": "P06(#17)、P07(#18)",
-    "frozen_values": {
-      "assets_total": 226,
-      "registered_documents": 100,
-      "unique_document_id": 100,
-      "unique_content_sha256": 87,
-      "ai_read_confirmed": 24,
-      "evidence_independently_verified": 0,
-      "local_pdf_hash_match": 64,
-      "local_pdf_hash_mismatch": 0,
-      "financial_snapshot_rows": 1054,
-      "financial_snapshot_columns": 50,
-      "financial_snapshot_sha256": "0c34f59567117b859ca57e9993f7a9fb8422598819274e4943ef331fa566b063"
-    },
-    "drive_followup": {
-      "completed_at": "2026-10-26T06:56:46.362Z",
-      "decision": "SELF_CHECK_PASS",
-      "drive_pdf_readbacks": 90,
-      "baseline_hash_matches": 87,
-      "no_baseline_hash": 3,
-      "summary_file": "runs/issues/P02/drive_followup_summary.json"
-    }
-  }
+  "open_followups_from_P04": [
+    "扣非归母净利润只能回官方 PDF 取，采集器必须解析非经常性损益表或主要会计数据表。",
+    "北交所 62 家旧快照覆盖率 0/62，必须走 P03 显式三市场适配器。",
+    "2025H1 五项基数缺失，2026H1 同比在补齐前不可计算。",
+    "listing_date 1054/1054 UNKNOWN，P05 须回填后才能判定上市前不适用。",
+    "旧快照 22 列扣非为累计口径，S00 标准化须按累计读入（P02 表述待更正）。"
+  ]
 }

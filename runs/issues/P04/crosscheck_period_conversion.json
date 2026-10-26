@@ -1,0 +1,699 @@
+{
+  "method": "官方年报分季度表 vs 新浪接口累计值；检验“累计差=单季”“四季加总=全年”",
+  "provider_type_semantics": {
+    "finding": "type 是报告期类型选择（0全部/1一季/2半年/3三季/4年报），各 type 返回的均为年初至今累计，接口不提供单季度序列",
+    "probe": [
+      {
+        "type": "0",
+        "periods_returned": [
+          "20260630",
+          "20260331",
+          "20251231",
+          "20250930",
+          "20250630",
+          "20250331"
+        ],
+        "period_suffix_set": [
+          "0331",
+          "0630",
+          "0930",
+          "1231"
+        ]
+      },
+      {
+        "type": "1",
+        "periods_returned": [
+          "20260331",
+          "20250331",
+          "20240331",
+          "20230331",
+          "20220331",
+          "20210331"
+        ],
+        "period_suffix_set": [
+          "0331"
+        ]
+      },
+      {
+        "type": "2",
+        "periods_returned": [
+          "20260630",
+          "20250630",
+          "20240630",
+          "20230630",
+          "20220630",
+          "20210630"
+        ],
+        "period_suffix_set": [
+          "0630"
+        ]
+      },
+      {
+        "type": "3",
+        "periods_returned": [
+          "20250930",
+          "20240930",
+          "20230930",
+          "20220930",
+          "20210930",
+          "20200930"
+        ],
+        "period_suffix_set": [
+          "0930"
+        ]
+      },
+      {
+        "type": "4",
+        "periods_returned": [
+          "20251231",
+          "20241231",
+          "20231231",
+          "20221231",
+          "20211231",
+          "20201231"
+        ],
+        "period_suffix_set": [
+          "1231"
+        ]
+      }
+    ]
+  },
+  "samples": [
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "period_label": "FY2025",
+      "quarter_ends": [
+        "20250331",
+        "20250630",
+        "20250930",
+        "20251231"
+      ],
+      "fy_key": "20251231"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "period_label": "FY2025",
+      "quarter_ends": [
+        "20250331",
+        "20250630",
+        "20250930",
+        "20251231"
+      ],
+      "fy_key": "20251231"
+    }
+  ],
+  "verdict_counts": {
+    "MATCH_EXACT": 48
+  },
+  "rows": [
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "营业收入",
+      "quarter": "20250331",
+      "quarter_no": 1,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "77,869,532.60",
+      "provider_cumulative": "77869532.600000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "营业收入",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "206,233,206.78",
+      "provider_cumulative": "206233206.780000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "营业收入",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "128,363,674.18",
+      "derived_single_quarter": "128,363,674.18",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "营业收入",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "339,829,105.93",
+      "provider_cumulative": "339829105.930000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "营业收入",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "133,595,899.15",
+      "derived_single_quarter": "133,595,899.15",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "营业收入",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "510,041,067.79",
+      "provider_cumulative": "510041067.790000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "营业收入",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "170,211,961.86",
+      "derived_single_quarter": "170,211,961.86",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "营业收入",
+      "quarter": "20251231",
+      "quarter_no": null,
+      "check": "SUM_OF_FOUR_QUARTERS_VS_PROVIDER_FY_CUMULATIVE",
+      "official_pdf_fy_sum": "510,041,067.79",
+      "provider_fy_cumulative": "510041067.790000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250331",
+      "quarter_no": 1,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-18,994,777.56",
+      "provider_cumulative": "-18994777.560000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-23,718,160.14",
+      "provider_cumulative": "-23718160.140000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "-4,723,382.58",
+      "derived_single_quarter": "-4,723,382.58",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-33,810,641.15",
+      "provider_cumulative": "-33810641.150000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "-10,092,481.01",
+      "derived_single_quarter": "-10,092,481.01",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-80,831,846.82",
+      "provider_cumulative": "-80831846.820000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "-47,021,205.67",
+      "derived_single_quarter": "-47,021,205.67",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20251231",
+      "quarter_no": null,
+      "check": "SUM_OF_FOUR_QUARTERS_VS_PROVIDER_FY_CUMULATIVE",
+      "official_pdf_fy_sum": "-80,831,846.82",
+      "provider_fy_cumulative": "-80831846.820000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250331",
+      "quarter_no": 1,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-47,365,689.31",
+      "provider_cumulative": "-47365689.310000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-36,017,837.67",
+      "provider_cumulative": "-36017837.670000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "11,347,851.64",
+      "derived_single_quarter": "11,347,851.64",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-28,311,190.09",
+      "provider_cumulative": "-28311190.090000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "7,706,647.58",
+      "derived_single_quarter": "7,706,647.58",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-10,037,457.61",
+      "provider_cumulative": "-10037457.610000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "18,273,732.48",
+      "derived_single_quarter": "18,273,732.48",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SH:688218",
+      "document_id": "DOC-055EAAF729BDBA32",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20251231",
+      "quarter_no": null,
+      "check": "SUM_OF_FOUR_QUARTERS_VS_PROVIDER_FY_CUMULATIVE",
+      "official_pdf_fy_sum": "-10,037,457.61",
+      "provider_fy_cumulative": "-10037457.610000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "营业收入",
+      "quarter": "20250331",
+      "quarter_no": 1,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "485,004,145.06",
+      "provider_cumulative": "485004145.060000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "营业收入",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "987,505,268.62",
+      "provider_cumulative": "987505268.620000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "营业收入",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "502,501,123.56",
+      "derived_single_quarter": "502,501,123.56",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "营业收入",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "1,508,466,388.58",
+      "provider_cumulative": "1508466388.580000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "营业收入",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "520,961,119.96",
+      "derived_single_quarter": "520,961,119.96",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "营业收入",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "2,076,978,524.51",
+      "provider_cumulative": "2076978524.510000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "营业收入",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "568,512,135.93",
+      "derived_single_quarter": "568,512,135.93",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "营业收入",
+      "quarter": "20251231",
+      "quarter_no": null,
+      "check": "SUM_OF_FOUR_QUARTERS_VS_PROVIDER_FY_CUMULATIVE",
+      "official_pdf_fy_sum": "2,076,978,524.51",
+      "provider_fy_cumulative": "2076978524.510000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250331",
+      "quarter_no": 1,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "5,241,667.53",
+      "provider_cumulative": "5241667.530000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "23,620,104.89",
+      "provider_cumulative": "23620104.890000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "18,378,437.36",
+      "derived_single_quarter": "18,378,437.36",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "42,703,059.13",
+      "provider_cumulative": "42703059.130000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "19,082,954.24",
+      "derived_single_quarter": "19,082,954.24",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-48,851,287.01",
+      "provider_cumulative": "-48851287.010000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "-91,554,346.14",
+      "derived_single_quarter": "-91,554,346.14",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "归属于上市公司股东的净利润",
+      "quarter": "20251231",
+      "quarter_no": null,
+      "check": "SUM_OF_FOUR_QUARTERS_VS_PROVIDER_FY_CUMULATIVE",
+      "official_pdf_fy_sum": "-48,851,287.01",
+      "provider_fy_cumulative": "-48851287.010000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250331",
+      "quarter_no": 1,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "-715,875.87",
+      "provider_cumulative": "-715875.870000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "88,023,060.68",
+      "provider_cumulative": "88023060.680000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250630",
+      "quarter_no": 2,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "88,738,936.55",
+      "derived_single_quarter": "88,738,936.55",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "78,497,589.38",
+      "provider_cumulative": "78497589.380000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20250930",
+      "quarter_no": 3,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "-9,525,471.30",
+      "derived_single_quarter": "-9,525,471.30",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "CUMULATIVE_PROVIDER_VS_PDF_QUARTERLY_SUM",
+      "official_pdf_cumulative": "116,261,982.97",
+      "provider_cumulative": "116261982.970000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20251231",
+      "quarter_no": 4,
+      "check": "SINGLE_QUARTER_EQ_CUMULATIVE_DIFF",
+      "official_pdf_single_quarter": "37,764,393.59",
+      "derived_single_quarter": "37,764,393.59",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    },
+    {
+      "security_id": "SZ:002354",
+      "document_id": "DOC-2025AR-002354",
+      "field_cn": "经营活动产生的现金流量净额",
+      "quarter": "20251231",
+      "quarter_no": null,
+      "check": "SUM_OF_FOUR_QUARTERS_VS_PROVIDER_FY_CUMULATIVE",
+      "official_pdf_fy_sum": "116,261,982.97",
+      "provider_fy_cumulative": "116261982.970000",
+      "abs_diff_cny": 0.0,
+      "verdict": "MATCH_EXACT"
+    }
+  ],
+  "rules_implied": [
+    "P1：Q1单季 = 一季报累计值（Q1累计即Q1单季）。",
+    "P2：Q2/Q3/Q4单季 = 本期累计 − 上一期累计，且两者必须同一年度、同一合并范围、同一版本。",
+    "P3：公司已在年报“分季度主要财务数据”表直接披露单季时，以官方单季表为准，累计差只作勾稽。",
+    "P4：发生追溯重述、同一控制下合并或合并范围变化时，禁止跨版本相减；改用重述后同一版本重算。",
+    "P5：四季加总与全年累计不一致且无法用重述解释时，标记 PERIOD_INCONSISTENT 并阻断该字段。"
+  ],
+  "limitations": [
+    "仅2家公司FY2025样本",
+    "分季度表来自年报正文文本抽取，已保留原始块供复核"
+  ]
+}

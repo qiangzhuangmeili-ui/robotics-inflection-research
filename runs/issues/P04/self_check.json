@@ -1,0 +1,118 @@
+{
+  "plan_version": "20261026_collection_first_v2",
+  "issue_key": "P04",
+  "issue_number": 15,
+  "review_nature": "SELF_CHECK",
+  "checked_at": "2026-10-26T07:35:20+00:00",
+  "executor": "WorkBuddy AI",
+  "summary": {
+    "total": 12,
+    "pass": 12,
+    "fail": 0
+  },
+  "decision": "SELF_CHECK_PASS",
+  "checks": [
+    {
+      "id": "A1",
+      "criterion": "金额/比例/百分点单位与量纲不混",
+      "result": "PASS",
+      "evidence": "financial_field_dictionary.csv",
+      "detail": "33 个字段单位全部匹配；异常=[]"
+    },
+    {
+      "id": "A2",
+      "criterion": "收入/扣非/净利为独立字段且互不替代",
+      "result": "PASS",
+      "evidence": "financial_field_dictionary.csv",
+      "detail": "三个 field_id 独立存在，且 blocking 明确禁止互相替代"
+    },
+    {
+      "id": "A3",
+      "criterion": "NULL 与真实 0 可区分且缺失不填 0",
+      "result": "PASS",
+      "evidence": "financial_field_dictionary.csv + 旧快照实测",
+      "detail": "41 个金额列中 0 值单元格=0；62 家缺失行全列为 NULL=True；每字段均有 null_semantics"
+    },
+    {
+      "id": "B1",
+      "criterion": "P00 契约 7 个字段缺口逐项登记",
+      "result": "PASS",
+      "evidence": "legacy_snapshot_gap_register.csv",
+      "detail": "缺登记=[]；登记总数=63"
+    },
+    {
+      "id": "B2",
+      "criterion": "2025H1 营收等同比基数缺口已列",
+      "result": "PASS",
+      "evidence": "legacy_snapshot_gap_register.csv",
+      "detail": "2025H1 相关缺口 5 项：2025H1 营业收入、2025H1 归母净利、2025H1 毛利率、2025H1 经营现金流净额、2025H1 扣非归母净利"
+    },
+    {
+      "id": "B3",
+      "criterion": "来源字段映射逐行有证据，缺失字段也有扫描证据",
+      "result": "PASS",
+      "evidence": "provider_field_mapping.csv",
+      "detail": "52 行全部有 evidence_ref；无证据行=[]"
+    },
+    {
+      "id": "B4",
+      "criterion": "结构化接口与官方 PDF 数值/单位一致",
+      "result": "PASS",
+      "evidence": "crosscheck_provider_vs_pdf.json",
+      "detail": "{'MATCH_EXACT': 14}；样本 2 组"
+    },
+    {
+      "id": "B5",
+      "criterion": "累计/单季度换算规则经实测验证",
+      "result": "PASS",
+      "evidence": "crosscheck_period_conversion.json",
+      "detail": "{'MATCH_EXACT': 48}；含四季加总=全年、累计差=官方单季"
+    },
+    {
+      "id": "B6",
+      "criterion": "单位取官方表头而非推断",
+      "result": "PASS",
+      "evidence": "pdf_lineitem_evidence.json",
+      "detail": "68 处表头读数，取值集合=['元']"
+    },
+    {
+      "id": "B7",
+      "criterion": "旧快照扣非口径由“单季”更正为“累计”且有逐季加总证据",
+      "result": "PASS",
+      "evidence": "period_conversion_rules.json#snapshot_period_semantics_correction",
+      "detail": "688218 2025：Q1 -19,728,084.54 + Q2 -5,735,225.19 = -25,463,309.73 = 快照 20250630 值；再加 Q3 -10,888,975.44 = -36,352,285.17 "
+    },
+    {
+      "id": "B8",
+      "criterion": "禁止项（fillna(0)/跨版本相减/单季×4）与阻断条件成文",
+      "result": "PASS",
+      "evidence": "period_conversion_rules.json",
+      "detail": "null 禁止 4 条、期间禁止 4 条、阻断 6 条"
+    },
+    {
+      "id": "B9",
+      "criterion": "北交所 62 家缺口与适配器要求显式登记",
+      "result": "PASS",
+      "evidence": "legacy_snapshot_gap_register.csv",
+      "detail": "旧快照对北交所覆盖率 0/62；旧工作台北交所接口返回 400（P03 实测）"
+    }
+  ],
+  "artifacts": {
+    "financial_field_dictionary.csv": {
+      "sha256": "d009e0dc57dd78336d18c6b5d9389fcce2e3900ac338396256089625082cc410",
+      "bytes": 14568
+    },
+    "provider_field_mapping.csv": {
+      "sha256": "b7d9f569728f4453a464ef435884e659743a85947e769d95bccab4a3cfc3574a",
+      "bytes": 26122
+    },
+    "period_conversion_rules.json": {
+      "sha256": "e393cc2c69b640d8b6b9b7d56c78d3054fc219d4160f5056643bf7f37f3fe987",
+      "bytes": 10379
+    },
+    "legacy_snapshot_gap_register.csv": {
+      "sha256": "f4a4e80f6695aba7a4e1b9296f967bb07664119f173f72f2b42219f0bf172f40",
+      "bytes": 13240
+    }
+  }
+}

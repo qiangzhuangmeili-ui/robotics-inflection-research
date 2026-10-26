@@ -1,0 +1,105 @@
+{
+  "template_only": false,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 15,
+  "issue_key": "P04",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI",
+  "review_method": "SELF_CHECK_REPRODUCIBLE_CHECKS_AND_LIVE_PROBES",
+  "reviewed_at": "2026-10-26T07:37:33+00:00",
+  "decision": "SELF_CHECK_PASS",
+  "dependency_review": {
+    "key": "P00",
+    "review_file": "runs/issues/P00/review.json",
+    "decision": "SELF_CHECK_PASS"
+  },
+  "checks": [
+    {
+      "criterion": "收入/扣非/净利、金额/比例/百分点均不混；NULL和真实0可区分",
+      "result": "PASS",
+      "evidence": [
+        "financial_field_dictionary.csv",
+        "self_check.json#A1-A3",
+        "legacy_snapshot_gap_register.csv"
+      ],
+      "detail": "33 个字段逐一标注 unit_kind（AMOUNT_CNY/RATIO_PCT/DELTA_PP/RATIO_TIMES/DATE/CODE）与 scale；收入、扣非归母、归母净利为三个独立 field_id 且各自写明不得互相替代；旧快照 41 个金额列零值单元格=0、62 家缺失行全列 NULL，NULL 与真实 0 可区分；每个字段均有 null_semantics。"
+    },
+    {
+      "criterion": "旧快照缺 2025H1 营收、经营现金流等具体缺口已列；来源字段映射有证据",
+      "result": "PASS",
+      "evidence": [
+        "legacy_snapshot_gap_register.csv",
+        "provider_field_mapping.csv",
+        "crosscheck_provider_vs_pdf.json",
+        "crosscheck_period_conversion.json"
+      ],
+      "detail": "缺口登记 63 行：41 列逐列覆盖 + 18 项整列缺失 + 2 项列存在但不可用 + 北交所分段缺口 + 62 家缺失原因不可判；其中 2025H1 五项基数缺口单独成行。映射 52 行全部带 evidence_ref：新浪为 9 次实测探针，官方 PDF 为物理页码，旧快照为与官方 PDF 的逐项数值比对，缺失字段用全字段扫描作为负证据。"
+    }
+  ],
+  "self_check_summary": {
+    "total": 12,
+    "pass": 12,
+    "fail": 0
+  },
+  "coverage": {
+    "probed_companies": 3,
+    "probed_exchanges": [
+      "SH",
+      "SZ",
+      "BJ"
+    ],
+    "probed_provider_fields": 281,
+    "pdf_documents_read": 4,
+    "pdf_line_items_located": 75,
+    "canonical_fields": 33,
+    "mapping_rows": 52,
+    "gap_rows": 63,
+    "full_universe_processed": 0,
+    "companies_screened": 0
+  },
+  "key_findings": [
+    "结构化接口无扣非归母净利润字段（77 个利润表字段全量扫描），必须回官方 PDF",
+    "接口 type=0/1/2/3/4 为报告期类型选择，返回均为年初至今累计，不提供单季度序列",
+    "官方年报“分季度主要财务数据”表直接披露单季，优先于累计相减",
+    "旧快照 22 列扣非为累计口径（P02 记为“单季”有误），已用逐季加总证明",
+    "旧快照对北交所覆盖率 0/62，与 P03 旧工作台 BJ=400 相互印证",
+    "62 家缺失原因不可判（listing_date 全 UNKNOWN、prelisting_flag 全 NONE）",
+    "2025H1 五项基数缺失，导致 2026H1 同比全部不可计算",
+    "毛利率为百分数数值（23.28 表示 23.28%），比率变动另用百分点"
+  ],
+  "allows_next_stage": true,
+  "allows_next_stage_scope": "P05(#16) 的 P04 依赖成立；P07(#18) 仍需 P05、P06 各自验收",
+  "next_recommended_issue": {
+    "number": 16,
+    "key": "P05"
+  },
+  "limitations": [
+    "3 家公司 4 份 PDF 的样本，不等于全池口径验收",
+    "新浪为非官方结构化数据；只证明数值与单位对齐，不证明业务口径正确",
+    "PDF 数值来自文本抽取，3 份 PDF 的“基本每股收益”标签未识别，已如实记 LABEL_NOT_FOUND_IN_RANGE",
+    "旧工作台 /api/finance/report 未纳入映射（字段词汇未实测）",
+    "SELF_CHECK，不是独立审计"
+  ],
+  "artifacts": {
+    "runs/issues/P04/crosscheck_period_conversion.json": "130d16da6101355bdf935f9c2d043d7d32dcd8b5befc0e0abf76fcc23c582dcf",
+    "runs/issues/P04/crosscheck_provider_vs_pdf.json": "30360ff796405e7f0b19f51620bf20ac01cc2d25fa9e02734d18a4afb57c30f1",
+    "runs/issues/P04/evidence_index.json": "c76f6749935c5904ab5ca8860682b8e86f9b6fae9a8ed7722b9e920e3b7e68be",
+    "runs/issues/P04/financial_field_dictionary.csv": "d009e0dc57dd78336d18c6b5d9389fcce2e3900ac338396256089625082cc410",
+    "runs/issues/P04/handoff.md": "61ca972b0095fdf49accf2bd4229808105ba08606586bbcc28abf7a280d52900",
+    "runs/issues/P04/legacy_snapshot_gap_register.csv": "f4a4e80f6695aba7a4e1b9296f967bb07664119f173f72f2b42219f0bf172f40",
+    "runs/issues/P04/pdf_lineitem_evidence.json": "a575162a44bb150916ca099ce2669535ee50245eaadfed62e22cfc4bdc2ad750",
+    "runs/issues/P04/period_conversion_rules.json": "e393cc2c69b640d8b6b9b7d56c78d3054fc219d4160f5056643bf7f37f3fe987",
+    "runs/issues/P04/plan_validation.json": "4ef5900dae8a9c586cfaa03a75d904200aa0b0f0a407bf63b5d6e1bc87569108",
+    "runs/issues/P04/provider_field_inventory.csv": "8abb8f4341e1181ce3e541231732f89c9dbf775c2a674813bfb8da56c1921482",
+    "runs/issues/P04/provider_field_mapping.csv": "b7d9f569728f4453a464ef435884e659743a85947e769d95bccab4a3cfc3574a",
+    "runs/issues/P04/provider_probe_records.json": "fec0879cea5cb0b4fd18f7d1ae472f8cba76ee9720e5bf7cc0ed7505b871105c",
+    "runs/issues/P04/self_check.json": "04af90bc030547ba8e8847dd249a020d08482879ea56d93ff0e12960ff30f9b2",
+    "tools/p04_crosscheck_periods.py": "ca9114487f6695e878dc0d88c8abb6960dee981e75a75035c86465a473c3fe31",
+    "tools/p04_crosscheck_units.py": "283b199a830a5c5a4492a92aa1e6bb6035fe4bc14ca8138c02517067e2ee106c",
+    "tools/p04_extract_pdf_lineitems.py": "4eb42a2d0295ad31d6e05525a98a3d9a3de74479bd2e43b15e47ca6f662d77e8",
+    "tools/p04_finalize.py": "2af2c23aa316e9ba3154683c66e40efec16da5c579f2f684bc62c9718ee42181",
+    "tools/p04_freeze_financial_contract.py": "e2408b314f80e0567dc2bc4c10d93f5afb72aa98386f52165b005291b882a958",
+    "tools/p04_probe_provider_fields.py": "7c00f675dd6c05fb28ea763e6a00ecb5e1e5c5815d7689ceffe64fd558936fe6",
+    "tools/p04_self_check.py": "f7c459982632d616daa2cca2bb8f99156afd68d5d834964c145f6d7a43d2b6d9"
+  }
+}

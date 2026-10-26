@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "C00_SELF_CHECK_COMPLETE_PENDING_INDEPENDENT_REVIEW_D00_ORDER_START_AND_REVENUE_PENDING",
+  "status": "P04_FIELD_CONTRACT_FROZEN_SELF_CHECK_PASS",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -217,17 +217,19 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/15",
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/16",
     "execution_started": true,
     "last_completed_issue": {
-      "issue_number": 14,
-      "issue_key": "P03",
-      "completed_at": "2026-10-26T07:09:14.809Z",
-      "review_file": "runs/issues/P03/review.json",
+      "issue_number": 15,
+      "issue_key": "P04",
+      "completed_at": "2026-10-26T07:37:33+00:00",
+      "review_file": "runs/issues/P04/review.json",
       "decision": "SELF_CHECK_PASS",
-      "allows_next_stage_scope": "P05/P07的P03技术依赖；其余依赖仍须分别验收",
-      "sample_companies": 3,
-      "circuit_tests_passed": 6
+      "allows_next_stage_scope": "P05(#16) 的 P04 依赖成立；P07(#18) 仍需 P05、P06 各自验收",
+      "canonical_fields": 33,
+      "mapping_rows": 52,
+      "gap_rows": 63,
+      "self_check_passed": "12/12"
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -254,6 +256,25 @@
       "explicit_market_adapter": "tools/source_access.py",
       "full_universe_allowed": false,
       "review_nature": "SELF_CHECK"
+    },
+    "p04_field_contract": {
+      "status": "FROZEN",
+      "version": "P04_FIELD_CONTRACT_V1",
+      "field_dictionary": "runs/issues/P04/financial_field_dictionary.csv",
+      "provider_mapping": "runs/issues/P04/provider_field_mapping.csv",
+      "period_rules": "runs/issues/P04/period_conversion_rules.json",
+      "gap_register": "runs/issues/P04/legacy_snapshot_gap_register.csv",
+      "canonical_fields": 33,
+      "mapping_rows": 52,
+      "verified_numeric_match_provider_vs_pdf": "14/14",
+      "verified_period_conversion_checks": "48/48",
+      "review_nature": "SELF_CHECK",
+      "must_fix_downstream": [
+        "扣非只能回官方 PDF",
+        "北交所必须走显式三市场适配器",
+        "2025H1 基数缺失导致 2026H1 同比不可算",
+        "旧快照 22 列扣非为累计口径"
+      ]
     }
   },
   "pre_issue_breakdown_first_actions": [
