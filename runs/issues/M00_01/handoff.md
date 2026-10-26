@@ -9,7 +9,7 @@
 
 ## 一、一句话结论
 
-100 家 × 7 槽 = **700 个槽位全部有状态**：674 个 `COLLECTED_IDENTITY_VERIFIED`、8 个 `COLLECTED_PENDING_IDENTITY`、18 个 `NOT_TRIED`、0 个 `NOT_DISCLOSED_BY_ISSUER`、0 个源失败/访问受限；合计取得 **682** 槽，累计 1874.0 MB 落本机 D 盘。
+100 家 × 7 槽 = **700 个槽位全部有状态**：678 个 `COLLECTED_IDENTITY_VERIFIED`、4 个 `COLLECTED_PENDING_IDENTITY`、18 个 `NOT_TRIED`、0 个 `NOT_DISCLOSED_BY_ISSUER`、0 个源失败/访问受限；合计取得 **682** 槽，累计 1870.1 MB 落本机 D 盘。
 
 ## 二、名单构成
 
@@ -35,17 +35,17 @@
 
 | 状态 | 槽数 |
 |---|---:|
-| `COLLECTED_IDENTITY_VERIFIED` | 674 |
+| `COLLECTED_IDENTITY_VERIFIED` | 678 |
 | `NOT_TRIED` | 18 |
-| `COLLECTED_PENDING_IDENTITY` | 8 |
+| `COLLECTED_PENDING_IDENTITY` | 4 |
 | **合计** | **700** |
 
 ### 对账（验收第 3 条）
 
 | 口径 | 槽数 |
 |---|---:|
-| obtained_verified | 674 |
-| obtained_pending_identity | 8 |
+| obtained_verified | 678 |
+| obtained_pending_identity | 4 |
 | not_disclosed_by_issuer | 0 |
 | not_applicable_pre_listing | 0 |
 | not_yet_disclosed | 0 |
@@ -60,20 +60,20 @@
 
 `automatic_failures.csv` 共 18 行，状态分布：`NOT_TRIED` 18。本批只入自动队列，不向用户逐家追件。
 
-另有 8 个槽位**文件已取得但身份未核实**（`COLLECTED_PENDING_IDENTITY`，前 8 页抽不出主体/报告期，多为图片封面或扫描件）：
+另有 4 个槽位**文件已取得但身份未核实**（`COLLECTED_PENDING_IDENTITY`，前 8 页抽不出主体/报告期，多为图片封面或扫描件）：
 
 | 证券 | 简称 | 槽位 | 字节 | 页数 |
 |---|---|---|---:|---:|
-| 000333 | 美的集团 | annual_2023 | 8910865 | 373 |
 | 000856 | 冀东装备 | q1_2026 | 5299024 | 10 |
 | 002083 | 孚日股份 | annual_2025 | 48150997 | 123 |
 | 002083 | 孚日股份 | h1_2026 | 37487272 | 93 |
 | 002083 | 孚日股份 | q1_2026 | 2533653 | 7 |
-| 002139 | 拓邦股份 | annual_2023 | 1994367 | 273 |
-| 002139 | 拓邦股份 | annual_2024 | 5044169 | 322 |
-| 002139 | 拓邦股份 | annual_2025 | 2246044 | 298 |
 
 这些槽位计入“已取得原件”，但**不得当作已核实**；待人工看封面或补 OCR 后转 VERIFIED。
+
+### 补采记录（采后发现缺陷）
+
+本批采完后发现 **F7 选择缺陷**（同一期同时有中文全文与英文版时，按“发布更晚”选中英文版，中文版被跳过、主体校验失败降级 PENDING），已修 `p05_collector.py::_select` 并补采 2 家 / 4 槽，补采后状态：`COLLECTED_IDENTITY_VERIFIED` 4。原英文版记录留档在 `recollect_pending.json` 的 `superseded`（4 条），未删除证据。
 
 
 ## 六、存储与归档

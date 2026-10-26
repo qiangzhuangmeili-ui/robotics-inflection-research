@@ -1030,10 +1030,27 @@ class Collector:
         full = [r for r in rows if not r["is_summary"]]
         summary = [r for r in rows if r["is_summary"]]
 
+        # M00_02 修正（F7）：同一期常同时有中文全文与英文版，英文版往往发布更晚。
+        # 原逻辑只按 (revision_no, published_on) 取最大 → 会选中英文版，中文版被跳过，
+        # 主体校验随即失败（英文正文里没有中文简称），静默降级为 PENDING。
+        # 现改为：优先中文全文，其次修订号高，最后披露日晚。
+        def is_english(r: dict) -> int:
+            title = normalize_text(r.get("title") or "").lower()
+            return 1 if ("英文" in title or "english" in title) else 0
+
+        def stamp(value: str) -> float:
+            try:
+                return datetime.strptime(value, "%Y-%m-%d").timestamp()
+            except (TypeError, ValueError):
+                return 0.0
+
+        def rank(r):
+            return (is_english(r), -int(r["revision_no"]), -stamp(r.get("published_on") or ""))
+
         def key(r):
             return (r["revision_no"], r.get("published_on") or "")
 
-        return (max(full, key=key) if full else None, max(summary, key=key) if summary else None)
+        return (min(full, key=rank) if full else None, max(summary, key=key) if summary else None)
 
     # -- 单槽采集
     def collect_slot(self, company: CompanyRef, slot: dict, index: dict,

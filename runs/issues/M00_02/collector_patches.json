@@ -1,0 +1,36 @@
+{
+  "issue_key": "M00_02",
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-26T22:20:00+08:00",
+  "patched_file": "tools/p05_collector.py::Collector._select",
+  "patches": [
+    {
+      "id": "F7",
+      "title": "同一报告期同时存在中文全文与英文版时，选中英文版导致主体校验失败",
+      "symptom": "M00_02 首轮 12 个 COLLECTED_PENDING_IDENTITY 中 10 个 title 为「（英文版）/（英文）」；M00_01 另有 4 个同类（000333 annual_2023、002139 annual_2023/2024/2025）。合计 14 槽被静默降级，占两批 1400 槽的 1.0%。",
+      "evidence": {
+        "example": "002415 海康威视 annual_2025：目录同时有「2025年年度报告」(2026-04-17) 与「2025年年度报告（英文版）」(2026-04-24)；旧逻辑按 (revision_no, published_on) 取最大 → 选中英文版；ISSUER_MATCH FAIL（正文无中文简称「海康威视」），降级 PENDING。",
+        "affected_in_m00_02": 10,
+        "affected_in_m00_01": 4,
+        "recollect_file": "runs/issues/M00_02/recollect_pending.json"
+      },
+      "root_cause": "Collector._select 只按 (revision_no, published_on) 取最大，未考虑语言版本；英文版通常晚于中文版披露，因此总是被选中。",
+      "fix": "改为三级排序：① 优先非英文（标题不含「英文」/English）② revision_no 高 ③ published_on 晚。摘要件仍在 _load_registry 与 _select 中被排除。",
+      "impact": "全池凡同时在巨潮披露中英文年报到公司（多为大盘/出口型企业）都会命中；不修则后续 9 批会持续产生 PENDING，且拿到的是英文版原文（对中文口径抽取、非经常性损益表定位都不利）。",
+      "risk": "若某公司只披露英文版，则仍会选中英文版（is_english=1 但唯一候选），状态仍为 PENDING，不会误判为 VERIFIED。",
+      "verification": "补采后 M00_02 12 槽 → 10 VERIFIED + 2 PENDING（002689 ST远智 名称变更）；M00_01 4 槽 → 全部 VERIFIED。"
+    },
+    {
+      "id": "F8-CANDIDATE",
+      "title": "证券简称变更（ST/更名）导致主体校验无法通过，暂不修",
+      "symptom": "002689 ST远智 annual_2024/2025 仍为 PENDING：封面全称为「沈阳远大智能工业集团股份有限公司」，简称已变更为「ST远智」，简称/字号均非封面连续子串。",
+      "evidence": {
+        "index_sec_names": "同一 security 的公告目录里同时出现「ST远智」2 条与「远大智能」7 条，可证主体同一",
+        "local_file": "sources/collection/originals/002689/annual_2025/*.pdf"
+      },
+      "decision": "NOT_PATCHED_IN_THIS_CARD",
+      "why": "需要「历史简称别名表」这一新规则，属身份校验口径变更，应由 A01/A02 统一裁决，不在采集批次内单方面放宽；本批按 P00 规则保留 PENDING 并写明证据。",
+      "suggested_next": "A01 集中重试时建立 data/issuer_name_aliases.csv（security_id + 历史简称 + 生效区间），再以 issuer_match_mode=HISTORICAL_SEC_NAME 复核。"
+    }
+  ]
+}

@@ -1,438 +1,6 @@
 {
  "security_id": "SZ:002139",
  "slots": {
-  "annual_2023": {
-   "security_id": "SZ:002139",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_PENDING_IDENTITY",
-   "status_reason": "身份未完全核实（正文抽取不足或主体未在前 8 页出现），待人工看封面",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219794080.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1370,
-     "at": "2026-10-26T21:27:12+08:00",
-     "response_sha256": null,
-     "bytes": 1994367,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219794080.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1370,
-    "at": "2026-10-26T21:27:12+08:00",
-    "response_sha256": null,
-    "bytes": 1994367,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "MANUAL_IDENTITY_CHECK",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:27:12+08:00",
-    "bytes_written": 1994367
-   },
-   "document": {
-    "document_id": "DOC-9D694A769548C115",
-    "identity_key": "SZ:002139|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2023年年度报告（英文版）",
-    "published_on": "2024-04-24",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219794080.PDF",
-    "local_file": "sources/collection/originals/002139/annual_2023/DOC-9D694A769548C115.pdf",
-    "sha256": "665313b93a3e4ff9a7aeb508335975605a1ff006959e7ece421e391243de4bf9",
-    "bytes": 1994367,
-    "page_count": 273,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1994367 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "273 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "273 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=拓邦股份 代码=002139 方式=NONE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2023年年度报告（英文版）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告（英文版）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002139\\annual_2023\\DOC-9D694A769548C115.pdf.part",
-    "bytes": 1994367,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1994367 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "273 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "273 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=拓邦股份 代码=002139 方式=NONE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2023年年度报告（英文版）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告（英文版）"
-     }
-    },
-    "identity_status": "COLLECTED_PENDING_IDENTITY",
-    "form": "FULL_TEXT",
-    "page_count": 273,
-    "text_chars": 2374,
-    "issues": [
-     "ISSUER_MATCH"
-    ],
-    "sha256": "665313b93a3e4ff9a7aeb508335975605a1ff006959e7ece421e391243de4bf9",
-    "cover_text_chars": 140,
-    "identity_probe_chars": 7307,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "NONE",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-26T21:27:12+08:00"
-  },
-  "annual_2024": {
-   "security_id": "SZ:002139",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_PENDING_IDENTITY",
-   "status_reason": "身份未完全核实（正文抽取不足或主体未在前 8 页出现），待人工看封面",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269269.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1549,
-     "at": "2026-10-26T21:27:14+08:00",
-     "response_sha256": null,
-     "bytes": 5044169,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269269.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1549,
-    "at": "2026-10-26T21:27:14+08:00",
-    "response_sha256": null,
-    "bytes": 5044169,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "MANUAL_IDENTITY_CHECK",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:27:14+08:00",
-    "bytes_written": 5044169
-   },
-   "document": {
-    "document_id": "DOC-6489828151F6EE2D",
-    "identity_key": "SZ:002139|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年年度报告（英文版）",
-    "published_on": "2025-04-24",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269269.PDF",
-    "local_file": "sources/collection/originals/002139/annual_2024/DOC-6489828151F6EE2D.pdf",
-    "sha256": "6b8826e2f561a0889ef626fa3374eec2545f181d6e5268e46a3bf8c600c5ddb7",
-    "bytes": 5044169,
-    "page_count": 322,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "5044169 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "322 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "322 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=拓邦股份 代码=002139 方式=NONE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年年度报告（英文版）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告（英文版）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002139\\annual_2024\\DOC-6489828151F6EE2D.pdf.part",
-    "bytes": 5044169,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "5044169 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "322 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "322 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=拓邦股份 代码=002139 方式=NONE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年年度报告（英文版）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告（英文版）"
-     }
-    },
-    "identity_status": "COLLECTED_PENDING_IDENTITY",
-    "form": "FULL_TEXT",
-    "page_count": 322,
-    "text_chars": 2110,
-    "issues": [
-     "ISSUER_MATCH"
-    ],
-    "sha256": "6b8826e2f561a0889ef626fa3374eec2545f181d6e5268e46a3bf8c600c5ddb7",
-    "cover_text_chars": 103,
-    "identity_probe_chars": 7847,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "NONE",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-26T21:27:14+08:00"
-  },
-  "annual_2025": {
-   "security_id": "SZ:002139",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_PENDING_IDENTITY",
-   "status_reason": "身份未完全核实（正文抽取不足或主体未在前 8 页出现），待人工看封面",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-05-06/1225273769.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1335,
-     "at": "2026-10-26T21:27:15+08:00",
-     "response_sha256": null,
-     "bytes": 2246044,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-05-06/1225273769.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1335,
-    "at": "2026-10-26T21:27:15+08:00",
-    "response_sha256": null,
-    "bytes": 2246044,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "MANUAL_IDENTITY_CHECK",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:27:16+08:00",
-    "bytes_written": 2246044
-   },
-   "document": {
-    "document_id": "DOC-503809AB6375AA96",
-    "identity_key": "SZ:002139|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告（英文版）",
-    "published_on": "2026-05-05",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-05-06/1225273769.PDF",
-    "local_file": "sources/collection/originals/002139/annual_2025/DOC-503809AB6375AA96.pdf",
-    "sha256": "6d6666c59eb42bdbe80008649c30b4026a653d8172fd141fe89e7bb5c8316207",
-    "bytes": 2246044,
-    "page_count": 298,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2246044 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "298 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "298 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=拓邦股份 代码=002139 方式=NONE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告（英文版）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告（英文版）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002139\\annual_2025\\DOC-503809AB6375AA96.pdf.part",
-    "bytes": 2246044,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2246044 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "298 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "298 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=拓邦股份 代码=002139 方式=NONE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告（英文版）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告（英文版）"
-     }
-    },
-    "identity_status": "COLLECTED_PENDING_IDENTITY",
-    "form": "FULL_TEXT",
-    "page_count": 298,
-    "text_chars": 3956,
-    "issues": [
-     "ISSUER_MATCH"
-    ],
-    "sha256": "6d6666c59eb42bdbe80008649c30b4026a653d8172fd141fe89e7bb5c8316207",
-    "cover_text_chars": 100,
-    "identity_probe_chars": 9467,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "NONE",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-26T21:27:16+08:00"
-  },
   "h1_2024": {
    "security_id": "SZ:002139",
    "slot_id": "h1_2024",
@@ -1000,6 +568,432 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-26T21:27:23+08:00"
+  },
+  "annual_2023": {
+   "security_id": "SZ:002139",
+   "slot_id": "annual_2023",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2023",
+   "period_end": "2023-12-31",
+   "statutory_deadline": "2024-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-03-27/1219412282.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1393,
+     "at": "2026-10-26T22:13:57+08:00",
+     "response_sha256": null,
+     "bytes": 3499540,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-03-27/1219412282.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1393,
+    "at": "2026-10-26T22:13:57+08:00",
+    "response_sha256": null,
+    "bytes": 3499540,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T22:13:57+08:00",
+    "bytes_written": 3499540
+   },
+   "document": {
+    "document_id": "DOC-9D694A769548C115",
+    "identity_key": "SZ:002139|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2023年年度报告",
+    "published_on": "2024-03-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-03-27/1219412282.PDF",
+    "local_file": "sources/collection/originals/002139/annual_2023/DOC-9D694A769548C115.pdf",
+    "sha256": "385369161716d0ab72c26b807773d9e53bf58d622a8bc8d728fba00294fff6a4",
+    "bytes": 3499540,
+    "page_count": 229,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "3499540 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "229 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "229 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=拓邦股份 代码=002139 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2023年年度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002139\\annual_2023\\DOC-9D694A769548C115.pdf.part",
+    "bytes": 3499540,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "3499540 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "229 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "229 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=拓邦股份 代码=002139 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2023年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 229,
+    "text_chars": 1565,
+    "issues": [],
+    "sha256": "385369161716d0ab72c26b807773d9e53bf58d622a8bc8d728fba00294fff6a4",
+    "cover_text_chars": 52,
+    "identity_probe_chars": 3466,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T22:13:57+08:00"
+  },
+  "annual_2024": {
+   "security_id": "SZ:002139",
+   "slot_id": "annual_2024",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2024",
+   "period_end": "2024-12-31",
+   "statutory_deadline": "2025-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-03-28/1222928170.pdf",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1362,
+     "at": "2026-10-26T22:13:59+08:00",
+     "response_sha256": null,
+     "bytes": 2059508,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-03-28/1222928170.pdf",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1362,
+    "at": "2026-10-26T22:13:59+08:00",
+    "response_sha256": null,
+    "bytes": 2059508,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T22:13:59+08:00",
+    "bytes_written": 2059508
+   },
+   "document": {
+    "document_id": "DOC-6489828151F6EE2D",
+    "identity_key": "SZ:002139|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年年度报告",
+    "published_on": "2025-03-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-03-28/1222928170.pdf",
+    "local_file": "sources/collection/originals/002139/annual_2024/DOC-6489828151F6EE2D.pdf",
+    "sha256": "085c07985d3f586f51bb170daf13134747aed606002fdff3fbcb0b66eb3d3c6d",
+    "bytes": 2059508,
+    "page_count": 238,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2059508 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "238 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "238 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=拓邦股份 代码=002139 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年年度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002139\\annual_2024\\DOC-6489828151F6EE2D.pdf.part",
+    "bytes": 2059508,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2059508 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "238 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "238 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=拓邦股份 代码=002139 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 238,
+    "text_chars": 1351,
+    "issues": [],
+    "sha256": "085c07985d3f586f51bb170daf13134747aed606002fdff3fbcb0b66eb3d3c6d",
+    "cover_text_chars": 22,
+    "identity_probe_chars": 3284,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T22:13:59+08:00"
+  },
+  "annual_2025": {
+   "security_id": "SZ:002139",
+   "slot_id": "annual_2025",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2025",
+   "period_end": "2025-12-31",
+   "statutory_deadline": "2026-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-02/1225075377.pdf",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1697,
+     "at": "2026-10-26T22:14:01+08:00",
+     "response_sha256": null,
+     "bytes": 1931057,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-02/1225075377.pdf",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1697,
+    "at": "2026-10-26T22:14:01+08:00",
+    "response_sha256": null,
+    "bytes": 1931057,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T22:14:01+08:00",
+    "bytes_written": 1931057
+   },
+   "document": {
+    "document_id": "DOC-503809AB6375AA96",
+    "identity_key": "SZ:002139|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年年度报告",
+    "published_on": "2026-04-01",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-02/1225075377.pdf",
+    "local_file": "sources/collection/originals/002139/annual_2025/DOC-503809AB6375AA96.pdf",
+    "sha256": "ea3426598fc82b9df13327ca1812c199695d5adc90e558a06ffb30ef958f8d5c",
+    "bytes": 1931057,
+    "page_count": 222,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1931057 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "222 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "222 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=拓邦股份 代码=002139 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年年度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002139\\annual_2025\\DOC-503809AB6375AA96.pdf.part",
+    "bytes": 1931057,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1931057 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "222 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "222 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=拓邦股份 代码=002139 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 222,
+    "text_chars": 1283,
+    "issues": [],
+    "sha256": "ea3426598fc82b9df13327ca1812c199695d5adc90e558a06ffb30ef958f8d5c",
+    "cover_text_chars": 22,
+    "identity_probe_chars": 3018,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T22:14:01+08:00"
   }
  },
  "indexes": {
@@ -1378,5 +1372,5 @@
    "fetched_at": "2026-10-26T21:27:22+08:00"
   }
  },
- "updated_at": "2026-10-26T21:27:23+08:00"
+ "updated_at": "2026-10-26T22:14:01+08:00"
 }

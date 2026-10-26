@@ -216,7 +216,7 @@ def companies_of(batch: str) -> list[P05.CompanyRef]:
             security_id=row["security_id"],
             stock_code=row["stock_code"],
             stock_name=row["stock_name"],
-            exchange=row["exchange"],
+            exchange=row["security_id"].split(":")[0],
         ))
     return refs
 
@@ -555,6 +555,81 @@ def build_reconciliation(coverage: list[dict], summary: dict) -> dict:
     }
 
 
+def recollect_pending(batch: str, only_slots: list[str] | None = None,
+                      only_english: bool = False) -> dict:
+    """重采身份待核槽位：先把台账记录降级留档，再按修正后的选择规则重跑这些槽。
+
+    用途：M00_02 发现 F7（同期中英文并存时选中英文版）后，只补这几十个槽，
+    不重跑整批、不动其他已核实槽位。
+    """
+    coverage, _ = build_coverage(batch)
+    refs = {c.security_id: c for c in companies_of(batch)}
+    targets: dict[str, list[str]] = {}
+    for row in coverage:
+        if row["status"] != "COLLECTED_PENDING_IDENTITY":
+            continue
+        if only_slots and row["slot_id"] not in only_slots:
+            continue
+        if only_english and not any(k in (row["title"] or "") for k in ("英文", "English", "ENGLISH")):
+            continue
+        targets.setdefault(row["security_id"], []).append(row["slot_id"])
+    if not targets:
+        return {"batch": batch, "companies": 0, "slots": 0, "note": "无 PENDING 槽位"}
+
+    collector = P05.Collector(config_path=CONFIG_PATH, root=ROOT)
+    superseded = []
+    for security_id, slot_ids in targets.items():
+        company = refs[security_id]
+        data = collector.ledger.load(company.stock_code)
+        for slot_id in slot_ids:
+            old = data["slots"].get(slot_id)
+            if not old:
+                continue
+            doc = old.get("document") or {}
+            superseded.append({
+                "security_id": security_id, "slot_id": slot_id,
+                "previous_status": old.get("status"),
+                "previous_title": doc.get("title"),
+                "previous_document_id": doc.get("document_id"),
+                "previous_sha256": doc.get("sha256"),
+                "reason": "F7：同期中英文并存时按旧规则选中英文版，主体校验失败降级 PENDING；改选中文全文后重采",
+                "at": utc_now(),
+            })
+            data["slots"].pop(slot_id, None)
+        collector.ledger.save(company.stock_code)
+    # 清掉旧内容索引，避免英文版哈希残留导致误判重复
+    collector._content_index = {}
+    for security_id, slot_id, record in collector.ledger.iter_slots():
+        doc = record.get("document") or {}
+        if doc.get("sha256"):
+            collector._content_index.setdefault(doc["sha256"], f"{security_id}/{slot_id}")
+
+    results = []
+    for security_id, slot_ids in targets.items():
+        company = refs[security_id]
+        try:
+            res = collector.collect_company(company, slot_ids, include_optional_pdf=True)
+        except Exception as exc:  # 单家失败不拖垮补采
+            print(f"{company.stock_code} ERROR {type(exc).__name__}: {exc}", flush=True)
+            continue
+        counts: dict[str, int] = {}
+        for slot in res["slots"]:
+            counts[slot["status"]] = counts.get(slot["status"], 0) + 1
+        print(f"{company.stock_code} {company.stock_name} {' '.join(slot_ids)} -> {counts}", flush=True)
+        results.append(res)
+    write_shared_index()
+    collector.flush_events()
+    payload = {
+        "batch_id": batch, "recollected_at": utc_now(),
+        "companies": len(targets), "slots": sum(len(v) for v in targets.values()),
+        "superseded": superseded,
+        "results": results,
+    }
+    write_json(out_dir(batch) / "recollect_pending.json", payload)
+    return {"batch": batch, "companies": len(targets),
+            "slots": sum(len(v) for v in targets.values()), "superseded": len(superseded)}
+
+
 def build_review(batch: str, summary: dict, failures: list[dict], checkpoint: dict) -> dict:
     assignment = read_csv(assignment_path(batch))
     coverage = read_csv(out_dir(batch) / "coverage.csv")
@@ -700,6 +775,23 @@ def build_handoff(batch: str, summary: dict, failures: list[dict], checkpoint: d
             lines.append(f"| {row['stock_code']} | {row['stock_name']} | {row['slot_id']} | "
                          f"{row['bytes']} | {row['page_count']} |")
         lines += ["", "这些槽位计入“已取得原件”，但**不得当作已核实**；待人工看封面或补 OCR 后转 VERIFIED。", ""]
+    recollect_file = out_dir(batch) / "recollect_pending.json"
+    if recollect_file.exists():
+        rec = json.loads(recollect_file.read_text(encoding="utf-8"))
+        after: dict[str, int] = {}
+        for company in rec.get("results") or []:
+            for slot in company.get("slots") or []:
+                after[slot.get("status")] = after.get(slot.get("status"), 0) + 1
+        after_desc = "、".join(f"`{k}` {v}" for k, v in sorted(after.items())) or "无"
+        lines += [
+            "### 补采记录（采后发现缺陷）",
+            "",
+            f"本批采完后发现 **F7 选择缺陷**（同一期同时有中文全文与英文版时，按“发布更晚”选中英文版，"
+            f"中文版被跳过、主体校验失败降级 PENDING），已修 `p05_collector.py::_select` 并补采 "
+            f"{rec.get('companies')} 家 / {rec.get('slots')} 槽，补采后状态：{after_desc}。"
+            f"原英文版记录留档在 `recollect_pending.json` 的 `superseded`（{len(rec.get('superseded') or [])} 条），未删除证据。",
+            "",
+        ]
     lines += [
         "",
         "## 六、存储与归档",
@@ -764,7 +856,8 @@ def finalize(batch: str) -> dict:
     }
     for name in ["assignment_freeze.json", "coverage.csv", "document_receipts.csv",
                  "field_coverage.csv", "automatic_failures.csv", "checkpoint.json",
-                 "run_result.json", "review.json", "handoff.md"]:
+                 "run_result.json", "review.json", "handoff.md", "run.log",
+                 "collector_patches.json", "recollect_pending.json", "plan_validation.txt"]:
         path = out_dir(batch) / name
         if path.exists():
             manifest["files"].append({"path": path.relative_to(ROOT).as_posix(),
@@ -781,6 +874,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--freeze", action="store_true")
     parser.add_argument("--run", action="store_true")
     parser.add_argument("--finalize", action="store_true")
+    parser.add_argument("--recollect-pending", action="store_true",
+                        help="重采 COLLECTED_PENDING_IDENTITY 槽位（修选择规则后补采）")
+    parser.add_argument("--only-english", action="store_true",
+                        help="配合 --recollect-pending：只补采当时选中英文版的槽位")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--no-optional-pdf", action="store_true")
     args = parser.parse_args(argv)
@@ -788,6 +885,9 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(freeze(args.batch), ensure_ascii=False, indent=2))
     if args.run:
         run(args.batch, limit=args.limit, include_optional_pdf=not args.no_optional_pdf)
+    if args.recollect_pending:
+        print(json.dumps(recollect_pending(args.batch, only_english=args.only_english),
+                         ensure_ascii=False, indent=2))
     if args.finalize:
         print(json.dumps(finalize(args.batch)["summary"], ensure_ascii=False, indent=2))
     return 0
