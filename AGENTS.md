@@ -1,6 +1,6 @@
 # AI接手必读
 
-这是研究组织仓库。首读README、PROJECT_STATE.json、data/package_index.csv。未被明确要求时，不执行全池调查、不改历史输入、不做买卖建议。一次领取一个READY包，先检查实际状态以免重复。
+这是研究组织仓库。首读README、PROJECT_STATE.json、docs/第一轮基础资料批量收集.md，再看data/intake_batch_index.csv。用户已授权全池基础资料批量采集；未被明确要求时，不执行全池企业深度调查、不改历史输入、不做买卖建议。一次领取一个READY包，先检查实际状态以免重复。
 
 data/company_master.csv是调度总表；archive/latest_universe.csv是旧验收快照。分组只是检索线索，不能写成事实。公司商业阶段新流程统一UNKNOWN，阶段只在产品线判。旧主表6处公司阶段值在archive与新主表legacy_company_stage列保留供追溯，不作为新流程认定。
 
@@ -22,3 +22,10 @@ data/company_master.csv是调度总表；archive/latest_universe.csv是旧验收
 AI先通过已连接Drive按真实URL/ID查元数据，再取得完整原文核页码和短引文。用户能打开不代表AI可读；OWNER_ONLY_CHECKED不可当作AI_READ_CONFIRMED，摘要可读不表示完整PDF已核读。无权限或无法取得原文写ACCESS_BLOCKED/HOLD并列补件，不能声称已核实。不要要求将Drive公开，不扩大分享权限。
 
 Drive根目录和分类目录已创建，真实URL/ID见PROJECT_STATE.json与data/drive_folders.csv。64份旧去重PDF和另外8份年报目前已在Drive找到共72份，详见data/document_registry.csv与data/manual_requests.csv。仅8份新年报已核对正文身份；64份旧PDF仅按文件名和元数据匹配，全部云端哈希/官方源及版本仍待核验。不得将文件已上传等同业务证据验收。
+
+
+## 2026-10-26用户新优先级：先广收资料，再按指标收紧
+
+先执行docs/第一轮基础资料批量收集.md：全池批量匹配现有资料、自动采集与有限重试；缺件先入自动队列，整轮完成后按软件/网站和报告期合并给用户一次补缺表。不要每处理一家公司就催用户补资料，也不要在新批次指标宽筛前继续无边界追客户/订单/履约。已有研究和归档结果全部复用，不回退验收状态。
+
+第一轮仅验证文件与数据可用性，不逐份PDF做业务精读；采用业务结论时仍须按原规则核验。资料收集状态与研究验收状态分别维护。data/intake_company_queue.csv与intake_batch_index.csv为采集调度，不是已经取得报告的证明。旧的“每家找15分钟再人工补件”规则仅用于后期重点公司特殊证据，基础资料遵循整轮汇总。
