@@ -1,0 +1,1370 @@
+{
+  "plan_version": "20261026_collection_first_v2",
+  "adopted_on": "2026-10-26",
+  "new_issues_created": 39,
+  "primary_batch_count": 11,
+  "candidate_count": 1054,
+  "next_recommended_issue": 11,
+  "execution_started": false,
+  "tasks": [
+    {
+      "key": "P00",
+      "phase": "准备",
+      "scope": "只制定本轮采集合同，不下载全池、不筛公司、不做业务判断。",
+      "dependencies": [],
+      "steps": [
+        "核对1054个security_id唯一、证券代码前导零和历史主体映射；固定名单版本/指纹。",
+        "以最新PROJECT_STATE.json为准冻结knowledge_as_of（当前2026-10-25），采集日另列；改日期必须另记版本。",
+        "固定2023—2025年报、2024—2026半年报全文槽；季度结构化数据/目录及能自动取得的原文；近两年公告/IR目录和相关关键词原件。",
+        "定义上市前、不适用、未披露、修订版、源失败、尚未尝试；记录容量估算规则，6324仅为最大核心槽数。"
+      ],
+      "outputs": [
+        "collection_scope.json",
+        "universe_fingerprint.json",
+        "coverage_acceptance_rules.json"
+      ],
+      "acceptance": [
+        "证券池精确1054且版本可复算；没有把旧53采用或概念标签当作预筛淘汰条件。",
+        "报告类型、期间、截止日、字段需求、纳入/不适用规则均明确。",
+        "完成定义允许有明确限制的缺口，但禁止NOT_TRIED伪装完成；不用为凑目标公司数设规则。"
+      ],
+      "stop": [
+        "名单/日期口径有冲突先记录并解决，未冻结不得启动全池请求。"
+      ],
+      "order": 1,
+      "issue_number": 11,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11",
+      "title": "P00｜冻结资料范围、候选名单和研究截止日",
+      "status": "READY",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/P00/",
+      "issue_body_sha256": "e66355affa4c266a7aa52a20b74df42aaa6da76a9782588893b6afc7e52337c8"
+    },
+    {
+      "key": "P01",
+      "phase": "准备",
+      "scope": "只定义资料身份与登记表，不重新研究企业。",
+      "dependencies": [
+        "P00"
+      ],
+      "steps": [
+        "冻结document_id、证券主体/期间、官方公告ID、原始URL、修订版本及source URL别名字段。",
+        "区分内容SHA256与Drive file ID：同Drive对象不等于同内容；同内容多来源保留来源别名。",
+        "定义发现链接、下载、Drive归档、文件可读/身份确认、业务证据核实五种独立状态。"
+      ],
+      "outputs": [
+        "document_identity_rules.json",
+        "document_registry_schema.json",
+        "registry_migration_plan.md"
+      ],
+      "acceptance": [
+        "同一原件被多批使用时幂等复用；更正版不覆盖原版。",
+        "迁移只补列/关联，不降低或抹去既有复核状态；字段包含失败原因与下一步。"
+      ],
+      "stop": [
+        "原表版本冲突、身份不明保留UNKNOWN，不直接删重、不删唯一原件。"
+      ],
+      "order": 2,
+      "issue_number": 12,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/12",
+      "title": "P01｜统一文件身份、来源登记与去重规则",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/P01/",
+      "issue_body_sha256": "ab3a5fc13ae13b046301169f3d53d9f648f5517a43f5bd2779e1c056f8e3df72"
+    },
+    {
+      "key": "P02",
+      "phase": "准备",
+      "scope": "仅盘点和建立索引复用，不追加企业业务深挖。",
+      "dependencies": [
+        "P01"
+      ],
+      "steps": [
+        "读取最新document_registry、Drive目录和本机缓存；不要把旧64份待上传状态覆盖到新归档结果。",
+        "复用已有992家部分财务快照及溯源信息，62家旧缺失单列，逐字段统计覆盖而非整家公司一概有/无。",
+        "把已有公司研究结果列为历史证据资产，不重新认定业务或阶段；修正失效本机路径。"
+      ],
+      "outputs": [
+        "existing_assets.csv",
+        "existing_field_coverage.csv",
+        "reuse_manifest.json"
+      ],
+      "acceptance": [
+        "盘点给出文档数/唯一数/已读取数/已业务验收数，分别计数。",
+        "每个复用资产有真实位置或Drive ID/URL、版本、身份与校验状态；无凭证不写已核验。"
+      ],
+      "stop": [
+        "读取受限只记录资产访问问题；不要求公开Drive、不向用户逐家开缺件。"
+      ],
+      "order": 3,
+      "issue_number": 13,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/13",
+      "title": "P02｜盘点现有Drive、本机与旧研究库，避免重复收集",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/P02/",
+      "issue_body_sha256": "3ef8609d2e5c4f946e4b7de20d5f2672e22c5795378a3a92d4fade8761a38646"
+    },
+    {
+      "key": "P03",
+      "phase": "准备",
+      "scope": "只验证和修复取数入口，少量公开探针；不跑1054家公司。",
+      "dependencies": [
+        "P00"
+      ],
+      "steps": [
+        "记录当前本机工具箱未运行/取数连接失败的真实错误，区分环境故障与源站没有资料。",
+        "在既有配置中恢复可用入口，先试一个公司/一个报告类型；再覆盖沪深北最小探针。",
+        "定义超时、有限重试、备用官方源、同源连续失败停止条件和下次重试条件。",
+        "涉及账户、权限或安全设置变更时按真实权限规则处理，不读取密钥或擅自扩大共享。"
+      ],
+      "outputs": [
+        "source_health.json",
+        "environment_recovery.md",
+        "source_circuit_policy.json"
+      ],
+      "acceptance": [
+        "沪深北探针与失败路径有实测记录；不能用沪深专用代码校验声称覆盖北交所。",
+        "一次全局故障不会产生1054条公司人工补件；未恢复时全量任务保持阻断。"
+      ],
+      "stop": [
+        "同源反复TLS/代理/接口错误即停止该源，保存一次环境故障记录，不逐公司撞错。"
+      ],
+      "order": 4,
+      "issue_number": 14,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/14",
+      "title": "P03｜恢复并验证采集连接，建立来源故障熔断",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/P03/",
+      "issue_body_sha256": "ad8f8cc906bb87e8dc4a76522e98ad725489f258049061baaec9842f21244bbf"
+    },
+    {
+      "key": "P04",
+      "phase": "准备",
+      "scope": "只做数据字典和来源映射，不按财务结果筛公司。",
+      "dependencies": [
+        "P00"
+      ],
+      "steps": [
+        "定义收入、成本/毛利、归母净利、扣非归母、经营现金流、应收、存货、合并范围、币种、单位。",
+        "明确FY/H1/9M/Q1等累计与派生单季公式；只在同范围/同版本可比时相减。",
+        "分别保留report_period、published_on、collected_at、as_of、restatement，未知披露日期不冒充PIT可得数据。",
+        "负利润/零基数不用正常增长率；另记绝对额改善、利润率；净利不能替代扣非。"
+      ],
+      "outputs": [
+        "financial_field_dictionary.csv",
+        "provider_field_mapping.csv",
+        "period_conversion_rules.json"
+      ],
+      "acceptance": [
+        "收入/扣非/净利、金额/比例/百分点均不混；NULL和真实0可区分。",
+        "旧快照缺2025H1营收、经营现金流等具体缺口已列；来源字段映射有证据。"
+      ],
+      "stop": [
+        "单位、主体或报告期不能确认则阻断相关字段，不猜映射、不fillna(0)。"
+      ],
+      "order": 5,
+      "issue_number": 15,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/15",
+      "title": "P04｜冻结财务字段、单位、报表与时间口径",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/P04/",
+      "issue_body_sha256": "067af8fc1dba2e96d044ec50fcebb54796da57d2107bdfb0c8337c39fedcd31c"
+    },
+    {
+      "key": "P05",
+      "phase": "准备",
+      "scope": "只实现与小样本验证采集能力，不做全池分析或无边界爬取。",
+      "dependencies": [
+        "P01",
+        "P03",
+        "P04"
+      ],
+      "steps": [
+        "支持公告全分页与上游总数核对，保留原始响应、请求参数、来源时间与游标。",
+        "每个证券/报告槽记录source_attempt、attempt_count、last_error、next_action、checkpoint；支持幂等跳过已取得原件。",
+        "原文检查HTTP/文件头/PDF可读、标题/主体/报告期/全文或摘要、页数、SHA256；链接记录不能当下载成功。",
+        "加入低并发、限速、重试预算、熔断和中断恢复；北交所/历史代码作为独立用例。"
+      ],
+      "outputs": [
+        "collector_config.json",
+        "collector_runbook.md",
+        "collector_validation.json"
+      ],
+      "acceptance": [
+        "至少覆盖分页不完整、HTML伪PDF、同文件重复、下载中断与源故障；运行可复算。",
+        "原始大文件旁路存本机/Drive，GitHub只保存小型索引与运行记录。"
+      ],
+      "stop": [
+        "源未恢复或核心校验不通过，不通过增加并发/无限重试绕过失败。"
+      ],
+      "order": 6,
+      "issue_number": 16,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/16",
+      "title": "P05｜实现可断点续跑的采集器与下载校验",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/P05/",
+      "issue_body_sha256": "88686dcbcf8457cb05bb76695574143e4fa133ab047c7788dc6a0ff6b7637ea1"
+    },
+    {
+      "key": "P06",
+      "phase": "准备",
+      "scope": "只完成资源与保存安排，不复制上传大量重复文件。",
+      "dependencies": [
+        "P00",
+        "P02"
+      ],
+      "steps": [
+        "基于已有命中和报告槽数估算文件数/大小，区分计划槽、实际发现、实际字节数。",
+        "确认Drive实际根目录、01原件/02交接/03历史/04财务导出/05行业目录，缺权限记录真实阻断。",
+        "定义本地下载缓存、Drive确认、文档登记顺序和重复缓存清理条件；原版与修订版保留。"
+      ],
+      "outputs": [
+        "storage_plan.json",
+        "archive_routing.csv",
+        "transfer_receipt_schema.json"
+      ],
+      "acceptance": [
+        "不会在GitHub提交PDF/ZIP/原始大表；容量不足时有断点和优先级记录，不默默截断。",
+        "Drive目录URL不能填进文件ID；归档成功不等于AI全文已核读。"
+      ],
+      "stop": [
+        "容量或写入权限不足停止上传环节并保留本地原件，不删除唯一原件。"
+      ],
+      "order": 7,
+      "issue_number": 17,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/17",
+      "title": "P06｜确定容量、目录、归档与交接规则",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/P06/",
+      "issue_body_sha256": "f6097eb14b7dd781be324bfecd16a3f6d3a816db81eb3747cc9f811401107062"
+    },
+    {
+      "key": "P07",
+      "phase": "准备",
+      "scope": "固定10家公司做采集格式校准；不是旧C00业务深读，也不新增全池以外公司。",
+      "dependencies": [
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06"
+      ],
+      "steps": [
+        "按沪深北、前导零、历史代码/近期上市、已有资料和缺资料等条件选10家并冻结清单。",
+        "跑财务字段、公告分页、全文PDF识别、归档与失败恢复，不做客户/订单/盈利归因。",
+        "明确校准产物可作为正式资料复用；之后M批仍按完整1054唯一名单统计，不能把10家再加一次。"
+      ],
+      "outputs": [
+        "calibration_assignment.csv",
+        "calibration_coverage.csv",
+        "calibration_review.json"
+      ],
+      "acceptance": [
+        "10家均有采集状态，市场覆盖与特殊边界充分；只核文件/数据可用性。",
+        "校准命中的文档后续不重复下载，队列证券总数仍为1054。"
+      ],
+      "stop": [
+        "字段/身份/分页错误先修采集器再复跑校准，不按旧C00分类推进。"
+      ],
+      "order": 8,
+      "issue_number": 18,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18",
+      "title": "P07｜10家采集校准：只验接口和资料，不研究业务",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/P07/",
+      "issue_body_sha256": "daf1d883dc23f571b4bacb5cda3efb9c399ec6c88dc924cd911415a7db48daa4"
+    },
+    {
+      "key": "M00_01",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_01/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 9,
+      "issue_number": 19,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/19",
+      "title": "M00_01｜基础资料自动采集第01批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_01/",
+      "issue_body_sha256": "f930112702e7673f000d2f267597d8090ab4ab10ae2a7edb49135b951165f396"
+    },
+    {
+      "key": "M00_02",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_02/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 10,
+      "issue_number": 20,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/20",
+      "title": "M00_02｜基础资料自动采集第02批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_02/",
+      "issue_body_sha256": "ed5639c80f6f7c6cceb48d6c26066a21f573f325127748f1559e6406a6d6cde5"
+    },
+    {
+      "key": "M00_03",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_03/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 11,
+      "issue_number": 21,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/21",
+      "title": "M00_03｜基础资料自动采集第03批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_03/",
+      "issue_body_sha256": "628dbfe54fdf5fa36427d7932b5eb6caf9b310107ecc0aa455208ca6f990d0c5"
+    },
+    {
+      "key": "M00_04",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_04/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 12,
+      "issue_number": 22,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/22",
+      "title": "M00_04｜基础资料自动采集第04批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_04/",
+      "issue_body_sha256": "efc2ff30f5f218317226e2e8a704dda122d6eaa26d1ec7dd7d98dd4ca745134f"
+    },
+    {
+      "key": "M00_05",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_05/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 13,
+      "issue_number": 23,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/23",
+      "title": "M00_05｜基础资料自动采集第05批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_05/",
+      "issue_body_sha256": "c40f963c6d6b32469ce196c2ef6977082e9827bbdfed8a2e7cf5ad244ac8b1f1"
+    },
+    {
+      "key": "M00_06",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_06/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 14,
+      "issue_number": 24,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/24",
+      "title": "M00_06｜基础资料自动采集第06批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_06/",
+      "issue_body_sha256": "87e36245857ae2fb0664b952e7f7e550ebbc15585067c477812ab75a1d44735a"
+    },
+    {
+      "key": "M00_07",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_07/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 15,
+      "issue_number": 25,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/25",
+      "title": "M00_07｜基础资料自动采集第07批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_07/",
+      "issue_body_sha256": "077a974a8637ff3e41327cfba4ed05d2cff65f4050f6c334aefd441ddd4368af"
+    },
+    {
+      "key": "M00_08",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_08/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 16,
+      "issue_number": 26,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/26",
+      "title": "M00_08｜基础资料自动采集第08批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_08/",
+      "issue_body_sha256": "933033382edbe5a1e74cb36b8d25153ddf2539695c3989dbc9f4a6f340a210d0"
+    },
+    {
+      "key": "M00_09",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_09/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 17,
+      "issue_number": 27,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/27",
+      "title": "M00_09｜基础资料自动采集第09批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_09/",
+      "issue_body_sha256": "90a2af93c37f93bebbc297294ac4d9d0f2933de37f2dfea9fd1025ab756563ef"
+    },
+    {
+      "key": "M00_10",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_10/assignment.csv的100家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确100家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 18,
+      "issue_number": 28,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/28",
+      "title": "M00_10｜基础资料自动采集第10批：固定100家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_10/",
+      "issue_body_sha256": "0addf14dee48de5fe6d3ed564afeeb7f29264efef6d57b3fbc1d7733f231a853"
+    },
+    {
+      "key": "M00_11",
+      "phase": "采集批次",
+      "scope": "只处理intake_batches/M00_11/assignment.csv的54家公司；不挑公司、不换名单、不做逐家公司业务精读。技术批次编号不表示已经执行。",
+      "dependencies": [
+        "P07"
+      ],
+      "steps": [
+        "先按文档ID/哈希和最新资产盘点命中复用，再收缺少的财务字段、报告原件和公告/IR目录。",
+        "按P00冻结的每个报告槽记录取得/不适用/未披露/失败/未尝试；主体与报告期核对，全文/摘要区分。",
+        "保留分页、原始出处、下载校验、Drive回执和断点；一家失败继续其他家。",
+        "失败先记录到本批自动队列，不向用户逐家追件，不开展订单合同和估值研究。"
+      ],
+      "outputs": [
+        "coverage.csv",
+        "document_receipts.csv",
+        "field_coverage.csv",
+        "automatic_failures.csv",
+        "checkpoint.json"
+      ],
+      "acceptance": [
+        "分配名单精确54家，证券ID与清单一致、代码六位文本，无换名漏人；计划槽全部有真实状态。",
+        "成功必须有真实文件/数据与来源；源停摆/未尝试项显式列出，不能说全批材料已齐。",
+        "运行记录说明已尝试数、成功数、未披露/不适用数、失败数和未尝试数，和总槽数对账。"
+      ],
+      "stop": [
+        "达到源熔断或资源预算时保存checkpoint与未处理项，回到P03/P05修复，不伪造完成也不派手补。"
+      ],
+      "order": 19,
+      "issue_number": 29,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/29",
+      "title": "M00_11｜基础资料自动采集第11批：固定54家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/M00_11/",
+      "issue_body_sha256": "121de94f3488cc36e0a0589a6143cd25349fb73d3bf9c2110843a42d65a7cb95"
+    },
+    {
+      "key": "A00",
+      "phase": "收尾补缺",
+      "scope": "只聚合采集覆盖与完整性，不按公司投资价值筛选。",
+      "dependencies": [
+        "M00_01",
+        "M00_02",
+        "M00_03",
+        "M00_04",
+        "M00_05",
+        "M00_06",
+        "M00_07",
+        "M00_08",
+        "M00_09",
+        "M00_10",
+        "M00_11"
+      ],
+      "steps": [
+        "核对11个批次名单互斥且并集1054，校准资料按文档ID复用不重计。",
+        "逐公司逐报告槽核发现链接/下载/归档/文件身份确认各状态，核各财务字段和市场覆盖。",
+        "把真实失败、未尝试、尚未披露、上市前不适用分别列出；保留全局源故障。"
+      ],
+      "outputs": [
+        "all_pool_coverage.csv",
+        "all_field_coverage.csv",
+        "coverage_reconciliation.json"
+      ],
+      "acceptance": [
+        "11/11批状态可核对，1054个ID不漏不重复；数量能复算。",
+        "所有NOT_TRIED保持未完成，不能因无报错就认定应收尽收。"
+      ],
+      "stop": [
+        "尚有整批未尝试则回对应M批；全局故障回P03，不能直接把未尝试清单交给用户。"
+      ],
+      "order": 20,
+      "issue_number": 30,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/30",
+      "title": "A00｜汇总11批覆盖率，核对全池和全部资料槽",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/A00/",
+      "issue_body_sha256": "491641aaedba084eae079c2332ee230ec40024ba4078bc4e3d85be49166ab148"
+    },
+    {
+      "key": "A01",
+      "phase": "收尾补缺",
+      "scope": "只自动补真实失败/不完整项，不重跑已取得资料。",
+      "dependencies": [
+        "A00"
+      ],
+      "steps": [
+        "按错误/网站分组，先处理全局连接故障，再按有限预算重试。",
+        "尝试备用交易所、巨潮、公司IR等正式来源，保留每次结果与身份核对；更正版独立保留。",
+        "成功项核销，剩余项区分自动已尽力、未披露、不适用和需环境恢复。"
+      ],
+      "outputs": [
+        "retry_attempts.csv",
+        "retry_resolved.csv",
+        "residual_failures.csv"
+      ],
+      "acceptance": [
+        "失败项都有已试路径和实际结果，已取得资料不重复下载。",
+        "源普遍不可用只保留一个源故障请求，不拆1054个手工公司请求。"
+      ],
+      "stop": [
+        "重试预算用完保留限制；全局环境未恢复时不得宣称已完成自动整轮。"
+      ],
+      "order": 21,
+      "issue_number": 31,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/31",
+      "title": "A01｜集中重试失败项与备用官方来源",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/A01/",
+      "issue_body_sha256": "e877046d8054b19d05dde00adf60fff6e14f3dbe70387389527cafb2e556f10d"
+    },
+    {
+      "key": "A02",
+      "phase": "收尾补缺",
+      "scope": "整理整轮人工补缺交付，不新增逐家研究。",
+      "dependencies": [
+        "A01"
+      ],
+      "steps": [
+        "只纳入已自动尝试并经过重试/备用源后仍缺的资料或字段。",
+        "按东方财富导出、交易所/巨潮下载、报告期与批次合并可一起取得的条目。",
+        "每项列代码/所需标题与期间/失败原因/已试来源/用户一次怎样操作/保存路径/Drive目标。",
+        "若没有需手补项写NO_HUMAN_ACTION_NEEDED；尚未披露、不适用不派用户补。"
+      ],
+      "outputs": [
+        "manual_requests_consolidated.csv",
+        "给用户的一次补件说明.md"
+      ],
+      "acceptance": [
+        "一次交付、可批量操作；没有NOT_TRIED伪缺件或全局故障拆分催补。",
+        "旧manual_requests.csv历史状态保留，新请求有批次/版本、不重复向用户索取已补文件。"
+      ],
+      "stop": [
+        "若仍是采集入口整体故障，回P03并给单一环境问题，不列全池下载任务给用户。"
+      ],
+      "order": 22,
+      "issue_number": 32,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/32",
+      "title": "A02｜只发一次：按软件、网站和报告期合并人工补缺",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/A02/",
+      "issue_body_sha256": "51f4126d49e0c3089511154ef8063cae0174d2378b67e1af85a6eff023dc1c82"
+    },
+    {
+      "key": "A03",
+      "phase": "收尾补缺",
+      "scope": "仅接收本轮补件和核销状态，不顺便深读企业。",
+      "dependencies": [
+        "A02"
+      ],
+      "steps": [
+        "按document_id/哈希、证券主体、报告期和修订版本匹配补交文件。",
+        "归档Drive并登记真实ID/URL；检查可打开、全文/摘要、身份和字段单位。",
+        "逐项核销补缺，错误/重复/未补保留原因；无需补件时记录可验证的空操作。"
+      ],
+      "outputs": [
+        "manual_intake_receipts.csv",
+        "remaining_gaps.csv",
+        "registry_updates.csv"
+      ],
+      "acceptance": [
+        "用户补件与请求一对一/多对一可追溯，已补不再催。",
+        "文档可用性和业务证据核实状态分开；不能仅凭用户说上传了就全标通过。"
+      ],
+      "stop": [
+        "附件不清或读取受限只保留相关缺口，不公开分享、不猜内容。"
+      ],
+      "order": 23,
+      "issue_number": 33,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/33",
+      "title": "A03｜人工补件回填、去重与缺口核销",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/A03/",
+      "issue_body_sha256": "341aaaf3ea5c0bad51d1a520756d216a8e1a3f8f794be0adf1486f3302def765"
+    },
+    {
+      "key": "A04",
+      "phase": "收尾补缺",
+      "scope": "只验收资料轮，不认定机器人业务或企业拐点。",
+      "dependencies": [
+        "A03"
+      ],
+      "steps": [
+        "核全池范围、计划槽处理状态、财务字段覆盖、已披露/不适用与未解决缺口。",
+        "按P00预定验收标准决定ACCEPTED_WITH_LIMITS或退回；关键指标不可比项保留HOLD。",
+        "列清原文可用性与官方出处/修订版本限制，不要求每份原文都先做业务引文精读。"
+      ],
+      "outputs": [
+        "intake_acceptance.json",
+        "usable_fields_and_limits.csv",
+        "remaining_gap_owners.csv"
+      ],
+      "acceptance": [
+        "能按冻结标准复算，未尝试与全局故障不被掩盖。",
+        "通过只表示可以开始指标工作，不能直接跳业务深研或估值；缺失公司仍保留。"
+      ],
+      "stop": [
+        "覆盖不符合P00或关键字段口径未核则退回相应资料/映射issue。"
+      ],
+      "order": 24,
+      "issue_number": 34,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/34",
+      "title": "A04｜资料轮验收：放行指标计算，明确保留缺口",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/A04/",
+      "issue_body_sha256": "26882e0a98d94d7d00fc026cdd0c10ac79a8575ddac2031416880106720bd245"
+    },
+    {
+      "key": "S00",
+      "phase": "指标筛选",
+      "scope": "只准备可比指标输入，不筛公司。",
+      "dependencies": [
+        "A04"
+      ],
+      "steps": [
+        "按P04映射标准化，保留原字段/单位/转换倍数/来源和修订版本。",
+        "处理年度、H1、累计季度和可派生单季，不同主体/版本不可盲减。",
+        "标记缺失、上市前、重述和低基数，检查合计关系与来源。"
+      ],
+      "outputs": [
+        "financial_normalized.csv",
+        "normalization_issues.csv",
+        "normalization_manifest.json"
+      ],
+      "acceptance": [
+        "1054家公司全留在主键集合；缺失不填0，季度与年度可比性明确。",
+        "现金流/扣非缺失不得用净利润或其他代理值替代。"
+      ],
+      "stop": [
+        "映射单位或报表范围冲突回P04；取件不足回对应资料issue。"
+      ],
+      "order": 25,
+      "issue_number": 35,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/35",
+      "title": "S00｜标准化全池财务，保留原值、单位和版本",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S00/",
+      "issue_body_sha256": "7cb6c9697b5878cabf0c2153c9ce68895a0b7c6bc9eb1d296a212682a900bc4c"
+    },
+    {
+      "key": "S01",
+      "phase": "指标筛选",
+      "scope": "只确定规则版本；不看个别公司来调阈值，不先宣布名单。",
+      "dependencies": [
+        "S00"
+      ],
+      "steps": [
+        "定义收入同比/加速、毛利率百分点变化、扣非绝对额改善/利润率、现金流/应收存货提示规则。",
+        "明确宽筛任一改善信号、收紧多信号要求、质量检查与观察名单；阈值是研究假设，不是行业定律。",
+        "登记负/零基数、缺失、低基数、一次性事项、不同模式的处理和重进条件。",
+        "如使用当期匿名分布校准，明确探索性质；冻结版本/时间/输入指纹后再运行。"
+      ],
+      "outputs": [
+        "screen_rules_v1.json",
+        "metric_formulas.md",
+        "threshold_rationale.md"
+      ],
+      "acceptance": [
+        "所有公式/阈值/边界/缺失路径可执行且先于名单产出留痕。",
+        "没有必须筛出N家的规则；以后改规则另版本重算全池，不手调个别公司。"
+      ],
+      "stop": [
+        "规则不能解释亏损或缺失处理则先修规则，不开始排名。"
+      ],
+      "order": 26,
+      "issue_number": 36,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/36",
+      "title": "S01｜预先登记筛选公式、阈值、缺失与亏损规则",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S01/",
+      "issue_body_sha256": "8f630c3042f69351369b48746ba2a3417a7148fcd778bf400d622e813de31050"
+    },
+    {
+      "key": "S02",
+      "phase": "指标筛选",
+      "scope": "只计算已登记指标，不读企业公告找故事。",
+      "dependencies": [
+        "S01"
+      ],
+      "steps": [
+        "用S00和S01冻结输入计算每项指标，保留分子/分母/对比期与公式版本。",
+        "负或零利润基数正常增速留空并列绝对额改善；公司整体指标不冒充机器人分部指标。",
+        "核前导零、单位、NA、极端值、历史数据版本与当前截面。"
+      ],
+      "outputs": [
+        "all_pool_metrics.csv",
+        "metric_qc.csv",
+        "calculation_manifest.json"
+      ],
+      "acceptance": [
+        "指标可复算，1054个主键都有状态；没有未来数据或跨期混算。",
+        "不能以本轮计算声称具备PIT历史回测或机器人盈利归因。"
+      ],
+      "stop": [
+        "数据/公式有误回S00/S01，不手工抹异常值以得到好名单。"
+      ],
+      "order": 27,
+      "issue_number": 37,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37",
+      "title": "S02｜计算全池指标与口径检查",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S02/",
+      "issue_body_sha256": "ea0aa53e74183772a9c3e4b67a3f23f2d22df7d823a9dee0c6e25a77e5c6ce95"
+    },
+    {
+      "key": "S03",
+      "phase": "指标筛选",
+      "scope": "只按已冻结规则做宽松筛选，不核客户/订单。",
+      "dependencies": [
+        "S02"
+      ],
+      "steps": [
+        "执行S01宽筛，给每家通过/未过/缺数据观察状态与触发指标。",
+        "另存未过和未知，不删除主表；记录重进条件。",
+        "汇总各市场、线索组、公司模式留存率与缺失影响，不指定应剩多少家。"
+      ],
+      "outputs": [
+        "wide_pass.csv",
+        "wide_defer.csv",
+        "wide_unknown.csv",
+        "wide_summary.json"
+      ],
+      "acceptance": [
+        "三类分区对账到1054，无人工加塞/移除。",
+        "缺数据不等于淘汰；已有45家业务候选也不自动绕过新宽筛。"
+      ],
+      "stop": [
+        "0家或过多时先报告分布；需改规则回S01新版本重跑，不暗调阈值。"
+      ],
+      "order": 28,
+      "issue_number": 38,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/38",
+      "title": "S03｜第一道宽筛：任一改善信号，保留观察队列",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S03/",
+      "issue_body_sha256": "f4cda68c7efb64b7b237bdabae10ef742fad2fe54edc9b34b2ceb6b41aece4d7"
+    },
+    {
+      "key": "S04",
+      "phase": "指标筛选",
+      "scope": "只对宽筛通过队列运行收紧规则；未知队列继续保留。",
+      "dependencies": [
+        "S03"
+      ],
+      "steps": [
+        "按冻结的增长加速、毛利改善、扣非改善等组合条件执行。",
+        "区分低基数反弹、减亏与持续增长，保存每家公司触发/未触发原因。",
+        "保留退回观察和重进条件；不新增人工PDF深读。"
+      ],
+      "outputs": [
+        "tight_pass.csv",
+        "tight_observe.csv",
+        "tight_decision_log.csv"
+      ],
+      "acceptance": [
+        "所有变化由规则解释，没有为了凑名单数调门槛。",
+        "未通过不自动作无机器人业务判断，未知不填零。"
+      ],
+      "stop": [
+        "规则变更必须回S01留版本并重算全体相关输入。"
+      ],
+      "order": 29,
+      "issue_number": 39,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/39",
+      "title": "S04｜第二道收紧：核多指标共同改善",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S04/",
+      "issue_body_sha256": "35abb0a4c0663cc258cc48a1037fdfeaabf63dccd8d9c3351068d0e91b0fb729"
+    },
+    {
+      "key": "S05",
+      "phase": "指标筛选",
+      "scope": "仅用结构化数据和已有材料标风险，不提前开展商业深研。",
+      "dependencies": [
+        "S04"
+      ],
+      "steps": [
+        "按同口径比较经营现金流、扣非、应收/存货与收入变动，记录季节性和范围限制。",
+        "负基数、处置并表、一次性项目等可疑改善列风险，无法确定时保留待核。",
+        "不以现金流单期为负或高研发自动剔除；执行既定规则。"
+      ],
+      "outputs": [
+        "quality_flags.csv",
+        "quality_pass.csv",
+        "quality_observe.csv"
+      ],
+      "acceptance": [
+        "每条风险有计算出处或明确待核标记；缺失和真实劣化分开。",
+        "公司整体质量检查不能冒充机器人业务质量确认。"
+      ],
+      "stop": [
+        "需要查特殊公告的项登记后期核验，当前不追合同履约。"
+      ],
+      "order": 30,
+      "issue_number": 40,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/40",
+      "title": "S05｜第三道质量检查：现金流、应收存货与低基数",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S05/",
+      "issue_body_sha256": "ff5477b05dd3e32a3279c94d8e5934b3ad62df16147f73faaee08b812691a5e5"
+    },
+    {
+      "key": "S06",
+      "phase": "指标筛选",
+      "scope": "只整理已有证据支持的早期储备/缺数据公司，不新挖全池。",
+      "dependencies": [
+        "S01",
+        "S02"
+      ],
+      "steps": [
+        "复用已有研发/样机/送样等事实，分开早期储备和单纯概念/未知。",
+        "不强制盈利，记录进入观察的来源与将来可验证触发条件。",
+        "与主线筛选去重，另标需补数据和业务验证优先级。"
+      ],
+      "outputs": [
+        "early_stage_watch.csv",
+        "missing_data_watch.csv",
+        "watch_reentry_rules.md"
+      ],
+      "acceptance": [
+        "不因未盈利漏掉所有早期企业，也不把所有人形概念无依据纳入。",
+        "观察名单不是买入推荐或已商业化名单，不自动跳到估值。"
+      ],
+      "stop": [
+        "缺业务证据只写UNKNOWN，不能用模型记忆补齐。"
+      ],
+      "order": 31,
+      "issue_number": 41,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/41",
+      "title": "S06｜保留早期储备与缺数据观察名单",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S06/",
+      "issue_body_sha256": "296327aebb5609d4bfb8665299f73efc7ba0fcb5cf8096d573c92fa8672dd80b"
+    },
+    {
+      "key": "S07",
+      "phase": "指标筛选",
+      "scope": "只做小样本规则/计算审计，不重研全池。",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "steps": [
+        "冻结抽样方法，覆盖边界通过/边界未过、北交所、亏损、缺数据和早期观察。",
+        "复算关键指标，检查缺失、报告期、基数和模式差异导致的偏差。",
+        "用反向漏筛样本检验，但不把已知喜欢的公司直接加回。"
+      ],
+      "outputs": [
+        "screen_audit_sample.csv",
+        "screen_audit_findings.md",
+        "screen_audit_review.json"
+      ],
+      "acceptance": [
+        "问题可定位到数据或规则版本；修复后按新版本重跑受影响全体。",
+        "抽查规模/目的有边界，不发展成持续逐家公告研究。"
+      ],
+      "stop": [
+        "发现系统性口径问题先回S00/S01，后期业务队列保持锁定。"
+      ],
+      "order": 32,
+      "issue_number": 42,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/42",
+      "title": "S07｜抽查阈值边界、漏筛和缺数据偏差",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S07/",
+      "issue_body_sha256": "65488cca2d5fd3e575b153f14db16ede4286377a92198cf57203246ae046cc10"
+    },
+    {
+      "key": "S08",
+      "phase": "指标筛选",
+      "scope": "只验收指标轮与核验队列，不开始业务调查。",
+      "dependencies": [
+        "S07"
+      ],
+      "steps": [
+        "对账宽筛/收紧/质量/观察所有分区，保存名单和规则/输入版本。",
+        "按规则和证据缺口排序分配核验预算，不承诺固定剩余数量。",
+        "与旧53采用、旧45细筛候选及C00/B00已有成果关联，复用但不自动提升状态。"
+      ],
+      "outputs": [
+        "screen_acceptance.json",
+        "business_verification_candidates.csv",
+        "candidate_reuse_map.csv"
+      ],
+      "acceptance": [
+        "名单可由数据+规则复现，每家公司有进入/观察/未过理由。",
+        "旧“概念粗筛20家读PDF”顺序不再提前执行；后续只按冻结名单分包。"
+      ],
+      "stop": [
+        "数据/规则未验收不得放行企业深读，不能直接进入估值。"
+      ],
+      "order": 33,
+      "issue_number": 43,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/43",
+      "title": "S08｜验收筛选结果，冻结后期业务核验名单",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/S08/",
+      "issue_body_sha256": "56f0a69f7ff121abda6e64af07974f39106c50c593536971223844a6cee2c30b"
+    },
+    {
+      "key": "R00",
+      "phase": "重点研究",
+      "scope": "只对冻结名单派包并核实业务事实；原67包为资料/历史范围参考，不全部重跑。",
+      "dependencies": [
+        "S08"
+      ],
+      "steps": [
+        "从business_verification_candidates生成固定5家以内派包；保留已有C00/B00结果复用映射。",
+        "每包另建具体执行子issue，引用本卡规则、固定assignment和可用原件，禁止临时换名单。",
+        "按具体产品/并表主体/机器人用途核官方原文、短引文与物理页，区分规划和已发生事实。"
+      ],
+      "outputs": [
+        "business_batch_dispatch.csv",
+        "business_review_register.csv",
+        "child_issue_manifest.json"
+      ],
+      "acceptance": [
+        "每个实际研究小包有独立issue和明确输出，不让一张总卡无限研究。",
+        "通过业务核验不等于有独立机器人收入或公司整体阶段确认。"
+      ],
+      "stop": [
+        "单公司证据缺口保留HOLD；本轮必要特殊证据可集中列增量补件，不回到全池深读。"
+      ],
+      "order": 34,
+      "issue_number": 44,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/44",
+      "title": "R00｜后期业务核验：只给筛后公司分5家小包",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/R00/",
+      "issue_body_sha256": "fbcdc194ee1651756f71b50b5594f012e5ccbe7b7d4df8d08ab48aed1ac787f2"
+    },
+    {
+      "key": "R01",
+      "phase": "重点研究",
+      "scope": "只对业务核验通过公司每批最多5家做收入/利润质量归因。",
+      "dependencies": [
+        "R00"
+      ],
+      "steps": [
+        "每5家以内另建子issue和固定名单，复用批量财务，不重复取全部历史。",
+        "核机器人单项/混合系统/公司总收入、并表范围、报告期间与分母。",
+        "核业务改善是否实际反映收入、毛利、扣非和回款，无法单列就写归因限制。"
+      ],
+      "outputs": [
+        "financial_attribution_dispatch.csv",
+        "robot_revenue_scope.csv",
+        "attribution_review.json"
+      ],
+      "acceptance": [
+        "不能把公司财务改善或混合类别金额全归机器人。",
+        "未披露保持未知，不由合作/产能/订单规模反推实绩。"
+      ],
+      "stop": [
+        "无法归因留观察和证据缺口，不为推进估值编数。"
+      ],
+      "order": 35,
+      "issue_number": 45,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/45",
+      "title": "R01｜筛后公司财务归因与收入范围核验",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/R01/",
+      "issue_body_sha256": "d19344a34a16a5c628d2a366c2f21ce7285293dec75da348b0fe93bf9f165ffb"
+    },
+    {
+      "key": "R02",
+      "phase": "重点研究",
+      "scope": "只研究筛后名单涉及的行业/业务模式，最多3个主题一包。",
+      "dependencies": [
+        "S08"
+      ],
+      "steps": [
+        "按产业链/业务模式分主题建子issue，限定指标和资料来源。",
+        "核产量/销量/订单/价格等至少两期同口径事实、样本范围和披露日。",
+        "区分行业景气与单公司受益，行业大盘不能证明特定企业机器人收入。"
+      ],
+      "outputs": [
+        "industry_topic_dispatch.csv",
+        "industry_signals.csv",
+        "industry_limits.md"
+      ],
+      "acceptance": [
+        "统计口径、来源、单位、时间范围明确，预测与事实分开。",
+        "不无限扩展到所有政策/新闻和全部产业链公司。"
+      ],
+      "stop": [
+        "统计口径冲突先保留未知，不强行合并序列。"
+      ],
+      "order": 36,
+      "issue_number": 46,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/46",
+      "title": "R02｜行业信号核验与同口径比较",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/R02/",
+      "issue_body_sha256": "40c72f5bd6da7538e58144b3ed03787703826e21bf10a777240a5889b23f4b11"
+    },
+    {
+      "key": "R03",
+      "phase": "重点研究",
+      "scope": "仅对业务和财务归因已核验的少量公司研究拐点。",
+      "dependencies": [
+        "R01",
+        "R02"
+      ],
+      "steps": [
+        "固定3家以内子issue，整合交付/收费、收入、盈利、回款和行业证据链。",
+        "至少两期可比事实，说明低基数/周期/并表/一次性因素等替代解释。",
+        "列未来可推翻信号和缺证条件，不把送样、合作、计划产能当盈利兑现。"
+      ],
+      "outputs": [
+        "inflection_batch_dispatch.csv",
+        "inflection_cases.csv",
+        "counter_evidence.md"
+      ],
+      "acceptance": [
+        "每个“拐点”结论可追溯且有限制，无法归因者仅观察。",
+        "公司产品线分开，不取最高阶段代表整家公司。"
+      ],
+      "stop": [
+        "关键事实缺失退回R00/R01，不先写乐观结论再找证据。"
+      ],
+      "order": 37,
+      "issue_number": 47,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/47",
+      "title": "R03｜公司与行业拐点研究：每包最多3家公司",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/R03/",
+      "issue_body_sha256": "afe49a8ba633859fbddc03cc866f1c87fdcac6afb2bff89057c86406a41cf4ed"
+    },
+    {
+      "key": "R04",
+      "phase": "重点研究",
+      "scope": "只对前序证据通过的少量公司做情景研究，不自动交易。",
+      "dependencies": [
+        "R03"
+      ],
+      "steps": [
+        "每包最多3家建子issue，使用同日价格、可核财务与股本口径。",
+        "假设明确列来源，区分事实与预测，展示不同利润/估值假设影响。",
+        "明确主要风险与证伪条件，不以远期市场规模或规划产能替代利润。"
+      ],
+      "outputs": [
+        "valuation_dispatch.csv",
+        "valuation_scenarios.csv",
+        "assumption_register.csv"
+      ],
+      "acceptance": [
+        "每项结果可复算，价格同日，假设不冒充实绩。",
+        "不生成自动买卖指令、收益承诺或补齐未知数据的虚构数值。"
+      ],
+      "stop": [
+        "业务或财务基础未通过则保持锁定，不提前估值。"
+      ],
+      "order": 38,
+      "issue_number": 48,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/48",
+      "title": "R04｜最后做估值情景与假设敏感性",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/R04/",
+      "issue_body_sha256": "7e0bac27d3762eebe11e9b439cf4530f9c286ac422266ec8eeee71d6d4684f4a"
+    },
+    {
+      "key": "R05",
+      "phase": "重点研究",
+      "scope": "只制定并执行有边界的增量更新；本卡不自动创建定时任务。",
+      "dependencies": [
+        "R04"
+      ],
+      "steps": [
+        "冻结每次新公告/财报的增量截止日、所需公司/主题和触发条件。",
+        "新资料走同一身份/归档/计算规则；变更阈值必须版本化重算。",
+        "检查issue依赖、唯一进行中任务、历史补件是否重复、输出是否越界。",
+        "需要提醒/自动监控时另获用户明确授权后再使用自动化工具。"
+      ],
+      "outputs": [
+        "incremental_update_policy.md",
+        "change_log.csv",
+        "plan_drift_audit.json"
+      ],
+      "acceptance": [
+        "不会无边界持续追单家公司合同履约或重跑全池。",
+        "保留证伪/重进条件和历史版本；任务执行范围每次明确。"
+      ],
+      "stop": [
+        "发现越界先在交接中标明并回到对应issue，不自改总体研究目标。"
+      ],
+      "order": 39,
+      "issue_number": 49,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/49",
+      "title": "R05｜增量更新、规则变更与计划防偏检查",
+      "status": "WAITING_DEPENDENCIES",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/R05/",
+      "issue_body_sha256": "64a19ebe4486ae6b996537fb8007f94375a614b175b95cf08eee9854a5000a26"
+    }
+  ]
+}
