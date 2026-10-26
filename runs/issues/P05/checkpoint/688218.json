@@ -1,0 +1,264 @@
+{
+ "security_id": "SH:688218",
+ "slots": {
+  "annual_2025": {
+   "security_id": "SH:688218",
+   "slot_id": "annual_2025",
+   "report_type": "ANNUAL_REPORT",
+   "period_label": "FY2025",
+   "period_end": "2025-12-31",
+   "statutory_deadline": "2026-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225259116.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 2459,
+     "at": "2026-10-26T16:30:21+08:00",
+     "response_sha256": null,
+     "bytes": 3951900,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225259116.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 2459,
+    "at": "2026-10-26T16:30:21+08:00",
+    "response_sha256": null,
+    "bytes": 3951900,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-26T16:30:21+08:00",
+    "bytes_written": 3951900
+   },
+   "document": {
+    "document_id": "DOC-F61E57277E3A31BD",
+    "identity_key": "SH:688218|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年年度报告全文",
+    "published_on": "2026-04-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225259116.PDF",
+    "local_file": "sources/p05_validation/688218/annual_2025/DOC-F61E57277E3A31BD.pdf",
+    "sha256": "055eaaf729bdba32dcab99188f35d0828e987b8a503a183b82367f21b5bb4506",
+    "bytes": 3951900,
+    "page_count": 263,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "3951900 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "263 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "263 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=江苏北人 代码=688218"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年年度报告全文"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\p05_validation\\688218\\annual_2025\\DOC-F61E57277E3A31BD.pdf",
+    "bytes": 3951900,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "3951900 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "263 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "263 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=江苏北人 代码=688218"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; title=2025年年度报告全文"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年年度报告全文"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 263,
+    "text_chars": 907,
+    "issues": [],
+    "sha256": "055eaaf729bdba32dcab99188f35d0828e987b8a503a183b82367f21b5bb4506",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-26T16:41:48+08:00",
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+   "skip_count": 7,
+   "last_checked_at": "2026-10-26T16:41:48+08:00"
+  }
+ },
+ "indexes": {
+  "category_ndbg_szsh": {
+   "security_id": "SH:688218",
+   "category": "category_ndbg_szsh",
+   "column": "sse",
+   "org_id": "gfbj0836084",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_ndbg_szsh",
+    "stock": "688218,gfbj0836084",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 8,
+   "rows_fetched": 8,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 8,
+     "new_rows": 8,
+     "total_announcement": 8,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "8207fd49f05b2a84f5326e4eee22876b5b7ead10aac862e96f6e4afc3f378271",
+     "response_bytes": 5028,
+     "raw_path": "sources/p05_raw/688218/category_ndbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_ndbg_szsh",
+      "stock": "688218,gfbj0836084",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-26T16:30:18+08:00",
+     "elapsed_ms": 1666
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225259116",
+     "title": "2025年年度报告全文",
+     "sec_code": "688218",
+     "sec_name": "江苏北人",
+     "published_on": "2026-04-29",
+     "adjunct_url": "finalpage/2026-04-30/1225259116.PDF"
+    },
+    {
+     "announcement_id": "1225258899",
+     "title": "2025年年度报告摘要",
+     "sec_code": "688218",
+     "sec_name": "江苏北人",
+     "published_on": "2026-04-29",
+     "adjunct_url": "finalpage/2026-04-30/1225258899.PDF"
+    },
+    {
+     "announcement_id": "1223407096",
+     "title": "2024年年度报告",
+     "sec_code": "688218",
+     "sec_name": "江苏北人",
+     "published_on": "2025-04-29",
+     "adjunct_url": "finalpage/2025-04-30/1223407096.PDF"
+    },
+    {
+     "announcement_id": "1223407086",
+     "title": "2024年年度报告摘要",
+     "sec_code": "688218",
+     "sec_name": "江苏北人",
+     "published_on": "2025-04-29",
+     "adjunct_url": "finalpage/2025-04-30/1223407086.PDF"
+    },
+    {
+     "announcement_id": "1219694787",
+     "title": "2023年年度报告",
+     "sec_code": "688218",
+     "sec_name": "江苏北人",
+     "published_on": "2024-04-19",
+     "adjunct_url": "finalpage/2024-04-20/1219694787.PDF"
+    },
+    {
+     "announcement_id": "1219694780",
+     "title": "2023年年度报告摘要",
+     "sec_code": "688218",
+     "sec_name": "江苏北人",
+     "published_on": "2024-04-19",
+     "adjunct_url": "finalpage/2024-04-20/1219694780.PDF"
+    },
+    {
+     "announcement_id": "1216684251",
+     "title": "2022年年度报告摘要",
+     "sec_code": "688218",
+     "sec_name": "江苏北人",
+     "published_on": "2023-04-28",
+     "adjunct_url": "finalpage/2023-04-29/1216684251.PDF"
+    },
+    {
+     "announcement_id": "1216684249",
+     "title": "2022年度报告全文",
+     "sec_code": "688218",
+     "sec_name": "江苏北人",
+     "published_on": "2023-04-28",
+     "adjunct_url": "finalpage/2023-04-29/1216684249.PDF"
+    }
+   ],
+   "fetched_at": "2026-10-26T16:30:18+08:00"
+  }
+ },
+ "updated_at": "2026-10-26T16:41:48+08:00"
+}

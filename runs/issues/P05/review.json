@@ -1,0 +1,142 @@
+{
+ "template_only": false,
+ "plan_version": "20261026_collection_first_v2",
+ "issue_number": 16,
+ "issue_key": "P05",
+ "executor": "WorkBuddy AI",
+ "reviewer": "WorkBuddy AI",
+ "review_method": "SELF_CHECK_OFFLINE_FAULT_INJECTION_PLUS_LIVE_SMALL_SAMPLE",
+ "reviewed_at": "2026-10-26T16:42:08+08:00",
+ "decision": "SELF_CHECK_PASS",
+ "dependency_review": {
+  "P01": {
+   "issue_number": 12,
+   "review_file": "runs/issues/P01/review.json",
+   "decision": "SELF_CHECK_PASS"
+  },
+  "P03": {
+   "issue_number": 14,
+   "review_file": "runs/issues/P03/review.json",
+   "decision": "SELF_CHECK_PASS"
+  },
+  "P04": {
+   "issue_number": 15,
+   "review_file": "runs/issues/P04/review.json",
+   "decision": "SELF_CHECK_PASS"
+  }
+ },
+ "checks": [
+  {
+   "criterion": "至少覆盖分页不完整、HTML伪PDF、同文件重复、下载中断与源故障；运行可复算",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/fault_tests.json",
+    "tools/p05_fault_tests.py"
+   ]
+  },
+  {
+   "criterion": "公告全分页与上游总数核对，保留原始响应、请求参数、来源时间与游标",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/live_validation.json#pagination_probe",
+    "runs/issues/P05/checkpoint/*.json#indexes"
+   ]
+  },
+  {
+   "criterion": "每证券/报告槽记录 source_attempt、attempt_count、last_error、next_action、checkpoint；幂等跳过已取得原件",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/collection_index.csv",
+    "runs/issues/P05/checkpoint/*.json"
+   ]
+  },
+  {
+   "criterion": "原文检查 HTTP/文件头/PDF可读/标题主体报告期/页数/SHA256；链接不能当下载成功",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/live_validation.json#companies",
+    "tools/p05_collector.py#validate_pdf"
+   ]
+  },
+  {
+   "criterion": "低并发、限速、重试预算、熔断与中断恢复；北交所/历史代码独立用例",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/collector_config.json#transport",
+    "runs/issues/P05/fault_tests.json#T05",
+    "runs/issues/P05/fault_tests.json#T04"
+   ]
+  },
+  {
+   "criterion": "原始大文件旁路存本机/Drive，GitHub 只保存小型索引与运行记录",
+   "result": "PASS",
+   "evidence": [
+    ".gitignore",
+    "runs/issues/P05/collection_index.csv"
+   ]
+  }
+ ],
+ "coverage": {
+  "offline_fault_tests": {
+   "total": 10,
+   "pass": 10,
+   "fail": 0
+  },
+  "live_checks": {
+   "checks_total": 11,
+   "checks_pass": 11,
+   "checks_fail": 0,
+   "downloaded_files": 4,
+   "downloaded_bytes_main_slots": 9380499,
+   "downloaded_bytes_total": 13988588,
+   "http_calls_this_run": 0,
+   "http_calls_idempotent_replay": 0,
+   "statuses_this_run": [
+    "COLLECTED_IDENTITY_VERIFIED",
+    "COLLECTED_IDENTITY_VERIFIED",
+    "COLLECTED_IDENTITY_VERIFIED"
+   ]
+  },
+  "companies_live": [
+   "SH:688218",
+   "SZ:002031",
+   "BJ:920207"
+  ],
+  "extra_probe": "SZ:002031",
+  "full_universe_processed": 0,
+  "companies_researched": 0
+ },
+ "key_findings": [
+  "巨潮 orgId 必须由 /new/data/szse_stock.json 解析：猜错 orgId 会返回 0 条，空结果极易被误写成未披露",
+  "分页不能依赖 totalpages/hasMore：实测 pageSize=30、8 条时 totalpages=0；pageSize=5 时 totalpages=1 但实际 2 页",
+  "北交所 2024 年及以前年报在巨潮以旧代码 835207 披露，行内 secCode 与当前 920207 不同，须按证券简称接受并留痕",
+  "北交所年报封面为版式化排版，正文无连续「2025年年度报告」字样，报告期核对需允许「官方标题+正文年份」交叉确认并记录方法",
+  "P04 交接的 7 个 P00 契约字段中，扣非仍需回 PDF 解析；本卡只负责把原件取回并核身份，不做字段抽取"
+ ],
+ "allows_next_stage": true,
+ "allows_next_stage_scope": "P05 技术依赖成立，可支撑 P07(#18) 的采集器依赖；P06 仍须单独验收，全池批次仍等 P07",
+ "next_recommended_issue": {
+  "number": 17,
+  "key": "P06"
+ },
+ "limitations": [
+  "实跑仅 3 家 × 1 个年度槽 + 1 家半年报槽，不是全池覆盖",
+  "PDF 正文比对用 pypdf 文本层；扫描件或版式化封面会退化为 COLLECTED_PENDING_IDENTITY",
+  "新浪结构化财务接口不在本卡范围（P04 已映射，采集器未接）",
+  "季度 PDF 下载开关已实现但未实跑",
+  "listing_date 未回填，空目录只能记 NOT_TRIED，不能判不适用",
+  "SELF_CHECK，不是独立审计"
+ ],
+ "artifacts": {
+  "runs/issues/P05/collector_config.json": "2cfdb37685b0ab44a307bbad2271172d991a7d33ff0ed842de115479fc67e594",
+  "runs/issues/P05/collector_runbook.md": "9ef4cf9c1b6d72aec9457a8854f463723d2060b727a3ea2e1c0dab442f70399c",
+  "runs/issues/P05/collector_validation.json": "42ce558ef759e1e3f1b06acaa68f0b38a760e2073710fba742e16e5bbba5cf04",
+  "runs/issues/P05/collection_index.csv": "6608a96aeb752db0b508819a3d9cc19e09fbfe3a8fe91f69dc46f9d57f128530",
+  "runs/issues/P05/fault_tests.json": "477c91d337bd4221659433e8b91b9602879b49de31bb026c38242beab748c0b4",
+  "runs/issues/P05/live_validation.json": "3fcb25b822945cd97669625eea9abf262599ed7eed82fda54c76badbe5aeb00a",
+  "tools/p05_collector.py": "347737069ef998d66695a128b1ee3b4964a8291bff6535806b5dce8579e01566",
+  "tools/p05_fault_tests.py": "b38bcb77dc61e0ab3f27ca0420c4c7c6ee036125a73d65256247859411eb6312",
+  "tools/p05_live_validation.py": "0a422e58dbdd1bd29b715058101a9ff09b6ccddfa0050ab44d5d3e15e44cbb57",
+  "tools/p05_finalize.py": "a19774a741a57944c3d68231e57dec78accb971debe3d0b7ff3530cfed46f3b8"
+ }
+}

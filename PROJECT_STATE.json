@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "P04_FIELD_CONTRACT_FROZEN_SELF_CHECK_PASS",
+  "status": "P05_COLLECTOR_READY_SELF_CHECK_PASS",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -217,19 +217,18 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/16",
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/17",
     "execution_started": true,
     "last_completed_issue": {
-      "issue_number": 15,
-      "issue_key": "P04",
-      "completed_at": "2026-10-26T07:37:33+00:00",
-      "review_file": "runs/issues/P04/review.json",
+      "issue_number": 16,
+      "issue_key": "P05",
+      "completed_at": "2026-10-26T08:45:00+00:00",
+      "review_file": "runs/issues/P05/review.json",
       "decision": "SELF_CHECK_PASS",
-      "allows_next_stage_scope": "P05(#16) 的 P04 依赖成立；P07(#18) 仍需 P05、P06 各自验收",
-      "canonical_fields": 33,
-      "mapping_rows": 52,
-      "gap_rows": 63,
-      "self_check_passed": "12/12"
+      "allows_next_stage_scope": "P05 技术依赖成立，可支撑 P07(#18)；P06 仍须单独验收，全池批次仍等 P07",
+      "offline_fault_tests": "10/10",
+      "live_checks": "11/11",
+      "acceptance": "6/6"
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -275,6 +274,30 @@
         "2025H1 基数缺失导致 2026H1 同比不可算",
         "旧快照 22 列扣非为累计口径"
       ]
+    },
+    "p05_collector": {
+      "status": "READY_SMALL_SAMPLE_VALIDATED",
+      "version": "COLLECTOR_V1",
+      "config": "runs/issues/P05/collector_config.json",
+      "runbook": "runs/issues/P05/collector_runbook.md",
+      "validation": "runs/issues/P05/collector_validation.json",
+      "index": "runs/issues/P05/collection_index.csv",
+      "ledger_dir": "runs/issues/P05/checkpoint",
+      "live_samples": {
+        "companies": 3,
+        "slots": 4,
+        "files": 4,
+        "bytes": 13988588
+      },
+      "org_id_coverage": "1054/1054（szse_stock.json，含 BJ 62）",
+      "must_fix_downstream": [
+        "空目录不得判未披露：orgId 猜错会返回 0 条",
+        "分页只信 totalAnnouncement，totalpages/hasMore 不可信",
+        "北交所 2024 年及以前年报以旧代码（如 835207）披露，须按简称接受",
+        "北交所版式化封面需 TITLE_PLUS_YEAR_IN_BODY 降级并留痕",
+        "listing_date 未回填前不得判 NOT_APPLICABLE_PRE_LISTING"
+      ],
+      "review_nature": "SELF_CHECK"
     }
   },
   "pre_issue_breakdown_first_actions": [

@@ -4,23 +4,36 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_P04_SELF_CHECK_PASS",
-  "claim_note": "按用户指定接续Codex完成P02/P03后执行P04；本卡只做字段/单位/报表/时间口径冻结与来源映射，不做财务筛选、不采全池。",
-  "claimed_base_commit": "c5ce8b3",
-  "input_baseline": {
-    "PROJECT_STATE.json": "332fcbe491782eda1904179af2fd537e8504cb6ba0d799e6b94ea7379890f131",
-    "data/company_master.csv": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
-    "data/document_registry.csv": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed",
-    "data/intake_company_queue.csv": "cf86db6c10810019b2efcd55b03e56940799ba98e2493afe12cfa480e88fe893",
-    "data/intake_batch_index.csv": "ab990b8b787398d1472dd3b1a492de6993817da6dcecc8cfa2940642410580c8",
-    "data/resource_map.csv": "9876c6e47f414c36a975bf8e21acb2c2aa5bff246863c822f17a00c8d17b3a26",
-    "data/drive_folders.csv": "9d76b3b6e75a4cd98f6569ed6082a3dcbd5a3ffc77d327f577d84626b2e0c7c3",
-    "data/financial_gaps.csv": "a3464b5b5d81c5e24dc73d3aa753ac5f5664b0211346fca858b10e32d68a95a4",
-    "runs/issues/P00/collection_scope.json": "f5e31dc053b9d7a020ffd0db15fb8d7cad44e2c04f6baa76d396c41a519a4e3b"
-  },
-  "next_recommended_issue_number": 16,
-  "next_recommended_issue_key": "P05",
+  "status": "IDLE_P05_SELF_CHECK_PASS",
+  "claim_note": "P05 已完成：采集器与小样本验证通过（离线 10/10、实跑 11/11、验收 6/6）。下一张建议 P06(#17)，P07(#18) 仍需 P06。",
   "last_completed": {
+    "issue_number": 16,
+    "issue_key": "P05",
+    "completed_at": "2026-10-26T08:45:00+00:00",
+    "review_file": "runs/issues/P05/review.json",
+    "decision": "SELF_CHECK_PASS",
+    "allows_next_stage_scope": "P05 技术依赖成立，可支撑 P07(#18)；P06 仍须单独验收，全池批次仍等 P07",
+    "offline_fault_tests": "10/10",
+    "live_checks": "11/11",
+    "acceptance": "6/6"
+  },
+  "input_baseline_after_p05": {
+    "PROJECT_STATE.json": "7c327929310e7db115a0f1ff8d1475a23b8f98bb06dcd686931733e863c4af8e",
+    "data/issue_execution_plan.csv": "0474a9dd1a03107f66717f905940b2ed102cce7de2dacb7e00b0e4ab541c007e",
+    "runs/issues/P05/collector_config.json": "2cfdb37685b0ab44a307bbad2271172d991a7d33ff0ed842de115479fc67e594",
+    "runs/issues/P05/collector_validation.json": "a9735a7b330f97488f0e19e913c56213baf7cdded8593903cf8bfa2d16cb1911"
+  },
+  "next_recommended_issue_number": 17,
+  "next_recommended_issue_key": "P06",
+  "next_recommended_reason": "P06 依赖 P00/P02 已成立；P07 同时需要 P05 与 P06，故先做 P06。",
+  "open_followups_from_p05": [
+    "季度 PDF 开关已实现但未实跑（默认关闭）。",
+    "PDF 正文比对依赖 pypdf 文本层；扫描件退化为 COLLECTED_PENDING_IDENTITY。",
+    "listing_date 1054/1054 UNKNOWN，空目录只能记 NOT_TRIED。",
+    "结构化财务接口（新浪）未接入采集器，字段抽取仍按 P04 单独实现。",
+    "run_log.jsonl 为追加式历史，含调试期中间事件。"
+  ],
+  "previous_completed": {
     "issue_number": 15,
     "issue_key": "P04",
     "completed_at": "2026-10-26T07:37:33+00:00",
@@ -31,40 +44,18 @@
     "mapping_rows": 52,
     "gap_rows": 63
   },
-  "next_recommended_reason": "P04 已冻结字段/单位/报表/时间口径并给出52条来源映射；P05 采集器所需的字段口径与校验规则已具备。",
   "open_followups_from_P02": [
     "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
     "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
     "重复文件夹 3 组（920418 2025年度×3、920207 2026H1×3、920491 IR×3），去重时不得当多份文件。",
     "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
   ],
-  "note": "P04 为 SELF_CHECK 口径冻结，未做任何财务筛选与业务判断。全池采集仍未启动；业务证据未新增独立验收。",
-  "previous_completed": {
-    "issue_number": 15,
-    "issue_key": "P04",
-    "completed_at": "2026-10-26T07:36:29+00:00",
-    "review_file": "runs/issues/P04/review.json",
-    "decision": "SELF_CHECK_PASS",
-    "allows_next_stage_scope": "P05(#16) 的 P04 依赖成立；P07(#18) 仍需 P05、P06 各自验收",
-    "canonical_fields": 33,
-    "mapping_rows": 52,
-    "gap_rows": 63
-  },
-  "p02_completed": {
-    "issue_number": 14,
-    "issue_key": "P03",
-    "completed_at": "2026-10-26T07:09:14.809Z",
-    "review_file": "runs/issues/P03/review.json",
-    "decision": "SELF_CHECK_PASS",
-    "allows_next_stage_scope": "P05/P07的P03技术依赖；其余依赖仍须分别验收",
-    "sample_companies": 3,
-    "circuit_tests_passed": 6
-  },
   "open_followups_from_P04": [
     "扣非归母净利润只能回官方 PDF 取，采集器必须解析非经常性损益表或主要会计数据表。",
     "北交所 62 家旧快照覆盖率 0/62，必须走 P03 显式三市场适配器。",
     "2025H1 五项基数缺失，2026H1 同比在补齐前不可计算。",
     "listing_date 1054/1054 UNKNOWN，P05 须回填后才能判定上市前不适用。",
     "旧快照 22 列扣非为累计口径，S00 标准化须按累计读入（P02 表述待更正）。"
-  ]
+  ],
+  "note": "P05 未改动任何原始输入；全池采集仍未启动。"
 }

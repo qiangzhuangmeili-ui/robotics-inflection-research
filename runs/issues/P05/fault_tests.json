@@ -1,0 +1,186 @@
+{
+ "plan_version": "20261026_collection_first_v2",
+ "issue_key": "P05",
+ "generated_at": "2026-10-26T16:39:12+08:00",
+ "mode": "OFFLINE_FAULT_INJECTION",
+ "network_used": false,
+ "summary": {
+  "total": 10,
+  "pass": 10,
+  "fail": 0
+ },
+ "tests": [
+  {
+   "id": "T01",
+   "name": "分页不完整被识别，不当作已检索",
+   "result": "PASS",
+   "detail": {
+    "total_announcement": 10,
+    "rows_fetched": 8,
+    "pages_fetched": 3,
+    "slot_status": "INDEX_INCOMPLETE_PAGINATION",
+    "pdf_calls": 0,
+    "note": "totalpages=2/hasMore=True 均为假值，收集器只认 totalAnnouncement"
+   },
+   "evidence": [
+    "checkpoint/688218.json#indexes.category_ndbg_szsh"
+   ]
+  },
+  {
+   "id": "T02",
+   "name": "HTML 伪 PDF 拒收且不留原件",
+   "result": "PASS",
+   "detail": {
+    "status": "SOURCE_FAILED",
+    "last_error": "NON_PDF_RESPONSE",
+    "http_calls": 2,
+    "pdf_files_kept": 0,
+    "part_files_kept": 0,
+    "next_action": "WAIT_CIRCUIT_HALF_OPEN"
+   },
+   "evidence": [
+    "checkpoint/688218.json#slots.annual_2025"
+   ]
+  },
+  {
+   "id": "T03",
+   "name": "同字节不同 URL 只入库一次",
+   "result": "PASS",
+   "detail": {
+    "annual_2024": "COLLECTED_IDENTITY_VERIFIED",
+    "annual_2025": "DUPLICATE_SAME_CONTENT",
+    "files_on_disk": 1,
+    "deduplicated_to": "SH:688218/annual_2024"
+   },
+   "evidence": [
+    "checkpoint/688218.json#slots.annual_2025.checkpoint"
+   ]
+  },
+  {
+   "id": "T04",
+   "name": "下载中断保留断点，续传成功，再跑幂等跳过",
+   "result": "PASS",
+   "detail": {
+    "run1_status": "SOURCE_FAILED",
+    "run1_part_bytes": 10000,
+    "run2_status": "COLLECTED_IDENTITY_VERIFIED",
+    "run2_resumed_from": 10000,
+    "run2_http_status": 206,
+    "run3_status": "COLLECTED_IDENTITY_VERIFIED",
+    "run3_last_action": "SKIPPED_ALREADY_HAVE",
+    "run3_new_http_calls": 0,
+    "sha256_match": true
+   },
+   "evidence": [
+    "checkpoint/688218.json#slots.annual_2025.source_attempts"
+   ]
+  },
+  {
+   "id": "T05",
+   "name": "源故障熔断后排队调用不再发请求",
+   "result": "PASS",
+   "detail": {
+    "slots": 6,
+    "pdf_http_calls": 2,
+    "statuses": [
+     "SOURCE_FAILED",
+     "SOURCE_FAILED",
+     "SOURCE_FAILED",
+     "SOURCE_FAILED",
+     "SOURCE_FAILED",
+     "SOURCE_FAILED"
+    ],
+    "obtained": 0,
+    "circuit": {
+     "failures": 2,
+     "opened_at": 1042.0,
+     "last_error": "CONNECTIONERROR"
+    }
+   },
+   "evidence": [
+    "checkpoint/688218.json",
+    "run_log.jsonl"
+   ]
+  },
+  {
+   "id": "T06",
+   "name": "摘要不得冒充全文",
+   "result": "PASS",
+   "detail": {
+    "status": "SUMMARY_ONLY",
+    "next_action": "SEARCH_FULL_TEXT_ALTERNATE_SOURCE",
+    "pdf_calls": 0
+   },
+   "evidence": [
+    "checkpoint/688218.json#slots.annual_2025"
+   ]
+  },
+  {
+   "id": "T07",
+   "name": "主体错配拒收且不留原件",
+   "result": "PASS",
+   "detail": {
+    "status": "IDENTITY_MISMATCH",
+    "pdf_files_kept": 0,
+    "issuer_check": {
+     "result": "FAIL",
+     "detail": "证券简称=江苏北人 代码=688218"
+    }
+   },
+   "evidence": [
+    "checkpoint/688218.json#slots.annual_2025.validation"
+   ]
+  },
+  {
+   "id": "T08",
+   "name": "北交所历史代码接受、异主体行拒收",
+   "result": "PASS",
+   "detail": {
+    "status": "COLLECTED_IDENTITY_VERIFIED",
+    "column": "szse",
+    "historical_code_rows": 1,
+    "rejected_rows": 1,
+    "rejected_code": "000001"
+   },
+   "evidence": [
+    "checkpoint/920207.json#indexes.category_ndbg_szsh"
+   ]
+  },
+  {
+   "id": "T09",
+   "name": "截断 PDF 不计成功、可重下",
+   "result": "PASS",
+   "detail": {
+    "status": "SOURCE_FAILED",
+    "last_error": "PDF_UNREADABLE",
+    "next_action": "RETRY_DOWNLOAD",
+    "pdf_files_kept": 0
+   },
+   "evidence": [
+    "checkpoint/688218.json#slots.annual_2025.validation"
+   ]
+  },
+  {
+   "id": "T10",
+   "name": "低并发/限速/重试预算参数生效",
+   "result": "PASS",
+   "detail": {
+    "concurrency": 1,
+    "max_http_attempts_per_request": 2,
+    "max_slot_attempts": 3,
+    "min_interval_seconds": 1.2,
+    "throttle_events": 3,
+    "www_cninfo_waits": [
+     0.0,
+     1.2
+    ],
+    "static_cninfo_waits": [
+     0.0
+    ]
+   },
+   "evidence": [
+    "collector_config.json#transport"
+   ]
+  }
+ ]
+}

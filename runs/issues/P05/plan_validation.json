@@ -1,0 +1,1397 @@
+{
+  "report_version": 1,
+  "checked_at_utc": "2026-10-26T08:41:03+00:00",
+  "research_cutoff": "2026-10-25",
+  "research_cutoff_source": "runs/issues/P00/collection_scope.json",
+  "legacy_package_cutoff": "2026-10-24",
+  "result": "FAIL",
+  "summary": {
+    "master_companies": 1054,
+    "starting_partition_counts": {
+      "NOT_SCREENED": 984,
+      "REUSE_WITH_LIMITS": 53,
+      "SOURCE_PENDING": 7,
+      "SAMPLE_PARTIAL_REVIEW": 10
+    },
+    "primary_packages": 59,
+    "conditional_detail_packages": 9,
+    "detail_candidates": 45,
+    "detail_reserve": 8,
+    "financial_missing": 62,
+    "group_count": 10,
+    "package_index_rows": 68,
+    "local_zip_count": 67,
+    "copied_resource_hashes_checked": 24,
+    "checks_passed": 106,
+    "checks_failed": 5
+  },
+  "checks": [
+    {
+      "name": "csv_parse:data/company_master.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 1054,
+        "columns": 58,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "master_row_count",
+      "status": "PASS",
+      "expected": 1054,
+      "actual": 1054
+    },
+    {
+      "name": "master_security_id_unique",
+      "status": "PASS",
+      "expected": 1054,
+      "actual": 1054
+    },
+    {
+      "name": "master_stock_code_unique",
+      "status": "PASS",
+      "expected": 1054,
+      "actual": 1054
+    },
+    {
+      "name": "master_codes_six_digit_text",
+      "status": "PASS",
+      "expected": "all six digits",
+      "actual": []
+    },
+    {
+      "name": "master_security_key_matches_exchange_and_code",
+      "status": "PASS",
+      "expected": "exchange:stock_code",
+      "actual": []
+    },
+    {
+      "name": "1054_partition_counts",
+      "status": "PASS",
+      "expected": {
+        "REUSE_WITH_LIMITS": 53,
+        "SOURCE_PENDING": 7,
+        "SAMPLE_PARTIAL_REVIEW": 10,
+        "NOT_SCREENED": 984
+      },
+      "actual": {
+        "NOT_SCREENED": 984,
+        "REUSE_WITH_LIMITS": 53,
+        "SOURCE_PENDING": 7,
+        "SAMPLE_PARTIAL_REVIEW": 10
+      }
+    },
+    {
+      "name": "starting_partitions_disjoint",
+      "status": "PASS",
+      "expected": "no cross-partition duplicate",
+      "actual": {}
+    },
+    {
+      "name": "starting_partitions_cover_master",
+      "status": "PASS",
+      "expected": {
+        "master_ids": 1054
+      },
+      "actual": {
+        "partition_ids": 1054,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "csv_parse:data/package_index.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 68,
+        "columns": 13,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "package_index_count",
+      "status": "FAIL",
+      "expected": 67,
+      "actual": 68
+    },
+    {
+      "name": "package_index_ids_unique",
+      "status": "PASS",
+      "expected": 68,
+      "actual": 68
+    },
+    {
+      "name": "primary_package_count",
+      "status": "FAIL",
+      "expected": 58,
+      "actual": 59
+    },
+    {
+      "name": "conditional_detail_package_count",
+      "status": "PASS",
+      "expected": 9,
+      "actual": 9
+    },
+    {
+      "name": "csv_parse:packages/B00_SOURCE_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 4,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/B00_SOURCE_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 3,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C00_PILOT_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 10,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/B02_REUSE_REFERENCE/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 53,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/B01_SAMPLE_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/B01_SAMPLE_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C01_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C01_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C01_03/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C02_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C02_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 11,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_03/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_04/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_05/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_06/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_07/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_08/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_09/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_10/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C03_11/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 3,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C04_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C04_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C04_03/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C04_04/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 18,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C05_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 15,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_03/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_04/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_05/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_06/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_07/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_08/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_09/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C06_10/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 19,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C07_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C07_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C07_03/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 12,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_03/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_04/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_05/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_06/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_07/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_08/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C08_09/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 9,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C09_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C09_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 14,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C10_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C10_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C10_03/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C10_04/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C10_05/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C10_06/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 20,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/C10_07/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 13,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D00_B00_ADVANCE_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 2,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_01/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_02/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_03/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_04/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_05/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_06/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_07/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_08/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "csv_parse:packages/D01_DETAIL_09/assignment.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 5,
+        "columns": 22,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "package_assignment_and_task_paths",
+      "status": "PASS",
+      "expected": "all 67 assignment.csv and TASK.md exist",
+      "actual": true,
+      "detail": []
+    },
+    {
+      "name": "package_task_cutoff",
+      "status": "PASS",
+      "expected": "2026-10-24 in every TASK.md",
+      "actual": []
+    },
+    {
+      "name": "package_assignment_counts_match_index",
+      "status": "PASS",
+      "expected": "each count matches assignment row count",
+      "actual": []
+    },
+    {
+      "name": "package_assignment_ids_and_codes",
+      "status": "PASS",
+      "expected": "unique keys and six-digit codes",
+      "actual": []
+    },
+    {
+      "name": "primary_packages_cover_master_once",
+      "status": "FAIL",
+      "expected": {
+        "companies": 1054,
+        "duplicates": 0
+      },
+      "actual": {
+        "companies": 1056,
+        "unique": 1054,
+        "duplicate_ids": [
+          "BJ:920207",
+          "BJ:920578"
+        ],
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "master_primary_package_matches_assignment",
+      "status": "FAIL",
+      "expected": "same package per company",
+      "actual": [
+        {
+          "security_id": "BJ:920578",
+          "assignment_package": "D00_B00_ADVANCE_01",
+          "master_package": "B00_SOURCE_02"
+        },
+        {
+          "security_id": "BJ:920207",
+          "assignment_package": "D00_B00_ADVANCE_01",
+          "master_package": "B00_SOURCE_01"
+        }
+      ]
+    },
+    {
+      "name": "calibration_package_has_10",
+      "status": "PASS",
+      "expected": 10,
+      "actual": 10
+    },
+    {
+      "name": "remaining_coarse_has_974",
+      "status": "PASS",
+      "expected": 974,
+      "actual": 974
+    },
+    {
+      "name": "pilot_and_remaining_coarse_partition_984",
+      "status": "PASS",
+      "expected": {
+        "total": 984,
+        "pilot": 10,
+        "remaining": 974
+      },
+      "actual": {
+        "total": 984,
+        "pilot": 10,
+        "remaining": 974
+      }
+    },
+    {
+      "name": "adopted_reference_package_53",
+      "status": "PASS",
+      "expected": {
+        "rows": 53,
+        "same_as_partition": true
+      },
+      "actual": {
+        "rows": 53,
+        "same_as_partition": true
+      }
+    },
+    {
+      "name": "conditional_detail_45_and_reserve_8",
+      "status": "PASS",
+      "expected": {
+        "packages": 9,
+        "detail_candidates": 45,
+        "reserve": 8,
+        "overlap_source": "B02_REUSE_REFERENCE"
+      },
+      "actual": {
+        "packages": 9,
+        "detail_rows": 45,
+        "detail_unique": 45,
+        "overlap_with_B02": 45,
+        "reserve": 8,
+        "reserve_codes": [
+          "001306",
+          "002050",
+          "002768",
+          "003021",
+          "600699",
+          "603466",
+          "688327",
+          "920100"
+        ]
+      }
+    },
+    {
+      "name": "conditional_assignment_overlap_identifiers",
+      "status": "PASS",
+      "expected": {
+        "fields": [
+          "next_stage_overlap_id",
+          "predecessor_package_id",
+          "primary_partition"
+        ],
+        "identifier_format": "security_id@B02_REUSE_REFERENCE",
+        "rows": 45
+      },
+      "actual": {
+        "missing_index_fields": [],
+        "error_count": 0,
+        "errors": []
+      }
+    },
+    {
+      "name": "source_pending_seven",
+      "status": "PASS",
+      "expected": {
+        "companies": 7
+      },
+      "actual": {
+        "companies": 7,
+        "matches_partition": true
+      }
+    },
+    {
+      "name": "early_samples_ten_separate",
+      "status": "PASS",
+      "expected": {
+        "companies": 10,
+        "disjoint_from_adopted": true
+      },
+      "actual": {
+        "companies": 10,
+        "matches_partition": true,
+        "overlap_with_adopted": 0
+      }
+    },
+    {
+      "name": "csv_parse:data/group_summary.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 10,
+        "columns": 5,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "group_summary_matches_master_rows",
+      "status": "PASS",
+      "expected": {
+        "groups": 10,
+        "total": 1054,
+        "new_screening": 984
+      },
+      "actual": {
+        "group_counts": {
+          "G01": {
+            "total_count": 67,
+            "new_screening_count": 61
+          },
+          "G04": {
+            "total_count": 82,
+            "new_screening_count": 79
+          },
+          "G10": {
+            "total_count": 139,
+            "new_screening_count": 134
+          },
+          "G06": {
+            "total_count": 207,
+            "new_screening_count": 200
+          },
+          "G09": {
+            "total_count": 37,
+            "new_screening_count": 35
+          },
+          "G08": {
+            "total_count": 171,
+            "new_screening_count": 170
+          },
+          "G02": {
+            "total_count": 45,
+            "new_screening_count": 32
+          },
+          "G03": {
+            "total_count": 213,
+            "new_screening_count": 204
+          },
+          "G07": {
+            "total_count": 54,
+            "new_screening_count": 53
+          },
+          "G05": {
+            "total_count": 39,
+            "new_screening_count": 16
+          }
+        },
+        "mismatches": {}
+      }
+    },
+    {
+      "name": "research_cutoff_consistent",
+      "status": "PASS",
+      "expected": {
+        "frozen_cutoff": "2026-10-25",
+        "project_state_matches": true,
+        "row_dates_not_after_cutoff": true
+      },
+      "actual": {
+        "project_state": "2026-10-25",
+        "master_dates": {
+          "2026-10-24": 1054
+        },
+        "frozen": "2026-10-25",
+        "source": "runs/issues/P00/collection_scope.json"
+      }
+    },
+    {
+      "name": "new_company_stage_all_unknown",
+      "status": "PASS",
+      "expected": {
+        "UNKNOWN": 1054
+      },
+      "actual": {
+        "UNKNOWN": 1054
+      }
+    },
+    {
+      "name": "csv_parse:archive/latest_universe.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 1054,
+        "columns": 46,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "legacy_stage_matches_archive",
+      "status": "PASS",
+      "expected": {
+        "all_match_archive": true,
+        "non_unknown_legacy_rows": 6
+      },
+      "actual": {
+        "mismatches": [],
+        "non_unknown_legacy_rows": [
+          {
+            "stock_code": "002050",
+            "stock_name": "三花智控",
+            "legacy_stage": "S2"
+          },
+          {
+            "stock_code": "003021",
+            "stock_name": "兆威机电",
+            "legacy_stage": "S1"
+          },
+          {
+            "stock_code": "300607",
+            "stock_name": "拓斯达",
+            "legacy_stage": "S4"
+          },
+          {
+            "stock_code": "603662",
+            "stock_name": "柯力传感",
+            "legacy_stage": "S3"
+          },
+          {
+            "stock_code": "603666",
+            "stock_name": "亿嘉和",
+            "legacy_stage": "S4"
+          },
+          {
+            "stock_code": "920593",
+            "stock_name": "鼎智科技",
+            "legacy_stage": "S4"
+          }
+        ]
+      }
+    },
+    {
+      "name": "old_commercial_stage_not_used_as_new_stage",
+      "status": "PASS",
+      "expected": "commercial_stage all UNKNOWN; old values only in legacy_company_stage/archive",
+      "actual": {
+        "UNKNOWN": 1054
+      }
+    },
+    {
+      "name": "csv_parse:data/financial_gaps.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 62,
+        "columns": 6,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "financial_missing_62_not_zero_filled",
+      "status": "PASS",
+      "expected": {
+        "missing_companies": 62,
+        "matching_master": true,
+        "status": "FINANCIAL_DATA_MISSING",
+        "financial_amounts": "not recorded as zero"
+      },
+      "actual": {
+        "rows": 62,
+        "unique_ids": 62,
+        "matches_master": true,
+        "statuses": {
+          "FINANCIAL_DATA_MISSING": 62
+        },
+        "financial_amount_columns_in_gap_register": [],
+        "zero_filled_rows": []
+      }
+    },
+    {
+      "name": "csv_parse:data/resource_map.csv",
+      "status": "PASS",
+      "expected": "consistent row widths",
+      "actual": "consistent",
+      "detail": {
+        "rows": 28,
+        "columns": 7,
+        "malformed_lines": []
+      }
+    },
+    {
+      "name": "resource_map_hashes_match_full_archive_files",
+      "status": "PASS",
+      "expected": "every COPIED row exists and matches SHA-256",
+      "actual": {
+        "copied_hashes_checked": 24,
+        "mismatches": [],
+        "missing_paths": []
+      }
+    },
+    {
+      "name": "manual_paths_resolve_inside_repository",
+      "status": "PASS",
+      "expected": "all local manual paths/links resolve",
+      "actual": {
+        "missing_paths": [],
+        "broken_links": []
+      }
+    },
+    {
+      "name": "deliveries_not_committed",
+      "status": "PASS",
+      "expected": "deliveries/ ignored by Git",
+      "actual": [
+        "sources/**",
+        "!sources/README.md",
+        "inbox/**",
+        "!inbox/README.md",
+        "deliveries/",
+        "*.pdf",
+        "*.zip",
+        "*.xlsx",
+        "*.xls",
+        "*.docx",
+        "*.pptx",
+        "*.png",
+        "*.jpg",
+        "*.pyc",
+        "__pycache__/",
+        ".env*",
+        "*.pem",
+        "*.key"
+      ]
+    },
+    {
+      "name": "all_local_package_zips_match_index",
+      "status": "FAIL",
+      "expected": {
+        "zip_count": 67,
+        "all text-only and package-scoped": true
+      },
+      "actual": {
+        "zip_count": 67,
+        "errors": [
+          {
+            "package_id": "D00_B00_ADVANCE_01",
+            "issue": "missing ZIP"
+          }
+        ]
+      }
+    },
+    {
+      "name": "calibration_zip_is_ten_company_text_only_and_hash_note_present",
+      "status": "PASS",
+      "expected": {
+        "companies": 10,
+        "pdfs": 0,
+        "hash_note": true
+      },
+      "actual": {
+        "companies": 10,
+        "pdfs": 0,
+        "hash_note": true
+      }
+    }
+  ],
+  "blocking_issues": [
+    {
+      "name": "package_index_count",
+      "status": "FAIL",
+      "expected": 67,
+      "actual": 68
+    },
+    {
+      "name": "primary_package_count",
+      "status": "FAIL",
+      "expected": 58,
+      "actual": 59
+    },
+    {
+      "name": "primary_packages_cover_master_once",
+      "status": "FAIL",
+      "expected": {
+        "companies": 1054,
+        "duplicates": 0
+      },
+      "actual": {
+        "companies": 1056,
+        "unique": 1054,
+        "duplicate_ids": [
+          "BJ:920207",
+          "BJ:920578"
+        ],
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "master_primary_package_matches_assignment",
+      "status": "FAIL",
+      "expected": "same package per company",
+      "actual": [
+        {
+          "security_id": "BJ:920578",
+          "assignment_package": "D00_B00_ADVANCE_01",
+          "master_package": "B00_SOURCE_02"
+        },
+        {
+          "security_id": "BJ:920207",
+          "assignment_package": "D00_B00_ADVANCE_01",
+          "master_package": "B00_SOURCE_01"
+        }
+      ]
+    },
+    {
+      "name": "all_local_package_zips_match_index",
+      "status": "FAIL",
+      "expected": {
+        "zip_count": 67,
+        "all text-only and package-scoped": true
+      },
+      "actual": {
+        "zip_count": 67,
+        "errors": [
+          {
+            "package_id": "D00_B00_ADVANCE_01",
+            "issue": "missing ZIP"
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "This audit checks plan structure and file integrity, not whether research conclusions are correct.",
+    "The 45 detail candidate companies are listed in nine conditional packages; their identifiers are checked against B02_REUSE_REFERENCE.",
+    "Deliveries are local attachment ZIPs and are excluded from GitHub; source PDFs are not expected in the default ZIPs."
+  ]
+}

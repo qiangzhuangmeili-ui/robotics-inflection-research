@@ -1,0 +1,572 @@
+{
+ "plan_version": "20261026_collection_first_v2",
+ "issue_key": "P05",
+ "generated_at": "2026-10-26T16:41:57+08:00",
+ "mode": "LIVE_SMALL_SAMPLE",
+ "scope": "3 家（沪/深/北各 1）× 1 个报告槽（annual_2025）；不是全池、不是业务验收",
+ "elapsed_seconds": 8.8,
+ "summary": {
+  "checks_total": 11,
+  "checks_pass": 11,
+  "checks_fail": 0,
+  "downloaded_files": 4,
+  "downloaded_bytes_main_slots": 9380499,
+  "downloaded_bytes_total": 13988588,
+  "http_calls_this_run": 0,
+  "http_calls_idempotent_replay": 0,
+  "statuses_this_run": [
+   "COLLECTED_IDENTITY_VERIFIED",
+   "COLLECTED_IDENTITY_VERIFIED",
+   "COLLECTED_IDENTITY_VERIFIED"
+  ]
+ },
+ "checks": [
+  {
+   "id": "L1",
+   "criterion": "沪市：目录全分页与上游总数核对",
+   "result": "PASS",
+   "detail": {
+    "SH:688218": true,
+    "SZ:002031": true,
+    "BJ:920207": true
+   }
+  },
+  {
+   "id": "L2",
+   "criterion": "深市：目录全分页与上游总数核对",
+   "result": "PASS",
+   "detail": {
+    "SH:688218": 8,
+    "SZ:002031": 8,
+    "BJ:920207": 8
+   }
+  },
+  {
+   "id": "L3",
+   "criterion": "北交所：走 szse 列且目录对账通过",
+   "result": "PASS",
+   "detail": {
+    "BJ:920207": {
+     "column": "szse",
+     "reconciled": true
+    }
+   }
+  },
+  {
+   "id": "L4",
+   "criterion": "北交所历史代码行被接受并留痕",
+   "result": "PASS",
+   "detail": {
+    "SH:688218": [],
+    "SZ:002031": [],
+    "BJ:920207": [
+     {
+      "sec_code": "835207",
+      "title": "2024年年度报告",
+      "published_on": "2025-04-28"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2024年年度报告摘要",
+      "published_on": "2025-04-28"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2023年年度报告",
+      "published_on": "2024-04-25"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2023年年度报告摘要",
+      "published_on": "2024-04-25"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2022年年度报告摘要",
+      "published_on": "2023-04-25"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2022年年度报告",
+      "published_on": "2023-04-25"
+     }
+    ]
+   }
+  },
+  {
+   "id": "L5",
+   "criterion": "三份原件均通过七项校验并落本地",
+   "result": "PASS",
+   "detail": {
+    "SH:688218": {
+     "status": "COLLECTED_IDENTITY_VERIFIED",
+     "pages": 263,
+     "period_method": "BODY_PHRASE",
+     "sha256": "055eaaf729bdba32"
+    },
+    "SZ:002031": {
+     "status": "COLLECTED_IDENTITY_VERIFIED",
+     "pages": 204,
+     "period_method": "BODY_PHRASE",
+     "sha256": "bca689c22e6f146a"
+    },
+    "BJ:920207": {
+     "status": "COLLECTED_IDENTITY_VERIFIED",
+     "pages": 178,
+     "period_method": "TITLE_PLUS_YEAR_IN_BODY",
+     "sha256": "86eed5c4be4c1e1b"
+    }
+   }
+  },
+  {
+   "id": "L6",
+   "criterion": "重复运行幂等跳过且不产生新请求",
+   "result": "PASS",
+   "detail": {
+    "last_actions": [
+     "SKIPPED_ALREADY_HAVE",
+     "SKIPPED_ALREADY_HAVE",
+     "SKIPPED_ALREADY_HAVE"
+    ],
+    "http_calls": 0
+   }
+  },
+  {
+   "id": "L7",
+   "criterion": "同主机两次请求间隔不小于限速值",
+   "result": "PASS",
+   "detail": {
+    "min_interval_seconds": 1.2,
+    "same_host_pairs": 1,
+    "violations": [],
+    "samples": [
+     {
+      "host": "www.cninfo.com.cn",
+      "gap": 3.012,
+      "waited": 0.0
+     }
+    ],
+    "note": "真实时钟下请求本身耗时通常已超过 1.2s；强制等待分支由故障测试 T10 用固定时钟验证"
+   }
+  },
+  {
+   "id": "L8",
+   "criterion": "原始响应落盘且台账只记哈希/游标",
+   "result": "PASS",
+   "detail": {
+    "SH:688218": 1,
+    "SZ:002031": 1,
+    "BJ:920207": 1
+   }
+  },
+  {
+   "id": "L9",
+   "criterion": "台账保留首次下载尝试（URL/时间/字节/哈希）",
+   "result": "PASS",
+   "detail": {
+    "SH:688218": {
+     "attempt_count": 1,
+     "http_status": 200,
+     "bytes": 3951900
+    },
+    "SZ:002031": {
+     "attempt_count": 1,
+     "http_status": 200,
+     "bytes": 2317799
+    },
+    "BJ:920207": {
+     "attempt_count": 3,
+     "http_status": 200,
+     "bytes": 3110800
+    }
+   }
+  },
+  {
+   "id": "L10",
+   "criterion": "真实多页翻页：pageSize=5 时 8 条目录分 2 页且对账通过",
+   "result": "PASS",
+   "detail": {
+    "page_size": 5,
+    "pages_fetched": 2,
+    "rows_fetched": 8,
+    "total_announcement": 8,
+    "reconciled": true,
+    "cursors": [
+     {
+      "page": 1,
+      "rows": 5,
+      "totalpages": 1,
+      "has_more": true
+     },
+     {
+      "page": 2,
+      "rows": 3,
+      "totalpages": 1,
+      "has_more": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "L11",
+   "criterion": "半年度槽实跑：第二个报告类型目录与 PDF 均通过校验",
+   "result": "PASS",
+   "detail": {
+    "security_id": "SZ:002031",
+    "slot_id": "h1_2026",
+    "status": "COLLECTED_IDENTITY_VERIFIED",
+    "pages": 171,
+    "period_method": "BODY_PHRASE",
+    "sha256": "800fc824df3f37b4"
+   }
+  }
+ ],
+ "companies": [
+  {
+   "security_id": "SH:688218",
+   "stock_name": "江苏北人",
+   "exchange": "SH",
+   "org_id": "gfbj0836084",
+   "index": {
+    "category": "category_ndbg_szsh",
+    "column": "sse",
+    "total_announcement": 8,
+    "rows_fetched": 8,
+    "pages_fetched": 1,
+    "reconciled": true,
+    "status": "RECONCILED",
+    "request_base": {
+     "tabName": "fulltext",
+     "searchkey": "",
+     "isHLtitle": "true",
+     "column": "sse",
+     "category": "category_ndbg_szsh",
+     "stock": "688218,gfbj0836084",
+     "seDate": "2023-01-01~2026-10-25"
+    },
+    "page_cursors": [
+     {
+      "page": 1,
+      "rows": 8,
+      "response_sha256": "8207fd49f05b2a84f5326e4eee22876b5b7ead10aac862e96f6e4afc3f378271",
+      "fetched_at": "2026-10-26T16:30:18+08:00"
+     }
+    ],
+    "historical_code_rows": []
+   },
+   "slot": {
+    "slot_id": "annual_2025",
+    "status": "COLLECTED_IDENTITY_VERIFIED",
+    "status_reason": "校验通过",
+    "last_action": "SKIPPED_ALREADY_HAVE",
+    "next_action": "NONE",
+    "attempt_count": 1,
+    "document_id": "DOC-F61E57277E3A31BD",
+    "title": "2025年年度报告全文",
+    "published_on": "2026-04-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225259116.PDF",
+    "local_file": "sources/p05_validation/688218/annual_2025/DOC-F61E57277E3A31BD.pdf",
+    "page_count": 263,
+    "bytes": 3951900,
+    "sha256": "055eaaf729bdba32dcab99188f35d0828e987b8a503a183b82367f21b5bb4506",
+    "form": "FULL_TEXT",
+    "period_match_method": "BODY_PHRASE",
+    "checks": {
+     "MAGIC_HEADER": "PASS",
+     "SIZE_FLOOR": "PASS",
+     "PDF_OPENABLE": "PASS",
+     "PAGE_COUNT_FLOOR": "PASS",
+     "ISSUER_MATCH": "PASS",
+     "PERIOD_MATCH": "PASS",
+     "FORM_FULL_TEXT": "PASS"
+    },
+    "last_source_attempt": {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225259116.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 2459,
+     "at": "2026-10-26T16:30:21+08:00",
+     "response_sha256": null,
+     "bytes": 3951900,
+     "resumed_from": 0
+    }
+   },
+   "binary_proof": {
+    "local_file_exists": true,
+    "sha256_matches_file": true
+   }
+  },
+  {
+   "security_id": "SZ:002031",
+   "stock_name": "巨轮智能",
+   "exchange": "SZ",
+   "org_id": "gssz0002031",
+   "index": {
+    "category": "category_ndbg_szsh",
+    "column": "szse",
+    "total_announcement": 8,
+    "rows_fetched": 8,
+    "pages_fetched": 1,
+    "reconciled": true,
+    "status": "RECONCILED",
+    "request_base": {
+     "tabName": "fulltext",
+     "searchkey": "",
+     "isHLtitle": "true",
+     "column": "szse",
+     "category": "category_ndbg_szsh",
+     "stock": "002031,gssz0002031",
+     "seDate": "2023-01-01~2026-10-25"
+    },
+    "page_cursors": [
+     {
+      "page": 1,
+      "rows": 8,
+      "response_sha256": "ac0c6f8be2f01030cb0db906bb3d77bf202779c8e0ffd4a5651a7fcae9a19a4b",
+      "fetched_at": "2026-10-26T16:30:55+08:00"
+     }
+    ],
+    "historical_code_rows": []
+   },
+   "slot": {
+    "slot_id": "annual_2025",
+    "status": "COLLECTED_IDENTITY_VERIFIED",
+    "status_reason": "校验通过",
+    "last_action": "SKIPPED_ALREADY_HAVE",
+    "next_action": "NONE",
+    "attempt_count": 1,
+    "document_id": "DOC-025C7ECA3181B362",
+    "title": "2025年年度报告",
+    "published_on": "2026-04-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225260516.PDF",
+    "local_file": "sources/p05_validation/002031/annual_2025/DOC-025C7ECA3181B362.pdf",
+    "page_count": 204,
+    "bytes": 2317799,
+    "sha256": "bca689c22e6f146ac4b47fe62797381450177f9cb60059224d6466017ee5a265",
+    "form": "FULL_TEXT",
+    "period_match_method": "BODY_PHRASE",
+    "checks": {
+     "MAGIC_HEADER": "PASS",
+     "SIZE_FLOOR": "PASS",
+     "PDF_OPENABLE": "PASS",
+     "PAGE_COUNT_FLOOR": "PASS",
+     "ISSUER_MATCH": "PASS",
+     "PERIOD_MATCH": "PASS",
+     "FORM_FULL_TEXT": "PASS"
+    },
+    "last_source_attempt": {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225260516.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 2237,
+     "at": "2026-10-26T16:30:58+08:00",
+     "response_sha256": null,
+     "bytes": 2317799,
+     "resumed_from": 0
+    }
+   },
+   "binary_proof": {
+    "local_file_exists": true,
+    "sha256_matches_file": true
+   }
+  },
+  {
+   "security_id": "BJ:920207",
+   "stock_name": "众诚科技",
+   "exchange": "BJ",
+   "org_id": "gfbj0835207",
+   "index": {
+    "category": "category_ndbg_szsh",
+    "column": "szse",
+    "total_announcement": 8,
+    "rows_fetched": 8,
+    "pages_fetched": 1,
+    "reconciled": true,
+    "status": "RECONCILED",
+    "request_base": {
+     "tabName": "fulltext",
+     "searchkey": "",
+     "isHLtitle": "true",
+     "column": "szse",
+     "category": "category_ndbg_szsh",
+     "stock": "920207,gfbj0835207",
+     "seDate": "2023-01-01~2026-10-25"
+    },
+    "page_cursors": [
+     {
+      "page": 1,
+      "rows": 8,
+      "response_sha256": "cd5a7c898b1ddc93345bfba75c87b4b18348fc27c60a64c1e25dbf1b5757a672",
+      "fetched_at": "2026-10-26T16:30:58+08:00"
+     }
+    ],
+    "historical_code_rows": [
+     {
+      "sec_code": "835207",
+      "title": "2024年年度报告",
+      "published_on": "2025-04-28"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2024年年度报告摘要",
+      "published_on": "2025-04-28"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2023年年度报告",
+      "published_on": "2024-04-25"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2023年年度报告摘要",
+      "published_on": "2024-04-25"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2022年年度报告摘要",
+      "published_on": "2023-04-25"
+     },
+     {
+      "sec_code": "835207",
+      "title": "2022年年度报告",
+      "published_on": "2023-04-25"
+     }
+    ]
+   },
+   "slot": {
+    "slot_id": "annual_2025",
+    "status": "COLLECTED_IDENTITY_VERIFIED",
+    "status_reason": "校验通过",
+    "last_action": "SKIPPED_ALREADY_HAVE",
+    "next_action": "NONE",
+    "attempt_count": 3,
+    "document_id": "DOC-42A96A84780EB94B",
+    "title": "2025年年度报告",
+    "published_on": "2026-04-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221058.PDF",
+    "local_file": "sources/p05_validation/920207/annual_2025/DOC-42A96A84780EB94B.pdf",
+    "page_count": 178,
+    "bytes": 3110800,
+    "sha256": "86eed5c4be4c1e1be67cce9bae452b8ec503be089d6a5bcf60bb04a542849e27",
+    "form": "FULL_TEXT",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY",
+    "checks": {
+     "MAGIC_HEADER": "PASS",
+     "SIZE_FLOOR": "PASS",
+     "PDF_OPENABLE": "PASS",
+     "PAGE_COUNT_FLOOR": "PASS",
+     "ISSUER_MATCH": "PASS",
+     "PERIOD_MATCH": "PASS",
+     "FORM_FULL_TEXT": "PASS"
+    },
+    "last_source_attempt": {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221058.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 2901,
+     "at": "2026-10-26T16:32:20+08:00",
+     "response_sha256": null,
+     "bytes": 3110800,
+     "resumed_from": 0
+    }
+   },
+   "binary_proof": {
+    "local_file_exists": true,
+    "sha256_matches_file": true
+   }
+  }
+ ],
+ "extra_probe": {
+  "security_id": "SZ:002031",
+  "slot": {
+   "slot_id": "h1_2026",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_action": "SKIPPED_ALREADY_HAVE",
+   "next_action": "NONE",
+   "attempt_count": 1,
+   "document_id": "DOC-70CF025B687209D5",
+   "title": "2026年半年度报告",
+   "published_on": "2026-08-25",
+   "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502077.PDF",
+   "local_file": "sources/p05_validation/002031/h1_2026/DOC-70CF025B687209D5.pdf",
+   "page_count": 171,
+   "bytes": 4608089,
+   "sha256": "800fc824df3f37b4d1cb3f67a555fb7473496a02a58b37cce13304f3eae977fd",
+   "form": "FULL_TEXT",
+   "period_match_method": "BODY_PHRASE",
+   "checks": {
+    "MAGIC_HEADER": "PASS",
+    "SIZE_FLOOR": "PASS",
+    "PDF_OPENABLE": "PASS",
+    "PAGE_COUNT_FLOOR": "PASS",
+    "ISSUER_MATCH": "PASS",
+    "PERIOD_MATCH": "PASS",
+    "FORM_FULL_TEXT": "PASS"
+   },
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502077.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 3685,
+    "at": "2026-10-26T16:35:50+08:00",
+    "response_sha256": null,
+    "bytes": 4608089,
+    "resumed_from": 0
+   }
+  }
+ },
+ "pagination_probe": {
+  "page_size": 5,
+  "pages_fetched": 2,
+  "rows_fetched": 8,
+  "total_announcement": 8,
+  "reconciled": true,
+  "cursors": [
+   {
+    "page": 1,
+    "rows": 5,
+    "totalpages": 1,
+    "has_more": true
+   },
+   {
+    "page": 2,
+    "rows": 3,
+    "totalpages": 1,
+    "has_more": false
+   }
+  ]
+ },
+ "circuit": {},
+ "notes": [
+  "原件存 sources/p05_validation/（.gitignore 排除），GitHub 只保存本文件与台账。",
+  "所有状态为 COLLECTED_IDENTITY_VERIFIED 只代表文件与主体/报告期身份核对通过，不含业务结论。",
+  "北交所 2024 年及以前年报在巨潮以旧代码 835207 披露，本次已实测并接受为历史代码行。",
+  "三家原件在本卡前一次运行中已下载完成，本次运行为幂等复算（http_calls_this_run=0）；首次下载的 URL/时间/字节/哈希见 L9 与 checkpoint/<code>.json 的 source_attempts。",
+  "限速校验用隔离目录单独发起 2 次同主机请求，不受幂等跳过影响。"
+ ]
+}

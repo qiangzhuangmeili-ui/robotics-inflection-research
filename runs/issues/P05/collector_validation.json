@@ -1,0 +1,218 @@
+{
+ "plan_version": "20261026_collection_first_v2",
+ "issue_number": 16,
+ "issue_key": "P05",
+ "generated_at": "2026-10-26T16:42:08+08:00",
+ "review_nature": "SELF_CHECK",
+ "acceptance": [
+  {
+   "criterion": "至少覆盖分页不完整、HTML伪PDF、同文件重复、下载中断与源故障；运行可复算",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/fault_tests.json",
+    "tools/p05_fault_tests.py"
+   ],
+   "detail": {
+    "offline_tests": "10/10",
+    "covered": [
+     "分页不完整(T01)",
+     "HTML伪PDF(T02)",
+     "同文件重复(T03)",
+     "下载中断与续传(T04)",
+     "源故障熔断(T05)",
+     "摘要冒充全文(T06)",
+     "主体错配(T07)",
+     "北交所历史代码(T08)",
+     "截断PDF(T09)",
+     "低并发/限速/重试预算(T10)"
+    ],
+    "reproduce": "python tools/p05_fault_tests.py"
+   }
+  },
+  {
+   "criterion": "公告全分页与上游总数核对，保留原始响应、请求参数、来源时间与游标",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/live_validation.json#pagination_probe",
+    "runs/issues/P05/checkpoint/*.json#indexes"
+   ],
+   "detail": {
+    "live_multipage": {
+     "page_size": 5,
+     "pages_fetched": 2,
+     "rows_fetched": 8,
+     "total_announcement": 8,
+     "reconciled": true,
+     "cursors": [
+      {
+       "page": 1,
+       "rows": 5,
+       "totalpages": 1,
+       "has_more": true
+      },
+      {
+       "page": 2,
+       "rows": 3,
+       "totalpages": 1,
+       "has_more": false
+      }
+     ]
+    },
+    "reconcile_rule": "累计去重行数 == totalAnnouncement；totalpages/hasMore 不采信",
+    "raw_response_location": "sources/p05_raw/<code>/<category>_p<N>.json（不入库）"
+   }
+  },
+  {
+   "criterion": "每证券/报告槽记录 source_attempt、attempt_count、last_error、next_action、checkpoint；幂等跳过已取得原件",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/collection_index.csv",
+    "runs/issues/P05/checkpoint/*.json"
+   ],
+   "detail": {
+    "ledger_fields": [
+     "source_attempts",
+     "last_source_attempt",
+     "attempt_count",
+     "last_error",
+     "next_action",
+     "checkpoint",
+     "status"
+    ],
+    "idempotent_replay_http_calls": 0,
+    "skip_rule": "台账同哈希 + 本地文件存在 → SKIPPED_ALREADY_HAVE，0 次 HTTP"
+   }
+  },
+  {
+   "criterion": "原文检查 HTTP/文件头/PDF可读/标题主体报告期/页数/SHA256；链接不能当下载成功",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/live_validation.json#companies",
+    "tools/p05_collector.py#validate_pdf"
+   ],
+   "detail": {
+    "checks": [
+     "MAGIC_HEADER",
+     "SIZE_FLOOR",
+     "PDF_OPENABLE",
+     "PAGE_COUNT_FLOOR",
+     "ISSUER_MATCH",
+     "PERIOD_MATCH",
+     "FORM_FULL_TEXT"
+    ],
+    "live_files": {
+     "SH:688218": {
+      "pages": 263,
+      "bytes": 3951900,
+      "sha256": "055eaaf729bdba32dcab99188f35d0828e987b8a503a183b82367f21b5bb4506",
+      "period_method": "BODY_PHRASE"
+     },
+     "SZ:002031": {
+      "pages": 204,
+      "bytes": 2317799,
+      "sha256": "bca689c22e6f146ac4b47fe62797381450177f9cb60059224d6466017ee5a265",
+      "period_method": "BODY_PHRASE"
+     },
+     "BJ:920207": {
+      "pages": 178,
+      "bytes": 3110800,
+      "sha256": "86eed5c4be4c1e1be67cce9bae452b8ec503be089d6a5bcf60bb04a542849e27",
+      "period_method": "TITLE_PLUS_YEAR_IN_BODY"
+     }
+    }
+   }
+  },
+  {
+   "criterion": "低并发、限速、重试预算、熔断与中断恢复；北交所/历史代码独立用例",
+   "result": "PASS",
+   "evidence": [
+    "runs/issues/P05/collector_config.json#transport",
+    "runs/issues/P05/fault_tests.json#T05",
+    "runs/issues/P05/fault_tests.json#T04"
+   ],
+   "detail": {
+    "concurrency": 1,
+    "min_interval_per_host_seconds": 1.2,
+    "max_http_attempts_per_request": 2,
+    "max_slot_attempts": 3,
+    "circuit_policy": "复用 runs/issues/P03/source_circuit_policy.json",
+    "bj_route": "column=szse；bjse 列 P03 实测 500，不使用",
+    "historical_code": {
+     "BJ:920207": [
+      {
+       "sec_code": "835207",
+       "title": "2024年年度报告",
+       "published_on": "2025-04-28"
+      },
+      {
+       "sec_code": "835207",
+       "title": "2024年年度报告摘要",
+       "published_on": "2025-04-28"
+      },
+      {
+       "sec_code": "835207",
+       "title": "2023年年度报告",
+       "published_on": "2024-04-25"
+      },
+      {
+       "sec_code": "835207",
+       "title": "2023年年度报告摘要",
+       "published_on": "2024-04-25"
+      },
+      {
+       "sec_code": "835207",
+       "title": "2022年年度报告摘要",
+       "published_on": "2023-04-25"
+      },
+      {
+       "sec_code": "835207",
+       "title": "2022年年度报告",
+       "published_on": "2023-04-25"
+      }
+     ]
+    },
+    "resume": "Range 206 续传（T04）；中断后 .part 保留、attempt_count 累加"
+   }
+  },
+  {
+   "criterion": "原始大文件旁路存本机/Drive，GitHub 只保存小型索引与运行记录",
+   "result": "PASS",
+   "evidence": [
+    ".gitignore",
+    "runs/issues/P05/collection_index.csv"
+   ],
+   "detail": {
+    "originals": "sources/p05_validation/（.gitignore 排除 sources/** 与 *.pdf）",
+    "tracked": [
+     "collector_config.json",
+     "collector_runbook.md",
+     "collector_validation.json",
+     "collection_index.csv",
+     "fault_tests.json",
+     "live_validation.json",
+     "checkpoint/*.json",
+     "run_log.jsonl"
+    ],
+    "downloaded_bytes_not_committed": 13988588
+   }
+  }
+ ],
+ "summary": {
+  "criteria_total": 6,
+  "criteria_pass": 6,
+  "offline_tests": "10/10",
+  "live_checks": "11/11",
+  "companies_live": 3,
+  "slots_live": 4,
+  "downloaded_files": 4,
+  "downloaded_bytes": 13988588,
+  "full_universe_processed": 0
+ },
+ "not_covered": [
+  "未跑全池 1054 家（属 M00_01—M00_11）",
+  "未做 10 家采集校准（属 P07）",
+  "未做任何业务结论、拐点判断或估值",
+  "季度 PDF 默认可选下载，本次实跑未开启",
+  "listing_date 仍为 1054/1054 UNKNOWN，上市前不适用判定仍不可做"
+ ]
+}
