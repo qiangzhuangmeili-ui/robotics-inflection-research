@@ -1,0 +1,109 @@
+{
+  "manifest_version": 1,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 13,
+  "issue_key": "P02",
+  "generated_at_utc": "2026-10-26T06:04:52+00:00",
+  "purpose": "盘点 Drive 目录、本机缓存、旧研究库与财务快照，给出可复用资产清单与逐字段财务覆盖。",
+  "scope_note": "只盘点与建索引，不重新认定业务或阶段，不追加企业深挖，不移动或删除任何原件。",
+  "counts": {
+    "registered_documents": 100,
+    "unique_document_id": 100,
+    "unique_content_sha256": 87,
+    "documents_without_hash": 13,
+    "ai_read_confirmed": 24,
+    "evidence_independently_verified": 0,
+    "evidence_self_check_only": 16,
+    "archive_verified": 14,
+    "archive_uploaded_unverified": 76,
+    "archive_not_uploaded": 8,
+    "local_file_hash_match": 64,
+    "local_file_hash_mismatch": 0
+  },
+  "assets_by_type": {
+    "REGISTERED_DOCUMENT": 100,
+    "RESEARCH_PACKAGE": 68,
+    "REPO_TEXT_ASSET": 27,
+    "RESEARCH_RESULT_FILE": 24,
+    "VALIDATION_REPORT": 6,
+    "FINANCIAL_SNAPSHOT": 1
+  },
+  "assets_by_reuse_decision": {
+    "REUSE_INDEX_ONLY": 142,
+    "REUSE_WITH_LIMITS": 43,
+    "REUSE_AS_IS": 30,
+    "HOLD_PENDING_VERIFICATION": 11
+  },
+  "drive_inventory": {
+    "source": "inbox/drive_inventory_20261026.csv（用户提供的目录快照，非 API 列举）",
+    "company_folders": 72,
+    "folder_rows": 73,
+    "pdf_filename_entries": 98,
+    "unique_pdf_filenames": 90,
+    "empty_folders": 7,
+    "duplicate_entries_in_listing": 8,
+    "duplicate_folder_groups": [
+      {
+        "stock_code": "920207",
+        "period_folder": "2026H1",
+        "folder_segments": 3
+      },
+      {
+        "stock_code": "920418",
+        "period_folder": "2025年度",
+        "folder_segments": 3
+      },
+      {
+        "stock_code": "920491",
+        "period_folder": "2026年度_投资者关系",
+        "folder_segments": 3
+      }
+    ],
+    "matched_to_registry": 90,
+    "unmatched": 0,
+    "note": "目录快照只能证明「存在同名文件」，不能证明可打开、是全文、身份正确。重复文件夹不得当成多份不同文件。"
+  },
+  "local_cache": {
+    "directories": [
+      "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\R1_parallel_parent_reviewed_20261024\\sources",
+      "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\tmp\\chat02a_parent_sources",
+      "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\tmp\\batch01_parent_sources"
+    ],
+    "pdf_count": 64,
+    "referenced_by_registry": 64,
+    "unregistered_extras": 0,
+    "portability": "全部为机器绝对路径，不在仓库内；换机即失效，需迁入 sources/ 或 Drive。"
+  },
+  "financial_snapshot": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\collection_run_20261026\\raw\\既有候选池财务快照.csv",
+    "rows": 1054,
+    "columns": 50,
+    "numeric_fields": 40,
+    "sha256": "0c34f59567117b859ca57e9993f7a9fb8422598819274e4943ef331fa566b063",
+    "drive_file_id": "1OhRUemuwYyLLYtdXsgSuzv36C5tmECTI",
+    "companies_with_data": 992,
+    "companies_missing": 62,
+    "field_level_coverage": "见 runs/issues/P02/existing_field_coverage.csv",
+    "limitations": [
+      "无实际披露日期/PIT 版本，不能做历史可得性回测",
+      "无经营现金流、应收、存货、营业成本字段",
+      "无单季度营收（仅有单季扣非净利）"
+    ]
+  },
+  "blocked": [
+    {
+      "what": "Drive 二进制回读与哈希校验",
+      "why": "本机未安装 Google Drive 连接器；私有链接实测返回 302 登录跳转 / 401",
+      "impact": "90 条有 drive_file_id 的记录无法回读；73 条 UPLOADED_UNVERIFIED 无法转 VERIFIED",
+      "unblock": "安装 Drive 连接器，或用户手动下载到本地目录"
+    }
+  ],
+  "acceptance_counts": {
+    "文档数": 100,
+    "唯一数（document_id）": 100,
+    "唯一数（内容SHA256）": 87,
+    "已读取数（AI_READ_CONFIRMED）": 24,
+    "已业务验收数（VERIFIED_INDEPENDENT）": 0,
+    "说明": "四项分别计数，不得互相替代。已读取不等于已验收，已归档不等于已读取。"
+  }
+}

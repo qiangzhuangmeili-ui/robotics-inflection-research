@@ -4,35 +4,38 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_P01_SELF_CHECK_PASS_PENDING_INDEPENDENT_REVIEW",
-  "next_recommended_issue_number": 13,
-  "next_recommended_issue_key": "P02",
+  "status": "IDLE_P02_SELF_CHECK_PASS_PENDING_INDEPENDENT_REVIEW",
+  "next_recommended_issue_number": 15,
+  "next_recommended_issue_key": "P04",
   "last_completed": {
-    "issue_number": 12,
-    "issue_key": "P01",
-    "completed_at": "2026-10-26T05:21:25Z",
-    "review_file": "runs/issues/P01/review.json",
+    "issue_number": 13,
+    "issue_key": "P02",
+    "completed_at": "2026-10-26T06:05:20Z",
+    "review_file": "runs/issues/P02/review.json",
     "decision": "SELF_CHECK_PASS",
-    "allows_next_stage_scope": "P02(#13)、P05(#16)",
+    "allows_next_stage_scope": "P06(#17)、P07(#18)",
     "frozen_values": {
-      "registry_rows": 100,
-      "registry_sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed",
-      "new_columns_defined": 19,
-      "document_id_scheme": "IDENTITY_V1",
-      "status_axes": 5
+      "assets_total": 226,
+      "registered_documents": 100,
+      "unique_document_id": 100,
+      "unique_content_sha256": 87,
+      "ai_read_confirmed": 24,
+      "evidence_independently_verified": 0,
+      "local_pdf_hash_match": 64,
+      "local_pdf_hash_mismatch": 0,
+      "financial_snapshot_rows": 1054,
+      "financial_snapshot_columns": 50,
+      "financial_snapshot_sha256": "0c34f59567117b859ca57e9993f7a9fb8422598819274e4943ef331fa566b063"
     }
   },
-  "alternative_next": {
-    "issue_number": 15,
-    "issue_key": "P04",
-    "reason": "P02 的 Drive 盘点部分受「本机无 Drive 连接器」限制，只能做本机与登记表部分；P04 是纯本地的财务字段口径定义，不受影响，可先做。"
-  },
-  "open_followups_from_P01": [
-    "4 行状态轴冲突待人工裁决：DOC-2025AR-920346、DOC-C00-2025-920211、DOC-AWARD-920207-20260429、DOC-C00-2026-IPO-920211。",
-    "77 行 document_type 由标题推断，需在归档核验时升级为 OFFICIAL_METADATA 或改判。",
-    "迁移方案未执行：data/document_registry.csv 未改，document_sources.csv 未建；建议 P02 开头落列。",
-    "tools/validate_plan.py 仍有 5 项既有包索引漂移失败（68/59 vs 67/58、D00_B00_ADVANCE_01 未回写 master 与 deliveries），需另开小卡修。",
-    "去重第 4 步缺 official_announcement_id 列，暂需从 CNINFO URL 反解。"
+  "next_recommended_reason": "P04 财务口径定义不依赖 Drive，且 P02 已把快照 40 个字段逐列摊开，可直接照 existing_field_coverage.csv 写规则。P03 次之（通通道）。",
+  "open_followups_from_P02": [
+    "Drive 二进制回读受阻：90 条有 drive_file_id 的记录无法核哈希，73 条 UPLOADED_UNVERIFIED 无法转 VERIFIED；需装 Drive 连接器或手动下载。",
+    "64 份本机 PDF 全为机器绝对路径、位于仓库外，换机即失效；建议迁入 sources/ 或上传 Drive 后清理缓存（不得删唯一原件）。",
+    "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
+    "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
+    "重复文件夹 3 组（920418 2025年度×3、920207 2026H1×3、920491 IR×3），去重时不得当多份文件。",
+    "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
   ],
-  "note": "一次只占一张执行卡。P01 为 SELF_CHECK，非独立验收；本文件不表示研究完成，完成状态以 runs/issues/<key>/review.json 为准。"
+  "note": "一次只占一张执行卡。P02 为 SELF_CHECK，非独立验收；本文件不表示研究完成，完成状态以 runs/issues/<key>/review.json 为准。"
 }

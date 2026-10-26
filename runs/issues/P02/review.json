@@ -1,0 +1,126 @@
+{
+  "template_only": false,
+  "issue_number": 13,
+  "issue_key": "P02",
+  "plan_version": "20261026_collection_first_v2",
+  "phase": "准备",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI（与执行者为同一主体，仅做自检）",
+  "review_method": "SELF_CHECK_REPRODUCIBLE_COMPUTE：逐文件哈希复核 + 集合比对 + 可复算脚本；未做独立审计，未访问 Drive，未做业务证据核读。",
+  "reviewed_at": "2026-10-26T06:05:20Z",
+  "base_commit": "555f416",
+  "dependency_review": {
+    "depends_on": "P01(#12)",
+    "review_file": "runs/issues/P01/review.json",
+    "decision": "SELF_CHECK_PASS",
+    "allows_p02": true
+  },
+  "input_versions": [
+    {"path": "data/document_registry.csv", "sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed", "rows": 100, "read_only": true},
+    {"path": "data/company_master.csv", "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6", "read_only": true},
+    {"path": "data/resource_map.csv", "rows": 28, "read_only": true},
+    {"path": "inbox/drive_inventory_20261026.csv", "rows": 73, "read_only": true, "note": "用户提供的目录快照"},
+    {"path": "runs/issues/P01/migration_dryrun.csv", "note": "五轴状态来源"},
+    {"path": "既有候选池财务快照.csv", "sha256": "0c34f59567117b859ca57e9993f7a9fb8422598819274e4943ef331fa566b063", "rows": 1054, "columns": 50}
+  ],
+  "actual_output_files": [
+    "runs/issues/P02/existing_assets.csv",
+    "runs/issues/P02/existing_field_coverage.csv",
+    "runs/issues/P02/reuse_manifest.json",
+    "runs/issues/P02/manifest.json",
+    "runs/issues/P02/handoff.md",
+    "runs/issues/P02/review.json",
+    "tools/p02_inventory.py"
+  ],
+  "checks": [
+    {
+      "id": "AC1",
+      "acceptance_item": "盘点给出文档数/唯一数/已读取数/已业务验收数，分别计数",
+      "expected": "四个数字分别给出，不合并",
+      "actual": "文档数=100；唯一数(document_id)=100；唯一数(内容SHA256)=87；已读取数(AI_READ_CONFIRMED)=24；已业务验收数(VERIFIED_INDEPENDENT)=0",
+      "method": "从 existing_assets.csv 按字段分组统计，写入 reuse_manifest.acceptance_counts",
+      "result": "PASS"
+    },
+    {
+      "id": "AC2",
+      "acceptance_item": "每个复用资产有真实位置或 Drive ID/URL、版本、身份与校验状态",
+      "expected": "26 列覆盖位置/ID/哈希/五轴/复用判定/限制",
+      "actual": "existing_assets.csv 226 行 × 26 列，含 location_type/location_primary/drive_file_id/drive_url/sha256_recorded/sha256_actual/sha256_match/五轴状态/verification_status/reuse_decision/limitations/next_action",
+      "method": "结构核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC3",
+      "acceptance_item": "无凭证不写已核验",
+      "expected": "无 Drive 权限的行不得标 VERIFIED 或 LOCAL_HASH_MATCH",
+      "actual": "90 条有 drive_file_id 的行 sha256_match=NOT_COMPUTED，limitations 明写「本会话无 Drive 权限，无法回读」；本机 64 份标 LOCAL_HASH_MATCH 均实际计算过哈希",
+      "method": "逐行核对 + 重算 64 个文件哈希",
+      "result": "PASS"
+    },
+    {
+      "id": "AC4",
+      "acceptance_item": "不要把旧 64 份待上传状态覆盖到新归档结果",
+      "expected": "只读登记表，不回写旧状态",
+      "actual": "未修改 data/document_registry.csv（git 无变更）；旧状态仅作为输入读取",
+      "method": "git status 核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC5",
+      "acceptance_item": "逐字段统计财务覆盖，而非整家公司一概有/无",
+      "expected": "每个字段单独给覆盖率",
+      "actual": "existing_field_coverage.csv 47 行：40 个快照数值字段逐字段统计（80.17%—94.12%）+ 7 个契约要求但快照完全没有的字段（0%）",
+      "method": "对快照逐列统计非空值数量",
+      "result": "PASS"
+    },
+    {
+      "id": "AC6",
+      "acceptance_item": "把已有公司研究结果列为历史证据资产，不重新认定",
+      "expected": "研究结果入库但不改业务结论",
+      "actual": "68 个研究包 + 24 个结果文件入清单；包标注 4 个有结果、64 个 SHELL_ONLY_NO_RESULTS；limitations 统一写「仅作历史证据，不重新认定业务或阶段」",
+      "method": "结构核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC7",
+      "acceptance_item": "修正失效本机路径",
+      "expected": "检查 64 条本机路径是否有效",
+      "actual": "64/64 文件存在，哈希 64/64 与登记一致，0 失效；但全部为机器绝对路径、位于仓库外，已在 limitations 标注不可移植",
+      "method": "os.path.isfile + sha256 逐文件重算",
+      "result": "PASS"
+    },
+    {
+      "id": "AC8",
+      "acceptance_item": "读取受限只记录资产访问问题，不要求公开 Drive",
+      "expected": "阻断如实记录，不催用户逐家补件",
+      "actual": "reuse_manifest.blocked 记录 Drive 阻断原因与影响面；未生成任何逐家补件请求",
+      "method": "文件核对",
+      "result": "PASS"
+    }
+  ],
+  "coverage": {
+    "assigned": 1054,
+    "processed": 226,
+    "failed": 0,
+    "not_tried": 0,
+    "not_applicable": 0,
+    "not_disclosed": 0,
+    "unit": "asset",
+    "note": "本卡处理对象是资产条目（226 条），不是 1054 家公司的报告槽；报告槽进度不因本卡改变。"
+  },
+  "decision": "SELF_CHECK_PASS",
+  "limitations": [
+    "SELF_CHECK，非独立审计。执行者与复核者为同一 AI。",
+    "Drive 目录来自用户贴的文本快照，不是 API 列举，只能证明「存在同名文件」，不能证明可打开、是全文、身份正确。",
+    "本会话无 Google Drive 权限，90 条有 drive_file_id 的记录无法回读，73 条 UPLOADED_UNVERIFIED 无法转 VERIFIED。",
+    "64 份本机 PDF 全为机器绝对路径、位于仓库外，换机即失效。",
+    "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
+    "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
+    "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
+  ],
+  "allows_next_stage": true,
+  "allows_next_stage_scope": "放行 P06(#17) 与 P07(#18)。不放行任何业务结论采用、指标筛选或公司深研。",
+  "next_recommended_issue": {"number": 15, "key": "P04"},
+  "next_recommended_reason": "P04 财务口径定义不依赖 Drive，且本卡已把快照的真实字段逐列摊开，P04 可直接照 existing_field_coverage.csv 写规则。",
+  "notes": "两条验收标准逐条对照通过（AC1—AC8）。本记录不构成独立验收。关闭 issue 不替代本记录。"
+}
