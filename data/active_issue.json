@@ -4,58 +4,35 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_P05_SELF_CHECK_PASS",
-  "claim_note": "P05 已完成：采集器与小样本验证通过（离线 10/10、实跑 11/11、验收 6/6）。下一张建议 P06(#17)，P07(#18) 仍需 P06。",
+  "status": "IDLE_P06_SELF_CHECK_PASS",
+  "claim_note": "P06 已完成：容量三层口径、13 条归档路由、传输回执 schema 与 10 条不变量落地；自检 11/11、验收 6/6。下一张建议 P07(#18)，M00 全池批次仍等 P07。",
   "last_completed": {
-    "issue_number": 16,
-    "issue_key": "P05",
-    "completed_at": "2026-10-26T08:45:00+00:00",
-    "review_file": "runs/issues/P05/review.json",
+    "issue_number": 17,
+    "issue_key": "P06",
+    "completed_at": "2026-10-26T09:04:00+00:00",
+    "review_file": "runs/issues/P06/review.json",
     "decision": "SELF_CHECK_PASS",
-    "allows_next_stage_scope": "P05 技术依赖成立，可支撑 P07(#18)；P06 仍须单独验收，全池批次仍等 P07",
-    "offline_fault_tests": "10/10",
-    "live_checks": "11/11",
-    "acceptance": "6/6"
+    "allows_next_stage_scope": "放行 P07(#18)；不放行 M00 全池批次、业务结论或指标筛选",
+    "acceptance": "6/6",
+    "self_check": "11/11",
+    "capacity_status": "PRE_CALIBRATION_ESTIMATE_NOT_FACT"
   },
-  "input_baseline_after_p05": {
-    "PROJECT_STATE.json": "7c327929310e7db115a0f1ff8d1475a23b8f98bb06dcd686931733e863c4af8e",
-    "data/issue_execution_plan.csv": "0474a9dd1a03107f66717f905940b2ed102cce7de2dacb7e00b0e4ab541c007e",
-    "runs/issues/P05/collector_config.json": "2cfdb37685b0ab44a307bbad2271172d991a7d33ff0ed842de115479fc67e594",
-    "runs/issues/P05/collector_validation.json": "a9735a7b330f97488f0e19e913c56213baf7cdded8593903cf8bfa2d16cb1911"
+  "input_baseline_after_p06": {
+    "PROJECT_STATE.json": "updated_by_p06",
+    "data/issue_execution_plan.csv": "updated_by_p06(P06=SELF_CHECK_PASS,P07=READY)",
+    "runs/issues/P06/storage_plan.json": "4abc6c929d05363c7f50a64e744bf265944ecfb88da163a46816e1228b21e7d1",
+    "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
+    "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 17,
-  "next_recommended_issue_key": "P06",
-  "next_recommended_reason": "P06 依赖 P00/P02 已成立；P07 同时需要 P05 与 P06，故先做 P06。",
-  "open_followups_from_p05": [
-    "季度 PDF 开关已实现但未实跑（默认关闭）。",
-    "PDF 正文比对依赖 pypdf 文本层；扫描件退化为 COLLECTED_PENDING_IDENTITY。",
-    "listing_date 1054/1054 UNKNOWN，空目录只能记 NOT_TRIED。",
-    "结构化财务接口（新浪）未接入采集器，字段抽取仍按 P04 单独实现。",
-    "run_log.jsonl 为追加式历史，含调试期中间事件。"
+  "next_recommended_issue_number": 18,
+  "next_recommended_issue_key": "P07",
+  "next_recommended_reason": "P07 依赖 P02/P03/P04/P05/P06 五张卡均具备可读验收记录；P06 已把容量水位、归档路由与回执 schema 交给 P07 校准实测。",
+  "open_followups_from_p06": [
+    "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
+    "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
+    "容量为 PRE_CALIBRATION_ESTIMATE_NOT_FACT，须 P07 用 10 家校准重算中位数。",
+    "listing_date 1054/1054 UNKNOWN，11594 只是尝试上界。",
+    "登记表 6 类非枚举历史状态值（16 行）只给映射未执行，待 P01 迁移落地。"
   ],
-  "previous_completed": {
-    "issue_number": 15,
-    "issue_key": "P04",
-    "completed_at": "2026-10-26T07:37:33+00:00",
-    "review_file": "runs/issues/P04/review.json",
-    "decision": "SELF_CHECK_PASS",
-    "allows_next_stage_scope": "P05(#16) 的 P04 依赖成立；P07(#18) 仍需 P05、P06 各自验收",
-    "canonical_fields": 33,
-    "mapping_rows": 52,
-    "gap_rows": 63
-  },
-  "open_followups_from_P02": [
-    "财务快照缺 7 个 P00 契约字段：经营现金流、应收、存货、营业成本/毛利额、实际披露日、上市日期、单季度营收。",
-    "68 个研究包中 64 个只有 TASK/assignment、无结果文件。",
-    "重复文件夹 3 组（920418 2025年度×3、920207 2026H1×3、920491 IR×3），去重时不得当多份文件。",
-    "P01 的迁移方案仍未执行，document_registry.csv 未加列。"
-  ],
-  "open_followups_from_P04": [
-    "扣非归母净利润只能回官方 PDF 取，采集器必须解析非经常性损益表或主要会计数据表。",
-    "北交所 62 家旧快照覆盖率 0/62，必须走 P03 显式三市场适配器。",
-    "2025H1 五项基数缺失，2026H1 同比在补齐前不可计算。",
-    "listing_date 1054/1054 UNKNOWN，P05 须回填后才能判定上市前不适用。",
-    "旧快照 22 列扣非为累计口径，S00 标准化须按累计读入（P02 表述待更正）。"
-  ],
-  "note": "P05 未改动任何原始输入；全池采集仍未启动。"
+  "note": "P06 未改动任何原始输入（document_registry/company_master/intake 队列 diff 为空）；本次未下载、未上传任何文件。"
 }

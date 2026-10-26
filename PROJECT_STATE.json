@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "P05_COLLECTOR_READY_SELF_CHECK_PASS",
+  "status": "P06_STORAGE_PLAN_SELF_CHECK_PASS",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -217,18 +217,19 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/17",
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18",
     "execution_started": true,
     "last_completed_issue": {
-      "issue_number": 16,
-      "issue_key": "P05",
-      "completed_at": "2026-10-26T08:45:00+00:00",
-      "review_file": "runs/issues/P05/review.json",
+      "issue_number": 17,
+      "issue_key": "P06",
+      "completed_at": "2026-10-26T09:04:00+00:00",
+      "review_file": "runs/issues/P06/review.json",
       "decision": "SELF_CHECK_PASS",
-      "allows_next_stage_scope": "P05 技术依赖成立，可支撑 P07(#18)；P06 仍须单独验收，全池批次仍等 P07",
-      "offline_fault_tests": "10/10",
-      "live_checks": "11/11",
-      "acceptance": "6/6"
+      "allows_next_stage_scope": "放行 P07(#18)；不放行 M00 全池批次（仍等 P07）、不放行业务结论或指标筛选",
+      "acceptance": "6/6",
+      "self_check": "11/11",
+      "storage_plan": "runs/issues/P06/storage_plan.json",
+      "capacity_status": "PRE_CALIBRATION_ESTIMATE_NOT_FACT"
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -296,6 +297,65 @@
         "北交所 2024 年及以前年报以旧代码（如 835207）披露，须按简称接受",
         "北交所版式化封面需 TITLE_PLUS_YEAR_IN_BODY 降级并留痕",
         "listing_date 未回填前不得判 NOT_APPLICABLE_PRE_LISTING"
+      ],
+      "review_nature": "SELF_CHECK"
+    },
+    "p06_storage": {
+      "status": "STORAGE_RULES_FROZEN",
+      "version": "STORAGE_PLAN_V1",
+      "plan": "runs/issues/P06/storage_plan.json",
+      "routing": "runs/issues/P06/archive_routing.csv",
+      "receipt_schema": "runs/issues/P06/transfer_receipt_schema.json",
+      "self_check": "runs/issues/P06/self_check.json",
+      "capacity": {
+        "planned_core_slots": 6324,
+        "planned_quarterly_slots": 5270,
+        "attempt_upper_bound": 11594,
+        "documents_registered": 100,
+        "unique_content_sha256": 87,
+        "pdf_assets_measured": 83,
+        "pdf_assets_bytes": 224269941,
+        "p05_live_bytes": 13988588,
+        "unit_bytes_median": {
+          "annual_report": 2110208,
+          "semi_annual_report": 2449992,
+          "annual_report_summary": 186696,
+          "prospectus": 6446427,
+          "quarterly_report": "UNMEASURED"
+        },
+        "envelope_gib": {
+          "low": 9.79,
+          "mid": 13.43,
+          "high": 18.66,
+          "excludes": "季度 PDF（UNMEASURED）、公告原件、财务导出"
+        },
+        "status": "PRE_CALIBRATION_ESTIMATE_NOT_FACT"
+      },
+      "local_cache": {
+        "root": "sources/p06_cache/",
+        "rolling_max_gib": 8,
+        "soft_watermark_free_gib": 10,
+        "hard_stop_free_gib": 6,
+        "cache_drive_free_gib_at_plan": 24.29,
+        "alternate_drive": "D:",
+        "alternate_free_gib_at_plan": 158.42
+      },
+      "drive_verification": {
+        "root_folder_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+        "categories": 5,
+        "all_present_in_snapshot": true,
+        "reverify_status": "RECORDED_NOT_REVERIFIED",
+        "blocker": "DRIVE_API_NOT_CONNECTED",
+        "probe": "folder 302→ServiceLogin；file 401；api/v3 403",
+        "quota": "UNKNOWN"
+      },
+      "must_fix_downstream": [
+        "目录 URL 不得写入 drive_file_id；目录 ID 只进 target_folder_id",
+        "archive_status=VERIFIED 必须同时有 file_id+file_url+回读父目录匹配",
+        "AI_READ_CONFIRMED 必须有页码原句，归档成功不等于已读全文",
+        "核心槽估算中位 13.43 GiB > 单轮缓存上限 8 GiB，必须按批滚动缓存",
+        "季度报告字节数零样本，P07 至少跑 1 个季度槽",
+        "listing_date 未回填前 11594 只是尝试上界，不是应有份数"
       ],
       "review_nature": "SELF_CHECK"
     }

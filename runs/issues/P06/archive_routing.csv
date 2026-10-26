@@ -1,0 +1,14 @@
+﻿route_id,doc_class,period_scope,route_condition,local_cache_path_template,drive_folder_path_template,drive_parent_role,archive_status_after_upload,archive_status_after_readback,access_check_status_default,receipt_required,evidence_level,blocker_if_folder_missing,notes
+R01,ANNUAL_REPORT,FY2023|FY2024|FY2025,核心槽全文，标题不含摘要/更正,{security_id}/{slot_id}/,01_原始资料/{stock_code}_{stock_name}/{YYYY}年度/,01_原始资料,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,01_原始资料目录不可用→ACCESS_BLOCKED，不降级到其他目录,文件名保留原名；同目录允许多份不同报告期
+R02,SEMI_ANNUAL_REPORT,2024H1|2025H1|2026H1,核心槽全文,{security_id}/{slot_id}/,01_原始资料/{stock_code}_{stock_name}/{YYYY}H1/,01_原始资料,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,同上,半年度报告与同年度年报不同目录
+R03,QUARTERLY_REPORT,2024Q1—2026Q3,仅在结构化财务缺项或需单季原文时取,{security_id}/{slot_id}/,01_原始资料/{stock_code}_{stock_name}/{YYYY}Q{n}/,01_原始资料,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,同上,默认关闭；取件前须在台账记触发原因
+R04,ANNUAL_REPORT_SUMMARY,FY2023—FY2025,只找到摘要、全文缺失,{security_id}/{slot_id}_summary/,01_原始资料/{stock_code}_{stock_name}/{YYYY}年度/,01_原始资料,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,同上,文件名单列“摘要”；不得计入核心槽完成数
+R05,PROSPECTUS,上市前期间,slot_status=NOT_APPLICABLE_PRE_LISTING 时替代,{security_id}/prospectus/,01_原始资料/{stock_code}_{stock_name}/招股说明书/,01_原始资料,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,同上,document_type=PROSPECTUS，不得冒充年报
+R06,REVISION_OR_CORRECTION,任意,标题含更正/修订/补充，revision_no>=1,{security_id}/{slot_id}_rev{n}/,03_历史版本/{stock_code}_{stock_name}/{period_key}/,03_历史版本,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,03_历史版本不可用→停止上传并保留本地,旧版留在原目录不回移；supersedes_document_id 指向旧版
+R07,CONTRACT_ANNOUNCEMENT,研究截止日前两年,关键词命中（机器人/人形/减速器/执行器/丝杠/灵巧手/伺服/关节模组等）,{security_id}/announcements/{YYYYMMDD}/,01_原始资料/{stock_code}_{stock_name}/公告_{YYYYMMDD}/,01_原始资料,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,同上,关键词只用于取件排序，不作业务证据
+R08,ANNOUNCEMENT_ORIGINAL,研究截止日前两年,人工补件或定向核验要求,{security_id}/announcements/{YYYYMMDD}/,01_原始资料/{stock_code}_{stock_name}/公告_{YYYYMMDD}/,01_原始资料,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,同上,与 R07 同目录，按公告日期分子目录
+R09,FINANCIAL_EXPORT,2021—2026H1,结构化财务导出（快照/接口导出）,financial/,04_财务与数据导出/{YYYYMMDD}_{内容描述}/,04_财务与数据导出,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,目录不可用→保留本机并在登记表记 NOT_UPLOADED,导出件须带抓取日与口径说明；不得覆盖官方 PDF
+R10,INDUSTRY_MATERIAL,不限,跨公司行业报告/政策/标准,industry/,05_行业资料/{类别}/{YYYYMMDD}_{标题}/,05_行业资料,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,同上,不得把行业资料当作公司收入证据
+R11,BATCH_HANDOFF_ZIP,按批次,批次交接包（ZIP/大表）,handoff/,02_批次交接/{package_id}/,02_批次交接,UPLOADED_UNVERIFIED,VERIFIED,NOT_CHECKED,REQUIRED,L2,同上,ZIP 永不入库 GitHub；只登记 manifest 与哈希
+R12,INDEX_ONLY_L1,全池,仅来源索引、未取二进制,无,无（不上传）,NONE,NOT_UPLOADED,NOT_APPLICABLE,NOT_CHECKED,NOT_REQUIRED,L1,不适用,L1 只写 URL/标题/日期到登记表；不得伪造 Drive ID
+R13,BLOCKED_NO_ARCHIVE,任意,无权限/配额不足/源站不可用,保留本地,无（不上传）,NONE,SOURCE_UNAVAILABLE,NOT_APPLICABLE,ACCESS_BLOCKED,REQUIRED,L2,不适用,必须写尝试入口、错误码、下一步；不得据此判定公司无业务

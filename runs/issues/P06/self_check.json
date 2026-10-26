@@ -1,0 +1,126 @@
+{
+  "issue_key": "P06",
+  "issue_number": 17,
+  "generated_at": "2026-10-26T17:00:14+08:00",
+  "review_nature": "SELF_CHECK",
+  "method": "可复算脚本 tools/p06_storage_plan.py；输入只读，输出仅 runs/issues/P06/",
+  "checks": [
+    {
+      "id": "SC1",
+      "item": "GitHub 跟踪文件里没有 PDF/ZIP/大表",
+      "expected": "二进制扩展名计数=0",
+      "actual": "跟踪 341 个文件，二进制 0 个：[]",
+      "result": "PASS",
+      "method": "git ls-files + 扩展名正则"
+    },
+    {
+      "id": "SC2",
+      "item": "P06 交付本身是小型文本",
+      "expected": "单文件 ≤ 512 KiB",
+      "actual": "最大 40932 B；超限 {}",
+      "result": "PASS",
+      "method": "stat"
+    },
+    {
+      "id": "SC3",
+      "item": "登记表没有把目录 URL 填进文件 ID",
+      "expected": "格式违规=0 且 URL 混入=0",
+      "actual": "格式违规 0；URL 混入 0",
+      "result": "PASS",
+      "method": "逐行正则 + 子串扫描"
+    },
+    {
+      "id": "SC4",
+      "item": "回执 schema 能拒收四类错误回执",
+      "expected": "正例 0 错；反例 4/4 被拒",
+      "actual": "正例错 0 条；反例 {'folder_url_in_folder_id': True, 'verified_without_readback': True, 'read_confirmed_without_page_quote': True, 'fake_hash': True}；正例错误明细 []",
+      "result": "PASS",
+      "method": "自实现 draft-07 子集校验器（type/required/pattern/enum/const/min/max/allOf/if-then/additionalProperties）+ 4 条不变量"
+    },
+    {
+      "id": "SC5",
+      "item": "容量数字可复算（重跑同结果）",
+      "expected": "重算 mid 与上界一致",
+      "actual": "mid 14419352400 vs 14419352400；上界 11594",
+      "result": "PASS",
+      "method": "重新装载输入并重算"
+    },
+    {
+      "id": "SC6",
+      "item": "不把未实测类别写成事实",
+      "expected": "status=PRE_CALIBRATION_ESTIMATE_NOT_FACT 且季度不填估算",
+      "actual": "status=PRE_CALIBRATION_ESTIMATE_NOT_FACT；季度样本=UNMEASURED；季度无估算=True",
+      "result": "PASS",
+      "method": "字段核对"
+    },
+    {
+      "id": "SC7",
+      "item": "Drive 根目录与 01—05 分类目录登记齐备，ID 与 URL 分离",
+      "expected": "6 个角色齐备、ID 均非 URL",
+      "actual": "缺 []；ID 全部非 URL=True",
+      "result": "PASS",
+      "method": "读 data/drive_folders.csv + 正则"
+    },
+    {
+      "id": "SC8",
+      "item": "每个文档类别都有归档路由",
+      "expected": "doc_class 全覆盖",
+      "actual": "schema 10 类；未覆盖 []",
+      "result": "PASS",
+      "method": "集合比对"
+    },
+    {
+      "id": "SC9",
+      "item": "本卡没有改动原始输入",
+      "expected": "四个输入文件 diff 为空",
+      "actual": "空",
+      "result": "PASS",
+      "method": "git diff --stat"
+    },
+    {
+      "id": "SC10",
+      "item": "容量不足时有优先级与断点记录，不静默截断",
+      "expected": "P0—P5 覆盖核心槽且 breach_actions 非空",
+      "actual": "优先级 ['annual_2023,h1_2024', 'annual_2024,h1_2025', 'annual_2025', 'h1_2026', 'keyword_original_announcements', 'quarterly_report_pdf']；breach 动作 5 条",
+      "result": "PASS",
+      "method": "字段核对"
+    },
+    {
+      "id": "SC11",
+      "item": "路由表把“上传后”与“回读后”两态分开且取值合法",
+      "expected": "状态值全部在枚举内、上传态与回读态不混写",
+      "actual": "非法值 []；上传后未升级为 VERIFIED 的 []",
+      "result": "PASS",
+      "method": "逐行枚举比对"
+    }
+  ],
+  "summary": {
+    "total": 11,
+    "pass": 11,
+    "fail": 0
+  },
+  "validator_coverage": [
+    "$id",
+    "$schema",
+    "additionalProperties",
+    "allOf",
+    "const",
+    "description",
+    "enum",
+    "if",
+    "items",
+    "maximum",
+    "minimum",
+    "pattern",
+    "properties",
+    "required",
+    "then",
+    "title",
+    "type"
+  ],
+  "not_covered": [
+    "未做真实上传与回读（无 Drive 权限）",
+    "未实测季度报告字节数",
+    "未做独立审计（执行者与自检者为同一 AI）"
+  ]
+}

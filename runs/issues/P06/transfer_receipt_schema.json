@@ -1,0 +1,747 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "runs/issues/P06/transfer_receipt_schema.json",
+  "title": "P06 传输回执 TRANSFER_RECEIPT_V1",
+  "description": "一次“本地缓存 → Drive 归档 → 回读确认”的完整证据记录。归档成功不等于 AI 已读全文；两者分字段记录。",
+  "schema_version": "TRANSFER_RECEIPT_V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receipt_id",
+    "schema_version",
+    "document_id",
+    "security_id",
+    "slot_id",
+    "doc_class",
+    "revision_no",
+    "source",
+    "download",
+    "local_cache",
+    "drive",
+    "archive_status",
+    "access_check_status",
+    "evidence",
+    "verification",
+    "created_at_utc"
+  ],
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^RCP-[0-9A-F]{12}$"
+    },
+    "schema_version": {
+      "const": "TRANSFER_RECEIPT_V1"
+    },
+    "document_id": {
+      "type": "string",
+      "pattern": "^DOC-[0-9A-F]{16}$"
+    },
+    "security_id": {
+      "type": "string",
+      "pattern": "^(SH|SZ|BJ):[0-9]{6}$"
+    },
+    "slot_id": {
+      "type": "string",
+      "enum": [
+        "annual_2023",
+        "annual_2024",
+        "annual_2025",
+        "h1_2024",
+        "h1_2025",
+        "h1_2026",
+        "q1_2024",
+        "q3_2024",
+        "q1_2025",
+        "q3_2025",
+        "q1_2026",
+        "q3_2026",
+        "announcement_ir_index",
+        "keyword_original",
+        "batch_handoff",
+        "financial_export",
+        "industry_material"
+      ]
+    },
+    "doc_class": {
+      "type": "string",
+      "enum": [
+        "ANNUAL_REPORT",
+        "ANNUAL_REPORT_SUMMARY",
+        "SEMI_ANNUAL_REPORT",
+        "QUARTERLY_REPORT",
+        "PROSPECTUS",
+        "CONTRACT_ANNOUNCEMENT",
+        "ANNOUNCEMENT_ORIGINAL",
+        "FINANCIAL_EXPORT",
+        "INDUSTRY_MATERIAL",
+        "BATCH_HANDOFF_ZIP"
+      ]
+    },
+    "revision_no": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "supersedes_document_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^DOC-[0-9A-F]{16}$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary_url",
+        "source_kind",
+        "http_status"
+      ],
+      "properties": {
+        "primary_url": {
+          "type": "string",
+          "pattern": "^https?://"
+        },
+        "source_kind": {
+          "type": "string",
+          "enum": [
+            "CNINFO_OFFICIAL",
+            "EXCHANGE_OFFICIAL",
+            "ISSUER_OFFICIAL",
+            "USER_UPLOAD",
+            "MIRROR_SECONDARY"
+          ]
+        },
+        "http_status": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599
+        },
+        "disclosed_on": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "identity_method": {
+          "type": "string",
+          "enum": [
+            "BODY_PHRASE",
+            "TITLE_PLUS_YEAR_IN_BODY",
+            "FIRST_PAGE_VISUAL",
+            "NOT_VERIFIED"
+          ]
+        },
+        "official_provenance": {
+          "type": "string",
+          "enum": [
+            "VERIFIED",
+            "PENDING",
+            "NOT_APPLICABLE"
+          ]
+        }
+      }
+    },
+    "download": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempted",
+        "bytes_received",
+        "sha256",
+        "downloaded_at_utc"
+      ],
+      "properties": {
+        "attempted": {
+          "type": "boolean"
+        },
+        "bytes_received": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "content_length_matches": {
+          "type": "boolean"
+        },
+        "page_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "downloaded_at_utc": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T"
+        },
+        "partial_suffix_used": {
+          "type": "boolean"
+        }
+      }
+    },
+    "local_cache": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cache_root",
+        "relative_path",
+        "exists"
+      ],
+      "properties": {
+        "cache_root": {
+          "type": "string",
+          "pattern": "^(sources/|[A-Za-z]:[\\\\/])"
+        },
+        "relative_path": {
+          "type": "string",
+          "pattern": "\\.(pdf|zip|xlsx|csv|json)$"
+        },
+        "exists": {
+          "type": "boolean"
+        },
+        "keep_until": {
+          "type": "string",
+          "enum": [
+            "ARCHIVE_VERIFIED",
+            "ALWAYS_KEEP",
+            "MANUAL_REVIEW"
+          ]
+        }
+      }
+    },
+    "drive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_folder_path",
+        "target_folder_id",
+        "upload_attempted"
+      ],
+      "properties": {
+        "target_folder_path": {
+          "type": "string",
+          "pattern": "^(01_原始资料|02_批次交接|03_历史版本|04_财务与数据导出|05_行业资料)/"
+        },
+        "target_folder_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{20,}$"
+        },
+        "file_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Za-z0-9_-]{20,}$"
+        },
+        "file_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://drive\\.google\\.com/file/d/[A-Za-z0-9_-]{20,}/?$"
+        },
+        "upload_attempted": {
+          "type": "boolean"
+        },
+        "upload_result": {
+          "type": "string",
+          "enum": [
+            "SUCCESS",
+            "FAILED",
+            "SKIPPED_NO_PERMISSION",
+            "NOT_TRIED"
+          ]
+        },
+        "readback": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "listed",
+            "readback_at_utc"
+          ],
+          "properties": {
+            "listed": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "mime_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "size_bytes": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "parents_contains_target_folder_id": {
+              "type": "boolean"
+            },
+            "readback_at_utc": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T"
+            }
+          }
+        }
+      }
+    },
+    "archive_status": {
+      "type": "string",
+      "enum": [
+        "NOT_UPLOADED",
+        "UPLOADED_UNVERIFIED",
+        "VERIFIED",
+        "NOT_REQUIRED_REFERENCE_ONLY",
+        "SOURCE_UNAVAILABLE"
+      ]
+    },
+    "access_check_status": {
+      "type": "string",
+      "enum": [
+        "NOT_CHECKED",
+        "OWNER_ONLY_CHECKED",
+        "AI_READ_CONFIRMED",
+        "ACCESS_BLOCKED"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level"
+      ],
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "L1",
+            "L2",
+            "L3"
+          ]
+        },
+        "page_quote": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "page",
+            "quote",
+            "quote_located"
+          ],
+          "properties": {
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "quote": {
+              "type": "string"
+            },
+            "quote_located": {
+              "type": "boolean"
+            },
+            "scope": {
+              "type": "string",
+              "enum": [
+                "CONSOLIDATED",
+                "PARENT_ONLY",
+                "UNKNOWN"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "failure": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "attempts",
+        "next_action"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "HTTP_ERROR",
+            "TIMEOUT",
+            "QUOTA_EXCEEDED",
+            "NO_PERMISSION",
+            "IDENTITY_MISMATCH",
+            "PARTIAL_CONTENT",
+            "DISK_FULL",
+            "SCHEMA_INVALID",
+            "SOURCE_UNAVAILABLE"
+          ]
+        },
+        "http_status": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 100,
+          "maximum": 599
+        },
+        "message": {
+          "type": "string"
+        },
+        "attempts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "next_action": {
+          "type": "string",
+          "enum": [
+            "RETRY_LATER",
+            "MANUAL_REVIEW",
+            "RESOLVE_LISTING_DATE",
+            "REQUEST_PERMISSION",
+            "FREE_SPACE",
+            "STOP_AND_KEEP_LOCAL"
+          ]
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nature",
+        "checks",
+        "verified_by",
+        "verified_at_utc"
+      ],
+      "properties": {
+        "nature": {
+          "type": "string",
+          "enum": [
+            "SELF_CHECK",
+            "INDEPENDENT"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "MAGIC_HEADER",
+              "SIZE_FLOOR",
+              "PDF_OPENABLE",
+              "PAGE_COUNT_FLOOR",
+              "ISSUER_MATCH",
+              "PERIOD_MATCH",
+              "FORM_FULL_TEXT",
+              "CONTENT_LENGTH",
+              "SHA256",
+              "DRIVE_READBACK",
+              "PARENTS_MATCH",
+              "PAGE_QUOTE_LOCATED"
+            ]
+          }
+        },
+        "verified_by": {
+          "type": "string"
+        },
+        "verified_at_utc": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T"
+        }
+      }
+    },
+    "created_at_utc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "archive_status": {
+            "const": "VERIFIED"
+          }
+        },
+        "required": [
+          "archive_status"
+        ]
+      },
+      "then": {
+        "required": [
+          "drive"
+        ],
+        "properties": {
+          "drive": {
+            "required": [
+              "file_id",
+              "file_url",
+              "readback",
+              "upload_result"
+            ],
+            "properties": {
+              "file_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{20,}$"
+              },
+              "file_url": {
+                "type": "string",
+                "pattern": "^https://drive\\.google\\.com/file/d/[A-Za-z0-9_-]{20,}/?$"
+              },
+              "readback": {
+                "type": "object",
+                "required": [
+                  "listed",
+                  "parents_contains_target_folder_id"
+                ],
+                "properties": {
+                  "listed": {
+                    "const": true
+                  },
+                  "parents_contains_target_folder_id": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "access_check_status": {
+            "const": "AI_READ_CONFIRMED"
+          }
+        },
+        "required": [
+          "access_check_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "required": [
+              "page_quote"
+            ],
+            "properties": {
+              "page_quote": {
+                "type": "object",
+                "required": [
+                  "quote_located"
+                ],
+                "properties": {
+                  "quote_located": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "doc_class": {
+            "enum": [
+              "ANNUAL_REPORT",
+              "SEMI_ANNUAL_REPORT",
+              "QUARTERLY_REPORT",
+              "PROSPECTUS"
+            ]
+          }
+        },
+        "required": [
+          "doc_class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "properties": {
+              "level": {
+                "enum": [
+                  "L2",
+                  "L3"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "archive_status": {
+            "enum": [
+              "NOT_UPLOADED",
+              "SOURCE_UNAVAILABLE"
+            ]
+          }
+        },
+        "required": [
+          "archive_status"
+        ]
+      },
+      "then": {
+        "required": [
+          "failure"
+        ]
+      }
+    }
+  ],
+  "x_invariants": [
+    {
+      "id": "INV-01",
+      "rule": "archive_status=VERIFIED 必须同时具备 file_id、file_url、readback.listed=true、parents_contains_target_folder_id=true，缺一不可。"
+    },
+    {
+      "id": "INV-02",
+      "rule": "access_check_status=AI_READ_CONFIRMED 必须有 evidence.page_quote.quote_located=true；归档成功不能替代读全文。"
+    },
+    {
+      "id": "INV-03",
+      "rule": "drive.target_folder_id 与 drive.file_id 必须是 Drive 不透明 ID；禁止出现 http、drive.google.com、/folders/。"
+    },
+    {
+      "id": "INV-04",
+      "rule": "drive.file_url 只能是 https://drive.google.com/file/d/<file_id>；目录链接不得填入。"
+    },
+    {
+      "id": "INV-05",
+      "rule": "archive_status ∈ {NOT_UPLOADED, SOURCE_UNAVAILABLE} 必须带 failure 块说明原因与下一步。"
+    },
+    {
+      "id": "INV-06",
+      "rule": "download.sha256 只能来自实际取得的二进制；未取得时置 null，不得编造。"
+    },
+    {
+      "id": "INV-07",
+      "rule": "revision_no>0 时必须填 supersedes_document_id，且旧版记录不得删除或覆盖。"
+    },
+    {
+      "id": "INV-08",
+      "rule": "verification.nature=SELF_CHECK 的记录不得在业务采用环节当作独立验收。"
+    },
+    {
+      "id": "INV-09",
+      "rule": "download.attempted=false 时 archive_status 不得为 VERIFIED，且 upload_result=NOT_TRIED。"
+    },
+    {
+      "id": "INV-10",
+      "rule": "同一 document_id 的 receipt 可多次生成（重试），但只有 archive_status=VERIFIED 的那条可驱动缓存清理。"
+    }
+  ],
+  "x_forbidden_patterns": {
+    "drive_file_id_must_not_contain": [
+      "http",
+      "drive.google.com",
+      "/folders/",
+      "usp=drivesdk"
+    ],
+    "drive_target_folder_id_must_not_contain": [
+      "http",
+      "drive.google.com",
+      "/file/d/"
+    ],
+    "note": "目录 URL / 分享链接里的 usp= 参数都不是 ID，必须先解析出裸 ID 再填。"
+  },
+  "x_examples": {
+    "valid_verified_receipt": {
+      "receipt_id": "RCP-0000000000A1",
+      "schema_version": "TRANSFER_RECEIPT_V1",
+      "document_id": "DOC-42A96A84780EB94B",
+      "security_id": "BJ:920207",
+      "slot_id": "annual_2025",
+      "doc_class": "ANNUAL_REPORT",
+      "revision_no": 0,
+      "supersedes_document_id": null,
+      "source": {
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221058.PDF",
+        "source_kind": "CNINFO_OFFICIAL",
+        "http_status": 200,
+        "disclosed_on": "2026-04-26",
+        "identity_method": "TITLE_PLUS_YEAR_IN_BODY",
+        "official_provenance": "VERIFIED"
+      },
+      "download": {
+        "attempted": true,
+        "bytes_received": 3110800,
+        "sha256": "86eed5c4be4c1e1be67cce9bae452b8ec503be089d6a5bcf60bb04a542849e27",
+        "content_length_matches": true,
+        "page_count": 178,
+        "downloaded_at_utc": "2026-10-26T08:41:48Z",
+        "partial_suffix_used": true
+      },
+      "local_cache": {
+        "cache_root": "sources/p06_cache/",
+        "relative_path": "BJ_920207/annual_2025/DOC-42A96A84780EB94B.pdf",
+        "exists": true,
+        "keep_until": "ARCHIVE_VERIFIED"
+      },
+      "drive": {
+        "target_folder_path": "01_原始资料/920207_众诚科技/2025年度/",
+        "target_folder_id": "1PPX55Sl9ZNhT6JaG-SUm1OByanYu6o6t",
+        "file_id": null,
+        "file_url": null,
+        "upload_attempted": false,
+        "upload_result": "NOT_TRIED",
+        "readback": null
+      },
+      "archive_status": "NOT_UPLOADED",
+      "access_check_status": "NOT_CHECKED",
+      "evidence": {
+        "level": "L2",
+        "page_quote": null
+      },
+      "failure": {
+        "code": "NO_PERMISSION",
+        "http_status": 403,
+        "message": "本会话无 Drive API 凭据：folder 302、file 401、api/v3 403",
+        "attempts": 1,
+        "next_action": "REQUEST_PERMISSION"
+      },
+      "verification": {
+        "nature": "SELF_CHECK",
+        "checks": [
+          "MAGIC_HEADER",
+          "SIZE_FLOOR",
+          "PDF_OPENABLE",
+          "PAGE_COUNT_FLOOR",
+          "ISSUER_MATCH",
+          "PERIOD_MATCH",
+          "FORM_FULL_TEXT",
+          "CONTENT_LENGTH",
+          "SHA256"
+        ],
+        "verified_by": "WorkBuddy AI",
+        "verified_at_utc": "2026-10-26T08:41:48Z"
+      },
+      "created_at_utc": "2026-10-26T08:41:48Z"
+    }
+  }
+}

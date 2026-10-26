@@ -1,0 +1,959 @@
+{
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 17,
+  "issue_key": "P06",
+  "storage_plan_version": "STORAGE_PLAN_V1",
+  "generated_at": "2026-10-26T16:58:00+08:00",
+  "generated_at_utc": "2026-10-26T08:58:00Z",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "scope_statement": "只定容量口径、目录路由、归档与交接规则；本卡不下载、不上传、不改登记表、不做业务判断、不估值。",
+  "inputs": [
+    {
+      "path": "PROJECT_STATE.json",
+      "exists": true,
+      "bytes": 20613,
+      "sha256": "7c327929310e7db115a0f1ff8d1475a23b8f98bb06dcd686931733e863c4af8e"
+    },
+    {
+      "path": "data/company_master.csv",
+      "exists": true,
+      "bytes": 707054,
+      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6"
+    },
+    {
+      "path": "data/document_registry.csv",
+      "exists": true,
+      "bytes": 79869,
+      "sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed"
+    },
+    {
+      "path": "data/drive_folders.csv",
+      "exists": true,
+      "bytes": 11220,
+      "sha256": "9d76b3b6e75a4cd98f6569ed6082a3dcbd5a3ffc77d327f577d84626b2e0c7c3"
+    },
+    {
+      "path": "data/intake_company_queue.csv",
+      "exists": true,
+      "bytes": 475528,
+      "sha256": "cf86db6c10810019b2efcd55b03e56940799ba98e2493afe12cfa480e88fe893"
+    },
+    {
+      "path": "data/intake_batch_index.csv",
+      "exists": true,
+      "bytes": 4684,
+      "sha256": "ab990b8b787398d1472dd3b1a492de6993817da6dcecc8cfa2940642410580c8"
+    },
+    {
+      "path": "data/pdf_transfer_plan.csv",
+      "exists": true,
+      "bytes": 54320,
+      "sha256": "458127e8f9538642e1abf31afafc8916688f0c623525eca9576aa0b1d8ffd952"
+    },
+    {
+      "path": "runs/issues/P00/collection_scope.json",
+      "exists": true,
+      "bytes": 14361,
+      "sha256": "f5e31dc053b9d7a020ffd0db15fb8d7cad44e2c04f6baa76d396c41a519a4e3b"
+    },
+    {
+      "path": "runs/issues/P02/existing_assets.csv",
+      "exists": true,
+      "bytes": 138872,
+      "sha256": "d2be35f234bc8630cc78dee56480a68f74988627c3d8f5db68ff6c3bed432c81"
+    },
+    {
+      "path": "runs/issues/P05/collector_config.json",
+      "exists": true,
+      "bytes": 12576,
+      "sha256": "2cfdb37685b0ab44a307bbad2271172d991a7d33ff0ed842de115479fc67e594"
+    },
+    {
+      "path": "runs/issues/P05/collection_index.csv",
+      "exists": true,
+      "bytes": 1977,
+      "sha256": "6608a96aeb752db0b508819a3d9cc19e09fbfe3a8fe91f69dc46f9d57f128530"
+    }
+  ],
+  "capacity": {
+    "method": "总容量 = Σ(各槽实际尝试数 × 该槽单位文件字节中位数)（P00 capacity_rule.estimation_method）",
+    "status": "PRE_CALIBRATION_ESTIMATE_NOT_FACT",
+    "p00_rule_compliance": "P00 规定 P07 实测前 pre_calibration_state=UNMEASURED、不对外给单一“总 GB 事实值”。本卡只给可复算的区间与样本量，并显式标 ESTIMATE_NOT_FACT；P07 校准后重算。",
+    "tiers": {
+      "planned_slots": {
+        "companies": 1054,
+        "core_slots": 6,
+        "quarterly_slots_applicable": 5,
+        "quarterly_slots_not_yet_disclosed": 1,
+        "core_attempt_upper_bound": 6324,
+        "quarterly_attempt_upper_bound": 5270,
+        "total_attempt_upper_bound": 11594,
+        "upper_bound_meaning": "数学上界，不是应有文件数；listing_date 1054/1054 UNKNOWN，无法扣除上市前不适用、未披露与修订合并，实际数必低于此值且当前不可知。",
+        "p00_cross_check": {
+          "p00_core_slot_upper_bound": 6324,
+          "recomputed": 6324,
+          "match": true
+        }
+      },
+      "actually_found": {
+        "documents_registered": 100,
+        "unique_document_id": 100,
+        "unique_content_sha256": 87,
+        "drive_file_id_present": 90,
+        "local_file_recorded": 64,
+        "local_file_exists_now": 64,
+        "archive_status_counts": {
+          "UPLOADED_UNVERIFIED": 73,
+          "VERIFIED": 14,
+          "L1_SOURCE_INDEX_ONLY": 3,
+          "NOT_REQUIRED_REFERENCE_ONLY": 2,
+          "UPLOADED_AND_TEXT_READ": 3,
+          "NOT_UPLOADED": 5
+        },
+        "access_check_status_counts": {
+          "NOT_CHECKED": 66,
+          "AI_READ_CONFIRMED": 24,
+          "OFFICIAL_PAGE_WEB_VERIFIED": 1,
+          "WEB_TEXT_READ_IDENTITY_CORRECTED": 1,
+          "DRIVE_TEXT_EXTRACTION_OK": 3,
+          "WEB_PAGE_READ_NOT_DRIVE_ARCHIVED": 5
+        },
+        "archived_verified": 14,
+        "uploaded_unverified": 73,
+        "not_uploaded": 8,
+        "ai_read_confirmed": 24,
+        "business_accepted_independent": 0,
+        "source": "data/document_registry.csv（只读）",
+        "note": "“已发现”是文件层面计数，不等于已核读、更不等于已业务验收；四项不得合并成单一完成率。"
+      },
+      "actual_bytes": {
+        "measured_asset_rows": 215,
+        "measured_asset_bytes": 227819025,
+        "measured_asset_mib": 217.27,
+        "pdf_asset_rows": 83,
+        "pdf_asset_bytes": 224269941,
+        "pdf_asset_mib": 213.88,
+        "pdf_class_scope": [
+          "ANNUAL_REPORT",
+          "ANNUAL_REPORT_SUMMARY",
+          "CONTRACT_ANNOUNCEMENT",
+          "LISTING_DISCLOSURE",
+          "PROSPECTUS",
+          "SEMI_ANNUAL_REPORT",
+          "SUSTAINABILITY_REPORT",
+          "TENDER_NOTICE"
+        ],
+        "p05_live_files": 4,
+        "p05_live_bytes": 13988588,
+        "p05_live_mib": 13.34,
+        "note": "实际字节只统计已取得二进制的文件；未取得二进制的登记行不计入，也不按文件名推测大小。measured_asset_* 含文本快照/研究包等非 PDF 资产，pdf_asset_* 才是原件口径。"
+      }
+    },
+    "unit_bytes_samples": {
+      "ANNUAL_REPORT": {
+        "n": 74,
+        "status": "MEASURED",
+        "min_bytes": 871037,
+        "p25_bytes": 1493006,
+        "median_bytes": 2110208,
+        "mean_bytes": 2533753,
+        "p75_bytes": 2885355,
+        "max_bytes": 10863252,
+        "sum_bytes": 187497746,
+        "sources": "P02 existing_assets(size_bytes) + P05 collection_index(bytes)，按内容哈希去重"
+      },
+      "ANNUAL_REPORT_SUMMARY": {
+        "n": 2,
+        "status": "MEASURED",
+        "min_bytes": 186010,
+        "p25_bytes": 186353,
+        "median_bytes": 186696,
+        "mean_bytes": 186696,
+        "p75_bytes": 187040,
+        "max_bytes": 187383,
+        "sum_bytes": 373393,
+        "sources": "P02 existing_assets(size_bytes) + P05 collection_index(bytes)，按内容哈希去重"
+      },
+      "SEMI_ANNUAL_REPORT": {
+        "n": 4,
+        "status": "MEASURED",
+        "min_bytes": 1820037,
+        "p25_bytes": 1830444,
+        "median_bytes": 2449992,
+        "mean_bytes": 2832028,
+        "p75_bytes": 3451576,
+        "max_bytes": 4608089,
+        "sum_bytes": 11328111,
+        "sources": "P02 existing_assets(size_bytes) + P05 collection_index(bytes)，按内容哈希去重"
+      },
+      "PROSPECTUS": {
+        "n": 1,
+        "status": "MEASURED",
+        "min_bytes": 6446427,
+        "p25_bytes": 6446427,
+        "median_bytes": 6446427,
+        "mean_bytes": 6446427,
+        "p75_bytes": 6446427,
+        "max_bytes": 6446427,
+        "sum_bytes": 6446427,
+        "sources": "P02 existing_assets(size_bytes) + P05 collection_index(bytes)，按内容哈希去重"
+      },
+      "QUARTERLY_REPORT": {
+        "n": 0,
+        "status": "UNMEASURED"
+      }
+    },
+    "envelope": {
+      "per_slot": [
+        {
+          "slot_id": "annual_2023",
+          "report_type": "ANNUAL_REPORT",
+          "period_label": "FY2023",
+          "core_slot": true,
+          "required_form": "FULL_PDF",
+          "statutory_deadline": "2024-04-30",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": 2110208,
+          "unit_bytes_p25": 1493006,
+          "unit_bytes_p75": 2885355,
+          "unit_sample_n": 74,
+          "envelope_low_bytes": 1573628324,
+          "envelope_mid_bytes": 2224159232,
+          "envelope_high_bytes": 3041164170,
+          "envelope_status": "ESTIMATE_NOT_FACT"
+        },
+        {
+          "slot_id": "annual_2024",
+          "report_type": "ANNUAL_REPORT",
+          "period_label": "FY2024",
+          "core_slot": true,
+          "required_form": "FULL_PDF",
+          "statutory_deadline": "2025-04-30",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": 2110208,
+          "unit_bytes_p25": 1493006,
+          "unit_bytes_p75": 2885355,
+          "unit_sample_n": 74,
+          "envelope_low_bytes": 1573628324,
+          "envelope_mid_bytes": 2224159232,
+          "envelope_high_bytes": 3041164170,
+          "envelope_status": "ESTIMATE_NOT_FACT"
+        },
+        {
+          "slot_id": "annual_2025",
+          "report_type": "ANNUAL_REPORT",
+          "period_label": "FY2025",
+          "core_slot": true,
+          "required_form": "FULL_PDF",
+          "statutory_deadline": "2026-04-30",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": 2110208,
+          "unit_bytes_p25": 1493006,
+          "unit_bytes_p75": 2885355,
+          "unit_sample_n": 74,
+          "envelope_low_bytes": 1573628324,
+          "envelope_mid_bytes": 2224159232,
+          "envelope_high_bytes": 3041164170,
+          "envelope_status": "ESTIMATE_NOT_FACT"
+        },
+        {
+          "slot_id": "h1_2024",
+          "report_type": "SEMI_ANNUAL_REPORT",
+          "period_label": "2024H1",
+          "core_slot": true,
+          "required_form": "FULL_PDF",
+          "statutory_deadline": "2024-08-31",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": 2449992,
+          "unit_bytes_p25": 1830444,
+          "unit_bytes_p75": 3451576,
+          "unit_sample_n": 4,
+          "envelope_low_bytes": 1929287976,
+          "envelope_mid_bytes": 2582291568,
+          "envelope_high_bytes": 3637961104,
+          "envelope_status": "ESTIMATE_NOT_FACT"
+        },
+        {
+          "slot_id": "h1_2025",
+          "report_type": "SEMI_ANNUAL_REPORT",
+          "period_label": "2025H1",
+          "core_slot": true,
+          "required_form": "FULL_PDF",
+          "statutory_deadline": "2025-08-31",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": 2449992,
+          "unit_bytes_p25": 1830444,
+          "unit_bytes_p75": 3451576,
+          "unit_sample_n": 4,
+          "envelope_low_bytes": 1929287976,
+          "envelope_mid_bytes": 2582291568,
+          "envelope_high_bytes": 3637961104,
+          "envelope_status": "ESTIMATE_NOT_FACT"
+        },
+        {
+          "slot_id": "h1_2026",
+          "report_type": "SEMI_ANNUAL_REPORT",
+          "period_label": "2026H1",
+          "core_slot": true,
+          "required_form": "FULL_PDF",
+          "statutory_deadline": "2026-08-31",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": 2449992,
+          "unit_bytes_p25": 1830444,
+          "unit_bytes_p75": 3451576,
+          "unit_sample_n": 4,
+          "envelope_low_bytes": 1929287976,
+          "envelope_mid_bytes": 2582291568,
+          "envelope_high_bytes": 3637961104,
+          "envelope_status": "ESTIMATE_NOT_FACT"
+        },
+        {
+          "slot_id": "q1_2024",
+          "report_type": "QUARTERLY_REPORT",
+          "period_label": "2024Q1",
+          "core_slot": false,
+          "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+          "statutory_deadline": "2024-04-30",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": null,
+          "envelope_status": "UNMEASURED_UNIT_BYTES",
+          "reason": "该类报告无实测字节样本；按 P00 capacity_rule 不得用经验带宽替代，故容量留空。"
+        },
+        {
+          "slot_id": "q3_2024",
+          "report_type": "QUARTERLY_REPORT",
+          "period_label": "2024Q3",
+          "core_slot": false,
+          "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+          "statutory_deadline": "2024-10-31",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": null,
+          "envelope_status": "UNMEASURED_UNIT_BYTES",
+          "reason": "该类报告无实测字节样本；按 P00 capacity_rule 不得用经验带宽替代，故容量留空。"
+        },
+        {
+          "slot_id": "q1_2025",
+          "report_type": "QUARTERLY_REPORT",
+          "period_label": "2025Q1",
+          "core_slot": false,
+          "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+          "statutory_deadline": "2025-04-30",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": null,
+          "envelope_status": "UNMEASURED_UNIT_BYTES",
+          "reason": "该类报告无实测字节样本；按 P00 capacity_rule 不得用经验带宽替代，故容量留空。"
+        },
+        {
+          "slot_id": "q3_2025",
+          "report_type": "QUARTERLY_REPORT",
+          "period_label": "2025Q3",
+          "core_slot": false,
+          "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+          "statutory_deadline": "2025-10-31",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": null,
+          "envelope_status": "UNMEASURED_UNIT_BYTES",
+          "reason": "该类报告无实测字节样本；按 P00 capacity_rule 不得用经验带宽替代，故容量留空。"
+        },
+        {
+          "slot_id": "q1_2026",
+          "report_type": "QUARTERLY_REPORT",
+          "period_label": "2026Q1",
+          "core_slot": false,
+          "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+          "statutory_deadline": "2026-04-30",
+          "counted_in_capacity": true,
+          "not_counted_reason": null,
+          "companies": 1054,
+          "attempt_upper_bound": 1054,
+          "unit_bytes_median": null,
+          "envelope_status": "UNMEASURED_UNIT_BYTES",
+          "reason": "该类报告无实测字节样本；按 P00 capacity_rule 不得用经验带宽替代，故容量留空。"
+        },
+        {
+          "slot_id": "q3_2026",
+          "report_type": "QUARTERLY_REPORT",
+          "period_label": "2026Q3",
+          "core_slot": false,
+          "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+          "statutory_deadline": "2026-10-31",
+          "counted_in_capacity": false,
+          "not_counted_reason": "NOT_YET_DISCLOSED_AT_CUTOFF",
+          "companies": 1054,
+          "attempt_upper_bound": 0,
+          "unit_bytes_median": null,
+          "envelope_status": "NOT_COUNTED_NOT_YET_DISCLOSED"
+        }
+      ],
+      "totals": {
+        "low_bytes": 10508748900,
+        "mid_bytes": 14419352400,
+        "high_bytes": 20037375822,
+        "low_gib": 9.79,
+        "mid_gib": 13.43,
+        "high_gib": 18.66,
+        "excluded_slots": [
+          "q1_2024",
+          "q3_2024",
+          "q1_2025",
+          "q3_2025",
+          "q1_2026"
+        ],
+        "excluded_note": "季度 PDF 无实测样本，未计入合计；其字节数保持 UNMEASURED，不得填估计值。"
+      }
+    },
+    "publishing_rule": "任何对外引用必须带“估算（ESTIMATE_NOT_FACT）+ 样本量 n + 区间”，不得写成“需要 X GB”的既成事实。"
+  },
+  "local_cache": {
+    "cache_root_default": "sources/p06_cache/",
+    "raw_response_root": "sources/p06_raw/",
+    "layout": "sources/p06_cache/{security_id}/{slot_id}/{document_id}.pdf（下载中为 .pdf.part）",
+    "git_policy": "sources/** 已被 .gitignore 排除；缓存目录永不入库，只入库回执与索引。",
+    "rolling_window": true,
+    "flush_after": "每个采集批次（M00_xx）结束",
+    "capacity_guard": {
+      "measured_at": "2026-10-26T16:58:00+08:00",
+      "cache_drive": "C:\\",
+      "cache_drive_total_bytes": 214749409280,
+      "cache_drive_free_bytes": 26079502336,
+      "cache_drive_free_gib": 24.29,
+      "cache_drive_used_pct": 87.9,
+      "alternate_drive": "D:\\",
+      "alternate_free_gib": 158.42,
+      "reserve_bytes": 6442450944,
+      "soft_watermark_free_bytes": 10737418240,
+      "hard_stop_free_bytes": 6442450944,
+      "rolling_cache_max_bytes": 8589934592,
+      "usable_cache_bytes_now": 8589934592,
+      "usable_cache_gib_now": 8.0,
+      "core_envelope_mid_bytes": 14419352400,
+      "core_envelope_mid_gib": 13.43,
+      "envelope_exceeds_rolling_cache": true,
+      "conclusion": "核心槽估算中位 13.43 GiB 已超过本机允许的单轮缓存上限 8.0 GiB，因此禁止“全池一次性下载完再归档”：必须按批（M00_xx）滚动缓存、批内归档回读后再清理。",
+      "breach_actions": [
+        "free_bytes < hard_stop_free_bytes → 立即停止新下载（不停止已完成文件的归档回读）",
+        "写 checkpoint：已下载未归档清单、下一家/下一槽游标、已占用字节",
+        "按 priority_order 记录“哪些低优先级槽被推迟”，不得静默截断",
+        "保留本地原件，不因空间不足删除唯一副本",
+        "切换 cache_root 到 alternate_drive 需显式配置并留痕，不自动改路径"
+      ],
+      "watermark_basis": "reserve 6 GiB 为系统与其他工作预留；soft 10 GiB 触发提前归档；rolling 8 GiB 为单轮缓存硬上限。"
+    },
+    "priority_order": [
+      {
+        "rank": "P0",
+        "target": "annual_2025",
+        "why": "最新完整年度，指标宽筛主依据",
+        "deferrable": false
+      },
+      {
+        "rank": "P1",
+        "target": "h1_2026",
+        "why": "最新中期，判断拐点方向的核心窗口",
+        "deferrable": false
+      },
+      {
+        "rank": "P2",
+        "target": "annual_2024,h1_2025",
+        "why": "同比与基数必需",
+        "deferrable": false
+      },
+      {
+        "rank": "P3",
+        "target": "annual_2023,h1_2024",
+        "why": "三年趋势与更早基数；容量紧张时最后取",
+        "deferrable": true
+      },
+      {
+        "rank": "P4",
+        "target": "keyword_original_announcements",
+        "why": "仅关键词命中的公告原件，用于后期业务核验",
+        "deferrable": true
+      },
+      {
+        "rank": "P5",
+        "target": "quarterly_report_pdf",
+        "why": "季度先取结构化财务，PDF 默认关闭；仅在需要单季原文时按需取",
+        "deferrable": true
+      }
+    ]
+  },
+  "drive_layout": {
+    "root_folder_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+    "root_folder_url": "https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+    "folders": [
+      {
+        "role": "PROJECT_ROOT",
+        "folder_name": "机器人行业拐点研究",
+        "folder_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+        "folder_url": "https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+        "parent_id": "root",
+        "contents": "整个机器人研究资料归档",
+        "snapshot_status": "CREATED_AND_READ_BACK",
+        "reverify_status": "RECORDED_NOT_REVERIFIED",
+        "reverify_blocker": "DRIVE_API_NOT_CONNECTED",
+        "id_is_not_url": true,
+        "url_contains_id": true
+      },
+      {
+        "role": "01_原始资料",
+        "folder_name": "01_原始资料",
+        "folder_id": "1uC1sk5q7PKMZMLPLt-xIxOj2nPk4z0Ne",
+        "folder_url": "https://drive.google.com/drive/folders/1uC1sk5q7PKMZMLPLt-xIxOj2nPk4z0Ne",
+        "parent_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+        "contents": "公司公告PDF、年报、中报、IR、ESG、原始扫描件，按公司和报告期",
+        "snapshot_status": "CREATED_AND_LISTED",
+        "reverify_status": "RECORDED_NOT_REVERIFIED",
+        "reverify_blocker": "DRIVE_API_NOT_CONNECTED",
+        "id_is_not_url": true,
+        "url_contains_id": true
+      },
+      {
+        "role": "02_批次交接",
+        "folder_name": "02_批次交接",
+        "folder_id": "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5",
+        "folder_url": "https://drive.google.com/drive/folders/1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5",
+        "parent_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+        "contents": "本包ZIP和大型交接附件，按包ID",
+        "snapshot_status": "CREATED_AND_LISTED",
+        "reverify_status": "RECORDED_NOT_REVERIFIED",
+        "reverify_blocker": "DRIVE_API_NOT_CONNECTED",
+        "id_is_not_url": true,
+        "url_contains_id": true
+      },
+      {
+        "role": "03_历史版本",
+        "folder_name": "03_历史版本",
+        "folder_id": "1i-HqmZKBxx_fMJMo1mA_nHW9JPe2ijqi",
+        "folder_url": "https://drive.google.com/drive/folders/1i-HqmZKBxx_fMJMo1mA_nHW9JPe2ijqi",
+        "parent_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+        "contents": "被更正或撤回的旧文件；保留原件并在索引关联新版",
+        "snapshot_status": "CREATED_AND_LISTED",
+        "reverify_status": "RECORDED_NOT_REVERIFIED",
+        "reverify_blocker": "DRIVE_API_NOT_CONNECTED",
+        "id_is_not_url": true,
+        "url_contains_id": true
+      },
+      {
+        "role": "04_财务与数据导出",
+        "folder_name": "04_财务与数据导出",
+        "folder_id": "1rbZSpFszk4i6nWbN4NwrxeqlEGtLX_St",
+        "folder_url": "https://drive.google.com/drive/folders/1rbZSpFszk4i6nWbN4NwrxeqlEGtLX_St",
+        "parent_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+        "contents": "东方财富/AKShare导出的财务Excel、CSV、原始数据ZIP",
+        "snapshot_status": "CREATED_AND_LISTED",
+        "reverify_status": "RECORDED_NOT_REVERIFIED",
+        "reverify_blocker": "DRIVE_API_NOT_CONNECTED",
+        "id_is_not_url": true,
+        "url_contains_id": true
+      },
+      {
+        "role": "05_行业资料",
+        "folder_name": "05_行业资料",
+        "folder_id": "1g3LMjH1SXHdosoqdQ8m-g3gfSq43Zll1",
+        "folder_url": "https://drive.google.com/drive/folders/1g3LMjH1SXHdosoqdQ8m-g3gfSq43Zll1",
+        "parent_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+        "contents": "行业产销量、标准、政策等跨公司原始报告",
+        "snapshot_status": "CREATED_AND_LISTED",
+        "reverify_status": "RECORDED_NOT_REVERIFIED",
+        "reverify_blocker": "DRIVE_API_NOT_CONNECTED",
+        "id_is_not_url": true,
+        "url_contains_id": true
+      }
+    ],
+    "missing_roles": [],
+    "verification": {
+      "probed_at_utc": "2026-10-26T08:58:00Z",
+      "probes": [
+        {
+          "probe": "root_folder",
+          "url": "https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+          "at_utc": "2026-10-26T08:57:57Z",
+          "http_status": 200,
+          "final_url": "https://accounts.google.com/v3/signin/identifier?continue=https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ&followup=https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ&osid=1&passive=1209600&service=wise&flowName=WebLiteSignIn&flowEntry=ServiceLogin&dsh=S1430104822:1793005077878414",
+          "reachable": true
+        },
+        {
+          "probe": "file_view",
+          "url": "https://drive.google.com/file/d/1oREDQ9KYl3FKaOOW5As-XhpFy-DBefL1/view",
+          "at_utc": "2026-10-26T08:57:59Z",
+          "http_status": 401,
+          "final_url": null,
+          "reachable": false
+        },
+        {
+          "probe": "api_v3_files_get",
+          "url": "https://www.googleapis.com/drive/v3/files/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ?fields=id,name",
+          "at_utc": "2026-10-26T08:58:00Z",
+          "http_status": 403,
+          "final_url": null,
+          "reachable": false
+        }
+      ],
+      "verdict": "DRIVE_API_NOT_CONNECTED",
+      "capability": {
+        "list_folder": false,
+        "read_metadata": false,
+        "upload": false,
+        "download_binary": false,
+        "quota_read": false
+      },
+      "impact": "本会话无法列举/读取/上传 Drive：五个分类目录只能按用户快照与 PROJECT_STATE 记为 RECORDED_NOT_REVERIFIED；Drive 配额 UNKNOWN；新文件 archive_status 最高只能到 UPLOADED_UNVERIFIED（需真实上传回读才可 VERIFIED）。",
+      "not_done": "未尝试登录、未要求公开分享、未扩大任何权限。"
+    },
+    "id_rule": "folder_id 只放 33 位左右的不透明 ID（^[A-Za-z0-9_-]{20,}$）；folder_url 只放 https://drive.google.com/drive/folders/<id>。两者不得互换，更不得把目录 URL 写进 drive_file_id。",
+    "file_id_rule": "文件回执里 drive.file_id 必须是上传回读返回的文件 ID，file_url 必须是 https://drive.google.com/file/d/<file_id>；从目录页复制的链接一律视为未验证。"
+  },
+  "registration_order": {
+    "principle": "先查重 → 再取件 → 再归档回读 → 最后登记；登记永远写在事实之后，不写预测。",
+    "steps": [
+      {
+        "step": 1,
+        "action": "查台账与登记表",
+        "detail": "按 (security_id, slot_id) 查 runs/issues/P05 台账与 data/document_registry.csv；命中同 sha256 且本地文件存在 → SKIPPED_ALREADY_HAVE，不发 HTTP。",
+        "writes": []
+      },
+      {
+        "step": 2,
+        "action": "查 Drive",
+        "detail": "有 Drive 权限时按文件名+父目录列目录比对；本会话无权限 → 记 RECORDED_NOT_REVERIFIED，不得声称“Drive 里没有”。",
+        "writes": []
+      },
+      {
+        "step": 3,
+        "action": "分配 document_id",
+        "detail": "IDENTITY_V1：DOC- + sha256(security_id|issuer_scope|document_type|period_key|revision_no)[:16].upper()，下载前分配，修订版换 revision_no。",
+        "writes": []
+      },
+      {
+        "step": 4,
+        "action": "取件到本地缓存",
+        "detail": "写 .part → 校验 Content-Length/魔数/可开 → 改名；失败保留 .part 供续传。",
+        "writes": [
+          "local_cache"
+        ]
+      },
+      {
+        "step": 5,
+        "action": "算哈希与页数",
+        "detail": "对本地二进制算 SHA-256、页数、首屏身份要素；哈希只能来自实际文件。",
+        "writes": [
+          "receipt.download"
+        ]
+      },
+      {
+        "step": 6,
+        "action": "上传 Drive 目标目录",
+        "detail": "按 archive_routing.csv 路由到 01—05 目录下的公司/报告期子目录；文件名保留原名。",
+        "writes": [
+          "receipt.drive.file_id"
+        ]
+      },
+      {
+        "step": 7,
+        "action": "回读确认",
+        "detail": "重新列目录/取元数据：name、size、mimeType、parents 含目标目录 ID；缺任一项 archive_status 只能 UPLOADED_UNVERIFIED。",
+        "writes": [
+          "receipt.drive.readback",
+          "archive_status"
+        ]
+      },
+      {
+        "step": 8,
+        "action": "写回执",
+        "detail": "按 transfer_receipt_schema.json 落一条回执；schema 校验不通过视为未完成。",
+        "writes": [
+          "receipt"
+        ]
+      },
+      {
+        "step": 9,
+        "action": "更新登记表",
+        "detail": "只回填实际取得的 drive_file_id/drive_url/sha256/page_count/archive_status/access_check_status；不确定留 UNKNOWN。",
+        "writes": [
+          "data/document_registry.csv"
+        ]
+      },
+      {
+        "step": 10,
+        "action": "最后清理缓存",
+        "detail": "满足 cleanup_rules 全部条件才删本地副本；任一不满足则保留。",
+        "writes": []
+      }
+    ],
+    "ordering_rule": "第 9 步（登记）必须晚于第 7 步（回读）；先写 ID 后上传属于禁止行为。"
+  },
+  "dedupe_rules": {
+    "identity_key": "sha256（内容指纹）优先于文件名、URL、大小",
+    "same_content_rule": "同一 sha256 在本次运行内只算一份；多槽命中记 DUPLICATE_SAME_CONTENT，保留首个来源，不重复计数、不重复上传。",
+    "registry_reuse_rule": "data/document_registry.csv 已有同 security_id + period_covered + sha256 且本地文件存在 → 复用原 document_id 与 Drive ID。",
+    "duplicate_folder_rule": "Drive 目录清单里 920418(2025年度)、920207(2026H1)、920491(IR) 各存在 3 个同名文件夹（P02 记录）。归档前必须指定唯一 canonical 目录；另两个只作历史位置记录，不得当成 3 份文件。",
+    "summary_vs_full_rule": "标题含“摘要”的另记 document_type=ANNUAL_REPORT_SUMMARY，不与全文共用槽位完成数。",
+    "revision_rule": "更正/修订/补充版另建 document_id（revision_no+1），旧版保留并在 supersedes_document_id 关联，不覆盖。",
+    "entity_rule": "更名/借壳/北交所旧代码（如 835207→920207）按 security_id 归并，历史代码记入 limitations，不拆成两家公司。",
+    "non_dedupe_rule": "同一公司的年度报告与半年度报告、全文与摘要、原文与转录稿均视为不同文件。"
+  },
+  "cleanup_rules": {
+    "principle": "只有“云端已确认 + 索引已回填”才允许删本地；本地是唯一副本时永不删除。",
+    "preconditions_all_required": [
+      "receipt.drive.file_id 非空且匹配 ^[A-Za-z0-9_-]{20,}$",
+      "receipt.drive.readback.listed == true 且 parents_contains_target_folder_id == true",
+      "archive_status == VERIFIED",
+      "receipt.download.sha256 与回读文件大小/内容一致（不一致则重传）",
+      "data/document_registry.csv 已回填该 document_id 的 drive_file_id 与 archive_status",
+      "本地文件已不在 .part 状态且无同名待续传任务"
+    ],
+    "never_cleanup_when": [
+      "archive_status ∈ {NOT_UPLOADED, UPLOADED_UNVERIFIED, SOURCE_UNAVAILABLE, ACCESS_BLOCKED}",
+      "该 sha256 在本地是唯一副本（无 Drive ID、无第二份本地路径）",
+      "文件属于 03_历史版本 关联的旧版/修订前版本",
+      "receipt.verification.nature == SELF_CHECK 且尚未完成任一必填回读字段"
+    ],
+    "order": "先删重复副本（同 sha256 多路径），再删已 VERIFIED 的缓存副本；每次删除写日志（路径、sha256、依据回执 ID）。",
+    "revision_retention": "原版与修订版同时保留在 03_历史版本，不做“以新替旧”的删除。"
+  },
+  "legacy_status_normalization": {
+    "status": "PROPOSED_NOT_APPLIED",
+    "why_not_applied": "P01 迁移方案未执行，登记表仍为 23 列；本卡不修改原始输入。",
+    "rows": [
+      {
+        "field": "archive_status",
+        "legacy_value": "L1_SOURCE_INDEX_ONLY",
+        "rows": 3,
+        "in_v11_enum": false,
+        "mapped_to": "NOT_UPLOADED",
+        "note": "仅来源索引、无二进制；映射后须在 limitations 保留 L1 事实"
+      },
+      {
+        "field": "archive_status",
+        "legacy_value": "NOT_REQUIRED_REFERENCE_ONLY",
+        "rows": 2,
+        "in_v11_enum": true,
+        "mapped_to": "NOT_REQUIRED_REFERENCE_ONLY",
+        "note": "枚举内，原值保留"
+      },
+      {
+        "field": "archive_status",
+        "legacy_value": "NOT_UPLOADED",
+        "rows": 5,
+        "in_v11_enum": true,
+        "mapped_to": "NOT_UPLOADED",
+        "note": "枚举内，原值保留"
+      },
+      {
+        "field": "archive_status",
+        "legacy_value": "UPLOADED_AND_TEXT_READ",
+        "rows": 3,
+        "in_v11_enum": false,
+        "mapped_to": "UPLOADED_UNVERIFIED",
+        "note": "有文本读取但缺回读记录，不得直接判 VERIFIED"
+      },
+      {
+        "field": "archive_status",
+        "legacy_value": "UPLOADED_UNVERIFIED",
+        "rows": 73,
+        "in_v11_enum": true,
+        "mapped_to": "UPLOADED_UNVERIFIED",
+        "note": "枚举内，原值保留"
+      },
+      {
+        "field": "archive_status",
+        "legacy_value": "VERIFIED",
+        "rows": 14,
+        "in_v11_enum": true,
+        "mapped_to": "VERIFIED",
+        "note": "枚举内，原值保留"
+      },
+      {
+        "field": "access_check_status",
+        "legacy_value": "AI_READ_CONFIRMED",
+        "rows": 24,
+        "in_v11_enum": true,
+        "mapped_to": "AI_READ_CONFIRMED",
+        "note": "枚举内"
+      },
+      {
+        "field": "access_check_status",
+        "legacy_value": "DRIVE_TEXT_EXTRACTION_OK",
+        "rows": 3,
+        "in_v11_enum": false,
+        "mapped_to": "AI_READ_CONFIRMED",
+        "note": "Drive 文本已抽出并读；物理页复核属 evidence_status，不并入 access"
+      },
+      {
+        "field": "access_check_status",
+        "legacy_value": "NOT_CHECKED",
+        "rows": 66,
+        "in_v11_enum": true,
+        "mapped_to": "NOT_CHECKED",
+        "note": "枚举内"
+      },
+      {
+        "field": "access_check_status",
+        "legacy_value": "OFFICIAL_PAGE_WEB_VERIFIED",
+        "rows": 1,
+        "in_v11_enum": false,
+        "mapped_to": "AI_READ_CONFIRMED",
+        "note": "官方页面已读；归档状态独立"
+      },
+      {
+        "field": "access_check_status",
+        "legacy_value": "WEB_PAGE_READ_NOT_DRIVE_ARCHIVED",
+        "rows": 5,
+        "in_v11_enum": false,
+        "mapped_to": "AI_READ_CONFIRMED",
+        "note": "网页全文已读；归档状态独立保持 NOT_UPLOADED（五轴分离）"
+      },
+      {
+        "field": "access_check_status",
+        "legacy_value": "WEB_TEXT_READ_IDENTITY_CORRECTED",
+        "rows": 1,
+        "in_v11_enum": false,
+        "mapped_to": "AI_READ_CONFIRMED",
+        "note": "网页全文已读且身份已更正；归档状态独立"
+      }
+    ],
+    "unmapped": []
+  },
+  "blockers": [
+    {
+      "id": "BLK-01",
+      "blocker": "Drive API 未连接（无凭据）",
+      "evidence": "folder 302→accounts.google.com；file 401；api/v3 403（2026-10-26T08:58:00Z）",
+      "impact": "五个分类目录无法列举核实、Drive 配额未知、新文件无法真实上传与回读",
+      "consequence": "目录状态只能 RECORDED_NOT_REVERIFIED；archive_status 无法达到 VERIFIED；配额不足无法事前判断",
+      "next_action": "P07 首个上传前先做一次列目录+上传+回读三步探测；仍无权限则记 ACCESS_BLOCKED 并把归档环节留给具备权限的会话",
+      "stop_rule": "不得因无权限就删除本地原件，也不得把目录 URL 当文件 ID 填表"
+    },
+    {
+      "id": "BLK-02",
+      "blocker": "Drive 配额 UNKNOWN",
+      "evidence": "无 API 凭据，about.storageQuota 不可读",
+      "impact": "无法判断核心槽估算量能否装下",
+      "consequence": "上传中断时只能按 receipt 逐份登记，不能声称已全部归档",
+      "next_action": "P07 上传首份后立即读 about.storageQuota；不足则按 priority_order 降级并保留本地",
+      "stop_rule": "配额不足时停止上传，不删唯一原件"
+    },
+    {
+      "id": "BLK-03",
+      "blocker": "本机缓存盘余量偏紧",
+      "evidence": "C:\\ 剩余 24.29 GiB（已用 87.9%）；核心槽估算中位 13.43 GiB",
+      "impact": "无法一次性容纳全池原件",
+      "consequence": "必须滚动缓存；空间不足时按 priority_order 断点，不静默截断",
+      "next_action": "M00 每批结束后强制归档+回读+清理；必要时把 cache_root 显式切到 D:\\（余 158.42 GiB）",
+      "stop_rule": "free < 6 GiB 立即停止新下载"
+    },
+    {
+      "id": "BLK-04",
+      "blocker": "listing_date 1054/1054 UNKNOWN",
+      "evidence": "P00 not_applicable_decision_table；P04 复核确认",
+      "impact": "计划槽 11594 个尝试上界无法扣除上市前不适用部分",
+      "consequence": "文件数只能给上界，不能给“应有份数”",
+      "next_action": "P05 待办：取交易所上市日期回填后重算分母",
+      "stop_rule": "未知不得按不适用处理，也不得当作缺件"
+    },
+    {
+      "id": "BLK-05",
+      "blocker": "季度报告字节数无实测样本",
+      "evidence": "QUARTERLY_REPORT n=0；P05 季度 PDF 开关未实跑",
+      "impact": "季度 PDF 容量无法估算",
+      "consequence": "容量表中季度 PDF 记 UNMEASURED，不给数字",
+      "next_action": "P07 校准含 1 个季度槽实跑后回填中位数",
+      "stop_rule": "不得用年报字节数代替季度字节数"
+    },
+    {
+      "id": "BLK-06",
+      "blocker": "登记表存在非枚举历史状态值",
+      "evidence": "archive_status 出现 L1_SOURCE_INDEX_ONLY(3)、UPLOADED_AND_TEXT_READ(3)；access_check_status 出现 WEB_PAGE_READ_NOT_DRIVE_ARCHIVED(5)、DRIVE_TEXT_EXTRACTION_OK(3)、OFFICIAL_PAGE_WEB_VERIFIED(1)、WEB_TEXT_READ_IDENTITY_CORRECTED(1)",
+      "impact": "清理条件与回执状态无法直接机读比对",
+      "consequence": "本卡只给归一化映射（PROPOSED_NOT_APPLIED），不改登记表",
+      "next_action": "P01 迁移落地时按 legacy_status_normalization 表一次性归一，保留原值列",
+      "stop_rule": "不得为对齐枚举而覆盖历史值"
+    }
+  ],
+  "invariants": [
+    {
+      "id": "S-01",
+      "rule": "GitHub 不提交 PDF/ZIP/XLSX/原始大表；只提交规则、索引、回执、短引文与哈希。",
+      "check": "git ls-files 二进制扩展名计数=0"
+    },
+    {
+      "id": "S-02",
+      "rule": "目录 URL 不得写入 drive_file_id；目录 ID 只进 drive.target_folder_id。",
+      "check": "登记表与回执双向扫描"
+    },
+    {
+      "id": "S-03",
+      "rule": "归档成功 ≠ AI 已读全文：archive_status 与 access_check_status 分字段、分证据。",
+      "check": "INV-02 回执校验"
+    },
+    {
+      "id": "S-04",
+      "rule": "容量不足时写断点与优先级，不静默截断、不改名单凑数。",
+      "check": "breach_actions + priority_order"
+    },
+    {
+      "id": "S-05",
+      "rule": "唯一原件不删；修订版另存另 ID，旧版保留。",
+      "check": "cleanup_rules.never_cleanup_when"
+    },
+    {
+      "id": "S-06",
+      "rule": "缺失不等于 0，未尝试不等于缺件；NOT_TRIED 不计完成。",
+      "check": "状态口径沿用 P00"
+    },
+    {
+      "id": "S-07",
+      "rule": "哈希只能来自实际二进制；未计算留空。",
+      "check": "INV-06"
+    },
+    {
+      "id": "S-08",
+      "rule": "本卡不修改原始输入：document_registry / company_master / intake 队列保持原字节。",
+      "check": "git diff --stat 空"
+    }
+  ],
+  "handoff_to_p07": [
+    "上传首个文件前做三步探测：列目录 → 上传 → 回读；任一步失败即记 ACCESS_BLOCKED，不进批量。",
+    "用 10 家校准实测 annual/h1/quarterly 三类字节中位数，回填 capacity.unit_bytes_samples 并把 status 改为 CALIBRATED。",
+    "校准中至少跑 1 个季度槽，补齐 QUARTERLY_REPORT 的 UNMEASURED。",
+    "校准期间保持滚动缓存：单轮不超过 8 GiB，批次结束即归档回读清理。",
+    "首个 VERIFIED 回执落库后，再放开 M00_01。"
+  ],
+  "out_of_scope": [
+    "不下载全池、不上传文件、不改登记表",
+    "不判定任何公司是否披露（属采集卡）",
+    "不做业务结论、拐点判断、估值"
+  ]
+}

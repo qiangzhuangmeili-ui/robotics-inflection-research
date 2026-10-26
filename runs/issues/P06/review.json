@@ -1,0 +1,168 @@
+{
+  "template_only": false,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 17,
+  "issue_key": "P06",
+  "phase": "准备",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI（与执行者为同一主体，仅做自检）",
+  "review_method": "SELF_CHECK_REPRODUCIBLE_COMPUTE：只读输入重算 + 真实 HTTP 探测 + schema 正反例校验；未做真实上传/回读，未做业务证据核读，非独立审计。",
+  "reviewed_at": "2026-10-26T17:04:00+08:00",
+  "base_commit": "b753b49",
+  "decision": "SELF_CHECK_PASS",
+  "dependency_review": {
+    "P00": {
+      "issue_number": 11,
+      "review_file": "runs/issues/P00/review.json",
+      "decision": "SELF_CHECK_PASS",
+      "used_for": "collection_scope.json 的 report_slots / quarterly_slots / capacity_rule / status_taxonomy"
+    },
+    "P02": {
+      "issue_number": 13,
+      "review_file": "runs/issues/P02/review.json",
+      "decision": "SELF_CHECK_PASS",
+      "allows_p06": true,
+      "used_for": "existing_assets.csv 的实测字节样本与资产计数"
+    }
+  },
+  "input_versions": [
+    {"path": "runs/issues/P00/collection_scope.json", "read_only": true},
+    {"path": "runs/issues/P02/existing_assets.csv", "rows": 226, "read_only": true},
+    {"path": "runs/issues/P05/collector_config.json", "read_only": true},
+    {"path": "runs/issues/P05/collection_index.csv", "rows": 4, "read_only": true},
+    {"path": "data/document_registry.csv", "rows": 100, "read_only": true},
+    {"path": "data/company_master.csv", "rows": 1054, "read_only": true},
+    {"path": "data/drive_folders.csv", "read_only": true},
+    {"path": "data/intake_company_queue.csv", "rows": 1054, "read_only": true},
+    {"path": "data/intake_batch_index.csv", "rows": 11, "read_only": true},
+    {"path": "data/pdf_transfer_plan.csv", "rows": 64, "read_only": true}
+  ],
+  "actual_output_files": [
+    "runs/issues/P06/storage_plan.json",
+    "runs/issues/P06/archive_routing.csv",
+    "runs/issues/P06/transfer_receipt_schema.json",
+    "runs/issues/P06/self_check.json",
+    "runs/issues/P06/handoff.md",
+    "runs/issues/P06/manifest.json",
+    "runs/issues/P06/review.json",
+    "tools/p06_storage_plan.py"
+  ],
+  "checks": [
+    {
+      "id": "AC1",
+      "criterion": "不会在 GitHub 提交 PDF/ZIP/原始大表；容量不足时有断点和优先级记录，不默默截断",
+      "expected": "入库二进制=0；有优先级与断点动作",
+      "actual": "git ls-files 341 个跟踪文件中二进制扩展名 0 个；P06 交付最大 40.9 KB；priority_order P0—P5 覆盖 6 个核心槽；breach_actions 5 条；水位 8 GiB 单轮上限 / 10 GiB 软水位 / 6 GiB 硬停",
+      "method": "git ls-files + 扩展名正则 + 字段核对（SC1/SC2/SC10）",
+      "result": "PASS"
+    },
+    {
+      "id": "AC2",
+      "criterion": "Drive 目录 URL 不能填进文件 ID",
+      "expected": "结构性禁止 + 现状零违规 + 反例被拒",
+      "actual": "schema 对 drive.target_folder_id / drive.file_id 均设 ^[A-Za-z0-9_-]{20,}$，并以 INV-03/04 禁止 http、drive.google.com、/folders/、usp=drivesdk；登记表 100 行现状：格式违规 0、URL 混入 0；反例（目录 URL 填入 folder_id）被校验器拒收",
+      "method": "逐行正则 + 子串扫描 + schema 反例测试（SC3/SC4）",
+      "result": "PASS"
+    },
+    {
+      "id": "AC3",
+      "criterion": "归档成功不等于 AI 全文已核读",
+      "expected": "两字段两证据，不得互相替代",
+      "actual": "archive_status 与 access_check_status 分列；VERIFIED 需 file_id+file_url+readback.listed=true+parents 匹配（INV-01）；AI_READ_CONFIRMED 需 evidence.page_quote.quote_located=true（INV-02）；两个反例（无回读写 VERIFIED、无页码原句写 AI_READ_CONFIRMED）均被拒收；路由表把上传态与回读态拆成两列（SC11）",
+      "method": "schema if/then + 不变量 + 反例测试（SC4/SC11）",
+      "result": "PASS"
+    },
+    {
+      "id": "AC4",
+      "criterion": "基于已有命中和报告槽数估算文件数/大小，区分计划槽、实际发现、实际字节数",
+      "expected": "三层分开、可复算、不把估算当事实",
+      "actual": "计划槽：核心 6324 + 季度适用 5270 = 11594 次尝试（q3_2026 不计）；实际发现：登记 100 / 唯一 ID 100 / 唯一哈希 87 / Drive ID 90 / 本地 64 / VERIFIED 14 / UPLOADED_UNVERIFIED 73 / AI_READ_CONFIRMED 24 / 独立业务验收 0；实际字节：PDF 类 83 份 224,269,941 B + P05 4 份 13,988,588 B；估算区间 9.79—18.66 GiB（中位 13.43），标 ESTIMATE_NOT_FACT，季度 UNMEASURED 留空",
+      "method": "重新装载输入重算并比对（SC5/SC6）",
+      "result": "PASS"
+    },
+    {
+      "id": "AC5",
+      "criterion": "确认 Drive 实际根目录与 01—05 目录，缺权限记录真实阻断",
+      "expected": "六个角色齐备；无权限如实记录，不声称已核实",
+      "actual": "根目录 + 01_原始资料/02_批次交接/03_历史版本/04_财务与数据导出/05_行业资料 全部取自 data/drive_folders.csv 且 ID 非 URL；实测 folder 302→ServiceLogin、file 401、api/v3 403，判定 DRIVE_API_NOT_CONNECTED，六目录一律 RECORDED_NOT_REVERIFIED，配额 UNKNOWN，未尝试登录/公开分享",
+      "method": "真实 HTTP 探测 + 集合比对（SC7）",
+      "result": "PASS"
+    },
+    {
+      "id": "AC6",
+      "criterion": "定义本地下载缓存、Drive 确认、文档登记顺序与重复缓存清理条件；原版与修订版保留",
+      "expected": "四类规则齐全且顺序明确",
+      "actual": "local_cache：sources/p06_cache/{security_id}/{slot_id}/{document_id}.pdf + .part 滚动窗口；registration_order 10 步，明写“登记必须晚于回读”；cleanup_rules 6 个前置条件全满足才可删、4 类永不清理；revision_rule 修订另建 document_id + supersedes 关联，旧版留在 03_历史版本不回移",
+      "method": "结构核对 + 规则覆盖检查",
+      "result": "PASS"
+    }
+  ],
+  "self_check_summary": {
+    "file": "runs/issues/P06/self_check.json",
+    "total": 11,
+    "pass": 11,
+    "fail": 0,
+    "items": [
+      "SC1 入库无二进制",
+      "SC2 交付体量 ≤512 KiB",
+      "SC3 登记表无目录 URL 混入文件 ID",
+      "SC4 回执 schema 拒收四类错误",
+      "SC5 容量数字可复算",
+      "SC6 不把未实测类别写成事实",
+      "SC7 六个 Drive 目录齐备且 ID/URL 分离",
+      "SC8 路由覆盖 schema 全部文档类别",
+      "SC9 原始输入 diff 为空",
+      "SC10 优先级与断点齐备",
+      "SC11 路由状态值合法且两态分离"
+    ]
+  },
+  "coverage": {
+    "report_slots_planned": 6324,
+    "quarterly_slots_counted": 5270,
+    "attempt_upper_bound": 11594,
+    "documents_registered": 100,
+    "documents_unique_sha256": 87,
+    "documents_measured_bytes": 83,
+    "drive_folders_checked": 6,
+    "drive_folders_reverified": 0,
+    "routing_rows": 13,
+    "receipt_invariants": 10,
+    "legacy_status_rows_mapped": 12,
+    "files_downloaded_this_run": 0,
+    "files_uploaded_this_run": 0,
+    "companies_researched": 0
+  },
+  "key_findings": [
+    "核心槽估算中位 13.43 GiB（区间 9.79—18.66）已超过本机单轮缓存上限 8 GiB，且 C: 仅剩 24.29 GiB（已用 87.9%）——“全池一次下完再归档”在本机不可行，必须按批滚动缓存",
+    "Drive 权限缺失是可复现的事实而非推测：目录页 302 跳登录、文件页 401、Drive API 403；因此本卡不给配额数字、不声称任何目录已核实",
+    "计划槽 11594 是尝试上界不是应有份数：listing_date 1054/1054 UNKNOWN，上市前不适用与未披露都扣不掉",
+    "季度报告字节数零样本（P05 季度开关未实跑），容量表里只能留 UNMEASURED；用年报字节顶替会系统性高估",
+    "登记表存在 6 类非枚举历史状态值（共 16 行），清理条件无法直接机读比对；本卡只给 12 行归一化映射并标 PROPOSED_NOT_APPLIED，未改登记表",
+    "现有 100 行里 VERIFIED 14、AI_READ_CONFIRMED 24、独立业务验收 0——归档数、读全文数、业务验收数三者不可互换，回执 schema 用 INV-01/02 把这个区别固化"
+  ],
+  "limitations": [
+    "SELF_CHECK，非独立审计。执行者与复核者为同一 AI。",
+    "未做任何真实上传与回读：VERIFIED 路径只在 schema 与校验器层面定义，未跑通一次真实闭环。",
+    "Drive 配额 UNKNOWN，无法判断核心槽估算量能否装下。",
+    "季度报告字节数 UNMEASURED，季度 PDF 容量留空。",
+    "容量为 PRE_CALIBRATION_ESTIMATE_NOT_FACT，须 P07 用 10 家校准重算。",
+    "listing_date 1054/1054 UNKNOWN，计划槽上界无法扣除上市前不适用部分。",
+    "历史状态归一只给映射，未执行；登记表仍为 23 列。",
+    "本卡不判断任何公司是否披露、不判定缺件；NOT_TRIED 不计完成。"
+  ],
+  "artifacts": {
+    "runs/issues/P06/storage_plan.json": "4abc6c929d05363c7f50a64e744bf265944ecfb88da163a46816e1228b21e7d1",
+    "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
+    "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f",
+    "runs/issues/P06/self_check.json": "656d2d0b26859ad03c1c9ac583cfffbbb221692b037097d6a184fe73b26926f2",
+    "tools/p06_storage_plan.py": "e0acf0d8d007a524ac1c9638352336f5a484e2d5546874916638a9c258810003"
+  },
+  "allows_next_stage": true,
+  "allows_next_stage_scope": "放行 P07(#18)：其五项依赖 P02/P03/P04/P05/P06 均具备可读验收记录。不放行 M00 全池批次（仍等 P07）、不放行任何业务结论或指标筛选。",
+  "next_recommended_issue": {
+    "number": 18,
+    "key": "P07"
+  },
+  "next_recommended_reason": "P07 依赖的五张卡全部 SELF_CHECK_PASS；P06 已把容量水位、归档路由与回执 schema 交给 P07 校准实测。",
+  "notes": "六条验收标准逐条对照（AC1—AC6）。本记录不构成独立验收。关闭 issue 不替代本记录。"
+}
