@@ -1,1353 +1,1402 @@
 {
- "security_id": "SZ:000026",
- "slots": {
-  "annual_2023": {
-   "security_id": "SZ:000026",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-03-14/1219302471.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 2354,
-     "at": "2026-10-26T19:32:36+08:00",
-     "response_sha256": null,
-     "bytes": 1130688,
-     "resumed_from": 0
+  "security_id": "SZ:000026",
+  "slots": {
+    "annual_2023": {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-03-14/1219302471.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 2354,
+          "at": "2026-10-26T19:32:36+08:00",
+          "response_sha256": null,
+          "bytes": 1130688,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-03-14/1219302471.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 2354,
+        "at": "2026-10-26T19:32:36+08:00",
+        "response_sha256": null,
+        "bytes": 1130688,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T19:32:36+08:00",
+        "bytes_written": 1130688
+      },
+      "document": {
+        "document_id": "DOC-0B42B8E6C7CBF3A8",
+        "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2023年年度报告",
+        "published_on": "2024-03-13",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-03-14/1219302471.PDF",
+        "local_file": "sources/collection/originals/000026/annual_2023/DOC-0B42B8E6C7CBF3A8.pdf",
+        "sha256": "b306f7ed65a8bb1ef1c600bf3d659cc37d66b0cbeca9e67ba0d08b6b331e616b",
+        "bytes": 1130688,
+        "page_count": 173,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1130688 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "173 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "173 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; title=2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告"
+          }
+        },
+        "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\annual_2023\\DOC-0B42B8E6C7CBF3A8.pdf",
+        "bytes": 1130688,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1130688 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "173 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "173 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 173,
+        "text_chars": 1406,
+        "issues": [],
+        "sha256": "b306f7ed65a8bb1ef1c600bf3d659cc37d66b0cbeca9e67ba0d08b6b331e616b",
+        "cover_text_chars": 55,
+        "identity_probe_chars": 3242,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T19:47:16+0800",
+      "last_action": "SKIPPED_ALREADY_HAVE",
+      "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+      "skip_count": 5,
+      "last_checked_at": "2026-10-26T19:41:27+08:00",
+      "drive_archive": {
+        "canonical_document_id": "DOC-0B42B8E6C7CBF3A8",
+        "drive_file_id": "1OUTEwcZIfU3TbLHg9XUekTwilwsj-F_M",
+        "drive_url": "https://drive.google.com/file/d/1OUTEwcZIfU3TbLHg9XUekTwilwsj-F_M/view?usp=drivesdk",
+        "archive_status": "VERIFIED",
+        "receipt": "runs/issues/P07/drive_archive/receipts.json#DOC-0B42B8E6C7CBF3A8"
+      }
+    },
+    "annual_2024": {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-03-14/1222788741.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 812,
+          "at": "2026-10-26T19:32:37+08:00",
+          "response_sha256": null,
+          "bytes": 1100963,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-03-14/1222788741.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 812,
+        "at": "2026-10-26T19:32:37+08:00",
+        "response_sha256": null,
+        "bytes": 1100963,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T19:32:37+08:00",
+        "bytes_written": 1100963
+      },
+      "document": {
+        "document_id": "DOC-850D60ACF079F840",
+        "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年年度报告",
+        "published_on": "2025-03-13",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-03-14/1222788741.PDF",
+        "local_file": "sources/collection/originals/000026/annual_2024/DOC-850D60ACF079F840.pdf",
+        "sha256": "57f612677d8fc6b3667aa8fa2df09d6fdc12b5fa2d8db746290dd2d37cc09cab",
+        "bytes": 1100963,
+        "page_count": 168,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1100963 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "168 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "168 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        },
+        "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\annual_2024\\DOC-850D60ACF079F840.pdf",
+        "bytes": 1100963,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1100963 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "168 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "168 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 168,
+        "text_chars": 1278,
+        "issues": [],
+        "sha256": "57f612677d8fc6b3667aa8fa2df09d6fdc12b5fa2d8db746290dd2d37cc09cab",
+        "cover_text_chars": 54,
+        "identity_probe_chars": 3318,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T19:47:16+0800",
+      "last_action": "SKIPPED_ALREADY_HAVE",
+      "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+      "skip_count": 5,
+      "last_checked_at": "2026-10-26T19:41:27+08:00",
+      "drive_archive": {
+        "canonical_document_id": "DOC-850D60ACF079F840",
+        "drive_file_id": "1n3TNwEDuoBCgWZgQmlXTImEdbl6UnWvm",
+        "drive_url": "https://drive.google.com/file/d/1n3TNwEDuoBCgWZgQmlXTImEdbl6UnWvm/view?usp=drivesdk",
+        "archive_status": "VERIFIED",
+        "receipt": "runs/issues/P07/drive_archive/receipts.json#DOC-850D60ACF079F840"
+      }
+    },
+    "annual_2025": {
+      "security_id": "SZ:000026",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-03-14/1225009595.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 896,
+          "at": "2026-10-26T19:32:38+08:00",
+          "response_sha256": null,
+          "bytes": 1073368,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-03-14/1225009595.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 896,
+        "at": "2026-10-26T19:32:38+08:00",
+        "response_sha256": null,
+        "bytes": 1073368,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T19:32:38+08:00",
+        "bytes_written": 1073368
+      },
+      "document": {
+        "document_id": "DOC-90E7F189A03EF48F",
+        "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-03-13",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-03-14/1225009595.PDF",
+        "local_file": "sources/collection/originals/000026/annual_2025/DOC-90E7F189A03EF48F.pdf",
+        "sha256": "d54a7b9856b41776e3084c7d06fca0e7718200104d0821684ab58407947e4864",
+        "bytes": 1073368,
+        "page_count": 167,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1073368 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "167 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "167 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\annual_2025\\DOC-90E7F189A03EF48F.pdf",
+        "bytes": 1073368,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1073368 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "167 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "167 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 167,
+        "text_chars": 1112,
+        "issues": [],
+        "sha256": "d54a7b9856b41776e3084c7d06fca0e7718200104d0821684ab58407947e4864",
+        "cover_text_chars": 54,
+        "identity_probe_chars": 3250,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T19:47:16+0800",
+      "last_action": "SKIPPED_ALREADY_HAVE",
+      "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+      "skip_count": 5,
+      "last_checked_at": "2026-10-26T19:41:27+08:00",
+      "drive_archive": {
+        "canonical_document_id": "DOC-90E7F189A03EF48F",
+        "drive_file_id": "15Tqq5V5MTMf_rzfTHV_AoLbnEziTuWyH",
+        "drive_url": "https://drive.google.com/file/d/15Tqq5V5MTMf_rzfTHV_AoLbnEziTuWyH/view?usp=drivesdk",
+        "archive_status": "VERIFIED",
+        "receipt": "runs/issues/P07/drive_archive/receipts.json#DOC-90E7F189A03EF48F"
+      }
+    },
+    "h1_2024": {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1220925265.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 731,
+          "at": "2026-10-26T19:32:40+08:00",
+          "response_sha256": null,
+          "bytes": 882507,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1220925265.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 731,
+        "at": "2026-10-26T19:32:40+08:00",
+        "response_sha256": null,
+        "bytes": 882507,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T19:32:40+08:00",
+        "bytes_written": 882507
+      },
+      "document": {
+        "document_id": "DOC-E1FAB8C582BD64DD",
+        "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年半年度报告",
+        "published_on": "2024-08-20",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1220925265.PDF",
+        "local_file": "sources/collection/originals/000026/h1_2024/DOC-E1FAB8C582BD64DD.pdf",
+        "sha256": "5256242a6a8c0b45de6f33cdd81a3a8b144a0a2948c9c2cc86c9ecdcfd9e4b5c",
+        "bytes": 882507,
+        "page_count": 142,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "882507 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "142 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "142 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        },
+        "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\h1_2024\\DOC-E1FAB8C582BD64DD.pdf",
+        "bytes": 882507,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "882507 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "142 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "142 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 142,
+        "text_chars": 1941,
+        "issues": [],
+        "sha256": "5256242a6a8c0b45de6f33cdd81a3a8b144a0a2948c9c2cc86c9ecdcfd9e4b5c",
+        "cover_text_chars": 59,
+        "identity_probe_chars": 3432,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T19:47:16+0800",
+      "last_action": "SKIPPED_ALREADY_HAVE",
+      "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+      "skip_count": 5,
+      "last_checked_at": "2026-10-26T19:41:27+08:00",
+      "drive_archive": {
+        "canonical_document_id": "DOC-E1FAB8C582BD64DD",
+        "drive_file_id": "1_1-oVxRffFEUihxNE84pykdH6L-ZEzDr",
+        "drive_url": "https://drive.google.com/file/d/1_1-oVxRffFEUihxNE84pykdH6L-ZEzDr/view?usp=drivesdk",
+        "archive_status": "VERIFIED",
+        "receipt": "runs/issues/P07/drive_archive/receipts.json#DOC-E1FAB8C582BD64DD"
+      }
+    },
+    "h1_2025": {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-08-23/1224556183.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1005,
+          "at": "2026-10-26T19:32:41+08:00",
+          "response_sha256": null,
+          "bytes": 874515,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-23/1224556183.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1005,
+        "at": "2026-10-26T19:32:41+08:00",
+        "response_sha256": null,
+        "bytes": 874515,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T19:32:41+08:00",
+        "bytes_written": 874515
+      },
+      "document": {
+        "document_id": "DOC-11EC852149EBFF7F",
+        "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年半年度报告",
+        "published_on": "2025-08-22",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-23/1224556183.PDF",
+        "local_file": "sources/collection/originals/000026/h1_2025/DOC-11EC852149EBFF7F.pdf",
+        "sha256": "0b9582955171e6e769f260f2b0d0c60249fa8377fe9222f65f4a89e3cfe02ad7",
+        "bytes": 874515,
+        "page_count": 137,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "874515 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "137 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "137 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        },
+        "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\h1_2025\\DOC-11EC852149EBFF7F.pdf",
+        "bytes": 874515,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "874515 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "137 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "137 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 137,
+        "text_chars": 1132,
+        "issues": [],
+        "sha256": "0b9582955171e6e769f260f2b0d0c60249fa8377fe9222f65f4a89e3cfe02ad7",
+        "cover_text_chars": 59,
+        "identity_probe_chars": 3459,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T19:47:16+0800",
+      "last_action": "SKIPPED_ALREADY_HAVE",
+      "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+      "skip_count": 5,
+      "last_checked_at": "2026-10-26T19:41:27+08:00",
+      "drive_archive": {
+        "canonical_document_id": "DOC-11EC852149EBFF7F",
+        "drive_file_id": "1tJhS28U0M3LjsNsuTfKtW6L5woQbvjQL",
+        "drive_url": "https://drive.google.com/file/d/1tJhS28U0M3LjsNsuTfKtW6L5woQbvjQL/view?usp=drivesdk",
+        "archive_status": "VERIFIED",
+        "receipt": "runs/issues/P07/drive_archive/receipts.json#DOC-11EC852149EBFF7F"
+      }
+    },
+    "h1_2026": {
+      "security_id": "SZ:000026",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225485701.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1266,
+          "at": "2026-10-26T19:32:42+08:00",
+          "response_sha256": null,
+          "bytes": 820236,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225485701.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1266,
+        "at": "2026-10-26T19:32:42+08:00",
+        "response_sha256": null,
+        "bytes": 820236,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T19:32:42+08:00",
+        "bytes_written": 820236
+      },
+      "document": {
+        "document_id": "DOC-20494A3AAC226115",
+        "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-20",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225485701.PDF",
+        "local_file": "sources/collection/originals/000026/h1_2026/DOC-20494A3AAC226115.pdf",
+        "sha256": "ca04add60204d8448608328bd2c9fff41b762904a63ca4f62bcabea5d43d6567",
+        "bytes": 820236,
+        "page_count": 131,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "820236 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "131 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "131 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\h1_2026\\DOC-20494A3AAC226115.pdf",
+        "bytes": 820236,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "820236 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "131 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "131 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 131,
+        "text_chars": 1096,
+        "issues": [],
+        "sha256": "ca04add60204d8448608328bd2c9fff41b762904a63ca4f62bcabea5d43d6567",
+        "cover_text_chars": 59,
+        "identity_probe_chars": 3467,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T19:47:16+0800",
+      "last_action": "SKIPPED_ALREADY_HAVE",
+      "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+      "skip_count": 5,
+      "last_checked_at": "2026-10-26T19:41:27+08:00",
+      "drive_archive": {
+        "canonical_document_id": "DOC-20494A3AAC226115",
+        "drive_file_id": "1_C5e5mki6NoJDA4JjxEyR3E97IRISK9I",
+        "drive_url": "https://drive.google.com/file/d/1_C5e5mki6NoJDA4JjxEyR3E97IRISK9I/view?usp=drivesdk",
+        "archive_status": "VERIFIED",
+        "receipt": "runs/issues/P07/drive_archive/receipts.json#DOC-20494A3AAC226115"
+      }
+    },
+    "q1_2026": {
+      "security_id": "SZ:000026",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225177382.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1719,
+          "at": "2026-10-26T19:36:53+08:00",
+          "response_sha256": null,
+          "bytes": 146483,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225177382.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1719,
+        "at": "2026-10-26T19:36:53+08:00",
+        "response_sha256": null,
+        "bytes": 146483,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T19:36:53+08:00",
+        "bytes_written": 146483
+      },
+      "document": {
+        "document_id": "DOC-E2839DC77F7D622C",
+        "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年一季度报告",
+        "published_on": "2026-04-24",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225177382.PDF",
+        "local_file": "sources/collection/originals/000026/q1_2026/DOC-E2839DC77F7D622C.pdf",
+        "sha256": "171acfc54f7b2731f3923616535d41faa0625dcfc7087c103e0ad090f1a835a5",
+        "bytes": 146483,
+        "page_count": 10,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "146483 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "10 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "10 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
+      },
+      "updated_at": "2026-10-26T19:47:16+0800",
+      "reason_code": "LISTING_DATE_UNKNOWN_EMPTY_INDEX",
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-26T19:32:43+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\q1_2026\\DOC-E2839DC77F7D622C.pdf",
+        "bytes": 146483,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "146483 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "10 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "10 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 10,
+        "text_chars": 2723,
+        "issues": [],
+        "sha256": "171acfc54f7b2731f3923616535d41faa0625dcfc7087c103e0ad090f1a835a5",
+        "cover_text_chars": 257,
+        "identity_probe_chars": 6001,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "last_action": "SKIPPED_ALREADY_HAVE",
+      "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
+      "skip_count": 4,
+      "last_checked_at": "2026-10-26T19:41:27+08:00",
+      "drive_archive": {
+        "canonical_document_id": "DOC-E2839DC77F7D622C",
+        "drive_file_id": "1h2LkoTvLfu58nhcFaMOMfRNXD9cik5Fa",
+        "drive_url": "https://drive.google.com/file/d/1h2LkoTvLfu58nhcFaMOMfRNXD9cik5Fa/view?usp=drivesdk",
+        "archive_status": "VERIFIED",
+        "receipt": "runs/issues/P07/drive_archive/receipts.json#DOC-E2839DC77F7D622C"
+      }
     }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-03-14/1219302471.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 2354,
-    "at": "2026-10-26T19:32:36+08:00",
-    "response_sha256": null,
-    "bytes": 1130688,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T19:32:36+08:00",
-    "bytes_written": 1130688
-   },
-   "document": {
-    "document_id": "DOC-0B42B8E6C7CBF3A8",
-    "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2023年年度报告",
-    "published_on": "2024-03-13",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-03-14/1219302471.PDF",
-    "local_file": "sources/collection/originals/000026/annual_2023/DOC-0B42B8E6C7CBF3A8.pdf",
-    "sha256": "b306f7ed65a8bb1ef1c600bf3d659cc37d66b0cbeca9e67ba0d08b6b331e616b",
-    "bytes": 1130688,
-    "page_count": 173,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1130688 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "173 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "173 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; title=2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告"
-     }
-    },
-    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\annual_2023\\DOC-0B42B8E6C7CBF3A8.pdf",
-    "bytes": 1130688,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1130688 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "173 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "173 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 173,
-    "text_chars": 1406,
-    "issues": [],
-    "sha256": "b306f7ed65a8bb1ef1c600bf3d659cc37d66b0cbeca9e67ba0d08b6b331e616b",
-    "cover_text_chars": 55,
-    "identity_probe_chars": 3242,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T19:47:16+0800",
-   "last_action": "SKIPPED_ALREADY_HAVE",
-   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
-   "skip_count": 5,
-   "last_checked_at": "2026-10-26T19:41:27+08:00"
   },
-  "annual_2024": {
-   "security_id": "SZ:000026",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-03-14/1222788741.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 812,
-     "at": "2026-10-26T19:32:37+08:00",
-     "response_sha256": null,
-     "bytes": 1100963,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-03-14/1222788741.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 812,
-    "at": "2026-10-26T19:32:37+08:00",
-    "response_sha256": null,
-    "bytes": 1100963,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T19:32:37+08:00",
-    "bytes_written": 1100963
-   },
-   "document": {
-    "document_id": "DOC-850D60ACF079F840",
-    "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年年度报告",
-    "published_on": "2025-03-13",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-03-14/1222788741.PDF",
-    "local_file": "sources/collection/originals/000026/annual_2024/DOC-850D60ACF079F840.pdf",
-    "sha256": "57f612677d8fc6b3667aa8fa2df09d6fdc12b5fa2d8db746290dd2d37cc09cab",
-    "bytes": 1100963,
-    "page_count": 168,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1100963 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "168 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "168 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    },
-    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\annual_2024\\DOC-850D60ACF079F840.pdf",
-    "bytes": 1100963,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1100963 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "168 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "168 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 168,
-    "text_chars": 1278,
-    "issues": [],
-    "sha256": "57f612677d8fc6b3667aa8fa2df09d6fdc12b5fa2d8db746290dd2d37cc09cab",
-    "cover_text_chars": 54,
-    "identity_probe_chars": 3318,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T19:47:16+0800",
-   "last_action": "SKIPPED_ALREADY_HAVE",
-   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
-   "skip_count": 5,
-   "last_checked_at": "2026-10-26T19:41:27+08:00"
-  },
-  "annual_2025": {
-   "security_id": "SZ:000026",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-03-14/1225009595.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 896,
-     "at": "2026-10-26T19:32:38+08:00",
-     "response_sha256": null,
-     "bytes": 1073368,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-03-14/1225009595.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 896,
-    "at": "2026-10-26T19:32:38+08:00",
-    "response_sha256": null,
-    "bytes": 1073368,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T19:32:38+08:00",
-    "bytes_written": 1073368
-   },
-   "document": {
-    "document_id": "DOC-90E7F189A03EF48F",
-    "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-03-13",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-03-14/1225009595.PDF",
-    "local_file": "sources/collection/originals/000026/annual_2025/DOC-90E7F189A03EF48F.pdf",
-    "sha256": "d54a7b9856b41776e3084c7d06fca0e7718200104d0821684ab58407947e4864",
-    "bytes": 1073368,
-    "page_count": 167,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1073368 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "167 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "167 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\annual_2025\\DOC-90E7F189A03EF48F.pdf",
-    "bytes": 1073368,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1073368 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "167 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "167 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 167,
-    "text_chars": 1112,
-    "issues": [],
-    "sha256": "d54a7b9856b41776e3084c7d06fca0e7718200104d0821684ab58407947e4864",
-    "cover_text_chars": 54,
-    "identity_probe_chars": 3250,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T19:47:16+0800",
-   "last_action": "SKIPPED_ALREADY_HAVE",
-   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
-   "skip_count": 5,
-   "last_checked_at": "2026-10-26T19:41:27+08:00"
-  },
-  "h1_2024": {
-   "security_id": "SZ:000026",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1220925265.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 731,
-     "at": "2026-10-26T19:32:40+08:00",
-     "response_sha256": null,
-     "bytes": 882507,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1220925265.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 731,
-    "at": "2026-10-26T19:32:40+08:00",
-    "response_sha256": null,
-    "bytes": 882507,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T19:32:40+08:00",
-    "bytes_written": 882507
-   },
-   "document": {
-    "document_id": "DOC-E1FAB8C582BD64DD",
-    "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年半年度报告",
-    "published_on": "2024-08-20",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1220925265.PDF",
-    "local_file": "sources/collection/originals/000026/h1_2024/DOC-E1FAB8C582BD64DD.pdf",
-    "sha256": "5256242a6a8c0b45de6f33cdd81a3a8b144a0a2948c9c2cc86c9ecdcfd9e4b5c",
-    "bytes": 882507,
-    "page_count": 142,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "882507 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "142 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "142 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    },
-    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\h1_2024\\DOC-E1FAB8C582BD64DD.pdf",
-    "bytes": 882507,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "882507 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "142 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "142 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 142,
-    "text_chars": 1941,
-    "issues": [],
-    "sha256": "5256242a6a8c0b45de6f33cdd81a3a8b144a0a2948c9c2cc86c9ecdcfd9e4b5c",
-    "cover_text_chars": 59,
-    "identity_probe_chars": 3432,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T19:47:16+0800",
-   "last_action": "SKIPPED_ALREADY_HAVE",
-   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
-   "skip_count": 5,
-   "last_checked_at": "2026-10-26T19:41:27+08:00"
-  },
-  "h1_2025": {
-   "security_id": "SZ:000026",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-08-23/1224556183.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1005,
-     "at": "2026-10-26T19:32:41+08:00",
-     "response_sha256": null,
-     "bytes": 874515,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-08-23/1224556183.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1005,
-    "at": "2026-10-26T19:32:41+08:00",
-    "response_sha256": null,
-    "bytes": 874515,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T19:32:41+08:00",
-    "bytes_written": 874515
-   },
-   "document": {
-    "document_id": "DOC-11EC852149EBFF7F",
-    "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年半年度报告",
-    "published_on": "2025-08-22",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-23/1224556183.PDF",
-    "local_file": "sources/collection/originals/000026/h1_2025/DOC-11EC852149EBFF7F.pdf",
-    "sha256": "0b9582955171e6e769f260f2b0d0c60249fa8377fe9222f65f4a89e3cfe02ad7",
-    "bytes": 874515,
-    "page_count": 137,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "874515 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "137 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "137 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    },
-    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\h1_2025\\DOC-11EC852149EBFF7F.pdf",
-    "bytes": 874515,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "874515 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "137 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "137 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 137,
-    "text_chars": 1132,
-    "issues": [],
-    "sha256": "0b9582955171e6e769f260f2b0d0c60249fa8377fe9222f65f4a89e3cfe02ad7",
-    "cover_text_chars": 59,
-    "identity_probe_chars": 3459,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T19:47:16+0800",
-   "last_action": "SKIPPED_ALREADY_HAVE",
-   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
-   "skip_count": 5,
-   "last_checked_at": "2026-10-26T19:41:27+08:00"
-  },
-  "h1_2026": {
-   "security_id": "SZ:000026",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225485701.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1266,
-     "at": "2026-10-26T19:32:42+08:00",
-     "response_sha256": null,
-     "bytes": 820236,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225485701.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1266,
-    "at": "2026-10-26T19:32:42+08:00",
-    "response_sha256": null,
-    "bytes": 820236,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T19:32:42+08:00",
-    "bytes_written": 820236
-   },
-   "document": {
-    "document_id": "DOC-20494A3AAC226115",
-    "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-20",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225485701.PDF",
-    "local_file": "sources/collection/originals/000026/h1_2026/DOC-20494A3AAC226115.pdf",
-    "sha256": "ca04add60204d8448608328bd2c9fff41b762904a63ca4f62bcabea5d43d6567",
-    "bytes": 820236,
-    "page_count": 131,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "820236 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "131 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "131 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\h1_2026\\DOC-20494A3AAC226115.pdf",
-    "bytes": 820236,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "820236 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "131 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "131 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 131,
-    "text_chars": 1096,
-    "issues": [],
-    "sha256": "ca04add60204d8448608328bd2c9fff41b762904a63ca4f62bcabea5d43d6567",
-    "cover_text_chars": 59,
-    "identity_probe_chars": 3467,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T19:47:16+0800",
-   "last_action": "SKIPPED_ALREADY_HAVE",
-   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
-   "skip_count": 5,
-   "last_checked_at": "2026-10-26T19:41:27+08:00"
-  },
-  "q1_2026": {
-   "security_id": "SZ:000026",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "本地七项校验通过（P07 校验器修正后复检）",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225177382.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1719,
-     "at": "2026-10-26T19:36:53+08:00",
-     "response_sha256": null,
-     "bytes": 146483,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225177382.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1719,
-    "at": "2026-10-26T19:36:53+08:00",
-    "response_sha256": null,
-    "bytes": 146483,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T19:36:53+08:00",
-    "bytes_written": 146483
-   },
-   "document": {
-    "document_id": "DOC-E2839DC77F7D622C",
-    "identity_key": "SZ:000026|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年一季度报告",
-    "published_on": "2026-04-24",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225177382.PDF",
-    "local_file": "sources/collection/originals/000026/q1_2026/DOC-E2839DC77F7D622C.pdf",
-    "sha256": "171acfc54f7b2731f3923616535d41faa0625dcfc7087c103e0ad090f1a835a5",
-    "bytes": 146483,
-    "page_count": 10,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "146483 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "10 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "10 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_verified_via": "LOCAL_REVALIDATION_AFTER_VALIDATOR_FIX"
-   },
-   "updated_at": "2026-10-26T19:47:16+0800",
-   "reason_code": "LISTING_DATE_UNKNOWN_EMPTY_INDEX",
-   "index_ref": {
-    "category": "category_yjdbg_szsh",
-    "fetched_at": "2026-10-26T19:32:43+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000026\\q1_2026\\DOC-E2839DC77F7D622C.pdf",
-    "bytes": 146483,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "146483 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "10 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "10 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=飞亚达 代码=000026 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 10,
-    "text_chars": 2723,
-    "issues": [],
-    "sha256": "171acfc54f7b2731f3923616535d41faa0625dcfc7087c103e0ad090f1a835a5",
-    "cover_text_chars": 257,
-    "identity_probe_chars": 6001,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "last_action": "SKIPPED_ALREADY_HAVE",
-   "last_action_reason": "台账已有同哈希原件，本次未发出 HTTP",
-   "skip_count": 4,
-   "last_checked_at": "2026-10-26T19:41:27+08:00"
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "SZ:000026",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "gssz0000026",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "000026,gssz0000026",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "9c5f1af5fb950d728c8a4b105d1bed995f3abde3ba72d9b9fa86fd73d111c709",
-     "response_bytes": 5030,
-     "raw_path": "sources/collection/raw/000026/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "SZ:000026",
       "category": "category_ndbg_szsh",
-      "stock": "000026,gssz0000026",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T19:32:34+08:00",
-     "elapsed_ms": 680
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225009595",
-     "title": "2025年年度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2026-03-13",
-     "adjunct_url": "finalpage/2026-03-14/1225009595.PDF"
-    },
-    {
-     "announcement_id": "1225009594",
-     "title": "2025年年度报告摘要",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2026-03-13",
-     "adjunct_url": "finalpage/2026-03-14/1225009594.PDF"
-    },
-    {
-     "announcement_id": "1222788782",
-     "title": "2024年年度报告摘要",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2025-03-13",
-     "adjunct_url": "finalpage/2025-03-14/1222788782.PDF"
-    },
-    {
-     "announcement_id": "1222788741",
-     "title": "2024年年度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2025-03-13",
-     "adjunct_url": "finalpage/2025-03-14/1222788741.PDF"
-    },
-    {
-     "announcement_id": "1219302492",
-     "title": "2023年年度报告摘要",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2024-03-13",
-     "adjunct_url": "finalpage/2024-03-14/1219302492.PDF"
-    },
-    {
-     "announcement_id": "1219302471",
-     "title": "2023年年度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2024-03-13",
-     "adjunct_url": "finalpage/2024-03-14/1219302471.PDF"
-    },
-    {
-     "announcement_id": "1216146107",
-     "title": "2022年年度报告摘要",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2023-03-17",
-     "adjunct_url": "finalpage/2023-03-18/1216146107.PDF"
-    },
-    {
-     "announcement_id": "1216146099",
-     "title": "2022年年度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2023-03-17",
-     "adjunct_url": "finalpage/2023-03-18/1216146099.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T19:32:34+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "SZ:000026",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "gssz0000026",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "000026,gssz0000026",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "25e8f8c443db8e6ef3809a8ec75c836fe059808e2019ac6184f604be9ad363e5",
-     "response_bytes": 5074,
-     "raw_path": "sources/collection/raw/000026/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gssz0000026",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "000026,gssz0000026",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "9c5f1af5fb950d728c8a4b105d1bed995f3abde3ba72d9b9fa86fd73d111c709",
+          "response_bytes": 5030,
+          "raw_path": "sources/collection/raw/000026/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "000026,gssz0000026",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T19:32:34+08:00",
+          "elapsed_ms": 680
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225009595",
+          "title": "2025年年度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2026-03-13",
+          "adjunct_url": "finalpage/2026-03-14/1225009595.PDF"
+        },
+        {
+          "announcement_id": "1225009594",
+          "title": "2025年年度报告摘要",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2026-03-13",
+          "adjunct_url": "finalpage/2026-03-14/1225009594.PDF"
+        },
+        {
+          "announcement_id": "1222788782",
+          "title": "2024年年度报告摘要",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2025-03-13",
+          "adjunct_url": "finalpage/2025-03-14/1222788782.PDF"
+        },
+        {
+          "announcement_id": "1222788741",
+          "title": "2024年年度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2025-03-13",
+          "adjunct_url": "finalpage/2025-03-14/1222788741.PDF"
+        },
+        {
+          "announcement_id": "1219302492",
+          "title": "2023年年度报告摘要",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2024-03-13",
+          "adjunct_url": "finalpage/2024-03-14/1219302492.PDF"
+        },
+        {
+          "announcement_id": "1219302471",
+          "title": "2023年年度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2024-03-13",
+          "adjunct_url": "finalpage/2024-03-14/1219302471.PDF"
+        },
+        {
+          "announcement_id": "1216146107",
+          "title": "2022年年度报告摘要",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2023-03-17",
+          "adjunct_url": "finalpage/2023-03-18/1216146107.PDF"
+        },
+        {
+          "announcement_id": "1216146099",
+          "title": "2022年年度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2023-03-17",
+          "adjunct_url": "finalpage/2023-03-18/1216146099.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T19:32:34+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "SZ:000026",
       "category": "category_bndbg_szsh",
-      "stock": "000026,gssz0000026",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T19:32:39+08:00",
-     "elapsed_ms": 692
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225485701",
-     "title": "2026年半年度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2026-08-20",
-     "adjunct_url": "finalpage/2026-08-21/1225485701.PDF"
-    },
-    {
-     "announcement_id": "1225485700",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2026-08-20",
-     "adjunct_url": "finalpage/2026-08-21/1225485700.PDF"
-    },
-    {
-     "announcement_id": "1224556193",
-     "title": "2025年半年度报告摘要",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2025-08-22",
-     "adjunct_url": "finalpage/2025-08-23/1224556193.PDF"
-    },
-    {
-     "announcement_id": "1224556183",
-     "title": "2025年半年度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2025-08-22",
-     "adjunct_url": "finalpage/2025-08-23/1224556183.PDF"
-    },
-    {
-     "announcement_id": "1220925265",
-     "title": "2024年半年度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2024-08-20",
-     "adjunct_url": "finalpage/2024-08-21/1220925265.PDF"
-    },
-    {
-     "announcement_id": "1220925254",
-     "title": "2024年半年度报告摘要",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2024-08-20",
-     "adjunct_url": "finalpage/2024-08-21/1220925254.PDF"
-    },
-    {
-     "announcement_id": "1217605438",
-     "title": "2023年半年度报告摘要",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2023-08-22",
-     "adjunct_url": "finalpage/2023-08-23/1217605438.PDF"
-    },
-    {
-     "announcement_id": "1217605429",
-     "title": "2023年半年度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2023-08-22",
-     "adjunct_url": "finalpage/2023-08-23/1217605429.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T19:32:39+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "SZ:000026",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "gssz0000026",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "000026,gssz0000026",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 4,
-   "rows_fetched": 4,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 4,
-     "new_rows": 4,
-     "total_announcement": 4,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "7bfaf0e1fd4d02fbd5d082f256eb437576e827457bb75f8e7780cd7ab686a668",
-     "response_bytes": 2594,
-     "raw_path": "sources/collection/raw/000026/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gssz0000026",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "000026,gssz0000026",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "25e8f8c443db8e6ef3809a8ec75c836fe059808e2019ac6184f604be9ad363e5",
+          "response_bytes": 5074,
+          "raw_path": "sources/collection/raw/000026/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "000026,gssz0000026",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T19:32:39+08:00",
+          "elapsed_ms": 692
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225485701",
+          "title": "2026年半年度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2026-08-20",
+          "adjunct_url": "finalpage/2026-08-21/1225485701.PDF"
+        },
+        {
+          "announcement_id": "1225485700",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2026-08-20",
+          "adjunct_url": "finalpage/2026-08-21/1225485700.PDF"
+        },
+        {
+          "announcement_id": "1224556193",
+          "title": "2025年半年度报告摘要",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2025-08-22",
+          "adjunct_url": "finalpage/2025-08-23/1224556193.PDF"
+        },
+        {
+          "announcement_id": "1224556183",
+          "title": "2025年半年度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2025-08-22",
+          "adjunct_url": "finalpage/2025-08-23/1224556183.PDF"
+        },
+        {
+          "announcement_id": "1220925265",
+          "title": "2024年半年度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2024-08-20",
+          "adjunct_url": "finalpage/2024-08-21/1220925265.PDF"
+        },
+        {
+          "announcement_id": "1220925254",
+          "title": "2024年半年度报告摘要",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2024-08-20",
+          "adjunct_url": "finalpage/2024-08-21/1220925254.PDF"
+        },
+        {
+          "announcement_id": "1217605438",
+          "title": "2023年半年度报告摘要",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2023-08-22",
+          "adjunct_url": "finalpage/2023-08-23/1217605438.PDF"
+        },
+        {
+          "announcement_id": "1217605429",
+          "title": "2023年半年度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2023-08-22",
+          "adjunct_url": "finalpage/2023-08-23/1217605429.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T19:32:39+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "SZ:000026",
       "category": "category_yjdbg_szsh",
-      "stock": "000026,gssz0000026",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T19:32:43+08:00",
-     "elapsed_ms": 701
+      "column": "szse",
+      "org_id": "gssz0000026",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "000026,gssz0000026",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 4,
+      "rows_fetched": 4,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 4,
+          "new_rows": 4,
+          "total_announcement": 4,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "7bfaf0e1fd4d02fbd5d082f256eb437576e827457bb75f8e7780cd7ab686a668",
+          "response_bytes": 2594,
+          "raw_path": "sources/collection/raw/000026/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "000026,gssz0000026",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T19:32:43+08:00",
+          "elapsed_ms": 701
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225177382",
+          "title": "2026年一季度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2026-04-24",
+          "adjunct_url": "finalpage/2026-04-25/1225177382.PDF"
+        },
+        {
+          "announcement_id": "1223266138",
+          "title": "2025年一季度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2025-04-24",
+          "adjunct_url": "finalpage/2025-04-25/1223266138.PDF"
+        },
+        {
+          "announcement_id": "1219796382",
+          "title": "2024年一季度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2024-04-24",
+          "adjunct_url": "finalpage/2024-04-25/1219796382.PDF"
+        },
+        {
+          "announcement_id": "1216549922",
+          "title": "2023年一季度报告",
+          "sec_code": "000026",
+          "sec_name": "飞亚达",
+          "published_on": "2023-04-24",
+          "adjunct_url": "finalpage/2023-04-25/1216549922.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T19:32:43+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225177382",
-     "title": "2026年一季度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2026-04-24",
-     "adjunct_url": "finalpage/2026-04-25/1225177382.PDF"
-    },
-    {
-     "announcement_id": "1223266138",
-     "title": "2025年一季度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2025-04-24",
-     "adjunct_url": "finalpage/2025-04-25/1223266138.PDF"
-    },
-    {
-     "announcement_id": "1219796382",
-     "title": "2024年一季度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2024-04-24",
-     "adjunct_url": "finalpage/2024-04-25/1219796382.PDF"
-    },
-    {
-     "announcement_id": "1216549922",
-     "title": "2023年一季度报告",
-     "sec_code": "000026",
-     "sec_name": "飞亚达",
-     "published_on": "2023-04-24",
-     "adjunct_url": "finalpage/2023-04-25/1216549922.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T19:32:43+08:00"
-  }
- },
- "updated_at": "2026-10-26T19:41:27+08:00"
+  },
+  "updated_at": "2026-10-26T19:41:27+08:00"
 }

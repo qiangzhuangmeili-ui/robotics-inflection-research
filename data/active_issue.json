@@ -34,5 +34,56 @@
     "listing_date 1054/1054 UNKNOWN，11594 只是尝试上界。",
     "登记表 6 类非枚举历史状态值（16 行）只给映射未执行，待 P01 迁移落地。"
   ],
-  "note": "P06 未改动任何原始输入（document_registry/company_master/intake 队列 diff 为空）；本次未下载、未上传任何文件。"
+  "note": "P06 未改动任何原始输入（document_registry/company_master/intake 队列 diff 为空）；本次未下载、未上传任何文件。",
+  "p07_drive_archive_followup": {
+    "issue_key": "P07",
+    "scope": "DRIVE_ARCHIVE_FOLLOWUP_ONLY",
+    "executor": "Codex",
+    "review_nature": "SELF_CHECK_FILE_ARCHIVE_ONLY",
+    "completed_at": "2026-10-26T12:26:47Z",
+    "files": 65,
+    "uploaded_new": 58,
+    "reused": 7,
+    "binary_sha256_matches": 65,
+    "listed_parent_matches": 65,
+    "bytes": 211077595,
+    "receipts_schema_pass": 65,
+    "registry_rows_before": 100,
+    "registry_rows_after": 158,
+    "registry_rows_added": 58,
+    "not_tried_slots_unchanged": 5,
+    "full_universe_started": false,
+    "business_adoption_added": 0,
+    "ai_read_confirmed_added": 0,
+    "cache_deleted": 0,
+    "receipt_file": "runs/issues/P07/drive_archive/receipts.json",
+    "limitations": [
+      "仅完成Drive归档，不重新认定P07财务字段校准或采集器修复。",
+      "不声明全池采集已启动或所有M00技术问题已解决；登记表级幂等仍待采集器实现。",
+      "正文主体/报告期身份结论沿用WorkBuddy；本次未逐份精读报告，未新增业务独立验收。",
+      "旧原文来源/版本限制保留；云端二进制一致不等于官方来源链独立核验。"
+    ],
+    "handoff_package": {
+      "scope": "P07_ARCHIVE_HANDOFF_PACKAGE",
+      "archive_status": "VERIFIED",
+      "folder": {
+        "success": true,
+        "id": "1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
+        "url": "https://drive.google.com/drive/folders/1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
+        "title": "P07_采集校准与Drive归档_20261026",
+        "parent_id": "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5"
+      },
+      "file": {
+        "id": "1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP",
+        "url": "https://drive.google.com/file/d/1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP/view?usp=drivesdk"
+      },
+      "bytes": 122860,
+      "sha256": "54d2e48330ef6e53cf37ff60b73b5108b727a900af4f32ecc60673adbf0dbbbc",
+      "listed": true,
+      "binary_sha256_matches": true,
+      "readback_at": "2026-10-26T12:28:36.140Z",
+      "contains": "P07校准文本、65份回执、归档索引及更新后的文档登记表；不重复打包PDF"
+    }
+  },
+  "current_drive_archive_status": "VERIFIED_65_FILES_BY_CODEX"
 }
