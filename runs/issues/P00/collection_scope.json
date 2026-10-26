@@ -1,0 +1,349 @@
+{
+  "scope_version": 1,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 11,
+  "issue_key": "P00",
+  "frozen_at_utc": "2026-10-26T04:32:07+00:00",
+  "base_commit": "faf56c53c3c3305c9cddfcec10dd4e805de59b36",
+  "executor": "WorkBuddy AI (executor=AI, review=SELF_CHECK)",
+  "scope_statement": "只冻结本轮采集合同：名单、截止日、报告槽、字段、状态口径与容量规则。不下载全池、不筛公司、不做业务判断、不估值。",
+  "time_axis": {
+    "knowledge_as_of": "2026-10-25",
+    "knowledge_as_of_semantics": "研究截止日。披露日晚于此日的任何文件不得作为本轮证据；可作为后续增量候选登记。",
+    "knowledge_as_of_source": "PROJECT_STATE.json（issue #11 指定以最新 PROJECT_STATE 为准）",
+    "collection_date": "2026-10-26",
+    "collection_date_semantics": "实际取件日，仅用于记录取件时间与源站快照，不改变研究截止日。",
+    "date_conflicts": [
+      {
+        "conflict": "knowledge_as_of 与 company_master.research_as_of 不一致",
+        "values": {
+          "PROJECT_STATE.knowledge_as_of": "2026-10-25",
+          "company_master.research_as_of": [
+            "2026-10-24"
+          ]
+        },
+        "resolution": "冻结 knowledge_as_of 为研究截止日；research_as_of 为行级研究时点标记，早于截止日属正常，保留原值不回填、不改写。",
+        "status": "RESOLVED_BY_DEFINITION"
+      },
+      {
+        "conflict": "tools/validate_plan.py 与 packages/*/TASK.md 仍写死 2026-10-24",
+        "values": {
+          "validator_expected": "2026-10-24",
+          "frozen": "2026-10-25"
+        },
+        "resolution": "属旧体系遗留断言，不在 P00 修改（避免改动既有校验与他卡输入）；登记为后续待办，由 P01 或专门卡把校验器改为读取本文件冻结值。",
+        "status": "LOGGED_NOT_CHANGED"
+      }
+    ],
+    "cutoff_rules": [
+      "文件披露日 ≤ knowledge_as_of 才可进入本轮证据链。",
+      "披露日晚于截止日的文件记为 AFTER_CUTOFF_DISCLOSED，只做增量候选，不参与本轮筛选。",
+      "季度报告在截止日时点尚未到法定披露期的，记 NOT_YET_DISCLOSED，不计缺口、不派人工补件。"
+    ]
+  },
+  "universe": {
+    "count": 1054,
+    "fingerprint_file": "runs/issues/P00/universe_fingerprint.json",
+    "canonical_sha256": "e093c54dfaf60ef883f2b353667eb497a978d5d8cf00954457af674f95527f5e",
+    "source": "data/company_master.csv",
+    "exclusion_rule": "零剔除。旧53采用/7待源/10样本/984未筛只是路由线索，不作预筛淘汰条件。"
+  },
+  "report_slots": [
+    {
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "required_form": "FULL_PDF",
+      "summary_acceptable": false,
+      "core_slot": true,
+      "deadline_before_cutoff": true
+    },
+    {
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "required_form": "FULL_PDF",
+      "summary_acceptable": false,
+      "core_slot": true,
+      "deadline_before_cutoff": true
+    },
+    {
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "required_form": "FULL_PDF",
+      "summary_acceptable": false,
+      "core_slot": true,
+      "deadline_before_cutoff": true
+    },
+    {
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_start": "2024-01-01",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "required_form": "FULL_PDF",
+      "summary_acceptable": false,
+      "core_slot": true,
+      "deadline_before_cutoff": true
+    },
+    {
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_start": "2025-01-01",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "required_form": "FULL_PDF",
+      "summary_acceptable": false,
+      "core_slot": true,
+      "deadline_before_cutoff": true
+    },
+    {
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "required_form": "FULL_PDF",
+      "summary_acceptable": false,
+      "core_slot": true,
+      "deadline_before_cutoff": true
+    }
+  ],
+  "quarterly_slots": [
+    {
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_start": "2024-01-01",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+      "core_slot": false,
+      "deadline_before_cutoff": true,
+      "as_of_cutoff_status": "APPLICABLE"
+    },
+    {
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_start": "2024-07-01",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+      "core_slot": false,
+      "deadline_before_cutoff": true,
+      "as_of_cutoff_status": "APPLICABLE"
+    },
+    {
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_start": "2025-01-01",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+      "core_slot": false,
+      "deadline_before_cutoff": true,
+      "as_of_cutoff_status": "APPLICABLE"
+    },
+    {
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_start": "2025-07-01",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+      "core_slot": false,
+      "deadline_before_cutoff": true,
+      "as_of_cutoff_status": "APPLICABLE"
+    },
+    {
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_start": "2026-01-01",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+      "core_slot": false,
+      "deadline_before_cutoff": true,
+      "as_of_cutoff_status": "APPLICABLE"
+    },
+    {
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "required_form": "STRUCTURED_FINANCIAL_PLUS_PDF_IF_AUTOMATIC",
+      "core_slot": false,
+      "deadline_before_cutoff": false,
+      "as_of_cutoff_status": "NOT_YET_DISCLOSED_PARTIAL"
+    }
+  ],
+  "supplementary_materials": [
+    {
+      "id": "announcement_ir_index",
+      "scope": "研究截止日前两年（2024-10-26 至 2026-10-25）的公告与正式 IR 目录，含分页与公司代码",
+      "required_form": "INDEX_THEN_SELECTIVE_ORIGINALS",
+      "coverage": "全候选池目录先行覆盖；关键词命中的原件再批量归档",
+      "not_evidence_for": "关键词只用于取件排序，不能当作机器人业务证据"
+    },
+    {
+      "id": "keyword_originals",
+      "scope": "机器人/人形/减速器/执行器/传感器/送样/量产/谐波/丝杠/灵巧手/伺服/关节模组等命中原件",
+      "required_form": "ORIGINAL_PDF",
+      "coverage": "仅命中项，不做全量抓取"
+    },
+    {
+      "id": "financial_corrections",
+      "scope": "与上述报告及机器人业务有关的更正、重述、并购、主体变更材料",
+      "required_form": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+      "coverage": "保留原始版与更正版并建立关联，不覆盖追溯原件"
+    }
+  ],
+  "financial_field_requirements": {
+    "note": "字段口径的最终冻结在 P04；此处只列本轮必须覆盖的字段清单，避免采集时漏抓。",
+    "period_fields": [
+      "营业收入（本期/上年同期）",
+      "营业成本或毛利（本期/上年同期）",
+      "归属于母公司股东的扣除非经常性损益的净利润",
+      "经营活动产生的现金流量净额",
+      "应收账款（含合同资产，分列）",
+      "存货"
+    ],
+    "dimension_fields": [
+      "公司主体（含历史名称/代码变更）",
+      "报告期",
+      "单季度 vs 年初至今累计",
+      "单位",
+      "实际披露日",
+      "数据来源与原文定位"
+    ],
+    "prohibitions": [
+      "单季度与累计不得混用。",
+      "归母净利与扣非净利不得互相替代。",
+      "缺失不得填 0；未披露与取件失败必须分开。",
+      "公司总收入不得冒充机器人业务收入。"
+    ]
+  },
+  "status_taxonomy": [
+    {
+      "code": "COLLECTED_IDENTITY_VERIFIED",
+      "definition": "文件已取得，且公司主体/报告期/全文身份已核；不含业务结论核读。"
+    },
+    {
+      "code": "COLLECTED_PENDING_IDENTITY",
+      "definition": "文件已取得，但身份尚未核（下载成功不等于身份正确）。"
+    },
+    {
+      "code": "NOT_APPLICABLE_PRE_LISTING",
+      "definition": "报告期结束日早于该公司上市日，不存在上市公司定期报告；必须有可核上市日支撑。"
+    },
+    {
+      "code": "SUBSTITUTED_BY_PROSPECTUS",
+      "definition": "报告期落在上市前，改用招股书对应期间章节；document_type 必须记为 PROSPECTUS，不得冒充年报。"
+    },
+    {
+      "code": "NOT_DISCLOSED_BY_ISSUER",
+      "definition": "已到法定披露期且公司应披露但查无该期报告；须附检索记录，不能凭一次失败断言。"
+    },
+    {
+      "code": "AFTER_CUTOFF_DISCLOSED",
+      "definition": "披露日晚于 knowledge_as_of，本轮不得作为证据使用，仅登记为后续增量候选。"
+    },
+    {
+      "code": "NOT_YET_DISCLOSED",
+      "definition": "在 knowledge_as_of 时点法定披露期尚未届满（如 2026Q3 于 2026-10-25）。"
+    },
+    {
+      "code": "SOURCE_FAILED",
+      "definition": "已实际请求并有限重试后源站失败/超时/格式损坏；须有请求记录与重试次数。"
+    },
+    {
+      "code": "ACCESS_BLOCKED",
+      "definition": "权限、付费墙或登录限制导致无法取得；不是公司未披露。"
+    },
+    {
+      "code": "NOT_TRIED",
+      "definition": "尚未尝试。禁止计入完成，禁止作为人工补件理由。"
+    }
+  ],
+  "legacy_value_mapping": {
+    "PENDING_EXISTING_ARCHIVE_MATCH": "NOT_TRIED",
+    "NOT_REQUESTED": "NOT_TRIED",
+    "NOT_STARTED": "NOT_TRIED",
+    "DO_NOT_REQUEST_BEFORE_AUTOMATIC_PASS_COMPLETE": "NOT_TRIED"
+  },
+  "not_applicable_decision_table": {
+    "input": "listing_date（当前 1054/1054 为 UNKNOWN）",
+    "rules": [
+      {
+        "condition": "listing_date == UNKNOWN",
+        "slot_status": "NOT_TRIED",
+        "reason": "无法判定，保持未知；禁止默认按不适用处理。"
+      },
+      {
+        "condition": "listing_date > period_end",
+        "slot_status": "NOT_APPLICABLE_PRE_LISTING",
+        "reason": "报告期结束时尚未上市，不存在上市公司定期报告。"
+      },
+      {
+        "condition": "listing_date <= period_end",
+        "slot_status": "APPLICABLE",
+        "reason": "报告期覆盖上市后期间，应取得该期定期报告。"
+      },
+      {
+        "condition": "北交所公司上市前曾在股转系统挂牌",
+        "slot_status": "APPLICABLE_WITH_DIFFERENT_PLATFORM",
+        "reason": "挂牌期间年报存在但披露平台与主体口径不同，需记录平台，不得因平台不同判不适用。"
+      },
+      {
+        "condition": "公司更名/代码变更/借壳",
+        "slot_status": "APPLICABLE_WITH_ENTITY_MAPPING",
+        "reason": "需先建立历史主体映射，映射表由 P01/P02 产出；P00 只登记该需求。"
+      }
+    ],
+    "prospectus_substitution": {
+      "allowed_when": "slot_status == NOT_APPLICABLE_PRE_LISTING",
+      "resulting_status": "SUBSTITUTED_BY_PROSPECTUS",
+      "constraint": "document_type 必须记为 PROSPECTUS，不得计入年报槽完成数。",
+      "affected_candidates": 62
+    }
+  },
+  "capacity_rule": {
+    "core_slot_upper_bound": 6324,
+    "core_slot_upper_bound_formula": "1054 × 6 = 6324",
+    "meaning": "只是核心报告槽的数学上界，不是应有文件数；须扣除上市前不适用、未披露、修订合并等情况。",
+    "estimation_method": "总容量 = Σ(各槽实际尝试数 × 该槽单位文件字节中位数)；单位大小以 P07 十家校准实测为准。",
+    "pre_calibration_state": "UNMEASURED",
+    "pre_calibration_placeholder": "在 P07 取得实测中位数前，不对外给出总 GB 数，避免把经验带宽当成事实。",
+    "extra_materials": "季度结构化数据、公告目录、关键词原件另计，不并入 6324。"
+  },
+  "out_of_scope": [
+    "不下载全池（本卡不发起任何批量请求）",
+    "不做指标计算、不筛公司、不调阈值",
+    "不做业务判断、不追合同履约、不估值",
+    "不修改既有研究采用状态与他人结果",
+    "不修改历史输入表（company_master 等）"
+  ],
+  "stop_conditions": [
+    "名单或日期口径出现未解决冲突时，不得启动全池请求。",
+    "发现候选池不是 1054 或存在重复键时，立即停止并回退到名单核对。"
+  ]
+}

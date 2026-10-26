@@ -1,0 +1,156 @@
+{
+  "rules_version": 1,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 11,
+  "issue_key": "P00",
+  "frozen_at_utc": "2026-10-26T04:32:07+00:00",
+  "principle": "完成不等于放行；未尝试不等于缺件；缺数据不等于无业务；不得为凑目标公司数改规则。",
+  "slot_completion_definition": {
+    "COLLECTED_IDENTITY_VERIFIED": "计入已取得",
+    "COLLECTED_PENDING_IDENTITY": "不计入已取得，计入待核",
+    "SUBSTITUTED_BY_PROSPECTUS": "计入已覆盖（替代来源），不计入年报槽完成数",
+    "NOT_APPLICABLE_PRE_LISTING": "计入不适用，须有可核上市日",
+    "NOT_YET_DISCLOSED": "计入未到期，不计缺口",
+    "AFTER_CUTOFF_DISCLOSED": "计入截止日后，不计本轮覆盖",
+    "NOT_DISCLOSED_BY_ISSUER": "计入真实缺口，须附检索证据",
+    "SOURCE_FAILED": "计入失败，进入自动重试队列",
+    "ACCESS_BLOCKED": "计入访问受阻，不归因于公司",
+    "NOT_TRIED": "不计入任何完成口径，禁止出现在完成统计里"
+  },
+  "round_completion_definition": {
+    "statement": "当且仅当全池每个槽位都处于上述非 NOT_TRIED 的任一状态，且每条状态都有可追溯记录（请求日志/原文ID/检索证据）时，资料轮才算完成。",
+    "allowed_gaps": "允许存在有明确限制的缺口：NOT_APPLICABLE_PRE_LISTING、NOT_YET_DISCLOSED、NOT_DISCLOSED_BY_ISSUER、SOURCE_FAILED、ACCESS_BLOCKED 均属合法终态。",
+    "forbidden": "NOT_TRIED 不得作为终态出现在 A00/A04 的完成统计中。"
+  },
+  "forbidden_patterns": [
+    "把 NOT_TRIED 写成已尝试或已完成",
+    "把取件失败当成公司未披露或无业务",
+    "缺失财务字段填 0",
+    "用摘要代替全文并计入全文槽",
+    "用关键词命中代替业务证据",
+    "为达到某个公司数量调整筛选阈值",
+    "把 UPLOADED 当作业务证据已验收"
+  ],
+  "acceptance_checks": [
+    {
+      "id": "AC01",
+      "check": "全池证券数 == 冻结指纹中的 total_securities",
+      "expected": "1054"
+    },
+    {
+      "id": "AC02",
+      "check": "每批次实际处理数 == intake_batch_index 声明数",
+      "expected": "10×100 + 54"
+    },
+    {
+      "id": "AC03",
+      "check": "11 批并集 == 冻结名单，且无重复",
+      "expected": "集合相等"
+    },
+    {
+      "id": "AC04",
+      "check": "每个 (security_id, slot_id) 都有且仅有一个终态",
+      "expected": "无空值、无冲突"
+    },
+    {
+      "id": "AC05",
+      "check": "NOT_TRIED 数量 == 0（A04 时点）",
+      "expected": "0"
+    },
+    {
+      "id": "AC06",
+      "check": "NOT_APPLICABLE_PRE_LISTING 每行都有可核上市日",
+      "expected": "100% 有据"
+    },
+    {
+      "id": "AC07",
+      "check": "COLLECTED_IDENTITY_VERIFIED 每行都有 document_id 与官方URL",
+      "expected": "100% 可追溯"
+    },
+    {
+      "id": "AC08",
+      "check": "SOURCE_FAILED 每行都有请求记录与重试次数",
+      "expected": "100%"
+    },
+    {
+      "id": "AC09",
+      "check": "人工补缺清单只包含自动尝试且失败/确无的项",
+      "expected": "不含 NOT_TRIED"
+    },
+    {
+      "id": "AC10",
+      "check": "披露日晚于 knowledge_as_of 的文件未进入本轮证据",
+      "expected": "0 违规"
+    }
+  ],
+  "gap_classification": [
+    {
+      "code": "GAP_NOT_YET_DISCLOSED",
+      "action": "等待，不派补件"
+    },
+    {
+      "code": "GAP_NOT_APPLICABLE",
+      "action": "关闭，须附上市日"
+    },
+    {
+      "code": "GAP_PARTIALLY_OBTAINED",
+      "action": "补缺剩余部分"
+    },
+    {
+      "code": "GAP_SOURCE_FAILED",
+      "action": "自动重试/换官方源"
+    },
+    {
+      "code": "GAP_ACCESS_BLOCKED",
+      "action": "记录权限问题，不催用户"
+    },
+    {
+      "code": "GAP_FIELD_NOT_DISCLOSED",
+      "action": "保留未知，不填 0"
+    },
+    {
+      "code": "GAP_NOT_TRIED",
+      "action": "禁止派单，先跑自动采集"
+    }
+  ],
+  "human_request_policy": {
+    "trigger": "仅在自动整轮 + 有限重试 + 备用官方源都试过之后，由 A02 一次性汇总。",
+    "grouping": "按网站/软件、报告期、可共同下载的批次分组。",
+    "template": "templates/整轮采集人工补缺.csv",
+    "must_include": [
+      "缺哪些文件/字段",
+      "尝试过什么",
+      "一次怎样导出",
+      "放到哪个本地/Drive 目录"
+    ],
+    "forbidden": [
+      "逐家发补件请求",
+      "把未尝试项列成缺件",
+      "把全局源故障转成 1054 条手补"
+    ]
+  },
+  "review_policy": {
+    "self_check_allowed_for": "技术/格式/可复算类检查",
+    "independent_review_required_for": "业务结论采用、证据原句与物理页核验",
+    "labeling": "同一 AI 执行并自检时须显式标 SELF_CHECK，不得称为独立验收",
+    "closing_issue": "关闭 issue 不替代验收记录；以 runs/issues/<key>/review.json 为准"
+  },
+  "deliverable_requirements": {
+    "per_issue": [
+      "专用结果文件",
+      "manifest.json",
+      "handoff.md",
+      "review.json"
+    ],
+    "manifest_fields": [
+      "files",
+      "sha256",
+      "generated_at",
+      "inputs"
+    ]
+  },
+  "capacity_acceptance": {
+    "upper_bound": 6324,
+    "rule": "6324 只用于容量上界与进度分母，不得当作应有文件数写入完成率分母之外的地方。"
+  }
+}

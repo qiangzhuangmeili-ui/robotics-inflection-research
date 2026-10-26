@@ -1,0 +1,118 @@
+{
+  "template_only": false,
+  "issue_number": 11,
+  "issue_key": "P00",
+  "plan_version": "20261026_collection_first_v2",
+  "phase": "准备",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI（与执行者为同一主体，仅做自检）",
+  "review_method": "SELF_CHECK_REPRODUCIBLE_COMPUTE：只做可复算的技术/格式核对，并由独立第二实现重算哈希；未做独立审计，未做业务证据核读。",
+  "reviewed_at": "2026-10-26T04:35:00Z",
+  "base_commit": "faf56c53c3c3305c9cddfcec10dd4e805de59b36",
+  "input_versions": [
+    {"path": "PROJECT_STATE.json", "note": "knowledge_as_of=2026-10-25，只读"},
+    {"path": "data/company_master.csv", "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6", "rows": 1054},
+    {"path": "data/intake_company_queue.csv", "rows": 1054, "note": "只读，用于批次互斥覆盖校验"},
+    {"path": "data/intake_batch_index.csv", "rows": 11, "note": "只读，用于批次声明数比对"},
+    {"path": "data/document_registry.csv", "rows": 100, "note": "只读，用于统计已有原文覆盖"},
+    {"path": "data/issue_execution_plan.csv", "note": "P00 状态 READY、无依赖"}
+  ],
+  "actual_output_files": [
+    "runs/issues/P00/universe_fingerprint.json",
+    "runs/issues/P00/collection_scope.json",
+    "runs/issues/P00/coverage_acceptance_rules.json",
+    "runs/issues/P00/manifest.json",
+    "runs/issues/P00/handoff.md",
+    "runs/issues/P00/review.json",
+    "tools/p00_freeze_scope.py"
+  ],
+  "checks": [
+    {
+      "id": "AC1",
+      "acceptance_item": "证券池精确 1054 且版本可复算",
+      "expected": "total=1054，security_id 唯一，哈希可复算",
+      "actual": "total=1054，unique security_id=1054，unique stock_code=1054，canonical_sha256=e093c54dfaf60ef883f2b353667eb497a978d5d8cf00954457af674f95527f5e",
+      "method": "以独立第二实现重算规范序列化哈希，与生成结果一致",
+      "result": "PASS"
+    },
+    {
+      "id": "AC1b",
+      "acceptance_item": "证券代码前导零与历史主体映射",
+      "expected": "代码保持 6 位文本；security_id == exchange:stock_code",
+      "actual": "1054/1054 为 6 位数字文本，254 家以 0 开头；1054/1054 满足 security_id 组合规则；未发现重复 stock_name",
+      "method": "逐行正则与等值校验",
+      "result": "PASS"
+    },
+    {
+      "id": "AC1c",
+      "acceptance_item": "没有把旧 53 采用或概念标签当作预筛淘汰条件",
+      "expected": "剔除数=0",
+      "actual": "exclusions.count=0；旧 53 采用/7 待源/10 样本/984 未筛仅作路由线索",
+      "method": "核对 candidate_status 全为 CONCEPT_CANDIDATE，主表行数与队列行数均 1054",
+      "result": "PASS"
+    },
+    {
+      "id": "AC2",
+      "acceptance_item": "报告类型、期间、截止日、字段需求、纳入/不适用规则均明确",
+      "expected": "六个核心全文槽 + 六个季度槽 + 补充材料 + 字段清单 + 5 条不适用判定规则",
+      "actual": "collection_scope.json 含 report_slots(6)、quarterly_slots(6)、supplementary_materials(3)、financial_field_requirements、not_applicable_decision_table(5 条 + 招股书替代)",
+      "method": "结构核对，逐项存在性检查",
+      "result": "PASS"
+    },
+    {
+      "id": "AC3",
+      "acceptance_item": "完成定义允许有明确限制的缺口，但禁止 NOT_TRIED 伪装完成",
+      "expected": "状态词表含 NOT_TRIED 且明确排除于完成口径；AC05 要求 A04 时点 NOT_TRIED=0",
+      "actual": "status_taxonomy 共 10 态，slot_completion_definition 明写 NOT_TRIED 不计入任何完成口径；round_completion_definition 禁止其作为终态；acceptance_checks 共 10 条含 AC05",
+      "method": "结构核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC4",
+      "acceptance_item": "不用为凑目标公司数设规则",
+      "expected": "规则中无公司数量目标，无阈值",
+      "actual": "本卡不含任何筛选阈值或目标公司数；6324 仅标注为槽位上界",
+      "method": "全文检查",
+      "result": "PASS"
+    },
+    {
+      "id": "AC5",
+      "acceptance_item": "名单/日期口径冲突先记录并解决，未冻结不得启动全池请求",
+      "expected": "冲突已登记并有结论；本卡未发起任何全池请求",
+      "actual": "time_axis.date_conflicts 登记 2 条（1 条 RESOLVED_BY_DEFINITION、1 条 LOGGED_NOT_CHANGED）；本卡未发起任何网络请求",
+      "method": "文件核对 + 执行日志核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC6",
+      "acceptance_item": "批次互斥覆盖",
+      "expected": "11 批并集 == 冻结名单，无重复",
+      "actual": "10×100 + 54 = 1054，queue 与 master 集合相等，mutually_exclusive=true",
+      "method": "集合比对",
+      "result": "PASS"
+    }
+  ],
+  "coverage": {
+    "assigned": 1054,
+    "processed": 0,
+    "failed": 0,
+    "not_tried": 6324,
+    "not_applicable": 0,
+    "not_disclosed": 0,
+    "unit": "company（assigned/processed）与 report_slot（not_tried 等）",
+    "note": "本卡为规则冻结卡，不执行采集。processed=0、not_tried=6324 是设计如此，不是缺口；不得据此判断资料轮进度。"
+  },
+  "decision": "SELF_CHECK_PASS",
+  "limitations": [
+    "SELF_CHECK，非独立审计。执行者与复核者为同一 AI，不满足独立复核要求。",
+    "listing_date 1054/1054 为 UNKNOWN，无法判定上市前不适用；只冻结了判定规则，未回填任何日期。",
+    "容量为 UNMEASURED，只给出估算公式，未给出 GB 数；实测留待 P07。",
+    "本卡未验证任何数据源连通性，未发起任何下载请求。",
+    "tools/validate_plan.py 仍硬编码 2026-10-24，会与本卡冻结的 2026-10-25 冲突并报假失败；已登记未修改。",
+    "北交所 62 家与 61 家上市前公司的历史主体映射、披露平台差异只登记需求，映射表未产出。"
+  ],
+  "allows_next_stage": true,
+  "allows_next_stage_scope": "仅放行 P01(#12)、P03(#14)、P04(#15) 三张技术/规格卡。不放行任何业务结论采用、指标筛选或公司深研。",
+  "next_recommended_issue": {"number": 12, "key": "P01"},
+  "notes": "三条验收标准逐条对照通过（AC1—AC3）。本记录不构成独立验收；若需独立复核，另派复核卡，不改变已产出文件。关闭 issue 不替代本记录。"
+}

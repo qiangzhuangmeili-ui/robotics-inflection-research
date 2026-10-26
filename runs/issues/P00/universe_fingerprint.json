@@ -1,0 +1,175 @@
+{
+  "fingerprint_version": 1,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 11,
+  "issue_key": "P00",
+  "generated_at_utc": "2026-10-26T04:32:07+00:00",
+  "base_commit": "faf56c53c3c3305c9cddfcec10dd4e805de59b36",
+  "purpose": "冻结本轮候选池名单版本，供后续所有采集/筛选环节复算比对。",
+  "source_file": {
+    "path": "data/company_master.csv",
+    "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+    "row_count": 1054
+  },
+  "canonical_form": {
+    "algorithm": "按 security_id 升序；每行按 security_id\\tstock_code\\tstock_name\\texchange 拼接；行间 \\n；末尾补一个 \\n；UTF-8 编码后取 SHA-256。",
+    "canonical_sha256": "e093c54dfaf60ef883f2b353667eb497a978d5d8cf00954457af674f95527f5e",
+    "security_id_only_sha256": "07d4394ae21c8860a22708c017358800fa1f7fea1d5b524cf650fc632564132a",
+    "note": "哈希不含时间戳与任何状态字段，任何人重跑应得到同一值。"
+  },
+  "counts": {
+    "total_securities": 1054,
+    "unique_security_id": 1054,
+    "unique_stock_code": 1054,
+    "unique_stock_name": 1054,
+    "duplicate_stock_name_rows": [],
+    "stock_code_leading_zero": 254
+  },
+  "distribution": {
+    "exchange": {
+      "BJ": 62,
+      "SH": 390,
+      "SZ": 602
+    },
+    "prelisting_flag": {
+      "NONE": 992,
+      "PRE_LISTING_BACKFILL_CONFIRMED": 1,
+      "PRE_LISTING_PROSPECTUS_DATA": 61
+    },
+    "data_status": {
+      "FINANCIAL_DATA_MISSING": 62,
+      "HAS_FINANCIAL_DATA": 992
+    },
+    "listing_date": {
+      "UNKNOWN": 1054
+    }
+  },
+  "cross_tabs": {
+    "prelisting_vs_data_status": {
+      "NONE|FINANCIAL_DATA_MISSING": 62,
+      "NONE|HAS_FINANCIAL_DATA": 930,
+      "PRE_LISTING_BACKFILL_CONFIRMED|HAS_FINANCIAL_DATA": 1,
+      "PRE_LISTING_PROSPECTUS_DATA|HAS_FINANCIAL_DATA": 61
+    }
+  },
+  "batch_coverage": {
+    "source": "data/intake_company_queue.csv",
+    "batch_counts": {
+      "M00_01": 100,
+      "M00_02": 100,
+      "M00_03": 100,
+      "M00_04": 100,
+      "M00_05": 100,
+      "M00_06": 100,
+      "M00_07": 100,
+      "M00_08": 100,
+      "M00_09": 100,
+      "M00_10": 100,
+      "M00_11": 54
+    },
+    "declared_in_index": {
+      "M00_01": 100,
+      "M00_02": 100,
+      "M00_03": 100,
+      "M00_04": 100,
+      "M00_05": 100,
+      "M00_06": 100,
+      "M00_07": 100,
+      "M00_08": 100,
+      "M00_09": 100,
+      "M00_10": 100,
+      "M00_11": 54
+    },
+    "total": 1054,
+    "mutually_exclusive": true
+  },
+  "existing_documents": {
+    "source": "data/document_registry.csv",
+    "rows": 100,
+    "unique_document_id": 100,
+    "companies_with_any_document": 72,
+    "coverage_ratio": 0.0683,
+    "archive_status": {
+      "L1_SOURCE_INDEX_ONLY": 3,
+      "NOT_REQUIRED_REFERENCE_ONLY": 2,
+      "NOT_UPLOADED": 5,
+      "UPLOADED_AND_TEXT_READ": 3,
+      "UPLOADED_UNVERIFIED": 73,
+      "VERIFIED": 14
+    },
+    "note": "已有原文只覆盖少数公司，且多数仅 UPLOADED_UNVERIFIED；不构成资料轮完成。"
+  },
+  "checks": [
+    {
+      "check": "master_row_count_1054",
+      "pass": true,
+      "actual": 1054
+    },
+    {
+      "check": "security_id_unique",
+      "pass": true,
+      "actual": 1054
+    },
+    {
+      "check": "stock_code_unique",
+      "pass": true,
+      "actual": 1054
+    },
+    {
+      "check": "stock_code_all_six_digit_text",
+      "pass": true,
+      "actual": "1054/1054"
+    },
+    {
+      "check": "security_id_equals_exchange_colon_code",
+      "pass": true,
+      "actual": "all match"
+    },
+    {
+      "check": "no_empty_stock_name",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "check": "queue_covers_master_once",
+      "pass": true,
+      "actual": "queue=1054 unique=1054"
+    },
+    {
+      "check": "batch_partition_matches_index",
+      "pass": true,
+      "actual": {
+        "M00_01": 100,
+        "M00_02": 100,
+        "M00_03": 100,
+        "M00_04": 100,
+        "M00_05": 100,
+        "M00_06": 100,
+        "M00_07": 100,
+        "M00_08": 100,
+        "M00_09": 100,
+        "M00_10": 100,
+        "M00_11": 54
+      }
+    },
+    {
+      "check": "no_company_dropped_by_legacy_partition",
+      "pass": true,
+      "actual": "旧53采用/7待源/10样本/984未筛仅作路由线索，未剔除任何证券"
+    }
+  ],
+  "all_checks_pass": true,
+  "exclusions": {
+    "count": 0,
+    "rule": "本轮不因旧53采用、概念标签、行业分组、财务缺失或上市前标记剔除任何证券。"
+  },
+  "known_input_gaps": [
+    {
+      "field": "listing_date",
+      "status": "ALL_UNKNOWN",
+      "affected_rows": 1054,
+      "impact": "无法逐家判定定期报告槽是否属于上市前不适用；在取得可核上市日前，槽位一律保持 NOT_TRIED，不得填 NOT_APPLICABLE。",
+      "unblock_owner": "P02/P03 取得交易所上市日期后回填；P00 只冻结判定规则。"
+    }
+  ]
+}
