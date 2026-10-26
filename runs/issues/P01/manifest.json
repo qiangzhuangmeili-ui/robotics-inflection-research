@@ -1,0 +1,119 @@
+{
+  "manifest_version": 1,
+  "issue_number": 12,
+  "issue_key": "P01",
+  "plan_version": "20261026_collection_first_v2",
+  "phase": "准备",
+  "executor": "WorkBuddy AI (executor=AI, review=SELF_CHECK)",
+  "generated_at_utc": "2026-10-26T05:21:25+00:00",
+  "base_commit": "9c9ab7d2257e7ef7ed7565a1269844c661e768ac",
+  "scope": "定义文档身份、版本、来源别名与五个独立状态，并给出登记表目标结构与迁移方案。不改写 data/document_registry.csv，不研究企业，不访问 Drive。",
+  "files": [
+    {
+      "path": "runs/issues/P01/document_identity_rules.json",
+      "role": "交付物1：身份规则（三层模型、ID 生成、身份键、版本、别名、五轴、查重顺序）",
+      "bytes": 18944,
+      "sha256": "4cbe6690aaf1428cb852f7db24207a95d79efda910d57844c556ae4c91041cd4"
+    },
+    {
+      "path": "runs/issues/P01/document_registry_schema.json",
+      "role": "交付物2：目标表结构（23 既有列 + 19 新列 + 旁表 document_sources + 9 条跨字段规则 + 10 条校验）",
+      "bytes": 16990,
+      "sha256": "82415649e3e4c1faea18902b8a4baece7b5d31080a0d414fffcfe81fa8abe2a8"
+    },
+    {
+      "path": "runs/issues/P01/registry_migration_plan.md",
+      "role": "交付物3：100 行迁移方案（十步流程、三张归一表、4 行冲突、10 项验证、回滚）",
+      "bytes": 8766,
+      "sha256": "4d742baa6732d2f88b56f6197b0915fb09741893eecdf163a27c44f74d7a9c3e"
+    },
+    {
+      "path": "runs/issues/P01/migration_dryrun.csv",
+      "role": "支撑物：100 行逐行 dry-run 结果（原值 + 建议新值 + 标记）",
+      "bytes": 45872,
+      "sha256": "b2d8f8fb99769c4a78c1eb6beb18378e21eeae4080c8933257baa3506438a1ef"
+    },
+    {
+      "path": "runs/issues/P01/migration_dryrun_summary.json",
+      "role": "支撑物：dry-run 分布统计与 6 项自动校验",
+      "bytes": 4020,
+      "sha256": "979eab66e0714315518e4130e23ead583d43e32dae7db5bfae451c5775352dd5"
+    },
+    {
+      "path": "runs/issues/P01/manifest.json",
+      "role": "本清单",
+      "sha256": "SELF"
+    },
+    {
+      "path": "runs/issues/P01/handoff.md",
+      "role": "交接记录",
+      "sha256": "SELF"
+    },
+    {
+      "path": "runs/issues/P01/review.json",
+      "role": "自检记录（SELF_CHECK）",
+      "sha256": "SELF"
+    },
+    {
+      "path": "tools/p01_registry_dryrun.py",
+      "role": "支撑工具：只读原表，生成 dry-run 与统计",
+      "bytes": 18815,
+      "sha256": "849d65fc8ae1bde02c9a7cf2434eb64daef1cbb0171145e608b2e2419825c0eb"
+    },
+    {
+      "path": "tools/validate_plan.py",
+      "role": "改动：研究截止日改为读取 P00 冻结值，不再硬编码 2026-10-24",
+      "bytes": 27341,
+      "sha256": "bbbaccfb43510b86ce5fdbce464438d31d0c2bda7429118fdf25ab07be1e8b15"
+    },
+    {
+      "path": "runs/issues/P01/validate_plan_run.json",
+      "role": "本次校验器运行结果（106 通过 / 5 项既有失败）。仓库原有 validation/independent_check.json 为 2026-10-25 历史绿报告（PASS 110/0，截止日 2026-10-24），已原样保留未覆盖。",
+      "bytes": 35191,
+      "sha256": "5ad082f90e623b4f31658a9d237275b36359f348e886054f63cfb02a251fe26a"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "data/document_registry.csv",
+      "sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed",
+      "rows": 100,
+      "columns": 23,
+      "read_only": true,
+      "note": "未做任何修改；本卡全部结论来自只读分析"
+    },
+    {
+      "path": "data/company_master.csv",
+      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+      "rows": 1054,
+      "read_only": true
+    },
+    {
+      "path": "runs/issues/P00/collection_scope.json",
+      "role": "依赖卡交付：研究截止日与报告槽定义",
+      "read_only": true
+    },
+    {
+      "path": "docs/资料保存分级规则.md",
+      "role": "状态枚举的权威来源",
+      "read_only": true
+    },
+    {
+      "path": "templates/来源登记.csv",
+      "role": "现有登记表模板（23 列）",
+      "read_only": true
+    }
+  ],
+  "reproduce": {
+    "command": "python tools/p01_registry_dryrun.py",
+    "deterministic": ["distributions", "checks", "migration_dryrun.csv 全部字段"],
+    "non_deterministic": ["generated_at_utc"],
+    "verified": "重跑两次输出一致；6 项自动校验全部 PASS"
+  },
+  "not_included": [
+    "未修改 data/document_registry.csv（按批准，只出方案与 dry-run）",
+    "未创建 data/document_sources.csv（由迁移卡建表）",
+    "未访问 Google Drive，未下载任何文件",
+    "未改写任何公司研究结论"
+  ]
+}

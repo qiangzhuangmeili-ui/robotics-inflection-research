@@ -1,0 +1,149 @@
+{
+  "generated_at_utc": "2026-10-26T05:23:40+00:00",
+  "source": {
+    "path": "data/document_registry.csv",
+    "sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed",
+    "rows": 100,
+    "columns": 23
+  },
+  "dryrun_scope": "只读原表；未修改 data/document_registry.csv；输出为迁移后的建议值。",
+  "distributions": {
+    "id_scheme": {
+      "SHA16": 64,
+      "LEGACY_SEMANTIC_ADHOC": 13,
+      "LEGACY_SEMANTIC_C00": 12,
+      "LEGACY_SEMANTIC_AR": 8,
+      "LEGACY_SEMANTIC_H1": 3
+    },
+    "new_document_type": {
+      "ANNUAL_REPORT": 74,
+      "INVESTOR_RELATIONS_ARTICLE": 7,
+      "OFFICIAL_WEBSITE_ARTICLE": 4,
+      "ANNUAL_REPORT_SUMMARY": 3,
+      "SEMI_ANNUAL_REPORT": 3,
+      "LISTING_DISCLOSURE": 2,
+      "PROSPECTUS": 2,
+      "CONTRACT_ANNOUNCEMENT": 2,
+      "SUSTAINABILITY_REPORT": 1,
+      "SHAREHOLDER_MEETING_MATERIAL": 1,
+      "TENDER_NOTICE": 1
+    },
+    "new_document_type_source": {
+      "TITLE_PATTERN": 77,
+      "SOURCE_TYPE": 23
+    },
+    "new_acquisition_channel": {
+      "LOCAL_PDF_UNVERIFIED_SOURCE": 64,
+      "USER_UPLOAD": 9,
+      "OFFICIAL_CNINFO": 8,
+      "OFFICIAL_BSE": 5,
+      "OFFICIAL_PORTAL_PLUS_DRIVE": 5,
+      "OFFICIAL_COMPANY_SITE": 4,
+      "OFFICIAL_CNINFO_PLUS_MIRROR": 1,
+      "OFFICIAL_SSE_PLUS_MIRROR": 1,
+      "OFFICIAL_SSE": 1,
+      "THIRD_PARTY_TENDER_PLATFORM": 1,
+      "SECONDARY_TRANSCRIPT": 1
+    },
+    "new_period_key": {
+      "FY2025": 69,
+      "2026H1": 12,
+      "NOT_APPLICABLE_EVENT_BASED": 7,
+      "PERIOD_UNRESOLVED": 7,
+      "PRE_LISTING_MATERIALS": 2,
+      "LISTING_YEAR_2026": 1,
+      "AGM_2026": 1,
+      "MULTI_PERIOD_FY2023_FY2025": 1
+    },
+    "new_link_status": {
+      "FOUND_OFFICIAL": 83,
+      "NOT_RECORDED": 11,
+      "FOUND_SECONDARY": 6
+    },
+    "new_binary_status": {
+      "OBTAINED": 90,
+      "NOT_ATTEMPTED": 8,
+      "FAILED": 2
+    },
+    "new_archive_status": {
+      "UPLOADED_UNVERIFIED": 76,
+      "VERIFIED": 14,
+      "NOT_UPLOADED": 8,
+      "NOT_REQUIRED_REFERENCE_ONLY": 2
+    },
+    "new_access_identity_status": {
+      "NOT_CHECKED": 72,
+      "AI_READ_CONFIRMED": 24,
+      "AI_TEXT_EXTRACTED_UNVERIFIED": 3,
+      "IDENTITY_MISMATCH": 1
+    },
+    "new_evidence_status": {
+      "NOT_USED": 84,
+      "SELF_CHECK_ONLY": 16
+    },
+    "migration_flags": {
+      "PERIOD_KEY_NORMALIZED": 92,
+      "LEGACY_DOCUMENT_ID_KEPT": 36,
+      "CONTENT_HASH_MISSING": 13,
+      "ACCESS_STATUS_NONSTANDARD": 10,
+      "PERIOD_AMBIGUOUS": 7,
+      "ARCHIVE_STATUS_NONSTANDARD": 6,
+      "NOT_A_STORED_BINARY": 5,
+      "ARCHIVE_AXIS_CONFLICT": 3,
+      "ACCESS_AXIS_CONFLICT": 1
+    }
+  },
+  "checks": [
+    {
+      "check": "row_count_unchanged",
+      "expected": 100,
+      "actual": 100,
+      "pass": true
+    },
+    {
+      "check": "document_id_all_preserved",
+      "expected": "100/100 原值不变",
+      "actual": 100,
+      "pass": true
+    },
+    {
+      "check": "no_unmapped_enum_values",
+      "expected": 0,
+      "actual": {},
+      "pass": true
+    },
+    {
+      "check": "archive_status_after_normalization_all_legal",
+      "expected": [
+        "NOT_REQUIRED_REFERENCE_ONLY",
+        "NOT_UPLOADED",
+        "SOURCE_UNAVAILABLE",
+        "UPLOADED_UNVERIFIED",
+        "VERIFIED"
+      ],
+      "actual": [
+        "NOT_REQUIRED_REFERENCE_ONLY",
+        "NOT_UPLOADED",
+        "UPLOADED_UNVERIFIED",
+        "VERIFIED"
+      ],
+      "pass": true
+    },
+    {
+      "check": "evidence_status_never_upgraded_to_independent",
+      "expected": "无 VERIFIED_INDEPENDENT（本库从未做过独立验收）",
+      "actual": [
+        "NOT_USED",
+        "SELF_CHECK_ONLY"
+      ],
+      "pass": true
+    },
+    {
+      "check": "no_row_silently_dropped",
+      "expected": "每行都有 migration_flags",
+      "actual": 100,
+      "pass": true
+    }
+  ],
+  "all_checks_pass": true
+}

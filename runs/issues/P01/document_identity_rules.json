@@ -1,0 +1,287 @@
+{
+  "rules_version": 1,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 12,
+  "issue_key": "P01",
+  "frozen_at_utc": "2026-10-26T05:21:25+00:00",
+  "base_commit": "9c9ab7d2257e7ef7ed7565a1269844c661e768ac",
+  "purpose": "定义一份文件的身份、版本、来源与状态，使同一原件可跨批次幂等复用，更正版不覆盖原版，且五个状态互不代偿。",
+  "scope_note": "只定义规则与表结构，不重新研究企业，不改写既有结论，不删除任何原件。",
+
+  "three_layer_model": {
+    "why": "当前表把「这是什么文档」「这份文件的内容」「文件存在哪」挤在同一行，导致同内容多来源要建多行、更正版无处安放、Drive 同一对象被误当同一内容。拆成三层后各自有稳定主键。",
+    "layers": [
+      {
+        "layer": "L1_DOCUMENT",
+        "name": "逻辑文档",
+        "key": "document_id",
+        "definition": "一个发行人主体、一个文件类型、一个报告期、一个修订版本的组合，代表「一份东西」。",
+        "cardinality": "1 个 document_id : N 个内容版本 : N 个存放位置"
+      },
+      {
+        "layer": "L2_CONTENT",
+        "name": "内容指纹",
+        "key": "sha256",
+        "definition": "该文档某一次实际取得的二进制文件的字节指纹。",
+        "cardinality": "同一文档可有多个 sha256（重新导出、镜像站、扫描重制）"
+      },
+      {
+        "layer": "L3_SOURCE",
+        "name": "来源与存放",
+        "key": "source_id",
+        "definition": "一个可定位的入口或一份存放副本：官方 URL、Drive file_id、本地路径。",
+        "cardinality": "同一内容可有多个来源（官方站 + 镜像 + 用户上传）"
+      }
+    ],
+    "explicit_non_equivalences": [
+      "同一 Drive file_id ≠ 同一内容：Drive 允许覆盖更新，file_id 不变而字节改变。",
+      "同一 sha256 ≠ 同一来源：镜像站可产出字节完全一致的副本。",
+      "同一 document_id ≠ 已核实：身份登记不等于业务证据已核读。"
+    ]
+  },
+
+  "document_id_rules": {
+    "immutability": [
+      "document_id 一经分配永不改变、永不复用、永不重新编号。",
+      "历史 ID 全部保留原值，包括不符合新规范的 36 条。重编号会打断既有证据引用，禁止。",
+      "身份信息后续被更正时，ID 不变；用 identity_correction_log 记录更正前后值。"
+    ],
+    "legacy_schemes": [
+      {"scheme": "SHA16", "pattern": "DOC-<sha256 前16位大写>", "rows": 64, "note": "内容派生。优点：同字节天然同 ID。缺点：重新导出即变新 ID；下载前无法分配。"},
+      {"scheme": "LEGACY_SEMANTIC_C00", "pattern": "DOC-C00-<年>[-H1|-BSE|-AGM|-IPO|-SUMMARY]-<代码>", "rows": 12, "note": "人工语义命名，含批次前缀。"},
+      {"scheme": "LEGACY_SEMANTIC_ADHOC", "pattern": "DOC-<类型>-<代码>-<日期>[-后缀]", "rows": 13, "note": "事件类文档的临时命名，形态不统一。"},
+      {"scheme": "LEGACY_SEMANTIC_AR", "pattern": "DOC-<年>AR-<代码>", "rows": 8, "note": "年报人工命名。"},
+      {"scheme": "LEGACY_SEMANTIC_H1", "pattern": "DOC-<年>H1-<代码>", "rows": 3, "note": "半年报人工命名。"}
+    ],
+    "new_scheme": {
+      "code": "IDENTITY_V1",
+      "format": "DOC-<16位大写十六进制>",
+      "algorithm": "sha256(identity_key 的 UTF-8 字节) 取前 16 位十六进制，转大写，前缀 DOC-",
+      "identity_key_template": "{security_id}|{issuer_scope}|{document_type}|{period_key}|{revision_no}",
+      "why_identity_derived": "可在下载前分配；同一逻辑文档无论换多少个来源、重下多少次都得到同一 ID。",
+      "why_not_content_derived": "内容派生会在重新导出/镜像时产生新 ID，破坏「同一原件复用」。",
+      "collision_handling": "若生成的 ID 已存在于表且 identity_key 不同，改用 sha256 的第 17—32 位；仍冲突则追加 -2、-3，并在 identity_correction_log 记录。绝不覆盖既有行。",
+      "freeze_rule": "ID 在首次写入时冻结；之后即使 identity_key 中的字段被更正，ID 也不重算。"
+    },
+    "prohibited": [
+      "用文件名、URL、标题拼接 document_id",
+      "用 (security_id, source_type, period_covered) 三元组当唯一键",
+      "把摘要与全文合并为同一 document_id",
+      "把更正版写成原版的更新行"
+    ]
+  },
+
+  "identity_key": {
+    "fields": [
+      {"field": "security_id", "why": "发行人主体。不同上市主体即使同集团也是不同文档。"},
+      {"field": "issuer_scope", "why": "上市公司本体 / 合并集团 / 子公司 / 参股公司。子公司单独披露的文件与母公司文件不是同一份。"},
+      {"field": "document_type", "why": "年报、半年报、季报、摘要、更正、招股书、股东会材料、合同公告、中标公告、IR 文章等不可互换。"},
+      {"field": "period_key", "why": "报告期受控值；事件类文档用 NOT_APPLICABLE_EVENT_BASED，具体日期记 event_period。"},
+      {"field": "revision_no", "why": "0 = 原始版本；1..n = 更正/重述。更正版必须是新文档，不是同一文档的新内容。"}
+    ],
+    "excluded_from_key": ["primary_url", "sha256", "drive_file_id", "local_file", "original_title", "page_count", "original_filename"],
+    "excluded_reason": "这些是来源或内容的属性，不是文档身份。纳入会导致同文档换源即变新身份。",
+    "uniqueness_traps_observed": [
+      {"trap": "(security_id, source_type, period_covered) 不唯一", "evidence": "现有 100 行中存在 4 组该三元组相同但内容不同的记录", "groups": [
+        {"security_id": "BJ:920418", "source_type": "LOCAL_PDF_PENDING_SOURCE_CHECK", "period_covered": "2025年度", "rows": 2},
+        {"security_id": "BJ:920418", "source_type": "LOCAL_PDF_PENDING_SOURCE_CHECK", "period_covered": "2026年度_投资者关系", "rows": 4},
+        {"security_id": "SH:688836", "source_type": "LOCAL_PDF_PENDING_SOURCE_CHECK", "period_covered": "2026年度_上市前材料", "rows": 2},
+        {"security_id": "BJ:920207", "source_type": "OFFICIAL_COMPANY_WEBSITE_ARTICLE", "period_covered": "2026年度", "rows": 4}
+      ]},
+      {"trap": "document_id 形态不统一", "evidence": "100 行里 5 种命名形态并存，见 document_id_rules.legacy_schemes"},
+      {"trap": "同一字段承担多种语义", "evidence": "source_type 的 17 个取值里混了「文档类型」「取得方式」「读取状态」三类信息，没有一个是纯文档类型"}
+    ]
+  },
+
+  "vocabularies": {
+    "issuer_scope": {
+      "values": ["LISTED_ENTITY", "CONSOLIDATED_GROUP", "SUBSIDIARY", "ASSOCIATE", "UNKNOWN"],
+      "default": "UNKNOWN",
+      "rule": "不得从标题推断；须由公告正文或报告封面确认。"
+    },
+    "document_type": {
+      "periodic": ["ANNUAL_REPORT", "SEMI_ANNUAL_REPORT", "QUARTERLY_REPORT", "ANNUAL_REPORT_SUMMARY", "SEMI_ANNUAL_REPORT_SUMMARY"],
+      "corporate_event": ["CORRECTION_NOTICE", "RESTATEMENT", "PROSPECTUS", "LISTING_DISCLOSURE", "SHAREHOLDER_MEETING_MATERIAL", "CONTRACT_ANNOUNCEMENT", "TENDER_NOTICE", "INVESTOR_RELATIONS_ARTICLE", "OFFICIAL_WEBSITE_ARTICLE", "SUSTAINABILITY_REPORT", "FINANCIAL_STATEMENT_EXPORT", "AUDIT_FINANCIAL_DATA"],
+      "other": ["OTHER", "UNKNOWN"],
+      "source_field": "document_type_source ∈ {OFFICIAL_METADATA, TITLE_PATTERN, USER_DECLARED, UNKNOWN}。TITLE_PATTERN 属推断值，须在归档核验时转为 OFFICIAL_METADATA 或改判。"
+    },
+    "period_key": {
+      "pattern": "FY<年> | <年>H1 | <年>Q1 | <年>Q3 | MULTI_PERIOD_<列表> | NOT_APPLICABLE_EVENT_BASED | PRE_LISTING_MATERIALS | LISTING_YEAR_<年> | AGM_<年> | PERIOD_UNRESOLVED",
+      "notes": [
+        "A 股定期报告只有 Q1、H1（半年报）、Q3、FY，不存在单独 Q2/Q4 报告；Q2 由半年报覆盖、Q4 由年报覆盖。",
+        "事件类文档不套报告期，用 NOT_APPLICABLE_EVENT_BASED，真实时点记 event_period。",
+        "无法确定是年度还是半年度时记 PERIOD_UNRESOLVED，不得猜。"
+      ],
+      "normalization_observed": {
+        "2025年度": "FY2025",
+        "2026H1": "2026H1",
+        "2026半年度": "2026H1",
+        "2025年度报告摘要": "FY2025",
+        "2023-2025审计财务数据": "MULTI_PERIOD_FY2023_FY2025",
+        "2026年度": "PERIOD_UNRESOLVED",
+        "2026年度_投资者关系": "NOT_APPLICABLE_EVENT_BASED",
+        "2025年度_投资者关系": "NOT_APPLICABLE_EVENT_BASED",
+        "2026年度_上市前材料": "PRE_LISTING_MATERIALS",
+        "2026年上市披露": "LISTING_YEAR_2026",
+        "2026年年度股东会材料": "AGM_2026"
+      }
+    },
+    "acquisition_channel": {
+      "values": ["OFFICIAL_CNINFO", "OFFICIAL_CNINFO_PLUS_MIRROR", "OFFICIAL_SSE", "OFFICIAL_SSE_PLUS_MIRROR", "OFFICIAL_SZSE", "OFFICIAL_BSE", "OFFICIAL_NEEQ", "OFFICIAL_COMPANY_SITE", "OFFICIAL_PORTAL_PLUS_DRIVE", "USER_UPLOAD", "LOCAL_PDF_UNVERIFIED_SOURCE", "THIRD_PARTY_TENDER_PLATFORM", "SECONDARY_TRANSCRIPT", "UNKNOWN"],
+      "why_separate": "「这是什么文档」与「怎么拿到的」是两个维度。现表 source_type 把两者混在 17 个取值里，导致无法按文档类型统计。"
+    },
+    "source_kind": {
+      "values": ["OFFICIAL_CNINFO", "OFFICIAL_SSE", "OFFICIAL_SZSE", "OFFICIAL_BSE", "OFFICIAL_NEEQ", "OFFICIAL_COMPANY_SITE", "DRIVE_FILE", "LOCAL_FILE", "MIRROR", "THIRD_PARTY", "USER_UPLOAD"],
+      "note": "用于旁表 document_sources，一行一个可定位来源。"
+    }
+  },
+
+  "revision_model": {
+    "fields": ["revision_no", "supersedes_document_id", "superseded_by_document_id", "revision_reason", "revision_disclosed_on"],
+    "rules": [
+      "revision_no=0 为原始版本；1..n 依次为更正/重述/换版。",
+      "更正版必须新建 document_id，绝不覆盖原版行、绝不改写原版 sha256。",
+      "双向关联：新版写 supersedes_document_id，原版写 superseded_by_document_id。",
+      "证据引用必须写明所用版本；引用了被更正版本时，证据状态须标 SUPERSEDED_VERSION_USED 并说明是否影响结论。",
+      "只知道存在更正公告、尚未取得原件时，原版可保持正常状态，另建一条 revision_no=1 的行，archive_status=SOURCE_UNAVAILABLE，limitations 写明「已知存在更正版，原件未取得」。",
+      "摘要与全文不是版本关系，是两个不同 document_type。"
+    ]
+  },
+
+  "source_alias_model": {
+    "sidecar_table": "data/document_sources.csv",
+    "rule": "一个 document_id 可挂多条来源；每条来源独立记录自己的定位、取得结果、失败原因与下一步。",
+    "alias_rule": "同一内容被多个来源提供时，保留全部来源行，用 is_primary 标记首选入口，不删除次要来源——它们是对抗单点失效的备份证据。",
+    "primary_rule": "优先官方发行人/交易所/巨潮；镜像与转录只能作 is_primary=false 的辅助来源。",
+    "failure_rule": "每个来源的失败必须写明 failure_code、attempted_at、next_step；不得只写一句「失败」。"
+  },
+
+  "status_axes": {
+    "principle": "五个状态各自回答一个不同问题，互不代偿。任何一轴为否，都不能用另一轴为是来补齐。",
+    "axes": [
+      {
+        "axis": 1,
+        "field": "link_status",
+        "question": "知道去哪拿吗？",
+        "values": ["FOUND_OFFICIAL", "FOUND_SECONDARY", "NOT_RECORDED", "NOT_SEARCHED"],
+        "definitions": {
+          "FOUND_OFFICIAL": "已定位发行人/交易所/巨潮/股转等官方入口，URL 已写入表",
+          "FOUND_SECONDARY": "只有镜像、转载、转录或第三方平台入口",
+          "NOT_RECORDED": "当时确实找到过入口，但 URL 没有落表（现存 64 行本地 PDF 多属此类）",
+          "NOT_SEARCHED": "尚未检索"
+        }
+      },
+      {
+        "axis": 2,
+        "field": "binary_status",
+        "question": "拿到二进制了吗？",
+        "values": ["OBTAINED", "FAILED", "NOT_ATTEMPTED"],
+        "definitions": {
+          "OBTAINED": "实际取得可打开的 PDF/Excel 等二进制文件",
+          "FAILED": "已实际请求但失败（超时、403、重定向循环、格式损坏），须记 failure_code",
+          "NOT_ATTEMPTED": "尚未尝试下载"
+        },
+        "hard_rule": "网页可读 ≠ 已下载。读到网页正文不能把本轴写成 OBTAINED。"
+      },
+      {
+        "axis": 3,
+        "field": "archive_status",
+        "question": "Drive 里有可核的原件吗？",
+        "values": ["NOT_UPLOADED", "UPLOADED_UNVERIFIED", "VERIFIED", "NOT_REQUIRED_REFERENCE_ONLY", "SOURCE_UNAVAILABLE"],
+        "definitions_source": "docs/资料保存分级规则.md 第四节，本规则不新增取值。",
+        "legacy_normalization": {"L1_SOURCE_INDEX_ONLY": "NOT_UPLOADED", "UPLOADED_AND_TEXT_READ": "UPLOADED_UNVERIFIED"},
+        "normalization_note": "两个自造值归一到规则定义值，原文保留在 archive_status_legacy 列，不丢失。"
+      },
+      {
+        "axis": 4,
+        "field": "access_identity_status",
+        "question": "AI 读到原文了吗？读到的确实是这家公司这一期吗？",
+        "values": ["NOT_CHECKED", "OWNER_ONLY_CHECKED", "AI_TEXT_EXTRACTED_UNVERIFIED", "AI_READ_CONFIRMED", "IDENTITY_MISMATCH", "ACCESS_BLOCKED"],
+        "definitions": {
+          "NOT_CHECKED": "尚未尝试让 AI 读取归档原件",
+          "OWNER_ONLY_CHECKED": "只确认用户账号能打开，AI 未读",
+          "AI_TEXT_EXTRACTED_UNVERIFIED": "已提取文本但未核对物理页与身份",
+          "AI_READ_CONFIRMED": "AI 确实读到完整原文，并能回答指定物理页内容",
+          "IDENTITY_MISMATCH": "读到的文件与登记主体/报告期/类型不符，已纠正",
+          "ACCESS_BLOCKED": "权限、连接或工具限制导致 AI 无法读取"
+        },
+        "identity_note": "身份确认与可读性绑在同一轴，因为「能读」不等于「读到的是这份」；两者都成立才可写 AI_READ_CONFIRMED。"
+      },
+      {
+        "axis": 5,
+        "field": "evidence_status",
+        "question": "这份文件支撑的业务结论被采用了吗？",
+        "values": ["NOT_USED", "REVIEW_PENDING", "SELF_CHECK_ONLY", "VERIFIED_INDEPENDENT", "SUPERSEDED_VERSION_USED"],
+        "definitions": {
+          "NOT_USED": "尚未用于任何业务判断",
+          "REVIEW_PENDING": "已提出结论，等待复核",
+          "SELF_CHECK_ONLY": "执行者自检过，未经独立复核",
+          "VERIFIED_INDEPENDENT": "独立复核通过（须有复核记录，执行者与复核者不能是同一主体）",
+          "SUPERSEDED_VERSION_USED": "结论引用了已被更正的版本"
+        },
+        "hard_rule": "同一 AI 执行并自检只能到 SELF_CHECK_ONLY。现有 100 行从未做过独立复核，因此本轴初始值不得出现 VERIFIED_INDEPENDENT。"
+      }
+    ],
+    "independence_proof": [
+      {
+        "document_id": "DOC-C00-2026-IPO-920211",
+        "axes": {"link_status": "FOUND_OFFICIAL", "binary_status": "FAILED", "archive_status": "NOT_UPLOADED", "access_identity_status": "AI_READ_CONFIRMED", "evidence_status": "NOT_USED"},
+        "why_it_matters": "官方链接找到了、PDF 下载失败、Drive 没有原件，但 AI 已读完网页全文。若把五件事合成一个字段，这行的真实情况必然丢失。"
+      },
+      {
+        "document_id": "DOC-C00-2026-BSE-SUMMARY-920346",
+        "axes": {"link_status": "FOUND_OFFICIAL", "binary_status": "FAILED", "archive_status": "NOT_UPLOADED", "access_identity_status": "NOT_CHECKED"},
+        "why_it_matters": "同为「下载失败」，但没读到内容，下一步动作与上一行完全不同。"
+      }
+    ]
+  },
+
+  "dedup_lookup_order": {
+    "rule": "写新行之前必须按以下顺序查一遍，任一命中即复用，不新建。",
+    "steps": [
+      {"step": 1, "key": "document_id", "match": "完全相等"},
+      {"step": 2, "key": "identity_key", "match": "五元组完全相等"},
+      {"step": 3, "key": "sha256", "match": "内容指纹相同"},
+      {"step": 4, "key": "official_announcement_id", "match": "巨潮/交易所公告编号相同"},
+      {"step": 5, "key": "normalized_primary_url", "match": "去掉协议与追踪参数后相同"},
+      {"step": 6, "key": "drive_file_id", "match": "同一 Drive 对象"}
+    ],
+    "on_multiple_hits": "若多个步骤命中不同 document_id，判为 CONFLICT，停下人工判定，禁止自动合并、禁止删除任一行。",
+    "on_zero_hits": "才可新建 document_id。",
+    "known_gap": "现有表缺 official_announcement_id 列，第 4 步目前只能从 CNINFO URL 反解 announcementId；补列后回填。"
+  },
+
+  "conflict_and_unknown_policy": {
+    "unknown_is_a_value": "UNKNOWN 是合法取值，不是空字符串。空值表示未采集，UNKNOWN 表示已查但不明确。两者不得混用。",
+    "never_infer": [
+      "不得用文件名推断文档类型或报告期",
+      "不得用标题推断 issuer_scope",
+      "不得用缺失推断「公司没有该报告」",
+      "不得为消除 UNKNOWN 而填猜测值"
+    ],
+    "unknown_reason_required": "每个 UNKNOWN 必须给出原因码：TITLE_ONLY / URL_UNSTABLE / SOURCE_BLOCKED / NOT_YET_SEARCHED / AMBIGUOUS_LABEL / MIGRATION_LEGACY_GAP。",
+    "conflict_rules": [
+      "同 identity_key 但内容不同 → 视为两个文档，不得合并；差异写入 limitations。",
+      "同 sha256 但 identity_key 不同 → 先怀疑登记错误，核对后再决定；不得直接删除其一。",
+      "状态轴之间冲突（如 file_status 暗示 VERIFIED 而 archive_status 是 UPLOADED_UNVERIFIED）→ 取更保守值并打 CONFLICT 标记，不静默升级也不静默降级。",
+      "原表版本冲突或身份不明时保留 UNKNOWN，不删重、不删唯一原件。"
+    ]
+  },
+
+  "invariants": [
+    "100 行历史记录一条不少，document_id 一个不改。",
+    "任何既有状态值都能在 *_legacy 列原样取回。",
+    "任何新状态值不得比旧值更乐观，除非有新的核验记录支撑。",
+    "同一 sha256 在同一时刻只能归属一个 document_id（除非登记错误且已标注）。",
+    "摘要、全文、更正版三者永远是不同 document_id。",
+    "未做独立复核的证据永远是 SELF_CHECK_ONLY，不得写成 VERIFIED_INDEPENDENT。"
+  ],
+
+  "out_of_scope": [
+    "不重新研究任何公司",
+    "不改写既有业务结论或采用状态",
+    "不删除、不合并任何既有行",
+    "不执行迁移（本卡只出方案与 dry-run，落列由后续卡按迁移方案执行）",
+    "不访问 Drive、不下载任何文件"
+  ]
+}

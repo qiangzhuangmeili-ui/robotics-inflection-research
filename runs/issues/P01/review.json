@@ -1,0 +1,126 @@
+{
+  "template_only": false,
+  "issue_number": 12,
+  "issue_key": "P01",
+  "plan_version": "20261026_collection_first_v2",
+  "phase": "准备",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI（与执行者为同一主体，仅做自检）",
+  "review_method": "SELF_CHECK_REPRODUCIBLE_COMPUTE：结构核对 + 100 行 dry-run 可复算 + 6 项自动校验；未做独立审计，未做业务证据核读，未访问 Drive。",
+  "reviewed_at": "2026-10-26T05:21:25Z",
+  "base_commit": "9c9ab7d2257e7ef7ed7565a1269844c661e768ac",
+  "dependency_review": {
+    "depends_on": "P00(#11)",
+    "review_file": "runs/issues/P00/review.json",
+    "decision": "SELF_CHECK_PASS",
+    "allows_p01": true
+  },
+  "input_versions": [
+    {"path": "data/document_registry.csv", "sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed", "rows": 100, "columns": 23, "read_only": true},
+    {"path": "data/company_master.csv", "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6", "read_only": true},
+    {"path": "runs/issues/P00/collection_scope.json", "note": "研究截止日与报告槽，只读"},
+    {"path": "docs/资料保存分级规则.md", "note": "状态枚举权威来源，只读"}
+  ],
+  "actual_output_files": [
+    "runs/issues/P01/document_identity_rules.json",
+    "runs/issues/P01/document_registry_schema.json",
+    "runs/issues/P01/registry_migration_plan.md",
+    "runs/issues/P01/migration_dryrun.csv",
+    "runs/issues/P01/migration_dryrun_summary.json",
+    "runs/issues/P01/manifest.json",
+    "runs/issues/P01/handoff.md",
+    "runs/issues/P01/review.json",
+    "tools/p01_registry_dryrun.py",
+    "tools/validate_plan.py"
+  ],
+  "checks": [
+    {
+      "id": "AC1",
+      "acceptance_item": "同一原件被多批使用时幂等复用",
+      "expected": "document_id 不随来源/批次变化；查重顺序覆盖 ID、身份键、内容哈希、公告编号、URL、Drive ID",
+      "actual": "identity_key 五元组排除 URL/sha256/drive_file_id；dedup_lookup_order 定义 6 步；新建 ID 为 IDENTITY_V1（身份派生，可在下载前分配）",
+      "method": "规则文本核对 + 反例核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC1b",
+      "acceptance_item": "同内容多来源保留来源别名",
+      "expected": "一份文档可挂多条来源，不重复建文档",
+      "actual": "旁表 document_sources 定义 16 列，source_id = hash(document_id|source_kind|locator)，is_primary 区分主备；同一内容多来源不删次要来源",
+      "method": "结构核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC2",
+      "acceptance_item": "更正版不覆盖原版",
+      "expected": "revision_no + 双向 supersedes 关联；更正版必须是新 document_id",
+      "actual": "revision_model 定义 6 条规则；schema 含 revision_no / supersedes_document_id / superseded_by_document_id / revision_reason / revision_disclosed_on；跨字段规则要求 revision_no>0 ⇒ supersedes 非空",
+      "method": "结构核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC3",
+      "acceptance_item": "迁移只补列/关联，不降低或抹去既有复核状态",
+      "expected": "6 个冻结列原文不改；归一值必须有 legacy 留痕；不静默升降级",
+      "actual": "迁移方案第 1—10 步只加列与旁表；archive_status_legacy / access_check_status_legacy 留痕；4 行冲突保留旧值 + CONFLICT 标记；dry-run 校验 document_id 100/100 原值不变",
+      "method": "dry-run 逐行比对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC4",
+      "acceptance_item": "字段包含失败原因与下一步",
+      "expected": "失败有原因码，缺口有下一步动作",
+      "actual": "document_sources 含 failure_code（10 值枚举）、attempted_at、retry_count、next_step；主表含 unknown_reasons（7 个原因码）与 next_action（8 个动作码），100 行均有值",
+      "method": "结构核对 + dry-run 输出核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC5",
+      "acceptance_item": "五种状态独立",
+      "expected": "五轴各自定义、互不代偿",
+      "actual": "link_status / binary_status / archive_status / access_identity_status / evidence_status 五轴独立枚举；以 DOC-C00-2026-IPO-920211 为实证（链接有、下载失败、无归档、但已读网页全文）",
+      "method": "结构核对 + 实例核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC6",
+      "acceptance_item": "身份不明保留 UNKNOWN，不直接删重、不删唯一原件",
+      "expected": "UNKNOWN 是合法值；冲突不自动合并",
+      "actual": "conflict_and_unknown_policy 定义 UNKNOWN 与空值区别、4 条冲突处理规则；现有表实测无重复 sha256、无重复 drive_file_id，未删除任何行",
+      "method": "规则核对 + 数据核对",
+      "result": "PASS"
+    },
+    {
+      "id": "AC7",
+      "acceptance_item": "dry-run 可复算",
+      "expected": "重跑输出一致，6 项自动校验通过",
+      "actual": "6 项校验全 PASS（行数、ID 保留、枚举无未映射、归档归一合法、证据未升级、无静默丢行）",
+      "method": "重跑比对",
+      "result": "PASS"
+    }
+  ],
+  "coverage": {
+    "assigned": 100,
+    "processed": 100,
+    "failed": 0,
+    "not_tried": 0,
+    "not_applicable": 0,
+    "not_disclosed": 0,
+    "unit": "registry_row",
+    "note": "本卡处理对象是登记表的 100 行，不是 1054 家公司的报告槽；报告槽进度不因本卡改变。"
+  },
+  "decision": "SELF_CHECK_PASS",
+  "limitations": [
+    "SELF_CHECK，非独立审计。执行者与复核者为同一 AI。",
+    "77 行 document_type 来自标题推断（TITLE_PATTERN），非官方元数据确认，归档核验时必须升级或改判。",
+    "4 行状态轴冲突（DOC-2025AR-920346、DOC-C00-2025-920211、DOC-AWARD-920207-20260429、DOC-C00-2026-IPO-920211）保留旧值并标记，未裁决。",
+    "迁移方案未执行：data/document_registry.csv 一字未改，document_sources.csv 未创建。",
+    "去重第 4 步缺 official_announcement_id 列，暂需从 CNINFO URL 反解。",
+    "本卡未访问 Drive，无法核对 73 条 UPLOADED_UNVERIFIED 的实际归档状态。",
+    "tools/validate_plan.py 已修复截止日断言，但仍有 5 项既有包索引漂移失败（68/59 vs 67/58、D00_B00_ADVANCE_01 未回写），未在 P01 处理。"
+  ],
+  "allows_next_stage": true,
+  "allows_next_stage_scope": "放行 P02(#13) 与 P05(#16)：两者都依赖文档身份与去重规则。不放行任何业务结论采用、指标筛选或公司深研。",
+  "next_recommended_issue": {"number": 13, "key": "P02"},
+  "notes": "两条验收标准（幂等复用+更正不覆盖 / 迁移只补列+失败原因与下一步）逐条对照通过。本记录不构成独立验收。关闭 issue 不替代本记录。"
+}

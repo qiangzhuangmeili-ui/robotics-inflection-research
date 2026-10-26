@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "plan_version": "20261026_collection_first_v2",
+  "issue_number": 12,
+  "issue_key": "P01",
+  "frozen_at_utc": "2026-10-26T05:21:25+00:00",
+  "target_files": {
+    "main_table": "data/document_registry.csv",
+    "sidecar_table": "data/document_sources.csv",
+    "sidecar_status": "本卡不创建，由迁移卡按本结构建表"
+  },
+  "design_principle": "既有 23 列全部保留且语义冻结；新语义一律追加新列，不覆写、不改名、不删除。",
+
+  "csv_conventions": {
+    "encoding": "UTF-8 with BOM（utf-8-sig），与现有表一致",
+    "delimiter": "逗号",
+    "quoting": "含逗号、引号、换行的字段用双引号包裹，内部双引号双写",
+    "line_ending": "写入用 CRLF；读取须容忍 LF",
+    "code_columns": "stock_code 必须是 6 位文本，禁止被表格软件转成数字（000026 不能变 26）",
+    "empty_vs_unknown": "空字符串 = 未采集；UNKNOWN = 已查但不明。两者不可互换。",
+    "date_format": "ISO 8601，YYYY-MM-DD；未知写 UNKNOWN，不写空",
+    "hash_format": "SHA-256 小写 64 位十六进制；未计算写空并在 unknown_reasons 记 NOT_COMPUTED"
+  },
+
+  "main_table_columns": {
+    "legacy_columns": [
+      {"name": "document_id", "type": "string", "required": true, "frozen": true, "description": "逻辑文档主键。一经分配永不改变，见 document_identity_rules.document_id_rules。", "constraints": ["唯一", "非空", "格式 DOC-[0-9A-F]{16} 或历史语义名"]},
+      {"name": "security_id", "type": "string", "required": true, "frozen": true, "description": "证券主体键，格式 <交易所>:<6位代码>", "constraints": ["必须等于 exchange + ':' + stock_code", "必须存在于 data/company_master.csv"]},
+      {"name": "stock_code", "type": "string", "required": true, "frozen": true, "description": "6 位证券代码文本", "constraints": ["^\\d{6}$", "禁止数值化"]},
+      {"name": "stock_name", "type": "string", "required": true, "frozen": true, "description": "证券简称（登记时点）"},
+      {"name": "source_type", "type": "string", "required": true, "frozen": true, "description": "【已冻结，不再新增取值】历史字段，混装文档类型/取得方式/读取状态三类语义。新写入须同时填 document_type 与 acquisition_channel；本列仅供追溯。", "observed_values": 17},
+      {"name": "original_title", "type": "string", "required": true, "frozen": true, "description": "公告/报告原始标题"},
+      {"name": "published_on", "type": "date_or_unknown", "required": true, "frozen": false, "description": "实际披露日。允许从 UNKNOWN 补齐为真实日期；禁止反向改回 UNKNOWN。", "constraints": ["ISO 日期或 UNKNOWN"]},
+      {"name": "period_covered", "type": "string", "required": true, "frozen": true, "description": "【已冻结】自由文本报告期。新语义见 period_key；本列保留原文不再规范化。", "observed_values": 11},
+      {"name": "event_period", "type": "string", "required": false, "frozen": false, "description": "事件发生时点或区间，用于非定期报告类文档"},
+      {"name": "primary_url", "type": "url_or_unknown", "required": true, "frozen": false, "description": "首选官方入口。允许从 UNKNOWN 补齐；补齐时同步写 document_sources。", "constraints": ["http(s) URL 或 UNKNOWN"]},
+      {"name": "local_file", "type": "path", "required": false, "frozen": false, "description": "本机缓存路径，属临时性质，不得作为唯一原件"},
+      {"name": "page_count", "type": "integer", "required": false, "frozen": false, "description": "PDF 页数；未核写空"},
+      {"name": "sha256", "type": "hash", "required": false, "frozen": false, "description": "内容指纹。同一 document_id 的主内容哈希；多来源各自的哈希写 document_sources.content_sha256。", "constraints": ["^[0-9a-f]{64}$ 或空"]},
+      {"name": "collected_on", "type": "date", "required": false, "frozen": false, "description": "实际取得文件的日期"},
+      {"name": "file_status", "type": "string", "required": true, "frozen": true, "description": "【已冻结】历史复合状态，14 种取值，把五件事糊在一起。新语义拆到五个 status 轴；本列原文保留供追溯。", "observed_values": 14},
+      {"name": "limitations", "type": "string", "required": false, "frozen": false, "description": "已知限制与不确定性说明"},
+      {"name": "storage_provider", "type": "string", "required": true, "frozen": true, "description": "【已冻结】存放方。5 种取值，其中 4 种表示「没有存二进制」。", "observed_values": 5},
+      {"name": "drive_file_id", "type": "string", "required": false, "frozen": false, "description": "Drive 文件 ID。不得预填或猜测。", "constraints": ["仅当真实取得后填写"]},
+      {"name": "drive_url", "type": "url", "required": false, "frozen": false, "description": "Drive 链接，须与 drive_file_id 对应"},
+      {"name": "drive_folder_path", "type": "string", "required": false, "frozen": false, "description": "Drive 目标目录：机器人行业拐点研究/01_原始资料/<代码>_<简称>/<报告期>/"},
+      {"name": "archive_status", "type": "enum", "required": true, "frozen": false, "description": "归档轴（第 3 轴）。取值按 docs/资料保存分级规则.md 第四节，不新增。", "enum": ["NOT_UPLOADED", "UPLOADED_UNVERIFIED", "VERIFIED", "NOT_REQUIRED_REFERENCE_ONLY", "SOURCE_UNAVAILABLE"], "migration_note": "现有 6 个取值中 L1_SOURCE_INDEX_ONLY、UPLOADED_AND_TEXT_READ 为规则外自造值，迁移时归一，原文存 archive_status_legacy"},
+      {"name": "access_check_status", "type": "enum", "required": true, "frozen": true, "description": "【已冻结】旧读取状态，规则定义 4 值但实际用了 6 值。新语义见 access_identity_status；本列原文保留，存 access_check_status_legacy。", "observed_values": 6},
+      {"name": "original_filename", "type": "string", "required": false, "frozen": false, "description": "原始文件名，用于溯源与去重比对"}
+    ],
+    "new_columns": [
+      {"name": "id_scheme", "type": "enum", "required": true, "description": "document_id 的命名来源，便于逐步收敛到 IDENTITY_V1", "enum": ["SHA16", "LEGACY_SEMANTIC_C00", "LEGACY_SEMANTIC_ADHOC", "LEGACY_SEMANTIC_AR", "LEGACY_SEMANTIC_H1", "IDENTITY_V1"], "default": "IDENTITY_V1"},
+      {"name": "issuer_scope", "type": "enum", "required": true, "description": "披露主体范围", "enum": ["LISTED_ENTITY", "CONSOLIDATED_GROUP", "SUBSIDIARY", "ASSOCIATE", "UNKNOWN"], "default": "UNKNOWN"},
+      {"name": "document_type", "type": "enum", "required": true, "description": "受控文档类型。这是「这是什么」，与「怎么拿到的」分开。", "enum": ["ANNUAL_REPORT", "SEMI_ANNUAL_REPORT", "QUARTERLY_REPORT", "ANNUAL_REPORT_SUMMARY", "SEMI_ANNUAL_REPORT_SUMMARY", "SUSTAINABILITY_REPORT", "CORRECTION_NOTICE", "RESTATEMENT", "PROSPECTUS", "LISTING_DISCLOSURE", "SHAREHOLDER_MEETING_MATERIAL", "CONTRACT_ANNOUNCEMENT", "TENDER_NOTICE", "INVESTOR_RELATIONS_ARTICLE", "OFFICIAL_WEBSITE_ARTICLE", "FINANCIAL_STATEMENT_EXPORT", "AUDIT_FINANCIAL_DATA", "OTHER", "UNKNOWN"]},
+      {"name": "document_type_source", "type": "enum", "required": true, "description": "文档类型的判定依据。TITLE_PATTERN 表示推断值，须在归档核验时升级或改判。", "enum": ["OFFICIAL_METADATA", "TITLE_PATTERN", "USER_DECLARED", "UNKNOWN"], "default": "UNKNOWN"},
+      {"name": "acquisition_channel", "type": "enum", "required": true, "description": "取得渠道（怎么拿到的）", "enum": ["OFFICIAL_CNINFO", "OFFICIAL_CNINFO_PLUS_MIRROR", "OFFICIAL_SSE", "OFFICIAL_SSE_PLUS_MIRROR", "OFFICIAL_SZSE", "OFFICIAL_BSE", "OFFICIAL_NEEQ", "OFFICIAL_COMPANY_SITE", "OFFICIAL_PORTAL_PLUS_DRIVE", "USER_UPLOAD", "LOCAL_PDF_UNVERIFIED_SOURCE", "THIRD_PARTY_TENDER_PLATFORM", "SECONDARY_TRANSCRIPT", "UNKNOWN"]},
+      {"name": "period_key", "type": "enum", "required": true, "description": "受控报告期。定期报告用 FY/H1/Q1/Q3；事件类用 NOT_APPLICABLE_EVENT_BASED。", "enum": ["FY2023", "FY2024", "FY2025", "FY2026", "2024H1", "2025H1", "2026H1", "2024Q1", "2024Q3", "2025Q1", "2025Q3", "2026Q1", "2026Q3", "MULTI_PERIOD_FY2023_FY2025", "NOT_APPLICABLE_EVENT_BASED", "PRE_LISTING_MATERIALS", "LISTING_YEAR_2026", "AGM_2026", "PERIOD_UNRESOLVED"]},
+      {"name": "revision_no", "type": "integer", "required": true, "description": "修订序号。0=原始；1..n=更正/重述。", "default": 0, "constraints": [">=0"]},
+      {"name": "supersedes_document_id", "type": "string", "required": false, "description": "本行取代的旧文档 ID（更正版指向原版）"},
+      {"name": "superseded_by_document_id", "type": "string", "required": false, "description": "本行被哪个新文档取代（原版指向更正版）"},
+      {"name": "official_announcement_id", "type": "string", "required": false, "description": "巨潮/交易所公告编号。现有表缺此列，去重第 4 步暂从 CNINFO URL 反解。", "constraints": ["不得编造"]},
+      {"name": "link_status", "type": "enum", "required": true, "description": "第 1 轴：知道去哪拿吗", "enum": ["FOUND_OFFICIAL", "FOUND_SECONDARY", "NOT_RECORDED", "NOT_SEARCHED"], "default": "NOT_SEARCHED"},
+      {"name": "binary_status", "type": "enum", "required": true, "description": "第 2 轴：拿到二进制了吗。网页可读不等于已下载。", "enum": ["OBTAINED", "FAILED", "NOT_ATTEMPTED"], "default": "NOT_ATTEMPTED"},
+      {"name": "access_identity_status", "type": "enum", "required": true, "description": "第 4 轴：AI 读到原文了吗、读到的确实是这份吗", "enum": ["NOT_CHECKED", "OWNER_ONLY_CHECKED", "AI_TEXT_EXTRACTED_UNVERIFIED", "AI_READ_CONFIRMED", "IDENTITY_MISMATCH", "ACCESS_BLOCKED"], "default": "NOT_CHECKED"},
+      {"name": "evidence_status", "type": "enum", "required": true, "description": "第 5 轴：这份文件支撑的业务结论被采用了吗", "enum": ["NOT_USED", "REVIEW_PENDING", "SELF_CHECK_ONLY", "VERIFIED_INDEPENDENT", "SUPERSEDED_VERSION_USED"], "default": "NOT_USED"},
+      {"name": "archive_status_legacy", "type": "string", "required": false, "description": "archive_status 归一前的原文，只读留痕"},
+      {"name": "access_check_status_legacy", "type": "string", "required": false, "description": "旧 access_check_status 原文，只读留痕"},
+      {"name": "unknown_reasons", "type": "string", "required": false, "description": "每个 UNKNOWN 的原因码，分号分隔", "enum_codes": ["TITLE_ONLY", "URL_UNSTABLE", "SOURCE_BLOCKED", "NOT_YET_SEARCHED", "AMBIGUOUS_LABEL", "MIGRATION_LEGACY_GAP", "NOT_COMPUTED"]},
+      {"name": "next_action", "type": "string", "required": true, "description": "下一步具体动作，分号分隔；无则 NONE", "enum_codes": ["RECOVER_OFFICIAL_URL", "FETCH_BINARY", "UPLOAD_TO_DRIVE", "VERIFY_IDENTITY_AND_PAGES", "COMPUTE_SHA256", "RESOLVE_PUBLISHED_ON", "RESOLVE_PERIOD", "NONE"], "default": "NONE"},
+      {"name": "migration_flags", "type": "string", "required": false, "description": "迁移期标记，供人工复核；迁移完成后可保留为审计痕迹"}
+    ]
+  },
+
+  "sidecar_table": {
+    "path": "data/document_sources.csv",
+    "purpose": "一行一个可定位来源。解决「同一文档多来源」「同一内容多镜像」「某来源失败但另一来源成功」三种情况。",
+    "primary_key": "source_id",
+    "columns": [
+      {"name": "source_id", "type": "string", "required": true, "description": "来源行主键，格式 SRC-<16位大写十六进制>，由 (document_id, source_kind, locator) 哈希生成"},
+      {"name": "document_id", "type": "string", "required": true, "description": "外键，指向主表"},
+      {"name": "source_kind", "type": "enum", "required": true, "enum": ["OFFICIAL_CNINFO", "OFFICIAL_SSE", "OFFICIAL_SZSE", "OFFICIAL_BSE", "OFFICIAL_NEEQ", "OFFICIAL_COMPANY_SITE", "DRIVE_FILE", "LOCAL_FILE", "MIRROR", "THIRD_PARTY", "USER_UPLOAD"]},
+      {"name": "locator", "type": "string", "required": true, "description": "URL、Drive file_id 或本地路径原文"},
+      {"name": "locator_normalized", "type": "string", "required": false, "description": "去协议、去追踪参数后的归一形式，用于跨表比对"},
+      {"name": "is_primary", "type": "boolean", "required": true, "description": "是否首选入口。官方优先；镜像与转录必须为 false。", "default": false},
+      {"name": "discovered_at", "type": "date", "required": false, "description": "首次定位到该来源的日期"},
+      {"name": "fetch_status", "type": "enum", "required": true, "enum": ["NOT_ATTEMPTED", "SUCCEEDED", "FAILED", "BLOCKED"], "default": "NOT_ATTEMPTED"},
+      {"name": "http_status", "type": "integer", "required": false, "description": "HTTP 状态码，非 HTTP 来源留空"},
+      {"name": "content_sha256", "type": "hash", "required": false, "description": "该来源实际取得内容的哈希。同一文档不同来源可不同。"},
+      {"name": "content_bytes", "type": "integer", "required": false, "description": "该来源文件字节数"},
+      {"name": "failure_code", "type": "enum", "required": false, "enum": ["TIMEOUT", "HTTP_403", "HTTP_404", "REDIRECT_LOOP", "CAPTCHA", "LOGIN_REQUIRED", "CORRUPT_FILE", "WRONG_DOCUMENT", "TOOL_UNAVAILABLE", "UNKNOWN"], "description": "失败原因码，禁止只写「失败」"},
+      {"name": "attempted_at", "type": "datetime", "required": false, "description": "最近一次尝试时间"},
+      {"name": "retry_count", "type": "integer", "required": true, "default": 0},
+      {"name": "next_step", "type": "string", "required": false, "description": "该来源的下一步动作"},
+      {"name": "note", "type": "string", "required": false}
+    ]
+  },
+
+  "cross_field_rules": [
+    {"rule": "archive_status ∈ {UPLOADED_UNVERIFIED, VERIFIED} ⇒ binary_status = OBTAINED", "why": "没拿到二进制不可能有 Drive 原件"},
+    {"rule": "archive_status = VERIFIED ⇒ drive_file_id 非空且 drive_url 与之对应", "why": "核验过就必须有真实 ID"},
+    {"rule": "binary_status = FAILED ⇒ document_sources 至少一条 failure_code 非空", "why": "失败必须留痕"},
+    {"rule": "access_identity_status = AI_READ_CONFIRMED ⇒ archive_status = VERIFIED 或 document_sources 存在 fetch_status=SUCCEEDED 的网页来源", "why": "读到原文必须能指认读的是哪一份"},
+    {"rule": "evidence_status = VERIFIED_INDEPENDENT ⇒ 存在独立复核记录，且复核者 ≠ 执行者", "why": "自检不能冒充独立审计"},
+    {"rule": "revision_no > 0 ⇒ supersedes_document_id 非空", "why": "更正版必须指回被更正版"},
+    {"rule": "document_type ∈ {ANNUAL_REPORT_SUMMARY, SEMI_ANNUAL_REPORT_SUMMARY} ⇒ 不得计入全文槽完成", "why": "摘要不能替代全文"},
+    {"rule": "published_on > knowledge_as_of ⇒ 不得作为本轮证据（evidence_status 不得升到 REVIEW_PENDING 以上）", "why": "遵守研究截止日"},
+    {"rule": "security_id 必须存在于 data/company_master.csv", "why": "防止孤立记录"}
+  ],
+
+  "validation_checks": [
+    {"id": "V01", "check": "document_id 唯一且非空", "severity": "BLOCKING"},
+    {"id": "V02", "check": "stock_code 全部为 6 位文本且与 security_id 后缀一致", "severity": "BLOCKING"},
+    {"id": "V03", "check": "所有 enum 列取值在枚举内", "severity": "BLOCKING"},
+    {"id": "V04", "check": "identity_key 五元组在「三要素均已知」的行内唯一", "severity": "BLOCKING", "note": "issuer_scope/document_type/period_key 任一为 UNKNOWN 时不强制，仅告警"},
+    {"id": "V05", "check": "sha256 格式合法或为空", "severity": "BLOCKING"},
+    {"id": "V06", "check": "同一 sha256 不得归属多个 document_id", "severity": "BLOCKING"},
+    {"id": "V07", "check": "cross_field_rules 全部满足", "severity": "BLOCKING"},
+    {"id": "V08", "check": "archive_status_legacy 与 archive_status 的差异行必须有 migration_flags", "severity": "WARNING"},
+    {"id": "V09", "check": "unknown_reasons 覆盖所有 UNKNOWN 字段", "severity": "WARNING"},
+    {"id": "V10", "check": "行数不少于迁移前（禁止静默丢行）", "severity": "BLOCKING"}
+  ],
+
+  "migration_contract": {
+    "rule_1": "只加列、只加旁表；不删列、不改名、不覆盖既有值。",
+    "rule_2": "被冻结的 6 列（source_type、period_covered、file_status、storage_provider、access_check_status、document_id）原文一律不改。",
+    "rule_3": "任何状态重述都必须同时写入 *_legacy 列，做到可回退。",
+    "rule_4": "冲突时取保守值并打标记，不静默升级也不静默降级。",
+    "rule_5": "迁移前后逐行比对，验证每一行的原始 23 列取值完全一致。"
+  }
+}

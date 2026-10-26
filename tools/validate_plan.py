@@ -14,7 +14,26 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "validation" / "independent_check.json"
+FROZEN_SCOPE = ROOT / "runs" / "issues" / "P00" / "collection_scope.json"
+# 旧 67 个公司包的 TASK.md 是按 2026-10-24 写的，属历史产物，不随本轮截止日改写。
+LEGACY_PACKAGE_CUTOFF = "2026-10-24"
 checks = []
+
+
+def frozen_cutoff():
+    """研究截止日以 P00 冻结值为准；P00 未执行时回退到 PROJECT_STATE。"""
+    try:
+        scope = json.loads(FROZEN_SCOPE.read_text(encoding="utf-8-sig"))
+        value = (scope.get("time_axis") or {}).get("knowledge_as_of")
+        if value:
+            return value, "runs/issues/P00/collection_scope.json"
+    except Exception:
+        pass
+    try:
+        state = json.loads((ROOT / "PROJECT_STATE.json").read_text(encoding="utf-8-sig"))
+        return state.get("knowledge_as_of"), "PROJECT_STATE.json"
+    except Exception:
+        return None, "UNRESOLVED"
 
 
 def check(name, passed, expected=None, actual=None, detail=None):
@@ -105,7 +124,7 @@ for package in index:
         package_path_errors.append({"package_id": pid, "missing": assignment_rel or "assignment_path"})
         continue
     task_text = read_text(task_rel)
-    if not task_text or "2026-10-24" not in task_text or "截止" not in task_text:
+    if not task_text or LEGACY_PACKAGE_CUTOFF not in task_text or "截止" not in task_text:
         package_task_cutoff_errors.append(pid)
     fields, rows = read_csv(assignment_rel)
     all_assignments[pid] = rows
@@ -188,7 +207,23 @@ check("group_summary_matches_master_rows", not group_mismatches and set(group_ex
 
 # Dates and company-stage separation.
 project_state = json.loads(read_text("PROJECT_STATE.json") or "{}")
-check("research_cutoff_consistent", project_state.get("knowledge_as_of") == "2026-10-24" and all(r.get("research_as_of") == "2026-10-24" for r in master), "2026-10-24", {"project_state": project_state.get("knowledge_as_of"), "master_dates": dict(Counter(r.get("research_as_of", "") for r in master))})
+cutoff, cutoff_source = frozen_cutoff()
+row_dates = Counter(r.get("research_as_of", "") for r in master)
+# knowledge_as_of 是研究截止日；research_as_of 是行级研究时点，只要求不晚于截止日。
+cutoff_errors = {
+    "project_state": project_state.get("knowledge_as_of"),
+    "master_dates": dict(row_dates),
+    "frozen": cutoff,
+    "source": cutoff_source,
+}
+cutoff_ok = (
+    bool(cutoff)
+    and project_state.get("knowledge_as_of") == cutoff
+    and all(d and d <= cutoff for d in row_dates)
+)
+check("research_cutoff_consistent", cutoff_ok,
+      {"frozen_cutoff": cutoff, "project_state_matches": True, "row_dates_not_after_cutoff": True},
+      cutoff_errors)
 new_stage_values = Counter(r.get("company_stage_for_new_workflow", "") for r in master)
 check("new_company_stage_all_unknown", new_stage_values == Counter({"UNKNOWN": 1054}), {"UNKNOWN": 1054}, dict(new_stage_values))
 archive_fields, legacy_rows = read_csv("archive/latest_universe.csv")
@@ -306,7 +341,9 @@ failures = [item for item in checks if item["status"] != "PASS"]
 report = {
     "report_version": 1,
     "checked_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-    "research_cutoff": "2026-10-24",
+    "research_cutoff": cutoff,
+    "research_cutoff_source": cutoff_source,
+    "legacy_package_cutoff": LEGACY_PACKAGE_CUTOFF,
     "result": "PASS" if not failures else "FAIL",
     "summary": {
         "master_companies": len(master),

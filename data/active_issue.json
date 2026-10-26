@@ -4,28 +4,35 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_P00_SELF_CHECK_PASS_PENDING_INDEPENDENT_REVIEW",
-  "next_recommended_issue_number": 12,
-  "next_recommended_issue_key": "P01",
+  "status": "IDLE_P01_SELF_CHECK_PASS_PENDING_INDEPENDENT_REVIEW",
+  "next_recommended_issue_number": 13,
+  "next_recommended_issue_key": "P02",
   "last_completed": {
-    "issue_number": 11,
-    "issue_key": "P00",
-    "completed_at": "2026-10-26T04:35:00Z",
-    "review_file": "runs/issues/P00/review.json",
+    "issue_number": 12,
+    "issue_key": "P01",
+    "completed_at": "2026-10-26T05:21:25Z",
+    "review_file": "runs/issues/P01/review.json",
     "decision": "SELF_CHECK_PASS",
-    "allows_next_stage_scope": "P01(#12)、P03(#14)、P04(#15)",
+    "allows_next_stage_scope": "P02(#13)、P05(#16)",
     "frozen_values": {
-      "knowledge_as_of": "2026-10-25",
-      "collection_date": "2026-10-26",
-      "universe_count": 1054,
-      "canonical_sha256": "e093c54dfaf60ef883f2b353667eb497a978d5d8cf00954457af674f95527f5e",
-      "security_id_only_sha256": "07d4394ae21c8860a22708c017358800fa1f7fea1d5b524cf650fc632564132a"
+      "registry_rows": 100,
+      "registry_sha256": "a2c31e7be0fd151c8f29ad9a65ed3f589677ae5e112f754463676d5bb6fcc4ed",
+      "new_columns_defined": 19,
+      "document_id_scheme": "IDENTITY_V1",
+      "status_axes": 5
     }
   },
-  "open_followups_from_P00": [
-    "listing_date 全池 UNKNOWN，须在 P02/P03 取得交易所上市日期后回填，否则不适用判不了。",
-    "tools/validate_plan.py 与 packages/*/TASK.md 仍硬编码 2026-10-24，与冻结的 2026-10-25 冲突；建议 P01 改为读取 runs/issues/P00/collection_scope.json。",
-    "容量 UNMEASURED，待 P07 十家校准实测单位文件大小。"
+  "alternative_next": {
+    "issue_number": 15,
+    "issue_key": "P04",
+    "reason": "P02 的 Drive 盘点部分受「本机无 Drive 连接器」限制，只能做本机与登记表部分；P04 是纯本地的财务字段口径定义，不受影响，可先做。"
+  },
+  "open_followups_from_P01": [
+    "4 行状态轴冲突待人工裁决：DOC-2025AR-920346、DOC-C00-2025-920211、DOC-AWARD-920207-20260429、DOC-C00-2026-IPO-920211。",
+    "77 行 document_type 由标题推断，需在归档核验时升级为 OFFICIAL_METADATA 或改判。",
+    "迁移方案未执行：data/document_registry.csv 未改，document_sources.csv 未建；建议 P02 开头落列。",
+    "tools/validate_plan.py 仍有 5 项既有包索引漂移失败（68/59 vs 67/58、D00_B00_ADVANCE_01 未回写 master 与 deliveries），需另开小卡修。",
+    "去重第 4 步缺 official_announcement_id 列，暂需从 CNINFO URL 反解。"
   ],
-  "note": "一次只占一张执行卡。P00 为 SELF_CHECK，非独立验收；本文件不表示研究完成，完成状态以 runs/issues/<key>/review.json 为准。"
+  "note": "一次只占一张执行卡。P01 为 SELF_CHECK，非独立验收；本文件不表示研究完成，完成状态以 runs/issues/<key>/review.json 为准。"
 }
