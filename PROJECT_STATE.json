@@ -84,10 +84,10 @@
     "d00_unrelated_august_it_contract_amount_cny": 291665208
   },
   "first_actions": [
-    "M00：先复用现有Drive和本机资料，按1054家公司批量收集基础财务、定期报告和公告目录；暂不启动新的逐公司深读。",
-    "先做采集格式/接口校准，再按data/intake_batch_index.csv分技术批次自动处理；故障留断点，不逐家催用户手补。",
-    "整轮自动尝试/有限重试后，统一输出按网站/软件、报告期分组的人工补缺表。",
-    "资料基本可用后先按指标宽筛和逐轮收紧，再对少量公司核验业务。此前企业跟进事项保存在company_followups_after_intake，不丢失。"
+    "先领取P00 #11，冻结资料范围、候选名单和时间口径。",
+    "按data/issue_execution_plan.csv核依赖，一次一个issue，保存实际交接和验收。",
+    "P07采集校准通过后开11批，整轮重试后A02集中人工补缺。",
+    "A04后先定规则、做指标筛选；S08后R00派筛后公司小包。"
   ],
   "legacy_R1_status": "REVIEW_PENDING",
   "scheduling_change": "按公司验收后局部推进，不宣称旧R1已全池通过",
@@ -208,5 +208,23 @@
     "新睿电子历史代码874510与当前代码920211的主体沿革已由北交所官方上市页面交叉确认；2025年报PDF的官方原始来源/二进制同源性仍待核。",
     "下一步视觉核对关键页并确认新睿电子2025年报官方原始来源，再完成C00独立验收；通过前不启动C01。",
     "2026-10-25 C00续验收：15份报告PDF完成SHA-256、22个关键物理页图像复核；宁波韵升依据2026H1第11页长期协议/样品交付与供货由HOLD调整为ADVANCE候选；自检分类6 ADVANCE/3 HOLD/1 DEFER。C00仍等待独立审查，C01未开放。新睿电子、威贸电子完整年报来源链待核，CNINFO官方招股说明书二进制待手动归档。"
+  ],
+  "issue_plan": {
+    "version": "20261026_collection_first_v2",
+    "index": "data/issue_execution_plan.csv",
+    "detail": "data/issue_execution_plan.json",
+    "guide": "docs/Issue执行总计划.md",
+    "controller": "data/active_issue.json",
+    "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
+    "new_issues_created": 39,
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11",
+    "execution_started": false,
+    "legacy_issues": "#2-#9 deferred historical work; new company research after S08/R00"
+  },
+  "pre_issue_breakdown_first_actions": [
+    "M00：先复用现有Drive和本机资料，按1054家公司批量收集基础财务、定期报告和公告目录；暂不启动新的逐公司深读。",
+    "先做采集格式/接口校准，再按data/intake_batch_index.csv分技术批次自动处理；故障留断点，不逐家催用户手补。",
+    "整轮自动尝试/有限重试后，统一输出按网站/软件、报告期分组的人工补缺表。",
+    "资料基本可用后先按指标宽筛和逐轮收紧，再对少量公司核验业务。此前企业跟进事项保存在company_followups_after_intake，不丢失。"
   ]
 }
