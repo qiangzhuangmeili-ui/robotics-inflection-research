@@ -763,6 +763,26 @@ def build_handoff(batch: str, summary: dict, failures: list[dict], checkpoint: d
         "",
     ]
     pending = [r for r in coverage if r["status"] == "COLLECTED_PENDING_IDENTITY"]
+    not_tried = [r for r in coverage if r["status"] == "NOT_TRIED"]
+    if not_tried:
+        per_company: dict[tuple[str, str], dict[str, str]] = {}
+        for row in coverage:
+            per_company.setdefault((row["stock_code"], row["stock_name"]), {})[row["slot_id"]] = row["status"]
+        lines += [
+            f"### NOT_TRIED 的缺口形态（{len({k for k, v in per_company.items() if 'NOT_TRIED' in v.values()})} 家）",
+            "",
+            "`listing_date` 仍全 UNKNOWN，按 P00 只能记 NOT_TRIED；下表只是**缺口形态**，供 A00/A01 回填上市日期时对照，不构成“上市前不适用”的断言。",
+            "",
+            "| 证券 | 简称 | 未尝试槽位 | 已取得槽位 |",
+            "|---|---|---|---|",
+        ]
+        for (code, name), statuses in sorted(per_company.items()):
+            missing = [s for s in SLOTS if statuses.get(s) == "NOT_TRIED"]
+            if not missing:
+                continue
+            got = [s for s in SLOTS if str(statuses.get(s, "")).startswith("COLLECTED")]
+            lines.append(f"| {code} | {name} | {'、'.join(missing)} | {'、'.join(got) or '无'} |")
+        lines += [""]
     if pending:
         lines += [
             f"另有 {len(pending)} 个槽位**文件已取得但身份未核实**（`COLLECTED_PENDING_IDENTITY`，"

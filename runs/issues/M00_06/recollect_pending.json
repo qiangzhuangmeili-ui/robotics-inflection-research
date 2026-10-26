@@ -1,0 +1,320 @@
+{
+  "batch_id": "M00_06",
+  "recollected_at": "2026-10-26T16:37:26Z",
+  "companies": 1,
+  "slots": 2,
+  "superseded": [
+    {
+      "security_id": "SZ:301138",
+      "slot_id": "annual_2024",
+      "previous_status": "COLLECTED_PENDING_IDENTITY",
+      "previous_title": "2024年年度报告",
+      "previous_document_id": "DOC-BF4D01E91FFEA081",
+      "previous_sha256": "4fdce3b7146f88d8ac266cb94846a426410ab75bb726f24ba7986108031ff28b",
+      "reason": "F7：同期中英文并存时按旧规则选中英文版，主体校验失败降级 PENDING；改选中文全文后重采",
+      "at": "2026-10-26T16:37:20Z"
+    },
+    {
+      "security_id": "SZ:301138",
+      "slot_id": "annual_2025",
+      "previous_status": "COLLECTED_PENDING_IDENTITY",
+      "previous_title": "2025年年度报告",
+      "previous_document_id": "DOC-0A1FD6EE5241600A",
+      "previous_sha256": "7f83fa5a6388c83f5e219f467b011bc61926b80edaeb6c89f4e29897ae606e07",
+      "reason": "F7：同期中英文并存时按旧规则选中英文版，主体校验失败降级 PENDING；改选中文全文后重采",
+      "at": "2026-10-26T16:37:20Z"
+    }
+  ],
+  "results": [
+    {
+      "security_id": "SZ:301138",
+      "org_id": "9900045995",
+      "slots": [
+        {
+          "security_id": "SZ:301138",
+          "slot_id": "annual_2024",
+          "report_type": "ANNUAL_REPORT",
+          "period_label": "FY2024",
+          "period_end": "2024-12-31",
+          "statutory_deadline": "2025-04-30",
+          "status": "COLLECTED_IDENTITY_VERIFIED",
+          "status_reason": "校验通过",
+          "attempt_count": 1,
+          "source_attempts": [
+            {
+              "route": "cninfo_pdf",
+              "method": "GET",
+              "url": "https://static.cninfo.com.cn/finalpage/2025-04-08/1223022018.PDF",
+              "request_params": {
+                "Range": null
+              },
+              "http_status": 200,
+              "outcome": "SUCCESS",
+              "error_code": null,
+              "elapsed_ms": 3033,
+              "at": "2026-10-27T00:37:23+08:00",
+              "response_sha256": null,
+              "bytes": 1680433,
+              "resumed_from": 0
+            }
+          ],
+          "last_source_attempt": {
+            "route": "cninfo_pdf",
+            "method": "GET",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-04-08/1223022018.PDF",
+            "request_params": {
+              "Range": null
+            },
+            "http_status": 200,
+            "outcome": "SUCCESS",
+            "error_code": null,
+            "elapsed_ms": 3033,
+            "at": "2026-10-27T00:37:23+08:00",
+            "response_sha256": null,
+            "bytes": 1680433,
+            "resumed_from": 0
+          },
+          "last_error": null,
+          "next_action": "NONE",
+          "checkpoint": {
+            "stage": "DONE",
+            "at": "2026-10-27T00:37:23+08:00",
+            "bytes_written": 1680433
+          },
+          "document": {
+            "document_id": "DOC-BF4D01E91FFEA081",
+            "identity_key": "SZ:301138|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+            "revision_no": 0,
+            "source_type": "CNINFO_OFFICIAL_PDF",
+            "title": "2024年年度报告",
+            "published_on": "2025-04-07",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-08/1223022018.PDF",
+            "local_file": "sources/collection/originals/301138/annual_2024/DOC-BF4D01E91FFEA081.pdf",
+            "sha256": "4fdce3b7146f88d8ac266cb94846a426410ab75bb726f24ba7986108031ff28b",
+            "bytes": 1680433,
+            "page_count": 238,
+            "form": "FULL_TEXT",
+            "identity_checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.5"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "1680433 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "238 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "238 >= 20"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=华研精机 代码=301138 方式=CORE_NAME 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2024年年度报告"
+              }
+            }
+          },
+          "validation": {
+            "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301138\\annual_2024\\DOC-BF4D01E91FFEA081.pdf.part",
+            "bytes": 1680433,
+            "checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.5"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "1680433 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "238 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "238 >= 20"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=华研精机 代码=301138 方式=CORE_NAME 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2024年年度报告"
+              }
+            },
+            "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+            "form": "FULL_TEXT",
+            "page_count": 238,
+            "text_chars": 1209,
+            "issues": [],
+            "sha256": "4fdce3b7146f88d8ac266cb94846a426410ab75bb726f24ba7986108031ff28b",
+            "cover_text_chars": 58,
+            "identity_probe_chars": 2942,
+            "issuer_search_scope": "P1-8",
+            "issuer_match_mode": "CORE_NAME",
+            "period_match_method": "BODY_PHRASE"
+          },
+          "updated_at": "2026-10-27T00:37:23+08:00"
+        },
+        {
+          "security_id": "SZ:301138",
+          "slot_id": "annual_2025",
+          "report_type": "ANNUAL_REPORT",
+          "period_label": "FY2025",
+          "period_end": "2025-12-31",
+          "statutory_deadline": "2026-04-30",
+          "status": "COLLECTED_IDENTITY_VERIFIED",
+          "status_reason": "校验通过",
+          "attempt_count": 1,
+          "source_attempts": [
+            {
+              "route": "cninfo_pdf",
+              "method": "GET",
+              "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225151913.PDF",
+              "request_params": {
+                "Range": null
+              },
+              "http_status": 200,
+              "outcome": "SUCCESS",
+              "error_code": null,
+              "elapsed_ms": 2016,
+              "at": "2026-10-27T00:37:25+08:00",
+              "response_sha256": null,
+              "bytes": 1960616,
+              "resumed_from": 0
+            }
+          ],
+          "last_source_attempt": {
+            "route": "cninfo_pdf",
+            "method": "GET",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225151913.PDF",
+            "request_params": {
+              "Range": null
+            },
+            "http_status": 200,
+            "outcome": "SUCCESS",
+            "error_code": null,
+            "elapsed_ms": 2016,
+            "at": "2026-10-27T00:37:25+08:00",
+            "response_sha256": null,
+            "bytes": 1960616,
+            "resumed_from": 0
+          },
+          "last_error": null,
+          "next_action": "NONE",
+          "checkpoint": {
+            "stage": "DONE",
+            "at": "2026-10-27T00:37:26+08:00",
+            "bytes_written": 1960616
+          },
+          "document": {
+            "document_id": "DOC-0A1FD6EE5241600A",
+            "identity_key": "SZ:301138|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+            "revision_no": 0,
+            "source_type": "CNINFO_OFFICIAL_PDF",
+            "title": "2025年年度报告",
+            "published_on": "2026-04-22",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225151913.PDF",
+            "local_file": "sources/collection/originals/301138/annual_2025/DOC-0A1FD6EE5241600A.pdf",
+            "sha256": "7f83fa5a6388c83f5e219f467b011bc61926b80edaeb6c89f4e29897ae606e07",
+            "bytes": 1960616,
+            "page_count": 231,
+            "form": "FULL_TEXT",
+            "identity_checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.7"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "1960616 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "231 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "231 >= 20"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=华研精机 代码=301138 方式=CORE_NAME 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2025年年度报告"
+              }
+            }
+          },
+          "validation": {
+            "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301138\\annual_2025\\DOC-0A1FD6EE5241600A.pdf.part",
+            "bytes": 1960616,
+            "checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.7"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "1960616 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "231 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "231 >= 20"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=华研精机 代码=301138 方式=CORE_NAME 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2025年年度报告"
+              }
+            },
+            "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+            "form": "FULL_TEXT",
+            "page_count": 231,
+            "text_chars": 1224,
+            "issues": [],
+            "sha256": "7f83fa5a6388c83f5e219f467b011bc61926b80edaeb6c89f4e29897ae606e07",
+            "cover_text_chars": 59,
+            "identity_probe_chars": 3098,
+            "issuer_search_scope": "P1-8",
+            "issuer_match_mode": "CORE_NAME",
+            "period_match_method": "BODY_PHRASE"
+          },
+          "updated_at": "2026-10-27T00:37:26+08:00"
+        }
+      ]
+    }
+  ]
+}

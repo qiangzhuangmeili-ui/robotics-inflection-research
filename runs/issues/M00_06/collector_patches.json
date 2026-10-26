@@ -1,0 +1,42 @@
+{
+  "issue_key": "M00_06",
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-27T00:40:00+08:00",
+  "patched_file": "tools/p05_collector.py::GENERIC_NAME_TOKENS / core_name_of",
+  "patches": [
+    {
+      "id": "F12",
+      "title": "简称与全称后缀不同（精机 vs 精密机械）时取不出字号，主体校验失败",
+      "symptom": "301138 华研精机 annual_2024/2025 PENDING：正文首页写「广州华研精密机械股份有限公司」，简称「华研精机」，代码不在封面；core_name_of(「华研精机」) 返回空串，三级匹配全部失效。",
+      "root_cause": "GENERIC_NAME_TOKENS 只有「精密/机械」，没有「精机」等简称常用缩写后缀，导致简称本身就是字号时无兜底。",
+      "evidence": {
+        "probe_chars": 2942,
+        "cover_chars": 58,
+        "page1": "广州华研精密机械股份有限公司 2024 年年度报告全文",
+        "issuer_match": "方式=NONE 范围=P1-8"
+      },
+      "fix": "GENERIC_NAME_TOKENS 增补 精机/精工/机电/重工/传动/动力/模具/轴承/仪器/仪表，core_name_of 可得到「华研」并在正文命中。",
+      "impact": "仅放宽到「字号出现在前 8 页」，与 P07 F3 同级；本批 2 槽补采后转 VERIFIED。",
+      "risk": "若简称前 2 字过于通用（如「江苏北人」），仍返回空串不参与兜底，保持 P07 的保守口径。"
+    }
+  ],
+  "verified_prior_patches": [
+    "F7",
+    "F9",
+    "F10",
+    "F11"
+  ],
+  "not_a_defect": [
+    {
+      "case": "301622 英思特 annual_2025 记 SOURCE_FAILED / SIZE_OVER_LIMIT",
+      "evidence": "HEAD 实测 Content-Length 91,560,700 B（87.3 MB），超过 config transport.max_download_bytes 83,886,080 B（80 MB）",
+      "decision": "不改冻结参数、不放宽上限；按卡内规则入自动失败队列，交 A01 集中重试时决定（建议另存 config v2 把上限提到 120 MB，并同步 P06 容量口径）。",
+      "next_action": "A01：SIZE_LIMIT_EXCEEDED_MANUAL"
+    },
+    {
+      "case": "53 个 NOT_TRIED 全部来自 19 家 301 次新股",
+      "evidence": "缺口集中在 annual_2023(19)/h1_2024(16)/annual_2024(9)/h1_2025(7)，与这些公司的实际上市时间吻合，但 listing_date 仍 1054/1054 UNKNOWN，无法断言",
+      "decision": "按 P00 not_applicable_decision_table 记 NOT_TRIED + next_action=RESOLVE_LISTING_DATE，不得写成上市前不适用，也不得写成未披露。"
+    }
+  ]
+}
