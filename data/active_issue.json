@@ -1,11 +1,23 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
-  "executor": null,
-  "started_at": null,
-  "status": "IDLE_PLANNING_COMPLETE_EXECUTION_NOT_STARTED",
+  "active_issue_number": 11,
+  "active_issue_key": "P00",
+  "executor": "WorkBuddy AI (executor=AI, review=SELF_CHECK)",
+  "started_at": "2026-10-26T12:31:29+08:00",
+  "status": "IN_PROGRESS",
   "next_recommended_issue_number": 11,
   "next_recommended_issue_key": "P00",
-  "note": "Read actual issue/dependency reviews before claiming; one executing issue at a time. This file does not mark research complete."
+  "claim_basis": {
+    "issue_state_at_claim": "OPEN",
+    "dependency_keys": [],
+    "dependency_note": "P00 无前置依赖，是新的第一张执行卡。",
+    "input_files_sha256": {
+      "data/issue_execution_plan.csv": "0f68b59f0a14b8ff",
+      "data/company_master.csv": "9d9e83ea3880d18f",
+      "PROJECT_STATE.json": "f2ec8681371bcb21"
+    },
+    "input_note": "以上为 sha256 前缀，完整值以各文件实际内容为准；冻结后的完整哈希写在 runs/issues/P00/universe_fingerprint.json。",
+    "base_commit": "faf56c5"
+  },
+  "note": "一次只占一张执行卡。本文件不表示研究完成；完成状态以 runs/issues/P00/review.json 为准。"
 }
