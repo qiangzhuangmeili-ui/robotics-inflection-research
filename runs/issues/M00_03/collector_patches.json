@@ -1,0 +1,46 @@
+{
+  "issue_key": "M00_03",
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-26T23:00:00+08:00",
+  "patched_file": "tools/p05_collector.py",
+  "patches": [
+    {
+      "id": "F9",
+      "title": "登记表周期归一化剥离下划线后缀，导致投资者关系记录表冒充年报",
+      "severity": "HIGH（会拿到错文件并计为已取得）",
+      "symptom": "300115 长盈精密 annual_2025 的 document 是「投资者关系活动记录表（编号2025-02）」141,941 B / 4 页，状态 PENDING；而巨潮目录里真正的「2025年年度报告」是 1225120097.PDF / 5.6 MB / 185 页。",
+      "root_cause": "M00_01 引入的 Collector._load_registry 用 period_covered.split(\"_\")[0] 归一，把登记表里的「2025年度_投资者关系」映射成 FY2025，于是非定期报告材料进入年报槽；reuse_from_registry 命中后未做文件类型复核。",
+      "evidence": {
+        "registry_period": "2025年度_投资者关系",
+        "wrong_doc": "深圳市长盈精密技术股份有限公司投资者关系活动记录表（编号2025-02）",
+        "wrong_url": "https://static.cninfo.com.cn/finalpage/2025-09-24/1224678305.PDF",
+        "right_url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225120097.PDF"
+      },
+      "fix": "① 带下划线的 period_covered 一律不进索引（后缀只有 _投资者关系/_上市前材料/_上市披露/_股东会材料，均非定期报告）；② 标题必须含对应报告类型（年度报告/半年度报告/季度报告）才进索引。",
+      "impact": "登记表复用命中数 139 → 133 键（排除 6 条非定期材料）；三批 16 个 REGISTRY 复用槽位审计后仅 300115 一例受影响，已重采为正确年报。",
+      "risk": "若将来登记表要收录定期报告的补充/更正说明（带下划线），需在别名表里显式登记，不会被自动当作全文。"
+    },
+    {
+      "id": "F10",
+      "title": "ST/*ST 等风险警示前缀未剥离，字号取不出导致主体校验失败",
+      "symptom": "300198 *ST纳川 annual_2023/2024/2025、h1_2026 全部 PENDING：封面为「福建纳川管材科技股份有限公司」，简称「*ST纳川」，简称与代码都不在封面，字号也取不出（core_name_of 返回空串）。",
+      "root_cause": "core_name_of 只剥离 GENERIC_NAME_TOKENS 后缀，未处理 ST/*ST/S*ST/SST/S/PT 前缀；且 normalize_text 会把字母转小写，前缀须按小写匹配。",
+      "fix": "core_name_of 先循环剥离风险警示前缀（小写 s*st/sst/*st/st/pt/s），再剥离通用后缀；字号「纳川」即可在封面命中。",
+      "impact": "池内 ST/*ST 共 20 家（占 1054 的 1.9%）；凡「ST + 曾更名」的公司都受此影响。三批中仅 300198 命中，补采 4 槽全部转 VERIFIED。",
+      "risk": "仅放宽到「字号出现在前 8 页」，与 P07 F3 的既有兜底同级；不会把别家文件判成本公司。"
+    },
+    {
+      "id": "F8-CANDIDATE",
+      "title": "证券简称变更（非 ST 类更名）仍无法自证，保留 PENDING",
+      "symptom": "002960 青鸟智控 annual_2023/2024、h1_2024 仍 PENDING：这三期年报封面是更名前名称（青鸟消防），简称「青鸟智控」与字号「青鸟」都不在旧封面。另 M00_02 的 002689 ST远智 annual_2024/2025 同类（封面「沈阳远大智能」，字号「远智」不匹配）。",
+      "evidence": {
+        "002960_index_sec_names": "青鸟消防",
+        "002689_index_sec_names": "ST远智 / 远大智能",
+        "note": "同一 security 的公告目录里出现旧简称，可证主体同一，但需要历史简称别名表才能自动判定"
+      },
+      "decision": "NOT_PATCHED",
+      "why": "属身份校验口径变更（引入历史名称别名），应由 A01/A02 统一裁决；采集批次内不单方面放宽。",
+      "suggested_next": "A01 建 data/issuer_name_aliases.csv（security_id + 历史简称 + 生效区间），以 issuer_match_mode=HISTORICAL_SEC_NAME 复核；涉及 002960 3 槽、002689 2 槽。"
+    }
+  ]
+}

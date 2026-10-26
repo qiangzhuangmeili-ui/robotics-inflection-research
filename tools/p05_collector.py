@@ -98,9 +98,23 @@ GENERIC_NAME_TOKENS = (
 
 
 def core_name_of(stock_name: str) -> str:
-    """返回 ≥2 字的字号；去不出字号（如简称本身就是“机器人”）则返回空串，不参与兜底。"""
+    """返回 ≥2 字的字号；去不出字号（如简称本身就是“机器人”）则返回空串，不参与兜底。
+
+    M00_03 修正（F10）：先剥离风险警示前缀（*ST / ST / S*ST / SST / S / PT）。
+    这些是交易所标记，不是公司名的一部分；不剥离时「*ST纳川」取不出字号，
+    而年报封面印的是「福建纳川管材科技股份有限公司」，主体校验会误判为找不到。
+    """
     norm = normalize_text(stock_name)
     core = norm
+    changed = True
+    while changed and len(core) > 2:
+        changed = False
+        # normalize_text 会把字母转小写，前缀必须用小写匹配
+        for prefix in ("s*st", "sst", "*st", "st", "pt", "s"):
+            if core.startswith(prefix) and len(core) - len(prefix) >= 2:
+                core = core[len(prefix):]
+                changed = True
+                break
     changed = True
     while changed and len(core) > 2:
         changed = False
@@ -738,11 +752,23 @@ class Collector:
             for row in csv.DictReader(fh):
                 if not (row.get("sha256") or "").strip():
                     continue
-                # 摘要是目录件不是全文：不得当作核心槽全文复用
-                if "摘要" in (row.get("period_covered") or "") or "摘要" in (row.get("original_title") or ""):
+                raw_period = row.get("period_covered") or ""
+                # M00_03 修正（F9）：带下划线后缀的是非定期报告材料
+                # （2025年度_投资者关系 / _上市前材料 / _上市披露 / _股东会材料）。
+                # 旧实现先 split("_") 再归一，会把「2025年度_投资者关系」映射成 FY2025，
+                # 让投资者关系记录表冒充年报（实测 300115 annual_2025 因此拿错文件）。
+                if "_" in raw_period:
                     continue
-                key = self.registry_period_key(row.get("period_covered", ""))
+                # 摘要是目录件不是全文：不得当作核心槽全文复用
+                if "摘要" in raw_period or "摘要" in (row.get("original_title") or ""):
+                    continue
+                key = self.registry_period_key(raw_period)
                 if not key:
+                    continue
+                # 标题必须真的是该报告类型，否则不进索引（再挡一层）
+                need = ("年度报告" if key.startswith("FY")
+                        else "半年度报告" if key.endswith("H1") else "季度报告")
+                if need not in normalize_text(row.get("original_title") or ""):
                     continue
                 index.setdefault((row.get("security_id", ""), key), []).append(row)
         return index
