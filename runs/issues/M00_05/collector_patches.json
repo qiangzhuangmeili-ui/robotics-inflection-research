@@ -1,0 +1,35 @@
+{
+  "issue_key": "M00_05",
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-26T00:15:00+08:00",
+  "patched_file": "tools/p05_collector.py::Collector.map_rows",
+  "patches": [
+    {
+      "id": "F11",
+      "title": "「关于…报告全文披露的提示性公告」被当作报告本体选中",
+      "symptom": "300730 科创信息 q1_2026 首轮拿到「关于2026年第一季度报告全文披露的提示性公告」，1 页 / 294 字符，状态 PENDING；真正的「2026年一季度报告」11 页 / 197 KB 未取。",
+      "root_cause": "map_rows 只按标题里的「YYYY年第X季度报告」正则匹配报告期，公告标题同样含该字样，且与报告同日披露（2026-04-26），排序时可能先取到公告。",
+      "evidence": {
+        "announcement": "关于2026年第一季度报告全文披露的提示性公告 | 2026-04-26",
+        "real_report": "2026年一季度报告 | 2026-04-26",
+        "wrong_doc": "1 页 294 字符",
+        "right_doc": "11 页 197,457 B | finalpage/2026-04-27/1225183267.PDF"
+      },
+      "fix": "map_rows 中标题含「公告」的行直接拒收（reason=ANNOUNCEMENT_NOT_REPORT），不进入任何报告槽候选；「（更正后）」不含「公告」，仍正常入选。",
+      "impact": "五批全台账审计：标题含「公告」的已取得槽位仅此 1 例（300730 q1_2026），已补采为正确季报。",
+      "risk": "若某份报告标题本身含「公告」二字（罕见），会被误拒并记为未尝试，不会误判为已取得。"
+    }
+  ],
+  "verified_prior_patches": [
+    "F7",
+    "F9",
+    "F10"
+  ],
+  "not_a_defect": [
+    {
+      "case": "300820 英杰电气 h1_2026 保持 PENDING",
+      "evidence": "19.3 MB / 123 页，前 12 页可抽取文本仅 32 字符 → 真扫描件（图片型 PDF）",
+      "decision": "按 P07 F2 规则记 COLLECTED_PENDING_IDENTITY，不计 VERIFIED；待人工看封面或补 OCR，不是采集器缺陷。"
+    }
+  ]
+}

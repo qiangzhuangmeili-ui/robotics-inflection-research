@@ -1032,6 +1032,14 @@ class Collector:
             period = self._period_of(title, report_type)
             if not period:
                 continue
+            # M00_05 修正（F11）：标题含「公告」的是关于报告的通知，不是报告本身。
+            # 实测 300730 q1_2026：「关于2026年第一季度报告全文披露的提示性公告」(1 页)
+            # 与真正的「2026年一季度报告」同日披露，旧逻辑可能选中前者。
+            # 注意「（更正后）」是报告标题的修饰，不含「公告」，不受影响。
+            if "公告" in title:
+                self._event("row_rejected", security_id=company.security_id,
+                            title=title, reason="ANNOUNCEMENT_NOT_REPORT")
+                continue
             row = dict(row)
             row["revision_no"] = 1 if any(k in title for k in ("更正", "修订", "补充")) else 0
             row["is_summary"] = "摘要" in title
