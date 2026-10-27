@@ -90,6 +90,10 @@ def normalize_text(text: str) -> str:
 
 
 # P07 校准修正（F3）：简称去掉通用后缀后的“字号”。仅当“连续简称”和“股票代码”都匹配不上时兜底使用。
+# 标题命中这些词的公告不是报告本体（关于报告的通知、问询回复等），不得进入报告槽候选。
+# F11 起只挡「公告」，F14 扩大到问询/回复/关注函等，避免「年报」两字误伤。
+REJECT_TITLE_KEYWORDS = ("公告", "问询", "回复", "关注函", "监管", "告知书", "说明会", "路演")
+
 GENERIC_NAME_TOKENS = (
     "股份有限公司", "有限责任公司", "有限公司", "集团", "控股", "股份", "科技", "精密",
     "智能", "电子", "新材料", "新材", "材料", "技术", "制造", "实业", "自动化", "信息",
@@ -97,6 +101,21 @@ GENERIC_NAME_TOKENS = (
     # M00_06 补充：简称与全称后缀不同但同义的常见词（华研精机 ↔ 广州华研精密机械）
     "精机", "精工", "机电", "重工", "传动", "动力", "模具", "轴承", "仪器", "仪表",
 )
+
+
+def _infer_year(published_on: str, *, annual: bool) -> str | None:
+    """标题无年份时按披露月份推断报告期年份。
+
+    半年报：7—12 月披露 → 当年 H1；年报：1—6 月披露 → 上一年度。
+    只用于标题完全不含四位年份的极端写法，且推断结果仍要过正文年份校验。
+    """
+    try:
+        d = datetime.strptime((published_on or "")[:10], "%Y-%m-%d")
+    except (TypeError, ValueError):
+        return None
+    if annual:
+        return str(d.year - 1) if d.month <= 6 else None
+    return str(d.year) if d.month >= 7 else None
 
 
 def core_name_of(stock_name: str) -> str:
@@ -527,7 +546,8 @@ class HttpClient:
 # ---------------------------------------------------------------- PDF 校验
 
 
-def validate_pdf(path: Path, slot: dict, *, stock_name: str, stock_code: str, config: dict) -> dict:
+def validate_pdf(path: Path, slot: dict, *, stock_name: str, stock_code: str, config: dict,
+                 aliases: list[str] | None = None) -> dict:
     """逐项校验：文件头 / 大小 / 可打开 / 页数 / 主体 / 报告期 / 全文形态。"""
     rules = config["pdf_validation"]
     checks: dict[str, dict] = {}
@@ -599,6 +619,9 @@ def validate_pdf(path: Path, slot: dict, *, stock_name: str, stock_code: str, co
 
     name_norm = normalize_text(stock_name)
     core = core_name_of(stock_name)
+    # F13：同一 orgId 的历史名称（更名/代码变更）也是有效主体证据
+    alias_norms = [normalize_text(a) for a in (aliases or []) if a]
+    alias_cores = [core_name_of(a) for a in (aliases or []) if a]
 
     def issuer_lookup(text_norm: str) -> str:
         if name_norm and name_norm in text_norm:
@@ -607,6 +630,12 @@ def validate_pdf(path: Path, slot: dict, *, stock_name: str, stock_code: str, co
             return "STOCK_CODE"
         if core and core in text_norm:
             return "CORE_NAME"
+        for a in alias_norms:
+            if a and a in text_norm:
+                return "HISTORICAL_SEC_NAME"
+        for a in alias_cores:
+            if a and a in text_norm:
+                return "HISTORICAL_CORE_NAME"
         return ""
 
     issuer_mode = issuer_lookup(wide_norm)
@@ -998,6 +1027,9 @@ class Collector:
                     "sec_name": r.get("secName"),
                     "published_on": ms_to_date(r.get("announcementTime")),
                     "adjunct_url": r.get("adjunctUrl"),
+                    # F14：巨潮返回的 adjunctSize（KB）。同一期常有多条同标题行
+                    # （摘要被标成报告、正文与全文并存），按体积取最大最稳。
+                    "adjunct_size": r.get("adjunctSize"),
                 }
                 for r in rows
             ],
@@ -1010,18 +1042,34 @@ class Collector:
 
     # -- 行 → 槽位
     @staticmethod
-    def _period_of(title: str, report_type: str) -> str | None:
-        # P07 校准修正（F1）：深市/北交所季度报告标题为「2026年一季度报告」，
-        # 沪市为「2026年第一季度报告」；原正则要求「第」字，导致 SZ 602 家 + BJ 62 家
-        # 全部季度槽被误判为“无该期全文”。改为「第?」后两式兼容。
+    def _period_of(title: str, report_type: str, published_on: str = "") -> str | None:
+        """从公告标题解析报告期；沪市写法极其不统一，按「带年份 → 无年份按披露月份」两层兜底。
+
+        P07 F1：季度报告「一季度报告」（深/北）与「第一季度报告」（沪）都要认。
+        M00_07 F14：沪市年报少一个「年」（2025年度报告）、上传件命名带分隔符
+                    （600704_物产中大_2025年_年度报告20260427）、
+                    还有「2023年年报告全文」「2024年年报-全文」这类漏字写法；
+                    半年报同样存在「2026年_半年度报告」「半年度报告」不带年份。
+        无年份时按披露月份推断：半年报 7—12 月披露→当年 H1；年报 1—6 月披露→上一年。
+        推断结果仍要过正文 PERIOD_MATCH（正文必须出现该年份），推错会被校验挡下。
+        """
         norm = normalize_text(title)
         if report_type == "ANNUAL_REPORT":
-            m = re.search(r"(\d{4})年年度报告", norm)
-            return f"FY{m.group(1)}" if m else None
+            m = re.search(r"(\d{4})\s*年?[\s_\-]*(?:年度报告|年报告|年报)", norm)
+            if m:
+                return f"FY{m.group(1)}"
+            if re.search(r"(?:年度报告|年报告|年报)", norm):
+                return _infer_year(published_on, annual=True)
+            return None
         if report_type == "SEMI_ANNUAL_REPORT":
-            m = re.search(r"(\d{4})年半年度报告", norm)
-            return f"{m.group(1)}H1" if m else None
-        m = re.search(r"(\d{4})\s*年第?([一三])季度报告", norm)
+            m = re.search(r"(\d{4})\s*年?[\s_\-]*(?:半年度报告|半年报)", norm)
+            if m:
+                return f"{m.group(1)}H1"
+            if re.search(r"(?:半年度报告|半年报)", norm):
+                year = _infer_year(published_on, annual=False)
+                return f"{year}H1" if year else None
+            return None
+        m = re.search(r"(\d{4})\s*年?[\s_\-]*第?([一三])季度报告", norm)
         if not m:
             return None
         return f"{m.group(1)}Q{'1' if m.group(2) == '一' else '3'}"
@@ -1029,16 +1077,21 @@ class Collector:
     def map_rows(self, company: CompanyRef, index: dict, report_type: str) -> tuple[dict[str, list[dict]], list[dict]]:
         buckets: dict[str, list[dict]] = {}
         rejected: list[dict] = []
+        # M00_07 修正（F13）：目录是按 orgId 检索的，一个 orgId 只对应一个发行主体，
+        # 因此同一目录里出现旧代码/旧简称的行，属于同一主体的历史行（更名或代码变更），
+        # 不能按“代码不同”直接拒收。判据：该目录内同时出现本公司现用简称。
+        index_names = {normalize_text(r.get("sec_name") or "") for r in index.get("rows", [])}
+        identity_mixed = normalize_text(company.stock_name) in index_names
         for row in index.get("rows", []):
             title = row.get("title") or ""
-            period = self._period_of(title, report_type)
+            period = self._period_of(title, report_type, row.get("published_on") or "")
             if not period:
                 continue
             # M00_05 修正（F11）：标题含「公告」的是关于报告的通知，不是报告本身。
             # 实测 300730 q1_2026：「关于2026年第一季度报告全文披露的提示性公告」(1 页)
             # 与真正的「2026年一季度报告」同日披露，旧逻辑可能选中前者。
             # 注意「（更正后）」是报告标题的修饰，不含「公告」，不受影响。
-            if "公告" in title:
+            if any(k in title for k in REJECT_TITLE_KEYWORDS):
                 self._event("row_rejected", security_id=company.security_id,
                             title=title, reason="ANNOUNCEMENT_NOT_REPORT")
                 continue
@@ -1048,10 +1101,14 @@ class Collector:
             sec_code = str(row.get("sec_code") or "")
             if sec_code and sec_code != company.stock_code:
                 same_name = normalize_text(row.get("sec_name") or "") == normalize_text(company.stock_name)
-                if same_name:
+                if same_name or identity_mixed:
                     row["historical_code"] = True
+                    row["historical_name"] = row.get("sec_name")
+                    row["entity_mapping"] = ("SAME_ORG_ID_HISTORICAL_NAME" if identity_mixed and not same_name
+                                             else "SAME_NAME_OLD_CODE")
                     self._event("historical_code_accepted", security_id=company.security_id,
-                                row_code=sec_code, title=title)
+                                row_code=sec_code, row_name=row.get("sec_name"),
+                                mode=row["entity_mapping"], title=title)
                 else:
                     row["rejected"] = "ISSUER_MISMATCH"
                     rejected.append(row)
@@ -1080,8 +1137,20 @@ class Collector:
             except (TypeError, ValueError):
                 return 0.0
 
+        def has_full(r: dict) -> int:
+            return 0 if "全文" in normalize_text(r.get("title") or "") else 1
+
+        def size_of(r: dict) -> float:
+            try:
+                return float(r.get("adjunct_size") or 0)
+            except (TypeError, ValueError):
+                return 0.0
+
         def rank(r):
-            return (is_english(r), -int(r["revision_no"]), -stamp(r.get("published_on") or ""))
+            # F14：同一期存在同标题的多份文件时（摘要被标成报告 / 正文与全文并存），
+            # 体积大的一般是全文，优先取；标题含「全文」再优先一层。
+            return (is_english(r), -int(r["revision_no"]), has_full(r),
+                    -size_of(r), -stamp(r.get("published_on") or ""))
 
         def key(r):
             return (r["revision_no"], r.get("published_on") or "")
@@ -1286,8 +1355,10 @@ class Collector:
         self._content_index.setdefault(digest, slot_key)
 
         slot_ctx = dict(slot, _selected_title=full_row["title"])
+        hist_alias = [full_row["historical_name"]] if full_row.get("historical_name") else None
         verdict = validate_pdf(part_path, slot_ctx, stock_name=company.stock_name,
-                               stock_code=company.stock_code, config=self.config)
+                               stock_code=company.stock_code, config=self.config,
+                               aliases=hist_alias)
         record["validation"] = verdict
 
         if verdict["identity_status"] in (VD_MISMATCH, VD_UNREADABLE):

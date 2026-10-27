@@ -1,0 +1,320 @@
+{
+  "batch_id": "M00_07",
+  "recollected_at": "2026-10-27T01:59:06Z",
+  "companies": 1,
+  "slots": 2,
+  "superseded": [
+    {
+      "security_id": "SZ:302132",
+      "slot_id": "annual_2023",
+      "previous_status": "COLLECTED_PENDING_IDENTITY",
+      "previous_title": "2023年年度报告",
+      "previous_document_id": "DOC-B16127A90BA9DD27",
+      "previous_sha256": "4ee07afa34784a97bcdcff56da6304cc1570a873692fea923ed088ec01896689",
+      "reason": "F7：同期中英文并存时按旧规则选中英文版，主体校验失败降级 PENDING；改选中文全文后重采",
+      "at": "2026-10-27T01:59:00Z"
+    },
+    {
+      "security_id": "SZ:302132",
+      "slot_id": "h1_2024",
+      "previous_status": "COLLECTED_PENDING_IDENTITY",
+      "previous_title": "2024年半年度报告",
+      "previous_document_id": "DOC-59E03B67B92B4F20",
+      "previous_sha256": "da8bf6a4c8249fac15d9ed69904cf12e4b5cf94abd7dfd6c3c6752b7bfbe7d0d",
+      "reason": "F7：同期中英文并存时按旧规则选中英文版，主体校验失败降级 PENDING；改选中文全文后重采",
+      "at": "2026-10-27T01:59:00Z"
+    }
+  ],
+  "results": [
+    {
+      "security_id": "SZ:302132",
+      "org_id": "9900013408",
+      "slots": [
+        {
+          "security_id": "SZ:302132",
+          "slot_id": "annual_2023",
+          "report_type": "ANNUAL_REPORT",
+          "period_label": "FY2023",
+          "period_end": "2023-12-31",
+          "statutory_deadline": "2024-04-30",
+          "status": "COLLECTED_IDENTITY_VERIFIED",
+          "status_reason": "校验通过",
+          "attempt_count": 1,
+          "source_attempts": [
+            {
+              "route": "cninfo_pdf",
+              "method": "GET",
+              "url": "https://static.cninfo.com.cn/finalpage/2024-03-15/1219307570.PDF",
+              "request_params": {
+                "Range": null
+              },
+              "http_status": 200,
+              "outcome": "SUCCESS",
+              "error_code": null,
+              "elapsed_ms": 3251,
+              "at": "2026-10-27T09:59:04+08:00",
+              "response_sha256": null,
+              "bytes": 2991884,
+              "resumed_from": 0
+            }
+          ],
+          "last_source_attempt": {
+            "route": "cninfo_pdf",
+            "method": "GET",
+            "url": "https://static.cninfo.com.cn/finalpage/2024-03-15/1219307570.PDF",
+            "request_params": {
+              "Range": null
+            },
+            "http_status": 200,
+            "outcome": "SUCCESS",
+            "error_code": null,
+            "elapsed_ms": 3251,
+            "at": "2026-10-27T09:59:04+08:00",
+            "response_sha256": null,
+            "bytes": 2991884,
+            "resumed_from": 0
+          },
+          "last_error": null,
+          "next_action": "NONE",
+          "checkpoint": {
+            "stage": "DONE",
+            "at": "2026-10-27T09:59:04+08:00",
+            "bytes_written": 2991884
+          },
+          "document": {
+            "document_id": "DOC-B16127A90BA9DD27",
+            "identity_key": "SZ:302132|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+            "revision_no": 0,
+            "source_type": "CNINFO_OFFICIAL_PDF",
+            "title": "2023年年度报告",
+            "published_on": "2024-03-14",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2024-03-15/1219307570.PDF",
+            "local_file": "sources/collection/originals/302132/annual_2023/DOC-B16127A90BA9DD27.pdf",
+            "sha256": "4ee07afa34784a97bcdcff56da6304cc1570a873692fea923ed088ec01896689",
+            "bytes": 2991884,
+            "page_count": 264,
+            "form": "FULL_TEXT",
+            "identity_checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.6"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "2991884 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "264 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "264 >= 20"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=中航成飞 代码=302132 方式=HISTORICAL_SEC_NAME 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2023年年度报告"
+              }
+            }
+          },
+          "validation": {
+            "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\302132\\annual_2023\\DOC-B16127A90BA9DD27.pdf.part",
+            "bytes": 2991884,
+            "checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.6"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "2991884 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "264 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "264 >= 20"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=中航成飞 代码=302132 方式=HISTORICAL_SEC_NAME 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2023年年度报告"
+              }
+            },
+            "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+            "form": "FULL_TEXT",
+            "page_count": 264,
+            "text_chars": 1913,
+            "issues": [],
+            "sha256": "4ee07afa34784a97bcdcff56da6304cc1570a873692fea923ed088ec01896689",
+            "cover_text_chars": 73,
+            "identity_probe_chars": 3449,
+            "issuer_search_scope": "P1-8",
+            "issuer_match_mode": "HISTORICAL_SEC_NAME",
+            "period_match_method": "BODY_PHRASE"
+          },
+          "updated_at": "2026-10-27T09:59:04+08:00"
+        },
+        {
+          "security_id": "SZ:302132",
+          "slot_id": "h1_2024",
+          "report_type": "SEMI_ANNUAL_REPORT",
+          "period_label": "2024H1",
+          "period_end": "2024-06-30",
+          "statutory_deadline": "2024-08-31",
+          "status": "COLLECTED_IDENTITY_VERIFIED",
+          "status_reason": "校验通过",
+          "attempt_count": 1,
+          "source_attempts": [
+            {
+              "route": "cninfo_pdf",
+              "method": "GET",
+              "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221029592.PDF",
+              "request_params": {
+                "Range": null
+              },
+              "http_status": 200,
+              "outcome": "SUCCESS",
+              "error_code": null,
+              "elapsed_ms": 1074,
+              "at": "2026-10-27T09:59:05+08:00",
+              "response_sha256": null,
+              "bytes": 2544008,
+              "resumed_from": 0
+            }
+          ],
+          "last_source_attempt": {
+            "route": "cninfo_pdf",
+            "method": "GET",
+            "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221029592.PDF",
+            "request_params": {
+              "Range": null
+            },
+            "http_status": 200,
+            "outcome": "SUCCESS",
+            "error_code": null,
+            "elapsed_ms": 1074,
+            "at": "2026-10-27T09:59:05+08:00",
+            "response_sha256": null,
+            "bytes": 2544008,
+            "resumed_from": 0
+          },
+          "last_error": null,
+          "next_action": "NONE",
+          "checkpoint": {
+            "stage": "DONE",
+            "at": "2026-10-27T09:59:06+08:00",
+            "bytes_written": 2544008
+          },
+          "document": {
+            "document_id": "DOC-59E03B67B92B4F20",
+            "identity_key": "SZ:302132|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+            "revision_no": 0,
+            "source_type": "CNINFO_OFFICIAL_PDF",
+            "title": "2024年半年度报告",
+            "published_on": "2024-08-28",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221029592.PDF",
+            "local_file": "sources/collection/originals/302132/h1_2024/DOC-59E03B67B92B4F20.pdf",
+            "sha256": "da8bf6a4c8249fac15d9ed69904cf12e4b5cf94abd7dfd6c3c6752b7bfbe7d0d",
+            "bytes": 2544008,
+            "page_count": 217,
+            "form": "FULL_TEXT",
+            "identity_checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.6"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "2544008 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "217 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "217 >= 10"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=中航成飞 代码=302132 方式=HISTORICAL_SEC_NAME 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2024年半年度报告"
+              }
+            }
+          },
+          "validation": {
+            "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\302132\\h1_2024\\DOC-59E03B67B92B4F20.pdf.part",
+            "bytes": 2544008,
+            "checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.6"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "2544008 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "217 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "217 >= 10"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=中航成飞 代码=302132 方式=HISTORICAL_SEC_NAME 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2024年半年度报告"
+              }
+            },
+            "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+            "form": "FULL_TEXT",
+            "page_count": 217,
+            "text_chars": 2061,
+            "issues": [],
+            "sha256": "da8bf6a4c8249fac15d9ed69904cf12e4b5cf94abd7dfd6c3c6752b7bfbe7d0d",
+            "cover_text_chars": 74,
+            "identity_probe_chars": 2754,
+            "issuer_search_scope": "P1-8",
+            "issuer_match_mode": "HISTORICAL_SEC_NAME",
+            "period_match_method": "BODY_PHRASE"
+          },
+          "updated_at": "2026-10-27T09:59:06+08:00"
+        }
+      ]
+    }
+  ]
+}

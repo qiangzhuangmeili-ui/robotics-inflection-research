@@ -95,7 +95,7 @@ def board_of(exchange: str, code: str) -> str:
     if exchange == "SH":
         return "沪主板" if seg in ("600", "601", "603", "605") else ("科创板" if seg in ("688", "689") else "沪其他")
     if exchange == "SZ":
-        return "深主板" if seg in ("000", "001", "002", "003") else ("创业板" if seg in ("300", "301") else "深其他")
+        return "深主板" if seg in ("000", "001", "002", "003") else ("创业板" if seg in ("300", "301", "302") else "深其他")
     return "北交所"
 
 
@@ -567,7 +567,8 @@ def build_reconciliation(coverage: list[dict], summary: dict) -> dict:
 
 
 def recollect_pending(batch: str, only_slots: list[str] | None = None,
-                      only_english: bool = False) -> dict:
+                      only_english: bool = False,
+                      statuses: tuple[str, ...] = ("COLLECTED_PENDING_IDENTITY",)) -> dict:
     """重采身份待核槽位：先把台账记录降级留档，再按修正后的选择规则重跑这些槽。
 
     用途：M00_02 发现 F7（同期中英文并存时选中英文版）后，只补这几十个槽，
@@ -577,7 +578,7 @@ def recollect_pending(batch: str, only_slots: list[str] | None = None,
     refs = {c.security_id: c for c in companies_of(batch)}
     targets: dict[str, list[str]] = {}
     for row in coverage:
-        if row["status"] != "COLLECTED_PENDING_IDENTITY":
+        if row["status"] not in statuses:
             continue
         if only_slots and row["slot_id"] not in only_slots:
             continue
@@ -909,6 +910,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="重采 COLLECTED_PENDING_IDENTITY 槽位（修选择规则后补采）")
     parser.add_argument("--only-english", action="store_true",
                         help="配合 --recollect-pending：只补采当时选中英文版的槽位")
+    parser.add_argument("--statuses", default="COLLECTED_PENDING_IDENTITY",
+                        help="配合 --recollect-pending：要重采的状态，逗号分隔")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--no-optional-pdf", action="store_true")
     args = parser.parse_args(argv)
@@ -917,7 +920,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.run:
         run(args.batch, limit=args.limit, include_optional_pdf=not args.no_optional_pdf)
     if args.recollect_pending:
-        print(json.dumps(recollect_pending(args.batch, only_english=args.only_english),
+        sts = tuple(x.strip() for x in args.statuses.split(",") if x.strip())
+        print(json.dumps(recollect_pending(args.batch, only_english=args.only_english, statuses=sts),
                          ensure_ascii=False, indent=2))
     if args.finalize:
         print(json.dumps(finalize(args.batch)["summary"], ensure_ascii=False, indent=2))
