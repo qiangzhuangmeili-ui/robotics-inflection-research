@@ -1159,7 +1159,8 @@ class Collector:
 
     # -- 单槽采集
     def collect_slot(self, company: CompanyRef, slot: dict, index: dict,
-                     buckets: dict[str, list[dict]], *, include_optional_pdf: bool = False) -> dict:
+                     buckets: dict[str, list[dict]], *, include_optional_pdf: bool = False,
+                     exclude_urls: set[str] | None = None) -> dict:
         slot_id = slot["slot_id"]
         code = company.stock_code
         now = utc_now()
@@ -1215,7 +1216,9 @@ class Collector:
             self.ledger.put_slot(company.security_id, code, record)
             return record
 
-        full_row, summary_row = self._select(buckets.get(slot["period_label"], []))
+        period_rows = [r for r in buckets.get(slot["period_label"], [])
+                       if r.get("adjunct_url") not in (exclude_urls or set())]
+        full_row, summary_row = self._select(period_rows)
         if full_row is None and summary_row is None:
             record.update(self._no_row_status(slot, now, company))
             record["index_ref"] = {"category": index["category"], "fetched_at": index["fetched_at"],
@@ -1301,12 +1304,28 @@ class Collector:
             outcome, calls = self.http.download("cninfo_pdf", url, part_path, expect_pdf=True)
         except DocumentUnavailable as exc:
             record["source_attempts"].extend(c.as_dict() for c in calls)
+            # M00_08 修正（F15）：同一期常有两条同标题行，其中一条是死链（体积甚至更大）。
+            # 先轮替到同期下一个候选；只有全部候选都 404，才判「源站文件缺失」，
+            # 且不能写成 NOT_DISCLOSED_BY_ISSUER——公司确实披露了，是文件不可得。
+            tried = set(exclude_urls or set()) | {full_row["adjunct_url"]}
+            remaining = [r for r in buckets.get(slot["period_label"], [])
+                         if r.get("adjunct_url") not in tried and not r.get("is_summary")]
+            if remaining:
+                record["fallback_from"] = (record.get("fallback_from") or []) + [
+                    {"title": full_row.get("title"), "url": full_row.get("adjunct_url"),
+                     "error": str(exc)}]
+                self.ledger.put_slot(company.security_id, code, record)
+                self._event("candidate_fallback", security_id=company.security_id, slot_id=slot_id,
+                            from_url=full_row.get("adjunct_url"), remaining=len(remaining))
+                return self.collect_slot(company, slot, index, buckets,
+                                         include_optional_pdf=include_optional_pdf,
+                                         exclude_urls=tried)
             record.update({
-                "status": ST_NOT_DISCLOSED,
-                "status_reason": "目录有记录但 PDF 返回 404",
-                "next_action": "REINDEX_THEN_RETRY",
+                "status": ST_SOURCE_FAILED,
+                "status_reason": f"目录有该期记录，但全部候选 PDF 均返回 404（源站文件缺失，非公司未披露）；已试 {len(tried)} 个链接",
+                "next_action": "SEARCH_ALTERNATE_SOURCE",
                 "last_error": str(exc),
-                "checkpoint": {"stage": "DOWNLOAD_404", "at": utc_now()},
+                "checkpoint": {"stage": "DOWNLOAD_404_ALL", "at": utc_now()},
                 "updated_at": utc_now(),
             })
             self.ledger.put_slot(company.security_id, code, record)

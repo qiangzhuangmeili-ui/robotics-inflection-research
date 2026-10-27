@@ -1,0 +1,37 @@
+{
+  "issue_key": "M00_08",
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-27T10:45:00+08:00",
+  "patched_file": "tools/p05_collector.py::Collector.collect_slot",
+  "patches": [
+    {
+      "id": "F15",
+      "title": "同期两条同标题行、其中一条是死链：选到 404 后直接判「公司未披露」",
+      "severity": "MEDIUM（会误判未披露，且丢失本可取得的原件）",
+      "symptom": "603015 弘讯科技 h1_2024、603381 永臻股份 h1_2024 判 NOT_DISCLOSED_BY_ISSUER，理由「目录有记录但 PDF 返回 404」。",
+      "root_cause": "① 同一期存在两条同标题「2024年半年度报告」的行，其中一条已失效（603015：1221291803 有效 2811 KB / 1220935724 死链 3484 KB；603381：1221291632 有效 4237 KB / 1220926473 死链 4946 KB），死链那条**体积更大**，按 F14 的「取大」规则正好被选中；② 404 分支直接写 NOT_DISCLOSED_BY_ISSUER，语义错误——公司确实披露了，是源站文件不可得。",
+      "evidence": {
+        "603015": {
+          "live": "finalpage/2024-08-22/1221291803.PDF (200)",
+          "dead": "finalpage/2024-08-22/1220935724.PDF (404)"
+        },
+        "603381": {
+          "live": "finalpage/2024-08-21/1221291632.PDF (200)",
+          "dead": "finalpage/2024-08-21/1220926473.PDF (404)"
+        }
+      },
+      "fix": "① collect_slot 增加 exclude_urls，选择前先剔除已确认 404 的候选；② 404 时轮替到同期下一个非摘要候选（递归，最多试 3 个链接），记录 fallback_from 留痕；③ 全部候选都 404 才判 SOURCE_FAILED + next_action=SEARCH_ALTERNATE_SOURCE，理由写明「源站文件缺失，非公司未披露」。",
+      "impact": "本批回收 2 槽（两期半年报）。这类「同名双行 + 一条死链」在巨潮并不罕见，F14 的取大规则会放大它，必须配对轮替。",
+      "risk": "递归深度受 remaining 候选数限制（≤3），不会无限重试；每次轮替都写 source_attempts 与 fallback_from。"
+    }
+  ],
+  "verified_prior_patches": [
+    "F7",
+    "F9",
+    "F10",
+    "F11",
+    "F12",
+    "F13",
+    "F14"
+  ]
+}

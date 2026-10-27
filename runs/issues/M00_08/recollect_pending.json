@@ -1,0 +1,340 @@
+{
+  "batch_id": "M00_08",
+  "recollected_at": "2026-10-27T02:43:59Z",
+  "companies": 2,
+  "slots": 2,
+  "superseded": [
+    {
+      "security_id": "SH:603015",
+      "slot_id": "h1_2024",
+      "previous_status": "NOT_DISCLOSED_BY_ISSUER",
+      "previous_title": "2024年半年度报告",
+      "previous_document_id": "DOC-71792EA082DB37B2",
+      "previous_sha256": null,
+      "reason": "F7：同期中英文并存时按旧规则选中英文版，主体校验失败降级 PENDING；改选中文全文后重采",
+      "at": "2026-10-27T02:43:48Z"
+    },
+    {
+      "security_id": "SH:603381",
+      "slot_id": "h1_2024",
+      "previous_status": "NOT_DISCLOSED_BY_ISSUER",
+      "previous_title": "2024年半年度报告",
+      "previous_document_id": "DOC-F61F8DA9593315EE",
+      "previous_sha256": null,
+      "reason": "F7：同期中英文并存时按旧规则选中英文版，主体校验失败降级 PENDING；改选中文全文后重采",
+      "at": "2026-10-27T02:43:48Z"
+    }
+  ],
+  "results": [
+    {
+      "security_id": "SH:603015",
+      "org_id": "9900023700",
+      "slots": [
+        {
+          "security_id": "SH:603015",
+          "slot_id": "h1_2024",
+          "report_type": "SEMI_ANNUAL_REPORT",
+          "period_label": "2024H1",
+          "period_end": "2024-06-30",
+          "statutory_deadline": "2024-08-31",
+          "status": "COLLECTED_IDENTITY_VERIFIED",
+          "status_reason": "校验通过",
+          "attempt_count": 2,
+          "source_attempts": [
+            {
+              "route": "cninfo_pdf",
+              "method": "GET",
+              "url": "https://static.cninfo.com.cn/finalpage/2024-08-22/1221291803.PDF",
+              "request_params": {
+                "Range": null
+              },
+              "http_status": 200,
+              "outcome": "SUCCESS",
+              "error_code": null,
+              "elapsed_ms": 2422,
+              "at": "2026-10-27T10:43:54+08:00",
+              "response_sha256": null,
+              "bytes": 2877154,
+              "resumed_from": 0
+            }
+          ],
+          "last_source_attempt": {
+            "route": "cninfo_pdf",
+            "method": "GET",
+            "url": "https://static.cninfo.com.cn/finalpage/2024-08-22/1221291803.PDF",
+            "request_params": {
+              "Range": null
+            },
+            "http_status": 200,
+            "outcome": "SUCCESS",
+            "error_code": null,
+            "elapsed_ms": 2422,
+            "at": "2026-10-27T10:43:54+08:00",
+            "response_sha256": null,
+            "bytes": 2877154,
+            "resumed_from": 0
+          },
+          "last_error": null,
+          "next_action": "NONE",
+          "checkpoint": {
+            "stage": "DONE",
+            "at": "2026-10-27T10:43:54+08:00",
+            "bytes_written": 2877154
+          },
+          "document": {
+            "document_id": "DOC-71792EA082DB37B2",
+            "identity_key": "SH:603015|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+            "revision_no": 0,
+            "source_type": "CNINFO_OFFICIAL_PDF",
+            "title": "2024年半年度报告",
+            "published_on": "2024-08-21",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-22/1221291803.PDF",
+            "local_file": "sources/collection/originals/603015/h1_2024/DOC-71792EA082DB37B2.pdf",
+            "sha256": "8e055fa2f3781499962526b4c29c0ddd0dc8f66465057f9eee2677b8b807cfff",
+            "bytes": 2877154,
+            "page_count": 156,
+            "form": "FULL_TEXT",
+            "identity_checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.7"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "2877154 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "156 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "156 >= 10"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=弘讯科技 代码=603015 方式=FULL_ABBR 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2024年半年度报告"
+              }
+            }
+          },
+          "fallback_from": [
+            {
+              "title": "2024年半年度报告",
+              "url": "finalpage/2024-08-22/1220935724.PDF",
+              "error": "HTTP_404_DOCUMENT_ONLY"
+            }
+          ],
+          "validation": {
+            "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603015\\h1_2024\\DOC-71792EA082DB37B2.pdf.part",
+            "bytes": 2877154,
+            "checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.7"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "2877154 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "156 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "156 >= 10"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=弘讯科技 代码=603015 方式=FULL_ABBR 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2024年半年度报告"
+              }
+            },
+            "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+            "form": "FULL_TEXT",
+            "page_count": 156,
+            "text_chars": 2268,
+            "issues": [],
+            "sha256": "8e055fa2f3781499962526b4c29c0ddd0dc8f66465057f9eee2677b8b807cfff",
+            "cover_text_chars": 54,
+            "identity_probe_chars": 5404,
+            "issuer_search_scope": "P1-8",
+            "issuer_match_mode": "FULL_ABBR",
+            "period_match_method": "BODY_PHRASE"
+          },
+          "updated_at": "2026-10-27T10:43:54+08:00"
+        }
+      ]
+    },
+    {
+      "security_id": "SH:603381",
+      "org_id": "9900058333",
+      "slots": [
+        {
+          "security_id": "SH:603381",
+          "slot_id": "h1_2024",
+          "report_type": "SEMI_ANNUAL_REPORT",
+          "period_label": "2024H1",
+          "period_end": "2024-06-30",
+          "statutory_deadline": "2024-08-31",
+          "status": "COLLECTED_IDENTITY_VERIFIED",
+          "status_reason": "校验通过",
+          "attempt_count": 2,
+          "source_attempts": [
+            {
+              "route": "cninfo_pdf",
+              "method": "GET",
+              "url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1221291632.PDF",
+              "request_params": {
+                "Range": null
+              },
+              "http_status": 200,
+              "outcome": "SUCCESS",
+              "error_code": null,
+              "elapsed_ms": 3210,
+              "at": "2026-10-27T10:43:58+08:00",
+              "response_sha256": null,
+              "bytes": 4337637,
+              "resumed_from": 0
+            }
+          ],
+          "last_source_attempt": {
+            "route": "cninfo_pdf",
+            "method": "GET",
+            "url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1221291632.PDF",
+            "request_params": {
+              "Range": null
+            },
+            "http_status": 200,
+            "outcome": "SUCCESS",
+            "error_code": null,
+            "elapsed_ms": 3210,
+            "at": "2026-10-27T10:43:58+08:00",
+            "response_sha256": null,
+            "bytes": 4337637,
+            "resumed_from": 0
+          },
+          "last_error": null,
+          "next_action": "NONE",
+          "checkpoint": {
+            "stage": "DONE",
+            "at": "2026-10-27T10:43:59+08:00",
+            "bytes_written": 4337637
+          },
+          "document": {
+            "document_id": "DOC-F61F8DA9593315EE",
+            "identity_key": "SH:603381|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+            "revision_no": 0,
+            "source_type": "CNINFO_OFFICIAL_PDF",
+            "title": "2024年半年度报告",
+            "published_on": "2024-08-20",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-21/1221291632.PDF",
+            "local_file": "sources/collection/originals/603381/h1_2024/DOC-F61F8DA9593315EE.pdf",
+            "sha256": "4acbd2d660d86b70b81faf375b03b19f98dd834e6e17d5b547c2cfe0bf5af314",
+            "bytes": 4337637,
+            "page_count": 181,
+            "form": "FULL_TEXT",
+            "identity_checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.7"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "4337637 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "181 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "181 >= 10"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=永臻股份 代码=603381 方式=FULL_ABBR 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2024年半年度报告"
+              }
+            }
+          },
+          "fallback_from": [
+            {
+              "title": "2024年半年度报告",
+              "url": "finalpage/2024-08-21/1220926473.PDF",
+              "error": "HTTP_404_DOCUMENT_ONLY"
+            }
+          ],
+          "validation": {
+            "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603381\\h1_2024\\DOC-F61F8DA9593315EE.pdf.part",
+            "bytes": 4337637,
+            "checks": {
+              "MAGIC_HEADER": {
+                "result": "PASS",
+                "detail": "%PDF-1.7"
+              },
+              "SIZE_FLOOR": {
+                "result": "PASS",
+                "detail": "4337637 bytes"
+              },
+              "PDF_OPENABLE": {
+                "result": "PASS",
+                "detail": "181 pages"
+              },
+              "PAGE_COUNT_FLOOR": {
+                "result": "PASS",
+                "detail": "181 >= 10"
+              },
+              "ISSUER_MATCH": {
+                "result": "PASS",
+                "detail": "证券简称=永臻股份 代码=603381 方式=FULL_ABBR 范围=P1-8"
+              },
+              "PERIOD_MATCH": {
+                "result": "PASS",
+                "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+              },
+              "FORM_FULL_TEXT": {
+                "result": "PASS",
+                "detail": "title=2024年半年度报告"
+              }
+            },
+            "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+            "form": "FULL_TEXT",
+            "page_count": 181,
+            "text_chars": 2324,
+            "issues": [],
+            "sha256": "4acbd2d660d86b70b81faf375b03b19f98dd834e6e17d5b547c2cfe0bf5af314",
+            "cover_text_chars": 52,
+            "identity_probe_chars": 5538,
+            "issuer_search_scope": "P1-8",
+            "issuer_match_mode": "FULL_ABBR",
+            "period_match_method": "BODY_PHRASE"
+          },
+          "updated_at": "2026-10-27T10:43:59+08:00"
+        }
+      ]
+    }
+  ]
+}
