@@ -1,0 +1,183 @@
+{
+  "issue_key": "A03",
+  "issue_number": 33,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "reviewed_at": "2026-10-27T20:13:16+0800",
+  "input_versions": {
+    "runs/collection/collection_index.csv": "7378 rows (A02 终态)",
+    "data/document_registry.csv": "158 rows",
+    "data/manual_requests.csv": "28 rows (未改动)",
+    "runs/issues/A02/review.json": "SELF_CHECK_PASS"
+  },
+  "decision": "SELF_CHECK_PASS",
+  "verdict": "GAPS_CLOSED_WITH_FIELD_LAYER_OPEN_ITEMS",
+  "acceptance": [
+    {
+      "item": "用户补件与请求一对一/多对一可追溯，已补不再催",
+      "result": "PASS",
+      "evidence": "manual_intake_receipts.csv 0 行；historical_request_closure.csv 28 行全部 CLOSED_BY_AUTO_COLLECTION，still_ask_user 全 NO；本轮新增请求 0 条"
+    },
+    {
+      "item": "文档可用性和业务证据核实状态分开，不能凭已上传就全标通过",
+      "result": "PASS",
+      "evidence": "回执表 availability_status 与 business_evidence_status 分列；drive_archive_status.json 把 archive_status 与 access_check_status 分开记；全池 7223 份只到身份已核层级，独立业务验收仍为 0"
+    }
+  ],
+  "scope_checks": {
+    "A_manual_intake": {
+      "receipts": 0,
+      "historical_requests": 28,
+      "closed": 28,
+      "still_needing_human": 0,
+      "noop_evidence": "manual_intake_noop.json"
+    },
+    "B_gap_closure": {
+      "document_gaps": 155,
+      "not_applicable_pre_listing": 151,
+      "not_disclosed_by_issuer": 4,
+      "blocking_document_gaps": 0,
+      "note": "155 条全部是终态判定，next_action 统一为无需补件，未写成缺件"
+    },
+    "C_dedup": {
+      "registry_rows": 158,
+      "ledger_rows": 7378,
+      "same_file_two_ids": 71,
+      "different_binary_same_slot": 3,
+      "no_matching_slot": 12,
+      "non_standard_period": 9,
+      "without_sha256": 2,
+      "ledger_internal_duplicates": {
+        "document_id": 0,
+        "sha256": 0,
+        "security_slot": 0
+      },
+      "registry_not_backfilled": 7162,
+      "evidence": "registry_crosswalk.csv + dedup_report.json"
+    },
+    "D_field_layer": {
+      "documents": 3081,
+      "field_rows": 79494,
+      "slot_field_pairs": 49296,
+      "extracted": 42873,
+      "extracted_rate": 0.8697,
+      "field_gaps": 1528,
+      "gap_by_status": {
+        "RESTATEMENT_INDICATED_NEEDS_REVIEW": 960,
+        "STATEMENT_NOT_FOUND": 553,
+        "NOT_FOUND": 15
+      },
+      "crosscheck": {
+        "MATCH": 2813,
+        "PARTIAL": 74,
+        "NO_KEY_TABLE": 76,
+        "MISMATCH": 119
+      },
+      "quality": {
+        "REV": {
+          "INCOMPLETE_QUARTERS": 245,
+          "MATCH": 2725,
+          "NO_YTD": 91,
+          "MISMATCH": 11,
+          "UNPARSED": 9
+        },
+        "NPP": {
+          "INCOMPLETE_QUARTERS": 369,
+          "MATCH": 2604,
+          "NO_YTD": 89,
+          "MISMATCH": 9,
+          "UNPARSED": 10
+        },
+        "NPDEDT": {
+          "NO_YTD": 418,
+          "INCOMPLETE_QUARTERS": 557,
+          "MATCH": 1979,
+          "MISMATCH": 69,
+          "UNPARSED": 58
+        },
+        "OCF": {
+          "INCOMPLETE_QUARTERS": 799,
+          "NO_YTD": 91,
+          "MATCH": 2171,
+          "UNPARSED": 6,
+          "MISMATCH": 14
+        }
+      },
+      "unit_consistent": {
+        "YES": 3027,
+        "NO": 54
+      },
+      "balance_sanity": {
+        "OK": 2976,
+        "VIOLATION": 0,
+        "SKIP": 105
+      },
+      "evidence": "field_coverage_annual_full.csv / field_quality_check_annual_full.csv / field_layer_summary.json"
+    },
+    "E_drive_archive": {
+      "status": "ACCESS_BLOCKED",
+      "uploaded": 0,
+      "readback": 0,
+      "verified": 0,
+      "with_cloud_copy": 65,
+      "local_only": 7158,
+      "evidence": "drive_archive_status.json（401/302/403 三项探测）"
+    }
+  },
+  "reconciliation": {
+    "slot_total": 7378,
+    "verified": 7223,
+    "not_applicable_pre_listing": 151,
+    "not_disclosed_by_issuer": 4,
+    "not_tried": 0,
+    "source_failed": 0,
+    "pending_identity": 0,
+    "sum": 7378,
+    "reconciles": true,
+    "applicable_slots": 7223,
+    "obtained_rate_applicable": 1.0
+  },
+  "artifacts": {
+    "manual_intake_receipts": "runs/issues/A03/manual_intake_receipts.csv",
+    "remaining_gaps": "runs/issues/A03/remaining_gaps.csv",
+    "registry_updates": "runs/issues/A03/registry_updates.csv",
+    "historical_closure": "runs/issues/A03/historical_request_closure.csv",
+    "registry_crosswalk": "runs/issues/A03/registry_crosswalk.csv",
+    "dedup_report": "runs/issues/A03/dedup_report.json",
+    "noop_evidence": "runs/issues/A03/manual_intake_noop.json",
+    "drive_status": "runs/issues/A03/drive_archive_status.json",
+    "field_extract": "runs/issues/A03/financial_fields_extracted_annual_full.csv",
+    "field_diag": "runs/issues/A03/extraction_diagnostics_annual_full.csv",
+    "field_quality": "runs/issues/A03/field_quality_check_annual_full.csv",
+    "field_coverage": "runs/issues/A03/field_coverage_annual_full.csv",
+    "field_gaps": "runs/issues/A03/field_gap_register_annual_full.csv",
+    "field_summary": "runs/issues/A03/field_layer_summary.json"
+  },
+  "limitations": [
+    "字段只覆盖年报（2023/2024/2025 共 3082 份）；半年报 3162 份、季报 1054 份未跑，交 S00 按需调用同一工具。",
+    "Drive 归档未完成：无凭据，7158 份已核文档只有本机副本，archive_status 未写 VERIFIED。",
+    "document_registry 未回写：7162 份已核文档仍只在 collection_index，批量写属改写原始输入，未执行。",
+    "重述字段 960 条只给疑似需复核，不硬判是/否；误判会让 S00 错误跨期相减。",
+    "56 份三表定位失败（1.8%）、1 份图片版需 OCR，均登记为字段缺口，未用代理值填补。",
+    "交叉校验 MISMATCH 119 份、四季加总存在 MISMATCH，须 S00 单独标注，不得混入可比序列。",
+    "7223 份是取得并验明身份，不等于已读全文，不等于业务采用；独立业务验收仍为 0。",
+    "自检由执行者本人完成，不等于独立审计。"
+  ],
+  "allows_next_stage_scope": "放行 A04（资料轮验收）。A04 可判文档层闭环，但字段层与归档层须带保留项验收，不得宣称资料已收齐。",
+  "not_allowed": [
+    "宣称资料已全部收齐",
+    "宣称字段已全部入库且可用",
+    "宣称 Drive 归档完成",
+    "把 155 条终态写成缺件",
+    "把 NOT_IN_STATEMENT 填 0",
+    "用归母净利替代扣非",
+    "用净利润替代经营现金流",
+    "把自检当独立审计",
+    "业务结论",
+    "指标筛选",
+    "估值"
+  ],
+  "notes": "本卡未改动任何原始输入（collection_index / document_registry / manual_requests 均未写）。"
+}

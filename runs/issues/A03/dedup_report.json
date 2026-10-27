@@ -1,0 +1,38 @@
+{
+  "index_rows": 7378,
+  "registry_rows": 158,
+  "duplicate_document_id_in_index": {},
+  "duplicate_sha256_in_index": {},
+  "duplicate_security_slot": {},
+  "document_id_overlap": {
+    "in_both": 61,
+    "only_in_registry": 97,
+    "only_in_index": 7162
+  },
+  "registry_only_sample": [
+    "DOC-022EF30353C4BC2D",
+    "DOC-055EAAF729BDBA32",
+    "DOC-06347EC5F2C7F244",
+    "DOC-08C8605BC99FC737",
+    "DOC-0D99D7A6B729AD04",
+    "DOC-11A5602430703565",
+    "DOC-16B1A520E8256B62",
+    "DOC-1B85DF1E341ECCF0",
+    "DOC-1F834B2B1E26AF44",
+    "DOC-1FC239518451BFB2"
+  ],
+  "index_only_count": 7162,
+  "historical_manual_requests": {
+    "rows": 28,
+    "companies_already_have_verified_slots": 28,
+    "companies_still_needing_human": 0
+  },
+  "note": "document_registry 与 collection_index 是双轨：全池 7223 份已核文档只登记在 collection_index，未回写 document_registry。A03 不批量写 7223 行，只出对账结论。",
+  "registry_crosswalk": {
+    "SAME_FILE_TWO_IDS": 71,
+    "DIFFERENT_BINARY_SAME_SLOT": 3,
+    "NO_MATCHING_SLOT_IN_INDEX": 12,
+    "NON_STANDARD_PERIOD_DOC": 9,
+    "REGISTRY_ROW_WITHOUT_SHA256": 2
+  }
+}

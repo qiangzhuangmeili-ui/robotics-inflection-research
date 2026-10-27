@@ -4,16 +4,16 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_A02_SELF_CHECK_PASS",
-  "claim_note": "A02 完成：15 槽判定（11 不适用 + 4 未披露）、11 槽记账统一、8 个必需字段全部可自动抽取 → NO_HUMAN_ACTION_NEEDED，0 条人工补件。",
+  "status": "IDLE_A03_SELF_CHECK_PASS",
+  "claim_note": "A03 完成：人工补件 0 条（历史 28 条请求全部由自动采集关闭）、155 条文档层终态、71 份重复登记定性、年报 3082 份字段抽取（42873/49296 槽位 86.97%）、Drive 仍 ACCESS_BLOCKED。",
   "last_completed": {
-    "issue_number": 32,
-    "issue_key": "A02",
-    "completed_at": "2026-10-27T16:22:51+08:00",
-    "review_file": "runs/issues/A02/review.json",
+    "issue_number": 33,
+    "issue_key": "A03",
+    "completed_at": "2026-10-27T20:13:55+08:00",
+    "review_file": "runs/issues/A03/review.json",
     "decision": "SELF_CHECK_PASS",
-    "acceptance": "4/4",
-    "self_check": "0 条人工补件；全池 7223 已核 / 151 NA / 4 未披露 / 0 未尝试"
+    "acceptance": "2/2",
+    "self_check": "补件 0 条；文档层 7378=7223+151+4；重复登记 71；字段层 42873/49296=86.97%；Drive 0 上传 0 回读"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 33,
-  "next_recommended_issue_key": "A03",
-  "next_recommended_reason": "A02 无人工补件；A03 转为缺口核销收口，并承接财务字段抽取器与 Drive 归档两项待办。",
+  "next_recommended_issue_number": 34,
+  "next_recommended_issue_key": "A04",
+  "next_recommended_reason": "A03 文档层闭环、字段层已产出可复算数据但保留 1528 条字段缺口与 Drive 未归档；A04 应带保留项验收，不得宣称资料已收齐。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -110,5 +110,20 @@
       "No Drive upload, financial adoption or independent acceptance in this follow-up."
     ],
     "review_file": "runs/issues/P03/neeq_recheck_20261027/review.json"
+  },
+  "a03_open_items": [
+    "Drive 无凭据：7158 份已核文档只有本机副本，archive_status 未写 VERIFIED。",
+    "document_registry 未回写：7162 份已核文档仍只在 collection_index。",
+    "字段仅覆盖年报（3082 份）；半年报 3162 份、季报 1054 份未跑。",
+    "重述字段 960 条标为需复核，未硬判是/否。",
+    "56 份三表定位失败、1 份图片版需 OCR，登记为字段缺口。"
+  ],
+  "a03_key_findings": {
+    "same_file_two_ids": 71,
+    "registry_rows_not_in_ledger": 97,
+    "ledger_rows_not_in_registry": 7162,
+    "field_extracted_rate": 0.8697,
+    "crosscheck_match": 2813,
+    "crosscheck_mismatch": 119
   }
 }

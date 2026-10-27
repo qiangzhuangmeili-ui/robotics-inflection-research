@@ -1,0 +1,62 @@
+{
+  "issue_key": "A03",
+  "issue_number": 33,
+  "probed_at": "2026-10-27T17:44:59+0800",
+  "purpose": "A03 承接的 Drive 归档待办：确认本轮能否上传并回读",
+  "probes": [
+    {
+      "target": "https://www.googleapis.com/drive/v3/about?fields=user",
+      "http_status": 401,
+      "meaning": "无 OAuth/服务账号凭据，API 不可用"
+    },
+    {
+      "target": "https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+      "http_status": 302,
+      "redirect": "https://accounts.google.com/ServiceLogin?...",
+      "meaning": "目录页要求登录，匿名不可读"
+    },
+    {
+      "target": "https://www.googleapis.com/drive/v3/files/1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP",
+      "http_status": 403,
+      "meaning": "历史 file_id 也无法匿名读取元数据"
+    }
+  ],
+  "credential_presence": {
+    "gcloud_config": false,
+    "token_file_in_data": false,
+    "drive_env_vars": false
+  },
+  "archive_status": "ACCESS_BLOCKED",
+  "uploaded_this_round": 0,
+  "readback_this_round": 0,
+  "verified_this_round": 0,
+  "what_is_still_valid": {
+    "local_originals": 7223,
+    "local_bytes": 18570188978,
+    "note": "原件在本机 D 盘完整，索引在 runs/collection/collection_index.csv；只是没有云端副本与回执"
+  },
+  "historical_reference": {
+    "p07_receipts": 65,
+    "p07_uploaded_new": 58,
+    "p07_reused": 7,
+    "p07_archive_status": "VERIFIED_65_FILES_BY_CODEX",
+    "caveat": "P07 的 65 份回执由 Codex 在具备凭据的环境完成；本轮环境无凭据，不可沿用其状态推断本轮可归档"
+  },
+  "rules_honored": [
+    "archive_status 未写 VERIFIED",
+    "未把目录 URL 写入 drive_file_id",
+    "未因归档失败删除任何本地原件（唯一副本）",
+    "未向用户索取凭据以外的替代动作，仅如实交接"
+  ],
+  "next_action": "恢复 Drive 凭据后，按 P06 storage_plan 分批上传并回读父目录；在此之前 S00 只用本机原件，不引用云端链接",
+  "archive_coverage": {
+    "slots_total": 7378,
+    "verified_documents": 7223,
+    "with_drive_file_id": 65,
+    "archive_status_verified": 65,
+    "archive_status_empty": 7313,
+    "registry_verified_rows": 78,
+    "registry_verified_but_access_not_checked": 62,
+    "note": "台账 7378 槽中 65 行 archive_status=VERIFIED 且带 drive_file_id，全部来自 P07/Codex 归档批次，sha256 与台账一致；其余 7158 份已核文档只有本机原件，无云端副本。登记表侧有 78 行 VERIFIED，其中 62 行 access_check_status 仍为 NOT_CHECKED——归档已验证不等于可访问性已复查，两个状态必须分开记。本轮 0 上传 0 回读，故不新增任何 VERIFIED。"
+  }
+}

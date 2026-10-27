@@ -1,0 +1,4 @@
+﻿update_id,target_file,key_type,key_value,field,old_value,new_value,change_kind,reason,source_issue,applied
+REG-00001,data/document_registry.csv,BULK_BY_DOCUMENT_ID,7162 document_ids,ALL,NOT_REGISTERED,REGISTER_FROM_COLLECTION_INDEX,BACKLOG,collection_index 已核文档未回写登记表；需按 P01 三层身份模型批量补登，本次不执行以免擅自改写原始输入,A03,NO
+REG-00002,runs/collection/collection_index.csv,ALL_ROWS,archive_status,archive_status,EMPTY,NOT_UPLOADED_ACCESS_BLOCKED,BLOCKED,Drive 无可用 API 凭据（302→ServiceLogin/401/403），本轮未上传任何文件；archive_status 不得写 VERIFIED,A03,NO
+REG-00003,runs/collection/collection_index.csv,ALL_ROWS,field_extraction_status,field_extraction_status,EMPTY,SEE_A03_financial_fields_extracted,PROPOSED,字段级抽取结果单独成表，未回写台账；S00 以该表为输入,A03,NO

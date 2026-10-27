@@ -1,0 +1,165 @@
+{
+  "documents": 3081,
+  "field_rows": 79494,
+  "slot_field_pairs": 49296,
+  "per_slot": {
+    "annual_2023": {
+      "NOT_IN_STATEMENT": 1757,
+      "EXTRACTED": 13872,
+      "FAILED_OR_REVIEW": 483
+    },
+    "annual_2024": {
+      "NOT_IN_STATEMENT": 1628,
+      "EXTRACTED": 14317,
+      "FAILED_OR_REVIEW": 519
+    },
+    "annual_2025": {
+      "EXTRACTED": 14684,
+      "NOT_IN_STATEMENT": 1510,
+      "FAILED_OR_REVIEW": 526
+    }
+  },
+  "per_field": {
+    "FIN.REV.SQ": {
+      "NOT_IN_STATEMENT": 303,
+      "EXTRACTED": 2778
+    },
+    "FIN.NPP.SQ": {
+      "NOT_IN_STATEMENT": 428,
+      "EXTRACTED": 2653
+    },
+    "FIN.NPDEDT.SQ": {
+      "NOT_IN_STATEMENT": 659,
+      "EXTRACTED": 2422
+    },
+    "FIN.OCF.SQ": {
+      "NOT_IN_STATEMENT": 868,
+      "EXTRACTED": 2213
+    },
+    "FIN.AR.INSTANT": {
+      "EXTRACTED": 2986,
+      "FAILED_OR_REVIEW": 55,
+      "NOT_IN_STATEMENT": 40
+    },
+    "FIN.NR.INSTANT": {
+      "EXTRACTED": 2736,
+      "FAILED_OR_REVIEW": 55,
+      "NOT_IN_STATEMENT": 290
+    },
+    "FIN.CONTRACTASSET.INSTANT": {
+      "NOT_IN_STATEMENT": 1475,
+      "EXTRACTED": 1551,
+      "FAILED_OR_REVIEW": 55
+    },
+    "FIN.INV.INSTANT": {
+      "EXTRACTED": 2984,
+      "FAILED_OR_REVIEW": 55,
+      "NOT_IN_STATEMENT": 42
+    },
+    "FIN.ASSET.INSTANT": {
+      "EXTRACTED": 2985,
+      "FAILED_OR_REVIEW": 55,
+      "NOT_IN_STATEMENT": 41
+    },
+    "FIN.REV.YTD": {
+      "EXTRACTED": 2990,
+      "FAILED_OR_REVIEW": 55,
+      "NOT_IN_STATEMENT": 36
+    },
+    "FIN.COST.YTD": {
+      "EXTRACTED": 2990,
+      "FAILED_OR_REVIEW": 55,
+      "NOT_IN_STATEMENT": 36
+    },
+    "FIN.NP.YTD": {
+      "EXTRACTED": 2993,
+      "FAILED_OR_REVIEW": 55,
+      "NOT_IN_STATEMENT": 33
+    },
+    "FIN.NPP.YTD": {
+      "EXTRACTED": 2992,
+      "FAILED_OR_REVIEW": 55,
+      "NOT_IN_STATEMENT": 34
+    },
+    "FIN.OCF.YTD": {
+      "EXTRACTED": 2990,
+      "FAILED_OR_REVIEW": 58,
+      "NOT_IN_STATEMENT": 33
+    },
+    "FIN.RESTATEMENT": {
+      "FAILED_OR_REVIEW": 975,
+      "NOT_IN_STATEMENT": 159,
+      "EXTRACTED": 1947
+    },
+    "FIN.NPDEDT.YTD": {
+      "NOT_IN_STATEMENT": 418,
+      "EXTRACTED": 2663
+    }
+  },
+  "crosscheck_documents": {
+    "MATCH": 2813,
+    "PARTIAL": 74,
+    "NO_KEY_TABLE": 76,
+    "MISMATCH": 119
+  },
+  "quality": {
+    "sum_REV": {
+      "INCOMPLETE_QUARTERS": 245,
+      "MATCH": 2725,
+      "NO_YTD": 91,
+      "MISMATCH": 11,
+      "UNPARSED": 9
+    },
+    "sum_NPP": {
+      "INCOMPLETE_QUARTERS": 369,
+      "MATCH": 2604,
+      "NO_YTD": 89,
+      "MISMATCH": 9,
+      "UNPARSED": 10
+    },
+    "sum_NPDEDT": {
+      "NO_YTD": 418,
+      "INCOMPLETE_QUARTERS": 557,
+      "MATCH": 1979,
+      "MISMATCH": 69,
+      "UNPARSED": 58
+    },
+    "sum_OCF": {
+      "INCOMPLETE_QUARTERS": 799,
+      "NO_YTD": 91,
+      "MATCH": 2171,
+      "UNPARSED": 6,
+      "MISMATCH": 14
+    },
+    "unit_consistent": {
+      "YES": 3027,
+      "NO": 54
+    },
+    "balance_sanity": {
+      "OK": 2976,
+      "SKIP": 105
+    }
+  },
+  "parse_errors": {
+    "IMAGE_ONLY_NO_TEXT_LAYER": 1
+  },
+  "field_gaps": 1528,
+  "gap_by_status": {
+    "RESTATEMENT_INDICATED_NEEDS_REVIEW": 960,
+    "STATEMENT_NOT_FOUND": 553,
+    "NOT_FOUND": 15
+  },
+  "gap_by_field": {
+    "FIN.RESTATEMENT": 975,
+    "FIN.AR.INSTANT": 55,
+    "FIN.NR.INSTANT": 55,
+    "FIN.CONTRACTASSET.INSTANT": 55,
+    "FIN.INV.INSTANT": 55,
+    "FIN.ASSET.INSTANT": 55,
+    "FIN.REV.YTD": 55,
+    "FIN.COST.YTD": 55,
+    "FIN.NP.YTD": 55,
+    "FIN.NPP.YTD": 55,
+    "FIN.OCF.YTD": 58
+  }
+}

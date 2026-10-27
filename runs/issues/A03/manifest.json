@@ -1,0 +1,182 @@
+{
+  "issue_key": "A03",
+  "issue_number": 33,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "generated_at": "2026-10-27T20:13:37+0800",
+  "review_nature": "SELF_CHECK",
+  "scope": "人工补件回填、去重与缺口核销；承接财务字段抽取器与 Drive 归档两项待办",
+  "deliverables": [
+    {
+      "file": "manual_intake_receipts.csv",
+      "desc": "人工补件回执（0 行空操作）",
+      "exists": true,
+      "bytes": 190,
+      "sha256": "fd111eb103a72356da069166b68d2320c70551e996b4f51d10047be8809cda34",
+      "data_rows": 0
+    },
+    {
+      "file": "remaining_gaps.csv",
+      "desc": "保留缺口清单（文档层+重复登记+字段层）",
+      "exists": true,
+      "bytes": 549644,
+      "sha256": "d9be93f2ca83ed6804dea49a304e8b71a2728bc7b2e9e7ac298d06c0cce99253",
+      "data_rows": 1754
+    },
+    {
+      "file": "registry_updates.csv",
+      "desc": "登记表建议更新（未执行）",
+      "exists": true,
+      "bytes": 892,
+      "sha256": "bf97f4d5c7ba5a25c05297c65e52652515b3d7b2d4f113add2e6ca84ba4037ac",
+      "data_rows": 3
+    },
+    {
+      "file": "historical_request_closure.csv",
+      "desc": "历史 28 条补件请求核销追溯",
+      "exists": true,
+      "bytes": 8588,
+      "sha256": "6213bddbc73f439180773f5a3c322647255463d74077e26856556c88720746aa",
+      "data_rows": 28
+    },
+    {
+      "file": "registry_crosswalk.csv",
+      "desc": "登记表 97 行孤立记录逐行定性",
+      "exists": true,
+      "bytes": 33444,
+      "sha256": "9465a8747bfef84c730a35aa35ec7f7436184276d10450e3a830e9705ab49544",
+      "data_rows": 97
+    },
+    {
+      "file": "dedup_report.json",
+      "desc": "去重与双轨对账",
+      "exists": true,
+      "bytes": 1189,
+      "sha256": "4b642c32778038cfe1cfdbcd2eef26565d49d53180df03b7e2d385b064ed0c39",
+      "data_rows": null
+    },
+    {
+      "file": "manual_intake_noop.json",
+      "desc": "空回执的可验证依据",
+      "exists": true,
+      "bytes": 1191,
+      "sha256": "ed0ee6643a09142f0700d263ea039d5e6d6e72d414e07028ed11ff971f21e524",
+      "data_rows": null
+    },
+    {
+      "file": "drive_archive_status.json",
+      "desc": "Drive 探测与归档覆盖",
+      "exists": true,
+      "bytes": 2776,
+      "sha256": "8642d7a0107ae49a15b1ad50a88b9cecfc0c86105a90c67264c3b86baffe4f8c",
+      "data_rows": null
+    },
+    {
+      "file": "financial_fields_extracted_annual_full.csv",
+      "desc": "年报字段抽取结果",
+      "exists": true,
+      "bytes": 16428030,
+      "sha256": "06e5b56315b7eb48373429dd2058a34ddd444d951790e4836abee25abe101f9a",
+      "data_rows": 79494
+    },
+    {
+      "file": "extraction_diagnostics_annual_full.csv",
+      "desc": "逐份解析诊断与交叉校验",
+      "exists": true,
+      "bytes": 535670,
+      "sha256": "d82cbf8cd0eda1f6ba2497d26f67b371802dde2ed0fcb616db3c085c1f0d221e",
+      "data_rows": 3082
+    },
+    {
+      "file": "field_quality_check_annual_full.csv",
+      "desc": "逐份恒等式质检",
+      "exists": true,
+      "bytes": 317847,
+      "sha256": "eb92baf81b5f2e896c3009bc4d5371d2daddc0e5d562ad8a98338a753307f544",
+      "data_rows": 3081
+    },
+    {
+      "file": "field_coverage_annual_full.csv",
+      "desc": "按字段覆盖率",
+      "exists": true,
+      "bytes": 692,
+      "sha256": "32baf9797abdad3915bdcec75dcbefde4b15190aada65244185138904e1e1a70",
+      "data_rows": 16
+    },
+    {
+      "file": "field_gap_register_annual_full.csv",
+      "desc": "字段级缺口逐条",
+      "exists": true,
+      "bytes": 227060,
+      "sha256": "a0b237b6294cc9040da87e96e90a9400978693f6d399b5233e93dd634ee6782f",
+      "data_rows": 1528
+    },
+    {
+      "file": "field_layer_summary.json",
+      "desc": "字段层汇总",
+      "exists": true,
+      "bytes": 3670,
+      "sha256": "8b2185cc89c2f1ba6e50c5241d07b550b78ff7c2698ad39303ea1c354318cf6a",
+      "data_rows": null
+    },
+    {
+      "file": "review.json",
+      "desc": "验收记录",
+      "exists": true,
+      "bytes": 7041,
+      "sha256": "5c142176aaf5d77aa47b18b5420f321fe840494fb1277083144ab9bb3bdcc63b",
+      "data_rows": null
+    },
+    {
+      "file": "handoff.md",
+      "desc": "交接说明",
+      "exists": true,
+      "bytes": 15819,
+      "sha256": "a242bfdaa9c62b888db34b485f4f20d96bf5ade0ec9e60b779ffdad5ab4d8339",
+      "data_rows": null
+    }
+  ],
+  "tools": [
+    {
+      "file": "tools/a03_financial_field_extractor.py",
+      "desc": "PDF 字段抽取器",
+      "exists": true,
+      "bytes": 36656,
+      "sha256": "5e0bbb213e7bcbcc87bad93fc58e04bbe500a4b26ad7cd6c7499d7eee5ea56a2"
+    },
+    {
+      "file": "tools/a03_field_quality.py",
+      "desc": "恒等式质检",
+      "exists": true,
+      "bytes": 5454,
+      "sha256": "6bc2d9987485a59bbe13e95a425db97a0df7e37441270e3d660741de051e54c8"
+    },
+    {
+      "file": "tools/a03_field_summary.py",
+      "desc": "字段覆盖率与缺口汇总",
+      "exists": true,
+      "bytes": 5977,
+      "sha256": "8b112e6a2cfeee02efd2ca6e867f234ab2973f1113d5b8e9cd511efc3ec69de4"
+    },
+    {
+      "file": "tools/a03_reconcile_gaps.py",
+      "desc": "缺口核销与去重对账",
+      "exists": true,
+      "bytes": 16839,
+      "sha256": "cd03219a27a3bf72504afc0ffea136931f3b2b68a46f11de006d53decdd6fa54"
+    }
+  ],
+  "inputs_readonly": [
+    "runs/collection/collection_index.csv",
+    "data/document_registry.csv",
+    "data/manual_requests.csv",
+    "runs/issues/A02/review.json",
+    "runs/issues/P04/financial_field_dictionary.csv"
+  ],
+  "inputs_modified": [],
+  "external_network": {
+    "drive_probe": "401 / 302->ServiceLogin / 403，未上传未下载",
+    "pdf_source": "未联网，只读本机已回读原件"
+  },
+  "notes": "计划路径不算成果；本 manifest 只列实际存在的文件与实测哈希。"
+}
