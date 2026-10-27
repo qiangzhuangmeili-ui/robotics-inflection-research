@@ -1,0 +1,29 @@
+{
+  "issue_key": "M00_11",
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-27T12:20:00+08:00",
+  "patched_file": null,
+  "patches": [],
+  "note": "本批未发现新的采集器缺陷。F14（沪市标题分层解析）、F15（候选轮替）、F17（无年份季报）在本批均正常。",
+  "verified_prior_patches": [
+    "F7",
+    "F9",
+    "F10",
+    "F11",
+    "F12",
+    "F13",
+    "F14",
+    "F15",
+    "F16",
+    "F17"
+  ],
+  "not_a_defect": [
+    {
+      "case": "39 个北交所槽位（7 家）NOT_TRIED，reason_code=APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "detail": "本批 54 家全部为北交所 920 段，其中 7 家上市较晚，其上市前报告期落在股转挂牌期。按 P00 不得判不适用。",
+      "attempted": "与 M00_10 同一结论：巨潮 column=neeq 对这批 orgId 返回 0，searchkey 检索亦为 0，同一路由取不到。",
+      "conclusion": "平台缺口，需按股转代码 8xxxxx 另建实体映射；交 A01 统一处理。",
+      "next_action": "SEARCH_NEEQ_ARCHIVE"
+    }
+  ]
+}
