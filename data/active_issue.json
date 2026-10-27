@@ -4,16 +4,16 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_A01_SELF_CHECK_PASS",
-  "claim_note": "A01 完成：P03 打通股转接口后按 50 条官方全文链接补采，50/50 取得且身份+报告期全 PASS；剩余 15 槽交 A02 做适用性判定。",
+  "status": "IDLE_A02_SELF_CHECK_PASS",
+  "claim_note": "A02 完成：15 槽判定（11 不适用 + 4 未披露）、11 槽记账统一、8 个必需字段全部可自动抽取 → NO_HUMAN_ACTION_NEEDED，0 条人工补件。",
   "last_completed": {
-    "issue_number": 31,
-    "issue_key": "A01",
-    "completed_at": "2026-10-27T15:52:20+08:00",
-    "review_file": "runs/issues/A01/review.json",
+    "issue_number": 32,
+    "issue_key": "A02",
+    "completed_at": "2026-10-27T16:22:51+08:00",
+    "review_file": "runs/issues/A02/review.json",
     "decision": "SELF_CHECK_PASS",
-    "acceptance": "5/5",
-    "self_check": "76 缺口补齐 61（11+50）；剩余 15 待适用性判定"
+    "acceptance": "4/4",
+    "self_check": "0 条人工补件；全池 7223 已核 / 151 NA / 4 未披露 / 0 未尝试"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 32,
-  "next_recommended_issue_key": "A02",
-  "next_recommended_reason": "剩余 15 槽需按 P03 分类做适用性判定；另有 11 槽 identity_checks 记账不一致待统一。",
+  "next_recommended_issue_number": 33,
+  "next_recommended_issue_key": "A03",
+  "next_recommended_reason": "A02 无人工补件；A03 转为缺口核销收口，并承接财务字段抽取器与 Drive 归档两项待办。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",

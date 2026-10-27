@@ -1,0 +1,9 @@
+﻿field_id,name_cn,verdict,source,sample_hit,blocking,note
+FIN.REV.SQ,营业收入（单季度）,AUTO_EXTRACTABLE,年报「分季度主要财务指标/数据」表,19/20,NO,措辞有「主要财务指标」「主要财务数据」两种，需兼容
+FIN.COST.YTD,营业成本（累计）,AUTO_EXTRACTABLE,合并利润表,20/20,NO,
+FIN.NPDEDT.SQ,扣非归母净利润（单季度）,AUTO_EXTRACTABLE,年报「分季度主要财务指标」表 + 「非经常性损益项目及金额」表,19/20,NO,P04 已定：结构化接口无此字段，只能回 PDF；分季度表直接给单季扣非
+FIN.OCF.YTD,经营活动现金流量净额（累计）,AUTO_EXTRACTABLE,合并现金流量表,19/20,YES（P00 必需，当前全缺）,本字段是当前最大阻塞项，但可由 PDF 自动抽取，无需人工导出
+FIN.AR.INSTANT,应收账款（时点）,AUTO_EXTRACTABLE,合并资产负债表,20/20,NO,注意与「应收票据及应收账款」合计区分
+FIN.CONTRACTASSET.INSTANT,合同资产（时点）,AUTO_EXTRACTABLE,合并资产负债表,16/20,NO,未命中的多为报表无该科目（不适用），不是抽取失败；须与「无此科目」区分
+FIN.INV.INSTANT,存货（时点）,AUTO_EXTRACTABLE,合并资产负债表,19/20,NO,
+FIN.RESTATEMENT,重述/版本标记,AUTO_EXTRACTABLE,审计报告与会计政策附注中的「重述/追溯调整/会计差错更正」表述,20/20,NO,需按关键词+上下文判定，不能只做字符串命中

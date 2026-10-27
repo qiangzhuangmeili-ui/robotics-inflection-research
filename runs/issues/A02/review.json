@@ -1,0 +1,109 @@
+{
+  "issue_key": "A02",
+  "issue_number": 32,
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_at": "2026-10-27T16:30:00+08:00",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS",
+  "verdict": "NO_HUMAN_ACTION_NEEDED",
+  "verdict_note": "本轮无任何需人工补件项：15 槽已按规则判定、11 槽记账已内部修正、8 个必需字段全部可自动抽取。",
+  "acceptance": [
+    {
+      "item": "一次交付、可批量操作；没有 NOT_TRIED 伪缺件或全局故障拆分催补",
+      "result": "PASS",
+      "evidence": "manual_requests_consolidated.csv 仅表头、0 行数据；15 个原 NOT_TRIED 槽全部转为可解释终态（11 NOT_APPLICABLE_PRE_LISTING + 4 NOT_DISCLOSED_BY_ISSUER），无一条被写成缺件；全池 NOT_TRIED 归零"
+    },
+    {
+      "item": "旧 manual_requests.csv 历史状态保留，新请求有批次/版本、不重复向用户索取已补文件",
+      "result": "PASS",
+      "evidence": "data/manual_requests.csv 28 行原样未改（git status 无变更）；其涉及的 28 家公司现在全部已有已核槽位（historical_requests_crossref.json）；本轮 0 条新请求，不存在重复索取"
+    },
+    {
+      "item": "只纳入已自动尝试并经过重试/备用源后仍缺的资料或字段",
+      "result": "PASS",
+      "evidence": "15 槽均经 A01 重试 + P03 技术复核 + A02 规则判定三级处理后才定终态；8 个字段先验证可自动抽取，不因「PDF 齐全」就跳过字段缺口检查"
+    },
+    {
+      "item": "若没有需手补项写 NO_HUMAN_ACTION_NEEDED；尚未披露、不适用不派用户补",
+      "result": "PASS",
+      "evidence": "manual_requests_summary.json → verdict=NO_HUMAN_ACTION_NEEDED；4 个未披露槽与 11 个不适用槽均未进入请求清单"
+    }
+  ],
+  "scope_checks": {
+    "A_15_slots": {
+      "total": 15,
+      "resolved": 15,
+      "not_applicable_pre_listing": 11,
+      "not_disclosed_by_issuer": 4,
+      "evidence": "runs/issues/A02/applicability_decisions.csv + applicability_evidence.json",
+      "method": "股转定期报告索引 disclosureType[]=9503（A01 已用同接口成功补采 50 份，接口有正向验证）；8 家索引 total == rows_fetched，均完整",
+      "key_basis": [
+        "11 槽：报告期结束日早于股转挂牌日，且索引中该期间无任何记录，索引最早一条落在挂牌日之后",
+        "4 槽：季度报告依规则第十一条为自愿披露；索引完整且无 2026 一季报；同索引可返回三季报（3 家），说明季报确会进该索引"
+      ]
+    },
+    "B_bookkeeping": {
+      "target_slots": 11,
+      "fixed": 11,
+      "companies": ["SZ:301000×6", "BJ:920207×4", "BJ:920011×1"],
+      "rule": "首次结果移入 document.identity_checks_first_pass；document.identity_checks 与 validation.checks 同源",
+      "evidence": "runs/issues/A02/bookkeeping_fix.json；A00 复核 first_pass_unknown_but_revalidated_pass 由 11 降为 0"
+    },
+    "C_fields": {
+      "p00_required_missing": 8,
+      "auto_extractable": 8,
+      "manual_required": 0,
+      "sample": "1046 份已核 annual_2025 中固定种子随机抽 20 份，全文抽取后按关键词命中",
+      "evidence": "runs/issues/A02/field_gap_resolution.csv",
+      "caveats": [
+        "SZ:002083 孚日股份 2025 年报为图片版（正文 0 字符），需 OCR——自动步骤，非人工",
+        "合同资产 4 家未命中，多为报表无该科目，抽取时须区分「无此科目」与「抽取失败」，不得填 0",
+        "抽取器尚未实现：字段可自动取得 ≠ 字段已入库"
+      ]
+    }
+  },
+  "reconciliation": {
+    "slot_total": 7378,
+    "verified": 7223,
+    "not_applicable_pre_listing": 151,
+    "not_disclosed_by_issuer": 4,
+    "not_tried": 0,
+    "source_failed": 0,
+    "pending_identity": 0,
+    "sum": 7378,
+    "reconciles": true,
+    "applicable_slots": 7223,
+    "obtained_rate_applicable": 1.0,
+    "denominator_note": "应取得 = 7378 − 151 不适用 − 4 未披露 = 7223。该分母依赖本轮 15 槽判定，判定依据已逐项留档可复核。"
+  },
+  "artifacts": {
+    "manual_requests": "runs/issues/A02/manual_requests_consolidated.csv",
+    "user_notice": "runs/issues/A02/给用户的一次补件说明.md",
+    "summary": "runs/issues/A02/manual_requests_summary.json",
+    "applicability_decisions": "runs/issues/A02/applicability_decisions.csv",
+    "applicability_evidence": "runs/issues/A02/applicability_evidence.json",
+    "bookkeeping_fix": "runs/issues/A02/bookkeeping_fix.json",
+    "field_gap_resolution": "runs/issues/A02/field_gap_resolution.csv",
+    "historical_crossref": "runs/issues/A02/historical_requests_crossref.json"
+  },
+  "limitations": [
+    "本卡只做缺口核实与合并交付，不做财务字段抽取、不做业务结论、不估值。",
+    "15 槽的判定是依据规则与索引证据作出的判断，属可复核的结论而非事实本身；若规则或索引口径变化需重判。",
+    "8 个字段「可自动抽取」基于 n=20 抽样，非全量实测；抽取器实现后须按全量复算。",
+    "7223 份是取得并验明身份，不等于已读全文、不等于业务采用（独立业务验收仍为 0）。",
+    "Drive 归档未完成：未上传未回读，archive_status 不得写 VERIFIED。",
+    "自检由执行者本人完成，不等于独立审计。"
+  ],
+  "allows_next_stage_scope": "放行 A03（人工补件回填与缺口核销）——但本轮无人工补件，A03 实际只需承接财务字段抽取器与 Drive 归档两项待办；不放行业务结论/指标筛选/估值",
+  "not_allowed": [
+    "业务结论",
+    "指标筛选",
+    "估值",
+    "把不适用写成缺件",
+    "把未披露写成缺件",
+    "把可自动抽取写成需人工导出",
+    "宣称资料已全部收齐",
+    "宣称独立验收"
+  ]
+}
