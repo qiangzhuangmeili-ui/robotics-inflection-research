@@ -1069,10 +1069,15 @@ class Collector:
                 year = _infer_year(published_on, annual=False)
                 return f"{year}H1" if year else None
             return None
-        m = re.search(r"(\d{4})\s*年?[\s_\-]*第?([一三])季度报告", norm)
-        if not m:
-            return None
-        return f"{m.group(1)}Q{'1' if m.group(2) == '一' else '3'}"
+        # F16：巨潮标题存在漏字，实测 688057「2026年第一季度报」少一个「告」。
+        # 允许「季度报(告)?」与「[一二三]季报」两种写法。
+        m = re.search(r"(\d{4})\s*年?[\s_\-]*第?([一三])季度报(?:告)?", norm)
+        if m:
+            return f"{m.group(1)}Q{'1' if m.group(2) == '一' else '3'}"
+        m = re.search(r"(\d{4})\s*年?[\s_\-]*([一二三])季报", norm)
+        if m:
+            return f"{m.group(1)}Q{'1' if m.group(2) == '一' else '3'}"
+        return None
 
     def map_rows(self, company: CompanyRef, index: dict, report_type: str) -> tuple[dict[str, list[dict]], list[dict]]:
         buckets: dict[str, list[dict]] = {}
