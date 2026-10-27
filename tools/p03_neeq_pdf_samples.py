@@ -61,3 +61,6 @@ for company in idx:
     (OUT/"sample_pdf_checks.json").write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps({k:rec[k] for k in ["security_id","old_neeq_code","bytes","pages","name_in_text","old_code_in_text","listing_evidence"]},ensure_ascii=True),flush=True)
 
+(OUT/"sample_pdf_checks.json").write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding="utf-8")
+
+
