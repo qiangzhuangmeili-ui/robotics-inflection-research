@@ -1,0 +1,52 @@
+{
+  "issue_key": "M00_10",
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-27T12:00:00+08:00",
+  "patched_file": "tools/p05_collector.py::Collector._period_of",
+  "patches": [
+    {
+      "id": "F17",
+      "title": "季度报告标题不带年份（「…股份有限公司第一季度报告」）导致季报槽判为目录无全文",
+      "severity": "LOW-MEDIUM（个案但属容错缺失）",
+      "symptom": "688638 誉辰智能 q1_2026 判「已上市却目录无该期全文」。",
+      "root_cause": "巨潮标题写作「深圳市誉辰智能装备股份有限公司第一季度报告」，完全没有四位年份，旧季度正则必须先匹配年份。",
+      "evidence": {
+        "title": "深圳市誉辰智能装备股份有限公司第一季度报告",
+        "published_on": "2026-04-24"
+      },
+      "fix": "季度解析增加第三层兜底：标题含「第?[一三]季度报(告)?」或「[一二三]季报」但无年份时，按披露年份推断（一季报 4—5 月、三季报 10—11 月披露）；结果仍要过正文 PERIOD_MATCH 年份校验。",
+      "impact": "本批回收 1 槽（183 KB / 12 页）。与 F14 的「半年报不带年份」同类，现在年报/半年报/季报三层都有无年份兜底。",
+      "risk": "推断只在标题完全不含四位年份时启用，且正文年份校验兜底；推错记 PENDING 不会误判 VERIFIED。"
+    }
+  ],
+  "verified_prior_patches": [
+    "F7",
+    "F9",
+    "F10",
+    "F11",
+    "F12",
+    "F13",
+    "F14",
+    "F15",
+    "F16"
+  ],
+  "not_a_defect": [
+    {
+      "case": "26 个北交所槽位（8 家）保持 NOT_TRIED，reason_code=APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "detail": "这些槽位的报告期早于北交所上市日，但公司在股转系统挂牌期间有定期报告。按 P00 not_applicable_decision_table 不得判「上市前不适用」，只能记平台不同。",
+      "attempted": "实测巨潮 hisAnnouncement/query 的 column=neeq（股转列）：920011/920022 用各自 orgId 查询 totalAnnouncement 均为 0；改用 searchkey=公司简称 在全股转列检索同样为 0。即**巨潮股转列不索引这些主体**，同一路由无法取到。",
+      "conclusion": "平台缺口真实存在，不是采集器缺陷。需按股转代码（8xxxxx，与 920xxx 不同）另建实体映射后从股转/北交所老公告库取；建议交 A01 统一处理。",
+      "next_action": "SEARCH_NEEQ_ARCHIVE",
+      "affected": {
+        "920011": 5,
+        "920022": 4,
+        "920055": 4,
+        "920080": 4,
+        "920091": 4,
+        "920060": 2,
+        "920066": 2,
+        "920002": 1
+      }
+    }
+  ]
+}

@@ -1077,6 +1077,15 @@ class Collector:
         m = re.search(r"(\d{4})\s*年?[\s_\-]*([一二三])季报", norm)
         if m:
             return f"{m.group(1)}Q{'1' if m.group(2) == '一' else '3'}"
+        # F17：季度报告标题也可能完全不带年份，实测 688638「深圳市誉辰智能装备股份有限公司第一季度报告」。
+        # 按披露年份推断（一季报 4—5 月、三季报 10—11 月披露），结果仍要过正文年份校验。
+        m = re.search(r"第?([一三])季度报(?:告)?", norm) or re.search(r"([一二三])季报", norm)
+        if m and published_on:
+            try:
+                year = datetime.strptime(published_on[:10], "%Y-%m-%d").year
+            except (TypeError, ValueError):
+                return None
+            return f"{year}Q{'1' if m.group(1) in ('一',) else '3'}"
         return None
 
     def map_rows(self, company: CompanyRef, index: dict, report_type: str) -> tuple[dict[str, list[dict]], list[dict]]:
