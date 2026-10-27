@@ -3,9 +3,37 @@
   "issue_number": 31,
   "plan_version": "20261026_collection_first_v2",
   "reviewed_at": "2026-10-27T12:50:00+08:00",
+  "amended_at": "2026-10-27T13:10:00+08:00",
   "reviewer": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
-  "decision": "SELF_CHECK_PASS",
+  "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
+  "decision_note": "11 槽补证成果成立；65 槽的「全局源不可用」定性已撤回，退回 P03 技术核验。本卡不再宣称「全部通过」。",
+  "corrections": [
+    {
+      "id": "C1",
+      "type": "RETRACTED_CONCLUSION",
+      "what": "v1 判定 65 槽为 GLOBAL_SOURCE_UNAVAILABLE（平台故障）",
+      "why": "缺少正向对照。股转接口对所有查询返 0，但未先证明同一接口同一参数能返回数据；返 0 无法区分「平台不可用」与「参数/代码/权限不对」。",
+      "now": "NOT_EXHAUSTED_PENDING_P03_TECHNICAL_REVIEW",
+      "evidence": "runs/issues/A01/source_probes.json（v2）→ conclusion.what_is_not_proven"
+    },
+    {
+      "id": "C2",
+      "type": "FACTUAL_ERROR",
+      "what": "source_probes.json v1 记「最早=None」，handoff 据此写「最早一条为 2024-05 IPO 期」",
+      "why": "巨潮公告行日期字段是 announcementTime（毫秒），v1 误取 published_on，恒为 None；交接中的日期来自未落盘的人工浏览，属推断。",
+      "now": "v2 统一用 announcementTime，15 家逐家记录真实最早日期与标题；v1 原文存档为 source_probes_v1_superseded.json",
+      "evidence": "source_probes.json → per_company"
+    },
+    {
+      "id": "C3",
+      "type": "SCOPE_CORRECTION",
+      "what": "v1 用一家公司（920002）的结果代表 15 家",
+      "why": "单样本不能外推。",
+      "now": "v2 对 15 家逐家翻到最早一页，记录 total、最早日期、最早标题、旧码行是否存在",
+      "evidence": "source_probes.json → per_company（15 行）"
+    }
+  ],
   "acceptance": [
     {
       "item": "失败项都有已试路径和实际结果，已取得资料不重复下载",
@@ -14,23 +42,23 @@
     },
     {
       "item": "源普遍不可用只保留一个源故障请求，不拆 1054 个手工公司请求",
-      "result": "PASS",
-      "evidence": "65 槽全部归入单条 GLOBAL_SOURCE_UNAVAILABLE；source_probes.json 7 条探测证明股转数据层对最宽查询（全部类型+2026 全年）仍返 0、巨潮股转列不服务、15 家无股转期公告行、无 8xxxxx 映射；未生成任何逐家公司的人工请求"
+      "result": "PASS_WITH_CORRECTION",
+      "evidence": "「只保留一条请求」的形式要求已满足：65 槽归入单条，未生成逐家请求。但「源普遍不可用」这一实质判断已撤回——缺正向对照，只能记「未证伪」。65 槽改为 NOT_EXHAUSTED_PENDING_P03_TECHNICAL_REVIEW，单条技术核验请求见 runs/issues/A01/p03_review_request.md"
     },
     {
       "item": "按错误/网站分组，先处理全局连接故障，再按有限预算重试",
       "result": "PASS",
-      "evidence": "分 G1 源故障（65）/G2 超限（1）/G3 更名（5）/G4 图片版（5）；G1 先做 7 条探测并定性为数据层不可用后才停止；G2/G3/G4 共 11 槽全部回收，未超预算"
+      "evidence": "分 G1 源疑点（65）/G2 超限（1）/G3 更名（5）/G4 图片版（5）；G2/G3/G4 共 11 槽全部回收，未超预算"
     },
     {
       "item": "尝试备用来源并保留每次结果与身份核对",
       "result": "PASS",
-      "evidence": "探测覆盖巨潮股转列、股转官网（http/https、年报分类与全部类型）、北交所官网、巨潮股票表映射；每槽回收均留存身份校验项（HISTORICAL_SEC_NAME / A01_VISUAL_COVER_CONFIRMATION）与证据"
+      "evidence": "探测覆盖巨潮 szse/neeq 列、股转官网（cookie 挑战后可达）、北交所官网、巨潮股票表映射、招股说明书；每槽回收均留存身份校验项与证据"
     },
     {
       "item": "成功项核销，剩余项区分自动已尽力、未披露、不适用和需环境恢复",
-      "result": "PASS",
-      "evidence": "retry_resolved.csv 11 行核销；residual_failures.csv 65 行全部 category=GLOBAL_SOURCE_UNAVAILABLE（需环境恢复）；未出现 NOT_DISCLOSED_BY_ISSUER 或 NOT_APPLICABLE_PRE_LISTING 的误判"
+      "result": "PASS_WITH_CORRECTION",
+      "evidence": "retry_resolved.csv 11 行核销；residual_failures.csv 65 行 category=NOT_EXHAUSTED_PENDING_P03_TECHNICAL_REVIEW。原分类「需环境恢复」暗示已知是环境问题，改为「待技术核验」"
     }
   ],
   "reconciliation": {
@@ -68,17 +96,22 @@
     "G1_neeq_platform_gap": {
       "slots": 65,
       "companies": 15,
-      "verdict": "GLOBAL_SOURCE_UNAVAILABLE",
-      "evidence": [
-        "巨潮 column=neeq（830779）totalAnnouncement=0：股转列不服务",
-        "巨潮 920002 最早一条为 2024-05 IPO 期，secCode 全为 920002：无股转期公告行",
-        "巨潮 920207 对照 382 条含 secCode=835207：巨潮有能力存旧代码行，缺失是数据而非查询",
-        "股转官网 https 首页 200，站点可达",
-        "股转官网 companyAnnouncement.do 年报分类 totalElements=0",
-        "股转官网 companyAnnouncement.do 全部类型+2026 全年（判别探针）totalElements=0：数据层为空",
-        "巨潮股票表 6262 行，15 家中能反查第二代码的 0 家：无 8xxxxx 映射"
+      "verdict": "NOT_EXHAUSTED_PENDING_P03_TECHNICAL_REVIEW",
+      "retracted_verdict": "GLOBAL_SOURCE_UNAVAILABLE",
+      "proven": [
+        "巨潮接口正常：正向对照 830779 有 368 条、830799 有 567 条",
+        "巨潮 column=neeq 不服务：同一 orgId 在 szse 列有数据、neeq 列为 0",
+        "巨潮有能力存旧码行：920207 有 319 条 secCode=835207",
+        "15 家逐家在巨潮均无股转期公告行、无旧码行，最早一条均为北交所 IPO 期材料",
+        "巨潮股票表 6262 行，按代码/名称/orgId 三种方式均查不到 8xxxxx↔920xxx 映射",
+        "股转期报告确实存在：920011 招股说明书载明 2024-09-09 在股转挂牌、创新层"
       ],
-      "action": "保留一条源故障请求；股转数据层恢复后按 8xxxxx 旧代码批量检索"
+      "not_proven": [
+        "股转官网公告接口是否可用（无正向对照样本，6 个候选代码全返 0）",
+        "15 家的 8xxxxx 旧代码（招股说明书正文未载明本公司代码）",
+        "65 个槽位是否真的可取得（q1_2026 等季度槽在股转期可能制度上不要求）"
+      ],
+      "action": "单条技术核验请求交 P03：runs/issues/A01/p03_review_request.md"
     },
     "G2_oversize": {
       "slots": 1,
@@ -103,8 +136,11 @@
     "retry_resolved": "runs/issues/A01/retry_resolved.csv",
     "residual_failures": "runs/issues/A01/residual_failures.csv",
     "source_probes": "runs/issues/A01/source_probes.json",
+    "source_probes_v1_superseded": "runs/issues/A01/source_probes_v1_superseded.json",
+    "p03_review_request": "runs/issues/A01/p03_review_request.md",
     "visual_confirmations": "runs/issues/A01/visual_confirmations.json",
     "config_v2": "runs/issues/A01/collection_config_v2.json",
+    "neeq_probe": "runs/issues/A01/neeq_probe/",
     "evidence_dir": "runs/issues/A01/evidence/",
     "alias_table": "data/company_name_aliases.csv"
   },
@@ -121,19 +157,21 @@
   },
   "limitations": [
     "本卡只做补缺与身份补证，不做财务字段精读、不做业务结论、不估值。",
-    "65 槽仍是未尝试；源不可用不等于不适用、不等于未披露。",
+    "65 槽仍是未尝试；「未证伪」不等于不适用、不等于未披露、更不等于平台故障。",
     "10 槽是身份补证而非新取得文件，不增加新原件。",
     "目视封面只确认主体与报告期，不代表已读全文或财务数据可用。",
     "config v2 仅放开单份上限，未改并发/限速/校验阈值。",
-    "无 Drive 连接器：未上传未回读，未改归档态。",
+    "无 Drive 连接器：未上传未回读，未改归档态；全池 Drive 归档未因本卡完成。",
+    "财务字段补齐未因本卡完成：P00 必需 21 个规范字段仍有 8 个缺失。",
     "自检由执行者本人完成，不等于独立审计。"
   ],
-  "allows_next_stage_scope": "放行 A02 人工补缺合并；不放行业务结论/指标筛选/估值",
+  "allows_next_stage_scope": "放行 A02，但 A02 不得把 65 槽当作人工补缺清单下发，须等 P03 技术核验结论；不放行业务结论/指标筛选/估值",
   "not_allowed": [
     "业务结论",
     "指标筛选",
     "估值",
     "把未尝试写成缺件或不适用",
+    "把未尝试写成平台故障",
     "把身份补证写成新取得文件",
     "宣称独立验收"
   ]

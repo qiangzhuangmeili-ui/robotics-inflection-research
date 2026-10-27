@@ -568,10 +568,15 @@ def write_reports():
                         "resolved_at": rec.get("updated_at"),
                     })
             if st in (PENDING, FAILED, NOT_TRIED):
+                concl = probes.get("conclusion") or {}
+                verdict = concl.get("verdict", "UNKNOWN")
                 if st == NOT_TRIED:
-                    cat = "GLOBAL_SOURCE_UNAVAILABLE"
-                    detail = probes["conclusion"]["detail"]
-                    action = "环境恢复后按 8xxxxx 旧代码到股转官网补采；本卡不拆逐家请求"
+                    # 65 槽的定性来自 source_probes.json 的结论，不在本函数里另立口径
+                    cat = verdict
+                    detail = (concl.get("neeq_path") or concl.get("detail")
+                              or "见 source_probes.json")
+                    action = ("交 P03 做接口/参数/旧代码映射技术核验（runs/issues/A01/"
+                              "p03_review_request.md）；核验前保持 NOT_TRIED，不转人工补件")
                 elif st == FAILED:
                     cat = "AUTO_EXHAUSTED"
                     detail = rec.get("last_error") or ""

@@ -1,84 +1,345 @@
 {
-  "generated_at": "2026-10-27T12:44:22+08:00",
-  "started_at": "2026-10-27T12:43:51+08:00",
+  "generated_at": "2026-10-27T13:07:23+08:00",
+  "version": 2,
+  "supersedes": "source_probes.json v1（字段错误：日期取 published_on 恒为 None；结论过度推断）",
+  "rule": "有正向对照且目标为 0 才能判「无数据」；无正向对照只能记「未证伪」。",
   "probes": [
     {
-      "group": "G1",
-      "route": "cninfo_hisAnnouncement",
-      "target": "column=neeq, stock=830779,gfbj0830779",
+      "id": "A1",
+      "path": "cninfo_hisAnnouncement",
+      "target": "正向对照 830779 武汉蓝电（col=szse）",
+      "http_status": "200",
+      "result": "totalAnnouncement=368；首条=2026-10-09",
+      "verdict": "CONTROL_PASS",
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:05:42+08:00"
+    },
+    {
+      "id": "A2",
+      "path": "cninfo_hisAnnouncement",
+      "target": "正向对照 830799 艾融软件",
+      "http_status": "200",
+      "result": "totalAnnouncement=567",
+      "verdict": "CONTROL_PASS",
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:05:44+08:00"
+    },
+    {
+      "id": "A3",
+      "path": "cninfo_hisAnnouncement",
+      "target": "column=neeq（830779）",
       "http_status": "200",
       "result": "totalAnnouncement=0",
       "verdict": "COLUMN_NOT_SERVING",
-      "probed_at": "2026-10-27T12:43:53+08:00"
+      "control_ref": "A1",
+      "probed_at": "2026-10-27T13:05:45+08:00"
     },
     {
-      "group": "G1",
-      "route": "cninfo_hisAnnouncement",
-      "target": "920002 翻到最早页",
+      "id": "A4",
+      "path": "cninfo_hisAnnouncement",
+      "target": "对照 920207 众诚科技（2022 转板）",
       "http_status": "200",
-      "result": "total=296; 最早=None; 该页secCode=['920002']",
-      "verdict": "NO_NEEQ_ERA_ROWS",
-      "probed_at": "2026-10-27T12:43:59+08:00"
-    },
-    {
-      "group": "G1",
-      "route": "cninfo_hisAnnouncement",
-      "target": "920207 对照（老股转转板）",
-      "http_status": "200",
-      "result": "total=382; secCodes=['835207', '920207']",
+      "result": "total=382；secCodes=['835207', '920207']",
       "verdict": "CNINFO_CAN_HOLD_OLD_CODE",
-      "probed_at": "2026-10-27T12:44:07+08:00"
+      "control_ref": "A1",
+      "probed_at": "2026-10-27T13:05:54+08:00"
     },
     {
-      "group": "G1",
-      "route": "neeq_official",
-      "target": "https 首页",
-      "http_status": 200,
-      "result": "站点可达",
-      "verdict": "SITE_REACHABLE",
-      "probed_at": "2026-10-27T12:44:08+08:00"
-    },
-    {
-      "group": "G1",
-      "route": "neeq_official",
-      "target": "http companyAnnouncement.do 年报分类",
+      "id": "A5",
+      "path": "cninfo_hisAnnouncement",
+      "target": "15 家逐家最早公告日（见 per_company）",
       "http_status": "200",
-      "result": "totalElements=0",
-      "verdict": "EMPTY_RESULT",
-      "probed_at": "2026-10-27T12:44:12+08:00"
+      "result": "逐家完成 15；有旧码行的 0 家",
+      "verdict": "NO_NEEQ_ERA_ROWS_ALL_15",
+      "control_ref": "A1",
+      "probed_at": "2026-10-27T13:06:53+08:00"
     },
     {
-      "group": "G1",
-      "route": "neeq_official",
-      "target": "http companyAnnouncement.do 全部+日期（判别探针）",
+      "id": "A6",
+      "path": "cninfo_stock_list",
+      "target": "szse_stock.json 名称/orgId 反查旧代码",
       "http_status": "200",
-      "result": "totalElements=0",
-      "verdict": "DATA_LAYER_EMPTY",
-      "probed_at": "2026-10-27T12:44:16+08:00"
-    },
-    {
-      "group": "G1",
-      "route": "bse_official",
-      "target": "https 首页",
-      "http_status": 200,
-      "result": "站点可达",
-      "verdict": "SITE_REACHABLE",
-      "probed_at": "2026-10-27T12:44:16+08:00"
-    },
-    {
-      "group": "G1",
-      "route": "cninfo_stock_list",
-      "target": "szse_stock.json orgId 反查旧代码",
-      "http_status": "200",
-      "result": "股票表 6262 行；15 家中能反查出第二代码的 0 家",
+      "result": "股票表 6262 行；15 家中能按名称或 orgId 反查出第二代码的 0 家",
       "verdict": "NO_OLD_CODE_MAPPING",
-      "probed_at": "2026-10-27T12:44:22+08:00"
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:06:53+08:00"
+    },
+    {
+      "id": "B1",
+      "path": "neeq_official",
+      "target": "站点可达性（JS cookie 挑战后可读）",
+      "http_status": "200",
+      "result": "挑战前 345B → 带 C3VK 后 38543B",
+      "verdict": "SITE_REACHABLE",
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:06:58+08:00"
+    },
+    {
+      "id": "B2",
+      "path": "neeq_official",
+      "target": "companyAnnouncement.do 全部类型+2026 全年（最宽查询）",
+      "http_status": "200",
+      "result": "totalElements=0",
+      "verdict": "ZERO_RESULT",
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:06:58+08:00"
+    },
+    {
+      "id": "B3",
+      "path": "neeq_official",
+      "target": "companyAnnouncement.do 年报分类 1:9503-1001",
+      "http_status": "200",
+      "result": "totalElements=0",
+      "verdict": "ZERO_RESULT",
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:06:59+08:00"
+    },
+    {
+      "id": "B4",
+      "path": "neeq_official",
+      "target": "companyAnnouncement.do 无分类无日期",
+      "http_status": "200",
+      "result": "totalElements=0",
+      "verdict": "ZERO_RESULT",
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:07:00+08:00"
+    },
+    {
+      "id": "B5",
+      "path": "neeq_official",
+      "target": "正向对照：6 个候选代码逐试",
+      "http_status": "200",
+      "result": "命中 0 个；详情见 positive_control_attempt",
+      "verdict": "CONTROL_NOT_OBTAINED",
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:07:06+08:00"
+    },
+    {
+      "id": "B6",
+      "path": "neeq_official",
+      "target": "15 家按 920xxx 现用代码直查",
+      "http_status": "200",
+      "result": "返 0 的 15/15（预期为 0：股转期用 8xxxxx 旧码，现用码不在股转库）",
+      "verdict": "EXPECTED_ZERO_NO_OLD_CODE",
+      "control_ref": "B5",
+      "probed_at": "2026-10-27T13:07:21+08:00"
+    },
+    {
+      "id": "C1",
+      "path": "bse_official",
+      "target": "站点可达性",
+      "http_status": "200",
+      "result": "站点可达",
+      "verdict": "SITE_REACHABLE",
+      "control_ref": "",
+      "probed_at": "2026-10-27T13:07:23+08:00"
     }
   ],
+  "per_company": [
+    {
+      "stock_code": "920002",
+      "org_id": "gfbj0873843",
+      "cninfo_total": 296,
+      "earliest_date": "2024-05-17",
+      "earliest_title": "主承销商关于战略投资者的专项核查报告",
+      "sec_codes_in_earliest_page": [
+        "920002"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920011",
+      "org_id": "gfbj0874468",
+      "cninfo_total": 85,
+      "earliest_date": "2026-03-23",
+      "earliest_title": "招股说明书",
+      "sec_codes_in_earliest_page": [
+        "920011"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920022",
+      "org_id": "gfbj0873702",
+      "cninfo_total": 127,
+      "earliest_date": "2025-09-05",
+      "earliest_title": "内部控制鉴证报告",
+      "sec_codes_in_earliest_page": [
+        "920022"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920055",
+      "org_id": "gfbj0874546",
+      "cninfo_total": 129,
+      "earliest_date": "2026-03-19",
+      "earliest_title": "向不特定合格投资者公开发行股票并在北京证券交易所上市投资风险特别公告",
+      "sec_codes_in_earliest_page": [
+        "920055"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920060",
+      "org_id": "9900048400",
+      "cninfo_total": 296,
+      "earliest_date": "2024-11-21",
+      "earliest_title": "关于签署募集资金监管协议的公告",
+      "sec_codes_in_earliest_page": [
+        "920060"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920066",
+      "org_id": "gfbj0873664",
+      "cninfo_total": 223,
+      "earliest_date": "2024-11-06",
+      "earliest_title": "关于取得发明专利证书的公告",
+      "sec_codes_in_earliest_page": [
+        "920066"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920080",
+      "org_id": "gfbj0833340",
+      "cninfo_total": 113,
+      "earliest_date": "2025-09-18",
+      "earliest_title": "经注册会计师鉴证的非经常性损益明细表",
+      "sec_codes_in_earliest_page": [
+        "920080"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920091",
+      "org_id": "9900041536",
+      "cninfo_total": 111,
+      "earliest_date": "2025-11-03",
+      "earliest_title": "经注册会计师鉴证的非经常性损益明细表",
+      "sec_codes_in_earliest_page": [
+        "920091"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920096",
+      "org_id": "9900056215",
+      "cninfo_total": 59,
+      "earliest_date": "2026-04-29",
+      "earliest_title": "招股说明书",
+      "sec_codes_in_earliest_page": [
+        "920096"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920100",
+      "org_id": "gfbj0873669",
+      "cninfo_total": 202,
+      "earliest_date": "2025-08-22",
+      "earliest_title": "内部控制鉴证报告",
+      "sec_codes_in_earliest_page": [
+        "920100"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920124",
+      "org_id": "gfbj0838401",
+      "cninfo_total": 106,
+      "earliest_date": "2025-11-07",
+      "earliest_title": "发行保荐书",
+      "sec_codes_in_earliest_page": [
+        "920124"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920211",
+      "org_id": "gfbj0874510",
+      "cninfo_total": 58,
+      "earliest_date": "2026-05-21",
+      "earliest_title": "盈利预测报告及审核报告",
+      "sec_codes_in_earliest_page": [
+        "920211"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920220",
+      "org_id": "gfbj0874326",
+      "cninfo_total": 88,
+      "earliest_date": "2026-05-11",
+      "earliest_title": "内部控制鉴证报告",
+      "sec_codes_in_earliest_page": [
+        "920220"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920238",
+      "org_id": "9900048406",
+      "cninfo_total": 50,
+      "earliest_date": "2026-07-13",
+      "earliest_title": "最近三年及一期的财务报告和审计报告",
+      "sec_codes_in_earliest_page": [
+        "920238"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    },
+    {
+      "stock_code": "920289",
+      "org_id": "gfbj0874378",
+      "cninfo_total": 50,
+      "earliest_date": "2026-08-20",
+      "earliest_title": "向不特定合格投资者公开发行股票并在北京证券交易所上市发行公告",
+      "sec_codes_in_earliest_page": [
+        "920289"
+      ],
+      "has_old_code_row": false,
+      "name_match_other_code": []
+    }
+  ],
+  "neeq_totals": {
+    "B2": 0,
+    "B3": 0,
+    "B4": 0
+  },
   "conclusion": {
-    "verdict": "GLOBAL_SOURCE_UNAVAILABLE",
-    "scope": "北交所股转挂牌期定期报告（8xxxxx 旧代码）",
-    "detail": "股转官网站点可达但公告接口对最宽查询（全部类型+2026 全年）仍返 totalElements=0，属数据层不可用；巨潮股转列不服务、这 15 家无股转期公告行（920002 最早一条为 2024-05 IPO 期）、股票表无 8xxxxx↔920xxx 同主体映射；北交所官网可达但只覆盖上市后披露。",
-    "action": "保留一个源故障请求，不拆 15 家手工公司请求；需股转数据层恢复后按 8xxxxx 旧代码检索。"
+    "verdict": "NOT_EXHAUSTED_PENDING_P03_TECHNICAL_REVIEW",
+    "retracts": "GLOBAL_SOURCE_UNAVAILABLE（v1 结论，已撤回）",
+    "cninfo_path": "已证伪：正向对照通过（830779 有数据），15 家逐家扫描均无股转期公告行、无旧码行。巨潮这条路可以确认取不到，不是查询写错。",
+    "neeq_path": "未证伪：股转接口对最宽查询与 6 个候选代码全部返 0，但**未取得任何正向对照样本**，因此不能判定平台故障，也不能判定参数错误。",
+    "why_not_global_failure": "「接口返 0」在缺少已知有数据的样本时，无法区分「平台不可用」与「参数/代码/权限不对」。v1 直接判平台故障属过度推断。",
+    "what_is_proven": [
+      "巨潮接口本身正常（正向对照 830779/830799 有数据）",
+      "巨潮股转列 column=neeq 不服务（同一 orgId 在 szse 列有数据、neeq 列为 0）",
+      "15 家在巨潮均无股转期公告行，最早一条均为北交所 IPO 期材料",
+      "巨潮股票表无 8xxxxx↔920xxx 同主体映射（按代码、名称、orgId 三种方式均查不到）",
+      "股转期报告确实存在：920011 招股说明书载明 2024-09-09 在股转挂牌、创新层，并引用挂牌时披露的《公开转让说明书》"
+    ],
+    "what_is_not_proven": [
+      "股转官网公告接口是否可用（无正向对照）",
+      "15 家的 8xxxxx 旧代码（招股说明书正文未载明本公司代码）",
+      "这 65 个槽位是否真的可取得"
+    ],
+    "handoff": "runs/issues/A01/p03_review_request.md（单条技术核验请求，不拆 15 家）"
   }
 }

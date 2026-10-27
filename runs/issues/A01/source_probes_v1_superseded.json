@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-10-27T12:44:22+08:00",
+  "started_at": "2026-10-27T12:43:51+08:00",
+  "probes": [
+    {
+      "group": "G1",
+      "route": "cninfo_hisAnnouncement",
+      "target": "column=neeq, stock=830779,gfbj0830779",
+      "http_status": "200",
+      "result": "totalAnnouncement=0",
+      "verdict": "COLUMN_NOT_SERVING",
+      "probed_at": "2026-10-27T12:43:53+08:00"
+    },
+    {
+      "group": "G1",
+      "route": "cninfo_hisAnnouncement",
+      "target": "920002 翻到最早页",
+      "http_status": "200",
+      "result": "total=296; 最早=None; 该页secCode=['920002']",
+      "verdict": "NO_NEEQ_ERA_ROWS",
+      "probed_at": "2026-10-27T12:43:59+08:00"
+    },
+    {
+      "group": "G1",
+      "route": "cninfo_hisAnnouncement",
+      "target": "920207 对照（老股转转板）",
+      "http_status": "200",
+      "result": "total=382; secCodes=['835207', '920207']",
+      "verdict": "CNINFO_CAN_HOLD_OLD_CODE",
+      "probed_at": "2026-10-27T12:44:07+08:00"
+    },
+    {
+      "group": "G1",
+      "route": "neeq_official",
+      "target": "https 首页",
+      "http_status": 200,
+      "result": "站点可达",
+      "verdict": "SITE_REACHABLE",
+      "probed_at": "2026-10-27T12:44:08+08:00"
+    },
+    {
+      "group": "G1",
+      "route": "neeq_official",
+      "target": "http companyAnnouncement.do 年报分类",
+      "http_status": "200",
+      "result": "totalElements=0",
+      "verdict": "EMPTY_RESULT",
+      "probed_at": "2026-10-27T12:44:12+08:00"
+    },
+    {
+      "group": "G1",
+      "route": "neeq_official",
+      "target": "http companyAnnouncement.do 全部+日期（判别探针）",
+      "http_status": "200",
+      "result": "totalElements=0",
+      "verdict": "DATA_LAYER_EMPTY",
+      "probed_at": "2026-10-27T12:44:16+08:00"
+    },
+    {
+      "group": "G1",
+      "route": "bse_official",
+      "target": "https 首页",
+      "http_status": 200,
+      "result": "站点可达",
+      "verdict": "SITE_REACHABLE",
+      "probed_at": "2026-10-27T12:44:16+08:00"
+    },
+    {
+      "group": "G1",
+      "route": "cninfo_stock_list",
+      "target": "szse_stock.json orgId 反查旧代码",
+      "http_status": "200",
+      "result": "股票表 6262 行；15 家中能反查出第二代码的 0 家",
+      "verdict": "NO_OLD_CODE_MAPPING",
+      "probed_at": "2026-10-27T12:44:22+08:00"
+    }
+  ],
+  "conclusion": {
+    "verdict": "GLOBAL_SOURCE_UNAVAILABLE",
+    "scope": "北交所股转挂牌期定期报告（8xxxxx 旧代码）",
+    "detail": "股转官网站点可达但公告接口对最宽查询（全部类型+2026 全年）仍返 totalElements=0，属数据层不可用；巨潮股转列不服务、这 15 家无股转期公告行（920002 最早一条为 2024-05 IPO 期）、股票表无 8xxxxx↔920xxx 同主体映射；北交所官网可达但只覆盖上市后披露。",
+    "action": "保留一个源故障请求，不拆 15 家手工公司请求；需股转数据层恢复后按 8xxxxx 旧代码检索。"
+  }
+}

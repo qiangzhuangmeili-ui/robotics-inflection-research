@@ -2,8 +2,11 @@
   "issue_key": "A01",
   "issue_number": 31,
   "plan_version": "20261026_collection_first_v2",
-  "generated_at": "2026-10-27T12:46:40+08:00",
-  "generator": "tools/a01_retry.py",
+  "generated_at": "2026-10-27T13:10:03+08:00",
+  "generator": "tools/a01_retry.py + tools/a01_probe_v2.py",
+  "version": 2,
+  "amended_at": "2026-10-27T13:10:03+08:00",
+  "amendment": "v1 的 65 槽「全局源不可用」结论已撤回，改为待 P03 技术核验；source_probes.json 重建为 v2",
   "files": [
     {
       "path": "runs/issues/A01/retry_attempts.csv",
@@ -19,14 +22,26 @@
     },
     {
       "path": "runs/issues/A01/residual_failures.csv",
-      "bytes": 35043,
-      "sha256": "419f5f8ffce5aa8b9252f0b71ca72426fe75d00def697df7e5d10e3950b39e87",
+      "bytes": 29973,
+      "sha256": "f077c0b6fe72815403be3f62f7f7cd5a030ccb3c64674d97a20505964ae0c613",
       "storage": "GIT"
     },
     {
       "path": "runs/issues/A01/source_probes.json",
+      "bytes": 11670,
+      "sha256": "925d323dc50c6a38400453850935c99edfa52c57265c72c5a337ebef824dc3ed",
+      "storage": "GIT"
+    },
+    {
+      "path": "runs/issues/A01/source_probes_v1_superseded.json",
       "bytes": 3080,
       "sha256": "18dc2c993c762f093dfaebffa34f48441cda5da4b10273c5dc4621babb7ed749",
+      "storage": "GIT"
+    },
+    {
+      "path": "runs/issues/A01/p03_review_request.md",
+      "bytes": 4586,
+      "sha256": "c93a3ec9e53c19920956135140e6fea8db23c12f46de6f102fb95dc02ba373eb",
       "storage": "GIT"
     },
     {
@@ -43,20 +58,26 @@
     },
     {
       "path": "runs/issues/A01/retry_summary.json",
-      "bytes": 234,
-      "sha256": "82767b068fe94d2fb7d1bceac7b5a4551fa56a19f993a34e7fbc757151b9092e",
+      "bytes": 251,
+      "sha256": "af132e9cd8a7f71b2629c651028a5fd0ffc1c1d7de5deca2c328a8a37a05232b",
       "storage": "GIT"
     },
     {
       "path": "runs/issues/A01/handoff.md",
-      "bytes": 9697,
-      "sha256": "e916a39be60da3e6b52b06f39acc0c7f03aa5575a5e43bbff586dd965b2b7ffa",
+      "bytes": 14494,
+      "sha256": "3d0ee5a7309884e60c240aaeca2cffab6804b9a16ba483f558bfdd4ebe3a24b5",
       "storage": "GIT"
     },
     {
       "path": "runs/issues/A01/review.json",
-      "bytes": 6463,
-      "sha256": "96d8489787dfe87ff8656bebd47100dff210bb2975078061cc58460df028745b",
+      "bytes": 8907,
+      "sha256": "c4548c00ffe1555dea0493a2e646640d9d8eecd86fceda1bb80d90fbe23d7edf",
+      "storage": "GIT"
+    },
+    {
+      "path": "runs/issues/A01/neeq_probe/per_company_cninfo_scan.json",
+      "bytes": 5337,
+      "sha256": "5fdaed8ed6a065a8f54ff90fd2bb3f570b9721e5b6ab6db7cb376be404cadce5",
       "storage": "GIT"
     },
     {
@@ -90,9 +111,21 @@
       "storage": "LOCAL_ONLY_GITIGNORED"
     },
     {
+      "path": "runs/issues/A01/neeq_probe/920011_prospectus.pdf",
+      "bytes": 6295826,
+      "sha256": "4ab222de50f3a29c26e04d48c17a0fc0dadc131f3a168fb4e743ec8e6405db7c",
+      "storage": "LOCAL_ONLY_GITIGNORED"
+    },
+    {
       "path": "tools/a01_retry.py",
-      "bytes": 31709,
-      "sha256": "fd172b992f40a484b6c01853ad3fe3134969d1937608a859547a55804e78eaf3",
+      "bytes": 32079,
+      "sha256": "7815a0836906a25371e74e0cad3fcd2eb122cce19ac18a387edb78618751afd0",
+      "storage": "GIT"
+    },
+    {
+      "path": "tools/a01_probe_v2.py",
+      "bytes": 17010,
+      "sha256": "33aaab8fb8cdec1e679f0160af7ffbfc085abf2f38c6e1e6f7726e4128807db7",
       "storage": "GIT"
     },
     {
@@ -102,5 +135,5 @@
       "storage": "GIT"
     }
   ],
-  "note": "PDF 原件在 D 盘 sources/collection，不入 Git；封面证据图按仓库 .gitignore 策略仅留本地，sha256 与渲染方式已记录，可据 visual_confirmations.json 从原件重放。"
+  "note": "PDF 原件在 D 盘；封面证据图与招股说明书样本按 .gitignore 仅留本地，sha256 已记录。"
 }

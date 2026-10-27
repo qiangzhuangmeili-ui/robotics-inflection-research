@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "A01_RETRY_COMPLETE",
+  "status": "A01_SELF_CHECK_PASS_WITH_OPEN_ITEM_PENDING_P03",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -783,7 +783,7 @@
     "issue_key": "A01",
     "issue_number": 31,
     "reviewed_at": "2026-10-27T12:46:12+08:00",
-    "decision": "SELF_CHECK_PASS",
+    "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
     "scope": "只补 A00 列出的 76 个缺口槽，不重跑已取得资料",
     "before": {
       "verified": 7162,
@@ -815,14 +815,37 @@
     },
     "residual": {
       "G1_neeq_platform_gap": 65,
-      "category": "GLOBAL_SOURCE_UNAVAILABLE",
-      "action": "保留一条源故障请求；股转数据层恢复后按 8xxxxx 旧代码批量检索"
+      "category": "NOT_EXHAUSTED_PENDING_P03_TECHNICAL_REVIEW",
+      "retracted_category": "GLOBAL_SOURCE_UNAVAILABLE",
+      "action": "单条技术核验请求 runs/issues/A01/p03_review_request.md，交 P03；核验前保持 NOT_TRIED"
     },
     "new_inputs": [
       "data/company_name_aliases.csv",
       "runs/issues/A01/collection_config_v2.json"
     ],
-    "next": "A02 #32 READY：65 槽股转缺口合并为一条源恢复请求；承接 11 槽 identity_checks 记账不一致",
-    "note": "11 槽回收中仅 1 槽为新下载，10 槽为对已在盘原件的身份补证。"
+    "next": "P03 技术核验（#14 范围）→ 之后 A02；A02 不得把 65 槽当人工补件清单",
+    "note": "11 槽回收中仅 1 槽为新下载，10 槽为对已在盘原件的身份补证。",
+    "amended_at": "2026-10-27T13:10:03+08:00",
+    "decision_note": "11 槽补证成立；65 槽「全局源不可用」已撤回，退回 P03 技术核验",
+    "corrections": [
+      "C1 撤回平台故障结论（缺正向对照）",
+      "C2 修正日期字段错（published_on → announcementTime）",
+      "C3 由单样本外推改为 15 家逐家取证"
+    ],
+    "proven": {
+      "cninfo_positive_control": [
+        "830779:368",
+        "830799:567"
+      ],
+      "cninfo_neeq_column": "not serving",
+      "cninfo_15_companies": "no NEEQ-era rows, no old code",
+      "old_code_mapping": "none",
+      "neeq_period_reports_exist": "920011 招股书：2024-09-09 股转挂牌、创新层"
+    },
+    "not_proven": [
+      "neeq API usability (no positive control)",
+      "8xxxxx old codes",
+      "whether all 65 slots are actually obtainable"
+    ]
   }
 }

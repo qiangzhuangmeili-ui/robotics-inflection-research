@@ -4,16 +4,16 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_A01_SELF_CHECK_PASS",
-  "claim_note": "A01 已完成：76 个缺口中 11 槽全部回收（待核 10→0、失败 1→0），65 槽北交所股转为全局源不可用，保留一条源故障请求。",
+  "status": "IDLE_A01_AMENDED_PENDING_P03",
+  "claim_note": "A01 已修正：11 槽补证成立；65 槽「全局源不可用」结论撤回（缺正向对照、日期字段取错），改为 NOT_EXHAUSTED_PENDING_P03_TECHNICAL_REVIEW，单条请求交 P03。",
   "last_completed": {
     "issue_number": 31,
     "issue_key": "A01",
-    "completed_at": "2026-10-27T12:46:12+08:00",
+    "completed_at": "2026-10-27T13:10:03+08:00",
     "review_file": "runs/issues/A01/review.json",
-    "decision": "SELF_CHECK_PASS",
-    "acceptance": "5/5",
-    "self_check": "11 槽回收（1 重下 + 10 身份补证）；65 槽 NOT_TRIED 保持未完成"
+    "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
+    "acceptance": "3 PASS + 2 PASS_WITH_CORRECTION",
+    "self_check": "11 槽回收（1 重下 + 10 身份补证）；65 槽未证伪，待 P03"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 32,
-  "next_recommended_issue_key": "A02",
-  "next_recommended_reason": "A01 已放行；剩余 65 槽合并为一条股转源恢复请求，另有 11 槽 identity_checks 记账不一致待统一。",
+  "next_recommended_issue_number": 14,
+  "next_recommended_issue_key": "P03",
+  "next_recommended_reason": "65 槽北交所股转缺口需先由 P03 做接口/参数/旧代码映射技术核验（runs/issues/A01/p03_review_request.md）；结论出来前 A02 不推进该 65 槽。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -83,5 +83,6 @@
       "contains": "P07校准文本、65份回执、归档索引及更新后的文档登记表；不重复打包PDF"
     }
   },
-  "current_drive_archive_status": "VERIFIED_65_FILES_BY_CODEX"
+  "current_drive_archive_status": "VERIFIED_65_FILES_BY_CODEX",
+  "a02_blocked_by": "P03_NEEQ_TECHNICAL_REVIEW"
 }
