@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 14,
-  "active_issue_key": "P03",
-  "executor": "Codex",
-  "started_at": "2026-10-27T05:14:04.482Z",
-  "status": "IN_PROGRESS_P03_NEEQ_RECHECK",
-  "claim_note": "按用户要求接手A01未完成的股转接口、旧代码映射及65槽适用性核验；仅当前15家65槽，不扩大全池、不改已验收历史成果。",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
+  "started_at": null,
+  "status": "IDLE_P03_TECHNICAL_RECHECK_COMPLETE_A01_RECOVERY_READY",
+  "claim_note": "P03股转技术复核已交付：15旧码、50官方候选链接、15适用性待复核；需A01自动恢复，A02仍等待。",
   "last_completed": {
     "issue_number": 31,
     "issue_key": "A01",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 14,
-  "next_recommended_issue_key": "P03",
-  "next_recommended_reason": "65 槽北交所股转缺口需先由 P03 做接口/参数/旧代码映射技术核验（runs/issues/A01/p03_review_request.md）；结论出来前 A02 不推进该 65 槽。",
+  "next_recommended_issue_number": 31,
+  "next_recommended_issue_key": "A01",
+  "next_recommended_reason": "P03已验证官方NEEQ接口及15家旧码；50槽有全文候选链接，15槽待适用性判断。恢复自动重试，不直接下发A02。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -84,5 +84,31 @@
     }
   },
   "current_drive_archive_status": "VERIFIED_65_FILES_BY_CODEX",
-  "a02_blocked_by": "P03_NEEQ_TECHNICAL_REVIEW"
+  "a02_blocked_by": "A01_NEEQ_AUTOMATIC_RECOVERY_AND_APPLICABILITY_REVIEW",
+  "p03_neeq_recheck": {
+    "issue": "P03",
+    "scope": "NEEQ_RECHECK_20261027",
+    "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
+    "completed_at": "2026-10-27T07:04:41.079355+00:00",
+    "official_index_route": "AVAILABLE_POSITIVE_CONTROL_VERIFIED",
+    "issuer_mappings": 15,
+    "target_slots": 65,
+    "slots_with_current_official_links": 50,
+    "unresolved_applicability": 15,
+    "pre_current_listing_periods": 11,
+    "quarterly_slots": 4,
+    "sample_pdf_identity_verified": 5,
+    "sample_pdf_download_errors": 10,
+    "shared_ledger_modified": false,
+    "a02_ready": false,
+    "next_action": "A01 automatic recovery using validated old codes and parameter encoding; applicability checks and file transport diagnostics first. Do not dispatch 65 manual requests.",
+    "limits": [
+      "50 is candidate-link coverage, not 50 downloaded PDFs.",
+      "5 PDF samples are issuer identity checks, not 5 newly recovered target slots.",
+      "11 pre-listing periods are review candidates, not final NA decisions.",
+      "Quarter-specific positive controls failed; their zeros cannot prove absence.",
+      "No Drive upload, financial adoption or independent acceptance in this follow-up."
+    ],
+    "review_file": "runs/issues/P03/neeq_recheck_20261027/review.json"
+  }
 }
