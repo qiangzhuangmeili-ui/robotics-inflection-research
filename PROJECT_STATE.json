@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "A00_COVERAGE_RECONCILED",
+  "status": "A01_RETRY_COMPLETE",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -778,5 +778,51 @@
     ],
     "next": "A01 #31 READY：65 槽股转映射补采、1 槽超限、5 槽更名、5 槽图片版",
     "note": "7172 是文件取得口径，不等于已读全文/业务采用；独立业务验收仍为 0。"
+  },
+  "a01_stage": {
+    "issue_key": "A01",
+    "issue_number": 31,
+    "reviewed_at": "2026-10-27T12:46:12+08:00",
+    "decision": "SELF_CHECK_PASS",
+    "scope": "只补 A00 列出的 76 个缺口槽，不重跑已取得资料",
+    "before": {
+      "verified": 7162,
+      "pending_identity": 10,
+      "source_failed": 1,
+      "not_tried": 65,
+      "na_prelisting": 140,
+      "bytes": 18668202153
+    },
+    "after": {
+      "verified": 7173,
+      "pending_identity": 0,
+      "source_failed": 0,
+      "not_tried": 65,
+      "na_prelisting": 140,
+      "applicable": 7238,
+      "obtained_rate_applicable": 0.991,
+      "bytes": 18759762853,
+      "local_files_present": 7173,
+      "local_files_missing": 0
+    },
+    "resolved": {
+      "G2_oversize": 1,
+      "G3_renamed": 5,
+      "G4_image_only": 5,
+      "total": 11,
+      "redownloaded": 1,
+      "identity_only": 10
+    },
+    "residual": {
+      "G1_neeq_platform_gap": 65,
+      "category": "GLOBAL_SOURCE_UNAVAILABLE",
+      "action": "保留一条源故障请求；股转数据层恢复后按 8xxxxx 旧代码批量检索"
+    },
+    "new_inputs": [
+      "data/company_name_aliases.csv",
+      "runs/issues/A01/collection_config_v2.json"
+    ],
+    "next": "A02 #32 READY：65 槽股转缺口合并为一条源恢复请求；承接 11 槽 identity_checks 记账不一致",
+    "note": "11 槽回收中仅 1 槽为新下载，10 槽为对已在盘原件的身份补证。"
   }
 }

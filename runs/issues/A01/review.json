@@ -1,0 +1,140 @@
+{
+  "issue_key": "A01",
+  "issue_number": 31,
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_at": "2026-10-27T12:50:00+08:00",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS",
+  "acceptance": [
+    {
+      "item": "失败项都有已试路径和实际结果，已取得资料不重复下载",
+      "result": "PASS",
+      "evidence": "retry_attempts.csv 11 行逐槽记录原状态/路径/是否发 HTTP/实际结果/证据；11 槽中仅 1 槽（301622）发出下载请求，其余 10 槽为对已在盘原件的身份补证（http_issued=NO）；7172 份既有原件未被重新下载，sha256 与 A00 一致"
+    },
+    {
+      "item": "源普遍不可用只保留一个源故障请求，不拆 1054 个手工公司请求",
+      "result": "PASS",
+      "evidence": "65 槽全部归入单条 GLOBAL_SOURCE_UNAVAILABLE；source_probes.json 7 条探测证明股转数据层对最宽查询（全部类型+2026 全年）仍返 0、巨潮股转列不服务、15 家无股转期公告行、无 8xxxxx 映射；未生成任何逐家公司的人工请求"
+    },
+    {
+      "item": "按错误/网站分组，先处理全局连接故障，再按有限预算重试",
+      "result": "PASS",
+      "evidence": "分 G1 源故障（65）/G2 超限（1）/G3 更名（5）/G4 图片版（5）；G1 先做 7 条探测并定性为数据层不可用后才停止；G2/G3/G4 共 11 槽全部回收，未超预算"
+    },
+    {
+      "item": "尝试备用来源并保留每次结果与身份核对",
+      "result": "PASS",
+      "evidence": "探测覆盖巨潮股转列、股转官网（http/https、年报分类与全部类型）、北交所官网、巨潮股票表映射；每槽回收均留存身份校验项（HISTORICAL_SEC_NAME / A01_VISUAL_COVER_CONFIRMATION）与证据"
+    },
+    {
+      "item": "成功项核销，剩余项区分自动已尽力、未披露、不适用和需环境恢复",
+      "result": "PASS",
+      "evidence": "retry_resolved.csv 11 行核销；residual_failures.csv 65 行全部 category=GLOBAL_SOURCE_UNAVAILABLE（需环境恢复）；未出现 NOT_DISCLOSED_BY_ISSUER 或 NOT_APPLICABLE_PRE_LISTING 的误判"
+    }
+  ],
+  "reconciliation": {
+    "slot_total": 7378,
+    "before": {
+      "verified": 7162,
+      "pending_identity": 10,
+      "source_failed": 1,
+      "not_tried": 65,
+      "na_prelisting": 140,
+      "obtained_incl_pending": 7172,
+      "bytes": 18668202153
+    },
+    "after": {
+      "verified": 7173,
+      "pending_identity": 0,
+      "source_failed": 0,
+      "not_tried": 65,
+      "na_prelisting": 140,
+      "not_yet_disclosed": 0,
+      "obtained_incl_pending": 7173,
+      "applicable": 7238,
+      "obtained_rate_applicable": 0.9910,
+      "bytes": 18759762853,
+      "local_files_present": 7173,
+      "local_files_missing": 0
+    },
+    "sum_of_buckets": 7378,
+    "reconciles": true,
+    "gained_slots": 11,
+    "redownloaded_slots": 1,
+    "identity_only_slots": 10
+  },
+  "retry_groups": {
+    "G1_neeq_platform_gap": {
+      "slots": 65,
+      "companies": 15,
+      "verdict": "GLOBAL_SOURCE_UNAVAILABLE",
+      "evidence": [
+        "巨潮 column=neeq（830779）totalAnnouncement=0：股转列不服务",
+        "巨潮 920002 最早一条为 2024-05 IPO 期，secCode 全为 920002：无股转期公告行",
+        "巨潮 920207 对照 382 条含 secCode=835207：巨潮有能力存旧代码行，缺失是数据而非查询",
+        "股转官网 https 首页 200，站点可达",
+        "股转官网 companyAnnouncement.do 年报分类 totalElements=0",
+        "股转官网 companyAnnouncement.do 全部类型+2026 全年（判别探针）totalElements=0：数据层为空",
+        "巨潮股票表 6262 行，15 家中能反查第二代码的 0 家：无 8xxxxx 映射"
+      ],
+      "action": "保留一条源故障请求；股转数据层恢复后按 8xxxxx 旧代码批量检索"
+    },
+    "G2_oversize": {
+      "slots": 1,
+      "verdict": "RESOLVED",
+      "detail": "301622 annual_2025，config v2 单份上限 120MB，重下 91,560,700 B / 233 页，七项校验全 PASS"
+    },
+    "G3_renamed": {
+      "slots": 5,
+      "companies": 2,
+      "verdict": "RESOLVED",
+      "detail": "data/company_name_aliases.csv 历史简称别名表；002689←沈阳远大智能工业集团、002960←青鸟消防；issuer_match_mode=HISTORICAL_SEC_NAME；未重新下载"
+    },
+    "G4_image_only": {
+      "slots": 5,
+      "companies": 3,
+      "verdict": "RESOLVED",
+      "detail": "封面位图目视确认，页码+封面原句+主体全称+报告期短语四者齐备；000856/002083×3 整页位图直出，300820 为字形贴片需按 cm 矩阵合成"
+    }
+  },
+  "artifacts": {
+    "retry_attempts": "runs/issues/A01/retry_attempts.csv",
+    "retry_resolved": "runs/issues/A01/retry_resolved.csv",
+    "residual_failures": "runs/issues/A01/residual_failures.csv",
+    "source_probes": "runs/issues/A01/source_probes.json",
+    "visual_confirmations": "runs/issues/A01/visual_confirmations.json",
+    "config_v2": "runs/issues/A01/collection_config_v2.json",
+    "evidence_dir": "runs/issues/A01/evidence/",
+    "alias_table": "data/company_name_aliases.csv"
+  },
+  "integrity": {
+    "checkpoint_index_status_diff": 0,
+    "sha256_shared_across_companies": 0,
+    "document_id_shared_across_companies": 0,
+    "revalidation_non_pass": 0,
+    "local_files_present": 7173,
+    "local_files_missing": 0,
+    "na_prelisting_rule_violations": 0,
+    "bookkeeping_fixed_slots": 11,
+    "bookkeeping_outstanding_slots": 11
+  },
+  "limitations": [
+    "本卡只做补缺与身份补证，不做财务字段精读、不做业务结论、不估值。",
+    "65 槽仍是未尝试；源不可用不等于不适用、不等于未披露。",
+    "10 槽是身份补证而非新取得文件，不增加新原件。",
+    "目视封面只确认主体与报告期，不代表已读全文或财务数据可用。",
+    "config v2 仅放开单份上限，未改并发/限速/校验阈值。",
+    "无 Drive 连接器：未上传未回读，未改归档态。",
+    "自检由执行者本人完成，不等于独立审计。"
+  ],
+  "allows_next_stage_scope": "放行 A02 人工补缺合并；不放行业务结论/指标筛选/估值",
+  "not_allowed": [
+    "业务结论",
+    "指标筛选",
+    "估值",
+    "把未尝试写成缺件或不适用",
+    "把身份补证写成新取得文件",
+    "宣称独立验收"
+  ]
+}

@@ -718,8 +718,8 @@
    "period_label": "FY2024",
    "period_end": "2024-12-31",
    "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_PENDING_IDENTITY",
-   "status_reason": "身份未完全核实（正文抽取不足或主体未在前 8 页出现），待人工看封面",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 更名复检通过：封面主体为历史名称，经 data/company_name_aliases.csv 别名匹配（HISTORICAL_SEC_NAME），报告期 BODY_PHRASE",
    "attempt_count": 1,
    "source_attempts": [
     {
@@ -756,7 +756,7 @@
     "resumed_from": 0
    },
    "last_error": null,
-   "next_action": "MANUAL_IDENTITY_CHECK",
+   "next_action": "NONE",
    "checkpoint": {
     "stage": "DONE",
     "at": "2026-10-26T22:12:49+08:00",
@@ -793,8 +793,8 @@
       "detail": "146 >= 20"
      },
      "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=ST远智 代码=002689 方式=NONE 范围=P1-8"
+      "result": "PASS",
+      "detail": "证券简称=ST远智 代码=002689 方式=HISTORICAL_SEC_NAME 范围=P1-8"
      },
      "PERIOD_MATCH": {
       "result": "PASS",
@@ -804,12 +804,8 @@
       "result": "PASS",
       "detail": "title=2024年年度报告"
      }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002689\\annual_2024\\DOC-351AD01A091B5969.pdf.part",
-    "bytes": 1735647,
-    "checks": {
+    },
+    "identity_checks_first_pass": {
      "MAGIC_HEADER": {
       "result": "PASS",
       "detail": "%PDF-1.7"
@@ -839,21 +835,55 @@
       "detail": "title=2024年年度报告"
      }
     },
-    "identity_status": "COLLECTED_PENDING_IDENTITY",
+    "identity_checks_source": "validation.checks@A01",
+    "identity_verified_via": "A01_ALIAS_REVALIDATION"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002689\\annual_2024\\DOC-351AD01A091B5969.pdf",
+    "bytes": 1735647,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1735647 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "146 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "146 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=ST远智 代码=002689 方式=HISTORICAL_SEC_NAME 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
     "form": "FULL_TEXT",
     "page_count": 146,
     "text_chars": 606,
-    "issues": [
-     "ISSUER_MATCH"
-    ],
+    "issues": [],
     "sha256": "2db77f7b3f61f256aaaef6f62a5e4e24cce57412231668a1693115cd3241bc56",
     "cover_text_chars": 28,
     "identity_probe_chars": 2414,
     "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "NONE",
+    "issuer_match_mode": "HISTORICAL_SEC_NAME",
     "period_match_method": "BODY_PHRASE"
    },
-   "updated_at": "2026-10-26T22:12:49+08:00"
+   "updated_at": "2026-10-27T12:44:31+08:00"
   },
   "annual_2025": {
    "security_id": "SZ:002689",
@@ -862,8 +892,8 @@
    "period_label": "FY2025",
    "period_end": "2025-12-31",
    "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_PENDING_IDENTITY",
-   "status_reason": "身份未完全核实（正文抽取不足或主体未在前 8 页出现），待人工看封面",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 更名复检通过：封面主体为历史名称，经 data/company_name_aliases.csv 别名匹配（HISTORICAL_SEC_NAME），报告期 BODY_PHRASE",
    "attempt_count": 1,
    "source_attempts": [
     {
@@ -900,7 +930,7 @@
     "resumed_from": 0
    },
    "last_error": null,
-   "next_action": "MANUAL_IDENTITY_CHECK",
+   "next_action": "NONE",
    "checkpoint": {
     "stage": "DONE",
     "at": "2026-10-26T22:12:51+08:00",
@@ -937,8 +967,8 @@
       "detail": "171 >= 20"
      },
      "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=ST远智 代码=002689 方式=NONE 范围=P1-8"
+      "result": "PASS",
+      "detail": "证券简称=ST远智 代码=002689 方式=HISTORICAL_SEC_NAME 范围=P1-8"
      },
      "PERIOD_MATCH": {
       "result": "PASS",
@@ -948,12 +978,8 @@
       "result": "PASS",
       "detail": "title=2025年年度报告"
      }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002689\\annual_2025\\DOC-A565E8B840DEA018.pdf.part",
-    "bytes": 1566750,
-    "checks": {
+    },
+    "identity_checks_first_pass": {
      "MAGIC_HEADER": {
       "result": "PASS",
       "detail": "%PDF-1.7"
@@ -983,21 +1009,55 @@
       "detail": "title=2025年年度报告"
      }
     },
-    "identity_status": "COLLECTED_PENDING_IDENTITY",
+    "identity_checks_source": "validation.checks@A01",
+    "identity_verified_via": "A01_ALIAS_REVALIDATION"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002689\\annual_2025\\DOC-A565E8B840DEA018.pdf",
+    "bytes": 1566750,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1566750 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "171 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "171 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=ST远智 代码=002689 方式=HISTORICAL_SEC_NAME 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
     "form": "FULL_TEXT",
     "page_count": 171,
     "text_chars": 566,
-    "issues": [
-     "ISSUER_MATCH"
-    ],
+    "issues": [],
     "sha256": "2f05c0074a53ef3b4aee85fd5e2510b1bd023a2a1aa52fbfdfc98656b742e6dd",
     "cover_text_chars": 27,
     "identity_probe_chars": 2359,
     "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "NONE",
+    "issuer_match_mode": "HISTORICAL_SEC_NAME",
     "period_match_method": "BODY_PHRASE"
    },
-   "updated_at": "2026-10-26T22:12:51+08:00"
+   "updated_at": "2026-10-27T12:44:31+08:00"
   }
  },
  "indexes": {
@@ -1336,5 +1396,5 @@
    "fetched_at": "2026-10-26T22:08:09+08:00"
   }
  },
- "updated_at": "2026-10-26T22:12:51+08:00"
+ "updated_at": "2026-10-27T12:44:31+08:00"
 }

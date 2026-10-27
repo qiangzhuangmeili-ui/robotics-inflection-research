@@ -860,8 +860,8 @@
    "period_label": "2026Q1",
    "period_end": "2026-03-31",
    "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_PENDING_IDENTITY",
-   "status_reason": "身份未完全核实（正文抽取不足或主体未在前 8 页出现），待人工看封面",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 目视封面确认：正文无法抽取（图片版/字形贴片），按 P1 封面原句确认主体与报告期",
    "attempt_count": 1,
    "source_attempts": [
     {
@@ -898,7 +898,7 @@
     "resumed_from": 0
    },
    "last_error": null,
-   "next_action": "MANUAL_IDENTITY_CHECK",
+   "next_action": "NONE",
    "checkpoint": {
     "stage": "DONE",
     "at": "2026-10-26T21:12:28+08:00",
@@ -935,23 +935,19 @@
       "detail": "10 >= 3"
      },
      "ISSUER_MATCH": {
-      "result": "FAIL",
-      "detail": "证券简称=冀东装备 代码=000856 方式=NONE 范围=P1-8"
+      "result": "PASS",
+      "detail": "目视封面主体=唐山冀东装备工程股份有限公司；证据 runs/issues/A01/evidence/000856_q1_2026_p1.png"
      },
      "PERIOD_MATCH": {
-      "result": "UNKNOWN",
-      "detail": "pattern=2026年第?[一三]季度报告; method=NONE; year_in_body=False; other_years=[]; title=2026年一季度报告"
+      "result": "PASS",
+      "detail": "目视封面报告期=2026 年第一季度报告；方法=A01_VISUAL_COVER"
      },
      "FORM_FULL_TEXT": {
       "result": "PASS",
-      "detail": "title=2026年一季度报告"
+      "detail": "封面标注为报告全文"
      }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000856\\q1_2026\\DOC-568DDDCF8BB99C79.pdf.part",
-    "bytes": 5299024,
-    "checks": {
+    },
+    "identity_checks_first_pass": {
      "MAGIC_HEADER": {
       "result": "PASS",
       "detail": "%PDF-1.7"
@@ -981,7 +977,50 @@
       "detail": "title=2026年一季度报告"
      }
     },
-    "identity_status": "COLLECTED_PENDING_IDENTITY",
+    "identity_checks_source": "validation.checks@A01",
+    "identity_verified_via": "A01_VISUAL_COVER_CONFIRMATION",
+    "identity_evidence": {
+     "page": 1,
+     "observed": "证券代码：000856　证券简称：冀东装备；唐山冀东装备工程股份有限公司 2026 年第一季度报告",
+     "file": "runs/issues/A01/evidence/000856_q1_2026_p1.png",
+     "sha256": "88ab55e85524934b4bbde7d5068497030efa69ab80ff90934fce76d6355105d4",
+     "render_method": "PDF 整页 FlateDecode RGB 位图直出"
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\000856\\q1_2026\\DOC-568DDDCF8BB99C79.pdf.part",
+    "bytes": 5299024,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "5299024 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "10 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "10 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "目视封面主体=唐山冀东装备工程股份有限公司；证据 runs/issues/A01/evidence/000856_q1_2026_p1.png"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "目视封面报告期=2026 年第一季度报告；方法=A01_VISUAL_COVER"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "封面标注为报告全文"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
     "form": "FULL_TEXT",
     "page_count": 10,
     "text_chars": 0,
@@ -993,9 +1032,10 @@
     "identity_probe_chars": 0,
     "issuer_search_scope": "P1-8",
     "issuer_match_mode": "NONE",
-    "period_match_method": "NONE"
+    "period_match_method": "A01_VISUAL_COVER",
+    "identity_verified_via": "A01_VISUAL_COVER_CONFIRMATION"
    },
-   "updated_at": "2026-10-26T21:12:28+08:00"
+   "updated_at": "2026-10-27T12:44:38+08:00"
   }
  },
  "indexes": {
@@ -1310,5 +1350,5 @@
    "fetched_at": "2026-10-26T21:12:26+08:00"
   }
  },
- "updated_at": "2026-10-26T21:12:28+08:00"
+ "updated_at": "2026-10-27T12:44:38+08:00"
 }

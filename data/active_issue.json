@@ -4,16 +4,16 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_A00_SELF_CHECK_PASS",
-  "claim_note": "A00 已完成：1054 家名单不重不漏，7378 槽逐个有状态，应取得 7238、取得 7172（99.09%），原件 7172 份全在盘。",
+  "status": "IDLE_A01_SELF_CHECK_PASS",
+  "claim_note": "A01 已完成：76 个缺口中 11 槽全部回收（待核 10→0、失败 1→0），65 槽北交所股转为全局源不可用，保留一条源故障请求。",
   "last_completed": {
-    "issue_number": 30,
-    "issue_key": "A00",
-    "completed_at": "2026-10-27T12:19:29+08:00",
-    "review_file": "runs/issues/A00/review.json",
+    "issue_number": 31,
+    "issue_key": "A01",
+    "completed_at": "2026-10-27T12:46:12+08:00",
+    "review_file": "runs/issues/A01/review.json",
     "decision": "SELF_CHECK_PASS",
-    "acceptance": "2/2",
-    "self_check": "名单 ROSTER PASS；四类缺口 76 槽（待核 10/失败 1/未尝试 65）单列"
+    "acceptance": "5/5",
+    "self_check": "11 槽回收（1 重下 + 10 身份补证）；65 槽 NOT_TRIED 保持未完成"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 31,
-  "next_recommended_issue_key": "A01",
-  "next_recommended_reason": "A00 已放行；剩余缺口集中在 A01：65 槽北交所股转映射、1 槽 87.3MB 超限、5 槽更名、5 槽图片版。",
+  "next_recommended_issue_number": 32,
+  "next_recommended_issue_key": "A02",
+  "next_recommended_reason": "A01 已放行；剩余 65 槽合并为一条股转源恢复请求，另有 11 槽 identity_checks 记账不一致待统一。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
