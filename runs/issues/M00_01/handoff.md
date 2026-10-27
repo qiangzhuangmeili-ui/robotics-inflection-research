@@ -9,7 +9,7 @@
 
 ## 一、一句话结论
 
-100 家 × 7 槽 = **700 个槽位全部有状态**：678 个 `COLLECTED_IDENTITY_VERIFIED`、4 个 `COLLECTED_PENDING_IDENTITY`、18 个 `NOT_TRIED`、0 个 `NOT_DISCLOSED_BY_ISSUER`、0 个源失败/访问受限；合计取得 **682** 槽，累计 1870.1 MB 落本机 D 盘。
+100 家 × 7 槽 = **700 个槽位全部有状态**：678 个 `COLLECTED_IDENTITY_VERIFIED`、4 个 `COLLECTED_PENDING_IDENTITY`、0 个 `NOT_TRIED`、0 个 `NOT_DISCLOSED_BY_ISSUER`、0 个源失败/访问受限；合计取得 **682** 槽，累计 1870.1 MB 落本机 D 盘。
 
 ## 二、名单构成
 
@@ -36,7 +36,7 @@
 | 状态 | 槽数 |
 |---|---:|
 | `COLLECTED_IDENTITY_VERIFIED` | 678 |
-| `NOT_TRIED` | 18 |
+| `NOT_APPLICABLE_PRE_LISTING` | 18 |
 | `COLLECTED_PENDING_IDENTITY` | 4 |
 | **合计** | **700** |
 
@@ -47,10 +47,10 @@
 | obtained_verified | 678 |
 | obtained_pending_identity | 4 |
 | not_disclosed_by_issuer | 0 |
-| not_applicable_pre_listing | 0 |
+| not_applicable_pre_listing | 18 |
 | not_yet_disclosed | 0 |
 | failed_source | 0 |
-| not_tried | 18 |
+| not_tried | 0 |
 | duplicate_or_other | 0 |
 | **分桶合计** | **700**（总槽数 700） |
 | 其中发出过下载请求 | 676 |
@@ -58,7 +58,7 @@
 
 ## 五、未取得项与自动队列
 
-`automatic_failures.csv` 共 18 行，状态分布：`NOT_TRIED` 18。本批只入自动队列，不向用户逐家追件。
+`automatic_failures.csv` 共 0 行，状态分布：无。本批只入自动队列，不向用户逐家追件。
 
 另有 4 个槽位**文件已取得但身份未核实**（`COLLECTED_PENDING_IDENTITY`，前 8 页抽不出主体/报告期，多为图片封面或扫描件）：
 

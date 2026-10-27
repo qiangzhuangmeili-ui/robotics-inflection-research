@@ -483,7 +483,7 @@
       "status_counts": {
         "COLLECTED_IDENTITY_VERIFIED": 678,
         "COLLECTED_PENDING_IDENTITY": 4,
-        "NOT_TRIED": 18
+        "NOT_APPLICABLE_PRE_LISTING": 18
       },
       "obtained": 682,
       "bytes": 1960899549,
@@ -547,7 +547,7 @@
       "slot_total": 700,
       "status_counts": {
         "COLLECTED_IDENTITY_VERIFIED": 698,
-        "NOT_TRIED": 1,
+        "NOT_APPLICABLE_PRE_LISTING": 1,
         "COLLECTED_PENDING_IDENTITY": 1
       },
       "obtained": 699,
@@ -564,7 +564,7 @@
       "slot_total": 700,
       "status_counts": {
         "COLLECTED_IDENTITY_VERIFIED": 646,
-        "NOT_TRIED": 53,
+        "NOT_APPLICABLE_PRE_LISTING": 53,
         "SOURCE_FAILED": 1
       },
       "obtained": 646,
@@ -574,5 +574,39 @@
       "review_nature": "SELF_CHECK",
       "drive": "NOT_ARCHIVED_NO_DRIVE_CONNECTOR"
     }
+  },
+  "listing_dates": {
+    "side_table": "data/company_listing_dates.csv",
+    "side_table_sha256": "5a1eced9b3392bb78399a81a0ee4fdf51d1387997062a1cc359bacb0c4d2f9ef",
+    "coverage": "1054/1054",
+    "date_min": "1992-07-24",
+    "date_max": "2026-09-09",
+    "resolved_at": "2026-10-27T01:19:41Z",
+    "sources": [
+      "SZ 深交所上市公司列表",
+      "SH 上交所主板A股列表",
+      "SH 上交所科创板列表",
+      "BJ 北交所上市公司列表"
+    ],
+    "name_diff": 2,
+    "missing": 0,
+    "reclassified_slots": {
+      "NOT_APPLICABLE_PRE_LISTING": 72,
+      "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ": 5
+    },
+    "report": "runs/listing_dates/backfill_report.md",
+    "note": "未改 data/company_master.csv（原始输入）；采集器 load_companies 与 m00_batch.companies_of 已改为优先读侧表。"
+  },
+  "m00_coverage_recalc": {
+    "slots_total": 4200,
+    "status_counts": {
+      "COLLECTED_IDENTITY_VERIFIED": 4117,
+      "COLLECTED_PENDING_IDENTITY": 10,
+      "NOT_APPLICABLE_PRE_LISTING": 72,
+      "SOURCE_FAILED": 1
+    },
+    "applicable_slots": 4128,
+    "obtained": 4127,
+    "note": "覆盖率分母应为“应取得槽位”=总槽位−上市前不适用；按此口径六批取得 4127/4128，仅 1 个超限失败。"
   }
 }

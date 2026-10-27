@@ -9,7 +9,7 @@
 
 ## 一、一句话结论
 
-100 家 × 7 槽 = **700 个槽位全部有状态**：646 个 `COLLECTED_IDENTITY_VERIFIED`、0 个 `COLLECTED_PENDING_IDENTITY`、53 个 `NOT_TRIED`、0 个 `NOT_DISCLOSED_BY_ISSUER`、1 个源失败/访问受限；合计取得 **646** 槽，累计 1389.6 MB 落本机 D 盘。
+100 家 × 7 槽 = **700 个槽位全部有状态**：646 个 `COLLECTED_IDENTITY_VERIFIED`、0 个 `COLLECTED_PENDING_IDENTITY`、0 个 `NOT_TRIED`、0 个 `NOT_DISCLOSED_BY_ISSUER`、1 个源失败/访问受限；合计取得 **646** 槽，累计 1389.6 MB 落本机 D 盘。
 
 ## 二、名单构成
 
@@ -36,7 +36,7 @@
 | 状态 | 槽数 |
 |---|---:|
 | `COLLECTED_IDENTITY_VERIFIED` | 646 |
-| `NOT_TRIED` | 53 |
+| `NOT_APPLICABLE_PRE_LISTING` | 53 |
 | `SOURCE_FAILED` | 1 |
 | **合计** | **700** |
 
@@ -47,10 +47,10 @@
 | obtained_verified | 646 |
 | obtained_pending_identity | 0 |
 | not_disclosed_by_issuer | 0 |
-| not_applicable_pre_listing | 0 |
+| not_applicable_pre_listing | 53 |
 | not_yet_disclosed | 0 |
 | failed_source | 1 |
-| not_tried | 53 |
+| not_tried | 0 |
 | duplicate_or_other | 0 |
 | **分桶合计** | **700**（总槽数 700） |
 | 其中发出过下载请求 | 646 |
@@ -58,33 +58,7 @@
 
 ## 五、未取得项与自动队列
 
-`automatic_failures.csv` 共 54 行，状态分布：`NOT_TRIED` 53、`SOURCE_FAILED` 1。本批只入自动队列，不向用户逐家追件。
-
-### NOT_TRIED 的缺口形态（19 家）
-
-`listing_date` 仍全 UNKNOWN，按 P00 只能记 NOT_TRIED；下表只是**缺口形态**，供 A00/A01 回填上市日期时对照，不构成“上市前不适用”的断言。
-
-| 证券 | 简称 | 未尝试槽位 | 已取得槽位 |
-|---|---|---|---|
-| 301449 | 天溯计量 | annual_2023、annual_2024、h1_2024、h1_2025 | annual_2025、h1_2026、q1_2026 |
-| 301458 | 钧崴电子 | annual_2023、h1_2024 | annual_2024、annual_2025、h1_2025、h1_2026、q1_2026 |
-| 301479 | 弘景光电 | annual_2023、h1_2024 | annual_2024、annual_2025、h1_2025、h1_2026、q1_2026 |
-| 301563 | 云汉芯城 | annual_2023、annual_2024、h1_2024、h1_2025 | annual_2025、h1_2026、q1_2026 |
-| 301584 | 建发致新 | annual_2023、annual_2024、h1_2024、h1_2025 | annual_2025、h1_2026、q1_2026 |
-| 301595 | 太力科技 | annual_2023、annual_2024、h1_2024 | annual_2025、h1_2025、h1_2026、q1_2026 |
-| 301596 | 瑞迪智驱 | annual_2023 | annual_2024、annual_2025、h1_2024、h1_2025、h1_2026、q1_2026 |
-| 301598 | 博科测试 | annual_2023、h1_2024 | annual_2024、annual_2025、h1_2025、h1_2026、q1_2026 |
-| 301602 | 超研股份 | annual_2023、h1_2024 | annual_2024、annual_2025、h1_2025、h1_2026、q1_2026 |
-| 301603 | 乔锋智能 | annual_2023 | annual_2024、annual_2025、h1_2024、h1_2025、h1_2026、q1_2026 |
-| 301608 | 博实结 | annual_2023 | annual_2024、annual_2025、h1_2024、h1_2025、h1_2026、q1_2026 |
-| 301613 | 新铝时代 | annual_2023、h1_2024 | annual_2024、annual_2025、h1_2025、h1_2026、q1_2026 |
-| 301622 | 英思特 | annual_2023、h1_2024 | annual_2024、h1_2025、h1_2026、q1_2026 |
-| 301631 | 壹连科技 | annual_2023、h1_2024 | annual_2024、annual_2025、h1_2025、h1_2026、q1_2026 |
-| 301632 | 广东建科 | annual_2023、annual_2024、h1_2024 | annual_2025、h1_2025、h1_2026、q1_2026 |
-| 301638 | 南网数字 | annual_2023、annual_2024、h1_2024、h1_2025 | annual_2025、h1_2026、q1_2026 |
-| 301677 | 欣兴工具 | annual_2023、annual_2024、annual_2025、h1_2024、h1_2025、q1_2026 | h1_2026 |
-| 301682 | 宏明电子 | annual_2023、annual_2024、h1_2024、h1_2025 | annual_2025、h1_2026、q1_2026 |
-| 301696 | 三瑞智能 | annual_2023、annual_2024、h1_2024、h1_2025 | annual_2025、h1_2026、q1_2026 |
+`automatic_failures.csv` 共 1 行，状态分布：`SOURCE_FAILED` 1。本批只入自动队列，不向用户逐家追件。
 
 ### 补采记录（采后发现缺陷）
 

@@ -1148,7 +1148,7 @@ class Collector:
 
         full_row, summary_row = self._select(buckets.get(slot["period_label"], []))
         if full_row is None and summary_row is None:
-            record.update(self._no_row_status(slot, now))
+            record.update(self._no_row_status(slot, now, company))
             record["index_ref"] = {"category": index["category"], "fetched_at": index["fetched_at"],
                                    "status": index["status"]}
             self.ledger.put_slot(company.security_id, code, record)
@@ -1336,13 +1336,40 @@ class Collector:
                     status=record["status"], sha256=digest, pages=verdict.get("page_count"))
         return record
 
-    def _no_row_status(self, slot: dict, now: str) -> dict:
+    def _no_row_status(self, slot: dict, now: str, company: "CompanyRef | None" = None) -> dict:
         deadline = slot.get("statutory_deadline")
         cutoff = self.config["time_axis"]["knowledge_as_of"]
         if slot.get("pre_cutoff_status") == ST_NOT_YET_DISCLOSED or (deadline and deadline > cutoff):
             return {"status": ST_NOT_YET_DISCLOSED,
                     "status_reason": f"法定披露期 {deadline} 晚于截止日 {cutoff}",
                     "next_action": "WAIT_NEXT_CYCLE", "last_error": None, "updated_at": now}
+        # 上市日期已知时按 P00 not_applicable_decision_table 判，不再一律记 NOT_TRIED
+        listing = getattr(company, "listing_date", None) if company else None
+        period_end = slot.get("period_end")
+        if listing and period_end and listing > period_end:
+            evidence = {"listing_date": listing, "period_end": period_end,
+                        "rule": "P00 not_applicable_decision_table: listing_date > period_end"}
+            if getattr(company, "exchange", "") == "BJ":
+                # 北交所公司上市前在股转系统挂牌，挂牌期间报告存在，只是平台不同
+                return {"status": ST_NOT_TRIED,
+                        "status_reason": (f"上市日 {listing} 晚于报告期结束 {period_end}，但北交所公司上市前在股转系统挂牌，"
+                                          "挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用"),
+                        "next_action": "SEARCH_NEEQ_ARCHIVE",
+                        "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+                        "listing_date_evidence": evidence, "last_error": None, "updated_at": now}
+            return {"status": ST_NOT_APPLICABLE,
+                    "status_reason": f"上市日 {listing} 晚于报告期结束日 {period_end}，公司当时未上市",
+                    "next_action": "NONE",
+                    "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+                    "listing_date_evidence": evidence, "last_error": None, "updated_at": now}
+        if listing:
+            return {"status": ST_NOT_TRIED,
+                    "status_reason": f"已上市（{listing} ≤ 报告期结束 {period_end}）但目录无该期全文，待人工复核检索式",
+                    "next_action": "MANUAL_REVIEW_INDEX",
+                    "reason_code": "APPLICABLE_BUT_EMPTY_INDEX",
+                    "listing_date_evidence": {"listing_date": listing, "period_end": period_end,
+                                              "rule": "P00: listing_date <= period_end → APPLICABLE"},
+                    "last_error": None, "updated_at": now}
         return {"status": ST_NOT_TRIED,
                 "status_reason": "目录已完整检索但无该期全文；listing_date 未知，不得判不适用或未披露",
                 "next_action": "RESOLVE_LISTING_DATE", "last_error": None, "updated_at": now,
@@ -1465,12 +1492,21 @@ class Collector:
 def load_companies(path: Path | str, security_ids: list[str] | None = None) -> list[CompanyRef]:
     import csv
 
+    # 上市日期优先取侧表（交易所官方口径，2026-10-27 回填 1054/1054）
+    side: dict[str, str] = {}
+    side_path = ROOT / "data/company_listing_dates.csv"
+    if side_path.exists():
+        with side_path.open(encoding="utf-8-sig", newline="") as fh:
+            for row in csv.DictReader(fh):
+                if row.get("listing_date_status") == "RESOLVED_FROM_EXCHANGE":
+                    side[row["security_id"]] = row["listing_date"]
+
     refs = []
     with Path(path).open(encoding="utf-8-sig", newline="") as fh:
         for row in csv.DictReader(fh):
             if security_ids and row["security_id"] not in security_ids:
                 continue
-            listing = row.get("listing_date") or ""
+            listing = side.get(row["security_id"]) or row.get("listing_date") or ""
             refs.append(CompanyRef(
                 security_id=row["security_id"],
                 stock_code=row["stock_code"],

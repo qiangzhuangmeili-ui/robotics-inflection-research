@@ -1,7 +1,7 @@
 {
   "issue_key": "M00_05",
   "plan_version": "20261026_collection_first_v2",
-  "reviewed_at": "2026-10-27T00:11:24+08:00",
+  "reviewed_at": "2026-10-27T09:22:54+08:00",
   "reviewer": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS",
@@ -24,7 +24,7 @@
     {
       "item": "运行记录对账：尝试/成功/未披露/不适用/失败/未尝试与总槽数一致",
       "result": "PASS",
-      "evidence": "reconciliation={'obtained_verified': 698, 'obtained_pending_identity': 1, 'not_disclosed_by_issuer': 0, 'not_applicable_pre_listing': 0, 'not_yet_disclosed': 0, 'failed_source': 0, 'not_tried': 1, 'duplicate_or_other': 0}，合计 700 = 700"
+      "evidence": "reconciliation={'obtained_verified': 698, 'obtained_pending_identity': 1, 'not_disclosed_by_issuer': 0, 'not_applicable_pre_listing': 1, 'not_yet_disclosed': 0, 'failed_source': 0, 'not_tried': 0, 'duplicate_or_other': 0}，合计 700 = 700"
     }
   ],
   "reconciliation": {
@@ -33,10 +33,10 @@
       "obtained_verified": 698,
       "obtained_pending_identity": 1,
       "not_disclosed_by_issuer": 0,
-      "not_applicable_pre_listing": 0,
+      "not_applicable_pre_listing": 1,
       "not_yet_disclosed": 0,
       "failed_source": 0,
-      "not_tried": 1,
+      "not_tried": 0,
       "duplicate_or_other": 0
     },
     "sum_of_buckets": 700,
@@ -51,7 +51,7 @@
     "slot_total": 700,
     "status_counts": {
       "COLLECTED_IDENTITY_VERIFIED": 698,
-      "NOT_TRIED": 1,
+      "NOT_APPLICABLE_PRE_LISTING": 1,
       "COLLECTED_PENDING_IDENTITY": 1
     },
     "obtained": 699,
@@ -107,10 +107,8 @@
     ]
   },
   "failures": {
-    "count": 1,
-    "by_status": {
-      "NOT_TRIED": 1
-    }
+    "count": 0,
+    "by_status": {}
   },
   "limitations": [
     "本卡只做资料采集与文件身份校验，不做财务字段精读、不做业务结论、不估值。",

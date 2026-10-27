@@ -209,7 +209,17 @@ def write_shared_index() -> Path:
 
 
 # ---------------------------------------------------------------- 跑批
+def listing_date_map() -> dict[str, str]:
+    """上市日期侧表（交易所官方口径）；缺失时退回 company_master 的 UNKNOWN。"""
+    path = ROOT / "data/company_listing_dates.csv"
+    if not path.exists():
+        return {}
+    return {r["security_id"]: r["listing_date"] for r in read_csv(path)
+            if r["listing_date_status"] == "RESOLVED_FROM_EXCHANGE"}
+
+
 def companies_of(batch: str) -> list[P05.CompanyRef]:
+    dates = listing_date_map()
     refs = []
     for row in read_csv(assignment_path(batch)):
         refs.append(P05.CompanyRef(
@@ -217,6 +227,7 @@ def companies_of(batch: str) -> list[P05.CompanyRef]:
             stock_code=row["stock_code"],
             stock_name=row["stock_name"],
             exchange=row["security_id"].split(":")[0],
+            listing_date=dates.get(row["security_id"]) or None,
         ))
     return refs
 
