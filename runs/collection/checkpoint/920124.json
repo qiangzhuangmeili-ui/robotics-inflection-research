@@ -37,26 +37,148 @@
    "period_label": "FY2024",
    "period_end": "2024-12-31",
    "statutory_deadline": "2025-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2025-11-27 晚于报告期结束 2024-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874643），1787809 bytes，七项校验通过",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-21/f8eb56e67c9548028a3e83c62021e832.pdf",
+     "http_status": null,
+     "outcome": "ERROR",
+     "error_code": "NEEQ_PDF_FETCH_FAILED",
+     "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
+     "at": "2026-10-27T15:38:47+08:00"
+    },
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-21/f8eb56e67c9548028a3e83c62021e832.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 1787809,
+     "sha256": "6cb40f5d2635ccd0c7b3fb6a5db3ad8e5336eb62f050602965bde29e8fe7823b",
+     "at": "2026-10-27T15:50:11+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-21/f8eb56e67c9548028a3e83c62021e832.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 1787809,
+    "sha256": "6cb40f5d2635ccd0c7b3fb6a5db3ad8e5336eb62f050602965bde29e8fe7823b",
+    "at": "2026-10-27T15:50:11+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-FA92E09A9A38ED19",
+    "identity_key": "BJ:920124|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]南特科技:2024年年度报告",
+    "published_on": "2025-03-21",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-03-21/f8eb56e67c9548028a3e83c62021e832.pdf",
+    "local_file": "sources/collection/originals/920124/annual_2024/DOC-FA92E09A9A38ED19.pdf",
+    "sha256": "6cb40f5d2635ccd0c7b3fb6a5db3ad8e5336eb62f050602965bde29e8fe7823b",
+    "bytes": 1787809,
+    "page_count": 208,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874643",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1787809 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "208 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "208 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=南特科技 代码=920124 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]南特科技:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]南特科技:2024年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2025-11-27",
     "period_end": "2024-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:53:43+08:00",
+   "updated_at": "2026-10-27T15:50:11+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:53:43+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920124\\annual_2024\\DOC-FA92E09A9A38ED19.pdf",
+    "bytes": 1787809,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1787809 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "208 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "208 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=南特科技 代码=920124 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]南特科技:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]南特科技:2024年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 208,
+    "text_chars": 1716,
+    "issues": [],
+    "sha256": "6cb40f5d2635ccd0c7b3fb6a5db3ad8e5336eb62f050602965bde29e8fe7823b",
+    "cover_text_chars": 38,
+    "identity_probe_chars": 2695,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "annual_2025": {
@@ -205,26 +327,148 @@
    "period_label": "2025H1",
    "period_end": "2025-06-30",
    "statutory_deadline": "2025-08-31",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2025-11-27 晚于报告期结束 2025-06-30，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874643），1645944 bytes，七项校验通过",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-18/d51b078abca24d069cc3afe6a74cdf6e.pdf",
+     "http_status": null,
+     "outcome": "ERROR",
+     "error_code": "NEEQ_PDF_FETCH_FAILED",
+     "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
+     "at": "2026-10-27T15:39:32+08:00"
+    },
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-18/d51b078abca24d069cc3afe6a74cdf6e.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 1645944,
+     "sha256": "f3d5c8513f49a8f7cb03fe6009790c0ab0c63fd277a3b57d1cee3b5901fee884",
+     "at": "2026-10-27T15:50:21+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-18/d51b078abca24d069cc3afe6a74cdf6e.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 1645944,
+    "sha256": "f3d5c8513f49a8f7cb03fe6009790c0ab0c63fd277a3b57d1cee3b5901fee884",
+    "at": "2026-10-27T15:50:21+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-52985FC004EFD1FC",
+    "identity_key": "BJ:920124|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]南特科技:2025年半年度报告",
+    "published_on": "2025-08-18",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-18/d51b078abca24d069cc3afe6a74cdf6e.pdf",
+    "local_file": "sources/collection/originals/920124/h1_2025/DOC-52985FC004EFD1FC.pdf",
+    "sha256": "f3d5c8513f49a8f7cb03fe6009790c0ab0c63fd277a3b57d1cee3b5901fee884",
+    "bytes": 1645944,
+    "page_count": 132,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874643",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1645944 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "132 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "132 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=南特科技 代码=920124 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]南特科技:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]南特科技:2025年半年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2025-11-27",
     "period_end": "2025-06-30",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:53:45+08:00",
+   "updated_at": "2026-10-27T15:50:21+08:00",
    "index_ref": {
     "category": "category_bndbg_szsh",
     "fetched_at": "2026-10-27T11:53:45+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920124\\h1_2025\\DOC-52985FC004EFD1FC.pdf",
+    "bytes": 1645944,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1645944 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "132 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "132 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=南特科技 代码=920124 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]南特科技:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]南特科技:2025年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 132,
+    "text_chars": 1648,
+    "issues": [],
+    "sha256": "f3d5c8513f49a8f7cb03fe6009790c0ab0c63fd277a3b57d1cee3b5901fee884",
+    "cover_text_chars": 38,
+    "identity_probe_chars": 4679,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2026": {
@@ -709,5 +953,5 @@
    "fetched_at": "2026-10-27T11:53:47+08:00"
   }
  },
- "updated_at": "2026-10-27T11:53:49+08:00"
+ "updated_at": "2026-10-27T15:50:21+08:00"
 }

@@ -37,26 +37,138 @@
    "period_label": "FY2024",
    "period_end": "2024-12-31",
    "statutory_deadline": "2025-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-06-05 晚于报告期结束 2024-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874510），1753324 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-25/67aa5954372948ccbe1784ef1ecda706.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 1753324,
+     "sha256": "3db114e7fff0b5d7990890fbea4374f851ea14d68989de18fd134814b3daabdc",
+     "at": "2026-10-27T15:40:20+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-25/67aa5954372948ccbe1784ef1ecda706.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 1753324,
+    "sha256": "3db114e7fff0b5d7990890fbea4374f851ea14d68989de18fd134814b3daabdc",
+    "at": "2026-10-27T15:40:20+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-FE4F5347135EDD46",
+    "identity_key": "BJ:920211|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]新睿电子:2024年年度报告",
+    "published_on": "2025-04-25",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-04-25/67aa5954372948ccbe1784ef1ecda706.pdf",
+    "local_file": "sources/collection/originals/920211/annual_2024/DOC-FE4F5347135EDD46.pdf",
+    "sha256": "3db114e7fff0b5d7990890fbea4374f851ea14d68989de18fd134814b3daabdc",
+    "bytes": 1753324,
+    "page_count": 150,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874510",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1753324 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "150 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "150 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新睿电子 代码=920211 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]新睿电子:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]新睿电子:2024年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-06-05",
     "period_end": "2024-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:54:42+08:00",
+   "updated_at": "2026-10-27T15:40:20+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:54:42+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920211\\annual_2024\\DOC-FE4F5347135EDD46.pdf",
+    "bytes": 1753324,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1753324 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "150 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "150 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新睿电子 代码=920211 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]新睿电子:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]新睿电子:2024年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 150,
+    "text_chars": 1606,
+    "issues": [],
+    "sha256": "3db114e7fff0b5d7990890fbea4374f851ea14d68989de18fd134814b3daabdc",
+    "cover_text_chars": 75,
+    "identity_probe_chars": 4415,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "annual_2025": {
@@ -66,26 +178,138 @@
    "period_label": "FY2025",
    "period_end": "2025-12-31",
    "statutory_deadline": "2026-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-06-05 晚于报告期结束 2025-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874510），1715827 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/1d3a00b937724b408fe74574e840d8c2.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 1715827,
+     "sha256": "31c25bf59ceed2f3da0a6ffccce6dcb6b640a1c855fbf3c81b55bc5052a9b632",
+     "at": "2026-10-27T15:40:26+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/1d3a00b937724b408fe74574e840d8c2.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 1715827,
+    "sha256": "31c25bf59ceed2f3da0a6ffccce6dcb6b640a1c855fbf3c81b55bc5052a9b632",
+    "at": "2026-10-27T15:40:26+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-4063964A8B35490D",
+    "identity_key": "BJ:920211|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]新睿电子:2025年年度报告",
+    "published_on": "2026-03-20",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/1d3a00b937724b408fe74574e840d8c2.pdf",
+    "local_file": "sources/collection/originals/920211/annual_2025/DOC-4063964A8B35490D.pdf",
+    "sha256": "31c25bf59ceed2f3da0a6ffccce6dcb6b640a1c855fbf3c81b55bc5052a9b632",
+    "bytes": 1715827,
+    "page_count": 147,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874510",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1715827 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "147 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "147 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新睿电子 代码=920211 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]新睿电子:2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]新睿电子:2025年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-06-05",
     "period_end": "2025-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:54:42+08:00",
+   "updated_at": "2026-10-27T15:40:26+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:54:42+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920211\\annual_2025\\DOC-4063964A8B35490D.pdf",
+    "bytes": 1715827,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1715827 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "147 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "147 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新睿电子 代码=920211 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]新睿电子:2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]新睿电子:2025年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 147,
+    "text_chars": 1715,
+    "issues": [],
+    "sha256": "31c25bf59ceed2f3da0a6ffccce6dcb6b640a1c855fbf3c81b55bc5052a9b632",
+    "cover_text_chars": 76,
+    "identity_probe_chars": 4008,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2024": {
@@ -124,26 +348,148 @@
    "period_label": "2025H1",
    "period_end": "2025-06-30",
    "statutory_deadline": "2025-08-31",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-06-05 晚于报告期结束 2025-06-30，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874510），1639718 bytes，七项校验通过",
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/1e6717a84ef24aa2b474ff1b840ccb5f.pdf",
+     "http_status": null,
+     "outcome": "ERROR",
+     "error_code": "NEEQ_PDF_FETCH_FAILED",
+     "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
+     "at": "2026-10-27T15:41:09+08:00"
+    },
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/1e6717a84ef24aa2b474ff1b840ccb5f.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 1639718,
+     "sha256": "178e98be650b1af9c4421ccb0fb61b892e7a8af5ee7222c62b5537be526873a4",
+     "at": "2026-10-27T15:51:05+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/1e6717a84ef24aa2b474ff1b840ccb5f.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 1639718,
+    "sha256": "178e98be650b1af9c4421ccb0fb61b892e7a8af5ee7222c62b5537be526873a4",
+    "at": "2026-10-27T15:51:05+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-9C35CEAEA3715682",
+    "identity_key": "BJ:920211|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]新睿电子:2025年半年度报告",
+    "published_on": "2025-08-25",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/1e6717a84ef24aa2b474ff1b840ccb5f.pdf",
+    "local_file": "sources/collection/originals/920211/h1_2025/DOC-9C35CEAEA3715682.pdf",
+    "sha256": "178e98be650b1af9c4421ccb0fb61b892e7a8af5ee7222c62b5537be526873a4",
+    "bytes": 1639718,
+    "page_count": 137,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874510",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1639718 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "137 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "137 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新睿电子 代码=920211 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]新睿电子:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]新睿电子:2025年半年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-06-05",
     "period_end": "2025-06-30",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:54:43+08:00",
+   "updated_at": "2026-10-27T15:51:05+08:00",
    "index_ref": {
     "category": "category_bndbg_szsh",
     "fetched_at": "2026-10-27T11:54:43+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920211\\h1_2025\\DOC-9C35CEAEA3715682.pdf",
+    "bytes": 1639718,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1639718 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "137 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "137 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新睿电子 代码=920211 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]新睿电子:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]新睿电子:2025年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 137,
+    "text_chars": 1626,
+    "issues": [],
+    "sha256": "178e98be650b1af9c4421ccb0fb61b892e7a8af5ee7222c62b5537be526873a4",
+    "cover_text_chars": 38,
+    "identity_probe_chars": 3891,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2026": {
@@ -486,5 +832,5 @@
    "fetched_at": "2026-10-27T11:54:45+08:00"
   }
  },
- "updated_at": "2026-10-27T11:54:45+08:00"
+ "updated_at": "2026-10-27T15:51:05+08:00"
 }

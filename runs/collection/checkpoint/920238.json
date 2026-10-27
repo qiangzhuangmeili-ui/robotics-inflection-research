@@ -37,26 +37,138 @@
    "period_label": "FY2024",
    "period_end": "2024-12-31",
    "statutory_deadline": "2025-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-07-24 晚于报告期结束 2024-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874396），2172987 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/5b9e99c531974e109c6a421341d4b2e8.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2172987,
+     "sha256": "4318f5f85425ae1bb30a137e34ec8764b5f5ef921fbfd59f253dcb1c389c8c3a",
+     "at": "2026-10-27T15:44:13+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/5b9e99c531974e109c6a421341d4b2e8.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2172987,
+    "sha256": "4318f5f85425ae1bb30a137e34ec8764b5f5ef921fbfd59f253dcb1c389c8c3a",
+    "at": "2026-10-27T15:44:13+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-271D77272C79334E",
+    "identity_key": "BJ:920238|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]长鹰硬科:2024年年度报告",
+    "published_on": "2025-04-21",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/5b9e99c531974e109c6a421341d4b2e8.pdf",
+    "local_file": "sources/collection/originals/920238/annual_2024/DOC-271D77272C79334E.pdf",
+    "sha256": "4318f5f85425ae1bb30a137e34ec8764b5f5ef921fbfd59f253dcb1c389c8c3a",
+    "bytes": 2172987,
+    "page_count": 173,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874396",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2172987 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "173 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "173 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=长鹰硬科 代码=920238 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]长鹰硬科:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]长鹰硬科:2024年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-07-24",
     "period_end": "2024-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:55:04+08:00",
+   "updated_at": "2026-10-27T15:44:13+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:55:04+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920238\\annual_2024\\DOC-271D77272C79334E.pdf",
+    "bytes": 2172987,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2172987 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "173 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "173 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=长鹰硬科 代码=920238 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]长鹰硬科:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]长鹰硬科:2024年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 173,
+    "text_chars": 1591,
+    "issues": [],
+    "sha256": "4318f5f85425ae1bb30a137e34ec8764b5f5ef921fbfd59f253dcb1c389c8c3a",
+    "cover_text_chars": 39,
+    "identity_probe_chars": 3605,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "annual_2025": {
@@ -66,26 +178,138 @@
    "period_label": "FY2025",
    "period_end": "2025-12-31",
    "statutory_deadline": "2026-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-07-24 晚于报告期结束 2025-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874396），2867164 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2026/2026-05-11/67d75f85c2f34daa8dff3aa80e60435e.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2867164,
+     "sha256": "4602e8f823a24777ad4881de87a988d8533e47a5407d9b003b0c2e63759fa432",
+     "at": "2026-10-27T15:44:21+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2026/2026-05-11/67d75f85c2f34daa8dff3aa80e60435e.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2867164,
+    "sha256": "4602e8f823a24777ad4881de87a988d8533e47a5407d9b003b0c2e63759fa432",
+    "at": "2026-10-27T15:44:21+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-887E6773EF8D7A49",
+    "identity_key": "BJ:920238|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]长鹰硬科:2025年年度报告",
+    "published_on": "2026-05-11",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-05-11/67d75f85c2f34daa8dff3aa80e60435e.pdf",
+    "local_file": "sources/collection/originals/920238/annual_2025/DOC-887E6773EF8D7A49.pdf",
+    "sha256": "4602e8f823a24777ad4881de87a988d8533e47a5407d9b003b0c2e63759fa432",
+    "bytes": 2867164,
+    "page_count": 185,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874396",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2867164 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "185 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "185 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=长鹰硬科 代码=920238 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]长鹰硬科:2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]长鹰硬科:2025年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-07-24",
     "period_end": "2025-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:55:04+08:00",
+   "updated_at": "2026-10-27T15:44:21+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:55:04+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920238\\annual_2025\\DOC-887E6773EF8D7A49.pdf",
+    "bytes": 2867164,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2867164 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "185 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "185 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=长鹰硬科 代码=920238 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]长鹰硬科:2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]长鹰硬科:2025年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 185,
+    "text_chars": 1666,
+    "issues": [],
+    "sha256": "4602e8f823a24777ad4881de87a988d8533e47a5407d9b003b0c2e63759fa432",
+    "cover_text_chars": 39,
+    "identity_probe_chars": 4788,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2024": {
@@ -124,26 +348,138 @@
    "period_label": "2025H1",
    "period_end": "2025-06-30",
    "statutory_deadline": "2025-08-31",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-07-24 晚于报告期结束 2025-06-30，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874396），1511491 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-12-08/0e1dd408e6ba41b495bb0df3a9d497fe.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 1511491,
+     "sha256": "672e9f4769e69ef2f9a8db9cfa0ab140628ee14e28e558efcb4c1101405d5144",
+     "at": "2026-10-27T15:45:06+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-12-08/0e1dd408e6ba41b495bb0df3a9d497fe.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 1511491,
+    "sha256": "672e9f4769e69ef2f9a8db9cfa0ab140628ee14e28e558efcb4c1101405d5144",
+    "at": "2026-10-27T15:45:06+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-C992EE156328204B",
+    "identity_key": "BJ:920238|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]长鹰硬科:2025年半年度报告",
+    "published_on": "2025-12-08",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-12-08/0e1dd408e6ba41b495bb0df3a9d497fe.pdf",
+    "local_file": "sources/collection/originals/920238/h1_2025/DOC-C992EE156328204B.pdf",
+    "sha256": "672e9f4769e69ef2f9a8db9cfa0ab140628ee14e28e558efcb4c1101405d5144",
+    "bytes": 1511491,
+    "page_count": 61,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874396",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1511491 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "61 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "61 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=长鹰硬科 代码=920238 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]长鹰硬科:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]长鹰硬科:2025年半年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-07-24",
     "period_end": "2025-06-30",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:55:05+08:00",
+   "updated_at": "2026-10-27T15:45:06+08:00",
    "index_ref": {
     "category": "category_bndbg_szsh",
     "fetched_at": "2026-10-27T11:55:05+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920238\\h1_2025\\DOC-C992EE156328204B.pdf",
+    "bytes": 1511491,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1511491 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "61 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "61 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=长鹰硬科 代码=920238 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]长鹰硬科:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]长鹰硬科:2025年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 61,
+    "text_chars": 1636,
+    "issues": [],
+    "sha256": "672e9f4769e69ef2f9a8db9cfa0ab140628ee14e28e558efcb4c1101405d5144",
+    "cover_text_chars": 39,
+    "identity_probe_chars": 4849,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2026": {
@@ -486,5 +822,5 @@
    "fetched_at": "2026-10-27T11:55:08+08:00"
   }
  },
- "updated_at": "2026-10-27T11:55:08+08:00"
+ "updated_at": "2026-10-27T15:45:06+08:00"
 }

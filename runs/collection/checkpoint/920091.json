@@ -434,26 +434,138 @@
    "period_label": "FY2023",
    "period_end": "2023-12-31",
    "statutory_deadline": "2024-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2025-11-21 晚于报告期结束 2023-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 873739），2131677 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2024/2024-04-10/402ba699940b4fe6ad303a54826d3fa7.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2131677,
+     "sha256": "31476e2a5c327ff4f6d5dd6d55c7bed6635da372d33ce7e533c7ea34e002e898",
+     "at": "2026-10-27T15:30:24+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2024/2024-04-10/402ba699940b4fe6ad303a54826d3fa7.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2131677,
+    "sha256": "31476e2a5c327ff4f6d5dd6d55c7bed6635da372d33ce7e533c7ea34e002e898",
+    "at": "2026-10-27T15:30:24+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-5BB6A82D596CA0AA",
+    "identity_key": "BJ:920091|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]大鹏工业:2023年年度报告",
+    "published_on": "2024-04-10",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-04-10/402ba699940b4fe6ad303a54826d3fa7.pdf",
+    "local_file": "sources/collection/originals/920091/annual_2023/DOC-5BB6A82D596CA0AA.pdf",
+    "sha256": "31476e2a5c327ff4f6d5dd6d55c7bed6635da372d33ce7e533c7ea34e002e898",
+    "bytes": 2131677,
+    "page_count": 157,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "873739",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2131677 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "157 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "157 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大鹏工业 代码=920091 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]大鹏工业:2023年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]大鹏工业:2023年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2025-11-21",
     "period_end": "2023-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:52:04+08:00",
+   "updated_at": "2026-10-27T15:30:24+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:50:25+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920091\\annual_2023\\DOC-5BB6A82D596CA0AA.pdf",
+    "bytes": 2131677,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2131677 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "157 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "157 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大鹏工业 代码=920091 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]大鹏工业:2023年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]大鹏工业:2023年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 157,
+    "text_chars": 1727,
+    "issues": [],
+    "sha256": "31476e2a5c327ff4f6d5dd6d55c7bed6635da372d33ce7e533c7ea34e002e898",
+    "cover_text_chars": 73,
+    "identity_probe_chars": 3358,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "annual_2024": {
@@ -463,26 +575,138 @@
    "period_label": "FY2024",
    "period_end": "2024-12-31",
    "statutory_deadline": "2025-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2025-11-21 晚于报告期结束 2024-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 873739），2246351 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-29/6891bad803974bbfbca7b40f1a2da559.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2246351,
+     "sha256": "ed63484b224daabe05f3a4e530af94c66acbfe82306a1cc2f8b9d9ac18d7f154",
+     "at": "2026-10-27T15:31:59+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-29/6891bad803974bbfbca7b40f1a2da559.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2246351,
+    "sha256": "ed63484b224daabe05f3a4e530af94c66acbfe82306a1cc2f8b9d9ac18d7f154",
+    "at": "2026-10-27T15:31:59+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-1D8B816FA691A33A",
+    "identity_key": "BJ:920091|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]大鹏工业:2024年年度报告",
+    "published_on": "2025-04-29",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-04-29/6891bad803974bbfbca7b40f1a2da559.pdf",
+    "local_file": "sources/collection/originals/920091/annual_2024/DOC-1D8B816FA691A33A.pdf",
+    "sha256": "ed63484b224daabe05f3a4e530af94c66acbfe82306a1cc2f8b9d9ac18d7f154",
+    "bytes": 2246351,
+    "page_count": 155,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "873739",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2246351 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "155 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "155 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大鹏工业 代码=920091 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]大鹏工业:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]大鹏工业:2024年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2025-11-21",
     "period_end": "2024-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:52:04+08:00",
+   "updated_at": "2026-10-27T15:31:59+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:50:25+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920091\\annual_2024\\DOC-1D8B816FA691A33A.pdf",
+    "bytes": 2246351,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2246351 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "155 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "155 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大鹏工业 代码=920091 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]大鹏工业:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]大鹏工业:2024年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 155,
+    "text_chars": 1719,
+    "issues": [],
+    "sha256": "ed63484b224daabe05f3a4e530af94c66acbfe82306a1cc2f8b9d9ac18d7f154",
+    "cover_text_chars": 73,
+    "identity_probe_chars": 4357,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2024": {
@@ -492,26 +716,138 @@
    "period_label": "2024H1",
    "period_end": "2024-06-30",
    "statutory_deadline": "2024-08-31",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2025-11-21 晚于报告期结束 2024-06-30，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 873739），1398846 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d6c2bc9354a749d7a0c09cae7d55c17f.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 1398846,
+     "sha256": "0d1b2059a1866c6b30c02de8c7b3668242f2f61548ba8686529860db2199db60",
+     "at": "2026-10-27T15:32:10+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d6c2bc9354a749d7a0c09cae7d55c17f.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 1398846,
+    "sha256": "0d1b2059a1866c6b30c02de8c7b3668242f2f61548ba8686529860db2199db60",
+    "at": "2026-10-27T15:32:10+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-9CF402304F269220",
+    "identity_key": "BJ:920091|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]大鹏工业:2024年半年度报告",
+    "published_on": "2024-08-29",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d6c2bc9354a749d7a0c09cae7d55c17f.pdf",
+    "local_file": "sources/collection/originals/920091/h1_2024/DOC-9CF402304F269220.pdf",
+    "sha256": "0d1b2059a1866c6b30c02de8c7b3668242f2f61548ba8686529860db2199db60",
+    "bytes": 1398846,
+    "page_count": 117,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "873739",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1398846 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "117 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "117 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大鹏工业 代码=920091 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]大鹏工业:2024年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]大鹏工业:2024年半年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2025-11-21",
     "period_end": "2024-06-30",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:52:04+08:00",
+   "updated_at": "2026-10-27T15:32:10+08:00",
    "index_ref": {
     "category": "category_bndbg_szsh",
     "fetched_at": "2026-10-27T11:50:28+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920091\\h1_2024\\DOC-9CF402304F269220.pdf",
+    "bytes": 1398846,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1398846 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "117 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "117 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大鹏工业 代码=920091 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]大鹏工业:2024年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]大鹏工业:2024年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 117,
+    "text_chars": 1660,
+    "issues": [],
+    "sha256": "0d1b2059a1866c6b30c02de8c7b3668242f2f61548ba8686529860db2199db60",
+    "cover_text_chars": 73,
+    "identity_probe_chars": 4205,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2025": {
@@ -521,26 +857,138 @@
    "period_label": "2025H1",
    "period_end": "2025-06-30",
    "statutory_deadline": "2025-08-31",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2025-11-21 晚于报告期结束 2025-06-30，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 873739），1637972 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-26/28d42c3e31d34e1c90472035eb0711b4.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 1637972,
+     "sha256": "6ebdab9f6ca07d0edfb991016e64d00d94df4f7f6fd41c717a046f631704ae6c",
+     "at": "2026-10-27T15:32:50+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-26/28d42c3e31d34e1c90472035eb0711b4.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 1637972,
+    "sha256": "6ebdab9f6ca07d0edfb991016e64d00d94df4f7f6fd41c717a046f631704ae6c",
+    "at": "2026-10-27T15:32:50+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-77D50C447AACAE57",
+    "identity_key": "BJ:920091|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]大鹏工业:2025年半年度报告",
+    "published_on": "2025-08-26",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-26/28d42c3e31d34e1c90472035eb0711b4.pdf",
+    "local_file": "sources/collection/originals/920091/h1_2025/DOC-77D50C447AACAE57.pdf",
+    "sha256": "6ebdab9f6ca07d0edfb991016e64d00d94df4f7f6fd41c717a046f631704ae6c",
+    "bytes": 1637972,
+    "page_count": 122,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "873739",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1637972 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "122 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "122 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大鹏工业 代码=920091 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]大鹏工业:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]大鹏工业:2025年半年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2025-11-21",
     "period_end": "2025-06-30",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:52:04+08:00",
+   "updated_at": "2026-10-27T15:32:50+08:00",
    "index_ref": {
     "category": "category_bndbg_szsh",
     "fetched_at": "2026-10-27T11:50:28+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920091\\h1_2025\\DOC-77D50C447AACAE57.pdf",
+    "bytes": 1637972,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1637972 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "122 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "122 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大鹏工业 代码=920091 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]大鹏工业:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]大鹏工业:2025年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 122,
+    "text_chars": 1622,
+    "issues": [],
+    "sha256": "6ebdab9f6ca07d0edfb991016e64d00d94df4f7f6fd41c717a046f631704ae6c",
+    "cover_text_chars": 73,
+    "identity_probe_chars": 4334,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   }
  },
@@ -741,5 +1189,5 @@
    "fetched_at": "2026-10-27T11:50:30+08:00"
   }
  },
- "updated_at": "2026-10-27T11:52:04+08:00"
+ "updated_at": "2026-10-27T15:32:50+08:00"
 }

@@ -8,26 +8,138 @@
    "period_label": "FY2023",
    "period_end": "2023-12-31",
    "statutory_deadline": "2024-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-05-18 晚于报告期结束 2023-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874302），2424570 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2024/2024-04-25/738147399daf42dc8452d89a4fb645f5.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2424570,
+     "sha256": "545af5eaf0949d6dbf2cbb65bdd7bb210716d69809bf76421cf33dd9ef53a1de",
+     "at": "2026-10-27T15:32:58+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2024/2024-04-25/738147399daf42dc8452d89a4fb645f5.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2424570,
+    "sha256": "545af5eaf0949d6dbf2cbb65bdd7bb210716d69809bf76421cf33dd9ef53a1de",
+    "at": "2026-10-27T15:32:58+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-F9B836D13C612526",
+    "identity_key": "BJ:920096|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]嘉晨智能:2023年年度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-04-25/738147399daf42dc8452d89a4fb645f5.pdf",
+    "local_file": "sources/collection/originals/920096/annual_2023/DOC-F9B836D13C612526.pdf",
+    "sha256": "545af5eaf0949d6dbf2cbb65bdd7bb210716d69809bf76421cf33dd9ef53a1de",
+    "bytes": 2424570,
+    "page_count": 131,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874302",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2424570 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "131 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "131 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2023年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2023年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-05-18",
     "period_end": "2023-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:53:32+08:00",
+   "updated_at": "2026-10-27T15:32:58+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:53:32+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920096\\annual_2023\\DOC-F9B836D13C612526.pdf",
+    "bytes": 2424570,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2424570 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "131 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "131 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2023年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2023年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 131,
+    "text_chars": 1647,
+    "issues": [],
+    "sha256": "545af5eaf0949d6dbf2cbb65bdd7bb210716d69809bf76421cf33dd9ef53a1de",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 5029,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "annual_2024": {
@@ -37,26 +149,138 @@
    "period_label": "FY2024",
    "period_end": "2024-12-31",
    "statutory_deadline": "2025-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-05-18 晚于报告期结束 2024-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874302），2251397 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-28/0f50ebc64bbc424aa3d06b0a466c3235.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2251397,
+     "sha256": "a1b5624bee2bc4ff717650e2ecf69062a24102252b5a82698b2d6c18416144be",
+     "at": "2026-10-27T15:34:03+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-28/0f50ebc64bbc424aa3d06b0a466c3235.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2251397,
+    "sha256": "a1b5624bee2bc4ff717650e2ecf69062a24102252b5a82698b2d6c18416144be",
+    "at": "2026-10-27T15:34:03+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-EB9B2798BA2B4F1A",
+    "identity_key": "BJ:920096|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]嘉晨智能:2024年年度报告",
+    "published_on": "2025-03-28",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-03-28/0f50ebc64bbc424aa3d06b0a466c3235.pdf",
+    "local_file": "sources/collection/originals/920096/annual_2024/DOC-EB9B2798BA2B4F1A.pdf",
+    "sha256": "a1b5624bee2bc4ff717650e2ecf69062a24102252b5a82698b2d6c18416144be",
+    "bytes": 2251397,
+    "page_count": 131,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874302",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2251397 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "131 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "131 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2024年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-05-18",
     "period_end": "2024-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:53:32+08:00",
+   "updated_at": "2026-10-27T15:34:03+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:53:32+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920096\\annual_2024\\DOC-EB9B2798BA2B4F1A.pdf",
+    "bytes": 2251397,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2251397 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "131 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "131 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2024年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2024年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 131,
+    "text_chars": 1787,
+    "issues": [],
+    "sha256": "a1b5624bee2bc4ff717650e2ecf69062a24102252b5a82698b2d6c18416144be",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 5416,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "annual_2025": {
@@ -66,26 +290,138 @@
    "period_label": "FY2025",
    "period_end": "2025-12-31",
    "statutory_deadline": "2026-04-30",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-05-18 晚于报告期结束 2025-12-31，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874302），2460214 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2026/2026-03-31/d503d96609a544b29dfb73aebe3a16c1.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2460214,
+     "sha256": "a304145f306687d89d2c32d15e6d4c911b30864cefc1bed117d96bb56d370942",
+     "at": "2026-10-27T15:34:33+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2026/2026-03-31/d503d96609a544b29dfb73aebe3a16c1.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2460214,
+    "sha256": "a304145f306687d89d2c32d15e6d4c911b30864cefc1bed117d96bb56d370942",
+    "at": "2026-10-27T15:34:33+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-AC95E1AF86807B5F",
+    "identity_key": "BJ:920096|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]嘉晨智能:2025年年度报告",
+    "published_on": "2026-03-31",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-03-31/d503d96609a544b29dfb73aebe3a16c1.pdf",
+    "local_file": "sources/collection/originals/920096/annual_2025/DOC-AC95E1AF86807B5F.pdf",
+    "sha256": "a304145f306687d89d2c32d15e6d4c911b30864cefc1bed117d96bb56d370942",
+    "bytes": 2460214,
+    "page_count": 134,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874302",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2460214 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "134 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "134 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2025年年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-05-18",
     "period_end": "2025-12-31",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:53:32+08:00",
+   "updated_at": "2026-10-27T15:34:33+08:00",
    "index_ref": {
     "category": "category_ndbg_szsh",
     "fetched_at": "2026-10-27T11:53:32+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920096\\annual_2025\\DOC-AC95E1AF86807B5F.pdf",
+    "bytes": 2460214,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2460214 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "134 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "134 >= 20"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2025年年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2025年年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 134,
+    "text_chars": 1747,
+    "issues": [],
+    "sha256": "a304145f306687d89d2c32d15e6d4c911b30864cefc1bed117d96bb56d370942",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 5462,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2024": {
@@ -95,26 +431,138 @@
    "period_label": "2024H1",
    "period_end": "2024-06-30",
    "statutory_deadline": "2024-08-31",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-05-18 晚于报告期结束 2024-06-30，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874302），2030499 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-28/7bd4cd38f6a14e4fb09e902fc1f5bc40.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2030499,
+     "sha256": "0156e7c1b1c0352ae50d47ad401ec56d4846beef698d0e903ea57225fbd60c02",
+     "at": "2026-10-27T15:35:17+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-28/7bd4cd38f6a14e4fb09e902fc1f5bc40.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2030499,
+    "sha256": "0156e7c1b1c0352ae50d47ad401ec56d4846beef698d0e903ea57225fbd60c02",
+    "at": "2026-10-27T15:35:17+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-248C0A5C6136594F",
+    "identity_key": "BJ:920096|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]嘉晨智能:2024年半年度报告",
+    "published_on": "2024-08-28",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-08-28/7bd4cd38f6a14e4fb09e902fc1f5bc40.pdf",
+    "local_file": "sources/collection/originals/920096/h1_2024/DOC-248C0A5C6136594F.pdf",
+    "sha256": "0156e7c1b1c0352ae50d47ad401ec56d4846beef698d0e903ea57225fbd60c02",
+    "bytes": 2030499,
+    "page_count": 103,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874302",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2030499 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "103 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "103 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2024年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2024年半年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-05-18",
     "period_end": "2024-06-30",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:53:33+08:00",
+   "updated_at": "2026-10-27T15:35:17+08:00",
    "index_ref": {
     "category": "category_bndbg_szsh",
     "fetched_at": "2026-10-27T11:53:33+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920096\\h1_2024\\DOC-248C0A5C6136594F.pdf",
+    "bytes": 2030499,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2030499 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "103 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "103 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2024年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2024年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 103,
+    "text_chars": 1722,
+    "issues": [],
+    "sha256": "0156e7c1b1c0352ae50d47ad401ec56d4846beef698d0e903ea57225fbd60c02",
+    "cover_text_chars": 72,
+    "identity_probe_chars": 5223,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2025": {
@@ -124,26 +572,138 @@
    "period_label": "2025H1",
    "period_end": "2025-06-30",
    "statutory_deadline": "2025-08-31",
-   "status": "NOT_TRIED",
-   "status_reason": "上市日 2026-05-18 晚于报告期结束 2025-06-30，但北交所公司上市前在股转系统挂牌，挂牌期间定期报告存在（披露平台与主体口径不同），不得判不适用",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "A01 恢复补采：股转官方全文（旧码 874302），2205970 bytes，七项校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "neeq_official_pdf",
+     "method": "GET",
+     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-27/5c6f7e6e9a7e46c7bc4fe31c66e44e87.pdf",
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "bytes": 2205970,
+     "sha256": "8c753ccaecd8ddd99ad482a2a98ccd31e1df5e963f79297effcc52d01bc31188",
+     "at": "2026-10-27T15:35:25+08:00"
+    }
+   ],
+   "last_source_attempt": {
+    "route": "neeq_official_pdf",
+    "method": "GET",
+    "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-27/5c6f7e6e9a7e46c7bc4fe31c66e44e87.pdf",
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "bytes": 2205970,
+    "sha256": "8c753ccaecd8ddd99ad482a2a98ccd31e1df5e963f79297effcc52d01bc31188",
+    "at": "2026-10-27T15:35:25+08:00"
+   },
    "last_error": null,
-   "next_action": "SEARCH_NEEQ_ARCHIVE",
+   "next_action": "NONE",
    "checkpoint": {},
-   "document": {},
+   "document": {
+    "document_id": "DOC-EB2CD0DE524715EB",
+    "identity_key": "BJ:920096|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+    "revision_no": 0,
+    "source_type": "NEEQ_OFFICIAL_PDF",
+    "title": "[定期报告]嘉晨智能:2025年半年度报告",
+    "published_on": "2025-08-27",
+    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-27/5c6f7e6e9a7e46c7bc4fe31c66e44e87.pdf",
+    "local_file": "sources/collection/originals/920096/h1_2025/DOC-EB2CD0DE524715EB.pdf",
+    "sha256": "8c753ccaecd8ddd99ad482a2a98ccd31e1df5e963f79297effcc52d01bc31188",
+    "bytes": 2205970,
+    "page_count": 112,
+    "form": "FULL_TEXT",
+    "old_neeq_code": "874302",
+    "identity_checks_first_pass": {},
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2205970 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "112 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "112 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2025年半年度报告"
+     }
+    },
+    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+   },
    "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
    "listing_date_evidence": {
     "listing_date": "2026-05-18",
     "period_end": "2025-06-30",
     "rule": "P00 not_applicable_decision_table: listing_date > period_end"
    },
-   "updated_at": "2026-10-27T11:53:33+08:00",
+   "updated_at": "2026-10-27T15:35:25+08:00",
    "index_ref": {
     "category": "category_bndbg_szsh",
     "fetched_at": "2026-10-27T11:53:33+08:00",
     "status": "RECONCILED"
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920096\\h1_2025\\DOC-EB2CD0DE524715EB.pdf",
+    "bytes": 2205970,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "2205970 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "112 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "112 >= 10"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=嘉晨智能 代码=920096 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]嘉晨智能:2025年半年度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=[定期报告]嘉晨智能:2025年半年度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 112,
+    "text_chars": 1699,
+    "issues": [],
+    "sha256": "8c753ccaecd8ddd99ad482a2a98ccd31e1df5e963f79297effcc52d01bc31188",
+    "cover_text_chars": 72,
+    "identity_probe_chars": 5277,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
    }
   },
   "h1_2026": {
@@ -486,5 +1046,5 @@
    "fetched_at": "2026-10-27T11:53:36+08:00"
   }
  },
- "updated_at": "2026-10-27T11:53:36+08:00"
+ "updated_at": "2026-10-27T15:35:25+08:00"
 }

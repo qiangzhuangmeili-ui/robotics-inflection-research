@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "P03_NEEQ_RECHECK_COMPLETE_A01_RECOVERY_READY",
+  "status": "A01_SELF_CHECK_PASS",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -788,7 +788,7 @@
     "issue_key": "A01",
     "issue_number": 31,
     "reviewed_at": "2026-10-27T12:46:12+08:00",
-    "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
+    "decision": "SELF_CHECK_PASS",
     "scope": "只补 A00 列出的 76 个缺口槽，不重跑已取得资料",
     "before": {
       "verified": 7162,
@@ -799,15 +799,15 @@
       "bytes": 18668202153
     },
     "after": {
-      "verified": 7173,
+      "verified": 7223,
       "pending_identity": 0,
       "source_failed": 0,
-      "not_tried": 65,
+      "not_tried": 15,
       "na_prelisting": 140,
       "applicable": 7238,
-      "obtained_rate_applicable": 0.991,
-      "bytes": 18759762853,
-      "local_files_present": 7173,
+      "obtained_rate_applicable": 0.9979,
+      "bytes": 18863410086,
+      "local_files_present": 7223,
       "local_files_missing": 0
     },
     "resolved": {
@@ -819,19 +819,22 @@
       "identity_only": 10
     },
     "residual": {
-      "G1_neeq_platform_gap": 65,
-      "category": "NOT_EXHAUSTED_PENDING_P03_TECHNICAL_REVIEW",
-      "retracted_category": "GLOBAL_SOURCE_UNAVAILABLE",
-      "action": "单条技术核验请求 runs/issues/A01/p03_review_request.md，交 P03；核验前保持 NOT_TRIED"
+      "count": 15,
+      "breakdown": {
+        "PERIOD_PRECEDES_CURRENT_NEEQ_LISTING_REVIEW_REQUIRED": 11,
+        "VOLUNTARY_QUARTER_NOT_FOUND_IN_VALIDATED_REGULAR_INDEX": 4
+      },
+      "category": "PENDING_APPLICABILITY_REVIEW",
+      "owner": "A02"
     },
     "new_inputs": [
       "data/company_name_aliases.csv",
       "runs/issues/A01/collection_config_v2.json"
     ],
-    "next": "P03 技术核验（#14 范围）→ 之后 A02；A02 不得把 65 槽当人工补件清单",
+    "next": "A02 #32：15 槽适用性判定 + 11 槽 identity_checks 统一；不得把 15 槽当人工补件清单",
     "note": "11 槽回收中仅 1 槽为新下载，10 槽为对已在盘原件的身份补证。",
-    "amended_at": "2026-10-27T13:10:03+08:00",
-    "decision_note": "11 槽补证成立；65 槽「全局源不可用」已撤回，退回 P03 技术核验",
+    "amended_at": "2026-10-27T15:52:20+08:00",
+    "decision_note": "第一轮 11 槽 + P03 后股转 50 槽，共 61 槽补齐；15 槽适用性判定交 A02",
     "corrections": [
       "C1 撤回平台故障结论（缺正向对照）",
       "C2 修正日期字段错（published_on → announcementTime）",
@@ -851,7 +854,13 @@
       "neeq API usability (no positive control)",
       "8xxxxx old codes",
       "whether all 65 slots are actually obtainable"
-    ]
+    ],
+    "recovery_round": {
+      "resolved": 50,
+      "bytes": 103647233,
+      "issuer_match_pass": 50,
+      "period_match_pass": 50
+    }
   },
   "p03_neeq_recheck": {
     "issue": "P03",

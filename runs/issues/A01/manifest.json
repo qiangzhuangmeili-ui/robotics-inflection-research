@@ -2,11 +2,10 @@
   "issue_key": "A01",
   "issue_number": 31,
   "plan_version": "20261026_collection_first_v2",
-  "generated_at": "2026-10-27T13:10:03+08:00",
-  "generator": "tools/a01_retry.py + tools/a01_probe_v2.py",
-  "version": 2,
-  "amended_at": "2026-10-27T13:10:03+08:00",
-  "amendment": "v1 的 65 槽「全局源不可用」结论已撤回，改为待 P03 技术核验；source_probes.json 重建为 v2",
+  "generated_at": "2026-10-27T15:52:20+08:00",
+  "version": 3,
+  "generator": "tools/a01_retry.py + tools/a01_probe_v2.py + tools/a01_neeq_recover.py",
+  "amendment": "v3：P03 复核后股转 50 槽自动补采完成；v1 平台故障结论、v2 未证伪结论均已作废但保留",
   "files": [
     {
       "path": "runs/issues/A01/retry_attempts.csv",
@@ -64,20 +63,38 @@
     },
     {
       "path": "runs/issues/A01/handoff.md",
-      "bytes": 14494,
-      "sha256": "3d0ee5a7309884e60c240aaeca2cffab6804b9a16ba483f558bfdd4ebe3a24b5",
+      "bytes": 16802,
+      "sha256": "25bb536e8b7fae69b432dccbcb0bf490f048ce40b60ca3911a044fcc0218adb4",
       "storage": "GIT"
     },
     {
       "path": "runs/issues/A01/review.json",
-      "bytes": 8907,
-      "sha256": "c4548c00ffe1555dea0493a2e646640d9d8eecd86fceda1bb80d90fbe23d7edf",
+      "bytes": 10827,
+      "sha256": "d5bebf78b1c2290ebc888a0eafa3100ae6b7ef5e50c6bdcfe2514d4fa3dda996",
       "storage": "GIT"
     },
     {
       "path": "runs/issues/A01/neeq_probe/per_company_cninfo_scan.json",
       "bytes": 5337,
       "sha256": "5fdaed8ed6a065a8f54ff90fd2bb3f570b9721e5b6ab6db7cb376be404cadce5",
+      "storage": "GIT"
+    },
+    {
+      "path": "runs/issues/A01/neeq_recovery.csv",
+      "bytes": 20760,
+      "sha256": "2e55700ccb5c99301e68a4d2ede16f73ca48a038f6973a2da351f65b8626bd73",
+      "storage": "GIT"
+    },
+    {
+      "path": "runs/issues/A01/neeq_residual.csv",
+      "bytes": 5190,
+      "sha256": "4d4b81c89db49ecbdcbf3051c6bef7150735f3af98ec608e3b607219437d3ebf",
+      "storage": "GIT"
+    },
+    {
+      "path": "runs/issues/A01/neeq_recovery_log.json",
+      "bytes": 6879,
+      "sha256": "08a59b206c8810e6f01ce94869c9ef4e398168a3d1f4c0a5b125c540fde898a2",
       "storage": "GIT"
     },
     {
@@ -129,11 +146,17 @@
       "storage": "GIT"
     },
     {
+      "path": "tools/a01_neeq_recover.py",
+      "bytes": 13594,
+      "sha256": "0ef13cd81bd5b1ff0cc08752b38ae677e2f20176100fb9d759b7520396befecc",
+      "storage": "GIT"
+    },
+    {
       "path": "data/company_name_aliases.csv",
       "bytes": 1216,
       "sha256": "7c99f13e74fc0f64accd4705b64446e9448145964034680648ef99ca93994c6b",
       "storage": "GIT"
     }
   ],
-  "note": "PDF 原件在 D 盘；封面证据图与招股说明书样本按 .gitignore 仅留本地，sha256 已记录。"
+  "note": "PDF 原件在 D 盘 sources/collection；封面证据图与招股书样本按 .gitignore 仅留本地。"
 }

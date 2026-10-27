@@ -4,16 +4,16 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": null,
-  "status": "IDLE_P03_TECHNICAL_RECHECK_COMPLETE_A01_RECOVERY_READY",
-  "claim_note": "P03股转技术复核已交付：15旧码、50官方候选链接、15适用性待复核；需A01自动恢复，A02仍等待。",
+  "status": "IDLE_A01_SELF_CHECK_PASS",
+  "claim_note": "A01 完成：P03 打通股转接口后按 50 条官方全文链接补采，50/50 取得且身份+报告期全 PASS；剩余 15 槽交 A02 做适用性判定。",
   "last_completed": {
     "issue_number": 31,
     "issue_key": "A01",
-    "completed_at": "2026-10-27T13:10:03+08:00",
+    "completed_at": "2026-10-27T15:52:20+08:00",
     "review_file": "runs/issues/A01/review.json",
-    "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
-    "acceptance": "3 PASS + 2 PASS_WITH_CORRECTION",
-    "self_check": "11 槽回收（1 重下 + 10 身份补证）；65 槽未证伪，待 P03"
+    "decision": "SELF_CHECK_PASS",
+    "acceptance": "5/5",
+    "self_check": "76 缺口补齐 61（11+50）；剩余 15 待适用性判定"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 31,
-  "next_recommended_issue_key": "A01",
-  "next_recommended_reason": "P03已验证官方NEEQ接口及15家旧码；50槽有全文候选链接，15槽待适用性判断。恢复自动重试，不直接下发A02。",
+  "next_recommended_issue_number": 32,
+  "next_recommended_issue_key": "A02",
+  "next_recommended_reason": "剩余 15 槽需按 P03 分类做适用性判定；另有 11 槽 identity_checks 记账不一致待统一。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -84,7 +84,7 @@
     }
   },
   "current_drive_archive_status": "VERIFIED_65_FILES_BY_CODEX",
-  "a02_blocked_by": "A01_NEEQ_AUTOMATIC_RECOVERY_AND_APPLICABILITY_REVIEW",
+  "a02_blocked_by": null,
   "p03_neeq_recheck": {
     "issue": "P03",
     "scope": "NEEQ_RECHECK_20261027",
