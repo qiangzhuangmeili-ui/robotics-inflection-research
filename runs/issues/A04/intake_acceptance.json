@@ -1,0 +1,220 @@
+{
+  "issue_key": "A04",
+  "issue_number": 34,
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-27T20:30:41.492449+08:00",
+  "review_nature": "SELF_CHECK",
+  "decision": "RETURN_FOR_REWORK",
+  "release_S00": false,
+  "reason": "P00 full frozen scope has unaccounted slots and supplementary scope; no relaxation of frozen standards",
+  "checks": [
+    {
+      "id": "AC01",
+      "result": "PASS",
+      "evidence": {
+        "count": 1054,
+        "canonical_sha256": "e093c54dfaf60ef883f2b353667eb497a978d5d8cf00954457af674f95527f5e"
+      }
+    },
+    {
+      "id": "AC02",
+      "result": "PASS",
+      "evidence": [
+        {
+          "batch_id": "M00_01",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_02",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_03",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_04",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_05",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_06",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_07",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_08",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_09",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_10",
+          "expected": 100,
+          "actual": 100,
+          "pass": true
+        },
+        {
+          "batch_id": "M00_11",
+          "expected": 54,
+          "actual": 54,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "AC03",
+      "result": "PASS",
+      "evidence": "assignment and queue set equality"
+    },
+    {
+      "id": "AC04",
+      "result": "FAIL",
+      "evidence": {
+        "duplicate_existing_pairs": 0,
+        "frozen_report_slots_absent": {
+          "annual_2023": 0,
+          "annual_2024": 0,
+          "annual_2025": 0,
+          "h1_2024": 0,
+          "h1_2025": 0,
+          "h1_2026": 0,
+          "q1_2024": 1054,
+          "q3_2024": 1054,
+          "q1_2025": 1054,
+          "q3_2025": 1054,
+          "q1_2026": 0,
+          "q3_2026": 1054
+        },
+        "reason": "7-slot implementation does not cover frozen 12 report-slot definitions; deadline-not-yet-due slots need explicit terminal decisions, not assumed downloads"
+      }
+    },
+    {
+      "id": "AC05",
+      "result": "FAIL",
+      "evidence": {
+        "not_tried_in_existing_7_slot_ledger": 0,
+        "missing_predeadline_quarter_slots": 4216,
+        "reason": "absent slots have no terminal disposition; cannot report full-round NOT_TRIED=0"
+      }
+    },
+    {
+      "id": "AC06",
+      "result": "PASS",
+      "evidence": {
+        "na_rows": 151,
+        "without_listing_side_table_date": 0,
+        "limit": "date/source presence check; no new independent original-source verification"
+      }
+    },
+    {
+      "id": "AC07",
+      "result": "PASS",
+      "evidence": {
+        "verified": 7223,
+        "missing_trace_fields": 0,
+        "local_missing": 0,
+        "limit": "metadata and local-file presence; not fresh binary hash or business review"
+      }
+    },
+    {
+      "id": "AC08",
+      "result": "PASS",
+      "evidence": {
+        "source_failed": 0,
+        "scope": "existing ledger only; omitted scope untested"
+      }
+    },
+    {
+      "id": "AC09",
+      "result": "PASS",
+      "evidence": {
+        "manual_receipts": 0,
+        "historical_closures": 28,
+        "new_requests_this_audit": 0
+      }
+    },
+    {
+      "id": "AC10",
+      "result": "HOLD",
+      "evidence": {
+        "known_after_cutoff_in_existing_ledger": 0,
+        "unknown_disclosure_date": 7,
+        "cutoff": "2026-10-25",
+        "hold_register": "cutoff_hold.csv"
+      }
+    }
+  ],
+  "implemented_ledger": {
+    "companies": 1054,
+    "rows": 7378,
+    "statuses": {
+      "COLLECTED_IDENTITY_VERIFIED": 7223,
+      "NOT_APPLICABLE_PRE_LISTING": 151,
+      "NOT_DISCLOSED_BY_ISSUER": 4
+    },
+    "local_missing": 0,
+    "archive_verified": 65,
+    "checkpoint_index_types": {
+      "category_ndbg_szsh": 1050,
+      "category_bndbg_szsh": 1048,
+      "category_yjdbg_szsh": 1048
+    }
+  },
+  "field_recomputation": {
+    "raw_rows": 79494,
+    "raw_extracted_rows": 73071,
+    "diagnostic_documents": 3082,
+    "documents_with_field_rows": 3081,
+    "diagnostic_documents_without_field_rows": [
+      "DOC-41A995E12934526B"
+    ],
+    "field_document_pairs": 49296,
+    "any_extracted_pairs": 42873,
+    "field_rows_status": {
+      "NOT_IN_STATEMENT": 2759,
+      "EXTRACTED": 73071,
+      "BLANK_IN_STATEMENT": 1977,
+      "RESTATEMENT_INDICATED_NEEDS_REVIEW": 960,
+      "NOT_APPLICABLE": 159,
+      "STATEMENT_NOT_FOUND": 553,
+      "NOT_FOUND": 15
+    },
+    "quality_unit": {
+      "YES": 3027,
+      "NO": 54
+    }
+  },
+  "limits": [
+    "Existing P00-A03 self-check decisions preserved; this is a new A04 gate decision.",
+    "No new official-source original, binary hash or business evidence verification.",
+    "P07 65 archive receipts remain historical; no live Drive probe performed here.",
+    "Rejected release does not mean obtained documents are unusable; comparable normalization may start only after gate repair."
+  ]
+}
