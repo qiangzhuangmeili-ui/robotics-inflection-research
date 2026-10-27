@@ -994,6 +994,596 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-27T11:14:20+08:00"
+  },
+  "q1_2024": {
+   "security_id": "SH:688151",
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219884554.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 886,
+     "at": "2026-10-27T23:48:35+08:00",
+     "response_sha256": null,
+     "bytes": 383515,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-41B5FCFD945376D3",
+    "identity_key": "SH:688151|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "湖北华强科技股份有限公司2024年第一季度报告",
+    "published_on": "2024-04-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219884554.PDF",
+    "local_file": "sources/collection/originals/688151/q1_2024/DOC-41B5FCFD945376D3.pdf",
+    "sha256": "54ecfb544d2484eeec0105f8c620d9a0cb93ca6e1a0dfc900df7e51b5e44ac8d",
+    "bytes": 383515,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "383515 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华强科技 代码=688151 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=湖北华强科技股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=湖北华强科技股份有限公司2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:48:36+08:00",
+    "bytes_written": 383515
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:48:36+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219884554.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 886,
+    "at": "2026-10-27T23:48:35+08:00",
+    "response_sha256": null,
+    "bytes": 383515,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688151\\q1_2024\\DOC-41B5FCFD945376D3.pdf.part",
+    "bytes": 383515,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "383515 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华强科技 代码=688151 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=湖北华强科技股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=湖北华强科技股份有限公司2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2441,
+    "issues": [],
+    "sha256": "54ecfb544d2484eeec0105f8c620d9a0cb93ca6e1a0dfc900df7e51b5e44ac8d",
+    "cover_text_chars": 475,
+    "identity_probe_chars": 4904,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2024": {
+   "security_id": "SH:688151",
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221574549.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1289,
+     "at": "2026-10-27T23:48:38+08:00",
+     "response_sha256": null,
+     "bytes": 524850,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-18B761920242963C",
+    "identity_key": "SH:688151|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "湖北华强科技股份有限公司2024年第三季度报告",
+    "published_on": "2024-10-30",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221574549.PDF",
+    "local_file": "sources/collection/originals/688151/q3_2024/DOC-18B761920242963C.pdf",
+    "sha256": "3446fbc14da88e8abd2aec3b33fa58ef03aceb99f255b50bedc9e3ba52f050f4",
+    "bytes": 524850,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "524850 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华强科技 代码=688151 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=湖北华强科技股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=湖北华强科技股份有限公司2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:48:38+08:00",
+    "bytes_written": 524850
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:48:38+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221574549.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1289,
+    "at": "2026-10-27T23:48:38+08:00",
+    "response_sha256": null,
+    "bytes": 524850,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688151\\q3_2024\\DOC-18B761920242963C.pdf.part",
+    "bytes": 524850,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "524850 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华强科技 代码=688151 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=湖北华强科技股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=湖北华强科技股份有限公司2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2334,
+    "issues": [],
+    "sha256": "3446fbc14da88e8abd2aec3b33fa58ef03aceb99f255b50bedc9e3ba52f050f4",
+    "cover_text_chars": 484,
+    "identity_probe_chars": 4871,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q1_2025": {
+   "security_id": "SH:688151",
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223247076.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 657,
+     "at": "2026-10-27T23:48:39+08:00",
+     "response_sha256": null,
+     "bytes": 156735,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-10FE819A8381A192",
+    "identity_key": "SH:688151|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "湖北华强科技股份有限公司2025年第一季度报告",
+    "published_on": "2025-04-23",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223247076.PDF",
+    "local_file": "sources/collection/originals/688151/q1_2025/DOC-10FE819A8381A192.pdf",
+    "sha256": "aa6e623d8ca3ef7a9c9b8918425316049b1b69826a1e8429ef5dd69af214bc1a",
+    "bytes": 156735,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "156735 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华强科技 代码=688151 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=湖北华强科技股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=湖北华强科技股份有限公司2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:48:39+08:00",
+    "bytes_written": 156735
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:48:39+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223247076.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 657,
+    "at": "2026-10-27T23:48:39+08:00",
+    "response_sha256": null,
+    "bytes": 156735,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688151\\q1_2025\\DOC-10FE819A8381A192.pdf.part",
+    "bytes": 156735,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "156735 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华强科技 代码=688151 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=湖北华强科技股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=湖北华强科技股份有限公司2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2334,
+    "issues": [],
+    "sha256": "aa6e623d8ca3ef7a9c9b8918425316049b1b69826a1e8429ef5dd69af214bc1a",
+    "cover_text_chars": 520,
+    "identity_probe_chars": 5187,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2025": {
+   "security_id": "SH:688151",
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224765081.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 969,
+     "at": "2026-10-27T23:48:40+08:00",
+     "response_sha256": null,
+     "bytes": 187691,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-790027798016336A",
+    "identity_key": "SH:688151|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "湖北华强科技股份有限公司2025年第三季度报告",
+    "published_on": "2025-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224765081.PDF",
+    "local_file": "sources/collection/originals/688151/q3_2025/DOC-790027798016336A.pdf",
+    "sha256": "abb7b2d0607899fe68d096a55ad1ac747b1faf6e88aaa4df9a859c5a9b7b801a",
+    "bytes": 187691,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "187691 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华强科技 代码=688151 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=湖北华强科技股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=湖北华强科技股份有限公司2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:48:41+08:00",
+    "bytes_written": 187691
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:48:41+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224765081.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 969,
+    "at": "2026-10-27T23:48:40+08:00",
+    "response_sha256": null,
+    "bytes": 187691,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688151\\q3_2025\\DOC-790027798016336A.pdf.part",
+    "bytes": 187691,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "187691 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华强科技 代码=688151 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=湖北华强科技股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=湖北华强科技股份有限公司2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2521,
+    "issues": [],
+    "sha256": "abb7b2d0607899fe68d096a55ad1ac747b1faf6e88aaa4df9a859c5a9b7b801a",
+    "cover_text_chars": 536,
+    "identity_probe_chars": 5195,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2026": {
+   "security_id": "SH:688151",
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "document": {},
+   "checkpoint": {},
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-27T23:48:41+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-27T23:48:37+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1337,8 +1927,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:14:20+08:00",
-     "elapsed_ms": 547
+     "fetched_at": "2026-10-27T23:48:34+08:00",
+     "elapsed_ms": 507
     }
    ],
    "rows": [
@@ -1379,8 +1969,85 @@
      "adjunct_size": 366
     }
    ],
-   "fetched_at": "2026-10-27T11:14:20+08:00"
+   "fetched_at": "2026-10-27T23:48:34+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688151",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900047919",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688151,9900047919",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "a0bd3e7a1f70803504cbdffad10158603f7ee60b543916896902f299e9d81f21",
+     "response_bytes": 2238,
+     "raw_path": "sources/collection/raw/688151/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688151,9900047919",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-27T23:48:37+08:00",
+     "elapsed_ms": 989
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224765081",
+     "title": "湖北华强科技股份有限公司2025年第三季度报告",
+     "sec_code": "688151",
+     "sec_name": "华强科技",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224765081.PDF",
+     "adjunct_size": 184
+    },
+    {
+     "announcement_id": "1221574549",
+     "title": "湖北华强科技股份有限公司2024年第三季度报告",
+     "sec_code": "688151",
+     "sec_name": "华强科技",
+     "published_on": "2024-10-30",
+     "adjunct_url": "finalpage/2024-10-31/1221574549.PDF",
+     "adjunct_size": 514
+    },
+    {
+     "announcement_id": "1218204985",
+     "title": "湖北华强科技股份有限公司2023年第三季度报告",
+     "sec_code": "688151",
+     "sec_name": "华强科技",
+     "published_on": "2023-10-30",
+     "adjunct_url": "finalpage/2023-10-31/1218204985.PDF",
+     "adjunct_size": 381
+    }
+   ],
+   "fetched_at": "2026-10-27T23:48:37+08:00"
   }
  },
- "updated_at": "2026-10-27T11:14:20+08:00"
+ "updated_at": "2026-10-27T23:48:41+08:00"
 }

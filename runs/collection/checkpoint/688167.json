@@ -994,6 +994,596 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-27T11:15:17+08:00"
+  },
+  "q1_2024": {
+   "security_id": "SH:688167",
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219884842.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1167,
+     "at": "2026-10-27T23:49:04+08:00",
+     "response_sha256": null,
+     "bytes": 416528,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-9A02BBF4DA433B0A",
+    "identity_key": "SH:688167|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "西安炬光科技股份有限公司2024年第一季度报告",
+    "published_on": "2024-04-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219884842.PDF",
+    "local_file": "sources/collection/originals/688167/q1_2024/DOC-9A02BBF4DA433B0A.pdf",
+    "sha256": "e0a12680a82a0a780dd7eb9565034b7f5d506fa8baee37b07bd92061eb49f19b",
+    "bytes": 416528,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "416528 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=炬光科技 代码=688167 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=西安炬光科技股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=西安炬光科技股份有限公司2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:49:05+08:00",
+    "bytes_written": 416528
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:49:05+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219884842.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1167,
+    "at": "2026-10-27T23:49:04+08:00",
+    "response_sha256": null,
+    "bytes": 416528,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688167\\q1_2024\\DOC-9A02BBF4DA433B0A.pdf.part",
+    "bytes": 416528,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "416528 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=炬光科技 代码=688167 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=西安炬光科技股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=西安炬光科技股份有限公司2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 2567,
+    "issues": [],
+    "sha256": "e0a12680a82a0a780dd7eb9565034b7f5d506fa8baee37b07bd92061eb49f19b",
+    "cover_text_chars": 438,
+    "identity_probe_chars": 5321,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2024": {
+   "security_id": "SH:688167",
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221558521.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 819,
+     "at": "2026-10-27T23:49:06+08:00",
+     "response_sha256": null,
+     "bytes": 418019,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-18D37D0E81AD5533",
+    "identity_key": "SH:688167|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "西安炬光科技股份有限公司2024年第三季度报告",
+    "published_on": "2024-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221558521.PDF",
+    "local_file": "sources/collection/originals/688167/q3_2024/DOC-18D37D0E81AD5533.pdf",
+    "sha256": "17dc2ebea8df95d5b063d53abb70ef708f02a3e7d71daf260c68b6f3a4298aae",
+    "bytes": 418019,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "418019 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=炬光科技 代码=688167 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=西安炬光科技股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=西安炬光科技股份有限公司2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:49:06+08:00",
+    "bytes_written": 418019
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:49:06+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221558521.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 819,
+    "at": "2026-10-27T23:49:06+08:00",
+    "response_sha256": null,
+    "bytes": 418019,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688167\\q3_2024\\DOC-18D37D0E81AD5533.pdf.part",
+    "bytes": 418019,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "418019 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=炬光科技 代码=688167 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=西安炬光科技股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=西安炬光科技股份有限公司2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2528,
+    "issues": [],
+    "sha256": "17dc2ebea8df95d5b063d53abb70ef708f02a3e7d71daf260c68b6f3a4298aae",
+    "cover_text_chars": 495,
+    "identity_probe_chars": 5232,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q1_2025": {
+   "security_id": "SH:688167",
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223328384.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 847,
+     "at": "2026-10-27T23:49:07+08:00",
+     "response_sha256": null,
+     "bytes": 182414,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-E147845477D1C80D",
+    "identity_key": "SH:688167|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "西安炬光科技股份有限公司2025年第一季度报告",
+    "published_on": "2025-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223328384.PDF",
+    "local_file": "sources/collection/originals/688167/q1_2025/DOC-E147845477D1C80D.pdf",
+    "sha256": "99e1726cfe1b171fc945bc304e7bffa74ee75ce5528048fc1a000d7113e9796f",
+    "bytes": 182414,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "182414 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=炬光科技 代码=688167 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=西安炬光科技股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=西安炬光科技股份有限公司2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:49:08+08:00",
+    "bytes_written": 182414
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:49:08+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223328384.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 847,
+    "at": "2026-10-27T23:49:07+08:00",
+    "response_sha256": null,
+    "bytes": 182414,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688167\\q1_2025\\DOC-E147845477D1C80D.pdf.part",
+    "bytes": 182414,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "182414 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=炬光科技 代码=688167 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=西安炬光科技股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=西安炬光科技股份有限公司2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2474,
+    "issues": [],
+    "sha256": "99e1726cfe1b171fc945bc304e7bffa74ee75ce5528048fc1a000d7113e9796f",
+    "cover_text_chars": 475,
+    "identity_probe_chars": 5437,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2025": {
+   "security_id": "SH:688167",
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224761789.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 2718,
+     "at": "2026-10-27T23:49:10+08:00",
+     "response_sha256": null,
+     "bytes": 215279,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-DF63656707C835A8",
+    "identity_key": "SH:688167|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "西安炬光科技股份有限公司2025年第三季度报告",
+    "published_on": "2025-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224761789.PDF",
+    "local_file": "sources/collection/originals/688167/q3_2025/DOC-DF63656707C835A8.pdf",
+    "sha256": "52d84c620bf4d2c221ac5cdcddb1a0566a3b1e798677e80efdf37bd612bf4ea2",
+    "bytes": 215279,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "215279 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=炬光科技 代码=688167 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=西安炬光科技股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=西安炬光科技股份有限公司2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:49:10+08:00",
+    "bytes_written": 215279
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:49:10+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224761789.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 2718,
+    "at": "2026-10-27T23:49:10+08:00",
+    "response_sha256": null,
+    "bytes": 215279,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688167\\q3_2025\\DOC-DF63656707C835A8.pdf.part",
+    "bytes": 215279,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "215279 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=炬光科技 代码=688167 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=西安炬光科技股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=西安炬光科技股份有限公司2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2373,
+    "issues": [],
+    "sha256": "52d84c620bf4d2c221ac5cdcddb1a0566a3b1e798677e80efdf37bd612bf4ea2",
+    "cover_text_chars": 509,
+    "identity_probe_chars": 5129,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2026": {
+   "security_id": "SH:688167",
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "document": {},
+   "checkpoint": {},
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-27T23:49:11+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-27T23:49:05+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1283,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:15:16+08:00",
-     "elapsed_ms": 553
+     "fetched_at": "2026-10-27T23:49:03+08:00",
+     "elapsed_ms": 967
     }
    ],
    "rows": [
@@ -1325,8 +1915,85 @@
      "adjunct_size": 372
     }
    ],
-   "fetched_at": "2026-10-27T11:15:16+08:00"
+   "fetched_at": "2026-10-27T23:49:03+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688167",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "gfbj0835243",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688167,gfbj0835243",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "28dfd39e7a8a4b1dc632eee96c8b50040cf7957d7288e6d7a14a8b958bc1541d",
+     "response_bytes": 2231,
+     "raw_path": "sources/collection/raw/688167/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688167,gfbj0835243",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-27T23:49:05+08:00",
+     "elapsed_ms": 699
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224761789",
+     "title": "西安炬光科技股份有限公司2025年第三季度报告",
+     "sec_code": "688167",
+     "sec_name": "炬光科技",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224761789.PDF",
+     "adjunct_size": 211
+    },
+    {
+     "announcement_id": "1221558521",
+     "title": "西安炬光科技股份有限公司2024年第三季度报告",
+     "sec_code": "688167",
+     "sec_name": "炬光科技",
+     "published_on": "2024-10-29",
+     "adjunct_url": "finalpage/2024-10-30/1221558521.PDF",
+     "adjunct_size": 409
+    },
+    {
+     "announcement_id": "1218187696",
+     "title": "西安炬光科技股份有限公司2023年第三季度报告",
+     "sec_code": "688167",
+     "sec_name": "炬光科技",
+     "published_on": "2023-10-27",
+     "adjunct_url": "finalpage/2023-10-28/1218187696.PDF",
+     "adjunct_size": 395
+    }
+   ],
+   "fetched_at": "2026-10-27T23:49:05+08:00"
   }
  },
- "updated_at": "2026-10-27T11:15:17+08:00"
+ "updated_at": "2026-10-27T23:49:11+08:00"
 }

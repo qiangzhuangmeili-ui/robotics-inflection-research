@@ -1,7 +1,7 @@
 {
   "plan_version": "20261026_collection_first_v2",
   "adopted_on": "2026-10-26",
-  "new_issues_created": 39,
+  "new_issues_created": 40,
   "primary_batch_count": 11,
   "candidate_count": 1054,
   "next_recommended_issue": 34,
@@ -833,11 +833,48 @@
       "issue_body_sha256": "341aaaf3ea5c0bad51d1a520756d216a8e1a3f8f794be0adf1486f3302def765"
     },
     {
+      "key": "A04R",
+      "phase": "收尾补缺",
+      "scope": "补齐 P00 冻结的 4 类到期季度槽与 q3_2026 逐项截止日登记，并补采近两年公告/IR 目录与关键词命中原件。",
+      "dependencies": [
+        "A03"
+      ],
+      "steps": [
+        "复用共享台账与已落盘目录缓存，已是终态不发请求。",
+        "自动补齐 q1_2024/q3_2024/q1_2025/q3_2025 终态；q3_2026 按披露日与截止日逐项判定。",
+        "全池公告/IR 目录分页对账，登记关键词命中与更正/修订行。"
+      ],
+      "outputs": [
+        "progress.json",
+        "run_result.json",
+        "announcement_index.jsonl",
+        "keyword_originals.jsonl"
+      ],
+      "acceptance": [
+        "12 槽 × 1054 家全部有唯一终态且 NOT_TRIED=0。",
+        "q3_2026 无截止日后文件进入本轮证据。",
+        "公告目录 1054/1054 覆盖且分页对账通过。"
+      ],
+      "stop": [
+        "全局来源故障回 P03，不转逐家人工补件；熔断写断点不删原件。"
+      ],
+      "order": 23.5,
+      "issue_number": 50,
+      "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/50",
+      "title": "A04R｜冻结范围补齐采集：4类到期季度与q3_2026逐项登记（A04 返工）",
+      "status": "IN_PROGRESS",
+      "plan_version": "20261026_collection_first_v2",
+      "output_directory": "runs/issues/A04R/",
+      "review_record": "runs/issues/A04R/review.json",
+      "addendum": true
+    },
+    {
       "key": "A04",
       "phase": "收尾补缺",
       "scope": "只验收资料轮，不认定机器人业务或企业拐点。",
       "dependencies": [
-        "A03"
+        "A03",
+        "A04R"
       ],
       "steps": [
         "核全池范围、计划槽处理状态、财务字段覆盖、已披露/不适用与未解决缺口。",

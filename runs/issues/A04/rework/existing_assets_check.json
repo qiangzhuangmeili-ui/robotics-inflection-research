@@ -1,0 +1,51 @@
+{
+  "scope": "A04_REWORK_EXISTING_ASSET_CHECK",
+  "generated_at": "2026-10-27T20:58:15+08:00",
+  "question": "近两年公告/IR 目录、关键词原件、更正版本链是否已有资产可复用",
+  "existing_library": {
+    "source": "runs/issues/P02/reuse_manifest.json",
+    "registered_documents": 100,
+    "unique_content_sha256": 87,
+    "assets_by_type": {
+      "REGISTERED_DOCUMENT": 100,
+      "RESEARCH_PACKAGE": 68,
+      "REPO_TEXT_ASSET": 27,
+      "RESEARCH_RESULT_FILE": 24,
+      "VALIDATION_REPORT": 6,
+      "FINANCIAL_SNAPSHOT": 1
+    },
+    "announcement_index_assets": 0,
+    "conclusion": "旧库只有 100 份已登记文档与 68 个研究包，没有任何全池公告目录资产，不能证明两年公告覆盖"
+  },
+  "on_disk_index_cache_baseline": {
+    "as_of": "2026-10-26",
+    "categories": {
+      "category_ndbg_szsh": {
+        "files": 1053,
+        "rows": 8314
+      },
+      "category_bndbg_szsh": {
+        "files": 1053,
+        "rows": 8251
+      },
+      "category_yjdbg_szsh": {
+        "files": 1054,
+        "rows": 4110,
+        "note": "2026-10-26 基线快照；本轮已按需刷新"
+      },
+      "category_sjdbg_szsh": {
+        "files": 0,
+        "rows": 0,
+        "note": "2026-10-26 基线无该类别缓存"
+      }
+    },
+    "total_rows": 20675,
+    "companies_covered": 1054,
+    "conclusion": "三类定期报告类别目录合计约 2.07 万行、每类约 8 行/家，只覆盖定期报告；单家两年公告量可达 155 条（如 000026 实测），因此类别索引不足以证明公告/IR 目录完成"
+  },
+  "decision": "EXISTING_ASSETS_INSUFFICIENT -> 需要自动补采全池两年公告/IR 目录（A04R）",
+  "limits": [
+    "本轮不改写 ndbg/bndbg 目录缓存；yjdbg/sjdbg 因补采需要按需刷新",
+    "基线行数来自 2026-10-26 落盘响应，未重新请求验证"
+  ]
+}

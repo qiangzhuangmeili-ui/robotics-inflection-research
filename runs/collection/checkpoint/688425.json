@@ -994,6 +994,596 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-27T11:34:23+08:00"
+  },
+  "q1_2024": {
+   "security_id": "SH:688425",
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219909676.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 842,
+     "at": "2026-10-27T23:55:13+08:00",
+     "response_sha256": null,
+     "bytes": 611743,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-BB56F421E4E21DE8",
+    "identity_key": "SH:688425|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "中国铁建重工集团股份有限公司2024年第一季度报告",
+    "published_on": "2024-04-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219909676.PDF",
+    "local_file": "sources/collection/originals/688425/q1_2024/DOC-BB56F421E4E21DE8.pdf",
+    "sha256": "9dc7efe6b242c8de359657317e394d86e11281680debdc8b57ff00f2796f2621",
+    "bytes": 611743,
+    "page_count": 15,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "611743 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "15 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "15 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=铁建重工 代码=688425 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中国铁建重工集团股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=中国铁建重工集团股份有限公司2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:55:13+08:00",
+    "bytes_written": 611743
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:55:13+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219909676.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 842,
+    "at": "2026-10-27T23:55:13+08:00",
+    "response_sha256": null,
+    "bytes": 611743,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688425\\q1_2024\\DOC-BB56F421E4E21DE8.pdf.part",
+    "bytes": 611743,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "611743 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "15 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "15 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=铁建重工 代码=688425 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中国铁建重工集团股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=中国铁建重工集团股份有限公司2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 15,
+    "text_chars": 1963,
+    "issues": [],
+    "sha256": "9dc7efe6b242c8de359657317e394d86e11281680debdc8b57ff00f2796f2621",
+    "cover_text_chars": 424,
+    "identity_probe_chars": 3832,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2024": {
+   "security_id": "SH:688425",
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221569542.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1215,
+     "at": "2026-10-27T23:55:15+08:00",
+     "response_sha256": null,
+     "bytes": 600105,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-5A04FAB49776F3B2",
+    "identity_key": "SH:688425|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "中国铁建重工集团股份有限公司2024年第三季度报告",
+    "published_on": "2024-10-30",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221569542.PDF",
+    "local_file": "sources/collection/originals/688425/q3_2024/DOC-5A04FAB49776F3B2.pdf",
+    "sha256": "b827329dfec3682c3e754ffeab138bd0b074c9bf80b6208c7ab940b20fcb894f",
+    "bytes": 600105,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "600105 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=铁建重工 代码=688425 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中国铁建重工集团股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=中国铁建重工集团股份有限公司2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:55:15+08:00",
+    "bytes_written": 600105
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:55:15+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221569542.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1215,
+    "at": "2026-10-27T23:55:15+08:00",
+    "response_sha256": null,
+    "bytes": 600105,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688425\\q3_2024\\DOC-5A04FAB49776F3B2.pdf.part",
+    "bytes": 600105,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "600105 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=铁建重工 代码=688425 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中国铁建重工集团股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=中国铁建重工集团股份有限公司2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2741,
+    "issues": [],
+    "sha256": "b827329dfec3682c3e754ffeab138bd0b074c9bf80b6208c7ab940b20fcb894f",
+    "cover_text_chars": 519,
+    "identity_probe_chars": 5162,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q1_2025": {
+   "security_id": "SH:688425",
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223372200.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 763,
+     "at": "2026-10-27T23:55:16+08:00",
+     "response_sha256": null,
+     "bytes": 149339,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-49F98CC6748BAA62",
+    "identity_key": "SH:688425|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "中国铁建重工集团股份有限公司2025年第一季度报告",
+    "published_on": "2025-04-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223372200.PDF",
+    "local_file": "sources/collection/originals/688425/q1_2025/DOC-49F98CC6748BAA62.pdf",
+    "sha256": "315a73cea7c1ecd5d26e3cbfd8194f7c0f96bec6f8a61cbba55112c77e6e5a0b",
+    "bytes": 149339,
+    "page_count": 11,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "149339 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=铁建重工 代码=688425 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中国铁建重工集团股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=中国铁建重工集团股份有限公司2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:55:17+08:00",
+    "bytes_written": 149339
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:55:17+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223372200.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 763,
+    "at": "2026-10-27T23:55:16+08:00",
+    "response_sha256": null,
+    "bytes": 149339,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688425\\q1_2025\\DOC-49F98CC6748BAA62.pdf.part",
+    "bytes": 149339,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "149339 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=铁建重工 代码=688425 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中国铁建重工集团股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=中国铁建重工集团股份有限公司2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 11,
+    "text_chars": 2203,
+    "issues": [],
+    "sha256": "315a73cea7c1ecd5d26e3cbfd8194f7c0f96bec6f8a61cbba55112c77e6e5a0b",
+    "cover_text_chars": 498,
+    "identity_probe_chars": 5094,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2025": {
+   "security_id": "SH:688425",
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758144.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 894,
+     "at": "2026-10-27T23:55:17+08:00",
+     "response_sha256": null,
+     "bytes": 181513,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-766AA3E58C010AC4",
+    "identity_key": "SH:688425|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "中国铁建重工集团股份有限公司2025年第三季度报告",
+    "published_on": "2025-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758144.PDF",
+    "local_file": "sources/collection/originals/688425/q3_2025/DOC-766AA3E58C010AC4.pdf",
+    "sha256": "b724e324649e55fb1bed30f020152b87927e720d5c6dc0a2c32e4ede1eaa1dc8",
+    "bytes": 181513,
+    "page_count": 11,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "181513 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=铁建重工 代码=688425 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中国铁建重工集团股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=中国铁建重工集团股份有限公司2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:55:18+08:00",
+    "bytes_written": 181513
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:55:18+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758144.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 894,
+    "at": "2026-10-27T23:55:17+08:00",
+    "response_sha256": null,
+    "bytes": 181513,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688425\\q3_2025\\DOC-766AA3E58C010AC4.pdf.part",
+    "bytes": 181513,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "181513 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=铁建重工 代码=688425 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中国铁建重工集团股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=中国铁建重工集团股份有限公司2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 11,
+    "text_chars": 2479,
+    "issues": [],
+    "sha256": "b724e324649e55fb1bed30f020152b87927e720d5c6dc0a2c32e4ede1eaa1dc8",
+    "cover_text_chars": 513,
+    "identity_probe_chars": 5348,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2026": {
+   "security_id": "SH:688425",
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "document": {},
+   "checkpoint": {},
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-27T23:55:18+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-27T23:55:14+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1283,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:34:22+08:00",
-     "elapsed_ms": 508
+     "fetched_at": "2026-10-27T23:55:12+08:00",
+     "elapsed_ms": 705
     }
    ],
    "rows": [
@@ -1325,8 +1915,85 @@
      "adjunct_size": 366
     }
    ],
-   "fetched_at": "2026-10-27T11:34:22+08:00"
+   "fetched_at": "2026-10-27T23:55:12+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688425",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "nssc1000602",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688425,nssc1000602",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "88e0fc705fd0c6c71149d98b2e20184f1449828622665f8535591d6c20e8263a",
+     "response_bytes": 2277,
+     "raw_path": "sources/collection/raw/688425/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688425,nssc1000602",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-27T23:55:14+08:00",
+     "elapsed_ms": 711
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224758144",
+     "title": "中国铁建重工集团股份有限公司2025年第三季度报告",
+     "sec_code": "688425",
+     "sec_name": "铁建重工",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224758144.PDF",
+     "adjunct_size": 178
+    },
+    {
+     "announcement_id": "1221569542",
+     "title": "中国铁建重工集团股份有限公司2024年第三季度报告",
+     "sec_code": "688425",
+     "sec_name": "铁建重工",
+     "published_on": "2024-10-30",
+     "adjunct_url": "finalpage/2024-10-31/1221569542.PDF",
+     "adjunct_size": 587
+    },
+    {
+     "announcement_id": "1218205385",
+     "title": "中国铁建重工集团股份有限公司2023年第三季度报告",
+     "sec_code": "688425",
+     "sec_name": "铁建重工",
+     "published_on": "2023-10-30",
+     "adjunct_url": "finalpage/2023-10-31/1218205385.PDF",
+     "adjunct_size": 335
+    }
+   ],
+   "fetched_at": "2026-10-27T23:55:14+08:00"
   }
  },
- "updated_at": "2026-10-27T11:34:23+08:00"
+ "updated_at": "2026-10-27T23:55:18+08:00"
 }

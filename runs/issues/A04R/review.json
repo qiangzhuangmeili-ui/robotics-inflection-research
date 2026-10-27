@@ -1,0 +1,237 @@
+{
+  "issue_key": "A04R",
+  "issue_number": 50,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "reviewed_at": "2026-10-27T23:58:46+08:00",
+  "decision": "SELF_CHECK_INCOMPLETE",
+  "checks": [
+    {
+      "id": "AC04",
+      "item": "12 槽 × 1054 家全部有且仅有一个终态（NOT_TRIED 不算终态）",
+      "result": "FAIL",
+      "evidence": {
+        "expected_pairs": 12648,
+        "ledger_pairs": 12648,
+        "absent": 0,
+        "duplicate": 0,
+        "not_tried": 565
+      }
+    },
+    {
+      "id": "AC05",
+      "item": "NOT_TRIED = 0",
+      "result": "FAIL",
+      "evidence": {
+        "not_tried": 565,
+        "by_slot": {
+          "q1_2024": 113,
+          "q3_2024": 114,
+          "q1_2025": 112,
+          "q3_2025": 113,
+          "q3_2026": 113
+        }
+      }
+    },
+    {
+      "id": "AC10",
+      "item": "截止日后披露不作为本轮证据",
+      "result": "PASS",
+      "evidence": {
+        "after_cutoff_registered": 0,
+        "cutoff": "2026-10-25"
+      }
+    },
+    {
+      "id": "AC11",
+      "item": "近两年公告/IR 目录全池覆盖且分页对账",
+      "result": "FAIL",
+      "evidence": {
+        "companies": 1054,
+        "companies_with_index": 1,
+        "reconciled": 1,
+        "keyword_hits": 0,
+        "keyword_originals_downloaded": 0,
+        "revision_rows": 1,
+        "ir_rows": 3
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "slot_id": "annual_2023",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 1007,
+      "pending_identity": 0,
+      "na_pre_listing": 47,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 0
+    },
+    {
+      "slot_id": "annual_2024",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 1029,
+      "pending_identity": 0,
+      "na_pre_listing": 25,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 0
+    },
+    {
+      "slot_id": "annual_2025",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 1046,
+      "pending_identity": 0,
+      "na_pre_listing": 8,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 0
+    },
+    {
+      "slot_id": "h1_2024",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 1014,
+      "pending_identity": 0,
+      "na_pre_listing": 40,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 0
+    },
+    {
+      "slot_id": "h1_2025",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 1034,
+      "pending_identity": 0,
+      "na_pre_listing": 20,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 0
+    },
+    {
+      "slot_id": "h1_2026",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 1050,
+      "pending_identity": 0,
+      "na_pre_listing": 4,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 0
+    },
+    {
+      "slot_id": "q1_2024",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 906,
+      "pending_identity": 0,
+      "na_pre_listing": 35,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 113
+    },
+    {
+      "slot_id": "q3_2024",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 911,
+      "pending_identity": 1,
+      "na_pre_listing": 28,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 114
+    },
+    {
+      "slot_id": "q1_2025",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 922,
+      "pending_identity": 1,
+      "na_pre_listing": 19,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 112
+    },
+    {
+      "slot_id": "q3_2025",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 924,
+      "pending_identity": 5,
+      "na_pre_listing": 11,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 113
+    },
+    {
+      "slot_id": "q1_2026",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 1043,
+      "pending_identity": 0,
+      "na_pre_listing": 7,
+      "not_disclosed": 4,
+      "not_yet_disclosed": 0,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 0
+    },
+    {
+      "slot_id": "q3_2026",
+      "ledger_rows": 1054,
+      "absent": 0,
+      "verified": 172,
+      "pending_identity": 2,
+      "na_pre_listing": 0,
+      "not_disclosed": 0,
+      "not_yet_disclosed": 767,
+      "after_cutoff": 0,
+      "source_failed": 0,
+      "not_tried": 113
+    }
+  ],
+  "status_counts": {
+    "COLLECTED_IDENTITY_VERIFIED": 11058,
+    "NOT_YET_DISCLOSED": 767,
+    "COLLECTED_PENDING_IDENTITY": 9,
+    "NOT_APPLICABLE_PRE_LISTING": 244,
+    "NOT_TRIED": 565,
+    "IN_PROGRESS": 1,
+    "NOT_DISCLOSED_BY_ISSUER": 4
+  },
+  "limits": [
+    "本卡只做采集与文件身份校验，不做财务精读、不做业务结论、不估值。",
+    "自检由执行者本人完成，不等于独立审计。",
+    "关键词命中只用于取件排序，不构成机器人业务证据。",
+    "Drive 无真实上传与回读回执，archive_status 不写 VERIFIED，本地原件保留。",
+    "COLLECTED_PENDING_IDENTITY 为正文抽取不足（图片版/字形贴片），待人工看封面。"
+  ],
+  "allows_next_stage_scope": "放行 A04 复验；不放行业务结论/指标筛选/估值"
+}

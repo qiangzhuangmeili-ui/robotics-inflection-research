@@ -768,6 +768,368 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-27T10:25:32+08:00"
+  },
+  "q1_2024": {
+   "security_id": "SH:603194",
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "document": {},
+   "checkpoint": {},
+   "status": "NOT_APPLICABLE_PRE_LISTING",
+   "status_reason": "上市日 2024-12-24 晚于报告期结束日 2024-03-31，公司当时未上市",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:31:21+08:00",
+   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+   "listing_date_evidence": {
+    "listing_date": "2024-12-24",
+    "period_end": "2024-03-31",
+    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+   },
+   "index_ref": {
+    "category": "category_yjdbg_szsh",
+    "fetched_at": "2026-10-27T23:31:21+08:00",
+    "status": "RECONCILED"
+   }
+  },
+  "q3_2024": {
+   "security_id": "SH:603194",
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "document": {},
+   "checkpoint": {},
+   "status": "NOT_APPLICABLE_PRE_LISTING",
+   "status_reason": "上市日 2024-12-24 晚于报告期结束日 2024-09-30，公司当时未上市",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:31:23+08:00",
+   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+   "listing_date_evidence": {
+    "listing_date": "2024-12-24",
+    "period_end": "2024-09-30",
+    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+   },
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-27T23:31:23+08:00",
+    "status": "RECONCILED"
+   }
+  },
+  "q1_2025": {
+   "security_id": "SH:603194",
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223346916.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1068,
+     "at": "2026-10-27T23:31:24+08:00",
+     "response_sha256": null,
+     "bytes": 193098,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-FE1FFB567AA822AD",
+    "identity_key": "SH:603194|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "浙江中力机械股份有限公司2025年第一季度报告",
+    "published_on": "2025-04-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223346916.PDF",
+    "local_file": "sources/collection/originals/603194/q1_2025/DOC-FE1FFB567AA822AD.pdf",
+    "sha256": "192d794bf2fd2e0677353d091a2388b7b8c442046a6107e2c1ff0665c55b4359",
+    "bytes": 193098,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "193098 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中力股份 代码=603194 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江中力机械股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江中力机械股份有限公司2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:31:24+08:00",
+    "bytes_written": 193098
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:31:24+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223346916.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1068,
+    "at": "2026-10-27T23:31:24+08:00",
+    "response_sha256": null,
+    "bytes": 193098,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603194\\q1_2025\\DOC-FE1FFB567AA822AD.pdf.part",
+    "bytes": 193098,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "193098 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中力股份 代码=603194 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江中力机械股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江中力机械股份有限公司2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2700,
+    "issues": [],
+    "sha256": "192d794bf2fd2e0677353d091a2388b7b8c442046a6107e2c1ff0665c55b4359",
+    "cover_text_chars": 548,
+    "identity_probe_chars": 5504,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2025": {
+   "security_id": "SH:603194",
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224763952.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 746,
+     "at": "2026-10-27T23:31:25+08:00",
+     "response_sha256": null,
+     "bytes": 192424,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-FFD8B18F6B6256EF",
+    "identity_key": "SH:603194|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年第三季度报告",
+    "published_on": "2025-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224763952.PDF",
+    "local_file": "sources/collection/originals/603194/q3_2025/DOC-FFD8B18F6B6256EF.pdf",
+    "sha256": "58ef1ccaaf44a5ecd9645615cf5d47ef5c3e278e4afbd71b20cb356c45769923",
+    "bytes": 192424,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "192424 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中力股份 代码=603194 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:31:25+08:00",
+    "bytes_written": 192424
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:31:25+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224763952.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 746,
+    "at": "2026-10-27T23:31:25+08:00",
+    "response_sha256": null,
+    "bytes": 192424,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603194\\q3_2025\\DOC-FFD8B18F6B6256EF.pdf.part",
+    "bytes": 192424,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "192424 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中力股份 代码=603194 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2165,
+    "issues": [],
+    "sha256": "58ef1ccaaf44a5ecd9645615cf5d47ef5c3e278e4afbd71b20cb356c45769923",
+    "cover_text_chars": 488,
+    "identity_probe_chars": 4961,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2026": {
+   "security_id": "SH:603194",
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "document": {},
+   "checkpoint": {},
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-27T23:31:25+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-27T23:31:23+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -985,8 +1347,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T10:25:30+08:00",
-     "elapsed_ms": 522
+     "fetched_at": "2026-10-27T23:31:21+08:00",
+     "elapsed_ms": 534
     }
    ],
    "rows": [
@@ -1009,8 +1371,67 @@
      "adjunct_size": 190
     }
    ],
-   "fetched_at": "2026-10-27T10:25:30+08:00"
+   "fetched_at": "2026-10-27T23:31:21+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:603194",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900056200",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "603194,9900056200",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 1,
+   "rows_fetched": 1,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 1,
+     "new_rows": 1,
+     "total_announcement": 1,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "f95218e056786b461b81b4c01327bac57e6e1db2eca9290c31562f03f43c0602",
+     "response_bytes": 781,
+     "raw_path": "sources/collection/raw/603194/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "603194,9900056200",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-27T23:31:23+08:00",
+     "elapsed_ms": 1174
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224763952",
+     "title": "2025年第三季度报告",
+     "sec_code": "603194",
+     "sec_name": "中力股份",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224763952.PDF",
+     "adjunct_size": 189
+    }
+   ],
+   "fetched_at": "2026-10-27T23:31:23+08:00"
   }
  },
- "updated_at": "2026-10-27T10:25:32+08:00"
+ "updated_at": "2026-10-27T23:31:25+08:00"
 }

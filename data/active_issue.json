@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
-  "executor": null,
-  "started_at": null,
-  "status": "IDLE_A04_RETURN_FOR_REWORK",
-  "claim_note": "A04 SELF_CHECK 退回返工：P00冻结季度/公告范围未落实；S00不放行。",
+  "active_issue_number": 50,
+  "active_issue_key": "A04R",
+  "executor": "WorkBuddy AI (executor=AI, review=SELF_CHECK)",
+  "started_at": "2026-10-27T20:54:25+08:00",
+  "status": "PAUSED_A04R_DAY_END",
+  "claim_note": "A04R #50 执行中按用户要求当日停机（非故障）：12 槽 12648 行已全部落台账，565 槽（116 家）仍 NOT_TRIED，公告目录未开始。断点与续跑命令见 runs/issues/A04R/PAUSE_STATE.md。",
   "last_completed": {
     "issue_number": 33,
     "issue_key": "A03",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 34,
-  "next_recommended_issue_key": "A04",
-  "next_recommended_reason": "先修复 runs/issues/A04/remaining_gap_owners.csv 中冻结范围终态和映射问题，再复验A04；不得重置已核成果。",
+  "next_recommended_issue_number": 50,
+  "next_recommended_issue_key": "A04R",
+  "next_recommended_reason": "A04 复验依赖 A04R 补齐 5270 个季度槽终态与近两年公告/IR 目录覆盖；完成后回 A04 重验。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -134,5 +134,59 @@
     "known_after_cutoff": 0,
     "unknown_disclosure_dates": 7,
     "missing_predeadline_quarter_dispositions": 4216
+  },
+  "claim_basis": {
+    "issue_state": "OPEN",
+    "github_checked_at": "2026-10-27T20:54:25+08:00",
+    "released_issue": {
+      "issue_number": 34,
+      "issue_key": "A04",
+      "released_at": "2026-10-27T20:54:25+08:00",
+      "reason": "A04 复验需先完成 A04R 采集；执行期间不双占卡",
+      "work_done_under_a04": [
+        "runs/issues/A04/rework/cutoff_hold_resolved.csv",
+        "runs/issues/A04/rework/audit_rework.py"
+      ]
+    },
+    "inputs_sha256": {
+      "data/issue_execution_plan.csv": "d4accf18538033b4b9b4aa7a32d3161b893729d60ee23161364c45deda2e4f9c",
+      "data/issue_execution_plan.json": "ed1994753025837f9546ed988c82026a93ea9584dd23aa611050d0b3bd48089d",
+      "PROJECT_STATE.json": "fd06fd265dc722c91f80b666a3a053cc087f325c7d7bc12baa67d8c81d0a6cc0",
+      "runs/issues/P00/collection_scope.json": "f5e31dc053b9d7a020ffd0db15fb8d7cad44e2c04f6baa76d396c41a519a4e3b",
+      "runs/issues/P00/coverage_acceptance_rules.json": "7b8fadc770b09cae094bdc67abd584f310db17a14cac2347d25bc803e070c196",
+      "runs/issues/A04/review.json": "6ca8ded33ea810ddac701c77ebe978c409f60ae4dba2cada2ba9d3667d07385d",
+      "runs/issues/A03/review.json": "5c142176aaf5d77aa47b18b5420f321fe840494fb1277083144ab9bb3bdcc63b",
+      "runs/collection/collection_index.csv": "31aea6f06e62ae1c8b88a8253e854223adf3eea8faa471324f492324f15fd4fe"
+    },
+    "config": "runs/issues/A01/collection_config_v2.json",
+    "config_sha256": "ba2c81d5502ff593176f70fea24b5d2bc9f15ccc12e6452c50ec85a5d9b5e5e2"
+  },
+  "paused_at": "2026-10-27T23:58:55+08:00",
+  "resume": {
+    "issue_key": "A04R",
+    "issue_number": 50,
+    "state_file": "runs/issues/A04R/PAUSE_STATE.md",
+    "commands": [
+      "python tools/a04r_scope_backfill.py",
+      "python tools/a04r_bj_applicability.py --probe",
+      "python tools/a04r_bj_applicability.py --decide",
+      "python tools/a04r_announcement_index.py --resume",
+      "python tools/a04r_announcement_index.py --download-hits",
+      "python tools/a04r_finalize.py",
+      "python runs/issues/A04/rework/audit_rework.py",
+      "python runs/issues/A04/rework/finalize_rework.py"
+    ],
+    "pending": {
+      "not_tried_slots": 565,
+      "companies_with_pending": 116,
+      "announcement_index_companies": 1,
+      "announcement_index_target": 1054
+    },
+    "then": "A04R 通过后回 A04 #34 复验；未通过前 S00 保持 WAITING_DEPENDENCIES"
+  },
+  "checkpoint_sha256": {
+    "runs/collection/collection_index.csv": "dbfbdd1106e45deae79de459dd9c54a7a20b73a7b874b1ad588ea304bd28ae31",
+    "runs/issues/A04R/progress.json": "7623e53ab56a88b061f16e586147b0ee126ff7d12297d49fafa7f0fc74bf35cf",
+    "runs/issues/A04R/progress_pass1.json": "ca37f8375c2e3756aca1b29dac0633b30e581f55750e3ef29baf69f1e671df99"
   }
 }

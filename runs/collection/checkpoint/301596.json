@@ -881,6 +881,484 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-27T00:34:03+08:00"
+  },
+  "q1_2024": {
+   "security_id": "SZ:301596",
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "status": "NOT_APPLICABLE_PRE_LISTING",
+   "status_reason": "上市日 2024-05-13 晚于报告期结束日 2024-03-31，公司当时未上市",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "last_source_attempt": null,
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {},
+   "document": {},
+   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+   "listing_date_evidence": {
+    "listing_date": "2024-05-13",
+    "period_end": "2024-03-31",
+    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+   },
+   "updated_at": "2026-10-27T22:12:21+08:00",
+   "index_ref": {
+    "category": "category_yjdbg_szsh",
+    "fetched_at": "2026-10-27T22:12:21+08:00",
+    "status": "RECONCILED"
+   }
+  },
+  "q3_2024": {
+   "security_id": "SZ:301596",
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221502953.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1040,
+     "at": "2026-10-27T22:12:23+08:00",
+     "response_sha256": null,
+     "bytes": 635676,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221502953.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1040,
+    "at": "2026-10-27T22:12:23+08:00",
+    "response_sha256": null,
+    "bytes": 635676,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:23+08:00",
+    "bytes_written": 635676
+   },
+   "document": {
+    "document_id": "DOC-2CBFD9A28F8BAB52",
+    "identity_key": "SZ:301596|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-24",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221502953.PDF",
+    "local_file": "sources/collection/originals/301596/q3_2024/DOC-2CBFD9A28F8BAB52.pdf",
+    "sha256": "ae60b1657f88db374072d62061d3f5fd21900c4313f6375f5d78d9ac96174181",
+    "bytes": 635676,
+    "page_count": 11,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "635676 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=瑞迪智驱 代码=301596 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301596\\q3_2024\\DOC-2CBFD9A28F8BAB52.pdf.part",
+    "bytes": 635676,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "635676 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=瑞迪智驱 代码=301596 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 11,
+    "text_chars": 3039,
+    "issues": [],
+    "sha256": "ae60b1657f88db374072d62061d3f5fd21900c4313f6375f5d78d9ac96174181",
+    "cover_text_chars": 253,
+    "identity_probe_chars": 6349,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:23+08:00"
+  },
+  "q1_2025": {
+   "security_id": "SZ:301596",
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223142941.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 799,
+     "at": "2026-10-27T22:12:24+08:00",
+     "response_sha256": null,
+     "bytes": 414409,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223142941.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 799,
+    "at": "2026-10-27T22:12:24+08:00",
+    "response_sha256": null,
+    "bytes": 414409,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:25+08:00",
+    "bytes_written": 414409
+   },
+   "document": {
+    "document_id": "DOC-0411F72A95F00713",
+    "identity_key": "SZ:301596|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-18",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223142941.PDF",
+    "local_file": "sources/collection/originals/301596/q1_2025/DOC-0411F72A95F00713.pdf",
+    "sha256": "e80dd4e398528fc256d80037ccef29217cdfab80f69e5d8965d99a5724b99fb8",
+    "bytes": 414409,
+    "page_count": 10,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "414409 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "10 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "10 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=瑞迪智驱 代码=301596 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301596\\q1_2025\\DOC-0411F72A95F00713.pdf.part",
+    "bytes": 414409,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "414409 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "10 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "10 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=瑞迪智驱 代码=301596 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 10,
+    "text_chars": 2852,
+    "issues": [],
+    "sha256": "e80dd4e398528fc256d80037ccef29217cdfab80f69e5d8965d99a5724b99fb8",
+    "cover_text_chars": 253,
+    "identity_probe_chars": 6477,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:25+08:00"
+  },
+  "q3_2025": {
+   "security_id": "SZ:301596",
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224732740.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1062,
+     "at": "2026-10-27T22:12:26+08:00",
+     "response_sha256": null,
+     "bytes": 587390,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224732740.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1062,
+    "at": "2026-10-27T22:12:26+08:00",
+    "response_sha256": null,
+    "bytes": 587390,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:26+08:00",
+    "bytes_written": 587390
+   },
+   "document": {
+    "document_id": "DOC-4190A8B8DC1CD87A",
+    "identity_key": "SZ:301596|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224732740.PDF",
+    "local_file": "sources/collection/originals/301596/q3_2025/DOC-4190A8B8DC1CD87A.pdf",
+    "sha256": "20c36726926c07a80d39e34a8aa793f5db68572f253889fcf4f463054d991042",
+    "bytes": 587390,
+    "page_count": 11,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "587390 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=瑞迪智驱 代码=301596 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301596\\q3_2025\\DOC-4190A8B8DC1CD87A.pdf.part",
+    "bytes": 587390,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "587390 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=瑞迪智驱 代码=301596 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 11,
+    "text_chars": 3257,
+    "issues": [],
+    "sha256": "20c36726926c07a80d39e34a8aa793f5db68572f253889fcf4f463054d991042",
+    "cover_text_chars": 257,
+    "identity_probe_chars": 6808,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:26+08:00"
+  },
+  "q3_2026": {
+   "security_id": "SZ:301596",
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "last_source_attempt": null,
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "checkpoint": {},
+   "document": {},
+   "updated_at": "2026-10-27T22:12:26+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-27T22:12:22+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1106,8 +1584,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T00:34:02+08:00",
-     "elapsed_ms": 525
+     "fetched_at": "2026-10-27T22:12:21+08:00",
+     "elapsed_ms": 732
     }
    ],
    "rows": [
@@ -1117,7 +1595,8 @@
      "sec_code": "301596",
      "sec_name": "瑞迪智驱",
      "published_on": "2026-04-22",
-     "adjunct_url": "finalpage/2026-04-23/1225143781.PDF"
+     "adjunct_url": "finalpage/2026-04-23/1225143781.PDF",
+     "adjunct_size": 636
     },
     {
      "announcement_id": "1223142941",
@@ -1125,11 +1604,80 @@
      "sec_code": "301596",
      "sec_name": "瑞迪智驱",
      "published_on": "2025-04-18",
-     "adjunct_url": "finalpage/2025-04-19/1223142941.PDF"
+     "adjunct_url": "finalpage/2025-04-19/1223142941.PDF",
+     "adjunct_size": 406
     }
    ],
-   "fetched_at": "2026-10-27T00:34:02+08:00"
+   "fetched_at": "2026-10-27T22:12:21+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SZ:301596",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "9900051624",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "301596,9900051624",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 2,
+   "rows_fetched": 2,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 2,
+     "new_rows": 2,
+     "total_announcement": 2,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "6376d8688b4f8b96e7d838113714725ce30d6856f22924cc8f70d5cccaabafa3",
+     "response_bytes": 1420,
+     "raw_path": "sources/collection/raw/301596/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "301596,9900051624",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-27T22:12:22+08:00",
+     "elapsed_ms": 984
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224732740",
+     "title": "2025年三季度报告",
+     "sec_code": "301596",
+     "sec_name": "瑞迪智驱",
+     "published_on": "2025-10-26",
+     "adjunct_url": "finalpage/2025-10-27/1224732740.PDF",
+     "adjunct_size": 575
+    },
+    {
+     "announcement_id": "1221502953",
+     "title": "2024年三季度报告",
+     "sec_code": "301596",
+     "sec_name": "瑞迪智驱",
+     "published_on": "2024-10-24",
+     "adjunct_url": "finalpage/2024-10-25/1221502953.PDF",
+     "adjunct_size": 622
+    }
+   ],
+   "fetched_at": "2026-10-27T22:12:22+08:00"
   }
  },
- "updated_at": "2026-10-27T00:34:03+08:00"
+ "updated_at": "2026-10-27T22:12:26+08:00"
 }

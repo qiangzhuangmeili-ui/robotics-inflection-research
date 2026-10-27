@@ -768,6 +768,603 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-27T00:34:54+08:00"
+  },
+  "q1_2024": {
+   "security_id": "SZ:301613",
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "status": "NOT_APPLICABLE_PRE_LISTING",
+   "status_reason": "上市日 2024-10-25 晚于报告期结束日 2024-03-31，公司当时未上市",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "last_source_attempt": null,
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {},
+   "document": {},
+   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+   "listing_date_evidence": {
+    "listing_date": "2024-10-25",
+    "period_end": "2024-03-31",
+    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+   },
+   "updated_at": "2026-10-27T22:12:51+08:00",
+   "index_ref": {
+    "category": "category_yjdbg_szsh",
+    "fetched_at": "2026-10-27T22:12:51+08:00",
+    "status": "RECONCILED"
+   }
+  },
+  "q3_2024": {
+   "security_id": "SZ:301613",
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221559862.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1038,
+     "at": "2026-10-27T22:12:53+08:00",
+     "response_sha256": null,
+     "bytes": 575040,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221559862.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1038,
+    "at": "2026-10-27T22:12:53+08:00",
+    "response_sha256": null,
+    "bytes": 575040,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:53+08:00",
+    "bytes_written": 575040
+   },
+   "document": {
+    "document_id": "DOC-4AD4A52DB76742F6",
+    "identity_key": "SZ:301613|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221559862.PDF",
+    "local_file": "sources/collection/originals/301613/q3_2024/DOC-4AD4A52DB76742F6.pdf",
+    "sha256": "3c3c65b030fd0891f7944de7cf400f11642b8b742d7fbbae8d968242b758ddeb",
+    "bytes": 575040,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "575040 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新铝时代 代码=301613 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301613\\q3_2024\\DOC-4AD4A52DB76742F6.pdf.part",
+    "bytes": 575040,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "575040 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新铝时代 代码=301613 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 2238,
+    "issues": [],
+    "sha256": "3c3c65b030fd0891f7944de7cf400f11642b8b742d7fbbae8d968242b758ddeb",
+    "cover_text_chars": 253,
+    "identity_probe_chars": 4820,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:53+08:00"
+  },
+  "q1_2025": {
+   "security_id": "SZ:301613",
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223236852.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 840,
+     "at": "2026-10-27T22:12:54+08:00",
+     "response_sha256": null,
+     "bytes": 202395,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223236852.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 840,
+    "at": "2026-10-27T22:12:54+08:00",
+    "response_sha256": null,
+    "bytes": 202395,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:54+08:00",
+    "bytes_written": 202395
+   },
+   "document": {
+    "document_id": "DOC-BF46F20D7F4FF598",
+    "identity_key": "SZ:301613|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-23",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223236852.PDF",
+    "local_file": "sources/collection/originals/301613/q1_2025/DOC-BF46F20D7F4FF598.pdf",
+    "sha256": "377b3ec6e130ef1c0cbd26353e025b7071d8fb67133d238b488fbb8ae81c732a",
+    "bytes": 202395,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "202395 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新铝时代 代码=301613 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301613\\q1_2025\\DOC-BF46F20D7F4FF598.pdf.part",
+    "bytes": 202395,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "202395 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新铝时代 代码=301613 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2799,
+    "issues": [],
+    "sha256": "377b3ec6e130ef1c0cbd26353e025b7071d8fb67133d238b488fbb8ae81c732a",
+    "cover_text_chars": 253,
+    "identity_probe_chars": 6186,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:54+08:00"
+  },
+  "q3_2025": {
+   "security_id": "SZ:301613",
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224733297.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 921,
+     "at": "2026-10-27T22:12:55+08:00",
+     "response_sha256": null,
+     "bytes": 176940,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224733297.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 921,
+    "at": "2026-10-27T22:12:55+08:00",
+    "response_sha256": null,
+    "bytes": 176940,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:55+08:00",
+    "bytes_written": 176940
+   },
+   "document": {
+    "document_id": "DOC-A1876DE484218CC8",
+    "identity_key": "SZ:301613|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224733297.PDF",
+    "local_file": "sources/collection/originals/301613/q3_2025/DOC-A1876DE484218CC8.pdf",
+    "sha256": "9cbfcaae3a35dd36113524c88ff34d41d8ff38ff3b3e07c0737ee0e482ea99d5",
+    "bytes": 176940,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "176940 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新铝时代 代码=301613 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301613\\q3_2025\\DOC-A1876DE484218CC8.pdf.part",
+    "bytes": 176940,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "176940 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新铝时代 代码=301613 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 3188,
+    "issues": [],
+    "sha256": "9cbfcaae3a35dd36113524c88ff34d41d8ff38ff3b3e07c0737ee0e482ea99d5",
+    "cover_text_chars": 252,
+    "identity_probe_chars": 6810,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:55+08:00"
+  },
+  "q3_2026": {
+   "security_id": "SZ:301613",
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225616018.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1450,
+     "at": "2026-10-27T22:12:57+08:00",
+     "response_sha256": null,
+     "bytes": 259210,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225616018.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1450,
+    "at": "2026-10-27T22:12:57+08:00",
+    "response_sha256": null,
+    "bytes": 259210,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:57+08:00",
+    "bytes_written": 259210
+   },
+   "document": {
+    "document_id": "DOC-B2AEE1DA579EDADE",
+    "identity_key": "SZ:301613|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2026年三季度报告",
+    "published_on": "2026-10-22",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225616018.PDF",
+    "local_file": "sources/collection/originals/301613/q3_2026/DOC-B2AEE1DA579EDADE.pdf",
+    "sha256": "9e5144504855579bfe5c9aa7ca998edaa59179f529f011e476b10aeb048c943e",
+    "bytes": 259210,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "259210 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新铝时代 代码=301613 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=['2025']; title=2026年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年三季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301613\\q3_2026\\DOC-B2AEE1DA579EDADE.pdf.part",
+    "bytes": 259210,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "259210 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=新铝时代 代码=301613 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=['2025']; title=2026年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 2445,
+    "issues": [],
+    "sha256": "9e5144504855579bfe5c9aa7ca998edaa59179f529f011e476b10aeb048c943e",
+    "cover_text_chars": 252,
+    "identity_probe_chars": 6910,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:57+08:00"
   }
  },
  "indexes": {
@@ -977,8 +1574,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T00:34:53+08:00",
-     "elapsed_ms": 514
+     "fetched_at": "2026-10-27T22:12:51+08:00",
+     "elapsed_ms": 971
     }
    ],
    "rows": [
@@ -988,7 +1585,8 @@
      "sec_code": "301613",
      "sec_name": "新铝时代",
      "published_on": "2026-04-26",
-     "adjunct_url": "finalpage/2026-04-27/1225176461.PDF"
+     "adjunct_url": "finalpage/2026-04-27/1225176461.PDF",
+     "adjunct_size": 202
     },
     {
      "announcement_id": "1223236852",
@@ -996,11 +1594,89 @@
      "sec_code": "301613",
      "sec_name": "新铝时代",
      "published_on": "2025-04-23",
-     "adjunct_url": "finalpage/2025-04-24/1223236852.PDF"
+     "adjunct_url": "finalpage/2025-04-24/1223236852.PDF",
+     "adjunct_size": 199
     }
    ],
-   "fetched_at": "2026-10-27T00:34:53+08:00"
+   "fetched_at": "2026-10-27T22:12:51+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SZ:301613",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "nssc1000838",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "301613,nssc1000838",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "f1f13e3ff23717c2f83a3cf768413e7107077857d6ce508f8b3562f53c0d08b5",
+     "response_bytes": 2052,
+     "raw_path": "sources/collection/raw/301613/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "301613,nssc1000838",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-27T22:12:52+08:00",
+     "elapsed_ms": 748
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225616018",
+     "title": "2026年三季度报告",
+     "sec_code": "301613",
+     "sec_name": "新铝时代",
+     "published_on": "2026-10-22",
+     "adjunct_url": "finalpage/2026-10-23/1225616018.PDF",
+     "adjunct_size": 254
+    },
+    {
+     "announcement_id": "1224733297",
+     "title": "2025年三季度报告",
+     "sec_code": "301613",
+     "sec_name": "新铝时代",
+     "published_on": "2025-10-26",
+     "adjunct_url": "finalpage/2025-10-27/1224733297.PDF",
+     "adjunct_size": 174
+    },
+    {
+     "announcement_id": "1221559862",
+     "title": "2024年三季度报告",
+     "sec_code": "301613",
+     "sec_name": "新铝时代",
+     "published_on": "2024-10-29",
+     "adjunct_url": "finalpage/2024-10-30/1221559862.PDF",
+     "adjunct_size": 563
+    }
+   ],
+   "fetched_at": "2026-10-27T22:12:52+08:00"
   }
  },
- "updated_at": "2026-10-27T00:34:54+08:00"
+ "updated_at": "2026-10-27T22:12:57+08:00"
 }

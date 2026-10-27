@@ -994,6 +994,596 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-27T10:22:07+08:00"
+  },
+  "q1_2024": {
+   "security_id": "SH:603081",
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219799954.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1243,
+     "at": "2026-10-27T23:29:31+08:00",
+     "response_sha256": null,
+     "bytes": 385614,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-F8819A7B27EF2086",
+    "identity_key": "SH:603081|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "浙江大丰实业股份有限公司2024年第一季度报告",
+    "published_on": "2024-04-24",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219799954.PDF",
+    "local_file": "sources/collection/originals/603081/q1_2024/DOC-F8819A7B27EF2086.pdf",
+    "sha256": "ce112253fc0839324b1fdd179df194ffa6d219895dfbe27c7f3df37a354a5187",
+    "bytes": 385614,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "385614 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大丰实业 代码=603081 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江大丰实业股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江大丰实业股份有限公司2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:29:31+08:00",
+    "bytes_written": 385614
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:29:31+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219799954.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1243,
+    "at": "2026-10-27T23:29:31+08:00",
+    "response_sha256": null,
+    "bytes": 385614,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603081\\q1_2024\\DOC-F8819A7B27EF2086.pdf.part",
+    "bytes": 385614,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "385614 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大丰实业 代码=603081 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江大丰实业股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江大丰实业股份有限公司2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2123,
+    "issues": [],
+    "sha256": "ce112253fc0839324b1fdd179df194ffa6d219895dfbe27c7f3df37a354a5187",
+    "cover_text_chars": 357,
+    "identity_probe_chars": 4714,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2024": {
+   "security_id": "SH:603081",
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221556896.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 937,
+     "at": "2026-10-27T23:29:33+08:00",
+     "response_sha256": null,
+     "bytes": 479730,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-2E9E2D7B64D7E5E1",
+    "identity_key": "SH:603081|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "浙江大丰实业股份有限公司2024年第三季度报告",
+    "published_on": "2024-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221556896.PDF",
+    "local_file": "sources/collection/originals/603081/q3_2024/DOC-2E9E2D7B64D7E5E1.pdf",
+    "sha256": "b49134c4e55425371ae086c3d6b33ada5ba65509a43e98c985ed72b9b857d453",
+    "bytes": 479730,
+    "page_count": 17,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "479730 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大丰实业 代码=603081 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江大丰实业股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江大丰实业股份有限公司2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:29:33+08:00",
+    "bytes_written": 479730
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:29:33+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221556896.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 937,
+    "at": "2026-10-27T23:29:33+08:00",
+    "response_sha256": null,
+    "bytes": 479730,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603081\\q3_2024\\DOC-2E9E2D7B64D7E5E1.pdf.part",
+    "bytes": 479730,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "479730 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大丰实业 代码=603081 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江大丰实业股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江大丰实业股份有限公司2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 17,
+    "text_chars": 2435,
+    "issues": [],
+    "sha256": "b49134c4e55425371ae086c3d6b33ada5ba65509a43e98c985ed72b9b857d453",
+    "cover_text_chars": 488,
+    "identity_probe_chars": 5206,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q1_2025": {
+   "security_id": "SH:603081",
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223385145.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 562,
+     "at": "2026-10-27T23:29:34+08:00",
+     "response_sha256": null,
+     "bytes": 157958,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-4B0AA5A1135F241B",
+    "identity_key": "SH:603081|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "浙江大丰实业股份有限公司2025年第一季度报告",
+    "published_on": "2025-04-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223385145.PDF",
+    "local_file": "sources/collection/originals/603081/q1_2025/DOC-4B0AA5A1135F241B.pdf",
+    "sha256": "216ddd93ac8485fbd483e8c371bd02fa36b2001440f838743ecddcbcc6351704",
+    "bytes": 157958,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "157958 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大丰实业 代码=603081 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江大丰实业股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江大丰实业股份有限公司2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:29:34+08:00",
+    "bytes_written": 157958
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:29:34+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223385145.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 562,
+    "at": "2026-10-27T23:29:34+08:00",
+    "response_sha256": null,
+    "bytes": 157958,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603081\\q1_2025\\DOC-4B0AA5A1135F241B.pdf.part",
+    "bytes": 157958,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "157958 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大丰实业 代码=603081 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江大丰实业股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江大丰实业股份有限公司2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2131,
+    "issues": [],
+    "sha256": "216ddd93ac8485fbd483e8c371bd02fa36b2001440f838743ecddcbcc6351704",
+    "cover_text_chars": 471,
+    "identity_probe_chars": 5141,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2025": {
+   "security_id": "SH:603081",
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224768356.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1293,
+     "at": "2026-10-27T23:29:36+08:00",
+     "response_sha256": null,
+     "bytes": 259640,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-51E1825AE26DB80A",
+    "identity_key": "SH:603081|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "浙江大丰实业股份有限公司2025年第三季度报告",
+    "published_on": "2025-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224768356.PDF",
+    "local_file": "sources/collection/originals/603081/q3_2025/DOC-51E1825AE26DB80A.pdf",
+    "sha256": "6cf52ee0e3d367eb3c0363e2e9ed4498e0dd29f8c4f73086d6ba92403d6b7fad",
+    "bytes": 259640,
+    "page_count": 17,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "259640 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大丰实业 代码=603081 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江大丰实业股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江大丰实业股份有限公司2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T23:29:36+08:00",
+    "bytes_written": 259640
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-27T23:29:36+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224768356.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1293,
+    "at": "2026-10-27T23:29:36+08:00",
+    "response_sha256": null,
+    "bytes": 259640,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603081\\q3_2025\\DOC-51E1825AE26DB80A.pdf.part",
+    "bytes": 259640,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "259640 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=大丰实业 代码=603081 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=浙江大丰实业股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=浙江大丰实业股份有限公司2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 17,
+    "text_chars": 2080,
+    "issues": [],
+    "sha256": "6cf52ee0e3d367eb3c0363e2e9ed4498e0dd29f8c4f73086d6ba92403d6b7fad",
+    "cover_text_chars": 488,
+    "identity_probe_chars": 5247,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
+  },
+  "q3_2026": {
+   "security_id": "SH:603081",
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "document": {},
+   "checkpoint": {},
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-27T23:29:36+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-27T23:29:32+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1283,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T10:22:05+08:00",
-     "elapsed_ms": 1464
+     "fetched_at": "2026-10-27T23:29:30+08:00",
+     "elapsed_ms": 1144
     }
    ],
    "rows": [
@@ -1325,8 +1915,85 @@
      "adjunct_size": 459
     }
    ],
-   "fetched_at": "2026-10-27T10:22:05+08:00"
+   "fetched_at": "2026-10-27T23:29:30+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:603081",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900030818",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "603081,9900030818",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "5cdfcaabe76342a7b38b11e4820c95ff14b7904f9fc5d54d1c65a8bc3395ceab",
+     "response_bytes": 2225,
+     "raw_path": "sources/collection/raw/603081/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "603081,9900030818",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-27T23:29:32+08:00",
+     "elapsed_ms": 927
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224768356",
+     "title": "浙江大丰实业股份有限公司2025年第三季度报告",
+     "sec_code": "603081",
+     "sec_name": "大丰实业",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224768356.PDF",
+     "adjunct_size": 255
+    },
+    {
+     "announcement_id": "1221556896",
+     "title": "浙江大丰实业股份有限公司2024年第三季度报告",
+     "sec_code": "603081",
+     "sec_name": "大丰实业",
+     "published_on": "2024-10-29",
+     "adjunct_url": "finalpage/2024-10-30/1221556896.PDF",
+     "adjunct_size": 469
+    },
+    {
+     "announcement_id": "1218168898",
+     "title": "浙江大丰实业股份有限公司2023年第三季度报告",
+     "sec_code": "603081",
+     "sec_name": "大丰实业",
+     "published_on": "2023-10-26",
+     "adjunct_url": "finalpage/2023-10-27/1218168898.PDF",
+     "adjunct_size": 459
+    }
+   ],
+   "fetched_at": "2026-10-27T23:29:32+08:00"
   }
  },
- "updated_at": "2026-10-27T10:22:07+08:00"
+ "updated_at": "2026-10-27T23:29:36+08:00"
 }

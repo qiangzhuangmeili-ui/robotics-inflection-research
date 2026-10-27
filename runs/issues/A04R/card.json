@@ -1,0 +1,61 @@
+{
+  "issue_key": "A04R",
+  "issue_number": 50,
+  "plan_version": "20261026_collection_first_v2",
+  "phase": "收尾补缺",
+  "card_type": "REWORK_CARD_ADDENDUM",
+  "created_at": "2026-10-27T20:54:18+08:00",
+  "created_by": "WorkBuddy AI (executor=AI, review=SELF_CHECK)",
+  "parent_issue": 34,
+  "parent_decision": "RETURN_FOR_REWORK",
+  "dependency_keys": [
+    "A03"
+  ],
+  "dependency_issue_numbers": [
+    33
+  ],
+  "reason": "A04 退回项属采集范围补齐，按调度纪律单开一卡，执行期间不占用 A04。",
+  "scope": {
+    "report_slots": [
+      "q1_2024",
+      "q3_2024",
+      "q1_2025",
+      "q3_2025",
+      "q3_2026"
+    ],
+    "slot_pairs": 5270,
+    "supplementary": [
+      "announcement_ir_index(2024-10-26~2026-10-25)",
+      "keyword_originals",
+      "financial_corrections"
+    ],
+    "reuse_first": [
+      "runs/collection/checkpoint",
+      "sources/collection/originals",
+      "sources/collection/raw",
+      "runs/collection/collection_index.csv"
+    ]
+  },
+  "out_of_scope": [
+    "重跑已取得核心槽",
+    "重置 M00/A00—A03",
+    "人工补件派单",
+    "业务结论/指标筛选/估值",
+    "Drive VERIFIED 写入"
+  ],
+  "deliverables": [
+    "progress.json",
+    "run_result.json",
+    "announcement_index.jsonl",
+    "keyword_originals.jsonl",
+    "review.json",
+    "handoff.md",
+    "manifest.json"
+  ],
+  "executor_scripts": [
+    "tools/a04r_scope_backfill.py",
+    "tools/a04r_announcement_index.py",
+    "tools/a04r_cutoff_hold_resolve.py"
+  ],
+  "status": "IN_PROGRESS"
+}

@@ -881,6 +881,484 @@
     "period_match_method": "BODY_PHRASE"
    },
    "updated_at": "2026-10-27T00:34:44+08:00"
+  },
+  "q1_2024": {
+   "security_id": "SZ:301608",
+   "slot_id": "q1_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q1",
+   "period_end": "2024-03-31",
+   "statutory_deadline": "2024-04-30",
+   "status": "NOT_APPLICABLE_PRE_LISTING",
+   "status_reason": "上市日 2024-08-01 晚于报告期结束日 2024-03-31，公司当时未上市",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "last_source_attempt": null,
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {},
+   "document": {},
+   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+   "listing_date_evidence": {
+    "listing_date": "2024-08-01",
+    "period_end": "2024-03-31",
+    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+   },
+   "updated_at": "2026-10-27T22:12:45+08:00",
+   "index_ref": {
+    "category": "category_yjdbg_szsh",
+    "fetched_at": "2026-10-27T22:12:45+08:00",
+    "status": "RECONCILED"
+   }
+  },
+  "q3_2024": {
+   "security_id": "SZ:301608",
+   "slot_id": "q3_2024",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2024Q3",
+   "period_end": "2024-09-30",
+   "statutory_deadline": "2024-10-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221521954.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1173,
+     "at": "2026-10-27T22:12:47+08:00",
+     "response_sha256": null,
+     "bytes": 537534,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221521954.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1173,
+    "at": "2026-10-27T22:12:47+08:00",
+    "response_sha256": null,
+    "bytes": 537534,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:47+08:00",
+    "bytes_written": 537534
+   },
+   "document": {
+    "document_id": "DOC-87441F42B1773C5C",
+    "identity_key": "SZ:301608|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221521954.PDF",
+    "local_file": "sources/collection/originals/301608/q3_2024/DOC-87441F42B1773C5C.pdf",
+    "sha256": "b82f18408c698c12c0cda1e837cc3d8b870a2611a0d4937af25710b9952b1544",
+    "bytes": 537534,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "537534 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=博实结 代码=301608 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301608\\q3_2024\\DOC-87441F42B1773C5C.pdf.part",
+    "bytes": 537534,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "537534 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=博实结 代码=301608 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2724,
+    "issues": [],
+    "sha256": "b82f18408c698c12c0cda1e837cc3d8b870a2611a0d4937af25710b9952b1544",
+    "cover_text_chars": 252,
+    "identity_probe_chars": 6074,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:47+08:00"
+  },
+  "q1_2025": {
+   "security_id": "SZ:301608",
+   "slot_id": "q1_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q1",
+   "period_end": "2025-03-31",
+   "statutory_deadline": "2025-04-30",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-23/1223211033.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1004,
+     "at": "2026-10-27T22:12:48+08:00",
+     "response_sha256": null,
+     "bytes": 483212,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-23/1223211033.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1004,
+    "at": "2026-10-27T22:12:48+08:00",
+    "response_sha256": null,
+    "bytes": 483212,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:48+08:00",
+    "bytes_written": 483212
+   },
+   "document": {
+    "document_id": "DOC-00F81661138CE3B0",
+    "identity_key": "SZ:301608|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-22",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-23/1223211033.PDF",
+    "local_file": "sources/collection/originals/301608/q1_2025/DOC-00F81661138CE3B0.pdf",
+    "sha256": "fff55e14db315023761f6be29401e795249214014b34545cc4693a9d08a600dd",
+    "bytes": 483212,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "483212 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=博实结 代码=301608 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301608\\q1_2025\\DOC-00F81661138CE3B0.pdf.part",
+    "bytes": 483212,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "483212 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=博实结 代码=301608 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2583,
+    "issues": [],
+    "sha256": "fff55e14db315023761f6be29401e795249214014b34545cc4693a9d08a600dd",
+    "cover_text_chars": 252,
+    "identity_probe_chars": 5948,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:48+08:00"
+  },
+  "q3_2025": {
+   "security_id": "SZ:301608",
+   "slot_id": "q3_2025",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2025Q3",
+   "period_end": "2025-09-30",
+   "statutory_deadline": "2025-10-31",
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224727759.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 969,
+     "at": "2026-10-27T22:12:49+08:00",
+     "response_sha256": null,
+     "bytes": 537621,
+     "resumed_from": 0
+    }
+   ],
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224727759.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 969,
+    "at": "2026-10-27T22:12:49+08:00",
+    "response_sha256": null,
+    "bytes": 537621,
+    "resumed_from": 0
+   },
+   "last_error": null,
+   "next_action": "NONE",
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-27T22:12:50+08:00",
+    "bytes_written": 537621
+   },
+   "document": {
+    "document_id": "DOC-2485303E66165AA3",
+    "identity_key": "SZ:301608|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-23",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224727759.PDF",
+    "local_file": "sources/collection/originals/301608/q3_2025/DOC-2485303E66165AA3.pdf",
+    "sha256": "ac227d7610ed305794f2d7fda449a80e3876e713a823973cc18903bc631c85ed",
+    "bytes": 537621,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "537621 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=博实结 代码=301608 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\301608\\q3_2025\\DOC-2485303E66165AA3.pdf.part",
+    "bytes": 537621,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "537621 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=博实结 代码=301608 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2676,
+    "issues": [],
+    "sha256": "ac227d7610ed305794f2d7fda449a80e3876e713a823973cc18903bc631c85ed",
+    "cover_text_chars": 251,
+    "identity_probe_chars": 5772,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   },
+   "updated_at": "2026-10-27T22:12:50+08:00"
+  },
+  "q3_2026": {
+   "security_id": "SZ:301608",
+   "slot_id": "q3_2026",
+   "report_type": "QUARTERLY_REPORT",
+   "period_label": "2026Q3",
+   "period_end": "2026-09-30",
+   "statutory_deadline": "2026-10-31",
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "attempt_count": 0,
+   "source_attempts": [],
+   "last_source_attempt": null,
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "checkpoint": {},
+   "document": {},
+   "updated_at": "2026-10-27T22:12:50+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-27T22:12:45+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1106,8 +1584,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T00:34:43+08:00",
-     "elapsed_ms": 759
+     "fetched_at": "2026-10-27T22:12:45+08:00",
+     "elapsed_ms": 1478
     }
    ],
    "rows": [
@@ -1117,7 +1595,8 @@
      "sec_code": "301608",
      "sec_name": "博实结",
      "published_on": "2026-04-20",
-     "adjunct_url": "finalpage/2026-04-21/1225125046.PDF"
+     "adjunct_url": "finalpage/2026-04-21/1225125046.PDF",
+     "adjunct_size": 420
     },
     {
      "announcement_id": "1223211033",
@@ -1125,11 +1604,80 @@
      "sec_code": "301608",
      "sec_name": "博实结",
      "published_on": "2025-04-22",
-     "adjunct_url": "finalpage/2025-04-23/1223211033.PDF"
+     "adjunct_url": "finalpage/2025-04-23/1223211033.PDF",
+     "adjunct_size": 473
     }
    ],
-   "fetched_at": "2026-10-27T00:34:43+08:00"
+   "fetched_at": "2026-10-27T22:12:45+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SZ:301608",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "9900055634",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "301608,9900055634",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 2,
+   "rows_fetched": 2,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 2,
+     "new_rows": 2,
+     "total_announcement": 2,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "117d79541784b2721ac02763d64dd2eaeea47a5bcab73d78c062674973660b2b",
+     "response_bytes": 1408,
+     "raw_path": "sources/collection/raw/301608/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "301608,9900055634",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-27T22:12:45+08:00",
+     "elapsed_ms": 683
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224727759",
+     "title": "2025年三季度报告",
+     "sec_code": "301608",
+     "sec_name": "博实结",
+     "published_on": "2025-10-23",
+     "adjunct_url": "finalpage/2025-10-24/1224727759.PDF",
+     "adjunct_size": 526
+    },
+    {
+     "announcement_id": "1221521954",
+     "title": "2024年三季度报告",
+     "sec_code": "301608",
+     "sec_name": "博实结",
+     "published_on": "2024-10-27",
+     "adjunct_url": "finalpage/2024-10-28/1221521954.PDF",
+     "adjunct_size": 526
+    }
+   ],
+   "fetched_at": "2026-10-27T22:12:45+08:00"
   }
  },
- "updated_at": "2026-10-27T00:34:44+08:00"
+ "updated_at": "2026-10-27T22:12:50+08:00"
 }
