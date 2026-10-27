@@ -1,0 +1,84 @@
+﻿field_id,name_cn,verdict,snapshot_columns,column_count,expected_cells,non_null_cells,coverage_pct,period_note,note,p00_required
+FIN.REV.YTD,营业收入（合并，年初至今）,COVERED,revenue_cny_2021|revenue_cny_2022|revenue_cny_2023|revenue_cny_2024|revenue_cny_2025|revenue_cny_2026H1,6,6324,5940,93.93,6 列：revenue_cny_2021 … revenue_cny_2026H1,2021—2025 年报 + 2026H1,YES
+FIN.REV.SQ,营业收入（合并，单季度）,ABSENT,,0,0,0,,,旧快照无单季营收列；须由年报「分季度主要财务数据」表取,YES
+FIN.COST.YTD,营业成本（合并，年初至今）,ABSENT,,0,0,0,,,旧快照无营业成本，毛利率为直接给出值,YES
+FIN.GROSSPROFIT.YTD,毛利额（派生）,BLOCKED_BY_RULE,,0,0,0,,,缺营业成本；P04 禁止用毛利率反推，故不可计算,NO
+FIN.GROSSMARGIN.PCT,毛利率（%）,COVERED,gross_margin_pct_2021|gross_margin_pct_2022|gross_margin_pct_2023|gross_margin_pct_2024|gross_margin_pct_2025|gross_margin_pct_2026H1,6,6324,5940,93.93,6 列：gross_margin_pct_2021 … gross_margin_pct_2026H1,百分数数值（23.28=23.28%），非小数,NO
+FIN.NP.YTD,净利润（合并，累计）,ABSENT,,0,0,0,,,只有归母口径,NO
+FIN.NPP.YTD,归母净利润（累计）,COVERED,net_profit_parent_cny_2021|net_profit_parent_cny_2022|net_profit_parent_cny_2023|net_profit_parent_cny_2024|net_profit_parent_cny_2025|net_profit_parent_cny_2026H1,6,6324,5940,93.93,6 列：net_profit_parent_cny_2021 … net_profit_parent_cny_2026H1,2021—2025 + 2026H1,YES
+FIN.NPP.SQ,归母净利润（单季度）,ABSENT,,0,0,0,,,无单季序列,NO
+FIN.NPDEDT.YTD,扣非归母净利润（累计）,COVERED,deducted_np_parent_cny_20210331|deducted_np_parent_cny_20210630|deducted_np_parent_cny_20210930|deducted_np_parent_cny_20211231|deducted_np_parent_cny_20220331|deducted_np_parent_cny_20220630|deducted_np_parent_cny_20220930|deducted_np_parent_cny_20221231|deducted_np_parent_cny_20230331|deducted_np_parent_cny_20230630|deducted_np_parent_cny_20230930|deducted_np_parent_cny_20231231|deducted_np_parent_cny_20240331|deducted_np_parent_cny_20240630|deducted_np_parent_cny_20240930|deducted_np_parent_cny_20241231|deducted_np_parent_cny_20250331|deducted_np_parent_cny_20250630|deducted_np_parent_cny_20250930|deducted_np_parent_cny_20251231|deducted_np_parent_cny_20260331|deducted_np_parent_cny_20260630,22,23188,21141,91.17,22 列：deducted_np_parent_cny_20210331 … deducted_np_parent_cny_20260630,22 期累计，覆盖 2021Q1—2026H1,YES
+FIN.NPDEDT.SQ,扣非归母净利润（单季度）,ABSENT,,0,0,0,,,结构化接口无此字段，须回官方 PDF 分季度表,YES
+FIN.OCF.YTD,经营活动现金流净额（累计）,ABSENT,,0,0,0,,,旧快照无经营现金流，P04 列为 P00 必需,YES
+FIN.OCF.SQ,经营活动现金流净额（单季度）,ABSENT,,0,0,0,,,同上，且无单季,NO
+FIN.AR.INSTANT,应收账款（时点）,ABSENT,,0,0,0,,,旧快照无应收,YES
+FIN.NR.INSTANT,应收票据（时点）,ABSENT,,0,0,0,,,旧快照无应收票据,NO
+FIN.CONTRACTASSET.INSTANT,合同资产（时点）,ABSENT,,0,0,0,,,旧快照无合同资产,YES
+FIN.INV.INSTANT,存货（时点）,ABSENT,,0,0,0,,,旧快照无存货,YES
+FIN.ASSET.INSTANT,资产总计（时点）,ABSENT,,0,0,0,,,旧快照无资产负债表科目,NO
+FIN.PERIOD.START,报告期起始日,DERIVED_FROM_COLUMN,,0,0,0,,,可由列名期间推导（2021→2021-01-01 等）,YES
+FIN.PERIOD.END,报告期结束日,DERIVED_FROM_COLUMN,,0,0,0,,,可由列名期间推导,YES
+FIN.PUBLISHED_ON,实际披露日,PARTIAL_NEW,,0,0,0,,,旧快照无；本轮采集已为 7172 槽取得巨潮 published_on，但尚未回写财务表,YES
+FIN.COLLECTED_AT,取件日,COVERED,,0,0,0,,,快照 2026-10-26 生成；本轮原件 2026-10-26/27,YES
+FIN.AS_OF,研究截止日,COVERED,,0,0,0,,,knowledge_as_of=2026-10-25（P00 冻结）,YES
+FIN.CURRENCY,币种,ASSUMED_NOT_ROW_SOURCED,,0,0,0,,,4/4 抽样 PDF 表头「币种：人民币」；快照逐行未带币种列,YES
+FIN.UNIT_SCALE,金额单位与量纲,ASSUMED_NOT_ROW_SOURCED,,0,0,0,,,4/4 抽样 PDF 表头「单位：元」；快照逐行未带单位列,YES
+FIN.CONSOLIDATION_SCOPE,合并范围,ASSUMED_NOT_ROW_SOURCED,,0,0,0,,,按合并口径定义取数，逐行未标注,YES
+FIN.AUDIT_STATUS,审计状态,ABSENT,,0,0,0,,,快照无审计意见列,NO
+FIN.RESTATEMENT,重述/版本标记,ABSENT,,0,0,0,,,快照无重述标记，跨期比较有风险,YES
+FIN.STATUS,数据状态码,COVERED,data_status,1,1054,1054,100.0,data_status,company_master.data_status 有值,YES
+FIN.LISTING_DATE,上市日期,COVERED_NEW,,0,0,0,,,侧表 data/company_listing_dates.csv 已 1054/1054 回填（不改 company_master）,YES
+FIN.YOY.PCT,同比增速（派生）,PARTIAL,,0,0,0,,,2022—2025 同比可算；2026H1 同比因缺 2025H1 基数不可算,NO
+FIN.NPMARGIN.PCT,归母净利率（派生）,DERIVABLE,,0,0,0,,,营收与归母均有，可派生,NO
+FIN.OCF_TO_NP.RATIO,经营现金流/归母净利,BLOCKED_BY_INPUT,,0,0,0,,,缺经营现金流,NO
+FIN.PPCHG.PP,比率变动（百分点）,DERIVABLE,,0,0,0,,,毛利率序列齐全，可算 pp 变动,NO
+,security_id,SNAPSHOT_COLUMN,security_id,1,1054,1054,100.0,,,
+,stock_code,SNAPSHOT_COLUMN,stock_code,1,1054,1054,100.0,,,
+,stock_name,SNAPSHOT_COLUMN,stock_name,1,1054,1054,100.0,,,
+,exchange,SNAPSHOT_COLUMN,exchange,1,1054,1054,100.0,,,
+,data_status,SNAPSHOT_COLUMN,data_status,1,1054,1054,100.0,,,
+,listing_date,SNAPSHOT_COLUMN,listing_date,1,1054,1054,100.0,,,
+,prelisting_flag,SNAPSHOT_COLUMN,prelisting_flag,1,1054,1054,100.0,,,
+,sw_l1,SNAPSHOT_COLUMN,sw_l1,1,1054,992,94.12,,,
+,sw_l2,SNAPSHOT_COLUMN,sw_l2,1,1054,992,94.12,,,
+,sw_l3,SNAPSHOT_COLUMN,sw_l3,1,1054,992,94.12,,,
+,revenue_cny_2021,SNAPSHOT_COLUMN,revenue_cny_2021,1,1054,980,92.98,,,
+,net_profit_parent_cny_2021,SNAPSHOT_COLUMN,net_profit_parent_cny_2021,1,1054,980,92.98,,,
+,gross_margin_pct_2021,SNAPSHOT_COLUMN,gross_margin_pct_2021,1,1054,980,92.98,,,
+,revenue_cny_2022,SNAPSHOT_COLUMN,revenue_cny_2022,1,1054,992,94.12,,,
+,net_profit_parent_cny_2022,SNAPSHOT_COLUMN,net_profit_parent_cny_2022,1,1054,992,94.12,,,
+,gross_margin_pct_2022,SNAPSHOT_COLUMN,gross_margin_pct_2022,1,1054,992,94.12,,,
+,revenue_cny_2023,SNAPSHOT_COLUMN,revenue_cny_2023,1,1054,992,94.12,,,
+,net_profit_parent_cny_2023,SNAPSHOT_COLUMN,net_profit_parent_cny_2023,1,1054,992,94.12,,,
+,gross_margin_pct_2023,SNAPSHOT_COLUMN,gross_margin_pct_2023,1,1054,992,94.12,,,
+,revenue_cny_2024,SNAPSHOT_COLUMN,revenue_cny_2024,1,1054,992,94.12,,,
+,net_profit_parent_cny_2024,SNAPSHOT_COLUMN,net_profit_parent_cny_2024,1,1054,992,94.12,,,
+,gross_margin_pct_2024,SNAPSHOT_COLUMN,gross_margin_pct_2024,1,1054,992,94.12,,,
+,revenue_cny_2025,SNAPSHOT_COLUMN,revenue_cny_2025,1,1054,992,94.12,,,
+,net_profit_parent_cny_2025,SNAPSHOT_COLUMN,net_profit_parent_cny_2025,1,1054,992,94.12,,,
+,gross_margin_pct_2025,SNAPSHOT_COLUMN,gross_margin_pct_2025,1,1054,992,94.12,,,
+,revenue_cny_2026H1,SNAPSHOT_COLUMN,revenue_cny_2026H1,1,1054,992,94.12,,,
+,net_profit_parent_cny_2026H1,SNAPSHOT_COLUMN,net_profit_parent_cny_2026H1,1,1054,992,94.12,,,
+,gross_margin_pct_2026H1,SNAPSHOT_COLUMN,gross_margin_pct_2026H1,1,1054,992,94.12,,,
+,deducted_np_parent_cny_20210331,SNAPSHOT_COLUMN,deducted_np_parent_cny_20210331,1,1054,845,80.17,,,
+,deducted_np_parent_cny_20210630,SNAPSHOT_COLUMN,deducted_np_parent_cny_20210630,1,1054,910,86.34,,,
+,deducted_np_parent_cny_20210930,SNAPSHOT_COLUMN,deducted_np_parent_cny_20210930,1,1054,874,82.92,,,
+,deducted_np_parent_cny_20211231,SNAPSHOT_COLUMN,deducted_np_parent_cny_20211231,1,1054,972,92.22,,,
+,deducted_np_parent_cny_20220331,SNAPSHOT_COLUMN,deducted_np_parent_cny_20220331,1,1054,922,87.48,,,
+,deducted_np_parent_cny_20220630,SNAPSHOT_COLUMN,deducted_np_parent_cny_20220630,1,1054,969,91.94,,,
+,deducted_np_parent_cny_20220930,SNAPSHOT_COLUMN,deducted_np_parent_cny_20220930,1,1054,926,87.86,,,
+,deducted_np_parent_cny_20221231,SNAPSHOT_COLUMN,deducted_np_parent_cny_20221231,1,1054,988,93.74,,,
+,deducted_np_parent_cny_20230331,SNAPSHOT_COLUMN,deducted_np_parent_cny_20230331,1,1054,956,90.7,,,
+,deducted_np_parent_cny_20230630,SNAPSHOT_COLUMN,deducted_np_parent_cny_20230630,1,1054,969,91.94,,,
+,deducted_np_parent_cny_20230930,SNAPSHOT_COLUMN,deducted_np_parent_cny_20230930,1,1054,962,91.27,,,
+,deducted_np_parent_cny_20231231,SNAPSHOT_COLUMN,deducted_np_parent_cny_20231231,1,1054,992,94.12,,,
+,deducted_np_parent_cny_20240331,SNAPSHOT_COLUMN,deducted_np_parent_cny_20240331,1,1054,971,92.13,,,
+,deducted_np_parent_cny_20240630,SNAPSHOT_COLUMN,deducted_np_parent_cny_20240630,1,1054,978,92.79,,,
+,deducted_np_parent_cny_20240930,SNAPSHOT_COLUMN,deducted_np_parent_cny_20240930,1,1054,974,92.41,,,
+,deducted_np_parent_cny_20241231,SNAPSHOT_COLUMN,deducted_np_parent_cny_20241231,1,1054,992,94.12,,,
+,deducted_np_parent_cny_20250331,SNAPSHOT_COLUMN,deducted_np_parent_cny_20250331,1,1054,989,93.83,,,
+,deducted_np_parent_cny_20250630,SNAPSHOT_COLUMN,deducted_np_parent_cny_20250630,1,1054,992,94.12,,,
+,deducted_np_parent_cny_20250930,SNAPSHOT_COLUMN,deducted_np_parent_cny_20250930,1,1054,986,93.55,,,
+,deducted_np_parent_cny_20251231,SNAPSHOT_COLUMN,deducted_np_parent_cny_20251231,1,1054,991,94.02,,,
+,deducted_np_parent_cny_20260331,SNAPSHOT_COLUMN,deducted_np_parent_cny_20260331,1,1054,992,94.12,,,
+,deducted_np_parent_cny_20260630,SNAPSHOT_COLUMN,deducted_np_parent_cny_20260630,1,1054,991,94.02,,,

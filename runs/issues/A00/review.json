@@ -1,0 +1,236 @@
+{
+  "issue_key": "A00",
+  "issue_number": 30,
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_at": "2026-10-27T12:30:00+08:00",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS",
+  "acceptance": [
+    {
+      "item": "11/11 批状态可核对，1054 个 ID 不漏不重复；数量能复算",
+      "result": "PASS",
+      "evidence": "company_master 1054 唯一ID/1054 唯一代码；intake_company_queue 1054；11 份 assignment.csv 合计 1054 行、并集 1054、跨批重复 0、批内重复 0、batch_id 不符 0；与主表/队列双向差集均为空；intake_batch_index 申报合计 1054 且逐批等于名单行数。coverage_reconciliation.json → roster.verdict = PASS"
+    },
+    {
+      "item": "所有 NOT_TRIED 保持未完成，不能因无报错就认定应收尽收",
+      "result": "PASS",
+      "evidence": "65 个 NOT_TRIED 全部保留原状态，无一个被改写为已取得/不适用/未披露；15 家全部为北交所股转挂牌期缺口，status_reason 均含「不得判不适用」，next_action=SEARCH_NEEQ_ARCHIVE；按市场核验 not_tried 仅 BJ=65、深沪=0"
+    },
+    {
+      "item": "逐公司逐槽核发现链接/下载/归档/文件身份确认各状态",
+      "result": "PASS",
+      "evidence": "7378 槽逐槽取 checkpoint 状态；7172 个取得槽全部有 validation.checks（0 缺失）；原件在盘 7172/7172、缺失 0；collection_index 7378 行与 checkpoint 状态差异 0；槽位报告类型不符 0、报告期标签不符 0"
+    },
+    {
+      "item": "把真实失败、未尝试、尚未披露、上市前不适用分别列出",
+      "result": "PASS",
+      "evidence": "失败 1（301622 SIZE_OVER_LIMIT，源可达非未披露）、未尝试 65（北交所股转）、尚未披露 0、上市前不适用 140（41 家，逐槽复核 listing_date > period_end 成立 140/140，0 例外）"
+    },
+    {
+      "item": "保留全局源故障",
+      "result": "PASS",
+      "evidence": "global_source_failures 记录 SIZE_LIMIT(1) 与 NEEQ_PLATFORM_GAP(65)；Drive 仍 ACCESS_BLOCKED，本卡未上传未回读，不改归档态"
+    }
+  ],
+  "reconciliation": {
+    "slot_total": 7378,
+    "expected_total": 1054,
+    "expected_slot_total": 7378,
+    "buckets": {
+      "obtained_verified": 7162,
+      "obtained_pending_identity": 10,
+      "not_disclosed_by_issuer": 0,
+      "not_applicable_pre_listing": 140,
+      "not_yet_disclosed": 0,
+      "failed_source": 1,
+      "not_tried": 65,
+      "duplicate_or_other": 0
+    },
+    "sum_of_buckets": 7378,
+    "reconciles": true,
+    "applicable_slots": 7238,
+    "obtained_incl_pending": 7172,
+    "obtained_rate_applicable": 0.9895,
+    "obtained_incl_pending_rate": 0.9909,
+    "obtained_rate_total": 0.9707
+  },
+  "coverage_summary": {
+    "companies": 1054,
+    "slots_per_company": 7,
+    "slot_total": 7378,
+    "status_counts": {
+      "COLLECTED_IDENTITY_VERIFIED": 7162,
+      "COLLECTED_PENDING_IDENTITY": 10,
+      "SOURCE_FAILED": 1,
+      "NOT_TRIED": 65,
+      "NOT_APPLICABLE_PRE_LISTING": 140
+    },
+    "by_market": {
+      "SZ": {
+        "companies": 602,
+        "slots": 4214,
+        "verified": 4124,
+        "pending_identity": 10,
+        "source_failed": 1,
+        "not_tried": 0,
+        "na_prelisting": 79
+      },
+      "SH": {
+        "companies": 390,
+        "slots": 2730,
+        "verified": 2669,
+        "pending_identity": 0,
+        "source_failed": 0,
+        "not_tried": 0,
+        "na_prelisting": 61
+      },
+      "BJ": {
+        "companies": 62,
+        "slots": 434,
+        "verified": 369,
+        "pending_identity": 0,
+        "source_failed": 0,
+        "not_tried": 65,
+        "na_prelisting": 0
+      }
+    },
+    "companies_all_7_slots_have_file": 998,
+    "companies_applicable_fully_verified": 1029,
+    "companies_applicable_fully_obtained": 1034,
+    "companies_with_real_gap": 16,
+    "companies_zero_applicable": 4
+  },
+  "identity_pending": {
+    "count": 10,
+    "companies": 5,
+    "note": "文件已取得且在盘，但主体或报告期无法自动确认，不得写成已核实。",
+    "items": [
+      {
+        "security_id": "SZ:000856",
+        "stock_code": "000856",
+        "stock_name": "冀东装备",
+        "batch_id": "M00_01",
+        "slots": ["q1_2026"],
+        "cause": "正文 0 字符，图片版"
+      },
+      {
+        "security_id": "SZ:002083",
+        "stock_code": "002083",
+        "stock_name": "孚日股份",
+        "batch_id": "M00_01",
+        "slots": ["annual_2025", "h1_2026", "q1_2026"],
+        "cause": "正文 0 字符，图片版"
+      },
+      {
+        "security_id": "SZ:300820",
+        "stock_code": "300820",
+        "stock_name": "英杰电气",
+        "batch_id": "M00_05",
+        "slots": ["h1_2026"],
+        "cause": "正文 0 字符，图片版"
+      },
+      {
+        "security_id": "SZ:002689",
+        "stock_code": "002689",
+        "stock_name": "ST远智",
+        "batch_id": "M00_02",
+        "slots": ["annual_2024", "annual_2025"],
+        "cause": "有正文，封面主体名与现简称不符（更名，F8）"
+      },
+      {
+        "security_id": "SZ:002960",
+        "stock_code": "002960",
+        "stock_name": "青鸟智控",
+        "batch_id": "M00_03",
+        "slots": ["annual_2023", "annual_2024", "h1_2024"],
+        "cause": "有正文，封面主体名与现简称不符（更名，F8）"
+      }
+    ]
+  },
+  "failures": {
+    "count": 1,
+    "by_status": {
+      "SOURCE_FAILED": 1
+    },
+    "items": [
+      {
+        "security_id": "SZ:301622",
+        "stock_code": "301622",
+        "stock_name": "英思特",
+        "batch_id": "M00_06",
+        "slots": ["annual_2025"],
+        "error": "SIZE_OVER_LIMIT",
+        "detail": "87.3 MB > transport.max_download_bytes 80 MB；源可达，非发行人未披露",
+        "action": "另存 config v2（建议 120 MB）并同步 P06 容量口径，交 A01"
+      }
+    ]
+  },
+  "not_tried": {
+    "count": 65,
+    "companies": 15,
+    "all_bj": true,
+    "reason": "北交所上市前在股转系统挂牌，定期报告存在但披露平台不同；按 P00 禁止判不适用",
+    "action": "建 8xxxxx 旧代码映射后到股转系统补采，交 A01"
+  },
+  "field_coverage": {
+    "canonical_fields": 33,
+    "p00_required": 21,
+    "p00_required_verdicts": {
+      "COVERED": 6,
+      "COVERED_NEW": 1,
+      "ASSUMED_NOT_ROW_SOURCED": 3,
+      "DERIVED_FROM_COLUMN": 2,
+      "PARTIAL_NEW": 1,
+      "ABSENT": 8
+    },
+    "p00_required_absent": [
+      "FIN.REV.SQ",
+      "FIN.COST.YTD",
+      "FIN.NPDEDT.SQ",
+      "FIN.OCF.YTD",
+      "FIN.AR.INSTANT",
+      "FIN.CONTRACTASSET.INSTANT",
+      "FIN.INV.INSTANT",
+      "FIN.RESTATEMENT"
+    ],
+    "blocking": "FIN.OCF.YTD 经营现金流为 P00 必需且完全缺失，现金含量类指标不可算；2026H1 同比因缺 2025H1 基数全部不可算"
+  },
+  "integrity": {
+    "slot_report_type_mismatch": 0,
+    "slot_period_label_mismatch": 0,
+    "slots_without_revalidation_record": 0,
+    "revalidation_non_pass": 10,
+    "revalidation_non_pass_all_pending": true,
+    "sha256_shared_across_companies": 0,
+    "document_id_shared_across_companies": 0,
+    "checkpoint_index_status_diff": 0,
+    "na_violating_listing_date_rule": 0,
+    "local_files_present": 7172,
+    "local_files_missing": 0,
+    "local_bytes": 18668202153,
+    "bookkeeping_inconsistency": {
+      "count": 11,
+      "detail": "document.identity_checks 保留首次下载 UNKNOWN，未随 P07 复检覆盖；validation.checks 已全 PASS。涉及 SZ:301000(6)、BJ:920207(4)、BJ:920011(1)",
+      "impact": "仅影响只看 document.identity_checks 的读者；权威结论取 validation.checks",
+      "action": "交 A02 统一字段或采集器回写时同步"
+    }
+  },
+  "limitations": [
+    "本卡只做覆盖率与完整性聚合，不按公司投资价值筛选，不做财务字段精读、不做业务结论、不估值。",
+    "7172 是文件取得口径，不等于已读全文、不等于业务采用；独立业务验收仍为 0。",
+    "无 Drive 连接器：本卡未上传未回读，未复验 P07 的 65 份 VERIFIED 回执，不改任何归档态。",
+    "财务字段覆盖是对旧快照的口径盘点，不代表已按 P04 字典补齐。",
+    "自检由执行者本人完成，不等于独立审计。"
+  ],
+  "allows_next_stage_scope": "放行 A01 集中重试失败项与备用官方来源；不放行业务结论/指标筛选/估值",
+  "not_allowed": [
+    "业务结论",
+    "指标筛选",
+    "估值",
+    "把未尝试写成缺件",
+    "把失败写成发行人未披露",
+    "把待核身份写成已核实",
+    "宣称独立验收"
+  ]
+}

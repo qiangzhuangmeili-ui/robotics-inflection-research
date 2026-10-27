@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "M00_COLLECTION_COMPLETE",
+  "status": "A00_COVERAGE_RECONCILED",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -731,5 +731,52 @@
     },
     "note": "覆盖率分母用「应取得槽位」=总槽位−上市前不适用。NOT_TRIED 全部来自北交所股转挂牌期（平台缺口），SOURCE_FAILED 为 87.3MB 超限。",
     "summary_file": "runs/m00_summary.json"
+  },
+  "a00_stage": {
+    "issue_key": "A00",
+    "issue_number": 30,
+    "reviewed_at": "2026-10-27T12:19:29+08:00",
+    "decision": "SELF_CHECK_PASS",
+    "scope": "全池覆盖率汇总与名单/槽位对账；不按投资价值筛选",
+    "roster": {
+      "companies": 1054,
+      "unique_ids": 1054,
+      "cross_batch_duplicates": 0,
+      "verdict": "PASS"
+    },
+    "slots": {
+      "total": 7378,
+      "applicable": 7238,
+      "verified": 7162,
+      "pending_identity": 10,
+      "source_failed": 1,
+      "not_tried": 65,
+      "na_prelisting": 140,
+      "not_yet_disclosed": 0,
+      "obtained_incl_pending": 7172,
+      "obtained_rate_applicable": 0.9909,
+      "verified_rate_applicable": 0.9895
+    },
+    "local_originals": {
+      "present": 7172,
+      "missing": 0,
+      "bytes": 18668202153
+    },
+    "integrity": {
+      "checkpoint_index_diff": 0,
+      "sha_shared_across_companies": 0,
+      "revalidation_non_pass_all_pending": true,
+      "bookkeeping_inconsistency_slots": 11
+    },
+    "deliverables": [
+      "runs/issues/A00/all_pool_coverage.csv",
+      "runs/issues/A00/all_field_coverage.csv",
+      "runs/issues/A00/coverage_reconciliation.json",
+      "runs/issues/A00/handoff.md",
+      "runs/issues/A00/manifest.json",
+      "runs/issues/A00/review.json"
+    ],
+    "next": "A01 #31 READY：65 槽股转映射补采、1 槽超限、5 槽更名、5 槽图片版",
+    "note": "7172 是文件取得口径，不等于已读全文/业务采用；独立业务验收仍为 0。"
   }
 }
