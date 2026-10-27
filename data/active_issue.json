@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 34,
-  "active_issue_key": "A04",
-  "executor": "Codex",
-  "started_at": "2026-10-27 12:27:23 UTC",
-  "status": "IN_PROGRESS",
-  "claim_note": "用户授权开始 A04；在线核对 A03 SELF_CHECK_PASS，资料轮验收，不跨入 S00。",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
+  "started_at": null,
+  "status": "IDLE_A04_RETURN_FOR_REWORK",
+  "claim_note": "A04 SELF_CHECK 退回返工：P00冻结季度/公告范围未落实；S00不放行。",
   "last_completed": {
     "issue_number": 33,
     "issue_key": "A03",
@@ -24,7 +24,7 @@
   },
   "next_recommended_issue_number": 34,
   "next_recommended_issue_key": "A04",
-  "next_recommended_reason": "A03 文档层闭环、字段层已产出可复算数据但保留 1528 条字段缺口与 Drive 未归档；A04 应带保留项验收，不得宣称资料已收齐。",
+  "next_recommended_reason": "先修复 runs/issues/A04/remaining_gap_owners.csv 中冻结范围终态和映射问题，再复验A04；不得重置已核成果。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -125,5 +125,14 @@
     "field_extracted_rate": 0.8697,
     "crosscheck_match": 2813,
     "crosscheck_mismatch": 119
+  },
+  "a04_review": {
+    "decision": "RETURN_FOR_REWORK",
+    "review_file": "runs/issues/A04/review.json",
+    "reviewed_at": "2026-10-27 12:33:58 UTC",
+    "release_S00": false,
+    "known_after_cutoff": 0,
+    "unknown_disclosure_dates": 7,
+    "missing_predeadline_quarter_dispositions": 4216
   }
 }
