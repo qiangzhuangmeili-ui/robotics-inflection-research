@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "A01_SELF_CHECK_PASS_WITH_OPEN_ITEM_PENDING_P03",
+  "status": "P03_NEEQ_RECHECK_COMPLETE_A01_RECOVERY_READY",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -220,7 +220,7 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/30",
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/31",
     "execution_started": true,
     "last_completed_issue": {
       "issue_number": 29,
@@ -411,6 +411,11 @@
         "readback_at": "2026-10-26T12:28:36.140Z",
         "contains": "P07校准文本、65份回执、归档索引及更新后的文档登记表；不重复打包PDF"
       }
+    },
+    "p03_neeq_recheck": {
+      "review_file": "runs/issues/P03/neeq_recheck_20261027/review.json",
+      "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
+      "next": "A01 automatic recovery; A02 waits"
     }
   },
   "pre_issue_breakdown_first_actions": [
@@ -846,6 +851,31 @@
       "neeq API usability (no positive control)",
       "8xxxxx old codes",
       "whether all 65 slots are actually obtainable"
+    ]
+  },
+  "p03_neeq_recheck": {
+    "issue": "P03",
+    "scope": "NEEQ_RECHECK_20261027",
+    "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
+    "completed_at": "2026-10-27T07:04:41.079355+00:00",
+    "official_index_route": "AVAILABLE_POSITIVE_CONTROL_VERIFIED",
+    "issuer_mappings": 15,
+    "target_slots": 65,
+    "slots_with_current_official_links": 50,
+    "unresolved_applicability": 15,
+    "pre_current_listing_periods": 11,
+    "quarterly_slots": 4,
+    "sample_pdf_identity_verified": 5,
+    "sample_pdf_download_errors": 10,
+    "shared_ledger_modified": false,
+    "a02_ready": false,
+    "next_action": "A01 automatic recovery using validated old codes and parameter encoding; applicability checks and file transport diagnostics first. Do not dispatch 65 manual requests.",
+    "limits": [
+      "50 is candidate-link coverage, not 50 downloaded PDFs.",
+      "5 PDF samples are issuer identity checks, not 5 newly recovered target slots.",
+      "11 pre-listing periods are review candidates, not final NA decisions.",
+      "Quarter-specific positive controls failed; their zeros cannot prove absence.",
+      "No Drive upload, financial adoption or independent acceptance in this follow-up."
     ]
   }
 }
