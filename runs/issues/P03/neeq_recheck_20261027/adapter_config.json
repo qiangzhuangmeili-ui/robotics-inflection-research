@@ -1,0 +1,50 @@
+{
+  "scope": "15 issuers / 65 slots only",
+  "method": "POST",
+  "url": "https://www.neeq.com.cn/disclosureInfoController/companyAnnouncement.do",
+  "encoding": "application/x-www-form-urlencoded; urllib.parse.urlencode(params,doseq=True)",
+  "sample_params": {
+    "noticeType[]": [
+      "9503"
+    ],
+    "disclosureType[]": [
+      "9503"
+    ],
+    "page": 0,
+    "companyCd": "874468",
+    "isNewThree": 1,
+    "startTime": "2023-01-01",
+    "endTime": "2026-10-25",
+    "keyword": "",
+    "hyType": "",
+    "xxfcbj[]": [
+      "3"
+    ],
+    "needFields[]": [
+      "companyCd",
+      "companyName",
+      "disclosureTitle",
+      "disclosurePostTitle",
+      "destFilePath",
+      "publishDate",
+      "xxfcbj",
+      "fileExt",
+      "xxzrlx"
+    ],
+    "siteId": 1
+  },
+  "sample_expected_total": 7,
+  "noticeType_is_required": false,
+  "throttle_seconds": 1.2,
+  "max_pages": 10,
+  "timeout_seconds": 25,
+  "verify_tls": true,
+  "source_failure_threshold": 3,
+  "failure_scope": "Distinguish index lookup, PDF transport and issuer applicability.",
+  "unvalidated_routes": [
+    "quarter subcategory query",
+    "keyword quarter query"
+  ],
+  "version_policy": "Exclude disclosurePostTitle containing 取消 from candidates; preserve original index records.",
+  "collection_policy": "Candidate URL is not a collected/identity-verified/archived document."
+}
