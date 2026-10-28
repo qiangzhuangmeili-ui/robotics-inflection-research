@@ -52,6 +52,18 @@ TITLES = {
     '母公司所有者权益变动表': 'EQ_PARENT',
 }
 
+# 标题变体（S00 实测新增）：深市三季报写作「2、合并年初到报告期末利润表」
+# 「3、合并年初到报告期末现金流量表」；也有「年初至报告期末」写法。
+# 用 $ 锚定整行，避免把正文里「合并资产负债表项目」这类小标题当成报表标题。
+TITLE_VARIANTS = [
+    (re.compile(r'^合并(?:年初到报告期末|年初至报告期末|本报告期)?利润表$'), 'IS_CONS'),
+    (re.compile(r'^母公司(?:年初到报告期末|年初至报告期末|本报告期)?利润表$'), 'IS_PARENT'),
+    (re.compile(r'^合并(?:年初到报告期末|年初至报告期末|本报告期)?现金流量表$'), 'CF_CONS'),
+    (re.compile(r'^母公司(?:年初到报告期末|年初至报告期末|本报告期)?现金流量表$'), 'CF_PARENT'),
+    (re.compile(r'^合并资产负债表$'), 'BS_CONS'),
+    (re.compile(r'^母公司资产负债表$'), 'BS_PARENT'),
+]
+
 # 分季度表字段：label 候选，按顺序尝试
 QUARTERLY_FIELDS = [
     ('FIN.REV.SQ', ['营业收入']),
@@ -126,7 +138,13 @@ def page_lines(text):
 def is_title(line):
     # 深市写「1、合并资产负债表」、北交所写「（一） 合并资产负债表 」，须先剥编号前缀
     s = normalize(line).replace(' ', '')
-    return TITLES.get(s)
+    key = TITLES.get(s)
+    if key:
+        return key
+    for pat, k in TITLE_VARIANTS:
+        if pat.match(s):
+            return k
+    return None
 
 
 def detect_unit(lines):
@@ -258,17 +276,51 @@ def extract_quarterly(pages):
     return got, unit, None
 
 
-def build_statement_map(pages, start_page=15):
+REPORT_FEATURES = {
+    'BS_CONS': ('货币资金', '资产总计', '流动资产合计', '负债合计'),
+    'BS_PARENT': ('货币资金', '资产总计', '流动资产合计', '负债合计'),
+    'IS_CONS': ('营业收入', '营业成本', '净利润'),
+    'IS_PARENT': ('营业收入', '营业成本', '净利润'),
+    'CF_CONS': ('经营活动产生的现金流量净额', '销售商品', '收到的现金', '购建固定资产'),
+    'CF_PARENT': ('经营活动产生的现金流量净额', '销售商品', '收到的现金', '购建固定资产'),
+}
+
+
+def _looks_like_statement(pages, pi, key, span=2):
+    """报表标题还要过一道「这一页真像报表吗」的检验。
+
+    S00 实测北交所一季报：第 3 页有独占行「合并资产负债表」、第 4 页有「合并现金流量表」，
+    但它们属于「主要财务数据变动情况」章节的小标题（下一行才是「项目 期末余额 期初余额 变动比例」），
+    真正的三表在第 9-17 页。只按标题文字匹配会把变动说明页当成报表区块，
+    导致 BS 区域错位、OCF 整段漏抽（920002/920060 各期复现）。
+    判据：该页及其后 span 页里，必须命中该报表的 2 个以上科目特征词。
+    """
+    feats = REPORT_FEATURES.get(key)
+    if not feats:
+        return True
+    text = ''
+    for k in range(pi, min(pi + span + 1, len(pages))):
+        text += (pages[k] or '')
+    flat = re.sub(r'\s+', '', text)
+    return sum(1 for f in feats if f in flat) >= 2
+
+
+def build_statement_map(pages, start_page=None):
     """扫描报表标题，返回 {statement_key: (start_idx, end_idx, unit)}。
 
     标题在正文里是独占行（带「1、」「（一）」等编号前缀），附注里的引用是长句不会被 is_title 命中；
     但目录页也可能是独占行，所以要求 BS_CONS 之后 15 页内出现 BS_PARENT 或 IS_CONS 才认作正文区块。
+
+    start_page 默认自适应：年报（>40 页）前 15 页是封面/目录/摘要，跳过；
+    季报（10-20 页）第 5-6 页就是合并资产负债表，固定 15 会整份漏抽（S00 实测深市/沪市季报均如此）。
     """
+    if start_page is None:
+        start_page = 2 if len(pages) < 40 else 15
     hits = []
     for pi in range(min(start_page, len(pages)), len(pages)):
         for ln in page_lines(pages[pi]):
             key = is_title(ln)
-            if key:
+            if key and _looks_like_statement(pages, pi, key):
                 hits.append((pi, key))
 
     start_idx = None
@@ -425,7 +477,67 @@ def extract_restatement(pages, scan=60):
     return 'NOT_FOUND', None, None, 'NONE'
 
 
-def extract_key_financials(pages, scan=60):
+def _ytd_column_index(lines, i, span=1):
+    """摘要表里「累计值」是第几个金额列（0-based）。默认 0。
+
+    页级判定：把该页切成「被金额行分隔的连续无金额行块」，取第一个同时出现
+    「本报告期」与「年初至报告期末」的块，比较两者先后。
+    深市三季报「本报告期 | 增减 | 年初至报告期末 | 增减」→ 累计在第 2 列；
+    北交所「项目 | 年初至报告期末(1-9月) | 上年同期 | 增减」→ 累计在第 1 列。
+    """
+    blocks, cur = [], []
+    for ln in lines:
+        if MONEY.search(ln):
+            if cur:
+                blocks.append(''.join(cur))
+                cur = []
+        else:
+            cur.append(ln)
+    if cur:
+        blocks.append(''.join(cur))
+    for t in blocks:
+        pos_cur = t.find('本报告期')
+        pos_ytd = -1
+        for key in ('年初至报告期末', '年初至本报告期末', '年初至报告期期末'):
+            pos_ytd = t.find(key)
+            if pos_ytd >= 0:
+                break
+        if pos_ytd < 0:
+            continue
+        if pos_cur < 0:
+            return 0
+        return 1 if pos_cur < pos_ytd else 0
+    return 0
+
+
+def _anchor_index(lines, anchor_value):
+    """用三表已抽到的营业收入累计值反查它在摘要表行里的列下标。
+
+    沪市三季报摘要表列宽不固定：600008 的「营业收入」行有 6 个金额
+    （本报告期 | 上年同期调整前 | 上年同期调整后 | 增减% | 年初至报告期末 | 上年同期…），
+    累计值在第 4 列，靠表头词序只能猜到第 1/2 列，必然取成单季。
+    用三表 REV（口径唯一）当锚点定位列，再拿同一列取扣非，比任何表头启发式都硬。
+    """
+    if not anchor_value:
+        return None
+    try:
+        target = float(str(anchor_value).replace(',', ''))
+    except (TypeError, ValueError):
+        return None
+    for ln in lines:
+        norm = normalize(ln)
+        if not norm.startswith('营业收入'):
+            continue
+        if norm[len('营业收入'):].startswith(('增长', '率', '比例')):
+            continue
+        for k, (_raw, num) in enumerate(amounts(ln)):
+            if abs(num - target) <= max(1.0, abs(target) * 1e-6):
+                return k
+        return None
+    return None
+
+
+def extract_key_financials(pages, scan=60, anchor_rev=None):
     """从年报摘要表取累计值，作为三表抽取的独立交叉校验源，并补三表没有的扣非累计。
 
     该表有三种版式：
@@ -442,6 +554,14 @@ def extract_key_financials(pages, scan=60):
         text = '\n'.join(lines)
         if '营业收入' not in text or '归属于' not in text or '增减' not in text:
             continue
+        # 三季报摘要表多一列「年初至报告期末」，但列序两种版式完全相反：
+        #   深市「本报告期 | 本报告期增减 | 年初至报告期末 | 年初至报告期末增减」→ 累计在第 2 列
+        #   北交所「项目 | 年初至报告期末(1-9月) | 上年同期 | 增减比例」→ 累计在第 1 列
+        #   沪市还夹「调整前/调整后」，累计可能在第 4 列
+        # 优先用三表 REV 累计值当锚点反查列；拿不到锚点再退回表头词序。
+        col_idx = _anchor_index(lines, anchor_rev)
+        if col_idx is None:
+            col_idx = _ytd_column_index(lines, 0)
         n = len(lines)
         targets = {
             'FIN.REV.YTD': ['营业收入'],
@@ -474,7 +594,13 @@ def extract_key_financials(pages, scan=60):
                             continue
                         vals = amounts(t)
                         if vals:
-                            out[fid] = vals[0][0]
+                            # 三季报摘要表有两列以上金额，必须按列语义取累计值：
+                            # 深市第一列是 Q3 单季、第二列才是 1-9 月累计（000026：41,360,520.65
+                            # 是单季扣非，累计应为 119,737,782.83）；北交所第一列就是累计。
+                            # 增减百分比（-7.53%）不含千分位且绝对值 <1000，已被 amounts() 过滤；
+                            # OCF 行用「— —」占位时金额列变少，越界则回退第 1 列。
+                            pick = vals[col_idx] if len(vals) > col_idx else vals[0]
+                            out[fid] = pick[0]
                             break
                     if fid in out:
                         break
@@ -609,7 +735,13 @@ def extract_one(task):
          note=f'method={rmethod};evidence={rev or ""}')
 
     # 主要会计数据表：既提供扣非累计（三表没有该科目），也用作三表抽取的交叉校验
-    kf, kf_page, kf_unit = extract_key_financials(pages)
+    # 锚点 = 三表已抽到的营业收入累计值，用于在列宽不定的摘要表里定位累计列
+    anchor_rev = None
+    for row in fields:
+        if row['field_id'] == 'FIN.REV.YTD' and row['extract_status'] == 'EXTRACTED':
+            anchor_rev = row['value_raw']
+            break
+    kf, kf_page, kf_unit = extract_key_financials(pages, anchor_rev=anchor_rev)
     res['key_financials_page'] = kf_page
     res['key_financials_unit'] = kf_unit
     if 'FIN.NPDEDT.YTD' in kf:

@@ -1,0 +1,988 @@
+{
+  "issue": "S00 / #35",
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-28T22:20:18+0800",
+  "as_of": "2026-10-25",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "inputs": {
+    "runs/collection/collection_index.csv": "12648 slots",
+    "runs/issues/S00/extract/*_fields.csv": "12 slots",
+    "data/company_master.csv": "1054 companies",
+    "data/company_listing_dates.csv": "1054 resolved",
+    "legacy snapshot (R1 run_20261024_local_02)": "1054 companies",
+    "runs/issues/P04/financial_field_dictionary.csv": "33 fields contract"
+  },
+  "outputs": {
+    "financial_normalized.csv": {
+      "rows": 228154,
+      "bytes": 80471995,
+      "sha256": "5c6b936b74889ebdbf2b9ddb6ae01c25b0fa71ab0a624066508f951b1cfb7bed",
+      "note": "明文大表留本机，不入 Git；解压 .gz 可逐字节复现"
+    },
+    "financial_normalized.csv.gz": {
+      "bytes": 5780244,
+      "sha256": "acf1edec2d3b0594e5d192dace7c3030c213db8765d8f93f872f4f730abe5926",
+      "committed": true
+    },
+    "normalization_issues.csv": {
+      "rows": 14350,
+      "bytes": 2688175,
+      "sha256": "6ac870aac1536200453d6eaba52a81312ddf4dfb5446dcf0a8bcef7324da6b4c"
+    }
+  },
+  "universe": {
+    "companies_total": 1054,
+    "companies_in_normalized": 1054,
+    "companies_missing_from_normalized": [],
+    "slot_status_counts": {
+      "COLLECTED_IDENTITY_VERIFIED": 11468,
+      "NOT_APPLICABLE_PRE_LISTING": 274,
+      "NOT_DISCLOSED_BY_ISSUER": 42,
+      "NOT_YET_DISCLOSED": 864
+    },
+    "slots_total": 12648,
+    "slots_covered_by_ledger": 12648,
+    "slots_with_at_least_one_value": 11406,
+    "slots_uncovered": 0,
+    "periods_in_normalized": 47
+  },
+  "field_coverage_cells": {
+    "FIN.AR.INSTANT": 11174,
+    "FIN.ASSET.INSTANT": 11175,
+    "FIN.CONTRACTASSET.INSTANT": 5651,
+    "FIN.COST.YTD": 11178,
+    "FIN.GROSSMARGIN.PCT": 13142,
+    "FIN.GROSSPROFIT.YTD": 11170,
+    "FIN.INV.INSTANT": 11170,
+    "FIN.NP.YTD": 11177,
+    "FIN.NPDEDT.SQ": 13364,
+    "FIN.NPDEDT.YTD": 18018,
+    "FIN.NPMARGIN.PCT": 13304,
+    "FIN.NPP.SQ": 13773,
+    "FIN.NPP.YTD": 13312,
+    "FIN.NR.INSTANT": 10108,
+    "FIN.OCF.SQ": 13188,
+    "FIN.OCF.YTD": 11174,
+    "FIN.OCF_TO_NP.RATIO": 8854,
+    "FIN.REV.SQ": 13914,
+    "FIN.REV.YTD": 13308
+  },
+  "checks": {
+    "V1_four_quarter_sum": {
+      "INCOMPLETE_QUARTERS": 1016,
+      "MATCH": 10629,
+      "MISMATCH": 114,
+      "UNRESOLVED_NO_PROVIDER": 23,
+      "QUARTERLY_SUM_ADOPTED": 64,
+      "YTD_KEPT": 24,
+      "MATCH_ROUNDING": 116,
+      "BOTH_FAR_FROM_PROVIDER": 3
+    },
+    "V3_provider_vs_pdf": {
+      "MISMATCH": 442,
+      "MATCH": 16921,
+      "GM_MINOR_DIFF_LE2PP": 381,
+      "GM_MATCH": 3334,
+      "GM_MISMATCH": 59
+    },
+    "single_quarter": {
+      "NOT_DERIVABLE": 13190,
+      "DERIVED_DIFF": 8603,
+      "OFFICIAL_TABLE": 40264,
+      "Q1_FROM_YTD": 5372,
+      "BLOCKED_CROSS_SOURCE": 27
+    },
+    "low_or_negative_base_flagged": 1921
+  },
+  "issue_type_counts": {
+    "CROSS_SOURCE_SUBTRACTION_BLOCKED": 27,
+    "DOCUMENT_IS_ENGLISH_OR_NON_ZH": 26,
+    "DOCUMENT_MIXED_LANGUAGE": 2,
+    "DOCUMENT_NO_TEXT_LAYER": 14,
+    "DOCUMENT_PARSE_FAILED": 15,
+    "EXTRACTION_BLIND_SPOT": 20,
+    "FIELD_BLANK_IN_STATEMENT": 7711,
+    "FIELD_NOT_IN_STATEMENT": 876,
+    "GROSSMARGIN_VS_PROVIDER_MISMATCH": 59,
+    "NOT_COMPUTABLE_NONPOSITIVE_NPP": 2315,
+    "NOT_DISCLOSED_BY_ISSUER": 42,
+    "NOT_YET_DISCLOSED": 864,
+    "PERIOD_INCONSISTENT": 114,
+    "PRE_IPO_REPORT": 30,
+    "PROVIDER_VS_PDF_MISMATCH": 151,
+    "STATEMENT_NOT_FOUND": 1410,
+    "THREE_STATEMENT_VS_KEY_TABLE_MISMATCH": 453,
+    "UNIT_UNKNOWN_VALUE_NOT_CONVERTED": 221
+  },
+  "empty_slots_no_value": {
+    "count": 62,
+    "by_language": {
+      "ZH": 20,
+      "EN_OR_NON_ZH": 26,
+      "MIXED": 2,
+      "NO_TEXT_LAYER": 14
+    },
+    "items": [
+      {
+        "security_id": "SH:601390",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-C93148F2A2BA0EE9",
+        "language": "ZH",
+        "zh_ratio": 0.342,
+        "text_chars": 2572
+      },
+      {
+        "security_id": "SH:601727",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-D3211113EB65C995",
+        "language": "ZH",
+        "zh_ratio": 0.326,
+        "text_chars": 2427
+      },
+      {
+        "security_id": "SH:603608",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-45C7767219A62461",
+        "language": "ZH",
+        "zh_ratio": 0.721,
+        "text_chars": 2104
+      },
+      {
+        "security_id": "SZ:000651",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-617474FA7518A51E",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2173
+      },
+      {
+        "security_id": "SZ:000927",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-6C71F176DA4D68C0",
+        "language": "ZH",
+        "zh_ratio": 0.672,
+        "text_chars": 1314
+      },
+      {
+        "security_id": "SZ:000967",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-DF05D0B7417C2A70",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3203
+      },
+      {
+        "security_id": "SZ:002241",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-F7E5125B429F3C11",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3510
+      },
+      {
+        "security_id": "SZ:002444",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-CA67D6690EB8888D",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 12638
+      },
+      {
+        "security_id": "SZ:002475",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-100C9AE009B8FA20",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3419
+      },
+      {
+        "security_id": "SZ:002579",
+        "slot_id": "annual_2023",
+        "document_id": "DOC-AC5DC97925E0EF19",
+        "language": "MIXED",
+        "zh_ratio": 0.241,
+        "text_chars": 2170
+      },
+      {
+        "security_id": "SH:601727",
+        "slot_id": "annual_2024",
+        "document_id": "DOC-49B96AFD6CC8A151",
+        "language": "ZH",
+        "zh_ratio": 0.335,
+        "text_chars": 2461
+      },
+      {
+        "security_id": "SH:603608",
+        "slot_id": "annual_2024",
+        "document_id": "DOC-665115A64A78F2BF",
+        "language": "ZH",
+        "zh_ratio": 0.629,
+        "text_chars": 1146
+      },
+      {
+        "security_id": "SH:688187",
+        "slot_id": "annual_2024",
+        "document_id": "DOC-A3D20EB403E21E33",
+        "language": "ZH",
+        "zh_ratio": 0.67,
+        "text_chars": 1154
+      },
+      {
+        "security_id": "SZ:000651",
+        "slot_id": "annual_2024",
+        "document_id": "DOC-54D8EC18B17A6B29",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 4052
+      },
+      {
+        "security_id": "SZ:000959",
+        "slot_id": "annual_2024",
+        "document_id": "DOC-A73AF0BA60E0D06F",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2837
+      },
+      {
+        "security_id": "SZ:000967",
+        "slot_id": "annual_2024",
+        "document_id": "DOC-7D5408ED85FA9763",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3201
+      },
+      {
+        "security_id": "SZ:002230",
+        "slot_id": "annual_2024",
+        "document_id": "DOC-D0AC250C7E8519B2",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2940
+      },
+      {
+        "security_id": "SZ:002241",
+        "slot_id": "annual_2024",
+        "document_id": "DOC-D4D92A5C8F61C1E8",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3228
+      },
+      {
+        "security_id": "SH:601727",
+        "slot_id": "annual_2025",
+        "document_id": "DOC-11BBC7058DD9D586",
+        "language": "ZH",
+        "zh_ratio": 0.416,
+        "text_chars": 2090
+      },
+      {
+        "security_id": "SZ:000651",
+        "slot_id": "annual_2025",
+        "document_id": "DOC-DBCAFF7FD64DDF43",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2428
+      },
+      {
+        "security_id": "SZ:000927",
+        "slot_id": "annual_2025",
+        "document_id": "DOC-1606B40C8DACA99B",
+        "language": "ZH",
+        "zh_ratio": 0.633,
+        "text_chars": 1423
+      },
+      {
+        "security_id": "SZ:000959",
+        "slot_id": "annual_2025",
+        "document_id": "DOC-5BD7427BFCD384BE",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 1883
+      },
+      {
+        "security_id": "SZ:000967",
+        "slot_id": "annual_2025",
+        "document_id": "DOC-63014E3930660312",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2635
+      },
+      {
+        "security_id": "SZ:002083",
+        "slot_id": "annual_2025",
+        "document_id": "DOC-41A995E12934526B",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:002241",
+        "slot_id": "annual_2025",
+        "document_id": "DOC-8AE1B2B44E4DB3AA",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2807
+      },
+      {
+        "security_id": "SZ:002475",
+        "slot_id": "annual_2025",
+        "document_id": "DOC-1C4F8777F08CFA9A",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2812
+      },
+      {
+        "security_id": "SZ:002139",
+        "slot_id": "h1_2024",
+        "document_id": "DOC-EB33549146C37047",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3674
+      },
+      {
+        "security_id": "SZ:002230",
+        "slot_id": "h1_2024",
+        "document_id": "DOC-12C283EA6456CC20",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3261
+      },
+      {
+        "security_id": "SZ:002611",
+        "slot_id": "h1_2024",
+        "document_id": "DOC-EDFB947AF07E9DBD",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3220
+      },
+      {
+        "security_id": "SH:688728",
+        "slot_id": "h1_2025",
+        "document_id": "DOC-542AA74B80EC5639",
+        "language": "ZH",
+        "zh_ratio": 0.796,
+        "text_chars": 755
+      },
+      {
+        "security_id": "SZ:002139",
+        "slot_id": "h1_2025",
+        "document_id": "DOC-7147DB0C2549525B",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3292
+      },
+      {
+        "security_id": "SZ:002415",
+        "slot_id": "h1_2025",
+        "document_id": "DOC-9C46C7E17F72333F",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.001,
+        "text_chars": 4686
+      },
+      {
+        "security_id": "SZ:002611",
+        "slot_id": "h1_2025",
+        "document_id": "DOC-18A3C648B802E090",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2925
+      },
+      {
+        "security_id": "SH:601727",
+        "slot_id": "h1_2026",
+        "document_id": "DOC-AE4FE8D4A427A86B",
+        "language": "ZH",
+        "zh_ratio": 0.367,
+        "text_chars": 1920
+      },
+      {
+        "security_id": "SZ:002083",
+        "slot_id": "h1_2026",
+        "document_id": "DOC-D7F653B0C5C02C09",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:002139",
+        "slot_id": "h1_2026",
+        "document_id": "DOC-F9CDDFDD1F4F6B14",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 3386
+      },
+      {
+        "security_id": "SZ:002415",
+        "slot_id": "h1_2026",
+        "document_id": "DOC-BD004DAB21E5E1CE",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 4979
+      },
+      {
+        "security_id": "SZ:002611",
+        "slot_id": "h1_2026",
+        "document_id": "DOC-A9E7E15C4BAEE74E",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 2972
+      },
+      {
+        "security_id": "SZ:300820",
+        "slot_id": "h1_2026",
+        "document_id": "DOC-6EC5A8F3D5995F6F",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:300907",
+        "slot_id": "h1_2026",
+        "document_id": "DOC-765F8CBCA0FE8BC0",
+        "language": "MIXED",
+        "zh_ratio": 0.23,
+        "text_chars": 2095
+      },
+      {
+        "security_id": "SH:688187",
+        "slot_id": "q1_2024",
+        "document_id": "DOC-FB53BD8CF987DB5D",
+        "language": "ZH",
+        "zh_ratio": 0.548,
+        "text_chars": 2264
+      },
+      {
+        "security_id": "SH:601727",
+        "slot_id": "q1_2025",
+        "document_id": "DOC-C16286276116494B",
+        "language": "ZH",
+        "zh_ratio": 0.683,
+        "text_chars": 2139
+      },
+      {
+        "security_id": "SH:601868",
+        "slot_id": "q1_2025",
+        "document_id": "DOC-9AC61BE076B37E71",
+        "language": "ZH",
+        "zh_ratio": 0.616,
+        "text_chars": 2021
+      },
+      {
+        "security_id": "SZ:300918",
+        "slot_id": "q1_2025",
+        "document_id": "DOC-9083F30898D0353D",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:301330",
+        "slot_id": "q1_2025",
+        "document_id": "DOC-0BA2342722929BDF",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 6275
+      },
+      {
+        "security_id": "SH:603608",
+        "slot_id": "q1_2026",
+        "document_id": "DOC-57AEE41A76843D2D",
+        "language": "ZH",
+        "zh_ratio": 0.709,
+        "text_chars": 2030
+      },
+      {
+        "security_id": "SZ:000856",
+        "slot_id": "q1_2026",
+        "document_id": "DOC-568DDDCF8BB99C79",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:002083",
+        "slot_id": "q1_2026",
+        "document_id": "DOC-3F5CD36F615E3BC4",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:002415",
+        "slot_id": "q1_2026",
+        "document_id": "DOC-AA4344F54D597EB4",
+        "language": "EN_OR_NON_ZH",
+        "zh_ratio": 0.0,
+        "text_chars": 5054
+      },
+      {
+        "security_id": "SZ:300918",
+        "slot_id": "q3_2024",
+        "document_id": "DOC-4CF1A8A60AE78817",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "BJ:920720",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-2D3FE7AE7C3B770B",
+        "language": "ZH",
+        "zh_ratio": 0.842,
+        "text_chars": 21
+      },
+      {
+        "security_id": "SH:601727",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-60AD7D5D54AC548D",
+        "language": "ZH",
+        "zh_ratio": 0.569,
+        "text_chars": 2286
+      },
+      {
+        "security_id": "SH:688169",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-AD8E91EB21883843",
+        "language": "ZH",
+        "zh_ratio": 0.604,
+        "text_chars": 2236
+      },
+      {
+        "security_id": "SH:688187",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-8C275BB2FE6003A5",
+        "language": "ZH",
+        "zh_ratio": 0.504,
+        "text_chars": 2904
+      },
+      {
+        "security_id": "SZ:000856",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-E3E312497CE927F2",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:002083",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-03B9B2A3EF9B491B",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:002863",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-C055EEB06DFF6D98",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:300387",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-5302903AFD29F7CD",
+        "language": "ZH",
+        "zh_ratio": 0.457,
+        "text_chars": 3498
+      },
+      {
+        "security_id": "SZ:300852",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-E60B063FB8DD4DEB",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:301568",
+        "slot_id": "q3_2025",
+        "document_id": "DOC-F6B3E9BF99B1DEAB",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:000856",
+        "slot_id": "q3_2026",
+        "document_id": "DOC-7568935915F9E765",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      },
+      {
+        "security_id": "SZ:002083",
+        "slot_id": "q3_2026",
+        "document_id": "DOC-9DE6D7E8F6A6333C",
+        "language": "NO_TEXT_LAYER",
+        "zh_ratio": 0.0,
+        "text_chars": 0
+      }
+    ]
+  },
+  "legacy_conflicts_sample": [
+    {
+      "security_id": "SH:600008",
+      "period_key": "20231231",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 21318568197.77,
+      "legacy_value": 21332108192.99,
+      "abs_diff": 13539995.22,
+      "rel_diff_pct": 0.0635,
+      "document_id": "DOC-0B135EF298358B1D"
+    },
+    {
+      "security_id": "SH:600008",
+      "period_key": "20231231",
+      "field_id": "FIN.NPP.YTD",
+      "pdf_value": 1606154341.31,
+      "legacy_value": 1609923557.46,
+      "abs_diff": 3769216.15,
+      "rel_diff_pct": 0.2341,
+      "document_id": "DOC-0B135EF298358B1D"
+    },
+    {
+      "security_id": "SH:600022",
+      "period_key": "20241231",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 82094093138.2,
+      "legacy_value": 76521410119.35,
+      "abs_diff": 5572683018.85,
+      "rel_diff_pct": 7.2825,
+      "document_id": "DOC-6D60038AB9991543"
+    },
+    {
+      "security_id": "SH:600022",
+      "period_key": "20241231",
+      "field_id": "FIN.NPP.YTD",
+      "pdf_value": -2257669006.54,
+      "legacy_value": -2894079759.81,
+      "abs_diff": 636410753.27,
+      "rel_diff_pct": 21.9901,
+      "document_id": "DOC-6D60038AB9991543"
+    },
+    {
+      "security_id": "SH:600053",
+      "period_key": "20231231",
+      "field_id": "FIN.NPP.YTD",
+      "pdf_value": 15345147.16,
+      "legacy_value": -117704604.86,
+      "abs_diff": 133049752.02,
+      "rel_diff_pct": 113.037,
+      "document_id": "DOC-2E77C37276E98AAA"
+    },
+    {
+      "security_id": "SH:600053",
+      "period_key": "20241231",
+      "field_id": "FIN.NPP.YTD",
+      "pdf_value": -268297775.88,
+      "legacy_value": -135408540.92,
+      "abs_diff": 132889234.96,
+      "rel_diff_pct": 98.1395,
+      "document_id": "DOC-3E34F7B26C3DB6DE"
+    },
+    {
+      "security_id": "SH:600060",
+      "period_key": "20241231",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 58530241713.44,
+      "legacy_value": 58530485019.64,
+      "abs_diff": 243306.2,
+      "rel_diff_pct": 0.0004,
+      "document_id": "DOC-6BF68F959402FD37"
+    },
+    {
+      "security_id": "SH:600060",
+      "period_key": "20241231",
+      "field_id": "FIN.NPP.YTD",
+      "pdf_value": 2246217303.19,
+      "legacy_value": 2246528265.28,
+      "abs_diff": 310962.09,
+      "rel_diff_pct": 0.0138,
+      "document_id": "DOC-6BF68F959402FD37"
+    },
+    {
+      "security_id": "SH:600081",
+      "period_key": "20231231",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 6815071291.84,
+      "legacy_value": 7166637012.46,
+      "abs_diff": 351565720.62,
+      "rel_diff_pct": 4.9056,
+      "document_id": "DOC-A2B4B03FE3E28EA0"
+    },
+    {
+      "security_id": "SH:600081",
+      "period_key": "20231231",
+      "field_id": "FIN.NPP.YTD",
+      "pdf_value": 134165969.17,
+      "legacy_value": 145003819.38,
+      "abs_diff": 10837850.21,
+      "rel_diff_pct": 7.4742,
+      "document_id": "DOC-A2B4B03FE3E28EA0"
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20231231",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 4014977373.82,
+      "legacy_value": 28833463784.14,
+      "abs_diff": 24818486410.32,
+      "rel_diff_pct": 86.0753,
+      "document_id": "DOC-2E9000348305032A"
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20241231",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 2700086089.16,
+      "legacy_value": 16801783043.91,
+      "abs_diff": 14101696954.75,
+      "rel_diff_pct": 83.9298,
+      "document_id": "DOC-B6C0301B8D7CB70B"
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20241231",
+      "field_id": "FIN.NPP.YTD",
+      "pdf_value": 140615987.11,
+      "legacy_value": 482199844.88,
+      "abs_diff": 341583857.77,
+      "rel_diff_pct": 70.8386,
+      "document_id": "DOC-B6C0301B8D7CB70B"
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20251231",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 2093450698.62,
+      "legacy_value": 15064892096.09,
+      "abs_diff": 12971441397.47,
+      "rel_diff_pct": 86.1038,
+      "document_id": "DOC-FE35E665EA02E925"
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20260630",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 415778065.42,
+      "legacy_value": 4740551562.53,
+      "abs_diff": 4324773497.11,
+      "rel_diff_pct": 91.2293,
+      "document_id": "DOC-CAADA5BC063F7BEA"
+    },
+    {
+      "security_id": "SH:600141",
+      "period_key": "20231231",
+      "field_id": "FIN.REV.YTD",
+      "pdf_value": 28105345808.86,
+      "legacy_value": 28281264663.6,
+      "abs_diff": 175918854.74,
+      "rel_diff_pct": 0.622,
+      "document_id": "DOC-1BDA80C4C1FB2592"
+    },
+    {
+      "security_id": "SH:600141",
+      "period_key": "20231231",
+      "field_id": "FIN.NPP.YTD",
+      "pdf_value": 1378917799.12,
+      "legacy_value": 1400664156.21,
+      "abs_diff": 21746357.09,
+      "rel_diff_pct": 1.5526,
+      "document_id": "DOC-1BDA80C4C1FB2592"
+    },
+    {
+      "security_id": "SH:600184",
+      "period_key": "20231231",
+      "field_id": "FIN.NPDEDT.YTD",
+      "pdf_value": 6270618.93,
+      "legacy_value": 43275566.68,
+      "abs_diff": 37004947.75,
+      "rel_diff_pct": 85.51,
+      "document_id": "DOC-F2004200C4FE7829"
+    },
+    {
+      "security_id": "SH:600196",
+      "period_key": "20240331",
+      "field_id": "FIN.NPDEDT.YTD",
+      "pdf_value": 535465.59,
+      "legacy_value": 608535465.59,
+      "abs_diff": 608000000.0,
+      "rel_diff_pct": 99.912,
+      "document_id": "DOC-4AC76CE9A900112C"
+    },
+    {
+      "security_id": "SH:600196",
+      "period_key": "20240930",
+      "field_id": "FIN.NPDEDT.YTD",
+      "pdf_value": 582174869.86,
+      "legacy_value": 1836246177.02,
+      "abs_diff": 1254071307.16,
+      "rel_diff_pct": 68.2954,
+      "document_id": "DOC-0BFEDF99684D706A"
+    }
+  ],
+  "legacy_conflicts_total": 442,
+  "rules_applied": {
+    "null_not_zero": "缺失一律不填 0，逐条落 issues 并带原因码",
+    "no_proxy_substitution": "扣非缺失不用净利润替代；经营现金流缺失不用净利润替代",
+    "single_quarter_precedence": "官方分季度表优先，累计相减仅在同源同版本同 PIT 时使用",
+    "cross_source_subtraction": "PROHIBITED，登记 CROSS_SOURCE_SUBTRACTION_BLOCKED",
+    "pit": "published_on ≤ 2026-10-25 才进证据链，晚于记 AFTER_CUTOFF（本轮 0 例）",
+    "pre_listing": "逐行比较 period_end < listing_date，不用状态码反推",
+    "restatement": "FIN.RESTATEMENT=是 时标 RESTATED_PRIOR_YEARS_UNRECALCULATED（未用最新年报重算历史期）",
+    "low_base_thresholds": {
+      "LOW_BASE_REV": "上年同期营业收入绝对值 < 10,000,000 元",
+      "LOW_BASE_PROFIT": "上年同期归母净利绝对值 < 5,000,000 元",
+      "note": "S00 临时口径，S01 登记筛选公式时可覆盖"
+    }
+  },
+  "comparability_matrix": {
+    "FY": {
+      "basis": "YTD_CUMULATIVE",
+      "months": 12,
+      "comparable_with": [
+        "FY"
+      ]
+    },
+    "H1": {
+      "basis": "YTD_CUMULATIVE",
+      "months": 6,
+      "comparable_with": [
+        "H1"
+      ]
+    },
+    "9M": {
+      "basis": "YTD_CUMULATIVE",
+      "months": 9,
+      "comparable_with": [
+        "9M"
+      ]
+    },
+    "Q1": {
+      "basis": "YTD_CUMULATIVE(=单季)",
+      "months": 3,
+      "comparable_with": [
+        "Q1",
+        "SINGLE_QUARTER_Q1"
+      ]
+    },
+    "Q2": {
+      "basis": "SINGLE_QUARTER",
+      "months": 3,
+      "comparable_with": [
+        "Q2"
+      ]
+    },
+    "Q3": {
+      "basis": "SINGLE_QUARTER",
+      "months": 3,
+      "comparable_with": [
+        "Q3"
+      ]
+    },
+    "Q4": {
+      "basis": "SINGLE_QUARTER",
+      "months": 3,
+      "comparable_with": [
+        "Q4"
+      ]
+    },
+    "INSTANT": {
+      "basis": "INSTANT",
+      "note": "资产负债表科目为时点值，只能同时点比较，不与期间流量混算"
+    },
+    "prohibited": [
+      "FY vs H1",
+      "9M vs FY",
+      "累计 vs 单季",
+      "跨年度相减",
+      "跨来源相减",
+      "跨版本（重述前后）相减"
+    ]
+  },
+  "known_limits": [
+    "旧快照 2021/2022 年度营收与归母仅单一来源（新浪），无官方 PDF 交叉校验。",
+    "未用最新年报「上年同期」列重算历史期，重述公司跨年比较口径可能不一致。",
+    "季报（一季/三季）多为摘要表+三表并存，深市部分公司只有摘要表，故 COST/AR/INV 在该期为 NOT_IN_STATEMENT。",
+    "合同资产未列示的公司记 NOT_IN_STATEMENT，不填 0。",
+    "单季扣非在无官方分季表且累计不齐时不可派生，记 NOT_DERIVABLE。"
+  ],
+  "elapsed_s": 14.1,
+  "extract_artifacts": [
+    {
+      "file": "extract/annual_2023_fields.csv",
+      "bytes": 5406497,
+      "sha256": "61de176801dad93a9a6d7dbd42b69733a40d2f525439a889be9c19a02298e423",
+      "data_rows": 26063
+    },
+    {
+      "file": "extract/annual_2024_fields.csv",
+      "bytes": 5453798,
+      "sha256": "8298a2695aca04a3131262e995c5092f90dcc74b953498d13a4a0f575022453d",
+      "data_rows": 26460
+    },
+    {
+      "file": "extract/annual_2025_fields.csv",
+      "bytes": 5569459,
+      "sha256": "17811ef8d157e2e647242ba371a008ecc8ecba8eff0743b7e39277a6e3dd7841",
+      "data_rows": 26971
+    },
+    {
+      "file": "extract/h1_2024_fields.csv",
+      "bytes": 2288158,
+      "sha256": "a96210c1aa6d77b7db652f01a15afd9547d182190af24959d8f8d79024268d84",
+      "data_rows": 16224
+    },
+    {
+      "file": "extract/h1_2025_fields.csv",
+      "bytes": 2333374,
+      "sha256": "984a5b3935c6ae43c075c3ecace070e171634b69b7830f0f3a04999991c5c300",
+      "data_rows": 16544
+    },
+    {
+      "file": "extract/h1_2026_fields.csv",
+      "bytes": 2372008,
+      "sha256": "ef85ff882a721302a35e37e1acf9ad19d33679889659432855e6b072c72469aa",
+      "data_rows": 16768
+    },
+    {
+      "file": "extract/q1_2024_fields.csv",
+      "bytes": 2229367,
+      "sha256": "53d9cb433efaee3c2626982dd57af9c246e916d894fb44b15435631a5d6bf05a",
+      "data_rows": 15968
+    },
+    {
+      "file": "extract/q1_2025_fields.csv",
+      "bytes": 2274466,
+      "sha256": "71eb091a29ea7c87518dc90b5d31e1d95c5338d9aa44f8e9b09fea8ac3b31d01",
+      "data_rows": 16272
+    },
+    {
+      "file": "extract/q1_2026_fields.csv",
+      "bytes": 2327013,
+      "sha256": "e618ff4ca862a6d121d788ae32b928325c7f9c6408e9d66f9d515dfd0afecac2",
+      "data_rows": 16656
+    },
+    {
+      "file": "extract/q3_2024_fields.csv",
+      "bytes": 2281586,
+      "sha256": "a9fcbb45a651c2e53e7ff15ed4e70ddea314a36dc62fdaad02b549c6b8212648",
+      "data_rows": 16144
+    },
+    {
+      "file": "extract/q3_2025_fields.csv",
+      "bytes": 2310552,
+      "sha256": "5b282071d2bfbc76cf1398d7e2544bb9e1670ea1a1f0b814aa392114200b0201",
+      "data_rows": 16368
+    },
+    {
+      "file": "extract/q3_2026_fields.csv",
+      "bytes": 429653,
+      "sha256": "8a4071b5cbbac51615bfd5f525da2b54354a7dab5ede099412a396913c1c43a9",
+      "data_rows": 3008
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "issue_key": "S00",
+  "issue_number": 35,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "generated_at": "2026-10-28T22:22:37+0800",
+  "review_nature": "SELF_CHECK",
+  "scope": "全池财务标准化：12 个采集槽 + 旧快照 2021/2022 补充，保留原值/单位/倍数/来源/版本，派生单季与毛利率，标记缺失/上市前/重述/低基数，检查合计关系与来源",
+  "deliverables": [
+    {
+      "file": "financial_normalized.csv",
+      "desc": "全池财务标准化长表（逐格原值/单位/倍数/页码/来源）",
+      "required_by_issue": true,
+      "exists": true,
+      "bytes": 80471995,
+      "sha256": "5c6b936b74889ebdbf2b9ddb6ae01c25b0fa71ab0a624066508f951b1cfb7bed",
+      "data_rows": 228154
+    },
+    {
+      "file": "financial_normalized.csv.gz",
+      "desc": "同上，gzip 版（提交 Git 用）",
+      "required_by_issue": true,
+      "exists": true,
+      "bytes": 5780244,
+      "sha256": "acf1edec2d3b0594e5d192dace7c3030c213db8765d8f93f872f4f730abe5926"
+    },
+    {
+      "file": "normalization_issues.csv",
+      "desc": "标准化问题清单（缺失/不适用/未披露/校验失败/重算标记）",
+      "required_by_issue": true,
+      "exists": true,
+      "bytes": 2688175,
+      "sha256": "6ac870aac1536200453d6eaba52a81312ddf4dfb5446dcf0a8bcef7324da6b4c",
+      "data_rows": 14350
+    },
+    {
+      "file": "normalization_manifest.json",
+      "desc": "标准化清单：口径、覆盖、校验汇总、可比性矩阵、已知限制",
+      "required_by_issue": true,
+      "exists": true,
+      "bytes": 29218,
+      "sha256": "d7e78a79702ea5cb14c77a9c24120d6fa112d883ec36c118b9ba57094dc142d6"
+    },
+    {
+      "file": "legacy_snapshot_conflicts.json",
+      "desc": "旧快照与官方 PDF 的逐条冲突明细（V3）",
+      "required_by_issue": true,
+      "exists": true,
+      "bytes": 131133,
+      "sha256": "8cadbb2e65b06ce0645f4ca3409885b024084ff977fbec2e76a51bba81864ee0"
+    },
+    {
+      "file": "extract/extract_run_summary.json",
+      "desc": "12 槽抽取总汇总",
+      "required_by_issue": true,
+      "exists": true,
+      "bytes": 5157,
+      "sha256": "f23f47aa18a3570f666f938ff6ef42232e1bc981263ecc7953295aeef288e4b6"
+    }
+  ],
+  "extract_artifacts": [
+    {
+      "file": "extract/annual_2023_fields.csv",
+      "bytes": 5406497,
+      "sha256": "61de176801dad93a9a6d7dbd42b69733a40d2f525439a889be9c19a02298e423",
+      "data_rows": 26063
+    },
+    {
+      "file": "extract/annual_2024_fields.csv",
+      "bytes": 5453798,
+      "sha256": "8298a2695aca04a3131262e995c5092f90dcc74b953498d13a4a0f575022453d",
+      "data_rows": 26460
+    },
+    {
+      "file": "extract/annual_2025_fields.csv",
+      "bytes": 5569459,
+      "sha256": "17811ef8d157e2e647242ba371a008ecc8ecba8eff0743b7e39277a6e3dd7841",
+      "data_rows": 26971
+    },
+    {
+      "file": "extract/h1_2024_fields.csv",
+      "bytes": 2288158,
+      "sha256": "a96210c1aa6d77b7db652f01a15afd9547d182190af24959d8f8d79024268d84",
+      "data_rows": 16224
+    },
+    {
+      "file": "extract/h1_2025_fields.csv",
+      "bytes": 2333374,
+      "sha256": "984a5b3935c6ae43c075c3ecace070e171634b69b7830f0f3a04999991c5c300",
+      "data_rows": 16544
+    },
+    {
+      "file": "extract/h1_2026_fields.csv",
+      "bytes": 2372008,
+      "sha256": "ef85ff882a721302a35e37e1acf9ad19d33679889659432855e6b072c72469aa",
+      "data_rows": 16768
+    },
+    {
+      "file": "extract/q1_2024_fields.csv",
+      "bytes": 2229367,
+      "sha256": "53d9cb433efaee3c2626982dd57af9c246e916d894fb44b15435631a5d6bf05a",
+      "data_rows": 15968
+    },
+    {
+      "file": "extract/q1_2025_fields.csv",
+      "bytes": 2274466,
+      "sha256": "71eb091a29ea7c87518dc90b5d31e1d95c5338d9aa44f8e9b09fea8ac3b31d01",
+      "data_rows": 16272
+    },
+    {
+      "file": "extract/q1_2026_fields.csv",
+      "bytes": 2327013,
+      "sha256": "e618ff4ca862a6d121d788ae32b928325c7f9c6408e9d66f9d515dfd0afecac2",
+      "data_rows": 16656
+    },
+    {
+      "file": "extract/q3_2024_fields.csv",
+      "bytes": 2281586,
+      "sha256": "a9fcbb45a651c2e53e7ff15ed4e70ddea314a36dc62fdaad02b549c6b8212648",
+      "data_rows": 16144
+    },
+    {
+      "file": "extract/q3_2025_fields.csv",
+      "bytes": 2310552,
+      "sha256": "5b282071d2bfbc76cf1398d7e2544bb9e1670ea1a1f0b814aa392114200b0201",
+      "data_rows": 16368
+    },
+    {
+      "file": "extract/q3_2026_fields.csv",
+      "bytes": 429653,
+      "sha256": "8a4071b5cbbac51615bfd5f525da2b54354a7dab5ede099412a396913c1c43a9",
+      "data_rows": 3008
+    }
+  ],
+  "git_policy": "逐格抽取明细（extract/*_fields.csv，约 37 MB）与 76.7 MB 明文大表不入 Git；提交 .gz（5.5 MB）+ 本 manifest 的 sha256，可解压复算"
+}

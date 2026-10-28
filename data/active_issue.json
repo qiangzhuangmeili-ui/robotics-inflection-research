@@ -3,17 +3,17 @@
   "active_issue_number": null,
   "active_issue_key": null,
   "executor": null,
-  "started_at": "2026-10-27T20:54:25+08:00",
-  "status": "IDLE_A04_ACCEPTED_WITH_LIMITS_RECHECKED_V3",
-  "claim_note": "A04 复验（第二轮复核意见）：修订纳入版本发现规则、仅公告链补公告原件、AC12 改为发现范围对账+逐项文件/哈希/关联核验；12/12 PASS，放行 S00。",
+  "started_at": "2026-10-28T20:52:00+08:00",
+  "status": "IDLE_S00_SELF_CHECK_PASS_S01_READY",
+  "claim_note": "S00 完成：全池 12 槽重抽 + 旧快照 2021/2022，228,154 行逐格可复算；1054 家全在、缺失不填 0、62 个整槽无值已定性并交接；放行 S01。",
   "last_completed": {
-    "issue_number": 34,
-    "issue_key": "A04",
-    "completed_at": "2026-10-28T20:22:33+08:00",
-    "review_file": "runs/issues/A04/rework/review.json",
-    "decision": "ACCEPTED_WITH_LIMITS",
-    "acceptance": "12/12",
-    "summary": "12648 槽全终态：已核 11468、未到期 864、不适用 274、未披露 42；公告目录 1054/1054；更正链 127/127（公告原件 55 份）"
+    "issue_number": 35,
+    "issue_key": "S00",
+    "completed_at": "2026-10-28T22:24:13+08:00",
+    "review_file": "runs/issues/S00/review.json",
+    "decision": "SELF_CHECK_PASS",
+    "acceptance": "2/2",
+    "summary": "228,154 行标准化财务；1054 家 / 12,648 槽全覆盖；V1 四季和 10,745 通过；V3 PDF vs 快照 16,921/17,363 一致；单季官方分季表 40,264 格；62 个整槽无值（英文版 26 / 无文本层 14 / 抽取盲区 20 / 混排 2）"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 35,
-  "next_recommended_issue_key": "S00",
-  "next_recommended_reason": "A04 已放行资料轮；S00 可开始全池财务标准化（保留原值/单位/版本），仍不得直接跳业务深研或估值。",
+  "next_recommended_issue_number": 36,
+  "next_recommended_issue_key": "S01",
+  "next_recommended_reason": "S00 已放行：标准化财务表可用，S01 可登记筛选公式/阈值/缺失与亏损规则；仍不得跳业务深研或估值。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -235,5 +235,13 @@
     "checks": "12/12 PASS（AC12：发现 127 组、逐项核 305 份文件、违规 0）",
     "prior_review_preserved": "runs/issues/A04/review.json",
     "gate": "全部 12 项必需检查 PASS 才放行（任一 FAIL/HOLD 不放行）"
-  }
+  },
+  "open_followups_from_s00": [
+    "62 个整槽无值：英文版 26（F32 采集器未校验语言）、无文本层 14、抽取盲区 20、混排 2。",
+    "453 份文档三表与摘要表不一致（1,326 格标 EXTRACTED_XCHECK_MISMATCH），S02 用前须核或排除。",
+    "2,157 份重述标记为 NEEDS_REVIEW（关键词判据，未逐份确认勾选项）。",
+    "旧快照 2021/2022 为单一来源，无官方 PDF 交叉校验。",
+    "未用最新年报「上年同期」列重算历史期，重述公司跨年口径可能不一致。",
+    "2026Q3 仅 190 家已披露，其余 864 家未到披露期（NOT_YET_DISCLOSED），当期截面不完整。"
+  ]
 }

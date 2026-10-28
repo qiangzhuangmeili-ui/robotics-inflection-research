@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "A04_ACCEPTED_WITH_LIMITS_S00_READY",
+  "status": "S00_SELF_CHECK_PASS_S01_READY",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -1007,5 +1007,75 @@
     "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除摘要/非财报更正/冻结范围外期间",
     "correction_discovery_rows": 223
   },
-  "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/35"
+  "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/35",
+  "s00_stage": {
+    "issue": "S00 / #35",
+    "decision": "SELF_CHECK_PASS",
+    "review_nature": "SELF_CHECK",
+    "completed_at": "2026-10-28T22:24:13+08:00",
+    "documents_extracted": 11468,
+    "field_rows_extracted": 213446,
+    "normalized_rows": 228154,
+    "companies": 1054,
+    "slots_total": 12648,
+    "slots_with_value": 11406,
+    "empty_slots": 62,
+    "empty_slots_breakdown": {
+      "EN_OR_NON_ZH": 26,
+      "NO_TEXT_LAYER": 14,
+      "ZH": 20,
+      "MIXED": 2
+    },
+    "issues_rows": 14350,
+    "checks": {
+      "V1_four_quarter_sum_pass": 10745,
+      "V1_mismatch": 114,
+      "V1_arbitration": {
+        "quarterly_sum_adopted": 64,
+        "ytd_kept": 24,
+        "both_far": 3,
+        "unresolved": 23
+      },
+      "V3_pdf_vs_provider": {
+        "match": 16921,
+        "mismatch": 442
+      },
+      "V4_gross_margin": {
+        "match": 3334,
+        "minor_le_2pp": 381,
+        "mismatch_gt_2pp": 59
+      },
+      "three_statement_vs_key_table": {
+        "match": 10542,
+        "partial": 242,
+        "no_key_table": 231,
+        "mismatch": 453
+      }
+    },
+    "single_quarter_sources": {
+      "official_quarterly_table": 40264,
+      "q1_equals_ytd": 5372,
+      "derived_cumulative_diff": 8603,
+      "cross_source_blocked": 27
+    },
+    "new_defects": [
+      "F28",
+      "F29",
+      "F30",
+      "F31 已修",
+      "F32 未修（英文版年报）"
+    ],
+    "release_next": "S01",
+    "limits": [
+      "旧快照 2021/2022 单一来源",
+      "未用最新年报重算历史期",
+      "453 份 xcheck 不一致",
+      "2026Q3 仅 190 家已披露"
+    ]
+  },
+  "next_issue": {
+    "key": "S01",
+    "number": 36,
+    "reason": "S00 放行；S01 只登记规则版本，不看个别公司调阈值"
+  }
 }

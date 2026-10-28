@@ -1,0 +1,183 @@
+{
+  "issue_key": "S00",
+  "issue_number": 35,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "reviewed_at": "2026-10-28T22:48:00+08:00",
+  "input_versions": {
+    "runs/collection/collection_index.csv": "12648 slots (A04 终态: 已核 11468 / NA 274 / 未披露 42 / 未到期 864)",
+    "runs/issues/A04/rework/review.json": "ACCEPTED_WITH_LIMITS, release_S00=true",
+    "runs/issues/A04/rework/na_applicability_audit.csv": "274 行不适用依据（SZ 145 / SH 110 / BJ 19，BJ 用股转挂牌日）",
+    "runs/issues/P04/financial_field_dictionary.csv": "33 字段契约，其中 21 个 p00_required=YES",
+    "data/company_master.csv": "1054 家",
+    "data/company_listing_dates.csv": "1054/1054 RESOLVED_FROM_EXCHANGE",
+    "legacy snapshot (R1 run_20261024_local_02)": "1054 家 × 2021-2025 + 2026H1 + 22 期累计扣非"
+  },
+  "decision": "SELF_CHECK_PASS",
+  "verdict": "NORMALIZED_WITH_DECLARED_DIRTY_ZONES",
+  "allows_next_stage": true,
+  "release_S01": true,
+  "acceptance": [
+    {
+      "item": "1054 家公司全留在主键集合；缺失不填 0，季度与年度可比性明确",
+      "result": "PASS",
+      "evidence": {
+        "companies_total": 1054,
+        "companies_in_normalized": 1054,
+        "companies_missing_from_normalized": [],
+        "slots_total": 12648,
+        "slots_covered_by_ledger": 12648,
+        "slots_uncovered": 0,
+        "slots_with_at_least_one_value": 11406,
+        "null_not_zero": "normalized 只输出 value_cny 非空的格；缺失逐条进 issues 并带状态码，全表无 0 占位",
+        "period_comparability": "period_basis 三值 + period_type 八值 + manifest.comparability_matrix（含 prohibited 清单）"
+      }
+    },
+    {
+      "item": "现金流/扣非缺失不得用净利润或其他代理值替代",
+      "result": "PASS",
+      "evidence": {
+        "code_check": "tools/s00_normalize.py 中无 fillna / 无代理赋值；OCF 与 NPDEDT 只从三表/摘要表/分季度表取数",
+        "ocf_missing_status": "NOT_IN_STATEMENT / BLANK_IN_STATEMENT / STATEMENT_NOT_FOUND，value_cny 为空",
+        "npdedt_missing_status": "NOT_IN_STATEMENT（扣非只在主要会计数据表与分季度表出现，缺就记缺）",
+        "no_substitution_cases": 0
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "S00-C1",
+      "name": "抽取层全量重抽 12 槽，与 A03 年报结果逐格比对无回归",
+      "result": "PASS",
+      "evidence": "annual_2024 4116/4116 同、annual_2025 4180/4180 同、annual_2023 4019 同 + 9 格由 NOT_IN_STATEMENT 改善为抽到值"
+    },
+    {
+      "id": "S00-C2",
+      "name": "V1 四季之和 = 全年累计",
+      "result": "PASS_WITH_LIMITS",
+      "evidence": {
+        "match": 10629,
+        "match_rounding": 116,
+        "mismatch_total": 114,
+        "arbitration": {
+          "quarterly_sum_adopted": 64,
+          "ytd_kept": 24,
+          "both_far_from_provider": 3,
+          "unresolved_no_provider": 23
+        },
+        "note": "64 次采用四季和均有第三方快照互证（如同方股份 2023 营收 288.33 亿，三表抽错为 40.15 亿）；23 次无第三方可仲裁的保持原值并标 UNRESOLVED_NO_PROVIDER"
+      }
+    },
+    {
+      "id": "S00-C3",
+      "name": "V3 官方 PDF vs 旧快照（同公司同期间同字段，容差 1 元）",
+      "result": "PASS_WITH_LIMITS",
+      "evidence": {
+        "compared": 17363,
+        "match": 16921,
+        "mismatch": 442,
+        "mismatch_rate_pct": 2.55,
+        "rule": "一律以官方 PDF 为准，逐条落 issues + legacy_snapshot_conflicts.json"
+      }
+    },
+    {
+      "id": "S00-C4",
+      "name": "V4 毛利率反算 vs 快照毛利率",
+      "result": "PASS_WITH_LIMITS",
+      "evidence": {
+        "match_le_0_05pp": 3334,
+        "minor_le_2pp": 381,
+        "mismatch_gt_2pp": 59,
+        "note": ">2pp 多为营业总收入 vs 营业收入口径差，已逐条登记"
+      }
+    },
+    {
+      "id": "S00-C5",
+      "name": "三表 vs 摘要表内建交叉校验",
+      "result": "PASS_WITH_LIMITS",
+      "evidence": {
+        "match": 10542,
+        "partial": 242,
+        "no_key_table": 231,
+        "mismatch": 453,
+        "handling": "453 份的 REV/NPP/OCF 标 EXTRACTED_XCHECK_MISMATCH（1326 格），blocking=YES"
+      }
+    },
+    {
+      "id": "S00-C6",
+      "name": "上市前不适用逐行复核（F22：不用状态码反推）",
+      "result": "PASS",
+      "evidence": {
+        "na_slots": 274,
+        "audit_source": "runs/issues/A04/rework/na_applicability_audit.csv",
+        "contradictions": 0,
+        "missing_audit_rows": 0
+      }
+    },
+    {
+      "id": "S00-C7",
+      "name": "整槽无值定性（英文版/无文本层/抽取盲区）",
+      "result": "PASS",
+      "evidence": {
+        "empty_slots": 62,
+        "by_language": {
+          "EN_OR_NON_ZH": 26,
+          "NO_TEXT_LAYER": 14,
+          "ZH": 20,
+          "MIXED": 2
+        },
+        "note": "62 槽不是「公司未披露」，文件在盘、身份已核，属文件形态问题；26 份英文版需回资料轮补采中文版（F32）"
+      }
+    },
+    {
+      "id": "S00-C8",
+      "name": "单季派生规则：官方分季表优先，禁止跨来源相减",
+      "result": "PASS",
+      "evidence": {
+        "official_quarterly_table": 40264,
+        "q1_equals_ytd": 5372,
+        "derived_cumulative_diff": 8603,
+        "not_derivable": 13190,
+        "cross_source_blocked": 27
+      }
+    },
+    {
+      "id": "S00-C9",
+      "name": "PIT：披露日晚于研究截止日不得进证据链",
+      "result": "PASS",
+      "evidence": {
+        "as_of": "2026-10-25",
+        "after_cutoff": 0,
+        "empty_published_on": 0,
+        "note": "11468 个已核槽 published_on 全部 ≤ as_of；2026Q3 的 190 家在 10-22/23 披露"
+      }
+    }
+  ],
+  "scope_checks": {
+    "did_not_screen_companies": true,
+    "did_not_set_thresholds": true,
+    "did_not_value": true,
+    "did_not_modify_originals": true,
+    "did_not_modify_ledger_status": true,
+    "did_not_download": true,
+    "files_written": "runs/issues/S00/ 与 tools/s00_*.py 与 tools/a03_financial_field_extractor.py（四处修正）"
+  },
+  "new_defects_found": [
+    {"id": "F28", "title": "季报三表定位 start_page 固定 15，10-20 页季报整份漏抽", "fixed": true},
+    {"id": "F29", "title": "三季报利润表标题「合并年初到报告期末利润表」未识别", "fixed": true},
+    {"id": "F30", "title": "北交所季报「变动情况」页小标题冒充报表标题，导致 BS 错位、OCF 漏抽", "fixed": true},
+    {"id": "F31", "title": "三季报摘要表累计列位置三种版式（深市第2列/北交所第1列/沪市第4列）", "fixed": true},
+    {"id": "F32", "title": "采集器未校验文档语言，26 份英文版年报被当成中文版采入", "fixed": false,
+     "owner": "资料轮（A 系列）补采中文版；采集器加语言校验"}
+  ],
+  "open_items_for_next_stage": [
+    "26 份英文版 + 14 份无文本层 + 20 份抽取盲区 = 62 个整槽无值，需资料轮补采或 OCR",
+    "453 份文档三表与摘要表不一致（1326 格标 EXTRACTED_XCHECK_MISMATCH），S02 用前须核或排除",
+    "2157 份文档重述标记为 NEEDS_REVIEW（关键词判据，未逐份确认勾选项）",
+    "旧快照 2021/2022 为单一来源，无官方 PDF 交叉校验",
+    "未用最新年报「上年同期」列重算历史期，重述公司跨年口径可能不一致"
+  ],
+  "self_check_note": "本卡为 SELF_CHECK，不是独立审计；数值正确性由 V1/V3/V4/内建交叉校验四条独立路径相互印证，但仍存在已声明的脏区（见 open_items_for_next_stage）。"
+}
