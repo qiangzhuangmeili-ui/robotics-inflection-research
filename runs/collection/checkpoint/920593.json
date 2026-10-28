@@ -970,15 +970,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219889328.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1498,
+     "at": "2026-10-28T12:38:03+08:00",
+     "response_sha256": null,
+     "bytes": 1022653,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-F4F2779256A16396",
+    "identity_key": "BJ:920593|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年一季度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219889328.PDF",
+    "local_file": "sources/collection/originals/920593/q1_2024/DOC-F4F2779256A16396.pdf",
+    "sha256": "d7f098c657acb8b0aecdc8c0ccf40d7a462f5c1dd74de61982008d0d6a06e8b4",
+    "bytes": 1022653,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1022653 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=鼎智科技 代码=920593 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:38:03+08:00",
+    "bytes_written": 1022653
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:38:03+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219889328.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1498,
+    "at": "2026-10-28T12:38:03+08:00",
+    "response_sha256": null,
+    "bytes": 1022653,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920593\\q1_2024\\DOC-F4F2779256A16396.pdf.part",
+    "bytes": 1022653,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1022653 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=鼎智科技 代码=920593 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1612,
+    "issues": [],
+    "sha256": "d7f098c657acb8b0aecdc8c0ccf40d7a462f5c1dd74de61982008d0d6a06e8b4",
+    "cover_text_chars": 41,
+    "identity_probe_chars": 3960,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "BJ:920593",
@@ -987,15 +1112,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221560701.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1318,
+     "at": "2026-10-28T12:38:05+08:00",
+     "response_sha256": null,
+     "bytes": 1039388,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-3B401987DA66C90F",
+    "identity_key": "BJ:920593|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221560701.PDF",
+    "local_file": "sources/collection/originals/920593/q3_2024/DOC-3B401987DA66C90F.pdf",
+    "sha256": "c1aad0a1aaf29e33ee4b289aa1a7eb4550c3e1507563237034b41dbe586074ea",
+    "bytes": 1039388,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1039388 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=鼎智科技 代码=920593 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:38:05+08:00",
+    "bytes_written": 1039388
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:38:05+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221560701.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1318,
+    "at": "2026-10-28T12:38:05+08:00",
+    "response_sha256": null,
+    "bytes": 1039388,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920593\\q3_2024\\DOC-3B401987DA66C90F.pdf.part",
+    "bytes": 1039388,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1039388 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=鼎智科技 代码=920593 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1569,
+    "issues": [],
+    "sha256": "c1aad0a1aaf29e33ee4b289aa1a7eb4550c3e1507563237034b41dbe586074ea",
+    "cover_text_chars": 41,
+    "identity_probe_chars": 4466,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "BJ:920593",
@@ -1004,15 +1254,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223311707.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1071,
+     "at": "2026-10-28T12:38:06+08:00",
+     "response_sha256": null,
+     "bytes": 1272285,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-1A26E2D807D04130",
+    "identity_key": "BJ:920593|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-24",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223311707.PDF",
+    "local_file": "sources/collection/originals/920593/q1_2025/DOC-1A26E2D807D04130.pdf",
+    "sha256": "580f09d846330e68259f7e6a806d98a455c6f35e01f999e60b2daa1f5732f6d6",
+    "bytes": 1272285,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1272285 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=鼎智科技 代码=920593 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:38:06+08:00",
+    "bytes_written": 1272285
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:38:06+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223311707.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1071,
+    "at": "2026-10-28T12:38:06+08:00",
+    "response_sha256": null,
+    "bytes": 1272285,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920593\\q1_2025\\DOC-1A26E2D807D04130.pdf.part",
+    "bytes": 1272285,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1272285 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=鼎智科技 代码=920593 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1498,
+    "issues": [],
+    "sha256": "580f09d846330e68259f7e6a806d98a455c6f35e01f999e60b2daa1f5732f6d6",
+    "cover_text_chars": 41,
+    "identity_probe_chars": 3796,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "BJ:920593",
@@ -1021,15 +1396,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224765002.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 965,
+     "at": "2026-10-28T12:38:07+08:00",
+     "response_sha256": null,
+     "bytes": 893648,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-6A38CF25C380D076",
+    "identity_key": "BJ:920593|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224765002.PDF",
+    "local_file": "sources/collection/originals/920593/q3_2025/DOC-6A38CF25C380D076.pdf",
+    "sha256": "4d2caf2d36d0a7e7f0687cb5c42407a9c02358c38353fe098453af50e1baddd3",
+    "bytes": 893648,
+    "page_count": 21,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "893648 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "21 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "21 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=鼎智科技 代码=920593 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:38:08+08:00",
+    "bytes_written": 893648
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:38:08+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224765002.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 965,
+    "at": "2026-10-28T12:38:07+08:00",
+    "response_sha256": null,
+    "bytes": 893648,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920593\\q3_2025\\DOC-6A38CF25C380D076.pdf.part",
+    "bytes": 893648,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "893648 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "21 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "21 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=鼎智科技 代码=920593 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 21,
+    "text_chars": 1540,
+    "issues": [],
+    "sha256": "4d2caf2d36d0a7e7f0687cb5c42407a9c02358c38353fe098453af50e1baddd3",
+    "cover_text_chars": 41,
+    "identity_probe_chars": 3743,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "BJ:920593",
@@ -1042,11 +1542,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:38:08+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:38:04+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1318,8 +1823,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T12:00:59+08:00",
-     "elapsed_ms": 524
+     "fetched_at": "2026-10-28T12:38:01+08:00",
+     "elapsed_ms": 758
     }
    ],
    "rows": [
@@ -1360,8 +1865,85 @@
      "adjunct_size": 1013
     }
    ],
-   "fetched_at": "2026-10-27T12:00:59+08:00"
+   "fetched_at": "2026-10-28T12:38:01+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "BJ:920593",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "gfbj0873593",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "920593,gfbj0873593",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "a01d9188beb358c2d38720b76a5b45a3e89e285bd34a5a8ae1675795fe76961c",
+     "response_bytes": 1883,
+     "raw_path": "sources/collection/raw/920593/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "920593,gfbj0873593",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:38:04+08:00",
+     "elapsed_ms": 668
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224765002",
+     "title": "2025年三季度报告",
+     "sec_code": "920593",
+     "sec_name": "鼎智科技",
+     "published_on": "2025-10-28",
+     "adjunct_url": "finalpage/2025-10-29/1224765002.PDF",
+     "adjunct_size": 874
+    },
+    {
+     "announcement_id": "1221560701",
+     "title": "2024年三季度报告",
+     "sec_code": "873593",
+     "sec_name": "鼎智科技",
+     "published_on": "2024-10-28",
+     "adjunct_url": "finalpage/2024-10-29/1221560701.PDF",
+     "adjunct_size": 1016
+    },
+    {
+     "announcement_id": "1218193534",
+     "title": "2023年三季度报告",
+     "sec_code": "873593",
+     "sec_name": "鼎智科技",
+     "published_on": "2023-10-26",
+     "adjunct_url": "finalpage/2023-10-27/1218193534.PDF",
+     "adjunct_size": 1049
+    }
+   ],
+   "fetched_at": "2026-10-28T12:38:04+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:38:08+08:00"
 }

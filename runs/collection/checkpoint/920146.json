@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219689547.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1221,
+     "at": "2026-10-28T12:34:08+08:00",
+     "response_sha256": null,
+     "bytes": 980852,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-2B6FD30ABB7B9FB5",
+    "identity_key": "BJ:920146|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年一季度报告",
+    "published_on": "2024-04-18",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219689547.PDF",
+    "local_file": "sources/collection/originals/920146/q1_2024/DOC-2B6FD30ABB7B9FB5.pdf",
+    "sha256": "353b2948b7db54adf6b9abb4d9359eb82a7219032cadc923525d3624907d899b",
+    "bytes": 980852,
+    "page_count": 15,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "980852 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "15 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "15 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华阳变速 代码=920146 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:34:09+08:00",
+    "bytes_written": 980852
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:34:09+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219689547.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1221,
+    "at": "2026-10-28T12:34:08+08:00",
+    "response_sha256": null,
+    "bytes": 980852,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920146\\q1_2024\\DOC-2B6FD30ABB7B9FB5.pdf.part",
+    "bytes": 980852,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "980852 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "15 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "15 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华阳变速 代码=920146 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 15,
+    "text_chars": 1658,
+    "issues": [],
+    "sha256": "353b2948b7db54adf6b9abb4d9359eb82a7219032cadc923525d3624907d899b",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 4281,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "BJ:920146",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-24/1221509676.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 938,
+     "at": "2026-10-28T12:34:10+08:00",
+     "response_sha256": null,
+     "bytes": 998924,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-A1CDD9AED4D51C0C",
+    "identity_key": "BJ:920146|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-23",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-24/1221509676.PDF",
+    "local_file": "sources/collection/originals/920146/q3_2024/DOC-A1CDD9AED4D51C0C.pdf",
+    "sha256": "8d639ad9fd3985ae318c175d43fa937b9db6004a404a4395a2b3143bf80678ec",
+    "bytes": 998924,
+    "page_count": 17,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "998924 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华阳变速 代码=920146 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:34:11+08:00",
+    "bytes_written": 998924
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:34:11+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-24/1221509676.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 938,
+    "at": "2026-10-28T12:34:10+08:00",
+    "response_sha256": null,
+    "bytes": 998924,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920146\\q3_2024\\DOC-A1CDD9AED4D51C0C.pdf.part",
+    "bytes": 998924,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "998924 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华阳变速 代码=920146 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 17,
+    "text_chars": 1684,
+    "issues": [],
+    "sha256": "8d639ad9fd3985ae318c175d43fa937b9db6004a404a4395a2b3143bf80678ec",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 5436,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "BJ:920146",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223349449.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 949,
+     "at": "2026-10-28T12:34:11+08:00",
+     "response_sha256": null,
+     "bytes": 969489,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-40311A189C4A6963",
+    "identity_key": "BJ:920146|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-24",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223349449.PDF",
+    "local_file": "sources/collection/originals/920146/q1_2025/DOC-40311A189C4A6963.pdf",
+    "sha256": "f68707d996209f842a3623e9a22e9cc7c67f0e81898d30783704be2e5e2b4e31",
+    "bytes": 969489,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "969489 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华阳变速 代码=920146 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:34:12+08:00",
+    "bytes_written": 969489
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:34:12+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223349449.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 949,
+    "at": "2026-10-28T12:34:11+08:00",
+    "response_sha256": null,
+    "bytes": 969489,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920146\\q1_2025\\DOC-40311A189C4A6963.pdf.part",
+    "bytes": 969489,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "969489 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华阳变速 代码=920146 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 1582,
+    "issues": [],
+    "sha256": "f68707d996209f842a3623e9a22e9cc7c67f0e81898d30783704be2e5e2b4e31",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 4467,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "BJ:920146",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224753296.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 994,
+     "at": "2026-10-28T12:34:13+08:00",
+     "response_sha256": null,
+     "bytes": 1178639,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-CB0994E43811EC02",
+    "identity_key": "BJ:920146|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224753296.PDF",
+    "local_file": "sources/collection/originals/920146/q3_2025/DOC-CB0994E43811EC02.pdf",
+    "sha256": "ffd19d749029511dfd9e3ddec89305ce216fdb48a13e0536a31e577e1701668f",
+    "bytes": 1178639,
+    "page_count": 17,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1178639 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华阳变速 代码=920146 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:34:13+08:00",
+    "bytes_written": 1178639
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:34:13+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224753296.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 994,
+    "at": "2026-10-28T12:34:13+08:00",
+    "response_sha256": null,
+    "bytes": 1178639,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920146\\q3_2025\\DOC-CB0994E43811EC02.pdf.part",
+    "bytes": 1178639,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1178639 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=华阳变速 代码=920146 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 17,
+    "text_chars": 1582,
+    "issues": [],
+    "sha256": "ffd19d749029511dfd9e3ddec89305ce216fdb48a13e0536a31e577e1701668f",
+    "cover_text_chars": 71,
+    "identity_probe_chars": 4910,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "BJ:920146",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:34:13+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:34:09+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:54:11+08:00",
-     "elapsed_ms": 513
+     "fetched_at": "2026-10-28T12:34:07+08:00",
+     "elapsed_ms": 554
     }
    ],
    "rows": [
@@ -1410,8 +1915,85 @@
      "adjunct_size": 1030
     }
    ],
-   "fetched_at": "2026-10-27T11:54:11+08:00"
+   "fetched_at": "2026-10-28T12:34:07+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "BJ:920146",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "gfbj0839946",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "920146,gfbj0839946",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "11f0b8abd1f20dd3984a757ea0f60db032cbe000f0b2c5288f155e353774ffa6",
+     "response_bytes": 1881,
+     "raw_path": "sources/collection/raw/920146/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "920146,gfbj0839946",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:34:09+08:00",
+     "elapsed_ms": 546
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224753296",
+     "title": "2025年三季度报告",
+     "sec_code": "920146",
+     "sec_name": "华阳变速",
+     "published_on": "2025-10-27",
+     "adjunct_url": "finalpage/2025-10-28/1224753296.PDF",
+     "adjunct_size": 1152
+    },
+    {
+     "announcement_id": "1221509676",
+     "title": "2024年三季度报告",
+     "sec_code": "839946",
+     "sec_name": "华阳变速",
+     "published_on": "2024-10-23",
+     "adjunct_url": "finalpage/2024-10-24/1221509676.PDF",
+     "adjunct_size": 977
+    },
+    {
+     "announcement_id": "1218192569",
+     "title": "2023年三季度报告",
+     "sec_code": "839946",
+     "sec_name": "XD华阳变",
+     "published_on": "2023-10-26",
+     "adjunct_url": "finalpage/2023-10-27/1218192569.PDF",
+     "adjunct_size": 962
+    }
+   ],
+   "fetched_at": "2026-10-28T12:34:09+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:34:13+08:00"
 }

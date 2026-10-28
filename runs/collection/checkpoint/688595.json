@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219886866.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 805,
+     "at": "2026-10-28T12:29:20+08:00",
+     "response_sha256": null,
+     "bytes": 402122,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-048EC3095ACC68F5",
+    "identity_key": "SH:688595|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "芯海科技2024年第一季度报告",
+    "published_on": "2024-04-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219886866.PDF",
+    "local_file": "sources/collection/originals/688595/q1_2024/DOC-048EC3095ACC68F5.pdf",
+    "sha256": "da8e84e95523fb9c1e810a7acc5750736773b2984c5a5704ebd91b74a54a9907",
+    "bytes": 402122,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "402122 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=芯海科技 代码=688595 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=芯海科技2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=芯海科技2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:20+08:00",
+    "bytes_written": 402122
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:20+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219886866.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 805,
+    "at": "2026-10-28T12:29:20+08:00",
+    "response_sha256": null,
+    "bytes": 402122,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688595\\q1_2024\\DOC-048EC3095ACC68F5.pdf.part",
+    "bytes": 402122,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "402122 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=芯海科技 代码=688595 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=芯海科技2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=芯海科技2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 2398,
+    "issues": [],
+    "sha256": "da8e84e95523fb9c1e810a7acc5750736773b2984c5a5704ebd91b74a54a9907",
+    "cover_text_chars": 417,
+    "identity_probe_chars": 4614,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688595",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221573884.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 851,
+     "at": "2026-10-28T12:29:21+08:00",
+     "response_sha256": null,
+     "bytes": 423125,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-5B8C21B9466B0716",
+    "identity_key": "SH:688595|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "芯海科技2024年第三季度报告",
+    "published_on": "2024-10-30",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221573884.PDF",
+    "local_file": "sources/collection/originals/688595/q3_2024/DOC-5B8C21B9466B0716.pdf",
+    "sha256": "6d69095e2f81dd9a01aeb8160f2b349fb0950e3ca9bd7d3f69041347744afd9e",
+    "bytes": 423125,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "423125 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=芯海科技 代码=688595 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=芯海科技2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=芯海科技2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:22+08:00",
+    "bytes_written": 423125
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:22+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221573884.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 851,
+    "at": "2026-10-28T12:29:21+08:00",
+    "response_sha256": null,
+    "bytes": 423125,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688595\\q3_2024\\DOC-5B8C21B9466B0716.pdf.part",
+    "bytes": 423125,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "423125 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=芯海科技 代码=688595 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=芯海科技2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=芯海科技2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 3007,
+    "issues": [],
+    "sha256": "6d69095e2f81dd9a01aeb8160f2b349fb0950e3ca9bd7d3f69041347744afd9e",
+    "cover_text_chars": 509,
+    "identity_probe_chars": 5390,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688595",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223418421.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1053,
+     "at": "2026-10-28T12:29:23+08:00",
+     "response_sha256": null,
+     "bytes": 176910,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-792A5A833266EC62",
+    "identity_key": "SH:688595|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "芯海科技2025年第一季度报告",
+    "published_on": "2025-04-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223418421.PDF",
+    "local_file": "sources/collection/originals/688595/q1_2025/DOC-792A5A833266EC62.pdf",
+    "sha256": "52caab228f8d96adbd709b89037dd03ba0eb5a1175d161885efa57aa9dc3cbf2",
+    "bytes": 176910,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "176910 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=芯海科技 代码=688595 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=芯海科技2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=芯海科技2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:23+08:00",
+    "bytes_written": 176910
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:23+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223418421.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1053,
+    "at": "2026-10-28T12:29:23+08:00",
+    "response_sha256": null,
+    "bytes": 176910,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688595\\q1_2025\\DOC-792A5A833266EC62.pdf.part",
+    "bytes": 176910,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "176910 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=芯海科技 代码=688595 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=芯海科技2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=芯海科技2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2316,
+    "issues": [],
+    "sha256": "52caab228f8d96adbd709b89037dd03ba0eb5a1175d161885efa57aa9dc3cbf2",
+    "cover_text_chars": 475,
+    "identity_probe_chars": 5032,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688595",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-31/1224778357.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1347,
+     "at": "2026-10-28T12:29:24+08:00",
+     "response_sha256": null,
+     "bytes": 200811,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-A18495CD530E64A0",
+    "identity_key": "SH:688595|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "芯海科技2025年三季度报告",
+    "published_on": "2025-10-30",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-31/1224778357.PDF",
+    "local_file": "sources/collection/originals/688595/q3_2025/DOC-A18495CD530E64A0.pdf",
+    "sha256": "2361eb377a58333b79c9d671c162d6304c5467a78f1a5ac581eb365afc152a19",
+    "bytes": 200811,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "200811 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=芯海科技 代码=688595 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=芯海科技2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=芯海科技2025年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:25+08:00",
+    "bytes_written": 200811
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:25+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-31/1224778357.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1347,
+    "at": "2026-10-28T12:29:24+08:00",
+    "response_sha256": null,
+    "bytes": 200811,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688595\\q3_2025\\DOC-A18495CD530E64A0.pdf.part",
+    "bytes": 200811,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "200811 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=芯海科技 代码=688595 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=芯海科技2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=芯海科技2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2361,
+    "issues": [],
+    "sha256": "2361eb377a58333b79c9d671c162d6304c5467a78f1a5ac581eb365afc152a19",
+    "cover_text_chars": 531,
+    "identity_probe_chars": 5216,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688595",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:29:25+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:29:20+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:41:44+08:00",
-     "elapsed_ms": 799
+     "fetched_at": "2026-10-28T12:29:19+08:00",
+     "elapsed_ms": 827
     }
    ],
    "rows": [
@@ -1410,8 +1915,85 @@
      "adjunct_size": 447
     }
    ],
-   "fetched_at": "2026-10-27T11:41:44+08:00"
+   "fetched_at": "2026-10-28T12:29:19+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688595",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "gfbj0837517",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688595,gfbj0837517",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "de3b12c03fbaf7ed2588f8e257c1e18f06a4bb7fd03a9c178e2187ec583ad284",
+     "response_bytes": 2047,
+     "raw_path": "sources/collection/raw/688595/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688595,gfbj0837517",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:29:20+08:00",
+     "elapsed_ms": 519
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224778357",
+     "title": "芯海科技2025年三季度报告",
+     "sec_code": "688595",
+     "sec_name": "芯海科技",
+     "published_on": "2025-10-30",
+     "adjunct_url": "finalpage/2025-10-31/1224778357.PDF",
+     "adjunct_size": 197
+    },
+    {
+     "announcement_id": "1221573884",
+     "title": "芯海科技2024年第三季度报告",
+     "sec_code": "688595",
+     "sec_name": "芯海科技",
+     "published_on": "2024-10-30",
+     "adjunct_url": "finalpage/2024-10-31/1221573884.PDF",
+     "adjunct_size": 414
+    },
+    {
+     "announcement_id": "1218191394",
+     "title": "2023年第三季度报告",
+     "sec_code": "688595",
+     "sec_name": "芯海科技",
+     "published_on": "2023-10-27",
+     "adjunct_url": "finalpage/2023-10-28/1218191394.PDF",
+     "adjunct_size": 458
+    }
+   ],
+   "fetched_at": "2026-10-28T12:29:20+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:26+08:00"
+ "updated_at": "2026-10-28T12:29:25+08:00"
 }

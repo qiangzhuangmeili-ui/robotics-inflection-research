@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-23/1219739271.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 941,
+     "at": "2026-10-28T12:31:06+08:00",
+     "response_sha256": null,
+     "bytes": 895504,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-20BAC88A0E588F0E",
+    "identity_key": "SH:688676|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年第一季度报告",
+    "published_on": "2024-04-22",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-23/1219739271.PDF",
+    "local_file": "sources/collection/originals/688676/q1_2024/DOC-20BAC88A0E588F0E.pdf",
+    "sha256": "1975c67f46f4dbb84cfa9bb7a0483a4277faa63321082f3509103ccaaec06f05",
+    "bytes": 895504,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "895504 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:06+08:00",
+    "bytes_written": 895504
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:06+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-23/1219739271.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 941,
+    "at": "2026-10-28T12:31:06+08:00",
+    "response_sha256": null,
+    "bytes": 895504,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688676\\q1_2024\\DOC-20BAC88A0E588F0E.pdf.part",
+    "bytes": 895504,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "895504 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2688,
+    "issues": [],
+    "sha256": "1975c67f46f4dbb84cfa9bb7a0483a4277faa63321082f3509103ccaaec06f05",
+    "cover_text_chars": 545,
+    "identity_probe_chars": 5392,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688676",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-22/1221450966.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 680,
+     "at": "2026-10-28T12:31:08+08:00",
+     "response_sha256": null,
+     "bytes": 419526,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-5D951F137EFEC879",
+    "identity_key": "SH:688676|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年第三季度报告",
+    "published_on": "2024-10-21",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-22/1221450966.PDF",
+    "local_file": "sources/collection/originals/688676/q3_2024/DOC-5D951F137EFEC879.pdf",
+    "sha256": "1a5529f3d5d4f6065d889fb890a1822d76fafd14b11543bf2ac1bac4c9d4b918",
+    "bytes": 419526,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "419526 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:08+08:00",
+    "bytes_written": 419526
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:08+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-22/1221450966.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 680,
+    "at": "2026-10-28T12:31:08+08:00",
+    "response_sha256": null,
+    "bytes": 419526,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688676\\q3_2024\\DOC-5D951F137EFEC879.pdf.part",
+    "bytes": 419526,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "419526 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 2665,
+    "issues": [],
+    "sha256": "1a5529f3d5d4f6065d889fb890a1822d76fafd14b11543bf2ac1bac4c9d4b918",
+    "cover_text_chars": 520,
+    "identity_probe_chars": 5383,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688676",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223242784.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1167,
+     "at": "2026-10-28T12:31:09+08:00",
+     "response_sha256": null,
+     "bytes": 183745,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-14AFD6E6D1741E37",
+    "identity_key": "SH:688676|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年第一季度报告",
+    "published_on": "2025-04-23",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223242784.PDF",
+    "local_file": "sources/collection/originals/688676/q1_2025/DOC-14AFD6E6D1741E37.pdf",
+    "sha256": "f7831354800264ddf9efa43c2ab1eebf0cb2ef32e7983d7b89848cdac125787f",
+    "bytes": 183745,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "183745 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:10+08:00",
+    "bytes_written": 183745
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:10+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223242784.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1167,
+    "at": "2026-10-28T12:31:09+08:00",
+    "response_sha256": null,
+    "bytes": 183745,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688676\\q1_2025\\DOC-14AFD6E6D1741E37.pdf.part",
+    "bytes": 183745,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "183745 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2380,
+    "issues": [],
+    "sha256": "f7831354800264ddf9efa43c2ab1eebf0cb2ef32e7983d7b89848cdac125787f",
+    "cover_text_chars": 526,
+    "identity_probe_chars": 5600,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688676",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741951.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1535,
+     "at": "2026-10-28T12:31:11+08:00",
+     "response_sha256": null,
+     "bytes": 208449,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-B40518479274F831",
+    "identity_key": "SH:688676|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年第三季度报告",
+    "published_on": "2025-10-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741951.PDF",
+    "local_file": "sources/collection/originals/688676/q3_2025/DOC-B40518479274F831.pdf",
+    "sha256": "00bb469ae6aec3043a4fdabc6ad59496f9c33c92470f123407066bc94a9bfd7d",
+    "bytes": 208449,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "208449 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:11+08:00",
+    "bytes_written": 208449
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:11+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741951.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1535,
+    "at": "2026-10-28T12:31:11+08:00",
+    "response_sha256": null,
+    "bytes": 208449,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688676\\q3_2025\\DOC-B40518479274F831.pdf.part",
+    "bytes": 208449,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "208449 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2332,
+    "issues": [],
+    "sha256": "00bb469ae6aec3043a4fdabc6ad59496f9c33c92470f123407066bc94a9bfd7d",
+    "cover_text_chars": 525,
+    "identity_probe_chars": 5333,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688676",
@@ -1070,15 +1570,140 @@
    "period_label": "2026Q3",
    "period_end": "2026-09-30",
    "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-10-14/1225603297.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 783,
+     "at": "2026-10-28T12:31:12+08:00",
+     "response_sha256": null,
+     "bytes": 220380,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-9543262FB557B62F",
+    "identity_key": "SH:688676|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2026年第三季度报告",
+    "published_on": "2026-10-13",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-10-14/1225603297.PDF",
+    "local_file": "sources/collection/originals/688676/q3_2026/DOC-9543262FB557B62F.pdf",
+    "sha256": "86e0f0cacfd5e47e90a03f40d2bbf2ee6b331d167cbdb8ed0a6e14c100aec4f5",
+    "bytes": 220380,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "220380 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:12+08:00",
+    "bytes_written": 220380
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:12+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-10-14/1225603297.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 783,
+    "at": "2026-10-28T12:31:12+08:00",
+    "response_sha256": null,
+    "bytes": 220380,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688676\\q3_2026\\DOC-9543262FB557B62F.pdf.part",
+    "bytes": 220380,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "220380 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=金盘科技 代码=688676 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 2429,
+    "issues": [],
+    "sha256": "86e0f0cacfd5e47e90a03f40d2bbf2ee6b331d167cbdb8ed0a6e14c100aec4f5",
+    "cover_text_chars": 514,
+    "identity_probe_chars": 5648,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1993,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:45:18+08:00",
-     "elapsed_ms": 626
+     "fetched_at": "2026-10-28T12:31:05+08:00",
+     "elapsed_ms": 999
     }
    ],
    "rows": [
@@ -1410,8 +2035,94 @@
      "adjunct_size": 396
     }
    ],
-   "fetched_at": "2026-10-27T11:45:18+08:00"
+   "fetched_at": "2026-10-28T12:31:05+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688676",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900044215",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688676,9900044215",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 4,
+   "rows_fetched": 4,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 4,
+     "new_rows": 4,
+     "total_announcement": 4,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "6cfb5f781bf97ef5df838bd8dfc60457a77fbefbc2b3f36769fc84752a32d03e",
+     "response_bytes": 2632,
+     "raw_path": "sources/collection/raw/688676/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688676,9900044215",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:31:07+08:00",
+     "elapsed_ms": 848
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225603297",
+     "title": "2026年第三季度报告",
+     "sec_code": "688676",
+     "sec_name": "金盘科技",
+     "published_on": "2026-10-13",
+     "adjunct_url": "finalpage/2026-10-14/1225603297.PDF",
+     "adjunct_size": 216
+    },
+    {
+     "announcement_id": "1224741951",
+     "title": "2025年第三季度报告",
+     "sec_code": "688676",
+     "sec_name": "金盘科技",
+     "published_on": "2025-10-27",
+     "adjunct_url": "finalpage/2025-10-28/1224741951.PDF",
+     "adjunct_size": 205
+    },
+    {
+     "announcement_id": "1221450966",
+     "title": "2024年第三季度报告",
+     "sec_code": "688676",
+     "sec_name": "金盘科技",
+     "published_on": "2024-10-21",
+     "adjunct_url": "finalpage/2024-10-22/1221450966.PDF",
+     "adjunct_size": 411
+    },
+    {
+     "announcement_id": "1218095796",
+     "title": "2023年第三季度报告",
+     "sec_code": "688676",
+     "sec_name": "金盘科技",
+     "published_on": "2023-10-19",
+     "adjunct_url": "finalpage/2023-10-20/1218095796.PDF",
+     "adjunct_size": 456
+    }
+   ],
+   "fetched_at": "2026-10-28T12:31:07+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:26+08:00"
+ "updated_at": "2026-10-28T12:31:12+08:00"
 }

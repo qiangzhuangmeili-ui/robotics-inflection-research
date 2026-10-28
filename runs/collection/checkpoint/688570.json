@@ -1009,15 +1009,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219816111.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 963,
+     "at": "2026-10-28T12:28:41+08:00",
+     "response_sha256": null,
+     "bytes": 530580,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-1543B0BD0208D450",
+    "identity_key": "SH:688570|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "天玛智控2024年第一季度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219816111.PDF",
+    "local_file": "sources/collection/originals/688570/q1_2024/DOC-1543B0BD0208D450.pdf",
+    "sha256": "dcf50c6f73e545b495af5f1db6788eccfbc9f56aa07ebb55af6e6123d0d72fe5",
+    "bytes": 530580,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "530580 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=天玛智控 代码=688570 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=天玛智控2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=天玛智控2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:28:42+08:00",
+    "bytes_written": 530580
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:28:42+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219816111.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 963,
+    "at": "2026-10-28T12:28:41+08:00",
+    "response_sha256": null,
+    "bytes": 530580,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688570\\q1_2024\\DOC-1543B0BD0208D450.pdf.part",
+    "bytes": 530580,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "530580 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=天玛智控 代码=688570 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=天玛智控2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=天玛智控2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2415,
+    "issues": [],
+    "sha256": "dcf50c6f73e545b495af5f1db6788eccfbc9f56aa07ebb55af6e6123d0d72fe5",
+    "cover_text_chars": 419,
+    "identity_probe_chars": 4872,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688570",
@@ -1026,15 +1151,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221556028.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 875,
+     "at": "2026-10-28T12:28:44+08:00",
+     "response_sha256": null,
+     "bytes": 398367,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-CFD8B0D94F390576",
+    "identity_key": "SH:688570|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "天玛智控2024年第三季度报告",
+    "published_on": "2024-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221556028.PDF",
+    "local_file": "sources/collection/originals/688570/q3_2024/DOC-CFD8B0D94F390576.pdf",
+    "sha256": "75f784dc7bc9fae6900117cdc213f1629ead9e0e77dd31cde4e79335f5863bb1",
+    "bytes": 398367,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "398367 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=天玛智控 代码=688570 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=天玛智控2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=天玛智控2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:28:44+08:00",
+    "bytes_written": 398367
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:28:44+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221556028.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 875,
+    "at": "2026-10-28T12:28:44+08:00",
+    "response_sha256": null,
+    "bytes": 398367,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688570\\q3_2024\\DOC-CFD8B0D94F390576.pdf.part",
+    "bytes": 398367,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "398367 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=天玛智控 代码=688570 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=天玛智控2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=天玛智控2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2446,
+    "issues": [],
+    "sha256": "75f784dc7bc9fae6900117cdc213f1629ead9e0e77dd31cde4e79335f5863bb1",
+    "cover_text_chars": 498,
+    "identity_probe_chars": 4944,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688570",
@@ -1043,15 +1293,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405843.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 978,
+     "at": "2026-10-28T12:28:45+08:00",
+     "response_sha256": null,
+     "bytes": 158019,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-C056E17DBDA277FD",
+    "identity_key": "SH:688570|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "天玛智控2025年第一季度报告",
+    "published_on": "2025-04-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405843.PDF",
+    "local_file": "sources/collection/originals/688570/q1_2025/DOC-C056E17DBDA277FD.pdf",
+    "sha256": "a92e7b6b1fb645549696a6d68597f51cb2cb37329070f0976b4c9248d2bf434e",
+    "bytes": 158019,
+    "page_count": 11,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "158019 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=天玛智控 代码=688570 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=天玛智控2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=天玛智控2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:28:45+08:00",
+    "bytes_written": 158019
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:28:45+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405843.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 978,
+    "at": "2026-10-28T12:28:45+08:00",
+    "response_sha256": null,
+    "bytes": 158019,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688570\\q1_2025\\DOC-C056E17DBDA277FD.pdf.part",
+    "bytes": 158019,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "158019 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "11 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "11 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=天玛智控 代码=688570 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=天玛智控2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=天玛智控2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 11,
+    "text_chars": 2411,
+    "issues": [],
+    "sha256": "a92e7b6b1fb645549696a6d68597f51cb2cb37329070f0976b4c9248d2bf434e",
+    "cover_text_chars": 503,
+    "identity_probe_chars": 5150,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688570",
@@ -1060,15 +1435,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758468.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1061,
+     "at": "2026-10-28T12:28:46+08:00",
+     "response_sha256": null,
+     "bytes": 190458,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-A8193AE7DC7E7393",
+    "identity_key": "SH:688570|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "天玛智控2025年第三季度报告",
+    "published_on": "2025-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758468.PDF",
+    "local_file": "sources/collection/originals/688570/q3_2025/DOC-A8193AE7DC7E7393.pdf",
+    "sha256": "73884378a9e8794b68266c2c011ce1b1fe4faae50609654e0ab4a6f4388e73b9",
+    "bytes": 190458,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "190458 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=天玛智控 代码=688570 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=天玛智控2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=天玛智控2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:28:46+08:00",
+    "bytes_written": 190458
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:28:46+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758468.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1061,
+    "at": "2026-10-28T12:28:46+08:00",
+    "response_sha256": null,
+    "bytes": 190458,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688570\\q3_2025\\DOC-A8193AE7DC7E7393.pdf.part",
+    "bytes": 190458,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "190458 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=天玛智控 代码=688570 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=天玛智控2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=天玛智控2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2620,
+    "issues": [],
+    "sha256": "73884378a9e8794b68266c2c011ce1b1fe4faae50609654e0ab4a6f4388e73b9",
+    "cover_text_chars": 571,
+    "identity_probe_chars": 5135,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688570",
@@ -1081,11 +1581,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:28:46+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:28:43+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1366,8 +1871,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:40:33+08:00",
-     "elapsed_ms": 535
+     "fetched_at": "2026-10-28T12:28:40+08:00",
+     "elapsed_ms": 551
     }
    ],
    "rows": [
@@ -1399,8 +1904,85 @@
      "adjunct_size": 519
     }
    ],
-   "fetched_at": "2026-10-27T11:40:33+08:00"
+   "fetched_at": "2026-10-28T12:28:40+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688570",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900056072",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688570,9900056072",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "3891148a9d4bccf4eb5a7201f2a01ad1566c1c530a7eeb8c28a614644ca54445",
+     "response_bytes": 2084,
+     "raw_path": "sources/collection/raw/688570/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688570,9900056072",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:28:43+08:00",
+     "elapsed_ms": 1250
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224758468",
+     "title": "天玛智控2025年第三季度报告",
+     "sec_code": "688570",
+     "sec_name": "天玛智控",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224758468.PDF",
+     "adjunct_size": 187
+    },
+    {
+     "announcement_id": "1221556028",
+     "title": "天玛智控2024年第三季度报告",
+     "sec_code": "688570",
+     "sec_name": "天玛智控",
+     "published_on": "2024-10-29",
+     "adjunct_url": "finalpage/2024-10-30/1221556028.PDF",
+     "adjunct_size": 390
+    },
+    {
+     "announcement_id": "1218147722",
+     "title": "天玛智控2023年第三季度报告",
+     "sec_code": "688570",
+     "sec_name": "天玛智控",
+     "published_on": "2023-10-25",
+     "adjunct_url": "finalpage/2023-10-26/1218147722.PDF",
+     "adjunct_size": 378
+    }
+   ],
+   "fetched_at": "2026-10-28T12:28:43+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:26+08:00"
+ "updated_at": "2026-10-28T12:28:46+08:00"
 }

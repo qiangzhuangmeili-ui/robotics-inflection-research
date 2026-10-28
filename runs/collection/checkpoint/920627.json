@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219889767.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1148,
+     "at": "2026-10-28T12:38:10+08:00",
+     "response_sha256": null,
+     "bytes": 850312,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-ADD97B446B7329A3",
+    "identity_key": "BJ:920627|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年一季度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219889767.PDF",
+    "local_file": "sources/collection/originals/920627/q1_2024/DOC-ADD97B446B7329A3.pdf",
+    "sha256": "351989b8ab02373e8b474a683370e320e61257fd1307b856b4b8952c5715b08c",
+    "bytes": 850312,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "850312 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=力王股份 代码=920627 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:38:10+08:00",
+    "bytes_written": 850312
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:38:10+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219889767.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1148,
+    "at": "2026-10-28T12:38:10+08:00",
+    "response_sha256": null,
+    "bytes": 850312,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920627\\q1_2024\\DOC-ADD97B446B7329A3.pdf.part",
+    "bytes": 850312,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "850312 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=力王股份 代码=920627 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1654,
+    "issues": [],
+    "sha256": "351989b8ab02373e8b474a683370e320e61257fd1307b856b4b8952c5715b08c",
+    "cover_text_chars": 68,
+    "identity_probe_chars": 4750,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "BJ:920627",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221560450.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1071,
+     "at": "2026-10-28T12:38:12+08:00",
+     "response_sha256": null,
+     "bytes": 1427855,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-735A7A0BD114D8F4",
+    "identity_key": "BJ:920627|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221560450.PDF",
+    "local_file": "sources/collection/originals/920627/q3_2024/DOC-735A7A0BD114D8F4.pdf",
+    "sha256": "49d46289a75579a4f95d36539a13c5a0ea0fc61bf7999c04c9b5ad97d8ea2cf7",
+    "bytes": 1427855,
+    "page_count": 24,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1427855 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "24 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "24 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=力王股份 代码=920627 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:38:12+08:00",
+    "bytes_written": 1427855
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:38:12+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221560450.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1071,
+    "at": "2026-10-28T12:38:12+08:00",
+    "response_sha256": null,
+    "bytes": 1427855,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920627\\q3_2024\\DOC-735A7A0BD114D8F4.pdf.part",
+    "bytes": 1427855,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1427855 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "24 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "24 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=力王股份 代码=920627 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 24,
+    "text_chars": 1607,
+    "issues": [],
+    "sha256": "49d46289a75579a4f95d36539a13c5a0ea0fc61bf7999c04c9b5ad97d8ea2cf7",
+    "cover_text_chars": 67,
+    "identity_probe_chars": 4342,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "BJ:920627",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223379985.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 890,
+     "at": "2026-10-28T12:38:13+08:00",
+     "response_sha256": null,
+     "bytes": 1584413,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-4F7AF66C92F80040",
+    "identity_key": "BJ:920627|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223379985.PDF",
+    "local_file": "sources/collection/originals/920627/q1_2025/DOC-4F7AF66C92F80040.pdf",
+    "sha256": "18dcbf7ed627d44efaf15c8e063d40c20563a283e60d0084d5bd19554aa1e437",
+    "bytes": 1584413,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1584413 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=力王股份 代码=920627 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:38:13+08:00",
+    "bytes_written": 1584413
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:38:13+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223379985.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 890,
+    "at": "2026-10-28T12:38:13+08:00",
+    "response_sha256": null,
+    "bytes": 1584413,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920627\\q1_2025\\DOC-4F7AF66C92F80040.pdf.part",
+    "bytes": 1584413,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1584413 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=力王股份 代码=920627 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1719,
+    "issues": [],
+    "sha256": "18dcbf7ed627d44efaf15c8e063d40c20563a283e60d0084d5bd19554aa1e437",
+    "cover_text_chars": 68,
+    "identity_probe_chars": 4893,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "BJ:920627",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224766385.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 933,
+     "at": "2026-10-28T12:38:14+08:00",
+     "response_sha256": null,
+     "bytes": 1175903,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-649F87B58E6214CC",
+    "identity_key": "BJ:920627|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224766385.PDF",
+    "local_file": "sources/collection/originals/920627/q3_2025/DOC-649F87B58E6214CC.pdf",
+    "sha256": "784837ce8465d69bb998eaa179890ead0859a2e12ac5b05d6ff3f17f7bd95b68",
+    "bytes": 1175903,
+    "page_count": 23,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1175903 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "23 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "23 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=力王股份 代码=920627 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:38:15+08:00",
+    "bytes_written": 1175903
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:38:15+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224766385.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 933,
+    "at": "2026-10-28T12:38:14+08:00",
+    "response_sha256": null,
+    "bytes": 1175903,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920627\\q3_2025\\DOC-649F87B58E6214CC.pdf.part",
+    "bytes": 1175903,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1175903 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "23 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "23 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=力王股份 代码=920627 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 23,
+    "text_chars": 1605,
+    "issues": [],
+    "sha256": "784837ce8465d69bb998eaa179890ead0859a2e12ac5b05d6ff3f17f7bd95b68",
+    "cover_text_chars": 68,
+    "identity_probe_chars": 4076,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "BJ:920627",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:38:15+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:38:11+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1332,8 +1837,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T12:01:11+08:00",
-     "elapsed_ms": 827
+     "fetched_at": "2026-10-28T12:38:08+08:00",
+     "elapsed_ms": 747
     }
    ],
    "rows": [
@@ -1365,8 +1870,85 @@
      "adjunct_size": 831
     }
    ],
-   "fetched_at": "2026-10-27T12:01:11+08:00"
+   "fetched_at": "2026-10-28T12:38:08+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "BJ:920627",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "gfbj0831627",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "920627,gfbj0831627",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "d9c0819343cb292c6b49f131b949e5b5eea18e17070095958ab32c32eabf5bb1",
+     "response_bytes": 1883,
+     "raw_path": "sources/collection/raw/920627/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "920627,gfbj0831627",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:38:11+08:00",
+     "elapsed_ms": 770
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224766385",
+     "title": "2025年三季度报告",
+     "sec_code": "920627",
+     "sec_name": "力王股份",
+     "published_on": "2025-10-28",
+     "adjunct_url": "finalpage/2025-10-29/1224766385.PDF",
+     "adjunct_size": 1149
+    },
+    {
+     "announcement_id": "1221560450",
+     "title": "2024年三季度报告",
+     "sec_code": "831627",
+     "sec_name": "力王股份",
+     "published_on": "2024-10-28",
+     "adjunct_url": "finalpage/2024-10-29/1221560450.PDF",
+     "adjunct_size": 1395
+    },
+    {
+     "announcement_id": "1218163860",
+     "title": "2023年三季度报告",
+     "sec_code": "831627",
+     "sec_name": "力王股份",
+     "published_on": "2023-10-25",
+     "adjunct_url": "finalpage/2023-10-26/1218163860.PDF",
+     "adjunct_size": 777
+    }
+   ],
+   "fetched_at": "2026-10-28T12:38:11+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:38:15+08:00"
 }

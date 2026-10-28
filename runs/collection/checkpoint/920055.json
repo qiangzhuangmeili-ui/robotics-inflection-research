@@ -1,1070 +1,1263 @@
 {
- "security_id": "BJ:920055",
- "slots": {
-  "annual_2025": {
-   "security_id": "BJ:920055",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225171514.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1814,
-     "at": "2026-10-27T11:49:55+08:00",
-     "response_sha256": null,
-     "bytes": 3701243,
-     "resumed_from": 0
+  "security_id": "BJ:920055",
+  "slots": {
+    "annual_2025": {
+      "security_id": "BJ:920055",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225171514.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1814,
+          "at": "2026-10-27T11:49:55+08:00",
+          "response_sha256": null,
+          "bytes": 3701243,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225171514.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1814,
+        "at": "2026-10-27T11:49:55+08:00",
+        "response_sha256": null,
+        "bytes": 3701243,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:49:55+08:00",
+        "bytes_written": 3701243
+      },
+      "document": {
+        "document_id": "DOC-8C32792F35A97F90",
+        "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-04-22",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225171514.PDF",
+        "local_file": "sources/collection/originals/920055/annual_2025/DOC-8C32792F35A97F90.pdf",
+        "sha256": "dfc6d4589ef736263a6891cc24dc185f7faa64bf4af32b6ba793530f23702459",
+        "bytes": 3701243,
+        "page_count": 191,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3701243 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "191 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "191 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\annual_2025\\DOC-8C32792F35A97F90.pdf.part",
+        "bytes": 3701243,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3701243 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "191 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "191 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 191,
+        "text_chars": 1657,
+        "issues": [],
+        "sha256": "dfc6d4589ef736263a6891cc24dc185f7faa64bf4af32b6ba793530f23702459",
+        "cover_text_chars": 62,
+        "identity_probe_chars": 2869,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T11:49:55+08:00"
+    },
+    "h1_2026": {
+      "security_id": "BJ:920055",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225515388.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1263,
+          "at": "2026-10-27T11:49:57+08:00",
+          "response_sha256": null,
+          "bytes": 3336768,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225515388.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1263,
+        "at": "2026-10-27T11:49:57+08:00",
+        "response_sha256": null,
+        "bytes": 3336768,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:49:57+08:00",
+        "bytes_written": 3336768
+      },
+      "document": {
+        "document_id": "DOC-22D291F992687C0A",
+        "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225515388.PDF",
+        "local_file": "sources/collection/originals/920055/h1_2026/DOC-22D291F992687C0A.pdf",
+        "sha256": "89bed0ccd2787bab767d1a75e7ca8d2ead7c6a7a791bb38c9eab2ef376966188",
+        "bytes": 3336768,
+        "page_count": 140,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3336768 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "140 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "140 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\h1_2026\\DOC-22D291F992687C0A.pdf.part",
+        "bytes": 3336768,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3336768 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "140 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "140 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 140,
+        "text_chars": 1146,
+        "issues": [],
+        "sha256": "89bed0ccd2787bab767d1a75e7ca8d2ead7c6a7a791bb38c9eab2ef376966188",
+        "cover_text_chars": 49,
+        "identity_probe_chars": 2948,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T11:49:57+08:00"
+    },
+    "q1_2026": {
+      "security_id": "BJ:920055",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225223426.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1131,
+          "at": "2026-10-27T11:49:59+08:00",
+          "response_sha256": null,
+          "bytes": 1008246,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225223426.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1131,
+        "at": "2026-10-27T11:49:59+08:00",
+        "response_sha256": null,
+        "bytes": 1008246,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:49:59+08:00",
+        "bytes_written": 1008246
+      },
+      "document": {
+        "document_id": "DOC-277975AB7F140FDE",
+        "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年一季度报告",
+        "published_on": "2026-04-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225223426.PDF",
+        "local_file": "sources/collection/originals/920055/q1_2026/DOC-277975AB7F140FDE.pdf",
+        "sha256": "ad4e1f8c68d1cea34fa6fdde2c785f013500154f8e0243ea37b27209419533e9",
+        "bytes": 1008246,
+        "page_count": 20,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1008246 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "20 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "20 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\q1_2026\\DOC-277975AB7F140FDE.pdf.part",
+        "bytes": 1008246,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1008246 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "20 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "20 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 20,
+        "text_chars": 1467,
+        "issues": [],
+        "sha256": "ad4e1f8c68d1cea34fa6fdde2c785f013500154f8e0243ea37b27209419533e9",
+        "cover_text_chars": 35,
+        "identity_probe_chars": 3508,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:49:59+08:00"
+    },
+    "annual_2023": {
+      "security_id": "BJ:920055",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "A02 适用性判定：股转挂牌日 2024-09-19 晚于报告期结束 2023-12-31；股转定期报告索引共 4 条，最早一条 2024-10-30「[定期报告]隆源股份:2024年三季度报告」，该期间无记录",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {},
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-03-31",
+        "period_end": "2023-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T16:13:13+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:49:53+08:00",
+        "status": "RECONCILED"
+      },
+      "applicability_decision": {
+        "decided_at": "2026-10-27T16:13:13+08:00",
+        "by": "A02",
+        "decision": "NOT_APPLICABLE_PRE_LISTING",
+        "p03_classification": "PERIOD_PRECEDES_CURRENT_NEEQ_LISTING_REVIEW_REQUIRED",
+        "basis": "股转挂牌日 2024-09-19 晚于报告期结束 2023-12-31；股转定期报告索引共 4 条，最早一条 2024-10-30「[定期报告]隆源股份:2024年三季度报告」，该期间无记录",
+        "evidence_file": "runs/issues/A02/applicability_evidence.json"
+      }
+    },
+    "annual_2024": {
+      "security_id": "BJ:920055",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 874546），2888169 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-16/221b0c06b06a43aa90bdc808130e591d.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2888169,
+          "sha256": "cfa1013a4a5dfd694dcac6d6f8eddc0bd84751c60a69e90eefdf94dd5659aee3",
+          "at": "2026-10-27T15:26:17+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-16/221b0c06b06a43aa90bdc808130e591d.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2888169,
+        "sha256": "cfa1013a4a5dfd694dcac6d6f8eddc0bd84751c60a69e90eefdf94dd5659aee3",
+        "at": "2026-10-27T15:26:17+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-DDCDBD742E3429E3",
+        "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]隆源股份:2024年年度报告",
+        "published_on": "2025-04-16",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-04-16/221b0c06b06a43aa90bdc808130e591d.pdf",
+        "local_file": "sources/collection/originals/920055/annual_2024/DOC-DDCDBD742E3429E3.pdf",
+        "sha256": "cfa1013a4a5dfd694dcac6d6f8eddc0bd84751c60a69e90eefdf94dd5659aee3",
+        "bytes": 2888169,
+        "page_count": 183,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "874546",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2888169 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "183 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "183 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]隆源股份:2024年年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-03-31",
+        "period_end": "2024-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:26:17+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:49:53+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\annual_2024\\DOC-DDCDBD742E3429E3.pdf",
+        "bytes": 2888169,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2888169 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "183 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "183 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]隆源股份:2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 183,
+        "text_chars": 1721,
+        "issues": [],
+        "sha256": "cfa1013a4a5dfd694dcac6d6f8eddc0bd84751c60a69e90eefdf94dd5659aee3",
+        "cover_text_chars": 52,
+        "identity_probe_chars": 4920,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "h1_2024": {
+      "security_id": "BJ:920055",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "A02 适用性判定：股转挂牌日 2024-09-19 晚于报告期结束 2024-06-30；股转定期报告索引共 4 条，最早一条 2024-10-30「[定期报告]隆源股份:2024年三季度报告」，该期间无记录",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {},
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-03-31",
+        "period_end": "2024-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T16:13:13+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:49:56+08:00",
+        "status": "RECONCILED"
+      },
+      "applicability_decision": {
+        "decided_at": "2026-10-27T16:13:13+08:00",
+        "by": "A02",
+        "decision": "NOT_APPLICABLE_PRE_LISTING",
+        "p03_classification": "PERIOD_PRECEDES_CURRENT_NEEQ_LISTING_REVIEW_REQUIRED",
+        "basis": "股转挂牌日 2024-09-19 晚于报告期结束 2024-06-30；股转定期报告索引共 4 条，最早一条 2024-10-30「[定期报告]隆源股份:2024年三季度报告」，该期间无记录",
+        "evidence_file": "runs/issues/A02/applicability_evidence.json"
+      }
+    },
+    "h1_2025": {
+      "security_id": "BJ:920055",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 874546），2953141 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-21/724e13f9986d4daebefcb79fdea2a86d.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2953141,
+          "sha256": "1bcb553b0a723c900e71d76ee5c52a895f96018cb5e577ebff28f53df86c261a",
+          "at": "2026-10-27T15:27:00+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-21/724e13f9986d4daebefcb79fdea2a86d.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2953141,
+        "sha256": "1bcb553b0a723c900e71d76ee5c52a895f96018cb5e577ebff28f53df86c261a",
+        "at": "2026-10-27T15:27:00+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-D8BF26ED27345265",
+        "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]隆源股份:2025年半年度报告",
+        "published_on": "2025-08-21",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-21/724e13f9986d4daebefcb79fdea2a86d.pdf",
+        "local_file": "sources/collection/originals/920055/h1_2025/DOC-D8BF26ED27345265.pdf",
+        "sha256": "1bcb553b0a723c900e71d76ee5c52a895f96018cb5e577ebff28f53df86c261a",
+        "bytes": 2953141,
+        "page_count": 141,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "874546",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2953141 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "141 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "141 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]隆源股份:2025年半年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-03-31",
+        "period_end": "2025-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:27:00+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:49:56+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\h1_2025\\DOC-D8BF26ED27345265.pdf",
+        "bytes": 2953141,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2953141 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "141 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "141 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]隆源股份:2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 141,
+        "text_chars": 1617,
+        "issues": [],
+        "sha256": "1bcb553b0a723c900e71d76ee5c52a895f96018cb5e577ebff28f53df86c261a",
+        "cover_text_chars": 53,
+        "identity_probe_chars": 3521,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "q1_2024": {
+      "security_id": "BJ:920055",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "A04R 股转索引最早一条 2024-10-30 晚于报告期结束 2024-03-31，公司当时未在股转挂牌",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:50:08+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2026-03-31",
+        "period_end": "2024-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:36+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_LISTING_AFTER_PERIOD_END"
+    },
+    "q3_2024": {
+      "security_id": "BJ:920055",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2024/2024-10-30/1afca3a6810e49b7afdd097f59d971dc.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 837668,
+          "at": "2026-10-28T12:50:18+08:00"
+        }
+      ],
+      "document": {
+        "document_id": "DOC-C8987FD305695567",
+        "title": "[定期报告]隆源股份:2024年三季度报告",
+        "published_on": "2024-10-30",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-10-30/1afca3a6810e49b7afdd097f59d971dc.pdf",
+        "sha256": "1243b7fb051d6b850248c517500b84fd4bedd5dec27e0db35ac27f181f64ba7d",
+        "bytes": 837668,
+        "page_count": 16,
+        "form": "FULL_TEXT",
+        "local_file": "sources/collection/originals/920055/q3_2024/DOC-C8987FD305695567.pdf",
+        "platform": "NEEQ",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "837668 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "16 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "16 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]隆源股份:2024年三季度报告"
+          }
+        }
+      },
+      "checkpoint": {},
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A04R 北交所挂牌期季度报告：股转官方全文，主体/报告期校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:50:18+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2026-03-31",
+        "period_end": "2024-09-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:37+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\q3_2024\\DOC-C8987FD305695567.pdf",
+        "bytes": 837668,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "837668 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "16 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "16 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]隆源股份:2024年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 16,
+        "text_chars": 1713,
+        "issues": [],
+        "sha256": "1243b7fb051d6b850248c517500b84fd4bedd5dec27e0db35ac27f181f64ba7d",
+        "cover_text_chars": 47,
+        "identity_probe_chars": 3823,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q1_2025": {
+      "security_id": "BJ:920055",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:50:18+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2026-03-31",
+        "period_end": "2025-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:36+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q3_2025": {
+      "security_id": "BJ:920055",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:50:18+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2026-03-31",
+        "period_end": "2025-09-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:37+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q3_2026": {
+      "security_id": "BJ:920055",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "updated_at": "2026-10-28T12:33:37+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:37+08:00",
+        "status": "RECONCILED"
+      }
     }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225171514.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1814,
-    "at": "2026-10-27T11:49:55+08:00",
-    "response_sha256": null,
-    "bytes": 3701243,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:49:55+08:00",
-    "bytes_written": 3701243
-   },
-   "document": {
-    "document_id": "DOC-8C32792F35A97F90",
-    "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-04-22",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225171514.PDF",
-    "local_file": "sources/collection/originals/920055/annual_2025/DOC-8C32792F35A97F90.pdf",
-    "sha256": "dfc6d4589ef736263a6891cc24dc185f7faa64bf4af32b6ba793530f23702459",
-    "bytes": 3701243,
-    "page_count": 191,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3701243 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "191 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "191 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\annual_2025\\DOC-8C32792F35A97F90.pdf.part",
-    "bytes": 3701243,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3701243 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "191 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "191 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 191,
-    "text_chars": 1657,
-    "issues": [],
-    "sha256": "dfc6d4589ef736263a6891cc24dc185f7faa64bf4af32b6ba793530f23702459",
-    "cover_text_chars": 62,
-    "identity_probe_chars": 2869,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T11:49:55+08:00"
   },
-  "h1_2026": {
-   "security_id": "BJ:920055",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225515388.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1263,
-     "at": "2026-10-27T11:49:57+08:00",
-     "response_sha256": null,
-     "bytes": 3336768,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225515388.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1263,
-    "at": "2026-10-27T11:49:57+08:00",
-    "response_sha256": null,
-    "bytes": 3336768,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:49:57+08:00",
-    "bytes_written": 3336768
-   },
-   "document": {
-    "document_id": "DOC-22D291F992687C0A",
-    "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225515388.PDF",
-    "local_file": "sources/collection/originals/920055/h1_2026/DOC-22D291F992687C0A.pdf",
-    "sha256": "89bed0ccd2787bab767d1a75e7ca8d2ead7c6a7a791bb38c9eab2ef376966188",
-    "bytes": 3336768,
-    "page_count": 140,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3336768 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "140 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "140 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\h1_2026\\DOC-22D291F992687C0A.pdf.part",
-    "bytes": 3336768,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3336768 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "140 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "140 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 140,
-    "text_chars": 1146,
-    "issues": [],
-    "sha256": "89bed0ccd2787bab767d1a75e7ca8d2ead7c6a7a791bb38c9eab2ef376966188",
-    "cover_text_chars": 49,
-    "identity_probe_chars": 2948,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T11:49:57+08:00"
-  },
-  "q1_2026": {
-   "security_id": "BJ:920055",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225223426.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1131,
-     "at": "2026-10-27T11:49:59+08:00",
-     "response_sha256": null,
-     "bytes": 1008246,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225223426.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1131,
-    "at": "2026-10-27T11:49:59+08:00",
-    "response_sha256": null,
-    "bytes": 1008246,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:49:59+08:00",
-    "bytes_written": 1008246
-   },
-   "document": {
-    "document_id": "DOC-277975AB7F140FDE",
-    "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年一季度报告",
-    "published_on": "2026-04-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225223426.PDF",
-    "local_file": "sources/collection/originals/920055/q1_2026/DOC-277975AB7F140FDE.pdf",
-    "sha256": "ad4e1f8c68d1cea34fa6fdde2c785f013500154f8e0243ea37b27209419533e9",
-    "bytes": 1008246,
-    "page_count": 20,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1008246 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "20 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "20 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\q1_2026\\DOC-277975AB7F140FDE.pdf.part",
-    "bytes": 1008246,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1008246 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "20 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "20 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 20,
-    "text_chars": 1467,
-    "issues": [],
-    "sha256": "ad4e1f8c68d1cea34fa6fdde2c785f013500154f8e0243ea37b27209419533e9",
-    "cover_text_chars": 35,
-    "identity_probe_chars": 3508,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:49:59+08:00"
-  },
-  "annual_2023": {
-   "security_id": "BJ:920055",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "NOT_APPLICABLE_PRE_LISTING",
-   "status_reason": "A02 适用性判定：股转挂牌日 2024-09-19 晚于报告期结束 2023-12-31；股转定期报告索引共 4 条，最早一条 2024-10-30「[定期报告]隆源股份:2024年三季度报告」，该期间无记录",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {},
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-03-31",
-    "period_end": "2023-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T16:13:13+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:49:53+08:00",
-    "status": "RECONCILED"
-   },
-   "applicability_decision": {
-    "decided_at": "2026-10-27T16:13:13+08:00",
-    "by": "A02",
-    "decision": "NOT_APPLICABLE_PRE_LISTING",
-    "p03_classification": "PERIOD_PRECEDES_CURRENT_NEEQ_LISTING_REVIEW_REQUIRED",
-    "basis": "股转挂牌日 2024-09-19 晚于报告期结束 2023-12-31；股转定期报告索引共 4 条，最早一条 2024-10-30「[定期报告]隆源股份:2024年三季度报告」，该期间无记录",
-    "evidence_file": "runs/issues/A02/applicability_evidence.json"
-   }
-  },
-  "annual_2024": {
-   "security_id": "BJ:920055",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 874546），2888169 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-16/221b0c06b06a43aa90bdc808130e591d.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2888169,
-     "sha256": "cfa1013a4a5dfd694dcac6d6f8eddc0bd84751c60a69e90eefdf94dd5659aee3",
-     "at": "2026-10-27T15:26:17+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-16/221b0c06b06a43aa90bdc808130e591d.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2888169,
-    "sha256": "cfa1013a4a5dfd694dcac6d6f8eddc0bd84751c60a69e90eefdf94dd5659aee3",
-    "at": "2026-10-27T15:26:17+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-DDCDBD742E3429E3",
-    "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]隆源股份:2024年年度报告",
-    "published_on": "2025-04-16",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-04-16/221b0c06b06a43aa90bdc808130e591d.pdf",
-    "local_file": "sources/collection/originals/920055/annual_2024/DOC-DDCDBD742E3429E3.pdf",
-    "sha256": "cfa1013a4a5dfd694dcac6d6f8eddc0bd84751c60a69e90eefdf94dd5659aee3",
-    "bytes": 2888169,
-    "page_count": 183,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "874546",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2888169 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "183 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "183 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]隆源股份:2024年年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-03-31",
-    "period_end": "2024-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:26:17+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:49:53+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\annual_2024\\DOC-DDCDBD742E3429E3.pdf",
-    "bytes": 2888169,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2888169 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "183 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "183 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]隆源股份:2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 183,
-    "text_chars": 1721,
-    "issues": [],
-    "sha256": "cfa1013a4a5dfd694dcac6d6f8eddc0bd84751c60a69e90eefdf94dd5659aee3",
-    "cover_text_chars": 52,
-    "identity_probe_chars": 4920,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "h1_2024": {
-   "security_id": "BJ:920055",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "NOT_APPLICABLE_PRE_LISTING",
-   "status_reason": "A02 适用性判定：股转挂牌日 2024-09-19 晚于报告期结束 2024-06-30；股转定期报告索引共 4 条，最早一条 2024-10-30「[定期报告]隆源股份:2024年三季度报告」，该期间无记录",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {},
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-03-31",
-    "period_end": "2024-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T16:13:13+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:49:56+08:00",
-    "status": "RECONCILED"
-   },
-   "applicability_decision": {
-    "decided_at": "2026-10-27T16:13:13+08:00",
-    "by": "A02",
-    "decision": "NOT_APPLICABLE_PRE_LISTING",
-    "p03_classification": "PERIOD_PRECEDES_CURRENT_NEEQ_LISTING_REVIEW_REQUIRED",
-    "basis": "股转挂牌日 2024-09-19 晚于报告期结束 2024-06-30；股转定期报告索引共 4 条，最早一条 2024-10-30「[定期报告]隆源股份:2024年三季度报告」，该期间无记录",
-    "evidence_file": "runs/issues/A02/applicability_evidence.json"
-   }
-  },
-  "h1_2025": {
-   "security_id": "BJ:920055",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 874546），2953141 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-21/724e13f9986d4daebefcb79fdea2a86d.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2953141,
-     "sha256": "1bcb553b0a723c900e71d76ee5c52a895f96018cb5e577ebff28f53df86c261a",
-     "at": "2026-10-27T15:27:00+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-21/724e13f9986d4daebefcb79fdea2a86d.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2953141,
-    "sha256": "1bcb553b0a723c900e71d76ee5c52a895f96018cb5e577ebff28f53df86c261a",
-    "at": "2026-10-27T15:27:00+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-D8BF26ED27345265",
-    "identity_key": "BJ:920055|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]隆源股份:2025年半年度报告",
-    "published_on": "2025-08-21",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-21/724e13f9986d4daebefcb79fdea2a86d.pdf",
-    "local_file": "sources/collection/originals/920055/h1_2025/DOC-D8BF26ED27345265.pdf",
-    "sha256": "1bcb553b0a723c900e71d76ee5c52a895f96018cb5e577ebff28f53df86c261a",
-    "bytes": 2953141,
-    "page_count": 141,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "874546",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2953141 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "141 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "141 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]隆源股份:2025年半年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-03-31",
-    "period_end": "2025-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:27:00+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:49:56+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920055\\h1_2025\\DOC-D8BF26ED27345265.pdf",
-    "bytes": 2953141,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2953141 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "141 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "141 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=隆源股份 代码=920055 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]隆源股份:2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]隆源股份:2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 141,
-    "text_chars": 1617,
-    "issues": [],
-    "sha256": "1bcb553b0a723c900e71d76ee5c52a895f96018cb5e577ebff28f53df86c261a",
-    "cover_text_chars": 53,
-    "identity_probe_chars": 3521,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "q1_2024": {
-   "security_id": "BJ:920055",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2024": {
-   "security_id": "BJ:920055",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q1_2025": {
-   "security_id": "BJ:920055",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2025": {
-   "security_id": "BJ:920055",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2026": {
-   "security_id": "BJ:920055",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "BJ:920055",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0874546",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "920055,gfbj0874546",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 2,
-   "rows_fetched": 2,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 2,
-     "new_rows": 2,
-     "total_announcement": 2,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "88d7315a0718a874c7daa4cd15122c7864957280f19c5c14c3cbbf377bf7ffe3",
-     "response_bytes": 1310,
-     "raw_path": "sources/collection/raw/920055/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "BJ:920055",
       "category": "category_ndbg_szsh",
-      "stock": "920055,gfbj0874546",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:49:53+08:00",
-     "elapsed_ms": 525
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225171514",
-     "title": "2025年年度报告",
-     "sec_code": "920055",
-     "sec_name": "隆源股份",
-     "published_on": "2026-04-22",
-     "adjunct_url": "finalpage/2026-04-23/1225171514.PDF",
-     "adjunct_size": 3615
-    },
-    {
-     "announcement_id": "1225171512",
-     "title": "2025年年度报告摘要",
-     "sec_code": "920055",
-     "sec_name": "隆源股份",
-     "published_on": "2026-04-22",
-     "adjunct_url": "finalpage/2026-04-23/1225171512.PDF",
-     "adjunct_size": 1463
-    }
-   ],
-   "fetched_at": "2026-10-27T11:49:53+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "BJ:920055",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0874546",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "920055,gfbj0874546",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 2,
-   "rows_fetched": 2,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 2,
-     "new_rows": 2,
-     "total_announcement": 2,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "c6d9814835e4b925fa9672ea4e00694a63743b3aab4b3d6308df5bc1723f5e7f",
-     "response_bytes": 1316,
-     "raw_path": "sources/collection/raw/920055/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0874546",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "920055,gfbj0874546",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 2,
+      "rows_fetched": 2,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 2,
+          "new_rows": 2,
+          "total_announcement": 2,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "88d7315a0718a874c7daa4cd15122c7864957280f19c5c14c3cbbf377bf7ffe3",
+          "response_bytes": 1310,
+          "raw_path": "sources/collection/raw/920055/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "920055,gfbj0874546",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:49:53+08:00",
+          "elapsed_ms": 525
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225171514",
+          "title": "2025年年度报告",
+          "sec_code": "920055",
+          "sec_name": "隆源股份",
+          "published_on": "2026-04-22",
+          "adjunct_url": "finalpage/2026-04-23/1225171514.PDF",
+          "adjunct_size": 3615
+        },
+        {
+          "announcement_id": "1225171512",
+          "title": "2025年年度报告摘要",
+          "sec_code": "920055",
+          "sec_name": "隆源股份",
+          "published_on": "2026-04-22",
+          "adjunct_url": "finalpage/2026-04-23/1225171512.PDF",
+          "adjunct_size": 1463
+        }
+      ],
+      "fetched_at": "2026-10-27T11:49:53+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "BJ:920055",
       "category": "category_bndbg_szsh",
-      "stock": "920055,gfbj0874546",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:49:56+08:00",
-     "elapsed_ms": 779
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225515421",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "920055",
-     "sec_name": "隆源股份",
-     "published_on": "2026-08-25",
-     "adjunct_url": "finalpage/2026-08-26/1225515421.PDF",
-     "adjunct_size": 1973
-    },
-    {
-     "announcement_id": "1225515388",
-     "title": "2026年半年度报告",
-     "sec_code": "920055",
-     "sec_name": "隆源股份",
-     "published_on": "2026-08-25",
-     "adjunct_url": "finalpage/2026-08-26/1225515388.PDF",
-     "adjunct_size": 3260
-    }
-   ],
-   "fetched_at": "2026-10-27T11:49:56+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "BJ:920055",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0874546",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "920055,gfbj0874546",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 1,
-   "rows_fetched": 1,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 1,
-     "new_rows": 1,
-     "total_announcement": 1,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "7d3e10748c825fa75b6233925fd7d4d6947c28bd4a48cde9280fc0d0987d9ebe",
-     "response_bytes": 735,
-     "raw_path": "sources/collection/raw/920055/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0874546",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "920055,gfbj0874546",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 2,
+      "rows_fetched": 2,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 2,
+          "new_rows": 2,
+          "total_announcement": 2,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "c6d9814835e4b925fa9672ea4e00694a63743b3aab4b3d6308df5bc1723f5e7f",
+          "response_bytes": 1316,
+          "raw_path": "sources/collection/raw/920055/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "920055,gfbj0874546",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:49:56+08:00",
+          "elapsed_ms": 779
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225515421",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "920055",
+          "sec_name": "隆源股份",
+          "published_on": "2026-08-25",
+          "adjunct_url": "finalpage/2026-08-26/1225515421.PDF",
+          "adjunct_size": 1973
+        },
+        {
+          "announcement_id": "1225515388",
+          "title": "2026年半年度报告",
+          "sec_code": "920055",
+          "sec_name": "隆源股份",
+          "published_on": "2026-08-25",
+          "adjunct_url": "finalpage/2026-08-26/1225515388.PDF",
+          "adjunct_size": 3260
+        }
+      ],
+      "fetched_at": "2026-10-27T11:49:56+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "BJ:920055",
       "category": "category_yjdbg_szsh",
-      "stock": "920055,gfbj0874546",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:49:58+08:00",
-     "elapsed_ms": 521
+      "column": "szse",
+      "org_id": "gfbj0874546",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "920055,gfbj0874546",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 1,
+      "rows_fetched": 1,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 1,
+          "new_rows": 1,
+          "total_announcement": 1,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "7d3e10748c825fa75b6233925fd7d4d6947c28bd4a48cde9280fc0d0987d9ebe",
+          "response_bytes": 735,
+          "raw_path": "sources/collection/raw/920055/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "920055,gfbj0874546",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:33:36+08:00",
+          "elapsed_ms": 833
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225223426",
+          "title": "2026年一季度报告",
+          "sec_code": "920055",
+          "sec_name": "隆源股份",
+          "published_on": "2026-04-27",
+          "adjunct_url": "finalpage/2026-04-28/1225223426.PDF",
+          "adjunct_size": 986
+        }
+      ],
+      "fetched_at": "2026-10-28T12:33:36+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "BJ:920055",
+      "category": "category_sjdbg_szsh",
+      "column": "szse",
+      "org_id": "gfbj0874546",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "920055,gfbj0874546",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 0,
+      "rows_fetched": 0,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 0,
+          "new_rows": 0,
+          "total_announcement": 0,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "response_bytes": 165,
+          "raw_path": "sources/collection/raw/920055/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "920055,gfbj0874546",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:33:37+08:00",
+          "elapsed_ms": 900
+        }
+      ],
+      "rows": [],
+      "fetched_at": "2026-10-28T12:33:37+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225223426",
-     "title": "2026年一季度报告",
-     "sec_code": "920055",
-     "sec_name": "隆源股份",
-     "published_on": "2026-04-27",
-     "adjunct_url": "finalpage/2026-04-28/1225223426.PDF",
-     "adjunct_size": 986
-    }
-   ],
-   "fetched_at": "2026-10-27T11:49:58+08:00"
-  }
- },
- "updated_at": "2026-10-27T22:26:27+08:00"
+  },
+  "updated_at": "2026-10-28T12:33:37+08:00"
 }

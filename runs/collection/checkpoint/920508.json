@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219877964.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 875,
+     "at": "2026-10-28T12:36:44+08:00",
+     "response_sha256": null,
+     "bytes": 451870,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-5D71A7DEF6FE977D",
+    "identity_key": "BJ:920508|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年一季度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219877964.PDF",
+    "local_file": "sources/collection/originals/920508/q1_2024/DOC-5D71A7DEF6FE977D.pdf",
+    "sha256": "f2e79345e4ac5aa4c44d45c757833d800bbefcf462dc9bed07d2e547bec62f74",
+    "bytes": 451870,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "451870 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=殷图网联 代码=920508 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:44+08:00",
+    "bytes_written": 451870
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:44+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219877964.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 875,
+    "at": "2026-10-28T12:36:44+08:00",
+    "response_sha256": null,
+    "bytes": 451870,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920508\\q1_2024\\DOC-5D71A7DEF6FE977D.pdf.part",
+    "bytes": 451870,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "451870 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=殷图网联 代码=920508 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 1591,
+    "issues": [],
+    "sha256": "f2e79345e4ac5aa4c44d45c757833d800bbefcf462dc9bed07d2e547bec62f74",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 4765,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "BJ:920508",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221577582.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1138,
+     "at": "2026-10-28T12:36:46+08:00",
+     "response_sha256": null,
+     "bytes": 522756,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-3DE840175E49D2EB",
+    "identity_key": "BJ:920508|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221577582.PDF",
+    "local_file": "sources/collection/originals/920508/q3_2024/DOC-3DE840175E49D2EB.pdf",
+    "sha256": "3b1c152cb38cfe00ef3f06d24ecc2ae7f1f1b2f2da53bce919e6d5245914a70d",
+    "bytes": 522756,
+    "page_count": 20,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "522756 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=殷图网联 代码=920508 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:46+08:00",
+    "bytes_written": 522756
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:46+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221577582.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1138,
+    "at": "2026-10-28T12:36:46+08:00",
+    "response_sha256": null,
+    "bytes": 522756,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920508\\q3_2024\\DOC-3DE840175E49D2EB.pdf.part",
+    "bytes": 522756,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "522756 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=殷图网联 代码=920508 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 20,
+    "text_chars": 1599,
+    "issues": [],
+    "sha256": "3b1c152cb38cfe00ef3f06d24ecc2ae7f1f1b2f2da53bce919e6d5245914a70d",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 4989,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "BJ:920508",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223394335.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 885,
+     "at": "2026-10-28T12:36:47+08:00",
+     "response_sha256": null,
+     "bytes": 965210,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-47C9C5DC71F462D9",
+    "identity_key": "BJ:920508|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223394335.PDF",
+    "local_file": "sources/collection/originals/920508/q1_2025/DOC-47C9C5DC71F462D9.pdf",
+    "sha256": "3c3d140a6947950a50e185e069258cd066b1c1fe27bbab9c8f9f78bd07f6222c",
+    "bytes": 965210,
+    "page_count": 18,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "965210 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=殷图网联 代码=920508 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:47+08:00",
+    "bytes_written": 965210
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:47+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223394335.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 885,
+    "at": "2026-10-28T12:36:47+08:00",
+    "response_sha256": null,
+    "bytes": 965210,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920508\\q1_2025\\DOC-47C9C5DC71F462D9.pdf.part",
+    "bytes": 965210,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "965210 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=殷图网联 代码=920508 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 18,
+    "text_chars": 1643,
+    "issues": [],
+    "sha256": "3c3d140a6947950a50e185e069258cd066b1c1fe27bbab9c8f9f78bd07f6222c",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 4689,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "BJ:920508",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224768159.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 858,
+     "at": "2026-10-28T12:36:48+08:00",
+     "response_sha256": null,
+     "bytes": 788248,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-D7D30C043177A059",
+    "identity_key": "BJ:920508|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224768159.PDF",
+    "local_file": "sources/collection/originals/920508/q3_2025/DOC-D7D30C043177A059.pdf",
+    "sha256": "fd380e710121e60bd44d718fc19791ff25417e84c2c7ab4ad74958ac97a150b9",
+    "bytes": 788248,
+    "page_count": 21,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "788248 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "21 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "21 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=殷图网联 代码=920508 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:49+08:00",
+    "bytes_written": 788248
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:49+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224768159.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 858,
+    "at": "2026-10-28T12:36:48+08:00",
+    "response_sha256": null,
+    "bytes": 788248,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920508\\q3_2025\\DOC-D7D30C043177A059.pdf.part",
+    "bytes": 788248,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "788248 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "21 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "21 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=殷图网联 代码=920508 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 21,
+    "text_chars": 1573,
+    "issues": [],
+    "sha256": "fd380e710121e60bd44d718fc19791ff25417e84c2c7ab4ad74958ac97a150b9",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 5141,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "BJ:920508",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:36:49+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:36:45+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:58:24+08:00",
-     "elapsed_ms": 560
+     "fetched_at": "2026-10-28T12:36:43+08:00",
+     "elapsed_ms": 1677
     }
    ],
    "rows": [
@@ -1410,8 +1915,85 @@
      "adjunct_size": 434
     }
    ],
-   "fetched_at": "2026-10-27T11:58:24+08:00"
+   "fetched_at": "2026-10-28T12:36:43+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "BJ:920508",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "gfbj0835508",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "920508,gfbj0835508",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "ff79a1076b0932abe48b79f272e9cd78928185a26eff866d86fbcb317171bd83",
+     "response_bytes": 1881,
+     "raw_path": "sources/collection/raw/920508/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "920508,gfbj0835508",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:36:45+08:00",
+     "elapsed_ms": 529
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224768159",
+     "title": "2025年三季度报告",
+     "sec_code": "920508",
+     "sec_name": "殷图网联",
+     "published_on": "2025-10-28",
+     "adjunct_url": "finalpage/2025-10-29/1224768159.PDF",
+     "adjunct_size": 771
+    },
+    {
+     "announcement_id": "1221577582",
+     "title": "2024年三季度报告",
+     "sec_code": "835508",
+     "sec_name": "殷图网联",
+     "published_on": "2024-10-29",
+     "adjunct_url": "finalpage/2024-10-30/1221577582.PDF",
+     "adjunct_size": 512
+    },
+    {
+     "announcement_id": "1218204853",
+     "title": "2023年三季度报告",
+     "sec_code": "835508",
+     "sec_name": "殷图网联",
+     "published_on": "2023-10-29",
+     "adjunct_url": "finalpage/2023-10-30/1218204853.PDF",
+     "adjunct_size": 452
+    }
+   ],
+   "fetched_at": "2026-10-28T12:36:45+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:36:49+08:00"
 }

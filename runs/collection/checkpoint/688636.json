@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-17/1219635508.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 822,
+     "at": "2026-10-28T12:30:26+08:00",
+     "response_sha256": null,
+     "bytes": 463685,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-1B9714DB2CD18E8F",
+    "identity_key": "SH:688636|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "成都智明达2024年第一季度报告",
+    "published_on": "2024-04-16",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-17/1219635508.PDF",
+    "local_file": "sources/collection/originals/688636/q1_2024/DOC-1B9714DB2CD18E8F.pdf",
+    "sha256": "3990efead77b3df2b85d0c1ae78739091d4f43176a21452168e16a3853d738e9",
+    "bytes": 463685,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "463685 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=智明达 代码=688636 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=成都智明达2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=成都智明达2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:27+08:00",
+    "bytes_written": 463685
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:27+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-17/1219635508.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 822,
+    "at": "2026-10-28T12:30:26+08:00",
+    "response_sha256": null,
+    "bytes": 463685,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688636\\q1_2024\\DOC-1B9714DB2CD18E8F.pdf.part",
+    "bytes": 463685,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "463685 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=智明达 代码=688636 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=成都智明达2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=成都智明达2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2153,
+    "issues": [],
+    "sha256": "3990efead77b3df2b85d0c1ae78739091d4f43176a21452168e16a3853d738e9",
+    "cover_text_chars": 248,
+    "identity_probe_chars": 4586,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688636",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221507419.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 876,
+     "at": "2026-10-28T12:30:28+08:00",
+     "response_sha256": null,
+     "bytes": 429729,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-A98B0147475B315E",
+    "identity_key": "SH:688636|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "成都智明达电子股份有限公司2024年第三季度报告",
+    "published_on": "2024-10-24",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221507419.PDF",
+    "local_file": "sources/collection/originals/688636/q3_2024/DOC-A98B0147475B315E.pdf",
+    "sha256": "f5f6f4881d9d3b76988c43aebb797b10cc95e493abea7c9f73bf4ea84a4aa770",
+    "bytes": 429729,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "429729 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=智明达 代码=688636 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=成都智明达电子股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=成都智明达电子股份有限公司2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:29+08:00",
+    "bytes_written": 429729
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:29+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221507419.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 876,
+    "at": "2026-10-28T12:30:28+08:00",
+    "response_sha256": null,
+    "bytes": 429729,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688636\\q3_2024\\DOC-A98B0147475B315E.pdf.part",
+    "bytes": 429729,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "429729 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=智明达 代码=688636 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=成都智明达电子股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=成都智明达电子股份有限公司2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2445,
+    "issues": [],
+    "sha256": "f5f6f4881d9d3b76988c43aebb797b10cc95e493abea7c9f73bf4ea84a4aa770",
+    "cover_text_chars": 261,
+    "identity_probe_chars": 4848,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688636",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223282882.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 637,
+     "at": "2026-10-28T12:30:29+08:00",
+     "response_sha256": null,
+     "bytes": 171413,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-127722231139935F",
+    "identity_key": "SH:688636|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "成都智明达2025年第一季度报告",
+    "published_on": "2025-04-24",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223282882.PDF",
+    "local_file": "sources/collection/originals/688636/q1_2025/DOC-127722231139935F.pdf",
+    "sha256": "709b10432d47a42111dc486e547778efd8f356315baffda75200458b88eece50",
+    "bytes": 171413,
+    "page_count": 10,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "171413 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "10 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "10 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=智明达 代码=688636 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=成都智明达2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=成都智明达2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:30+08:00",
+    "bytes_written": 171413
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:30+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223282882.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 637,
+    "at": "2026-10-28T12:30:29+08:00",
+    "response_sha256": null,
+    "bytes": 171413,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688636\\q1_2025\\DOC-127722231139935F.pdf.part",
+    "bytes": 171413,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "171413 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "10 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "10 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=智明达 代码=688636 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=成都智明达2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=成都智明达2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 10,
+    "text_chars": 2492,
+    "issues": [],
+    "sha256": "709b10432d47a42111dc486e547778efd8f356315baffda75200458b88eece50",
+    "cover_text_chars": 547,
+    "identity_probe_chars": 5486,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688636",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224728441.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 979,
+     "at": "2026-10-28T12:30:30+08:00",
+     "response_sha256": null,
+     "bytes": 197077,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-423B154E243D4409",
+    "identity_key": "SH:688636|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "成都智明达2025年第三季度报告",
+    "published_on": "2025-10-23",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224728441.PDF",
+    "local_file": "sources/collection/originals/688636/q3_2025/DOC-423B154E243D4409.pdf",
+    "sha256": "478cf92e7452933b561b5995cb74e7cfc7bbc543f48973910ab78658577ef7a6",
+    "bytes": 197077,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "197077 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=智明达 代码=688636 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=成都智明达2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=成都智明达2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:31+08:00",
+    "bytes_written": 197077
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:31+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224728441.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 979,
+    "at": "2026-10-28T12:30:30+08:00",
+    "response_sha256": null,
+    "bytes": 197077,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688636\\q3_2025\\DOC-423B154E243D4409.pdf.part",
+    "bytes": 197077,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "197077 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=智明达 代码=688636 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=成都智明达2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=成都智明达2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2445,
+    "issues": [],
+    "sha256": "478cf92e7452933b561b5995cb74e7cfc7bbc543f48973910ab78658577ef7a6",
+    "cover_text_chars": 256,
+    "identity_probe_chars": 4940,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688636",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:30:31+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:30:27+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:43:52+08:00",
-     "elapsed_ms": 514
+     "fetched_at": "2026-10-28T12:30:26+08:00",
+     "elapsed_ms": 813
     }
    ],
    "rows": [
@@ -1410,8 +1915,85 @@
      "adjunct_size": 636
     }
    ],
-   "fetched_at": "2026-10-27T11:43:52+08:00"
+   "fetched_at": "2026-10-28T12:30:26+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688636",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900041815",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688636,9900041815",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "0606d0beff25c2cad9c50d0febf5e8631e8d8814a2ee556dff9a6aeb30abdc8b",
+     "response_bytes": 2180,
+     "raw_path": "sources/collection/raw/688636/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688636,9900041815",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:30:27+08:00",
+     "elapsed_ms": 894
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224728441",
+     "title": "成都智明达2025年第三季度报告",
+     "sec_code": "688636",
+     "sec_name": "智明达",
+     "published_on": "2025-10-23",
+     "adjunct_url": "finalpage/2025-10-24/1224728441.PDF",
+     "adjunct_size": 193
+    },
+    {
+     "announcement_id": "1221507419",
+     "title": "成都智明达电子股份有限公司2024年第三季度报告",
+     "sec_code": "688636",
+     "sec_name": "智明达",
+     "published_on": "2024-10-24",
+     "adjunct_url": "finalpage/2024-10-25/1221507419.PDF",
+     "adjunct_size": 421
+    },
+    {
+     "announcement_id": "1218149615",
+     "title": "成都智明达电子股份有限公司2023年第三季度报告",
+     "sec_code": "688636",
+     "sec_name": "智明达",
+     "published_on": "2023-10-25",
+     "adjunct_url": "finalpage/2023-10-26/1218149615.PDF",
+     "adjunct_size": 540
+    }
+   ],
+   "fetched_at": "2026-10-28T12:30:27+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:26+08:00"
+ "updated_at": "2026-10-28T12:30:31+08:00"
 }

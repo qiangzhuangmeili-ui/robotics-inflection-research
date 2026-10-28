@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219888427.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1225,
+     "at": "2026-10-28T12:35:55+08:00",
+     "response_sha256": null,
+     "bytes": 1374667,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-94B1C4465534FAFD",
+    "identity_key": "BJ:920414|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年一季度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219888427.PDF",
+    "local_file": "sources/collection/originals/920414/q1_2024/DOC-94B1C4465534FAFD.pdf",
+    "sha256": "8dd69d1c5d918c4f7f25229112583774fd33148bffba4955d58e94ccddd85d2c",
+    "bytes": 1374667,
+    "page_count": 20,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1374667 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:35:55+08:00",
+    "bytes_written": 1374667
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:35:55+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219888427.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1225,
+    "at": "2026-10-28T12:35:55+08:00",
+    "response_sha256": null,
+    "bytes": 1374667,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920414\\q1_2024\\DOC-94B1C4465534FAFD.pdf.part",
+    "bytes": 1374667,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1374667 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 20,
+    "text_chars": 1639,
+    "issues": [],
+    "sha256": "8dd69d1c5d918c4f7f25229112583774fd33148bffba4955d58e94ccddd85d2c",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 3210,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "BJ:920414",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221544369.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1358,
+     "at": "2026-10-28T12:35:58+08:00",
+     "response_sha256": null,
+     "bytes": 1509917,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-D1E7C6B03E792D6F",
+    "identity_key": "BJ:920414|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221544369.PDF",
+    "local_file": "sources/collection/originals/920414/q3_2024/DOC-D1E7C6B03E792D6F.pdf",
+    "sha256": "5e8bd225f0dd7174b8f33c92a2611815bcd0c8d1dd8df69ee6d85501eca7c54e",
+    "bytes": 1509917,
+    "page_count": 18,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1509917 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:35:59+08:00",
+    "bytes_written": 1509917
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:35:59+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221544369.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1358,
+    "at": "2026-10-28T12:35:58+08:00",
+    "response_sha256": null,
+    "bytes": 1509917,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920414\\q3_2024\\DOC-D1E7C6B03E792D6F.pdf.part",
+    "bytes": 1509917,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1509917 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 18,
+    "text_chars": 1607,
+    "issues": [],
+    "sha256": "5e8bd225f0dd7174b8f33c92a2611815bcd0c8d1dd8df69ee6d85501eca7c54e",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 5166,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "BJ:920414",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223331541.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1327,
+     "at": "2026-10-28T12:36:00+08:00",
+     "response_sha256": null,
+     "bytes": 1505866,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-EAABC9EBACE28BBF",
+    "identity_key": "BJ:920414|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-24",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223331541.PDF",
+    "local_file": "sources/collection/originals/920414/q1_2025/DOC-EAABC9EBACE28BBF.pdf",
+    "sha256": "b2a1e8eedb1ee445c706895590c4abd23666e8b2a23def116c9bb7d4e9653f6f",
+    "bytes": 1505866,
+    "page_count": 16,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1505866 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "16 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "16 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:00+08:00",
+    "bytes_written": 1505866
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:00+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223331541.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1327,
+    "at": "2026-10-28T12:36:00+08:00",
+    "response_sha256": null,
+    "bytes": 1505866,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920414\\q1_2025\\DOC-EAABC9EBACE28BBF.pdf.part",
+    "bytes": 1505866,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1505866 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "16 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "16 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 16,
+    "text_chars": 1647,
+    "issues": [],
+    "sha256": "b2a1e8eedb1ee445c706895590c4abd23666e8b2a23def116c9bb7d4e9653f6f",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 4105,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "BJ:920414",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224744856.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1058,
+     "at": "2026-10-28T12:36:01+08:00",
+     "response_sha256": null,
+     "bytes": 951154,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-7F2145BF1D176F59",
+    "identity_key": "BJ:920414|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224744856.PDF",
+    "local_file": "sources/collection/originals/920414/q3_2025/DOC-7F2145BF1D176F59.pdf",
+    "sha256": "7a048cbacc3b862d02acff0bf5741ea76e6f924b1d9a825dd402ae4cd13c5ab0",
+    "bytes": 951154,
+    "page_count": 18,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "951154 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:02+08:00",
+    "bytes_written": 951154
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:02+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224744856.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1058,
+    "at": "2026-10-28T12:36:01+08:00",
+    "response_sha256": null,
+    "bytes": 951154,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920414\\q3_2025\\DOC-7F2145BF1D176F59.pdf.part",
+    "bytes": 951154,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "951154 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 18,
+    "text_chars": 1603,
+    "issues": [],
+    "sha256": "7a048cbacc3b862d02acff0bf5741ea76e6f924b1d9a825dd402ae4cd13c5ab0",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 3793,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "BJ:920414",
@@ -1070,15 +1570,140 @@
    "period_label": "2026Q3",
    "period_end": "2026-09-30",
    "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225620564.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1063,
+     "at": "2026-10-28T12:36:03+08:00",
+     "response_sha256": null,
+     "bytes": 1340178,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-F712A41DA6DA5829",
+    "identity_key": "BJ:920414|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2026年三季度报告",
+    "published_on": "2026-10-22",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225620564.PDF",
+    "local_file": "sources/collection/originals/920414/q3_2026/DOC-F712A41DA6DA5829.pdf",
+    "sha256": "bb241f4cd5e457e6cc919e40d081c4113c54d50eed6abc915e4e783d45d3bc88",
+    "bytes": 1340178,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1340178 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:04+08:00",
+    "bytes_written": 1340178
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:04+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-10-23/1225620564.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1063,
+    "at": "2026-10-28T12:36:03+08:00",
+    "response_sha256": null,
+    "bytes": 1340178,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920414\\q3_2026\\DOC-F712A41DA6DA5829.pdf.part",
+    "bytes": 1340178,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "1340178 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=欧普泰 代码=920414 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1599,
+    "issues": [],
+    "sha256": "bb241f4cd5e457e6cc919e40d081c4113c54d50eed6abc915e4e783d45d3bc88",
+    "cover_text_chars": 40,
+    "identity_probe_chars": 4304,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1993,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:57:11+08:00",
-     "elapsed_ms": 516
+     "fetched_at": "2026-10-28T12:35:53+08:00",
+     "elapsed_ms": 1162
     }
    ],
    "rows": [
@@ -1410,8 +2035,94 @@
      "adjunct_size": 1259
     }
    ],
-   "fetched_at": "2026-10-27T11:57:11+08:00"
+   "fetched_at": "2026-10-28T12:35:53+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "BJ:920414",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "gfbj0836414",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "920414,gfbj0836414",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 4,
+   "rows_fetched": 4,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 4,
+     "new_rows": 4,
+     "total_announcement": 4,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "15e1bfa5a16d5cd097805c1c0a129866e8fa519f206a31fa151cb44849652fb2",
+     "response_bytes": 2445,
+     "raw_path": "sources/collection/raw/920414/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "920414,gfbj0836414",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:35:57+08:00",
+     "elapsed_ms": 1856
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225620564",
+     "title": "2026年三季度报告",
+     "sec_code": "920414",
+     "sec_name": "欧普泰",
+     "published_on": "2026-10-22",
+     "adjunct_url": "finalpage/2026-10-23/1225620564.PDF",
+     "adjunct_size": 1310
+    },
+    {
+     "announcement_id": "1224744856",
+     "title": "2025年三季度报告",
+     "sec_code": "920414",
+     "sec_name": "欧普泰",
+     "published_on": "2025-10-26",
+     "adjunct_url": "finalpage/2025-10-27/1224744856.PDF",
+     "adjunct_size": 930
+    },
+    {
+     "announcement_id": "1221544369",
+     "title": "2024年三季度报告",
+     "sec_code": "836414",
+     "sec_name": "欧普泰",
+     "published_on": "2024-10-27",
+     "adjunct_url": "finalpage/2024-10-28/1221544369.PDF",
+     "adjunct_size": 1476
+    },
+    {
+     "announcement_id": "1218124116",
+     "title": "2023年三季度报告",
+     "sec_code": "836414",
+     "sec_name": "欧普泰",
+     "published_on": "2023-10-22",
+     "adjunct_url": "finalpage/2023-10-23/1218124116.PDF",
+     "adjunct_size": 1507
+    }
+   ],
+   "fetched_at": "2026-10-28T12:35:57+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:36:04+08:00"
 }

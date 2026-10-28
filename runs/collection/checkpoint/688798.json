@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219839548.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1087,
+     "at": "2026-10-28T12:33:02+08:00",
+     "response_sha256": null,
+     "bytes": 377342,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-A4298289B4C776C1",
+    "identity_key": "SH:688798|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "艾为电子2024年第一季度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219839548.PDF",
+    "local_file": "sources/collection/originals/688798/q1_2024/DOC-A4298289B4C776C1.pdf",
+    "sha256": "18e963b1e5a65dff4130daee3064cb9370a3fe64cf605cc3347e08e98e903f37",
+    "bytes": 377342,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "377342 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=艾为电子 代码=688798 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=艾为电子2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=艾为电子2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:33:02+08:00",
+    "bytes_written": 377342
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:33:02+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219839548.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1087,
+    "at": "2026-10-28T12:33:02+08:00",
+    "response_sha256": null,
+    "bytes": 377342,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688798\\q1_2024\\DOC-A4298289B4C776C1.pdf.part",
+    "bytes": 377342,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "377342 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=艾为电子 代码=688798 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=艾为电子2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=艾为电子2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2291,
+    "issues": [],
+    "sha256": "18e963b1e5a65dff4130daee3064cb9370a3fe64cf605cc3347e08e98e903f37",
+    "cover_text_chars": 412,
+    "identity_probe_chars": 4751,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688798",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221558906.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1072,
+     "at": "2026-10-28T12:33:04+08:00",
+     "response_sha256": null,
+     "bytes": 411651,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-3592DE992985F0D7",
+    "identity_key": "SH:688798|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "艾为电子2024年第三季度报告",
+    "published_on": "2024-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221558906.PDF",
+    "local_file": "sources/collection/originals/688798/q3_2024/DOC-3592DE992985F0D7.pdf",
+    "sha256": "9ed7f4281add1457407d0d28dfe2b0423990433836daca8067e88b22eca1d19e",
+    "bytes": 411651,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "411651 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=艾为电子 代码=688798 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=艾为电子2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=艾为电子2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:33:04+08:00",
+    "bytes_written": 411651
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:33:04+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221558906.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1072,
+    "at": "2026-10-28T12:33:04+08:00",
+    "response_sha256": null,
+    "bytes": 411651,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688798\\q3_2024\\DOC-3592DE992985F0D7.pdf.part",
+    "bytes": 411651,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "411651 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=艾为电子 代码=688798 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=艾为电子2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=艾为电子2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 2608,
+    "issues": [],
+    "sha256": "9ed7f4281add1457407d0d28dfe2b0423990433836daca8067e88b22eca1d19e",
+    "cover_text_chars": 541,
+    "identity_probe_chars": 5133,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688798",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223315406.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 751,
+     "at": "2026-10-28T12:33:05+08:00",
+     "response_sha256": null,
+     "bytes": 171462,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-A3B179DC95480016",
+    "identity_key": "SH:688798|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "艾为电子2025年第一季度报告",
+    "published_on": "2025-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223315406.PDF",
+    "local_file": "sources/collection/originals/688798/q1_2025/DOC-A3B179DC95480016.pdf",
+    "sha256": "f8bdc8982014f3597a873c1d7ae4074f5fd6593e1392cbca6e94b4d6eb1fa5e5",
+    "bytes": 171462,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "171462 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=艾为电子 代码=688798 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=艾为电子2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=艾为电子2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:33:05+08:00",
+    "bytes_written": 171462
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:33:05+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223315406.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 751,
+    "at": "2026-10-28T12:33:05+08:00",
+    "response_sha256": null,
+    "bytes": 171462,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688798\\q1_2025\\DOC-A3B179DC95480016.pdf.part",
+    "bytes": 171462,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "171462 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=艾为电子 代码=688798 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=艾为电子2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=艾为电子2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2413,
+    "issues": [],
+    "sha256": "f8bdc8982014f3597a873c1d7ae4074f5fd6593e1392cbca6e94b4d6eb1fa5e5",
+    "cover_text_chars": 510,
+    "identity_probe_chars": 5070,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688798",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224745351.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 980,
+     "at": "2026-10-28T12:33:06+08:00",
+     "response_sha256": null,
+     "bytes": 189669,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-E12A1C7EF7AE7971",
+    "identity_key": "SH:688798|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "艾为电子2025年第三季度报告",
+    "published_on": "2025-10-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224745351.PDF",
+    "local_file": "sources/collection/originals/688798/q3_2025/DOC-E12A1C7EF7AE7971.pdf",
+    "sha256": "ca2537823a2deff0ddba233ea130cc5df8bd4a5b8a7215fa4da74f7c19b34fcf",
+    "bytes": 189669,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "189669 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=艾为电子 代码=688798 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=艾为电子2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=艾为电子2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:33:06+08:00",
+    "bytes_written": 189669
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:33:06+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224745351.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 980,
+    "at": "2026-10-28T12:33:06+08:00",
+    "response_sha256": null,
+    "bytes": 189669,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688798\\q3_2025\\DOC-E12A1C7EF7AE7971.pdf.part",
+    "bytes": 189669,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "189669 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=艾为电子 代码=688798 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=艾为电子2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=艾为电子2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2570,
+    "issues": [],
+    "sha256": "ca2537823a2deff0ddba233ea130cc5df8bd4a5b8a7215fa4da74f7c19b34fcf",
+    "cover_text_chars": 578,
+    "identity_probe_chars": 5187,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688798",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:33:06+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:33:03+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1377,8 +1882,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:48:52+08:00",
-     "elapsed_ms": 960
+     "fetched_at": "2026-10-28T12:33:01+08:00",
+     "elapsed_ms": 1334
     }
    ],
    "rows": [
@@ -1419,8 +1924,85 @@
      "adjunct_size": 423
     }
    ],
-   "fetched_at": "2026-10-27T11:48:52+08:00"
+   "fetched_at": "2026-10-28T12:33:01+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688798",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "gfbj0833221",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688798,gfbj0833221",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "1cd6279ed2f3b92b3440a67419ef293a96f2c4437ee48e75d81826f50fedcd73",
+     "response_bytes": 2087,
+     "raw_path": "sources/collection/raw/688798/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688798,gfbj0833221",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:33:03+08:00",
+     "elapsed_ms": 553
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224745351",
+     "title": "艾为电子2025年第三季度报告",
+     "sec_code": "688798",
+     "sec_name": "艾为电子",
+     "published_on": "2025-10-27",
+     "adjunct_url": "finalpage/2025-10-28/1224745351.PDF",
+     "adjunct_size": 186
+    },
+    {
+     "announcement_id": "1221558906",
+     "title": "艾为电子2024年第三季度报告",
+     "sec_code": "688798",
+     "sec_name": "艾为电子",
+     "published_on": "2024-10-29",
+     "adjunct_url": "finalpage/2024-10-30/1221558906.PDF",
+     "adjunct_size": 403
+    },
+    {
+     "announcement_id": "1218190513",
+     "title": "艾为电子2023年第三季度报告",
+     "sec_code": "688798",
+     "sec_name": "艾为电子",
+     "published_on": "2023-10-27",
+     "adjunct_url": "finalpage/2023-10-28/1218190513.PDF",
+     "adjunct_size": 432
+    }
+   ],
+   "fetched_at": "2026-10-28T12:33:03+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:33:06+08:00"
 }

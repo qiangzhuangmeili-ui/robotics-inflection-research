@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import time
 import datetime as dt
 import hashlib
 import json
@@ -216,14 +217,32 @@ def main() -> int:
 
     print(f"待采集公司 {len(refs)}", flush=True)
     ok = bad = err = 0
+    cooldown = float(collector.http.policy["cooldown_seconds"])
+    waits = 0
     with INDEX_JSONL.open("a", encoding="utf-8") as fh:
         for i, company in enumerate(refs, 1):
-            try:
-                org = collector.resolve_org(company)
-                rec = fetch_all(collector, company, org["org_id"])
-            except Exception as exc:
-                err += 1
-                print(f"[{i}/{len(refs)}] {company.stock_code} ERROR {type(exc).__name__}: {exc}", flush=True)
+            attempt = 0
+            while True:
+                attempt += 1
+                try:
+                    org = collector.resolve_org(company)
+                    rec = fetch_all(collector, company, org["org_id"])
+                    break
+                except Exception as exc:
+                    opened = [v["opened_at"] for v in collector.http.circuit_snapshot().values() if v["opened_at"]]
+                    if opened and waits < 8:
+                        wait = max(5.0, cooldown - (time.time() - max(opened)) + 5)
+                        waits += 1
+                        print(f"[{i}/{len(refs)}] {company.stock_code} 源熔断（{exc}），冷却 {wait:.0f}s 后重试"
+                              f"（第 {waits}/8 次）", flush=True)
+                        time.sleep(wait)
+                        collector.http.states.clear()
+                        continue
+                    err += 1
+                    print(f"[{i}/{len(refs)}] {company.stock_code} ERROR {type(exc).__name__}: {exc}", flush=True)
+                    rec = None
+                    break
+            if rec is None:
                 continue
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
             fh.flush()

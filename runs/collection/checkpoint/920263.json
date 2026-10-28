@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561283.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 999,
+     "at": "2026-10-28T12:35:17+08:00",
+     "response_sha256": null,
+     "bytes": 746004,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-22FD1D16B7C46C64",
+    "identity_key": "BJ:920263|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|1",
+    "revision_no": 1,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年一季度报告（更正后）",
+    "published_on": "2024-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561283.PDF",
+    "local_file": "sources/collection/originals/920263/q1_2024/DOC-22FD1D16B7C46C64.pdf",
+    "sha256": "4ba6106edca44f71caa96efcc7476068954790fa30f1837d28377343b210fd63",
+    "bytes": 746004,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "746004 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中航泰达 代码=920263 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告（更正后）"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:35:18+08:00",
+    "bytes_written": 746004
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:35:18+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561283.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 999,
+    "at": "2026-10-28T12:35:17+08:00",
+    "response_sha256": null,
+    "bytes": 746004,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920263\\q1_2024\\DOC-22FD1D16B7C46C64.pdf.part",
+    "bytes": 746004,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "746004 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中航泰达 代码=920263 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告（更正后）"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1724,
+    "issues": [],
+    "sha256": "4ba6106edca44f71caa96efcc7476068954790fa30f1837d28377343b210fd63",
+    "cover_text_chars": 102,
+    "identity_probe_chars": 4784,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "BJ:920263",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561358.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1258,
+     "at": "2026-10-28T12:35:20+08:00",
+     "response_sha256": null,
+     "bytes": 747840,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-A9FD635D2ACAEFAD",
+    "identity_key": "BJ:920263|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561358.PDF",
+    "local_file": "sources/collection/originals/920263/q3_2024/DOC-A9FD635D2ACAEFAD.pdf",
+    "sha256": "06b936256d5e1c0086a201940eb369f114be327c2cf2f1cfd612ac500f6a5540",
+    "bytes": 747840,
+    "page_count": 20,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "747840 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中航泰达 代码=920263 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:35:20+08:00",
+    "bytes_written": 747840
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:35:20+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561358.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1258,
+    "at": "2026-10-28T12:35:20+08:00",
+    "response_sha256": null,
+    "bytes": 747840,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920263\\q3_2024\\DOC-A9FD635D2ACAEFAD.pdf.part",
+    "bytes": 747840,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "747840 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中航泰达 代码=920263 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 20,
+    "text_chars": 1688,
+    "issues": [],
+    "sha256": "06b936256d5e1c0086a201940eb369f114be327c2cf2f1cfd612ac500f6a5540",
+    "cover_text_chars": 102,
+    "identity_probe_chars": 3687,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "BJ:920263",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-23/1223250632.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 930,
+     "at": "2026-10-28T12:35:21+08:00",
+     "response_sha256": null,
+     "bytes": 561487,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-6F00D83C00EE5B0F",
+    "identity_key": "BJ:920263|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-22",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-23/1223250632.PDF",
+    "local_file": "sources/collection/originals/920263/q1_2025/DOC-6F00D83C00EE5B0F.pdf",
+    "sha256": "30bc693c00ae00d42558f4d427982550ddbe721005b49e3de67d724ab4d09403",
+    "bytes": 561487,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "561487 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中航泰达 代码=920263 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:35:21+08:00",
+    "bytes_written": 561487
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:35:21+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-23/1223250632.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 930,
+    "at": "2026-10-28T12:35:21+08:00",
+    "response_sha256": null,
+    "bytes": 561487,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920263\\q1_2025\\DOC-6F00D83C00EE5B0F.pdf.part",
+    "bytes": 561487,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "561487 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中航泰达 代码=920263 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1751,
+    "issues": [],
+    "sha256": "30bc693c00ae00d42558f4d427982550ddbe721005b49e3de67d724ab4d09403",
+    "cover_text_chars": 102,
+    "identity_probe_chars": 4191,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "BJ:920263",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224775152.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 945,
+     "at": "2026-10-28T12:35:22+08:00",
+     "response_sha256": null,
+     "bytes": 598711,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-FC4BA8656145E41D",
+    "identity_key": "BJ:920263|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224775152.PDF",
+    "local_file": "sources/collection/originals/920263/q3_2025/DOC-FC4BA8656145E41D.pdf",
+    "sha256": "b78b33c9e8f8036bf2248bf93a92d4c6617dfb06d4282002c48cc6c8638e7a1d",
+    "bytes": 598711,
+    "page_count": 20,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "598711 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中航泰达 代码=920263 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:35:22+08:00",
+    "bytes_written": 598711
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:35:22+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224775152.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 945,
+    "at": "2026-10-28T12:35:22+08:00",
+    "response_sha256": null,
+    "bytes": 598711,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920263\\q3_2025\\DOC-FC4BA8656145E41D.pdf.part",
+    "bytes": 598711,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "598711 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=中航泰达 代码=920263 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 20,
+    "text_chars": 1685,
+    "issues": [],
+    "sha256": "b78b33c9e8f8036bf2248bf93a92d4c6617dfb06d4282002c48cc6c8638e7a1d",
+    "cover_text_chars": 102,
+    "identity_probe_chars": 4118,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "BJ:920263",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:35:22+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:35:18+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1440,8 +1945,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:55:59+08:00",
-     "elapsed_ms": 764
+     "fetched_at": "2026-10-28T12:35:16+08:00",
+     "elapsed_ms": 982
     }
    ],
    "rows": [
@@ -1500,8 +2005,103 @@
      "adjunct_size": 710
     }
    ],
-   "fetched_at": "2026-10-27T11:55:59+08:00"
+   "fetched_at": "2026-10-28T12:35:16+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "BJ:920263",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "gfbj0836263",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "920263,gfbj0836263",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 5,
+   "rows_fetched": 5,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 5,
+     "new_rows": 5,
+     "total_announcement": 5,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "a6aa897a55b0e0a4a944395de6d9c2dc8f293c62f1f0d6ded8d912bff0fc1d34",
+     "response_bytes": 3068,
+     "raw_path": "sources/collection/raw/920263/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "920263,gfbj0836263",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:35:18+08:00",
+     "elapsed_ms": 542
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224775152",
+     "title": "2025年三季度报告",
+     "sec_code": "920263",
+     "sec_name": "中航泰达",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224775152.PDF",
+     "adjunct_size": 586
+    },
+    {
+     "announcement_id": "1221561358",
+     "title": "2024年三季度报告",
+     "sec_code": "836263",
+     "sec_name": "中航泰达",
+     "published_on": "2024-10-28",
+     "adjunct_url": "finalpage/2024-10-29/1221561358.PDF",
+     "adjunct_size": 731
+    },
+    {
+     "announcement_id": "1221561338",
+     "title": "2023年三季度报告（更正公告）",
+     "sec_code": "836263",
+     "sec_name": "中航泰达",
+     "published_on": "2024-10-28",
+     "adjunct_url": "finalpage/2024-10-29/1221561338.PDF",
+     "adjunct_size": 138
+    },
+    {
+     "announcement_id": "1221561317",
+     "title": "2023年三季度报告（更正后）",
+     "sec_code": "836263",
+     "sec_name": "中航泰达",
+     "published_on": "2024-10-28",
+     "adjunct_url": "finalpage/2024-10-29/1221561317.PDF",
+     "adjunct_size": 754
+    },
+    {
+     "announcement_id": "1218192508",
+     "title": "2023年三季度报告",
+     "sec_code": "836263",
+     "sec_name": "中航泰达",
+     "published_on": "2023-10-26",
+     "adjunct_url": "finalpage/2023-10-27/1218192508.PDF",
+     "adjunct_size": 728
+    }
+   ],
+   "fetched_at": "2026-10-28T12:35:18+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:35:22+08:00"
 }

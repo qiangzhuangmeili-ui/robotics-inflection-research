@@ -1,1256 +1,1478 @@
 {
- "security_id": "BJ:920100",
- "slots": {
-  "annual_2023": {
-   "security_id": "BJ:920100",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 873669），3205494 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-11/99bb3bf8c62f432889fa165c6c87375a.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 3205494,
-     "sha256": "fda51d9542f45d130e327cabc3ff635ea1904a7d4d3c1976002365cf6ce49a0a",
-     "at": "2026-10-27T15:36:12+08:00"
+  "security_id": "BJ:920100",
+  "slots": {
+    "annual_2023": {
+      "security_id": "BJ:920100",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 873669），3205494 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-11/99bb3bf8c62f432889fa165c6c87375a.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 3205494,
+          "sha256": "fda51d9542f45d130e327cabc3ff635ea1904a7d4d3c1976002365cf6ce49a0a",
+          "at": "2026-10-27T15:36:12+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-11/99bb3bf8c62f432889fa165c6c87375a.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 3205494,
+        "sha256": "fda51d9542f45d130e327cabc3ff635ea1904a7d4d3c1976002365cf6ce49a0a",
+        "at": "2026-10-27T15:36:12+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-2C1784FDEB0E498D",
+        "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]三协电机:2023年年度报告",
+        "published_on": "2024-03-11",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-03-11/99bb3bf8c62f432889fa165c6c87375a.pdf",
+        "local_file": "sources/collection/originals/920100/annual_2023/DOC-2C1784FDEB0E498D.pdf",
+        "sha256": "fda51d9542f45d130e327cabc3ff635ea1904a7d4d3c1976002365cf6ce49a0a",
+        "bytes": 3205494,
+        "page_count": 178,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "873669",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3205494 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "178 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "178 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]三协电机:2023年年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-08",
+        "period_end": "2023-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:36:12+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:53:38+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\annual_2023\\DOC-2C1784FDEB0E498D.pdf",
+        "bytes": 3205494,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3205494 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "178 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "178 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]三协电机:2023年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 178,
+        "text_chars": 1716,
+        "issues": [],
+        "sha256": "fda51d9542f45d130e327cabc3ff635ea1904a7d4d3c1976002365cf6ce49a0a",
+        "cover_text_chars": 35,
+        "identity_probe_chars": 3438,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "annual_2024": {
+      "security_id": "BJ:920100",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 873669），2629814 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-03/0fe16c5d01d04bcc8b872574af163760.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2629814,
+          "sha256": "7e5c2e1b52b4c1d8a1ce4e6aaf2e473eca0cf8753d486949ea323b0b2792df1b",
+          "at": "2026-10-27T15:36:26+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-03/0fe16c5d01d04bcc8b872574af163760.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2629814,
+        "sha256": "7e5c2e1b52b4c1d8a1ce4e6aaf2e473eca0cf8753d486949ea323b0b2792df1b",
+        "at": "2026-10-27T15:36:26+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-F6FF5F25A47D577A",
+        "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]三协电机:2024年年度报告",
+        "published_on": "2025-03-03",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-03-03/0fe16c5d01d04bcc8b872574af163760.pdf",
+        "local_file": "sources/collection/originals/920100/annual_2024/DOC-F6FF5F25A47D577A.pdf",
+        "sha256": "7e5c2e1b52b4c1d8a1ce4e6aaf2e473eca0cf8753d486949ea323b0b2792df1b",
+        "bytes": 2629814,
+        "page_count": 168,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "873669",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2629814 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "168 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "168 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]三协电机:2024年年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-08",
+        "period_end": "2024-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:36:26+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:53:38+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\annual_2024\\DOC-F6FF5F25A47D577A.pdf",
+        "bytes": 2629814,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2629814 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "168 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "168 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]三协电机:2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 168,
+        "text_chars": 1681,
+        "issues": [],
+        "sha256": "7e5c2e1b52b4c1d8a1ce4e6aaf2e473eca0cf8753d486949ea323b0b2792df1b",
+        "cover_text_chars": 35,
+        "identity_probe_chars": 3601,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "annual_2025": {
+      "security_id": "BJ:920100",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "登记表已有同哈希原件，本地复检后复用（未发出 HTTP）",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {
+        "document_id": "DOC-6D1A6516BD2DC5E6",
+        "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "常州三协电机股份有限公司2025年年度报告",
+        "published_on": "2026-04-27",
+        "primary_url": "https://www.bse.cn/disclosure/2026/2026-04-27/04108788539e42f2b72b81907d097854.pdf",
+        "local_file": "sources/collection/originals/920100/annual_2025/DOC-6D1A6516BD2DC5E6.pdf",
+        "sha256": "16b1a520e8256b62329b31f0bca0b8038ca0dbd4ee36dc43efe9c722451383d1",
+        "bytes": 2953980,
+        "page_count": 182,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2953980 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "182 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "182 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=常州三协电机股份有限公司2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=常州三协电机股份有限公司2025年年度报告"
+          }
+        },
+        "canonical_document_id": "DOC-16B1A520E8256B62",
+        "reuse_source": "REGISTRY"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\annual_2025\\DOC-6D1A6516BD2DC5E6.pdf",
+        "bytes": 2953980,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2953980 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "182 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "182 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=常州三协电机股份有限公司2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=常州三协电机股份有限公司2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 182,
+        "text_chars": 1814,
+        "issues": [],
+        "sha256": "16b1a520e8256b62329b31f0bca0b8038ca0dbd4ee36dc43efe9c722451383d1",
+        "cover_text_chars": 31,
+        "identity_probe_chars": 3425,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "last_action": "SKIPPED_ALREADY_HAVE",
+      "last_action_reason": "REGISTRY_HASH_MATCH",
+      "skip_count": 1,
+      "last_http_status": null,
+      "next_action": "NONE",
+      "last_checked_at": "2026-10-27T11:53:38+08:00",
+      "updated_at": "2026-10-27T11:53:38+08:00"
+    },
+    "h1_2024": {
+      "security_id": "BJ:920100",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 873669），2329728 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d5c047f0314f44d7a433e6c9e91522b0.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2329728,
+          "sha256": "5459842b9d05d047426fc14d44614865fb7f5a06285a58a087361c3050f176ba",
+          "at": "2026-10-27T15:37:12+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d5c047f0314f44d7a433e6c9e91522b0.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2329728,
+        "sha256": "5459842b9d05d047426fc14d44614865fb7f5a06285a58a087361c3050f176ba",
+        "at": "2026-10-27T15:37:12+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-B74D90CE08DE9CEA",
+        "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]三协电机:2024年半年度报告",
+        "published_on": "2024-08-29",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d5c047f0314f44d7a433e6c9e91522b0.pdf",
+        "local_file": "sources/collection/originals/920100/h1_2024/DOC-B74D90CE08DE9CEA.pdf",
+        "sha256": "5459842b9d05d047426fc14d44614865fb7f5a06285a58a087361c3050f176ba",
+        "bytes": 2329728,
+        "page_count": 132,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "873669",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2329728 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "132 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "132 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]三协电机:2024年半年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-08",
+        "period_end": "2024-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:37:12+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:53:39+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\h1_2024\\DOC-B74D90CE08DE9CEA.pdf",
+        "bytes": 2329728,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2329728 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "132 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "132 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]三协电机:2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 132,
+        "text_chars": 1673,
+        "issues": [],
+        "sha256": "5459842b9d05d047426fc14d44614865fb7f5a06285a58a087361c3050f176ba",
+        "cover_text_chars": 36,
+        "identity_probe_chars": 4433,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "h1_2025": {
+      "security_id": "BJ:920100",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 873669），2444665 bytes，七项校验通过",
+      "attempt_count": 2,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-12/1451423cbb924a8980eda6985ca89cb4.pdf",
+          "http_status": null,
+          "outcome": "ERROR",
+          "error_code": "NEEQ_PDF_FETCH_FAILED",
+          "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
+          "at": "2026-10-27T15:37:57+08:00"
+        },
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-12/1451423cbb924a8980eda6985ca89cb4.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2444665,
+          "sha256": "16a7e963f714463cc1739a4e4a0234452ef0f2eb0f6309c230e7285536fd3ac1",
+          "at": "2026-10-27T15:49:26+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-12/1451423cbb924a8980eda6985ca89cb4.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2444665,
+        "sha256": "16a7e963f714463cc1739a4e4a0234452ef0f2eb0f6309c230e7285536fd3ac1",
+        "at": "2026-10-27T15:49:26+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-E2BDEAB4F6274B6E",
+        "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]三协电机:2025年半年度报告",
+        "published_on": "2025-08-12",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-12/1451423cbb924a8980eda6985ca89cb4.pdf",
+        "local_file": "sources/collection/originals/920100/h1_2025/DOC-E2BDEAB4F6274B6E.pdf",
+        "sha256": "16a7e963f714463cc1739a4e4a0234452ef0f2eb0f6309c230e7285536fd3ac1",
+        "bytes": 2444665,
+        "page_count": 136,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "873669",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2444665 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "136 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "136 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]三协电机:2025年半年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-08",
+        "period_end": "2025-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:49:26+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:53:39+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\h1_2025\\DOC-E2BDEAB4F6274B6E.pdf",
+        "bytes": 2444665,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2444665 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "136 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "136 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]三协电机:2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 136,
+        "text_chars": 1643,
+        "issues": [],
+        "sha256": "16a7e963f714463cc1739a4e4a0234452ef0f2eb0f6309c230e7285536fd3ac1",
+        "cover_text_chars": 35,
+        "identity_probe_chars": 4498,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "h1_2026": {
+      "security_id": "BJ:920100",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225499521.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1270,
+          "at": "2026-10-27T11:53:40+08:00",
+          "response_sha256": null,
+          "bytes": 2538572,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225499521.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1270,
+        "at": "2026-10-27T11:53:40+08:00",
+        "response_sha256": null,
+        "bytes": 2538572,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:53:40+08:00",
+        "bytes_written": 2538572
+      },
+      "document": {
+        "document_id": "DOC-473A91E6DA7CAF30",
+        "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-23",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225499521.PDF",
+        "local_file": "sources/collection/originals/920100/h1_2026/DOC-473A91E6DA7CAF30.pdf",
+        "sha256": "fc1360c93dbeb1905d46f079a004d5c5e07575b879e28b11c29d56968bc6e380",
+        "bytes": 2538572,
+        "page_count": 134,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2538572 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "134 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "134 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\h1_2026\\DOC-473A91E6DA7CAF30.pdf.part",
+        "bytes": 2538572,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2538572 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "134 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "134 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 134,
+        "text_chars": 2226,
+        "issues": [],
+        "sha256": "fc1360c93dbeb1905d46f079a004d5c5e07575b879e28b11c29d56968bc6e380",
+        "cover_text_chars": 99,
+        "identity_probe_chars": 3383,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:53:40+08:00"
+    },
+    "q1_2026": {
+      "security_id": "BJ:920100",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225215674.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1153,
+          "at": "2026-10-27T11:53:42+08:00",
+          "response_sha256": null,
+          "bytes": 1226815,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225215674.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1153,
+        "at": "2026-10-27T11:53:42+08:00",
+        "response_sha256": null,
+        "bytes": 1226815,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:53:42+08:00",
+        "bytes_written": 1226815
+      },
+      "document": {
+        "document_id": "DOC-6EB27DB46B0E3D34",
+        "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年一季度报告",
+        "published_on": "2026-04-26",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225215674.PDF",
+        "local_file": "sources/collection/originals/920100/q1_2026/DOC-6EB27DB46B0E3D34.pdf",
+        "sha256": "5d1b87915d93a6f7ed01aedb7442b72442d02645b2ac6799267b48e359068679",
+        "bytes": 1226815,
+        "page_count": 22,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1226815 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "22 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "22 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\q1_2026\\DOC-6EB27DB46B0E3D34.pdf.part",
+        "bytes": 1226815,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1226815 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "22 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "22 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 22,
+        "text_chars": 1463,
+        "issues": [],
+        "sha256": "5d1b87915d93a6f7ed01aedb7442b72442d02645b2ac6799267b48e359068679",
+        "cover_text_chars": 38,
+        "identity_probe_chars": 3964,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:53:42+08:00"
+    },
+    "q1_2024": {
+      "security_id": "BJ:920100",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:51:12+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-08",
+        "period_end": "2024-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:55+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q3_2024": {
+      "security_id": "BJ:920100",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:51:12+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-08",
+        "period_end": "2024-09-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:56+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q1_2025": {
+      "security_id": "BJ:920100",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:51:12+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-08",
+        "period_end": "2025-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:55+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q3_2025": {
+      "security_id": "BJ:920100",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224746307.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1482,
+          "at": "2026-10-28T12:33:58+08:00",
+          "response_sha256": null,
+          "bytes": 1244787,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-89990FC77D9243AE",
+        "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年三季度报告",
+        "published_on": "2025-10-26",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224746307.PDF",
+        "local_file": "sources/collection/originals/920100/q3_2025/DOC-89990FC77D9243AE.pdf",
+        "sha256": "bbc9c2d83d14b358f10aff56aeadae37db5a9a62aec11c0cd496d629a193ee9f",
+        "bytes": 1244787,
+        "page_count": 23,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1244787 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "23 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "23 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-28T12:33:58+08:00",
+        "bytes_written": 1244787
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:33:58+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224746307.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1482,
+        "at": "2026-10-28T12:33:58+08:00",
+        "response_sha256": null,
+        "bytes": 1244787,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\q3_2025\\DOC-89990FC77D9243AE.pdf.part",
+        "bytes": 1244787,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1244787 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "23 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "23 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 23,
+        "text_chars": 1597,
+        "issues": [],
+        "sha256": "bbc9c2d83d14b358f10aff56aeadae37db5a9a62aec11c0cd496d629a193ee9f",
+        "cover_text_chars": 38,
+        "identity_probe_chars": 5075,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2026": {
+      "security_id": "BJ:920100",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "updated_at": "2026-10-28T12:33:58+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:56+08:00",
+        "status": "RECONCILED"
+      }
     }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-11/99bb3bf8c62f432889fa165c6c87375a.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 3205494,
-    "sha256": "fda51d9542f45d130e327cabc3ff635ea1904a7d4d3c1976002365cf6ce49a0a",
-    "at": "2026-10-27T15:36:12+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-2C1784FDEB0E498D",
-    "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]三协电机:2023年年度报告",
-    "published_on": "2024-03-11",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-03-11/99bb3bf8c62f432889fa165c6c87375a.pdf",
-    "local_file": "sources/collection/originals/920100/annual_2023/DOC-2C1784FDEB0E498D.pdf",
-    "sha256": "fda51d9542f45d130e327cabc3ff635ea1904a7d4d3c1976002365cf6ce49a0a",
-    "bytes": 3205494,
-    "page_count": 178,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "873669",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3205494 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "178 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "178 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]三协电机:2023年年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2025-09-08",
-    "period_end": "2023-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:36:12+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:53:38+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\annual_2023\\DOC-2C1784FDEB0E498D.pdf",
-    "bytes": 3205494,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3205494 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "178 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "178 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]三协电机:2023年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 178,
-    "text_chars": 1716,
-    "issues": [],
-    "sha256": "fda51d9542f45d130e327cabc3ff635ea1904a7d4d3c1976002365cf6ce49a0a",
-    "cover_text_chars": 35,
-    "identity_probe_chars": 3438,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
   },
-  "annual_2024": {
-   "security_id": "BJ:920100",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 873669），2629814 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-03/0fe16c5d01d04bcc8b872574af163760.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2629814,
-     "sha256": "7e5c2e1b52b4c1d8a1ce4e6aaf2e473eca0cf8753d486949ea323b0b2792df1b",
-     "at": "2026-10-27T15:36:26+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-03/0fe16c5d01d04bcc8b872574af163760.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2629814,
-    "sha256": "7e5c2e1b52b4c1d8a1ce4e6aaf2e473eca0cf8753d486949ea323b0b2792df1b",
-    "at": "2026-10-27T15:36:26+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-F6FF5F25A47D577A",
-    "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]三协电机:2024年年度报告",
-    "published_on": "2025-03-03",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-03-03/0fe16c5d01d04bcc8b872574af163760.pdf",
-    "local_file": "sources/collection/originals/920100/annual_2024/DOC-F6FF5F25A47D577A.pdf",
-    "sha256": "7e5c2e1b52b4c1d8a1ce4e6aaf2e473eca0cf8753d486949ea323b0b2792df1b",
-    "bytes": 2629814,
-    "page_count": 168,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "873669",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2629814 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "168 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "168 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]三协电机:2024年年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2025-09-08",
-    "period_end": "2024-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:36:26+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:53:38+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\annual_2024\\DOC-F6FF5F25A47D577A.pdf",
-    "bytes": 2629814,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2629814 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "168 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "168 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]三协电机:2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 168,
-    "text_chars": 1681,
-    "issues": [],
-    "sha256": "7e5c2e1b52b4c1d8a1ce4e6aaf2e473eca0cf8753d486949ea323b0b2792df1b",
-    "cover_text_chars": 35,
-    "identity_probe_chars": 3601,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "annual_2025": {
-   "security_id": "BJ:920100",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "登记表已有同哈希原件，本地复检后复用（未发出 HTTP）",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {
-    "document_id": "DOC-6D1A6516BD2DC5E6",
-    "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "常州三协电机股份有限公司2025年年度报告",
-    "published_on": "2026-04-27",
-    "primary_url": "https://www.bse.cn/disclosure/2026/2026-04-27/04108788539e42f2b72b81907d097854.pdf",
-    "local_file": "sources/collection/originals/920100/annual_2025/DOC-6D1A6516BD2DC5E6.pdf",
-    "sha256": "16b1a520e8256b62329b31f0bca0b8038ca0dbd4ee36dc43efe9c722451383d1",
-    "bytes": 2953980,
-    "page_count": 182,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2953980 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "182 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "182 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=常州三协电机股份有限公司2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=常州三协电机股份有限公司2025年年度报告"
-     }
-    },
-    "canonical_document_id": "DOC-16B1A520E8256B62",
-    "reuse_source": "REGISTRY"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\annual_2025\\DOC-6D1A6516BD2DC5E6.pdf",
-    "bytes": 2953980,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2953980 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "182 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "182 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=常州三协电机股份有限公司2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=常州三协电机股份有限公司2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 182,
-    "text_chars": 1814,
-    "issues": [],
-    "sha256": "16b1a520e8256b62329b31f0bca0b8038ca0dbd4ee36dc43efe9c722451383d1",
-    "cover_text_chars": 31,
-    "identity_probe_chars": 3425,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "last_action": "SKIPPED_ALREADY_HAVE",
-   "last_action_reason": "REGISTRY_HASH_MATCH",
-   "skip_count": 1,
-   "last_http_status": null,
-   "next_action": "NONE",
-   "last_checked_at": "2026-10-27T11:53:38+08:00",
-   "updated_at": "2026-10-27T11:53:38+08:00"
-  },
-  "h1_2024": {
-   "security_id": "BJ:920100",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 873669），2329728 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d5c047f0314f44d7a433e6c9e91522b0.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2329728,
-     "sha256": "5459842b9d05d047426fc14d44614865fb7f5a06285a58a087361c3050f176ba",
-     "at": "2026-10-27T15:37:12+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d5c047f0314f44d7a433e6c9e91522b0.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2329728,
-    "sha256": "5459842b9d05d047426fc14d44614865fb7f5a06285a58a087361c3050f176ba",
-    "at": "2026-10-27T15:37:12+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-B74D90CE08DE9CEA",
-    "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]三协电机:2024年半年度报告",
-    "published_on": "2024-08-29",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/d5c047f0314f44d7a433e6c9e91522b0.pdf",
-    "local_file": "sources/collection/originals/920100/h1_2024/DOC-B74D90CE08DE9CEA.pdf",
-    "sha256": "5459842b9d05d047426fc14d44614865fb7f5a06285a58a087361c3050f176ba",
-    "bytes": 2329728,
-    "page_count": 132,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "873669",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2329728 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "132 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "132 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]三协电机:2024年半年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2025-09-08",
-    "period_end": "2024-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:37:12+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:53:39+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\h1_2024\\DOC-B74D90CE08DE9CEA.pdf",
-    "bytes": 2329728,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2329728 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "132 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "132 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]三协电机:2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 132,
-    "text_chars": 1673,
-    "issues": [],
-    "sha256": "5459842b9d05d047426fc14d44614865fb7f5a06285a58a087361c3050f176ba",
-    "cover_text_chars": 36,
-    "identity_probe_chars": 4433,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "h1_2025": {
-   "security_id": "BJ:920100",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 873669），2444665 bytes，七项校验通过",
-   "attempt_count": 2,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-12/1451423cbb924a8980eda6985ca89cb4.pdf",
-     "http_status": null,
-     "outcome": "ERROR",
-     "error_code": "NEEQ_PDF_FETCH_FAILED",
-     "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
-     "at": "2026-10-27T15:37:57+08:00"
-    },
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-12/1451423cbb924a8980eda6985ca89cb4.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2444665,
-     "sha256": "16a7e963f714463cc1739a4e4a0234452ef0f2eb0f6309c230e7285536fd3ac1",
-     "at": "2026-10-27T15:49:26+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-12/1451423cbb924a8980eda6985ca89cb4.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2444665,
-    "sha256": "16a7e963f714463cc1739a4e4a0234452ef0f2eb0f6309c230e7285536fd3ac1",
-    "at": "2026-10-27T15:49:26+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-E2BDEAB4F6274B6E",
-    "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]三协电机:2025年半年度报告",
-    "published_on": "2025-08-12",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-12/1451423cbb924a8980eda6985ca89cb4.pdf",
-    "local_file": "sources/collection/originals/920100/h1_2025/DOC-E2BDEAB4F6274B6E.pdf",
-    "sha256": "16a7e963f714463cc1739a4e4a0234452ef0f2eb0f6309c230e7285536fd3ac1",
-    "bytes": 2444665,
-    "page_count": 136,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "873669",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2444665 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "136 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "136 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]三协电机:2025年半年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2025-09-08",
-    "period_end": "2025-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:49:26+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:53:39+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\h1_2025\\DOC-E2BDEAB4F6274B6E.pdf",
-    "bytes": 2444665,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2444665 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "136 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "136 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]三协电机:2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]三协电机:2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 136,
-    "text_chars": 1643,
-    "issues": [],
-    "sha256": "16a7e963f714463cc1739a4e4a0234452ef0f2eb0f6309c230e7285536fd3ac1",
-    "cover_text_chars": 35,
-    "identity_probe_chars": 4498,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "h1_2026": {
-   "security_id": "BJ:920100",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225499521.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1270,
-     "at": "2026-10-27T11:53:40+08:00",
-     "response_sha256": null,
-     "bytes": 2538572,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225499521.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1270,
-    "at": "2026-10-27T11:53:40+08:00",
-    "response_sha256": null,
-    "bytes": 2538572,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:53:40+08:00",
-    "bytes_written": 2538572
-   },
-   "document": {
-    "document_id": "DOC-473A91E6DA7CAF30",
-    "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-23",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225499521.PDF",
-    "local_file": "sources/collection/originals/920100/h1_2026/DOC-473A91E6DA7CAF30.pdf",
-    "sha256": "fc1360c93dbeb1905d46f079a004d5c5e07575b879e28b11c29d56968bc6e380",
-    "bytes": 2538572,
-    "page_count": 134,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2538572 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "134 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "134 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\h1_2026\\DOC-473A91E6DA7CAF30.pdf.part",
-    "bytes": 2538572,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2538572 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "134 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "134 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 134,
-    "text_chars": 2226,
-    "issues": [],
-    "sha256": "fc1360c93dbeb1905d46f079a004d5c5e07575b879e28b11c29d56968bc6e380",
-    "cover_text_chars": 99,
-    "identity_probe_chars": 3383,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:53:40+08:00"
-  },
-  "q1_2026": {
-   "security_id": "BJ:920100",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225215674.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1153,
-     "at": "2026-10-27T11:53:42+08:00",
-     "response_sha256": null,
-     "bytes": 1226815,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225215674.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1153,
-    "at": "2026-10-27T11:53:42+08:00",
-    "response_sha256": null,
-    "bytes": 1226815,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:53:42+08:00",
-    "bytes_written": 1226815
-   },
-   "document": {
-    "document_id": "DOC-6EB27DB46B0E3D34",
-    "identity_key": "BJ:920100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年一季度报告",
-    "published_on": "2026-04-26",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225215674.PDF",
-    "local_file": "sources/collection/originals/920100/q1_2026/DOC-6EB27DB46B0E3D34.pdf",
-    "sha256": "5d1b87915d93a6f7ed01aedb7442b72442d02645b2ac6799267b48e359068679",
-    "bytes": 1226815,
-    "page_count": 22,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1226815 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "22 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "22 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920100\\q1_2026\\DOC-6EB27DB46B0E3D34.pdf.part",
-    "bytes": 1226815,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1226815 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "22 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "22 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=三协电机 代码=920100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 22,
-    "text_chars": 1463,
-    "issues": [],
-    "sha256": "5d1b87915d93a6f7ed01aedb7442b72442d02645b2ac6799267b48e359068679",
-    "cover_text_chars": 38,
-    "identity_probe_chars": 3964,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:53:42+08:00"
-  },
-  "q1_2024": {
-   "security_id": "BJ:920100",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2024": {
-   "security_id": "BJ:920100",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q1_2025": {
-   "security_id": "BJ:920100",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2025": {
-   "security_id": "BJ:920100",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2026": {
-   "security_id": "BJ:920100",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "BJ:920100",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0873669",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "920100,gfbj0873669",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 2,
-   "rows_fetched": 2,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 2,
-     "new_rows": 2,
-     "total_announcement": 2,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "8bbf2624194030c69cd0becbfa38c5fccba4bc64529d6d09a354216aec348866",
-     "response_bytes": 1310,
-     "raw_path": "sources/collection/raw/920100/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "BJ:920100",
       "category": "category_ndbg_szsh",
-      "stock": "920100,gfbj0873669",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:53:38+08:00",
-     "elapsed_ms": 1376
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225215670",
-     "title": "2025年年度报告",
-     "sec_code": "920100",
-     "sec_name": "三协电机",
-     "published_on": "2026-04-26",
-     "adjunct_url": "finalpage/2026-04-27/1225215670.PDF",
-     "adjunct_size": 2886
-    },
-    {
-     "announcement_id": "1225215668",
-     "title": "2025年年度报告摘要",
-     "sec_code": "920100",
-     "sec_name": "三协电机",
-     "published_on": "2026-04-26",
-     "adjunct_url": "finalpage/2026-04-27/1225215668.PDF",
-     "adjunct_size": 1047
-    }
-   ],
-   "fetched_at": "2026-10-27T11:53:38+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "BJ:920100",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0873669",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "920100,gfbj0873669",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 2,
-   "rows_fetched": 2,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 2,
-     "new_rows": 2,
-     "total_announcement": 2,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "7913d9aa1b70273dbb3e187890598a19efdc7f3868ce581c4b11c7837b496ea0",
-     "response_bytes": 1315,
-     "raw_path": "sources/collection/raw/920100/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0873669",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "920100,gfbj0873669",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 2,
+      "rows_fetched": 2,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 2,
+          "new_rows": 2,
+          "total_announcement": 2,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "8bbf2624194030c69cd0becbfa38c5fccba4bc64529d6d09a354216aec348866",
+          "response_bytes": 1310,
+          "raw_path": "sources/collection/raw/920100/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "920100,gfbj0873669",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:53:38+08:00",
+          "elapsed_ms": 1376
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225215670",
+          "title": "2025年年度报告",
+          "sec_code": "920100",
+          "sec_name": "三协电机",
+          "published_on": "2026-04-26",
+          "adjunct_url": "finalpage/2026-04-27/1225215670.PDF",
+          "adjunct_size": 2886
+        },
+        {
+          "announcement_id": "1225215668",
+          "title": "2025年年度报告摘要",
+          "sec_code": "920100",
+          "sec_name": "三协电机",
+          "published_on": "2026-04-26",
+          "adjunct_url": "finalpage/2026-04-27/1225215668.PDF",
+          "adjunct_size": 1047
+        }
+      ],
+      "fetched_at": "2026-10-27T11:53:38+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "BJ:920100",
       "category": "category_bndbg_szsh",
-      "stock": "920100,gfbj0873669",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:53:39+08:00",
-     "elapsed_ms": 759
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225499522",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "920100",
-     "sec_name": "三协电机",
-     "published_on": "2026-08-23",
-     "adjunct_url": "finalpage/2026-08-24/1225499522.PDF",
-     "adjunct_size": 872
-    },
-    {
-     "announcement_id": "1225499521",
-     "title": "2026年半年度报告",
-     "sec_code": "920100",
-     "sec_name": "三协电机",
-     "published_on": "2026-08-23",
-     "adjunct_url": "finalpage/2026-08-24/1225499521.PDF",
-     "adjunct_size": 2480
-    }
-   ],
-   "fetched_at": "2026-10-27T11:53:39+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "BJ:920100",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0873669",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "920100,gfbj0873669",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 1,
-   "rows_fetched": 1,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 1,
-     "new_rows": 1,
-     "total_announcement": 1,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "cd263fe0b8af1d0eb451f4ecc8e4fe143f580a33fb57996c94350b3ff48837c0",
-     "response_bytes": 736,
-     "raw_path": "sources/collection/raw/920100/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0873669",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "920100,gfbj0873669",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 2,
+      "rows_fetched": 2,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 2,
+          "new_rows": 2,
+          "total_announcement": 2,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "7913d9aa1b70273dbb3e187890598a19efdc7f3868ce581c4b11c7837b496ea0",
+          "response_bytes": 1315,
+          "raw_path": "sources/collection/raw/920100/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "920100,gfbj0873669",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:53:39+08:00",
+          "elapsed_ms": 759
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225499522",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "920100",
+          "sec_name": "三协电机",
+          "published_on": "2026-08-23",
+          "adjunct_url": "finalpage/2026-08-24/1225499522.PDF",
+          "adjunct_size": 872
+        },
+        {
+          "announcement_id": "1225499521",
+          "title": "2026年半年度报告",
+          "sec_code": "920100",
+          "sec_name": "三协电机",
+          "published_on": "2026-08-23",
+          "adjunct_url": "finalpage/2026-08-24/1225499521.PDF",
+          "adjunct_size": 2480
+        }
+      ],
+      "fetched_at": "2026-10-27T11:53:39+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "BJ:920100",
       "category": "category_yjdbg_szsh",
-      "stock": "920100,gfbj0873669",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:53:41+08:00",
-     "elapsed_ms": 532
+      "column": "szse",
+      "org_id": "gfbj0873669",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "920100,gfbj0873669",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 1,
+      "rows_fetched": 1,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 1,
+          "new_rows": 1,
+          "total_announcement": 1,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "cd263fe0b8af1d0eb451f4ecc8e4fe143f580a33fb57996c94350b3ff48837c0",
+          "response_bytes": 736,
+          "raw_path": "sources/collection/raw/920100/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "920100,gfbj0873669",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:33:55+08:00",
+          "elapsed_ms": 1027
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225215674",
+          "title": "2026年一季度报告",
+          "sec_code": "920100",
+          "sec_name": "三协电机",
+          "published_on": "2026-04-26",
+          "adjunct_url": "finalpage/2026-04-27/1225215674.PDF",
+          "adjunct_size": 1199
+        }
+      ],
+      "fetched_at": "2026-10-28T12:33:55+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "BJ:920100",
+      "category": "category_sjdbg_szsh",
+      "column": "szse",
+      "org_id": "gfbj0873669",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "920100,gfbj0873669",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 1,
+      "rows_fetched": 1,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 1,
+          "new_rows": 1,
+          "total_announcement": 1,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "c1ca6302f66f7de81be11f749c2cd0025b41fd98d5dee59ef730049180f7929c",
+          "response_bytes": 736,
+          "raw_path": "sources/collection/raw/920100/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "920100,gfbj0873669",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:33:56+08:00",
+          "elapsed_ms": 1273
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224746307",
+          "title": "2025年三季度报告",
+          "sec_code": "920100",
+          "sec_name": "三协电机",
+          "published_on": "2025-10-26",
+          "adjunct_url": "finalpage/2025-10-27/1224746307.PDF",
+          "adjunct_size": 1217
+        }
+      ],
+      "fetched_at": "2026-10-28T12:33:56+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225215674",
-     "title": "2026年一季度报告",
-     "sec_code": "920100",
-     "sec_name": "三协电机",
-     "published_on": "2026-04-26",
-     "adjunct_url": "finalpage/2026-04-27/1225215674.PDF",
-     "adjunct_size": 1199
-    }
-   ],
-   "fetched_at": "2026-10-27T11:53:41+08:00"
-  }
- },
- "updated_at": "2026-10-27T22:26:27+08:00"
+  },
+  "updated_at": "2026-10-28T12:33:58+08:00"
 }

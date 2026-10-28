@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219921396.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 835,
+     "at": "2026-10-28T12:31:47+08:00",
+     "response_sha256": null,
+     "bytes": 446116,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-37859F6AB7229D82",
+    "identity_key": "SH:688698|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "苏州伟创电气科技股份有限公司2024年第一季度报告",
+    "published_on": "2024-04-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219921396.PDF",
+    "local_file": "sources/collection/originals/688698/q1_2024/DOC-37859F6AB7229D82.pdf",
+    "sha256": "501c287adc989d2ad693e16160ac6c21a2680452162e9c264c52c492967b4abf",
+    "bytes": 446116,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "446116 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=伟创电气 代码=688698 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=苏州伟创电气科技股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=苏州伟创电气科技股份有限公司2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:47+08:00",
+    "bytes_written": 446116
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:47+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219921396.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 835,
+    "at": "2026-10-28T12:31:47+08:00",
+    "response_sha256": null,
+    "bytes": 446116,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688698\\q1_2024\\DOC-37859F6AB7229D82.pdf.part",
+    "bytes": 446116,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "446116 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=伟创电气 代码=688698 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=苏州伟创电气科技股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=苏州伟创电气科技股份有限公司2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2400,
+    "issues": [],
+    "sha256": "501c287adc989d2ad693e16160ac6c21a2680452162e9c264c52c492967b4abf",
+    "cover_text_chars": 434,
+    "identity_probe_chars": 4988,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688698",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221573074.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 843,
+     "at": "2026-10-28T12:31:49+08:00",
+     "response_sha256": null,
+     "bytes": 460393,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-4ECDBA5BCBCFD2CE",
+    "identity_key": "SH:688698|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年第三季度报告",
+    "published_on": "2024-10-30",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221573074.PDF",
+    "local_file": "sources/collection/originals/688698/q3_2024/DOC-4ECDBA5BCBCFD2CE.pdf",
+    "sha256": "1ec6d6dc7d4f0a8d137651a30658f43e5eea6fc2c517d624ab53ec628ac9f551",
+    "bytes": 460393,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "460393 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=伟创电气 代码=688698 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:49+08:00",
+    "bytes_written": 460393
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:49+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221573074.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 843,
+    "at": "2026-10-28T12:31:49+08:00",
+    "response_sha256": null,
+    "bytes": 460393,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688698\\q3_2024\\DOC-4ECDBA5BCBCFD2CE.pdf.part",
+    "bytes": 460393,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "460393 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=伟创电气 代码=688698 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2908,
+    "issues": [],
+    "sha256": "1ec6d6dc7d4f0a8d137651a30658f43e5eea6fc2c517d624ab53ec628ac9f551",
+    "cover_text_chars": 526,
+    "identity_probe_chars": 5694,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688698",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223388888.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 548,
+     "at": "2026-10-28T12:31:50+08:00",
+     "response_sha256": null,
+     "bytes": 182064,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-D0C37C9EE850B507",
+    "identity_key": "SH:688698|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": " 2025年第一季度报告",
+    "published_on": "2025-04-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223388888.PDF",
+    "local_file": "sources/collection/originals/688698/q1_2025/DOC-D0C37C9EE850B507.pdf",
+    "sha256": "24472fa8a2dd0c7115a3722bfbd1617b585dcf262348c7dd7fab7d6318080c87",
+    "bytes": 182064,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "182064 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=伟创电气 代码=688698 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title= 2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title= 2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:50+08:00",
+    "bytes_written": 182064
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:50+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223388888.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 548,
+    "at": "2026-10-28T12:31:50+08:00",
+    "response_sha256": null,
+    "bytes": 182064,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688698\\q1_2025\\DOC-D0C37C9EE850B507.pdf.part",
+    "bytes": 182064,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "182064 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=伟创电气 代码=688698 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title= 2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title= 2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2631,
+    "issues": [],
+    "sha256": "24472fa8a2dd0c7115a3722bfbd1617b585dcf262348c7dd7fab7d6318080c87",
+    "cover_text_chars": 522,
+    "identity_probe_chars": 5694,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688698",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224728700.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1074,
+     "at": "2026-10-28T12:31:51+08:00",
+     "response_sha256": null,
+     "bytes": 201048,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-F399204D7EB879F0",
+    "identity_key": "SH:688698|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年第三季度报告",
+    "published_on": "2025-10-23",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224728700.PDF",
+    "local_file": "sources/collection/originals/688698/q3_2025/DOC-F399204D7EB879F0.pdf",
+    "sha256": "84fd37957355b0428234623d0938f40c9d133301588749895de10637486f0385",
+    "bytes": 201048,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "201048 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=伟创电气 代码=688698 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:31:51+08:00",
+    "bytes_written": 201048
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:31:51+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224728700.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1074,
+    "at": "2026-10-28T12:31:51+08:00",
+    "response_sha256": null,
+    "bytes": 201048,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688698\\q3_2025\\DOC-F399204D7EB879F0.pdf.part",
+    "bytes": 201048,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "201048 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=伟创电气 代码=688698 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2706,
+    "issues": [],
+    "sha256": "84fd37957355b0428234623d0938f40c9d133301588749895de10637486f0385",
+    "cover_text_chars": 569,
+    "identity_probe_chars": 5867,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688698",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:31:51+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:31:48+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:46:44+08:00",
-     "elapsed_ms": 522
+     "fetched_at": "2026-10-28T12:31:46+08:00",
+     "elapsed_ms": 1094
     }
    ],
    "rows": [
@@ -1410,8 +1915,85 @@
      "adjunct_size": 431
     }
    ],
-   "fetched_at": "2026-10-27T11:46:44+08:00"
+   "fetched_at": "2026-10-28T12:31:46+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688698",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "nssc1000507",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688698,nssc1000507",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "aa7eb8270f0607a9f5651abad0260c4f35fc718b917c40bf03fa0734343c9a85",
+     "response_bytes": 2109,
+     "raw_path": "sources/collection/raw/688698/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688698,nssc1000507",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:31:48+08:00",
+     "elapsed_ms": 540
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224728700",
+     "title": "2025年第三季度报告",
+     "sec_code": "688698",
+     "sec_name": "伟创电气",
+     "published_on": "2025-10-23",
+     "adjunct_url": "finalpage/2025-10-24/1224728700.PDF",
+     "adjunct_size": 197
+    },
+    {
+     "announcement_id": "1221573074",
+     "title": "2024年第三季度报告",
+     "sec_code": "688698",
+     "sec_name": "伟创电气",
+     "published_on": "2024-10-30",
+     "adjunct_url": "finalpage/2024-10-31/1221573074.PDF",
+     "adjunct_size": 451
+    },
+    {
+     "announcement_id": "1218205498",
+     "title": "苏州伟创电气科技股份有限公司2023年第三季度报告",
+     "sec_code": "688698",
+     "sec_name": "伟创电气",
+     "published_on": "2023-10-30",
+     "adjunct_url": "finalpage/2023-10-31/1218205498.PDF",
+     "adjunct_size": 671
+    }
+   ],
+   "fetched_at": "2026-10-28T12:31:48+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:31:51+08:00"
 }

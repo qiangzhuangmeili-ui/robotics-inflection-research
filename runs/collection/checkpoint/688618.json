@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219818439.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 984,
+     "at": "2026-10-28T12:29:51+08:00",
+     "response_sha256": null,
+     "bytes": 437642,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-E6BFE805B8D4B661",
+    "identity_key": "SH:688618|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "深圳市三旺通信股份有限公司2024年第一季度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219818439.PDF",
+    "local_file": "sources/collection/originals/688618/q1_2024/DOC-E6BFE805B8D4B661.pdf",
+    "sha256": "6f5f3a18ce7bc8387a5dedf9c96f612d548eacaef30fa2f0b2df22cfc841584f",
+    "bytes": 437642,
+    "page_count": 16,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "437642 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "16 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "16 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=三旺通信 代码=688618 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市三旺通信股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市三旺通信股份有限公司2024年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:51+08:00",
+    "bytes_written": 437642
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:51+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219818439.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 984,
+    "at": "2026-10-28T12:29:51+08:00",
+    "response_sha256": null,
+    "bytes": 437642,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688618\\q1_2024\\DOC-E6BFE805B8D4B661.pdf.part",
+    "bytes": 437642,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "437642 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "16 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "16 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=三旺通信 代码=688618 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市三旺通信股份有限公司2024年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市三旺通信股份有限公司2024年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 16,
+    "text_chars": 2494,
+    "issues": [],
+    "sha256": "6f5f3a18ce7bc8387a5dedf9c96f612d548eacaef30fa2f0b2df22cfc841584f",
+    "cover_text_chars": 394,
+    "identity_probe_chars": 5983,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688618",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221572151.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 800,
+     "at": "2026-10-28T12:29:53+08:00",
+     "response_sha256": null,
+     "bytes": 412796,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-38B0DE1FDB3050AD",
+    "identity_key": "SH:688618|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "深圳市三旺通信股份有限公司2024年第三季度报告",
+    "published_on": "2024-10-30",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221572151.PDF",
+    "local_file": "sources/collection/originals/688618/q3_2024/DOC-38B0DE1FDB3050AD.pdf",
+    "sha256": "27b63b61650e389a6b8778cdc4c801b351af1178a9f97ae110d662b90df8b322",
+    "bytes": 412796,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "412796 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=三旺通信 代码=688618 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市三旺通信股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市三旺通信股份有限公司2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:53+08:00",
+    "bytes_written": 412796
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:53+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221572151.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 800,
+    "at": "2026-10-28T12:29:53+08:00",
+    "response_sha256": null,
+    "bytes": 412796,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688618\\q3_2024\\DOC-38B0DE1FDB3050AD.pdf.part",
+    "bytes": 412796,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "412796 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=三旺通信 代码=688618 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市三旺通信股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市三旺通信股份有限公司2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 3004,
+    "issues": [],
+    "sha256": "27b63b61650e389a6b8778cdc4c801b351af1178a9f97ae110d662b90df8b322",
+    "cover_text_chars": 523,
+    "identity_probe_chars": 5364,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688618",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223418443.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 635,
+     "at": "2026-10-28T12:29:54+08:00",
+     "response_sha256": null,
+     "bytes": 184649,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-21A9B5596D26009C",
+    "identity_key": "SH:688618|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "深圳市三旺通信股份有限公司2025年第一季度报告",
+    "published_on": "2025-04-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223418443.PDF",
+    "local_file": "sources/collection/originals/688618/q1_2025/DOC-21A9B5596D26009C.pdf",
+    "sha256": "824751b4b2d85063b71cd974a4d7679cd901d2103acc198435f0ae7ca41237d8",
+    "bytes": 184649,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "184649 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=三旺通信 代码=688618 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市三旺通信股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市三旺通信股份有限公司2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:54+08:00",
+    "bytes_written": 184649
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:54+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223418443.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 635,
+    "at": "2026-10-28T12:29:54+08:00",
+    "response_sha256": null,
+    "bytes": 184649,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688618\\q1_2025\\DOC-21A9B5596D26009C.pdf.part",
+    "bytes": 184649,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "184649 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=三旺通信 代码=688618 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市三旺通信股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市三旺通信股份有限公司2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2270,
+    "issues": [],
+    "sha256": "824751b4b2d85063b71cd974a4d7679cd901d2103acc198435f0ae7ca41237d8",
+    "cover_text_chars": 544,
+    "identity_probe_chars": 5662,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688618",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-31/1224773553.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1379,
+     "at": "2026-10-28T12:29:56+08:00",
+     "response_sha256": null,
+     "bytes": 210112,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-B470F7D0B6BBC747",
+    "identity_key": "SH:688618|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "深圳市三旺通信股份有限公司2025年第三季度报告",
+    "published_on": "2025-10-30",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-31/1224773553.PDF",
+    "local_file": "sources/collection/originals/688618/q3_2025/DOC-B470F7D0B6BBC747.pdf",
+    "sha256": "38815f3fcf24c4b706867aee670485633e8c1580809a9235e8d254daaf0f8b27",
+    "bytes": 210112,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "210112 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=三旺通信 代码=688618 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市三旺通信股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市三旺通信股份有限公司2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:56+08:00",
+    "bytes_written": 210112
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:56+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-31/1224773553.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1379,
+    "at": "2026-10-28T12:29:56+08:00",
+    "response_sha256": null,
+    "bytes": 210112,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688618\\q3_2025\\DOC-B470F7D0B6BBC747.pdf.part",
+    "bytes": 210112,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "210112 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=三旺通信 代码=688618 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市三旺通信股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市三旺通信股份有限公司2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2399,
+    "issues": [],
+    "sha256": "38815f3fcf24c4b706867aee670485633e8c1580809a9235e8d254daaf0f8b27",
+    "cover_text_chars": 536,
+    "identity_probe_chars": 5580,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688618",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:29:56+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:29:52+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1873,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:42:44+08:00",
-     "elapsed_ms": 661
+     "fetched_at": "2026-10-28T12:29:50+08:00",
+     "elapsed_ms": 568
     }
    ],
    "rows": [
@@ -1410,8 +1915,85 @@
      "adjunct_size": 404
     }
    ],
-   "fetched_at": "2026-10-27T11:42:44+08:00"
+   "fetched_at": "2026-10-28T12:29:50+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688618",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "nssc1000604",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688618,nssc1000604",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "68fe204bed675ce8ac64044089a5802b245ce5729403f6a9ab77a3dd27479514",
+     "response_bytes": 2259,
+     "raw_path": "sources/collection/raw/688618/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688618,nssc1000604",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:29:52+08:00",
+     "elapsed_ms": 802
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224773553",
+     "title": "深圳市三旺通信股份有限公司2025年第三季度报告",
+     "sec_code": "688618",
+     "sec_name": "三旺通信",
+     "published_on": "2025-10-30",
+     "adjunct_url": "finalpage/2025-10-31/1224773553.PDF",
+     "adjunct_size": 206
+    },
+    {
+     "announcement_id": "1221572151",
+     "title": "深圳市三旺通信股份有限公司2024年第三季度报告",
+     "sec_code": "688618",
+     "sec_name": "三旺通信",
+     "published_on": "2024-10-30",
+     "adjunct_url": "finalpage/2024-10-31/1221572151.PDF",
+     "adjunct_size": 404
+    },
+    {
+     "announcement_id": "1218203040",
+     "title": "深圳市三旺通信股份有限公司2023年第三季度报告",
+     "sec_code": "688618",
+     "sec_name": "三旺通信",
+     "published_on": "2023-10-30",
+     "adjunct_url": "finalpage/2023-10-31/1218203040.PDF",
+     "adjunct_size": 625
+    }
+   ],
+   "fetched_at": "2026-10-28T12:29:52+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:26+08:00"
+ "updated_at": "2026-10-28T12:29:56+08:00"
 }

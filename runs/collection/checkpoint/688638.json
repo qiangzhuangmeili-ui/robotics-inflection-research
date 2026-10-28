@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219887148.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 750,
+     "at": "2026-10-28T12:30:32+08:00",
+     "response_sha256": null,
+     "bytes": 616940,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-FB0E5420D66FD668",
+    "identity_key": "SH:688638|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "誉辰智能2024年一季度报告",
+    "published_on": "2024-04-26",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219887148.PDF",
+    "local_file": "sources/collection/originals/688638/q1_2024/DOC-FB0E5420D66FD668.pdf",
+    "sha256": "26cb799319da6319bbcde261dae341715a80721619cc455de5848d787c558c52",
+    "bytes": 616940,
+    "page_count": 17,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "616940 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=誉辰智能 代码=688638 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=誉辰智能2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=誉辰智能2024年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:33+08:00",
+    "bytes_written": 616940
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:33+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219887148.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 750,
+    "at": "2026-10-28T12:30:32+08:00",
+    "response_sha256": null,
+    "bytes": 616940,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688638\\q1_2024\\DOC-FB0E5420D66FD668.pdf.part",
+    "bytes": 616940,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "616940 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=誉辰智能 代码=688638 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=誉辰智能2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=誉辰智能2024年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 17,
+    "text_chars": 2247,
+    "issues": [],
+    "sha256": "26cb799319da6319bbcde261dae341715a80721619cc455de5848d787c558c52",
+    "cover_text_chars": 379,
+    "identity_probe_chars": 4451,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688638",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221531329.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 746,
+     "at": "2026-10-28T12:30:35+08:00",
+     "response_sha256": null,
+     "bytes": 499634,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-F7783F070EAA3985",
+    "identity_key": "SH:688638|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "深圳市誉辰智能装备股份有限公司2024年第三季度报告",
+    "published_on": "2024-10-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221531329.PDF",
+    "local_file": "sources/collection/originals/688638/q3_2024/DOC-F7783F070EAA3985.pdf",
+    "sha256": "8e8e56de2cf87764f4e43b20d2122dcbdce6a4cd42f0ce145c71b069a6ca751f",
+    "bytes": 499634,
+    "page_count": 18,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "499634 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=誉辰智能 代码=688638 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市誉辰智能装备股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市誉辰智能装备股份有限公司2024年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:35+08:00",
+    "bytes_written": 499634
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:35+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221531329.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 746,
+    "at": "2026-10-28T12:30:35+08:00",
+    "response_sha256": null,
+    "bytes": 499634,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688638\\q3_2024\\DOC-F7783F070EAA3985.pdf.part",
+    "bytes": 499634,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "499634 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=誉辰智能 代码=688638 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市誉辰智能装备股份有限公司2024年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市誉辰智能装备股份有限公司2024年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 18,
+    "text_chars": 2751,
+    "issues": [],
+    "sha256": "8e8e56de2cf87764f4e43b20d2122dcbdce6a4cd42f0ce145c71b069a6ca751f",
+    "cover_text_chars": 508,
+    "identity_probe_chars": 4943,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688638",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223381855.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 878,
+     "at": "2026-10-28T12:30:36+08:00",
+     "response_sha256": null,
+     "bytes": 182528,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-AD38E51C671624A5",
+    "identity_key": "SH:688638|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "深圳市誉辰智能装备股份有限公司2025年第一季度报告",
+    "published_on": "2025-04-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223381855.PDF",
+    "local_file": "sources/collection/originals/688638/q1_2025/DOC-AD38E51C671624A5.pdf",
+    "sha256": "1b3afb3c5bf2d7e4c9614ded043f24f92f9ab6c6f7324c8a935d032f5b789a3a",
+    "bytes": 182528,
+    "page_count": 17,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "182528 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=誉辰智能 代码=688638 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市誉辰智能装备股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市誉辰智能装备股份有限公司2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:36+08:00",
+    "bytes_written": 182528
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:36+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223381855.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 878,
+    "at": "2026-10-28T12:30:36+08:00",
+    "response_sha256": null,
+    "bytes": 182528,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688638\\q1_2025\\DOC-AD38E51C671624A5.pdf.part",
+    "bytes": 182528,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "182528 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "17 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "17 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=誉辰智能 代码=688638 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市誉辰智能装备股份有限公司2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市誉辰智能装备股份有限公司2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 17,
+    "text_chars": 2209,
+    "issues": [],
+    "sha256": "1b3afb3c5bf2d7e4c9614ded043f24f92f9ab6c6f7324c8a935d032f5b789a3a",
+    "cover_text_chars": 471,
+    "identity_probe_chars": 4833,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688638",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224753313.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 909,
+     "at": "2026-10-28T12:30:37+08:00",
+     "response_sha256": null,
+     "bytes": 220279,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-EB41673F92CBDBDF",
+    "identity_key": "SH:688638|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "深圳市誉辰智能装备股份有限公司2025年第三季度报告",
+    "published_on": "2025-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224753313.PDF",
+    "local_file": "sources/collection/originals/688638/q3_2025/DOC-EB41673F92CBDBDF.pdf",
+    "sha256": "a3a6b6255f27b1c3ee0ec18557faa1afef44b053d3b0225002f75405e8200c49",
+    "bytes": 220279,
+    "page_count": 18,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "220279 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=誉辰智能 代码=688638 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市誉辰智能装备股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市誉辰智能装备股份有限公司2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:37+08:00",
+    "bytes_written": 220279
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:37+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224753313.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 909,
+    "at": "2026-10-28T12:30:37+08:00",
+    "response_sha256": null,
+    "bytes": 220279,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688638\\q3_2025\\DOC-EB41673F92CBDBDF.pdf.part",
+    "bytes": 220279,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "220279 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=誉辰智能 代码=688638 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=深圳市誉辰智能装备股份有限公司2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=深圳市誉辰智能装备股份有限公司2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 18,
+    "text_chars": 2281,
+    "issues": [],
+    "sha256": "a3a6b6255f27b1c3ee0ec18557faa1afef44b053d3b0225002f75405e8200c49",
+    "cover_text_chars": 496,
+    "identity_probe_chars": 4978,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688638",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:30:37+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:30:34+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1350,8 +1855,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:44:05+08:00",
-     "elapsed_ms": 535
+     "fetched_at": "2026-10-28T12:30:31+08:00",
+     "elapsed_ms": 741
     }
    ],
    "rows": [
@@ -1383,8 +1888,85 @@
      "adjunct_size": 603
     }
    ],
-   "fetched_at": "2026-10-27T11:44:05+08:00"
+   "fetched_at": "2026-10-28T12:30:31+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688638",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900038835",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688638,9900038835",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 3,
+   "rows_fetched": 3,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 3,
+     "new_rows": 3,
+     "total_announcement": 3,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "d45456c1c6ff93e2d2d5a99fe9816c99dbc07fa0c49a534a487927c50bd09922",
+     "response_bytes": 2292,
+     "raw_path": "sources/collection/raw/688638/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688638,9900038835",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:30:34+08:00",
+     "elapsed_ms": 1261
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224753313",
+     "title": "深圳市誉辰智能装备股份有限公司2025年第三季度报告",
+     "sec_code": "688638",
+     "sec_name": "誉辰智能",
+     "published_on": "2025-10-28",
+     "adjunct_url": "finalpage/2025-10-29/1224753313.PDF",
+     "adjunct_size": 216
+    },
+    {
+     "announcement_id": "1221531329",
+     "title": "深圳市誉辰智能装备股份有限公司2024年第三季度报告",
+     "sec_code": "688638",
+     "sec_name": "誉辰智能",
+     "published_on": "2024-10-27",
+     "adjunct_url": "finalpage/2024-10-28/1221531329.PDF",
+     "adjunct_size": 489
+    },
+    {
+     "announcement_id": "1218193268",
+     "title": "深圳市誉辰智能装备股份有限公司2023年第三季度报告",
+     "sec_code": "688638",
+     "sec_name": "誉辰智能",
+     "published_on": "2023-10-29",
+     "adjunct_url": "finalpage/2023-10-30/1218193268.PDF",
+     "adjunct_size": 609
+    }
+   ],
+   "fetched_at": "2026-10-28T12:30:34+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:26+08:00"
+ "updated_at": "2026-10-28T12:30:37+08:00"
 }

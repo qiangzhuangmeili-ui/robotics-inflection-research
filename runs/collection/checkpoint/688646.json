@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122537.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 610,
+     "at": "2026-10-28T12:30:38+08:00",
+     "response_sha256": null,
+     "bytes": 184616,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-C7E7FA23DC1C68C9",
+    "identity_key": "SH:688646|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|1",
+    "revision_no": 1,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "逸飞激光2024年第一季度报告（更正后）",
+    "published_on": "2026-04-17",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122537.PDF",
+    "local_file": "sources/collection/originals/688646/q1_2024/DOC-C7E7FA23DC1C68C9.pdf",
+    "sha256": "a49fb697ae2ab759db107e9088cd3730289718e68f4cbdf12d68016e465dbd87",
+    "bytes": 184616,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "184616 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2024年第一季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2024年第一季度报告（更正后）"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:39+08:00",
+    "bytes_written": 184616
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:39+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122537.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 610,
+    "at": "2026-10-28T12:30:38+08:00",
+    "response_sha256": null,
+    "bytes": 184616,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688646\\q1_2024\\DOC-C7E7FA23DC1C68C9.pdf.part",
+    "bytes": 184616,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "184616 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2024年第一季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2024年第一季度报告（更正后）"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2077,
+    "issues": [],
+    "sha256": "a49fb697ae2ab759db107e9088cd3730289718e68f4cbdf12d68016e465dbd87",
+    "cover_text_chars": 454,
+    "identity_probe_chars": 5097,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688646",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122551.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1092,
+     "at": "2026-10-28T12:30:41+08:00",
+     "response_sha256": null,
+     "bytes": 178892,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-A0DBA3B82CBEB224",
+    "identity_key": "SH:688646|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|1",
+    "revision_no": 1,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "逸飞激光2024年第三季度报告（更正后）",
+    "published_on": "2026-04-17",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122551.PDF",
+    "local_file": "sources/collection/originals/688646/q3_2024/DOC-A0DBA3B82CBEB224.pdf",
+    "sha256": "20d1975eab3767cd4b97370a1575f86d9a55c94951edec88c4e4ff3ea3feafbc",
+    "bytes": 178892,
+    "page_count": 14,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "178892 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2024年第三季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2024年第三季度报告（更正后）"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:41+08:00",
+    "bytes_written": 178892
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:41+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122551.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1092,
+    "at": "2026-10-28T12:30:41+08:00",
+    "response_sha256": null,
+    "bytes": 178892,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688646\\q3_2024\\DOC-A0DBA3B82CBEB224.pdf.part",
+    "bytes": 178892,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "178892 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "14 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "14 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2024年第三季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2024年第三季度报告（更正后）"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 14,
+    "text_chars": 2233,
+    "issues": [],
+    "sha256": "20d1975eab3767cd4b97370a1575f86d9a55c94951edec88c4e4ff3ea3feafbc",
+    "cover_text_chars": 515,
+    "identity_probe_chars": 5513,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688646",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122575.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 811,
+     "at": "2026-10-28T12:30:42+08:00",
+     "response_sha256": null,
+     "bytes": 168581,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-9088DE01B2D7E512",
+    "identity_key": "SH:688646|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|1",
+    "revision_no": 1,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "逸飞激光2025年第一季度报告（更正后）",
+    "published_on": "2026-04-17",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122575.PDF",
+    "local_file": "sources/collection/originals/688646/q1_2025/DOC-9088DE01B2D7E512.pdf",
+    "sha256": "67b29ad156bac84eae7eff3614cd2064e6e3593e2edeba01caa1e5984ddccaf3",
+    "bytes": 168581,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "168581 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2025年第一季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2025年第一季度报告（更正后）"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:42+08:00",
+    "bytes_written": 168581
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:42+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122575.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 811,
+    "at": "2026-10-28T12:30:42+08:00",
+    "response_sha256": null,
+    "bytes": 168581,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688646\\q1_2025\\DOC-9088DE01B2D7E512.pdf.part",
+    "bytes": 168581,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "168581 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2025年第一季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2025年第一季度报告（更正后）"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2151,
+    "issues": [],
+    "sha256": "67b29ad156bac84eae7eff3614cd2064e6e3593e2edeba01caa1e5984ddccaf3",
+    "cover_text_chars": 476,
+    "identity_probe_chars": 5276,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688646",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122604.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 880,
+     "at": "2026-10-28T12:30:43+08:00",
+     "response_sha256": null,
+     "bytes": 208523,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-D93DF83F998CAB85",
+    "identity_key": "SH:688646|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|1",
+    "revision_no": 1,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "逸飞激光2025年第三季度报告（更正后）",
+    "published_on": "2026-04-17",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122604.PDF",
+    "local_file": "sources/collection/originals/688646/q3_2025/DOC-D93DF83F998CAB85.pdf",
+    "sha256": "5e229319475b48247395f3288b11d98094743f47e3c0e8d6dc41143636029c20",
+    "bytes": 208523,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "208523 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2025年第三季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2025年第三季度报告（更正后）"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:43+08:00",
+    "bytes_written": 208523
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:43+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122604.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 880,
+    "at": "2026-10-28T12:30:43+08:00",
+    "response_sha256": null,
+    "bytes": 208523,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688646\\q3_2025\\DOC-D93DF83F998CAB85.pdf.part",
+    "bytes": 208523,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "208523 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2025年第三季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2025年第三季度报告（更正后）"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2357,
+    "issues": [],
+    "sha256": "5e229319475b48247395f3288b11d98094743f47e3c0e8d6dc41143636029c20",
+    "cover_text_chars": 527,
+    "identity_probe_chars": 5387,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688646",
@@ -1070,15 +1570,140 @@
    "period_label": "2026Q3",
    "period_end": "2026-09-30",
    "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225620766.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 954,
+     "at": "2026-10-28T12:30:44+08:00",
+     "response_sha256": null,
+     "bytes": 207618,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-1AA8F38B6091B4B7",
+    "identity_key": "SH:688646|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "逸飞激光2026年第三季度报告",
+    "published_on": "2026-10-23",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225620766.PDF",
+    "local_file": "sources/collection/originals/688646/q3_2026/DOC-1AA8F38B6091B4B7.pdf",
+    "sha256": "c5f339857d6bbdfb4453527075fc1f044bc49c14899d047cbe5dc05e2a3c8db1",
+    "bytes": 207618,
+    "page_count": 15,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "207618 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "15 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "15 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2026年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2026年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:30:44+08:00",
+    "bytes_written": 207618
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:30:44+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225620766.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 954,
+    "at": "2026-10-28T12:30:44+08:00",
+    "response_sha256": null,
+    "bytes": 207618,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688646\\q3_2026\\DOC-1AA8F38B6091B4B7.pdf.part",
+    "bytes": 207618,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "207618 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "15 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "15 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=逸飞激光 代码=688646 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=逸飞激光2026年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=逸飞激光2026年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 15,
+    "text_chars": 2094,
+    "issues": [],
+    "sha256": "c5f339857d6bbdfb4453527075fc1f044bc49c14899d047cbe5dc05e2a3c8db1",
+    "cover_text_chars": 434,
+    "identity_probe_chars": 4677,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   }
  },
  "indexes": {
@@ -1386,8 +2011,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:44:18+08:00",
-     "elapsed_ms": 968
+     "fetched_at": "2026-10-28T12:30:38+08:00",
+     "elapsed_ms": 677
     }
    ],
    "rows": [
@@ -1437,8 +2062,112 @@
      "adjunct_size": 464
     }
    ],
-   "fetched_at": "2026-10-27T11:44:18+08:00"
+   "fetched_at": "2026-10-28T12:30:38+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688646",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900047763",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688646,9900047763",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 6,
+   "rows_fetched": 6,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 6,
+     "new_rows": 6,
+     "total_announcement": 6,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "cb8f42d00ff6891946fc537604d21197470db97cab19ae5b47bb139e300a8333",
+     "response_bytes": 4042,
+     "raw_path": "sources/collection/raw/688646/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688646,9900047763",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:30:40+08:00",
+     "elapsed_ms": 966
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225620766",
+     "title": "逸飞激光2026年第三季度报告",
+     "sec_code": "688646",
+     "sec_name": "逸飞激光",
+     "published_on": "2026-10-23",
+     "adjunct_url": "finalpage/2026-10-24/1225620766.PDF",
+     "adjunct_size": 204
+    },
+    {
+     "announcement_id": "1225122604",
+     "title": "逸飞激光2025年第三季度报告（更正后）",
+     "sec_code": "688646",
+     "sec_name": "ST逸飞",
+     "published_on": "2026-04-17",
+     "adjunct_url": "finalpage/2026-04-18/1225122604.PDF",
+     "adjunct_size": 205
+    },
+    {
+     "announcement_id": "1225122551",
+     "title": "逸飞激光2024年第三季度报告（更正后）",
+     "sec_code": "688646",
+     "sec_name": "ST逸飞",
+     "published_on": "2026-04-17",
+     "adjunct_url": "finalpage/2026-04-18/1225122551.PDF",
+     "adjunct_size": 176
+    },
+    {
+     "announcement_id": "1224762580",
+     "title": "逸飞激光2025年第三季度报告",
+     "sec_code": "688646",
+     "sec_name": "ST逸飞",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224762580.PDF",
+     "adjunct_size": 203
+    },
+    {
+     "announcement_id": "1221553928",
+     "title": "逸飞激光2024年第三季度报告",
+     "sec_code": "688646",
+     "sec_name": "逸飞激光",
+     "published_on": "2024-10-29",
+     "adjunct_url": "finalpage/2024-10-30/1221553928.PDF",
+     "adjunct_size": 402
+    },
+    {
+     "announcement_id": "1218203048",
+     "title": "逸飞激光2023年第三季度报告",
+     "sec_code": "688646",
+     "sec_name": "逸飞激光",
+     "published_on": "2023-10-30",
+     "adjunct_url": "finalpage/2023-10-31/1218203048.PDF",
+     "adjunct_size": 389
+    }
+   ],
+   "fetched_at": "2026-10-28T12:30:40+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:26+08:00"
+ "updated_at": "2026-10-28T12:30:44+08:00"
 }

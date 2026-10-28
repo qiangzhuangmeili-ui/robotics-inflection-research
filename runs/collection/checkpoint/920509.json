@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219742550.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1112,
+     "at": "2026-10-28T12:36:51+08:00",
+     "response_sha256": null,
+     "bytes": 951585,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-BFFA004E2D230B3E",
+    "identity_key": "BJ:920509|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年一季度报告",
+    "published_on": "2024-04-21",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219742550.PDF",
+    "local_file": "sources/collection/originals/920509/q1_2024/DOC-BFFA004E2D230B3E.pdf",
+    "sha256": "fc960cd1e44be39683fc631b934c62706c21aa7eedc07b553f19b6eb07a1754a",
+    "bytes": 951585,
+    "page_count": 21,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "951585 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "21 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "21 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:51+08:00",
+    "bytes_written": 951585
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:51+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219742550.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1112,
+    "at": "2026-10-28T12:36:51+08:00",
+    "response_sha256": null,
+    "bytes": 951585,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920509\\q1_2024\\DOC-BFFA004E2D230B3E.pdf.part",
+    "bytes": 951585,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "951585 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "21 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "21 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 21,
+    "text_chars": 1830,
+    "issues": [],
+    "sha256": "fc960cd1e44be39683fc631b934c62706c21aa7eedc07b553f19b6eb07a1754a",
+    "cover_text_chars": 72,
+    "identity_probe_chars": 3675,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "BJ:920509",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221544347.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1066,
+     "at": "2026-10-28T12:36:52+08:00",
+     "response_sha256": null,
+     "bytes": 928141,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-B99B900AC24C8053",
+    "identity_key": "BJ:920509|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221544347.PDF",
+    "local_file": "sources/collection/originals/920509/q3_2024/DOC-B99B900AC24C8053.pdf",
+    "sha256": "dc019716b419d91896abbe4b7e9c8adc010336980c7609c8a0256269e439e793",
+    "bytes": 928141,
+    "page_count": 21,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "928141 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "21 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "21 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:53+08:00",
+    "bytes_written": 928141
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:53+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221544347.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1066,
+    "at": "2026-10-28T12:36:52+08:00",
+    "response_sha256": null,
+    "bytes": 928141,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920509\\q3_2024\\DOC-B99B900AC24C8053.pdf.part",
+    "bytes": 928141,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "928141 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "21 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "21 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 21,
+    "text_chars": 1713,
+    "issues": [],
+    "sha256": "dc019716b419d91896abbe4b7e9c8adc010336980c7609c8a0256269e439e793",
+    "cover_text_chars": 38,
+    "identity_probe_chars": 5411,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "BJ:920509",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-22/1223221621.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 1381,
+     "at": "2026-10-28T12:36:54+08:00",
+     "response_sha256": null,
+     "bytes": 876794,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-BA09B98C0A1642FC",
+    "identity_key": "BJ:920509|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-21",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-22/1223221621.PDF",
+    "local_file": "sources/collection/originals/920509/q1_2025/DOC-BA09B98C0A1642FC.pdf",
+    "sha256": "18fff875532d2ee8ac61de7df697db08cd37def3dc820bf0f082ed259c219a44",
+    "bytes": 876794,
+    "page_count": 20,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "876794 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:54+08:00",
+    "bytes_written": 876794
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:54+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-22/1223221621.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 1381,
+    "at": "2026-10-28T12:36:54+08:00",
+    "response_sha256": null,
+    "bytes": 876794,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920509\\q1_2025\\DOC-BA09B98C0A1642FC.pdf.part",
+    "bytes": 876794,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "876794 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "20 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "20 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 20,
+    "text_chars": 1871,
+    "issues": [],
+    "sha256": "18fff875532d2ee8ac61de7df697db08cd37def3dc820bf0f082ed259c219a44",
+    "cover_text_chars": 72,
+    "identity_probe_chars": 4965,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "BJ:920509",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224756076.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 749,
+     "at": "2026-10-28T12:36:55+08:00",
+     "response_sha256": null,
+     "bytes": 699606,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-10C88ACBC5D19C19",
+    "identity_key": "BJ:920509|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告",
+    "published_on": "2025-10-27",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224756076.PDF",
+    "local_file": "sources/collection/originals/920509/q3_2025/DOC-10C88ACBC5D19C19.pdf",
+    "sha256": "83bc2b314dde014e8f2d6c0c65c872ff06756d2a1a81cba890ecfbb75f49f759",
+    "bytes": 699606,
+    "page_count": 22,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "699606 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "22 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "22 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:56+08:00",
+    "bytes_written": 699606
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:56+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224756076.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 749,
+    "at": "2026-10-28T12:36:55+08:00",
+    "response_sha256": null,
+    "bytes": 699606,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920509\\q3_2025\\DOC-10C88ACBC5D19C19.pdf.part",
+    "bytes": 699606,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "699606 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "22 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "22 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 22,
+    "text_chars": 1758,
+    "issues": [],
+    "sha256": "83bc2b314dde014e8f2d6c0c65c872ff06756d2a1a81cba890ecfbb75f49f759",
+    "cover_text_chars": 72,
+    "identity_probe_chars": 4377,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "BJ:920509",
@@ -1070,15 +1570,140 @@
    "period_label": "2026Q3",
    "period_end": "2026-09-30",
    "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-10-15/1225607379.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 965,
+     "at": "2026-10-28T12:36:57+08:00",
+     "response_sha256": null,
+     "bytes": 920137,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-812C85DDB21F6E1C",
+    "identity_key": "BJ:920509|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2026年三季度报告",
+    "published_on": "2026-10-14",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-10-15/1225607379.PDF",
+    "local_file": "sources/collection/originals/920509/q3_2026/DOC-812C85DDB21F6E1C.pdf",
+    "sha256": "908579aca30b9e1e178d6dab0b6a968fb024940721587bfef8d952b368415f5e",
+    "bytes": 920137,
+    "page_count": 18,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "920137 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:57+08:00",
+    "bytes_written": 920137
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:57+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-10-15/1225607379.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 965,
+    "at": "2026-10-28T12:36:57+08:00",
+    "response_sha256": null,
+    "bytes": 920137,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920509\\q3_2026\\DOC-812C85DDB21F6E1C.pdf.part",
+    "bytes": 920137,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "920137 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=同惠电子 代码=920509 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2026年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 18,
+    "text_chars": 1811,
+    "issues": [],
+    "sha256": "908579aca30b9e1e178d6dab0b6a968fb024940721587bfef8d952b368415f5e",
+    "cover_text_chars": 72,
+    "identity_probe_chars": 4357,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   }
  },
  "indexes": {
@@ -1368,8 +1993,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:58:36+08:00",
-     "elapsed_ms": 516
+     "fetched_at": "2026-10-28T12:36:49+08:00",
+     "elapsed_ms": 770
     }
    ],
    "rows": [
@@ -1410,8 +2035,94 @@
      "adjunct_size": 621
     }
    ],
-   "fetched_at": "2026-10-27T11:58:36+08:00"
+   "fetched_at": "2026-10-28T12:36:49+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "BJ:920509",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "gfbj0833509",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "920509,gfbj0833509",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 4,
+   "rows_fetched": 4,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 4,
+     "new_rows": 4,
+     "total_announcement": 4,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "2788de5fdf25d6f64ab725c37772ec801c47178cb17451b0697b5605986c6984",
+     "response_bytes": 2454,
+     "raw_path": "sources/collection/raw/920509/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "920509,gfbj0833509",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:36:51+08:00",
+     "elapsed_ms": 551
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225607379",
+     "title": "2026年三季度报告",
+     "sec_code": "920509",
+     "sec_name": "同惠电子",
+     "published_on": "2026-10-14",
+     "adjunct_url": "finalpage/2026-10-15/1225607379.PDF",
+     "adjunct_size": 900
+    },
+    {
+     "announcement_id": "1224756076",
+     "title": "2025年三季度报告",
+     "sec_code": "920509",
+     "sec_name": "同惠电子",
+     "published_on": "2025-10-27",
+     "adjunct_url": "finalpage/2025-10-28/1224756076.PDF",
+     "adjunct_size": 684
+    },
+    {
+     "announcement_id": "1221544347",
+     "title": "2024年三季度报告",
+     "sec_code": "833509",
+     "sec_name": "同惠电子",
+     "published_on": "2024-10-27",
+     "adjunct_url": "finalpage/2024-10-28/1221544347.PDF",
+     "adjunct_size": 907
+    },
+    {
+     "announcement_id": "1218166864",
+     "title": "2023年三季度报告",
+     "sec_code": "833509",
+     "sec_name": "同惠电子",
+     "published_on": "2023-10-25",
+     "adjunct_url": "finalpage/2023-10-26/1218166864.PDF",
+     "adjunct_size": 864
+    }
+   ],
+   "fetched_at": "2026-10-28T12:36:51+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:36:57+08:00"
 }

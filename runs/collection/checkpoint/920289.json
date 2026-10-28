@@ -1,1123 +1,1221 @@
 {
- "security_id": "BJ:920289",
- "slots": {
-  "annual_2023": {
-   "security_id": "BJ:920289",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "NOT_APPLICABLE_PRE_LISTING",
-   "status_reason": "A02 适用性判定：股转挂牌日 2024-06-24 晚于报告期结束 2023-12-31；股转定期报告索引共 8 条，最早一条 2024-08-09「[定期报告]华汇智能:2024年半年度报告」，该期间无记录",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {},
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-09-04",
-    "period_end": "2023-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T16:13:14+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:56:01+08:00",
-    "status": "RECONCILED"
-   },
-   "applicability_decision": {
-    "decided_at": "2026-10-27T16:13:14+08:00",
-    "by": "A02",
-    "decision": "NOT_APPLICABLE_PRE_LISTING",
-    "p03_classification": "PERIOD_PRECEDES_CURRENT_NEEQ_LISTING_REVIEW_REQUIRED",
-    "basis": "股转挂牌日 2024-06-24 晚于报告期结束 2023-12-31；股转定期报告索引共 8 条，最早一条 2024-08-09「[定期报告]华汇智能:2024年半年度报告」，该期间无记录",
-    "evidence_file": "runs/issues/A02/applicability_evidence.json"
-   }
-  },
-  "annual_2024": {
-   "security_id": "BJ:920289",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），2028094 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/e8e7054015ee4009b7cf9391e3c70a8b.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2028094,
-     "sha256": "434a30cf97ff35d1a0bb1a863f064aefc5662c1bfd77dfda26a8919d04aa011c",
-     "at": "2026-10-27T15:45:14+08:00"
+  "security_id": "BJ:920289",
+  "slots": {
+    "annual_2023": {
+      "security_id": "BJ:920289",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "A02 适用性判定：股转挂牌日 2024-06-24 晚于报告期结束 2023-12-31；股转定期报告索引共 8 条，最早一条 2024-08-09「[定期报告]华汇智能:2024年半年度报告」，该期间无记录",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {},
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2023-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T16:13:14+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:56:01+08:00",
+        "status": "RECONCILED"
+      },
+      "applicability_decision": {
+        "decided_at": "2026-10-27T16:13:14+08:00",
+        "by": "A02",
+        "decision": "NOT_APPLICABLE_PRE_LISTING",
+        "p03_classification": "PERIOD_PRECEDES_CURRENT_NEEQ_LISTING_REVIEW_REQUIRED",
+        "basis": "股转挂牌日 2024-06-24 晚于报告期结束 2023-12-31；股转定期报告索引共 8 条，最早一条 2024-08-09「[定期报告]华汇智能:2024年半年度报告」，该期间无记录",
+        "evidence_file": "runs/issues/A02/applicability_evidence.json"
+      }
+    },
+    "annual_2024": {
+      "security_id": "BJ:920289",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），2028094 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/e8e7054015ee4009b7cf9391e3c70a8b.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2028094,
+          "sha256": "434a30cf97ff35d1a0bb1a863f064aefc5662c1bfd77dfda26a8919d04aa011c",
+          "at": "2026-10-27T15:45:14+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/e8e7054015ee4009b7cf9391e3c70a8b.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2028094,
+        "sha256": "434a30cf97ff35d1a0bb1a863f064aefc5662c1bfd77dfda26a8919d04aa011c",
+        "at": "2026-10-27T15:45:14+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-D948771188DF8D90",
+        "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]华汇智能:2024年年度报告",
+        "published_on": "2025-04-21",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/e8e7054015ee4009b7cf9391e3c70a8b.pdf",
+        "local_file": "sources/collection/originals/920289/annual_2024/DOC-D948771188DF8D90.pdf",
+        "sha256": "434a30cf97ff35d1a0bb1a863f064aefc5662c1bfd77dfda26a8919d04aa011c",
+        "bytes": 2028094,
+        "page_count": 157,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "874378",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2028094 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "157 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "157 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2024年年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2024-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:45:14+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:56:01+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\annual_2024\\DOC-D948771188DF8D90.pdf",
+        "bytes": 2028094,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2028094 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "157 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "157 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 157,
+        "text_chars": 1755,
+        "issues": [],
+        "sha256": "434a30cf97ff35d1a0bb1a863f064aefc5662c1bfd77dfda26a8919d04aa011c",
+        "cover_text_chars": 77,
+        "identity_probe_chars": 5052,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "annual_2025": {
+      "security_id": "BJ:920289",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），2376336 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/a776ce07dd2f4e0a95a851bfe5d1a6d7.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2376336,
+          "sha256": "d3ca79bff1eadc11ec07aea696e2884066e18c4eea862519a425167568e116ce",
+          "at": "2026-10-27T15:46:02+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/a776ce07dd2f4e0a95a851bfe5d1a6d7.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2376336,
+        "sha256": "d3ca79bff1eadc11ec07aea696e2884066e18c4eea862519a425167568e116ce",
+        "at": "2026-10-27T15:46:02+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-B58CB166883839D2",
+        "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]华汇智能:2025年年度报告",
+        "published_on": "2026-03-20",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/a776ce07dd2f4e0a95a851bfe5d1a6d7.pdf",
+        "local_file": "sources/collection/originals/920289/annual_2025/DOC-B58CB166883839D2.pdf",
+        "sha256": "d3ca79bff1eadc11ec07aea696e2884066e18c4eea862519a425167568e116ce",
+        "bytes": 2376336,
+        "page_count": 151,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "874378",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2376336 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "151 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "151 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2025年年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2025-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:46:02+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:56:01+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\annual_2025\\DOC-B58CB166883839D2.pdf",
+        "bytes": 2376336,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2376336 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "151 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "151 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 151,
+        "text_chars": 1715,
+        "issues": [],
+        "sha256": "d3ca79bff1eadc11ec07aea696e2884066e18c4eea862519a425167568e116ce",
+        "cover_text_chars": 77,
+        "identity_probe_chars": 4713,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "h1_2024": {
+      "security_id": "BJ:920289",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），2263741 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-09/cd11746af3fa47e1a3b785b356f2517a.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2263741,
+          "sha256": "f1175ce40a63ea2a1d1ea24d8de74efd227fef28defa20bbf524fb626a9b8825",
+          "at": "2026-10-27T15:46:11+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-09/cd11746af3fa47e1a3b785b356f2517a.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2263741,
+        "sha256": "f1175ce40a63ea2a1d1ea24d8de74efd227fef28defa20bbf524fb626a9b8825",
+        "at": "2026-10-27T15:46:11+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-4B1C8E3516F65820",
+        "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]华汇智能:2024年半年度报告",
+        "published_on": "2024-08-09",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-08-09/cd11746af3fa47e1a3b785b356f2517a.pdf",
+        "local_file": "sources/collection/originals/920289/h1_2024/DOC-4B1C8E3516F65820.pdf",
+        "sha256": "f1175ce40a63ea2a1d1ea24d8de74efd227fef28defa20bbf524fb626a9b8825",
+        "bytes": 2263741,
+        "page_count": 114,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "874378",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2263741 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "114 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "114 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2024年半年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2024-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:46:11+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:56:02+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\h1_2024\\DOC-4B1C8E3516F65820.pdf",
+        "bytes": 2263741,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2263741 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "114 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "114 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 114,
+        "text_chars": 1721,
+        "issues": [],
+        "sha256": "f1175ce40a63ea2a1d1ea24d8de74efd227fef28defa20bbf524fb626a9b8825",
+        "cover_text_chars": 49,
+        "identity_probe_chars": 4617,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "h1_2025": {
+      "security_id": "BJ:920289",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），2349793 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/e6925ac5645140998b68fcb70f164dd0.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2349793,
+          "sha256": "7482fececc348deafe195c59e3200b291e221a19c25bf35128115b61968321ab",
+          "at": "2026-10-27T15:46:58+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/e6925ac5645140998b68fcb70f164dd0.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2349793,
+        "sha256": "7482fececc348deafe195c59e3200b291e221a19c25bf35128115b61968321ab",
+        "at": "2026-10-27T15:46:58+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-BAE58B22488F6BBC",
+        "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]华汇智能:2025年半年度报告",
+        "published_on": "2025-08-25",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/e6925ac5645140998b68fcb70f164dd0.pdf",
+        "local_file": "sources/collection/originals/920289/h1_2025/DOC-BAE58B22488F6BBC.pdf",
+        "sha256": "7482fececc348deafe195c59e3200b291e221a19c25bf35128115b61968321ab",
+        "bytes": 2349793,
+        "page_count": 133,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "874378",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2349793 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "133 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "133 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2025年半年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2025-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:46:58+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:56:02+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\h1_2025\\DOC-BAE58B22488F6BBC.pdf",
+        "bytes": 2349793,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2349793 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "133 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "133 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 133,
+        "text_chars": 1674,
+        "issues": [],
+        "sha256": "7482fececc348deafe195c59e3200b291e221a19c25bf35128115b61968321ab",
+        "cover_text_chars": 77,
+        "identity_probe_chars": 6113,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "h1_2026": {
+      "security_id": "BJ:920289",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），1400663 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2026/2026-07-29/aa8420357c3f4af696f296179a048843.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 1400663,
+          "sha256": "7bbfffdaa9a81365fd24fe42c06d0d36289b56af90f4a0a0ab3dc02b1a0b0b22",
+          "at": "2026-10-27T15:47:07+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2026/2026-07-29/aa8420357c3f4af696f296179a048843.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 1400663,
+        "sha256": "7bbfffdaa9a81365fd24fe42c06d0d36289b56af90f4a0a0ab3dc02b1a0b0b22",
+        "at": "2026-10-27T15:47:07+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-1F57F872802C1839",
+        "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]华汇智能:2026年半年度报告",
+        "published_on": "2026-07-29",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-07-29/aa8420357c3f4af696f296179a048843.pdf",
+        "local_file": "sources/collection/originals/920289/h1_2026/DOC-1F57F872802C1839.pdf",
+        "sha256": "7bbfffdaa9a81365fd24fe42c06d0d36289b56af90f4a0a0ab3dc02b1a0b0b22",
+        "bytes": 1400663,
+        "page_count": 115,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "874378",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1400663 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "115 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "115 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2026年半年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2026-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:47:07+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:56:02+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\h1_2026\\DOC-1F57F872802C1839.pdf",
+        "bytes": 1400663,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1400663 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "115 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "115 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 115,
+        "text_chars": 2107,
+        "issues": [],
+        "sha256": "7bbfffdaa9a81365fd24fe42c06d0d36289b56af90f4a0a0ab3dc02b1a0b0b22",
+        "cover_text_chars": 77,
+        "identity_probe_chars": 5890,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "q1_2026": {
+      "security_id": "BJ:920289",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），477128 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2026/2026-04-30/46dcb3d741504572aa103554da850b2d.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 477128,
+          "sha256": "55cde618c88f594ac4d5aab78617fa15b3795dd828b6cbd2789a00d8b68cc321",
+          "at": "2026-10-27T15:47:51+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2026/2026-04-30/46dcb3d741504572aa103554da850b2d.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 477128,
+        "sha256": "55cde618c88f594ac4d5aab78617fa15b3795dd828b6cbd2789a00d8b68cc321",
+        "at": "2026-10-27T15:47:51+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-4482EADF01B37A43",
+        "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]华汇智能:2026年一季度报告",
+        "published_on": "2026-04-30",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-04-30/46dcb3d741504572aa103554da850b2d.pdf",
+        "local_file": "sources/collection/originals/920289/q1_2026/DOC-4482EADF01B37A43.pdf",
+        "sha256": "55cde618c88f594ac4d5aab78617fa15b3795dd828b6cbd2789a00d8b68cc321",
+        "bytes": 477128,
+        "page_count": 16,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "874378",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "477128 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "16 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "16 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2026年一季度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2026-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:47:51+08:00",
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-27T11:56:03+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\q1_2026\\DOC-4482EADF01B37A43.pdf",
+        "bytes": 477128,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "477128 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "16 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "16 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]华汇智能:2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 16,
+        "text_chars": 1487,
+        "issues": [],
+        "sha256": "55cde618c88f594ac4d5aab78617fa15b3795dd828b6cbd2789a00d8b68cc321",
+        "cover_text_chars": 40,
+        "identity_probe_chars": 3279,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q1_2024": {
+      "security_id": "BJ:920289",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "A04R 股转索引最早一条 2024-08-09 晚于报告期结束 2024-03-31，公司当时未在股转挂牌",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:51:12+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2024-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-28T12:35:23+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_LISTING_AFTER_PERIOD_END"
+    },
+    "q3_2024": {
+      "security_id": "BJ:920289",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:51:12+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2024-09-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:35:25+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q1_2025": {
+      "security_id": "BJ:920289",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:51:12+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2025-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-28T12:35:23+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q3_2025": {
+      "security_id": "BJ:920289",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:51:12+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2026-09-04",
+        "period_end": "2025-09-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:35:25+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q3_2026": {
+      "security_id": "BJ:920289",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "updated_at": "2026-10-28T12:35:25+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:35:25+08:00",
+        "status": "RECONCILED"
+      }
     }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/e8e7054015ee4009b7cf9391e3c70a8b.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2028094,
-    "sha256": "434a30cf97ff35d1a0bb1a863f064aefc5662c1bfd77dfda26a8919d04aa011c",
-    "at": "2026-10-27T15:45:14+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-D948771188DF8D90",
-    "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]华汇智能:2024年年度报告",
-    "published_on": "2025-04-21",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-04-21/e8e7054015ee4009b7cf9391e3c70a8b.pdf",
-    "local_file": "sources/collection/originals/920289/annual_2024/DOC-D948771188DF8D90.pdf",
-    "sha256": "434a30cf97ff35d1a0bb1a863f064aefc5662c1bfd77dfda26a8919d04aa011c",
-    "bytes": 2028094,
-    "page_count": 157,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "874378",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2028094 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "157 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "157 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2024年年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-09-04",
-    "period_end": "2024-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:45:14+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:56:01+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\annual_2024\\DOC-D948771188DF8D90.pdf",
-    "bytes": 2028094,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2028094 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "157 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "157 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 157,
-    "text_chars": 1755,
-    "issues": [],
-    "sha256": "434a30cf97ff35d1a0bb1a863f064aefc5662c1bfd77dfda26a8919d04aa011c",
-    "cover_text_chars": 77,
-    "identity_probe_chars": 5052,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
   },
-  "annual_2025": {
-   "security_id": "BJ:920289",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），2376336 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/a776ce07dd2f4e0a95a851bfe5d1a6d7.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2376336,
-     "sha256": "d3ca79bff1eadc11ec07aea696e2884066e18c4eea862519a425167568e116ce",
-     "at": "2026-10-27T15:46:02+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/a776ce07dd2f4e0a95a851bfe5d1a6d7.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2376336,
-    "sha256": "d3ca79bff1eadc11ec07aea696e2884066e18c4eea862519a425167568e116ce",
-    "at": "2026-10-27T15:46:02+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-B58CB166883839D2",
-    "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]华汇智能:2025年年度报告",
-    "published_on": "2026-03-20",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-03-20/a776ce07dd2f4e0a95a851bfe5d1a6d7.pdf",
-    "local_file": "sources/collection/originals/920289/annual_2025/DOC-B58CB166883839D2.pdf",
-    "sha256": "d3ca79bff1eadc11ec07aea696e2884066e18c4eea862519a425167568e116ce",
-    "bytes": 2376336,
-    "page_count": 151,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "874378",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2376336 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "151 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "151 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2025年年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-09-04",
-    "period_end": "2025-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:46:02+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:56:01+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\annual_2025\\DOC-B58CB166883839D2.pdf",
-    "bytes": 2376336,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2376336 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "151 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "151 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 151,
-    "text_chars": 1715,
-    "issues": [],
-    "sha256": "d3ca79bff1eadc11ec07aea696e2884066e18c4eea862519a425167568e116ce",
-    "cover_text_chars": 77,
-    "identity_probe_chars": 4713,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "h1_2024": {
-   "security_id": "BJ:920289",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），2263741 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-09/cd11746af3fa47e1a3b785b356f2517a.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2263741,
-     "sha256": "f1175ce40a63ea2a1d1ea24d8de74efd227fef28defa20bbf524fb626a9b8825",
-     "at": "2026-10-27T15:46:11+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-09/cd11746af3fa47e1a3b785b356f2517a.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2263741,
-    "sha256": "f1175ce40a63ea2a1d1ea24d8de74efd227fef28defa20bbf524fb626a9b8825",
-    "at": "2026-10-27T15:46:11+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-4B1C8E3516F65820",
-    "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]华汇智能:2024年半年度报告",
-    "published_on": "2024-08-09",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-08-09/cd11746af3fa47e1a3b785b356f2517a.pdf",
-    "local_file": "sources/collection/originals/920289/h1_2024/DOC-4B1C8E3516F65820.pdf",
-    "sha256": "f1175ce40a63ea2a1d1ea24d8de74efd227fef28defa20bbf524fb626a9b8825",
-    "bytes": 2263741,
-    "page_count": 114,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "874378",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2263741 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "114 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "114 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2024年半年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-09-04",
-    "period_end": "2024-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:46:11+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:56:02+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\h1_2024\\DOC-4B1C8E3516F65820.pdf",
-    "bytes": 2263741,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2263741 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "114 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "114 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 114,
-    "text_chars": 1721,
-    "issues": [],
-    "sha256": "f1175ce40a63ea2a1d1ea24d8de74efd227fef28defa20bbf524fb626a9b8825",
-    "cover_text_chars": 49,
-    "identity_probe_chars": 4617,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "h1_2025": {
-   "security_id": "BJ:920289",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），2349793 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/e6925ac5645140998b68fcb70f164dd0.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2349793,
-     "sha256": "7482fececc348deafe195c59e3200b291e221a19c25bf35128115b61968321ab",
-     "at": "2026-10-27T15:46:58+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/e6925ac5645140998b68fcb70f164dd0.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2349793,
-    "sha256": "7482fececc348deafe195c59e3200b291e221a19c25bf35128115b61968321ab",
-    "at": "2026-10-27T15:46:58+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-BAE58B22488F6BBC",
-    "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]华汇智能:2025年半年度报告",
-    "published_on": "2025-08-25",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-25/e6925ac5645140998b68fcb70f164dd0.pdf",
-    "local_file": "sources/collection/originals/920289/h1_2025/DOC-BAE58B22488F6BBC.pdf",
-    "sha256": "7482fececc348deafe195c59e3200b291e221a19c25bf35128115b61968321ab",
-    "bytes": 2349793,
-    "page_count": 133,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "874378",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2349793 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "133 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "133 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2025年半年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-09-04",
-    "period_end": "2025-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:46:58+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:56:02+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\h1_2025\\DOC-BAE58B22488F6BBC.pdf",
-    "bytes": 2349793,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2349793 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "133 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "133 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 133,
-    "text_chars": 1674,
-    "issues": [],
-    "sha256": "7482fececc348deafe195c59e3200b291e221a19c25bf35128115b61968321ab",
-    "cover_text_chars": 77,
-    "identity_probe_chars": 6113,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "h1_2026": {
-   "security_id": "BJ:920289",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），1400663 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2026/2026-07-29/aa8420357c3f4af696f296179a048843.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 1400663,
-     "sha256": "7bbfffdaa9a81365fd24fe42c06d0d36289b56af90f4a0a0ab3dc02b1a0b0b22",
-     "at": "2026-10-27T15:47:07+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2026/2026-07-29/aa8420357c3f4af696f296179a048843.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 1400663,
-    "sha256": "7bbfffdaa9a81365fd24fe42c06d0d36289b56af90f4a0a0ab3dc02b1a0b0b22",
-    "at": "2026-10-27T15:47:07+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-1F57F872802C1839",
-    "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]华汇智能:2026年半年度报告",
-    "published_on": "2026-07-29",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-07-29/aa8420357c3f4af696f296179a048843.pdf",
-    "local_file": "sources/collection/originals/920289/h1_2026/DOC-1F57F872802C1839.pdf",
-    "sha256": "7bbfffdaa9a81365fd24fe42c06d0d36289b56af90f4a0a0ab3dc02b1a0b0b22",
-    "bytes": 1400663,
-    "page_count": 115,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "874378",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1400663 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "115 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "115 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2026年半年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-09-04",
-    "period_end": "2026-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:47:07+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:56:02+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\h1_2026\\DOC-1F57F872802C1839.pdf",
-    "bytes": 1400663,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1400663 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "115 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "115 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 115,
-    "text_chars": 2107,
-    "issues": [],
-    "sha256": "7bbfffdaa9a81365fd24fe42c06d0d36289b56af90f4a0a0ab3dc02b1a0b0b22",
-    "cover_text_chars": 77,
-    "identity_probe_chars": 5890,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "q1_2026": {
-   "security_id": "BJ:920289",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 874378），477128 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2026/2026-04-30/46dcb3d741504572aa103554da850b2d.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 477128,
-     "sha256": "55cde618c88f594ac4d5aab78617fa15b3795dd828b6cbd2789a00d8b68cc321",
-     "at": "2026-10-27T15:47:51+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2026/2026-04-30/46dcb3d741504572aa103554da850b2d.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 477128,
-    "sha256": "55cde618c88f594ac4d5aab78617fa15b3795dd828b6cbd2789a00d8b68cc321",
-    "at": "2026-10-27T15:47:51+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-4482EADF01B37A43",
-    "identity_key": "BJ:920289|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]华汇智能:2026年一季度报告",
-    "published_on": "2026-04-30",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2026/2026-04-30/46dcb3d741504572aa103554da850b2d.pdf",
-    "local_file": "sources/collection/originals/920289/q1_2026/DOC-4482EADF01B37A43.pdf",
-    "sha256": "55cde618c88f594ac4d5aab78617fa15b3795dd828b6cbd2789a00d8b68cc321",
-    "bytes": 477128,
-    "page_count": 16,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "874378",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "477128 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "16 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "16 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2026年一季度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2026-09-04",
-    "period_end": "2026-03-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:47:51+08:00",
-   "index_ref": {
-    "category": "category_yjdbg_szsh",
-    "fetched_at": "2026-10-27T11:56:03+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920289\\q1_2026\\DOC-4482EADF01B37A43.pdf",
-    "bytes": 477128,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "477128 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "16 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "16 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华汇智能 代码=920289 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=[定期报告]华汇智能:2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]华汇智能:2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 16,
-    "text_chars": 1487,
-    "issues": [],
-    "sha256": "55cde618c88f594ac4d5aab78617fa15b3795dd828b6cbd2789a00d8b68cc321",
-    "cover_text_chars": 40,
-    "identity_probe_chars": 3279,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q1_2024": {
-   "security_id": "BJ:920289",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2024": {
-   "security_id": "BJ:920289",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q1_2025": {
-   "security_id": "BJ:920289",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2025": {
-   "security_id": "BJ:920289",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2026": {
-   "security_id": "BJ:920289",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "BJ:920289",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0874378",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "920289,gfbj0874378",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 0,
-   "rows_fetched": 0,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 0,
-     "new_rows": 0,
-     "total_announcement": 0,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
-     "response_bytes": 165,
-     "raw_path": "sources/collection/raw/920289/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "BJ:920289",
       "category": "category_ndbg_szsh",
-      "stock": "920289,gfbj0874378",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:56:01+08:00",
-     "elapsed_ms": 547
-    }
-   ],
-   "rows": [],
-   "fetched_at": "2026-10-27T11:56:01+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "BJ:920289",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0874378",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "920289,gfbj0874378",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 0,
-   "rows_fetched": 0,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 0,
-     "new_rows": 0,
-     "total_announcement": 0,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
-     "response_bytes": 165,
-     "raw_path": "sources/collection/raw/920289/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0874378",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "920289,gfbj0874378",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 0,
+      "rows_fetched": 0,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 0,
+          "new_rows": 0,
+          "total_announcement": 0,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "response_bytes": 165,
+          "raw_path": "sources/collection/raw/920289/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "920289,gfbj0874378",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:56:01+08:00",
+          "elapsed_ms": 547
+        }
+      ],
+      "rows": [],
+      "fetched_at": "2026-10-27T11:56:01+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "BJ:920289",
       "category": "category_bndbg_szsh",
-      "stock": "920289,gfbj0874378",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:56:02+08:00",
-     "elapsed_ms": 1158
-    }
-   ],
-   "rows": [],
-   "fetched_at": "2026-10-27T11:56:02+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "BJ:920289",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0874378",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "920289,gfbj0874378",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 0,
-   "rows_fetched": 0,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 0,
-     "new_rows": 0,
-     "total_announcement": 0,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
-     "response_bytes": 165,
-     "raw_path": "sources/collection/raw/920289/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0874378",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "920289,gfbj0874378",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 0,
+      "rows_fetched": 0,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 0,
+          "new_rows": 0,
+          "total_announcement": 0,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "response_bytes": 165,
+          "raw_path": "sources/collection/raw/920289/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "920289,gfbj0874378",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:56:02+08:00",
+          "elapsed_ms": 1158
+        }
+      ],
+      "rows": [],
+      "fetched_at": "2026-10-27T11:56:02+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "BJ:920289",
       "category": "category_yjdbg_szsh",
-      "stock": "920289,gfbj0874378",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:56:03+08:00",
-     "elapsed_ms": 1199
+      "column": "szse",
+      "org_id": "gfbj0874378",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "920289,gfbj0874378",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 0,
+      "rows_fetched": 0,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 0,
+          "new_rows": 0,
+          "total_announcement": 0,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "response_bytes": 165,
+          "raw_path": "sources/collection/raw/920289/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "920289,gfbj0874378",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:35:23+08:00",
+          "elapsed_ms": 543
+        }
+      ],
+      "rows": [],
+      "fetched_at": "2026-10-28T12:35:23+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "BJ:920289",
+      "category": "category_sjdbg_szsh",
+      "column": "szse",
+      "org_id": "gfbj0874378",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "920289,gfbj0874378",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 0,
+      "rows_fetched": 0,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 0,
+          "new_rows": 0,
+          "total_announcement": 0,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "c2a890bbf3a6a53ab02ddc6c1794bf1c72ba45799fe9f59dcc5ba2cc18467114",
+          "response_bytes": 165,
+          "raw_path": "sources/collection/raw/920289/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "920289,gfbj0874378",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:35:25+08:00",
+          "elapsed_ms": 2442
+        }
+      ],
+      "rows": [],
+      "fetched_at": "2026-10-28T12:35:25+08:00"
     }
-   ],
-   "rows": [],
-   "fetched_at": "2026-10-27T11:56:03+08:00"
-  }
- },
- "updated_at": "2026-10-27T22:26:27+08:00"
+  },
+  "updated_at": "2026-10-28T12:35:25+08:00"
 }

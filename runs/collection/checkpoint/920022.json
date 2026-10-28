@@ -1,1308 +1,1530 @@
 {
- "security_id": "BJ:920022",
- "slots": {
-  "annual_2025": {
-   "security_id": "BJ:920022",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225036979.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 2147,
-     "at": "2026-10-27T11:49:48+08:00",
-     "response_sha256": null,
-     "bytes": 2652353,
-     "resumed_from": 0
+  "security_id": "BJ:920022",
+  "slots": {
+    "annual_2025": {
+      "security_id": "BJ:920022",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225036979.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 2147,
+          "at": "2026-10-27T11:49:48+08:00",
+          "response_sha256": null,
+          "bytes": 2652353,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225036979.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 2147,
+        "at": "2026-10-27T11:49:48+08:00",
+        "response_sha256": null,
+        "bytes": 2652353,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:49:48+08:00",
+        "bytes_written": 2652353
+      },
+      "document": {
+        "document_id": "DOC-EFCBFB68E83B84D0",
+        "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-03-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225036979.PDF",
+        "local_file": "sources/collection/originals/920022/annual_2025/DOC-EFCBFB68E83B84D0.pdf",
+        "sha256": "9d8e1a28ba3086875d62b83d5bbafca75bab73c8c254ee1d5134e9e1c9d5601a",
+        "bytes": 2652353,
+        "page_count": 156,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2652353 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "156 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "156 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\annual_2025\\DOC-EFCBFB68E83B84D0.pdf.part",
+        "bytes": 2652353,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2652353 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "156 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "156 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 156,
+        "text_chars": 1326,
+        "issues": [],
+        "sha256": "9d8e1a28ba3086875d62b83d5bbafca75bab73c8c254ee1d5134e9e1c9d5601a",
+        "cover_text_chars": 60,
+        "identity_probe_chars": 3015,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T11:49:48+08:00"
+    },
+    "h1_2026": {
+      "security_id": "BJ:920022",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225495799.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1242,
+          "at": "2026-10-27T11:49:50+08:00",
+          "response_sha256": null,
+          "bytes": 1848383,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225495799.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1242,
+        "at": "2026-10-27T11:49:50+08:00",
+        "response_sha256": null,
+        "bytes": 1848383,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:49:50+08:00",
+        "bytes_written": 1848383
+      },
+      "document": {
+        "document_id": "DOC-40EEEAA9C4330A86",
+        "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-23",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225495799.PDF",
+        "local_file": "sources/collection/originals/920022/h1_2026/DOC-40EEEAA9C4330A86.pdf",
+        "sha256": "ae3fa4839dd37462095e1fd564ece80e86076c62c24d958ddba77576da4410db",
+        "bytes": 1848383,
+        "page_count": 116,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1848383 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "116 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "116 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\h1_2026\\DOC-40EEEAA9C4330A86.pdf.part",
+        "bytes": 1848383,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1848383 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "116 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "116 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 116,
+        "text_chars": 1701,
+        "issues": [],
+        "sha256": "ae3fa4839dd37462095e1fd564ece80e86076c62c24d958ddba77576da4410db",
+        "cover_text_chars": 61,
+        "identity_probe_chars": 3235,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T11:49:50+08:00"
+    },
+    "q1_2026": {
+      "security_id": "BJ:920022",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225241172.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1059,
+          "at": "2026-10-27T11:49:52+08:00",
+          "response_sha256": null,
+          "bytes": 667623,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225241172.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1059,
+        "at": "2026-10-27T11:49:52+08:00",
+        "response_sha256": null,
+        "bytes": 667623,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:49:52+08:00",
+        "bytes_written": 667623
+      },
+      "document": {
+        "document_id": "DOC-E990F14C0121C783",
+        "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年一季度报告",
+        "published_on": "2026-04-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225241172.PDF",
+        "local_file": "sources/collection/originals/920022/q1_2026/DOC-E990F14C0121C783.pdf",
+        "sha256": "dfbb9974bdefcf4129b0d31d80898772f9c9128ec335820c3679b144997ae206",
+        "bytes": 667623,
+        "page_count": 19,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "667623 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "19 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "19 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\q1_2026\\DOC-E990F14C0121C783.pdf.part",
+        "bytes": 667623,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "667623 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "19 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "19 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 19,
+        "text_chars": 1585,
+        "issues": [],
+        "sha256": "dfbb9974bdefcf4129b0d31d80898772f9c9128ec335820c3679b144997ae206",
+        "cover_text_chars": 40,
+        "identity_probe_chars": 4284,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:49:52+08:00"
+    },
+    "annual_2023": {
+      "security_id": "BJ:920022",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 873702），1954123 bytes，七项校验通过",
+      "attempt_count": 2,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-19/0b2a0ce859aa4cc295f2fd24cb64f69d.pdf",
+          "http_status": null,
+          "outcome": "ERROR",
+          "error_code": "NEEQ_PDF_FETCH_FAILED",
+          "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
+          "at": "2026-10-27T15:22:59+08:00"
+        },
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-19/0b2a0ce859aa4cc295f2fd24cb64f69d.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 1954123,
+          "sha256": "278e683a58e758bb8293021947733cdca27473a8789a79246f8657528dafe85b",
+          "at": "2026-10-27T15:25:24+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-19/0b2a0ce859aa4cc295f2fd24cb64f69d.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 1954123,
+        "sha256": "278e683a58e758bb8293021947733cdca27473a8789a79246f8657528dafe85b",
+        "at": "2026-10-27T15:25:24+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-F9E7BCD12422849F",
+        "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]世昌股份:2023年年度报告",
+        "published_on": "2024-03-19",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-03-19/0b2a0ce859aa4cc295f2fd24cb64f69d.pdf",
+        "local_file": "sources/collection/originals/920022/annual_2023/DOC-F9E7BCD12422849F.pdf",
+        "sha256": "278e683a58e758bb8293021947733cdca27473a8789a79246f8657528dafe85b",
+        "bytes": 1954123,
+        "page_count": 130,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "873702",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1954123 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "130 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "130 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]世昌股份:2023年年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-19",
+        "period_end": "2023-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:25:24+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:49:45+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\annual_2023\\DOC-F9E7BCD12422849F.pdf",
+        "bytes": 1954123,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1954123 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "130 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "130 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]世昌股份:2023年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 130,
+        "text_chars": 2043,
+        "issues": [],
+        "sha256": "278e683a58e758bb8293021947733cdca27473a8789a79246f8657528dafe85b",
+        "cover_text_chars": 64,
+        "identity_probe_chars": 4618,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "annual_2024": {
+      "security_id": "BJ:920022",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 873702），1753484 bytes，七项校验通过",
+      "attempt_count": 2,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-05/448bb65b49ef4228bb516abb5390f5ae.pdf",
+          "http_status": null,
+          "outcome": "ERROR",
+          "error_code": "NEEQ_PDF_FETCH_FAILED",
+          "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
+          "at": "2026-10-27T15:23:34+08:00"
+        },
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-05/448bb65b49ef4228bb516abb5390f5ae.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 1753484,
+          "sha256": "f6a0dda3e6c858a8847467f2084c19c2625482927616337fb7db7cfd63bec194",
+          "at": "2026-10-27T15:25:28+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-05/448bb65b49ef4228bb516abb5390f5ae.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 1753484,
+        "sha256": "f6a0dda3e6c858a8847467f2084c19c2625482927616337fb7db7cfd63bec194",
+        "at": "2026-10-27T15:25:28+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-7A13D0F60CD3CC17",
+        "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]世昌股份:2024年年度报告",
+        "published_on": "2025-03-05",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-03-05/448bb65b49ef4228bb516abb5390f5ae.pdf",
+        "local_file": "sources/collection/originals/920022/annual_2024/DOC-7A13D0F60CD3CC17.pdf",
+        "sha256": "f6a0dda3e6c858a8847467f2084c19c2625482927616337fb7db7cfd63bec194",
+        "bytes": 1753484,
+        "page_count": 139,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "873702",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1753484 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "139 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "139 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]世昌股份:2024年年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-19",
+        "period_end": "2024-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:25:28+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T11:49:45+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\annual_2024\\DOC-7A13D0F60CD3CC17.pdf",
+        "bytes": 1753484,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1753484 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "139 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "139 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]世昌股份:2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 139,
+        "text_chars": 2035,
+        "issues": [],
+        "sha256": "f6a0dda3e6c858a8847467f2084c19c2625482927616337fb7db7cfd63bec194",
+        "cover_text_chars": 64,
+        "identity_probe_chars": 4586,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "h1_2024": {
+      "security_id": "BJ:920022",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 873702），1614042 bytes，七项校验通过",
+      "attempt_count": 2,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/bf6194a78bb748fe90ab18ebde1f0488.pdf",
+          "http_status": null,
+          "outcome": "ERROR",
+          "error_code": "NEEQ_PDF_FETCH_FAILED",
+          "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
+          "at": "2026-10-27T15:24:08+08:00"
+        },
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/bf6194a78bb748fe90ab18ebde1f0488.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 1614042,
+          "sha256": "11414763a2ad203200660fbff4c9586919aad9b516ba11daed9fcfa6d8c5367e",
+          "at": "2026-10-27T15:26:08+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/bf6194a78bb748fe90ab18ebde1f0488.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 1614042,
+        "sha256": "11414763a2ad203200660fbff4c9586919aad9b516ba11daed9fcfa6d8c5367e",
+        "at": "2026-10-27T15:26:08+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-5F02AD4C138E2D85",
+        "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]世昌股份:2024年半年度报告",
+        "published_on": "2024-08-29",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/bf6194a78bb748fe90ab18ebde1f0488.pdf",
+        "local_file": "sources/collection/originals/920022/h1_2024/DOC-5F02AD4C138E2D85.pdf",
+        "sha256": "11414763a2ad203200660fbff4c9586919aad9b516ba11daed9fcfa6d8c5367e",
+        "bytes": 1614042,
+        "page_count": 108,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "873702",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1614042 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "108 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "108 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]世昌股份:2024年半年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-19",
+        "period_end": "2024-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:26:08+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:49:49+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\h1_2024\\DOC-5F02AD4C138E2D85.pdf",
+        "bytes": 1614042,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1614042 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "108 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "108 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]世昌股份:2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 108,
+        "text_chars": 1967,
+        "issues": [],
+        "sha256": "11414763a2ad203200660fbff4c9586919aad9b516ba11daed9fcfa6d8c5367e",
+        "cover_text_chars": 64,
+        "identity_probe_chars": 4693,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "h1_2025": {
+      "security_id": "BJ:920022",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "A01 恢复补采：股转官方全文（旧码 873702），2211777 bytes，七项校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "neeq_official_pdf",
+          "method": "GET",
+          "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-05/e025d70ac24748f59ff1951ead612d30.pdf",
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "bytes": 2211777,
+          "sha256": "df78162bca6e0ae3e39456cdde1bbee38edaf2e5b24ab29c905bb41d0b487f37",
+          "at": "2026-10-27T15:26:13+08:00"
+        }
+      ],
+      "last_source_attempt": {
+        "route": "neeq_official_pdf",
+        "method": "GET",
+        "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-05/e025d70ac24748f59ff1951ead612d30.pdf",
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "bytes": 2211777,
+        "sha256": "df78162bca6e0ae3e39456cdde1bbee38edaf2e5b24ab29c905bb41d0b487f37",
+        "at": "2026-10-27T15:26:13+08:00"
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {
+        "document_id": "DOC-DD248D3BD260D8E5",
+        "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "NEEQ_OFFICIAL_PDF",
+        "title": "[定期报告]世昌股份:2025年半年度报告",
+        "published_on": "2025-08-05",
+        "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-05/e025d70ac24748f59ff1951ead612d30.pdf",
+        "local_file": "sources/collection/originals/920022/h1_2025/DOC-DD248D3BD260D8E5.pdf",
+        "sha256": "df78162bca6e0ae3e39456cdde1bbee38edaf2e5b24ab29c905bb41d0b487f37",
+        "bytes": 2211777,
+        "page_count": 107,
+        "form": "FULL_TEXT",
+        "old_neeq_code": "873702",
+        "identity_checks_first_pass": {},
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2211777 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "107 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "107 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]世昌股份:2025年半年度报告"
+          }
+        },
+        "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
+        "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
+      },
+      "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-19",
+        "period_end": "2025-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T15:26:13+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T11:49:49+08:00",
+        "status": "RECONCILED"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\h1_2025\\DOC-DD248D3BD260D8E5.pdf",
+        "bytes": 2211777,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2211777 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "107 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "107 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=[定期报告]世昌股份:2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 107,
+        "text_chars": 1676,
+        "issues": [],
+        "sha256": "df78162bca6e0ae3e39456cdde1bbee38edaf2e5b24ab29c905bb41d0b487f37",
+        "cover_text_chars": 64,
+        "identity_probe_chars": 4309,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      }
+    },
+    "q1_2024": {
+      "security_id": "BJ:920022",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:50:08+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-19",
+        "period_end": "2024-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:33+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q3_2024": {
+      "security_id": "BJ:920022",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:50:08+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-19",
+        "period_end": "2024-09-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:34+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q1_2025": {
+      "security_id": "BJ:920022",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_DISCLOSED_BY_ISSUER",
+      "status_reason": "A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:50:08+08:00",
+      "listing_date_evidence": {
+        "listing_date": "2025-09-19",
+        "period_end": "2025-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:33+08:00",
+        "status": "RECONCILED"
+      },
+      "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED"
+    },
+    "q3_2025": {
+      "security_id": "BJ:920022",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224765774.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 960,
+          "at": "2026-10-28T12:33:35+08:00",
+          "response_sha256": null,
+          "bytes": 709792,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-9E3D3323958B24C9",
+        "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年三季度报告",
+        "published_on": "2025-10-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224765774.PDF",
+        "local_file": "sources/collection/originals/920022/q3_2025/DOC-9E3D3323958B24C9.pdf",
+        "sha256": "25ed887d36343fa0d2441b2d8a97869c582bcdaa2f4da98553312fea65bc5d30",
+        "bytes": 709792,
+        "page_count": 20,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "709792 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "20 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "20 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-28T12:33:35+08:00",
+        "bytes_written": 709792
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:33:35+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224765774.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 960,
+        "at": "2026-10-28T12:33:35+08:00",
+        "response_sha256": null,
+        "bytes": 709792,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\q3_2025\\DOC-9E3D3323958B24C9.pdf.part",
+        "bytes": 709792,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "709792 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "20 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "20 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 20,
+        "text_chars": 1574,
+        "issues": [],
+        "sha256": "25ed887d36343fa0d2441b2d8a97869c582bcdaa2f4da98553312fea65bc5d30",
+        "cover_text_chars": 40,
+        "identity_probe_chars": 4358,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2026": {
+      "security_id": "BJ:920022",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "updated_at": "2026-10-28T12:33:35+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:33:34+08:00",
+        "status": "RECONCILED"
+      }
     }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225036979.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 2147,
-    "at": "2026-10-27T11:49:48+08:00",
-    "response_sha256": null,
-    "bytes": 2652353,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:49:48+08:00",
-    "bytes_written": 2652353
-   },
-   "document": {
-    "document_id": "DOC-EFCBFB68E83B84D0",
-    "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-03-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225036979.PDF",
-    "local_file": "sources/collection/originals/920022/annual_2025/DOC-EFCBFB68E83B84D0.pdf",
-    "sha256": "9d8e1a28ba3086875d62b83d5bbafca75bab73c8c254ee1d5134e9e1c9d5601a",
-    "bytes": 2652353,
-    "page_count": 156,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2652353 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "156 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "156 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\annual_2025\\DOC-EFCBFB68E83B84D0.pdf.part",
-    "bytes": 2652353,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2652353 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "156 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "156 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 156,
-    "text_chars": 1326,
-    "issues": [],
-    "sha256": "9d8e1a28ba3086875d62b83d5bbafca75bab73c8c254ee1d5134e9e1c9d5601a",
-    "cover_text_chars": 60,
-    "identity_probe_chars": 3015,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T11:49:48+08:00"
   },
-  "h1_2026": {
-   "security_id": "BJ:920022",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225495799.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1242,
-     "at": "2026-10-27T11:49:50+08:00",
-     "response_sha256": null,
-     "bytes": 1848383,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225495799.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1242,
-    "at": "2026-10-27T11:49:50+08:00",
-    "response_sha256": null,
-    "bytes": 1848383,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:49:50+08:00",
-    "bytes_written": 1848383
-   },
-   "document": {
-    "document_id": "DOC-40EEEAA9C4330A86",
-    "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-23",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-24/1225495799.PDF",
-    "local_file": "sources/collection/originals/920022/h1_2026/DOC-40EEEAA9C4330A86.pdf",
-    "sha256": "ae3fa4839dd37462095e1fd564ece80e86076c62c24d958ddba77576da4410db",
-    "bytes": 1848383,
-    "page_count": 116,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1848383 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "116 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "116 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\h1_2026\\DOC-40EEEAA9C4330A86.pdf.part",
-    "bytes": 1848383,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1848383 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "116 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "116 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 116,
-    "text_chars": 1701,
-    "issues": [],
-    "sha256": "ae3fa4839dd37462095e1fd564ece80e86076c62c24d958ddba77576da4410db",
-    "cover_text_chars": 61,
-    "identity_probe_chars": 3235,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T11:49:50+08:00"
-  },
-  "q1_2026": {
-   "security_id": "BJ:920022",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225241172.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1059,
-     "at": "2026-10-27T11:49:52+08:00",
-     "response_sha256": null,
-     "bytes": 667623,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225241172.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1059,
-    "at": "2026-10-27T11:49:52+08:00",
-    "response_sha256": null,
-    "bytes": 667623,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:49:52+08:00",
-    "bytes_written": 667623
-   },
-   "document": {
-    "document_id": "DOC-E990F14C0121C783",
-    "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年一季度报告",
-    "published_on": "2026-04-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225241172.PDF",
-    "local_file": "sources/collection/originals/920022/q1_2026/DOC-E990F14C0121C783.pdf",
-    "sha256": "dfbb9974bdefcf4129b0d31d80898772f9c9128ec335820c3679b144997ae206",
-    "bytes": 667623,
-    "page_count": 19,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "667623 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "19 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "19 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\q1_2026\\DOC-E990F14C0121C783.pdf.part",
-    "bytes": 667623,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "667623 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "19 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "19 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 19,
-    "text_chars": 1585,
-    "issues": [],
-    "sha256": "dfbb9974bdefcf4129b0d31d80898772f9c9128ec335820c3679b144997ae206",
-    "cover_text_chars": 40,
-    "identity_probe_chars": 4284,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:49:52+08:00"
-  },
-  "annual_2023": {
-   "security_id": "BJ:920022",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 873702），1954123 bytes，七项校验通过",
-   "attempt_count": 2,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-19/0b2a0ce859aa4cc295f2fd24cb64f69d.pdf",
-     "http_status": null,
-     "outcome": "ERROR",
-     "error_code": "NEEQ_PDF_FETCH_FAILED",
-     "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
-     "at": "2026-10-27T15:22:59+08:00"
-    },
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-19/0b2a0ce859aa4cc295f2fd24cb64f69d.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 1954123,
-     "sha256": "278e683a58e758bb8293021947733cdca27473a8789a79246f8657528dafe85b",
-     "at": "2026-10-27T15:25:24+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2024/2024-03-19/0b2a0ce859aa4cc295f2fd24cb64f69d.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 1954123,
-    "sha256": "278e683a58e758bb8293021947733cdca27473a8789a79246f8657528dafe85b",
-    "at": "2026-10-27T15:25:24+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-F9E7BCD12422849F",
-    "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]世昌股份:2023年年度报告",
-    "published_on": "2024-03-19",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-03-19/0b2a0ce859aa4cc295f2fd24cb64f69d.pdf",
-    "local_file": "sources/collection/originals/920022/annual_2023/DOC-F9E7BCD12422849F.pdf",
-    "sha256": "278e683a58e758bb8293021947733cdca27473a8789a79246f8657528dafe85b",
-    "bytes": 1954123,
-    "page_count": 130,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "873702",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1954123 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "130 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "130 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]世昌股份:2023年年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2025-09-19",
-    "period_end": "2023-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:25:24+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:49:45+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\annual_2023\\DOC-F9E7BCD12422849F.pdf",
-    "bytes": 1954123,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1954123 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "130 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "130 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]世昌股份:2023年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 130,
-    "text_chars": 2043,
-    "issues": [],
-    "sha256": "278e683a58e758bb8293021947733cdca27473a8789a79246f8657528dafe85b",
-    "cover_text_chars": 64,
-    "identity_probe_chars": 4618,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "annual_2024": {
-   "security_id": "BJ:920022",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 873702），1753484 bytes，七项校验通过",
-   "attempt_count": 2,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-05/448bb65b49ef4228bb516abb5390f5ae.pdf",
-     "http_status": null,
-     "outcome": "ERROR",
-     "error_code": "NEEQ_PDF_FETCH_FAILED",
-     "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
-     "at": "2026-10-27T15:23:34+08:00"
-    },
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-05/448bb65b49ef4228bb516abb5390f5ae.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 1753484,
-     "sha256": "f6a0dda3e6c858a8847467f2084c19c2625482927616337fb7db7cfd63bec194",
-     "at": "2026-10-27T15:25:28+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2025/2025-03-05/448bb65b49ef4228bb516abb5390f5ae.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 1753484,
-    "sha256": "f6a0dda3e6c858a8847467f2084c19c2625482927616337fb7db7cfd63bec194",
-    "at": "2026-10-27T15:25:28+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-7A13D0F60CD3CC17",
-    "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]世昌股份:2024年年度报告",
-    "published_on": "2025-03-05",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-03-05/448bb65b49ef4228bb516abb5390f5ae.pdf",
-    "local_file": "sources/collection/originals/920022/annual_2024/DOC-7A13D0F60CD3CC17.pdf",
-    "sha256": "f6a0dda3e6c858a8847467f2084c19c2625482927616337fb7db7cfd63bec194",
-    "bytes": 1753484,
-    "page_count": 139,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "873702",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1753484 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "139 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "139 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]世昌股份:2024年年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2025-09-19",
-    "period_end": "2024-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:25:28+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T11:49:45+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\annual_2024\\DOC-7A13D0F60CD3CC17.pdf",
-    "bytes": 1753484,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1753484 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "139 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "139 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]世昌股份:2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 139,
-    "text_chars": 2035,
-    "issues": [],
-    "sha256": "f6a0dda3e6c858a8847467f2084c19c2625482927616337fb7db7cfd63bec194",
-    "cover_text_chars": 64,
-    "identity_probe_chars": 4586,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "h1_2024": {
-   "security_id": "BJ:920022",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 873702），1614042 bytes，七项校验通过",
-   "attempt_count": 2,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/bf6194a78bb748fe90ab18ebde1f0488.pdf",
-     "http_status": null,
-     "outcome": "ERROR",
-     "error_code": "NEEQ_PDF_FETCH_FAILED",
-     "error": "HTTPError: HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Temporarily",
-     "at": "2026-10-27T15:24:08+08:00"
-    },
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/bf6194a78bb748fe90ab18ebde1f0488.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 1614042,
-     "sha256": "11414763a2ad203200660fbff4c9586919aad9b516ba11daed9fcfa6d8c5367e",
-     "at": "2026-10-27T15:26:08+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/bf6194a78bb748fe90ab18ebde1f0488.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 1614042,
-    "sha256": "11414763a2ad203200660fbff4c9586919aad9b516ba11daed9fcfa6d8c5367e",
-    "at": "2026-10-27T15:26:08+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-5F02AD4C138E2D85",
-    "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]世昌股份:2024年半年度报告",
-    "published_on": "2024-08-29",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2024/2024-08-29/bf6194a78bb748fe90ab18ebde1f0488.pdf",
-    "local_file": "sources/collection/originals/920022/h1_2024/DOC-5F02AD4C138E2D85.pdf",
-    "sha256": "11414763a2ad203200660fbff4c9586919aad9b516ba11daed9fcfa6d8c5367e",
-    "bytes": 1614042,
-    "page_count": 108,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "873702",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1614042 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "108 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "108 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]世昌股份:2024年半年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2025-09-19",
-    "period_end": "2024-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:26:08+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:49:49+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\h1_2024\\DOC-5F02AD4C138E2D85.pdf",
-    "bytes": 1614042,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1614042 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "108 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "108 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]世昌股份:2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 108,
-    "text_chars": 1967,
-    "issues": [],
-    "sha256": "11414763a2ad203200660fbff4c9586919aad9b516ba11daed9fcfa6d8c5367e",
-    "cover_text_chars": 64,
-    "identity_probe_chars": 4693,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "h1_2025": {
-   "security_id": "BJ:920022",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "A01 恢复补采：股转官方全文（旧码 873702），2211777 bytes，七项校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "neeq_official_pdf",
-     "method": "GET",
-     "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-05/e025d70ac24748f59ff1951ead612d30.pdf",
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "bytes": 2211777,
-     "sha256": "df78162bca6e0ae3e39456cdde1bbee38edaf2e5b24ab29c905bb41d0b487f37",
-     "at": "2026-10-27T15:26:13+08:00"
-    }
-   ],
-   "last_source_attempt": {
-    "route": "neeq_official_pdf",
-    "method": "GET",
-    "url": "https://www.neeq.com.cn/disclosure/2025/2025-08-05/e025d70ac24748f59ff1951ead612d30.pdf",
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "bytes": 2211777,
-    "sha256": "df78162bca6e0ae3e39456cdde1bbee38edaf2e5b24ab29c905bb41d0b487f37",
-    "at": "2026-10-27T15:26:13+08:00"
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {
-    "document_id": "DOC-DD248D3BD260D8E5",
-    "identity_key": "BJ:920022|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "NEEQ_OFFICIAL_PDF",
-    "title": "[定期报告]世昌股份:2025年半年度报告",
-    "published_on": "2025-08-05",
-    "primary_url": "https://www.neeq.com.cn/disclosure/2025/2025-08-05/e025d70ac24748f59ff1951ead612d30.pdf",
-    "local_file": "sources/collection/originals/920022/h1_2025/DOC-DD248D3BD260D8E5.pdf",
-    "sha256": "df78162bca6e0ae3e39456cdde1bbee38edaf2e5b24ab29c905bb41d0b487f37",
-    "bytes": 2211777,
-    "page_count": 107,
-    "form": "FULL_TEXT",
-    "old_neeq_code": "873702",
-    "identity_checks_first_pass": {},
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2211777 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "107 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "107 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]世昌股份:2025年半年度报告"
-     }
-    },
-    "identity_checks_source": "validation.checks@A01_NEEQ_RECOVERY",
-    "identity_verified_via": "A01_NEEQ_RECOVERY_OLD_CODE"
-   },
-   "reason_code": "APPLICABLE_WITH_DIFFERENT_PLATFORM_NEEQ",
-   "listing_date_evidence": {
-    "listing_date": "2025-09-19",
-    "period_end": "2025-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T15:26:13+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T11:49:49+08:00",
-    "status": "RECONCILED"
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920022\\h1_2025\\DOC-DD248D3BD260D8E5.pdf",
-    "bytes": 2211777,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2211777 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "107 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "107 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=世昌股份 代码=920022 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=[定期报告]世昌股份:2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=[定期报告]世昌股份:2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 107,
-    "text_chars": 1676,
-    "issues": [],
-    "sha256": "df78162bca6e0ae3e39456cdde1bbee38edaf2e5b24ab29c905bb41d0b487f37",
-    "cover_text_chars": 64,
-    "identity_probe_chars": 4309,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   }
-  },
-  "q1_2024": {
-   "security_id": "BJ:920022",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2024": {
-   "security_id": "BJ:920022",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q1_2025": {
-   "security_id": "BJ:920022",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2025": {
-   "security_id": "BJ:920022",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  },
-  "q3_2026": {
-   "security_id": "BJ:920022",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "BJ:920022",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0873702",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "920022,gfbj0873702",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 2,
-   "rows_fetched": 2,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 2,
-     "new_rows": 2,
-     "total_announcement": 2,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "4e42715c5de5b9a65d3720ac96262161d044e4b74c4b885038b38586a21d3588",
-     "response_bytes": 1309,
-     "raw_path": "sources/collection/raw/920022/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "BJ:920022",
       "category": "category_ndbg_szsh",
-      "stock": "920022,gfbj0873702",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:49:45+08:00",
-     "elapsed_ms": 1088
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225036979",
-     "title": "2025年年度报告",
-     "sec_code": "920022",
-     "sec_name": "世昌股份",
-     "published_on": "2026-03-25",
-     "adjunct_url": "finalpage/2026-03-26/1225036979.PDF",
-     "adjunct_size": 2591
-    },
-    {
-     "announcement_id": "1225036978",
-     "title": "2025年年度报告摘要",
-     "sec_code": "920022",
-     "sec_name": "世昌股份",
-     "published_on": "2026-03-25",
-     "adjunct_url": "finalpage/2026-03-26/1225036978.PDF",
-     "adjunct_size": 966
-    }
-   ],
-   "fetched_at": "2026-10-27T11:49:45+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "BJ:920022",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0873702",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "920022,gfbj0873702",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 2,
-   "rows_fetched": 2,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 2,
-     "new_rows": 2,
-     "total_announcement": 2,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "f6bf196e7f93be9907da24e6510876910d7cad60d101d193a9e8f6f4c545d45f",
-     "response_bytes": 1315,
-     "raw_path": "sources/collection/raw/920022/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0873702",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "920022,gfbj0873702",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 2,
+      "rows_fetched": 2,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 2,
+          "new_rows": 2,
+          "total_announcement": 2,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "4e42715c5de5b9a65d3720ac96262161d044e4b74c4b885038b38586a21d3588",
+          "response_bytes": 1309,
+          "raw_path": "sources/collection/raw/920022/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "920022,gfbj0873702",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:49:45+08:00",
+          "elapsed_ms": 1088
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225036979",
+          "title": "2025年年度报告",
+          "sec_code": "920022",
+          "sec_name": "世昌股份",
+          "published_on": "2026-03-25",
+          "adjunct_url": "finalpage/2026-03-26/1225036979.PDF",
+          "adjunct_size": 2591
+        },
+        {
+          "announcement_id": "1225036978",
+          "title": "2025年年度报告摘要",
+          "sec_code": "920022",
+          "sec_name": "世昌股份",
+          "published_on": "2026-03-25",
+          "adjunct_url": "finalpage/2026-03-26/1225036978.PDF",
+          "adjunct_size": 966
+        }
+      ],
+      "fetched_at": "2026-10-27T11:49:45+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "BJ:920022",
       "category": "category_bndbg_szsh",
-      "stock": "920022,gfbj0873702",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:49:49+08:00",
-     "elapsed_ms": 897
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225495799",
-     "title": "2026年半年度报告",
-     "sec_code": "920022",
-     "sec_name": "世昌股份",
-     "published_on": "2026-08-23",
-     "adjunct_url": "finalpage/2026-08-24/1225495799.PDF",
-     "adjunct_size": 1806
-    },
-    {
-     "announcement_id": "1225495798",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "920022",
-     "sec_name": "世昌股份",
-     "published_on": "2026-08-23",
-     "adjunct_url": "finalpage/2026-08-24/1225495798.PDF",
-     "adjunct_size": 737
-    }
-   ],
-   "fetched_at": "2026-10-27T11:49:49+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "BJ:920022",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0873702",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "920022,gfbj0873702",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 1,
-   "rows_fetched": 1,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 1,
-     "new_rows": 1,
-     "total_announcement": 1,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "10f9bbe0bde873bd65253e0bfcd06e3792e87fd25b2094661a26ebd79d8148a9",
-     "response_bytes": 735,
-     "raw_path": "sources/collection/raw/920022/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0873702",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "920022,gfbj0873702",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 2,
+      "rows_fetched": 2,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 2,
+          "new_rows": 2,
+          "total_announcement": 2,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "f6bf196e7f93be9907da24e6510876910d7cad60d101d193a9e8f6f4c545d45f",
+          "response_bytes": 1315,
+          "raw_path": "sources/collection/raw/920022/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "920022,gfbj0873702",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:49:49+08:00",
+          "elapsed_ms": 897
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225495799",
+          "title": "2026年半年度报告",
+          "sec_code": "920022",
+          "sec_name": "世昌股份",
+          "published_on": "2026-08-23",
+          "adjunct_url": "finalpage/2026-08-24/1225495799.PDF",
+          "adjunct_size": 1806
+        },
+        {
+          "announcement_id": "1225495798",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "920022",
+          "sec_name": "世昌股份",
+          "published_on": "2026-08-23",
+          "adjunct_url": "finalpage/2026-08-24/1225495798.PDF",
+          "adjunct_size": 737
+        }
+      ],
+      "fetched_at": "2026-10-27T11:49:49+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "BJ:920022",
       "category": "category_yjdbg_szsh",
-      "stock": "920022,gfbj0873702",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:49:51+08:00",
-     "elapsed_ms": 508
+      "column": "szse",
+      "org_id": "gfbj0873702",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "920022,gfbj0873702",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 1,
+      "rows_fetched": 1,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 1,
+          "new_rows": 1,
+          "total_announcement": 1,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "10f9bbe0bde873bd65253e0bfcd06e3792e87fd25b2094661a26ebd79d8148a9",
+          "response_bytes": 735,
+          "raw_path": "sources/collection/raw/920022/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "920022,gfbj0873702",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:33:33+08:00",
+          "elapsed_ms": 1579
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225241172",
+          "title": "2026年一季度报告",
+          "sec_code": "920022",
+          "sec_name": "世昌股份",
+          "published_on": "2026-04-27",
+          "adjunct_url": "finalpage/2026-04-28/1225241172.PDF",
+          "adjunct_size": 653
+        }
+      ],
+      "fetched_at": "2026-10-28T12:33:33+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "BJ:920022",
+      "category": "category_sjdbg_szsh",
+      "column": "szse",
+      "org_id": "gfbj0873702",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "920022,gfbj0873702",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 1,
+      "rows_fetched": 1,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 1,
+          "new_rows": 1,
+          "total_announcement": 1,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "3a8263f9a55e4e3ca687c53c64d61df60402a38c102324ee779f4c2da9e4a6b7",
+          "response_bytes": 735,
+          "raw_path": "sources/collection/raw/920022/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "920022,gfbj0873702",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:33:34+08:00",
+          "elapsed_ms": 1292
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224765774",
+          "title": "2025年三季度报告",
+          "sec_code": "920022",
+          "sec_name": "世昌股份",
+          "published_on": "2025-10-28",
+          "adjunct_url": "finalpage/2025-10-29/1224765774.PDF",
+          "adjunct_size": 694
+        }
+      ],
+      "fetched_at": "2026-10-28T12:33:34+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225241172",
-     "title": "2026年一季度报告",
-     "sec_code": "920022",
-     "sec_name": "世昌股份",
-     "published_on": "2026-04-27",
-     "adjunct_url": "finalpage/2026-04-28/1225241172.PDF",
-     "adjunct_size": 653
-    }
-   ],
-   "fetched_at": "2026-10-27T11:49:51+08:00"
-  }
- },
- "updated_at": "2026-10-27T22:26:27+08:00"
+  },
+  "updated_at": "2026-10-28T12:33:35+08:00"
 }

@@ -1428,8 +1428,25 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 1,
-   "source_attempts": [],
+   "attempt_count": 2,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224759617.PDF",
+     "request_params": {
+      "Range": "bytes=65536-"
+     },
+     "http_status": 206,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 2332,
+     "at": "2026-10-28T12:28:03+08:00",
+     "response_sha256": null,
+     "bytes": 168677,
+     "resumed_from": 65536
+    }
+   ],
    "document": {
     "document_id": "DOC-852562527528D98D",
     "identity_key": "SH:688539|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
@@ -1438,21 +1455,113 @@
     "title": "高华科技2025年第三季度报告",
     "published_on": "2025-10-29",
     "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224759617.PDF",
-    "local_file": "sources/collection/originals/688539/q3_2025/DOC-852562527528D98D.pdf"
+    "local_file": "sources/collection/originals/688539/q3_2025/DOC-852562527528D98D.pdf",
+    "sha256": "34bcff5d29fafb4b469c055a74730000c6079a7b330ec535e10f5809a7e5ed3d",
+    "bytes": 168677,
+    "page_count": 12,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "168677 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=高华科技 代码=688539 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=高华科技2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=高华科技2025年第三季度报告"
+     }
+    }
    },
    "checkpoint": {
-    "stage": "DOWNLOAD_STARTED",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224759617.PDF",
-    "part": "sources/collection/originals/688539/q3_2025/DOC-852562527528D98D.pdf.part",
-    "bytes_written": 0,
-    "attempt": 1,
-    "at": "2026-10-27T23:57:26+08:00"
+    "stage": "DONE",
+    "at": "2026-10-28T12:28:03+08:00",
+    "bytes_written": 168677
    },
-   "status": "IN_PROGRESS",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:28:03+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224759617.PDF",
+    "request_params": {
+     "Range": "bytes=65536-"
+    },
+    "http_status": 206,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 2332,
+    "at": "2026-10-28T12:28:03+08:00",
+    "response_sha256": null,
+    "bytes": 168677,
+    "resumed_from": 65536
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688539\\q3_2025\\DOC-852562527528D98D.pdf.part",
+    "bytes": 168677,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "168677 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "12 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "12 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=高华科技 代码=688539 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=高华科技2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=高华科技2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 12,
+    "text_chars": 2733,
+    "issues": [],
+    "sha256": "34bcff5d29fafb4b469c055a74730000c6079a7b330ec535e10f5809a7e5ed3d",
+    "cover_text_chars": 558,
+    "identity_probe_chars": 5260,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688539",
@@ -1465,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:28:03+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:28:00+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1818,8 +1932,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T23:57:23+08:00",
-     "elapsed_ms": 516
+     "fetched_at": "2026-10-28T12:28:00+08:00",
+     "elapsed_ms": 1953
     }
    ],
    "rows": [
@@ -1851,8 +1965,8 @@
      "adjunct_size": 439
     }
    ],
-   "fetched_at": "2026-10-27T23:57:23+08:00"
+   "fetched_at": "2026-10-28T12:28:00+08:00"
   }
  },
- "updated_at": "2026-10-27T23:57:26+08:00"
+ "updated_at": "2026-10-28T12:28:03+08:00"
 }

@@ -780,11 +780,22 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_APPLICABLE_PRE_LISTING",
+   "status_reason": "上市日 2025-01-15 晚于报告期结束日 2024-03-31，公司当时未上市",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:09+08:00",
+   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+   "listing_date_evidence": {
+    "listing_date": "2025-01-15",
+    "period_end": "2024-03-31",
+    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+   },
+   "index_ref": {
+    "category": "category_yjdbg_szsh",
+    "fetched_at": "2026-10-28T12:29:09+08:00",
+    "status": "RECONCILED"
+   }
   },
   "q3_2024": {
    "security_id": "SH:688583",
@@ -797,11 +808,22 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_APPLICABLE_PRE_LISTING",
+   "status_reason": "上市日 2025-01-15 晚于报告期结束日 2024-09-30，公司当时未上市",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:09+08:00",
+   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+   "listing_date_evidence": {
+    "listing_date": "2025-01-15",
+    "period_end": "2024-09-30",
+    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+   },
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:29:09+08:00",
+    "status": "RECONCILED"
+   }
   },
   "q1_2025": {
    "security_id": "SH:688583",
@@ -810,15 +832,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223321819.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 615,
+     "at": "2026-10-28T12:29:10+08:00",
+     "response_sha256": null,
+     "bytes": 195700,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-C35CEA1D5926A17A",
+    "identity_key": "SH:688583|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年第一季度报告",
+    "published_on": "2025-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223321819.PDF",
+    "local_file": "sources/collection/originals/688583/q1_2025/DOC-C35CEA1D5926A17A.pdf",
+    "sha256": "0a3877dce4bb393b6e44b33dad3ee488d6ab4183661df4d4f4c4e5fbc8a96390",
+    "bytes": 195700,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "195700 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=思看科技 代码=688583 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:10+08:00",
+    "bytes_written": 195700
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:10+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223321819.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 615,
+    "at": "2026-10-28T12:29:10+08:00",
+    "response_sha256": null,
+    "bytes": 195700,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688583\\q1_2025\\DOC-C35CEA1D5926A17A.pdf.part",
+    "bytes": 195700,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "195700 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=思看科技 代码=688583 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2187,
+    "issues": [],
+    "sha256": "0a3877dce4bb393b6e44b33dad3ee488d6ab4183661df4d4f4c4e5fbc8a96390",
+    "cover_text_chars": 458,
+    "identity_probe_chars": 4846,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "SH:688583",
@@ -827,15 +974,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224761539.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 934,
+     "at": "2026-10-28T12:29:11+08:00",
+     "response_sha256": null,
+     "bytes": 197018,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-21C8B36AF5C6A255",
+    "identity_key": "SH:688583|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年第三季度报告",
+    "published_on": "2025-10-29",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224761539.PDF",
+    "local_file": "sources/collection/originals/688583/q3_2025/DOC-21C8B36AF5C6A255.pdf",
+    "sha256": "5ef29ed38af6924c2f4d0fc471c97b19ae9a11e9224395ab6c5341cf0b35d760",
+    "bytes": 197018,
+    "page_count": 13,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "197018 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=思看科技 代码=688583 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:29:11+08:00",
+    "bytes_written": 197018
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:29:11+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224761539.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 934,
+    "at": "2026-10-28T12:29:11+08:00",
+    "response_sha256": null,
+    "bytes": 197018,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\688583\\q3_2025\\DOC-21C8B36AF5C6A255.pdf.part",
+    "bytes": 197018,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "197018 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "13 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "13 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=思看科技 代码=688583 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年第三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 13,
+    "text_chars": 2264,
+    "issues": [],
+    "sha256": "5ef29ed38af6924c2f4d0fc471c97b19ae9a11e9224395ab6c5341cf0b35d760",
+    "cover_text_chars": 485,
+    "identity_probe_chars": 4885,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "SH:688583",
@@ -848,11 +1120,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:26+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:29:11+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:29:09+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1070,8 +1347,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:41:17+08:00",
-     "elapsed_ms": 515
+     "fetched_at": "2026-10-28T12:29:09+08:00",
+     "elapsed_ms": 1111
     }
    ],
    "rows": [
@@ -1094,8 +1371,67 @@
      "adjunct_size": 192
     }
    ],
-   "fetched_at": "2026-10-27T11:41:17+08:00"
+   "fetched_at": "2026-10-28T12:29:09+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "SH:688583",
+   "category": "category_sjdbg_szsh",
+   "column": "sse",
+   "org_id": "9900059081",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "sse",
+    "category": "category_sjdbg_szsh",
+    "stock": "688583,9900059081",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 1,
+   "rows_fetched": 1,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 1,
+     "new_rows": 1,
+     "total_announcement": 1,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "f64eaf45e1775a6f27edcc64d9c1d592949f6bf05e035a7692b382429d797e47",
+     "response_bytes": 782,
+     "raw_path": "sources/collection/raw/688583/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "sse",
+      "category": "category_sjdbg_szsh",
+      "stock": "688583,9900059081",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:29:09+08:00",
+     "elapsed_ms": 608
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1224761539",
+     "title": "2025年第三季度报告",
+     "sec_code": "688583",
+     "sec_name": "思看科技",
+     "published_on": "2025-10-29",
+     "adjunct_url": "finalpage/2025-10-30/1224761539.PDF",
+     "adjunct_size": 193
+    }
+   ],
+   "fetched_at": "2026-10-28T12:29:09+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:26+08:00"
+ "updated_at": "2026-10-28T12:29:11+08:00"
 }

@@ -193,7 +193,7 @@ def decide() -> dict:
         if not info or info.get("error") or not info.get("index_complete"):
             rows.append({**case, "decision": "HOLD_INDEX_INCOMPLETE", "evidence": "股转索引未取全"})
             continue
-        period_year = slot[:4]
+        period_year = slot.split("_")[1]
         want = Q1 if slot.startswith("q1") else Q3
         hit = None
         for r in info["rows"]:

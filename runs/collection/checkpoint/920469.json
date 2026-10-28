@@ -1002,15 +1002,140 @@
    "period_label": "2024Q1",
    "period_end": "2024-03-31",
    "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219886879.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 954,
+     "at": "2026-10-28T12:36:22+08:00",
+     "response_sha256": null,
+     "bytes": 684213,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-0EA94F9AD554A6A4",
+    "identity_key": "BJ:920469|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年一季度报告",
+    "published_on": "2024-04-25",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219886879.PDF",
+    "local_file": "sources/collection/originals/920469/q1_2024/DOC-0EA94F9AD554A6A4.pdf",
+    "sha256": "481af41b3895fd4da466345fd8001d481806f11422714fcaf4c19357a2c3e7cd",
+    "bytes": 684213,
+    "page_count": 18,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "684213 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=富恒新材 代码=920469 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:22+08:00",
+    "bytes_written": 684213
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:22+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219886879.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 954,
+    "at": "2026-10-28T12:36:22+08:00",
+    "response_sha256": null,
+    "bytes": 684213,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920469\\q1_2024\\DOC-0EA94F9AD554A6A4.pdf.part",
+    "bytes": 684213,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.5"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "684213 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "18 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "18 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=富恒新材 代码=920469 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 18,
+    "text_chars": 1597,
+    "issues": [],
+    "sha256": "481af41b3895fd4da466345fd8001d481806f11422714fcaf4c19357a2c3e7cd",
+    "cover_text_chars": 69,
+    "identity_probe_chars": 4786,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2024": {
    "security_id": "BJ:920469",
@@ -1019,15 +1144,140 @@
    "period_label": "2024Q3",
    "period_end": "2024-09-30",
    "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561179.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 933,
+     "at": "2026-10-28T12:36:24+08:00",
+     "response_sha256": null,
+     "bytes": 547641,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-DB79946B1B4BC491",
+    "identity_key": "BJ:920469|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2024年三季度报告",
+    "published_on": "2024-10-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561179.PDF",
+    "local_file": "sources/collection/originals/920469/q3_2024/DOC-DB79946B1B4BC491.pdf",
+    "sha256": "85fba0889ba37d9c5e4b8b86b2fe4dadb1a73c235828a080c961c1bb257b53d7",
+    "bytes": 547641,
+    "page_count": 23,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "547641 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "23 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "23 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=富恒新材 代码=920469 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:24+08:00",
+    "bytes_written": 547641
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:24+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2024-10-29/1221561179.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 933,
+    "at": "2026-10-28T12:36:24+08:00",
+    "response_sha256": null,
+    "bytes": 547641,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920469\\q3_2024\\DOC-DB79946B1B4BC491.pdf.part",
+    "bytes": 547641,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "547641 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "23 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "23 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=富恒新材 代码=920469 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2024年三季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 23,
+    "text_chars": 1636,
+    "issues": [],
+    "sha256": "85fba0889ba37d9c5e4b8b86b2fe4dadb1a73c235828a080c961c1bb257b53d7",
+    "cover_text_chars": 69,
+    "identity_probe_chars": 4543,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q1_2025": {
    "security_id": "BJ:920469",
@@ -1036,15 +1286,140 @@
    "period_label": "2025Q1",
    "period_end": "2025-03-31",
    "statutory_deadline": "2025-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223429023.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 788,
+     "at": "2026-10-28T12:36:25+08:00",
+     "response_sha256": null,
+     "bytes": 575171,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-0459D71C40B8A2C3",
+    "identity_key": "BJ:920469|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+    "revision_no": 0,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年一季度报告",
+    "published_on": "2025-04-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223429023.PDF",
+    "local_file": "sources/collection/originals/920469/q1_2025/DOC-0459D71C40B8A2C3.pdf",
+    "sha256": "274429b317f28f927572ab5f900fe96a0776eae96bf18ed36aa0f3d38f17503a",
+    "bytes": 575171,
+    "page_count": 19,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "575171 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=富恒新材 代码=920469 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:26+08:00",
+    "bytes_written": 575171
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:26+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223429023.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 788,
+    "at": "2026-10-28T12:36:25+08:00",
+    "response_sha256": null,
+    "bytes": 575171,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920469\\q1_2025\\DOC-0459D71C40B8A2C3.pdf.part",
+    "bytes": 575171,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "575171 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "19 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "19 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=富恒新材 代码=920469 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年一季度报告"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 19,
+    "text_chars": 1580,
+    "issues": [],
+    "sha256": "274429b317f28f927572ab5f900fe96a0776eae96bf18ed36aa0f3d38f17503a",
+    "cover_text_chars": 69,
+    "identity_probe_chars": 4540,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2025": {
    "security_id": "BJ:920469",
@@ -1053,15 +1428,140 @@
    "period_label": "2025Q3",
    "period_end": "2025-09-30",
    "statutory_deadline": "2025-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "attempt_count": 1,
+   "source_attempts": [
+    {
+     "route": "cninfo_pdf",
+     "method": "GET",
+     "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225267360.PDF",
+     "request_params": {
+      "Range": null
+     },
+     "http_status": 200,
+     "outcome": "SUCCESS",
+     "error_code": null,
+     "elapsed_ms": 806,
+     "at": "2026-10-28T12:36:26+08:00",
+     "response_sha256": null,
+     "bytes": 627521,
+     "resumed_from": 0
+    }
+   ],
+   "document": {
+    "document_id": "DOC-8938C19A9DADF5C7",
+    "identity_key": "BJ:920469|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|1",
+    "revision_no": 1,
+    "source_type": "CNINFO_OFFICIAL_PDF",
+    "title": "2025年三季度报告（更正后）",
+    "published_on": "2026-04-28",
+    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225267360.PDF",
+    "local_file": "sources/collection/originals/920469/q3_2025/DOC-8938C19A9DADF5C7.pdf",
+    "sha256": "28fa846aa4236397624385319a67aa4fa4894ffff24a750b9836ab4941320104",
+    "bytes": 627521,
+    "page_count": 24,
+    "form": "FULL_TEXT",
+    "identity_checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "627521 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "24 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "24 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=富恒新材 代码=920469 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告（更正后）"
+     }
+    }
+   },
+   "checkpoint": {
+    "stage": "DONE",
+    "at": "2026-10-28T12:36:27+08:00",
+    "bytes_written": 627521
+   },
+   "status": "COLLECTED_IDENTITY_VERIFIED",
+   "status_reason": "校验通过",
+   "last_error": null,
+   "next_action": "NONE",
+   "updated_at": "2026-10-28T12:36:27+08:00",
+   "last_source_attempt": {
+    "route": "cninfo_pdf",
+    "method": "GET",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225267360.PDF",
+    "request_params": {
+     "Range": null
+    },
+    "http_status": 200,
+    "outcome": "SUCCESS",
+    "error_code": null,
+    "elapsed_ms": 806,
+    "at": "2026-10-28T12:36:26+08:00",
+    "response_sha256": null,
+    "bytes": 627521,
+    "resumed_from": 0
+   },
+   "validation": {
+    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920469\\q3_2025\\DOC-8938C19A9DADF5C7.pdf.part",
+    "bytes": 627521,
+    "checks": {
+     "MAGIC_HEADER": {
+      "result": "PASS",
+      "detail": "%PDF-1.7"
+     },
+     "SIZE_FLOOR": {
+      "result": "PASS",
+      "detail": "627521 bytes"
+     },
+     "PDF_OPENABLE": {
+      "result": "PASS",
+      "detail": "24 pages"
+     },
+     "PAGE_COUNT_FLOOR": {
+      "result": "PASS",
+      "detail": "24 >= 3"
+     },
+     "ISSUER_MATCH": {
+      "result": "PASS",
+      "detail": "证券简称=富恒新材 代码=920469 方式=FULL_ABBR 范围=P1-8"
+     },
+     "PERIOD_MATCH": {
+      "result": "PASS",
+      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告（更正后）"
+     },
+     "FORM_FULL_TEXT": {
+      "result": "PASS",
+      "detail": "title=2025年三季度报告（更正后）"
+     }
+    },
+    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+    "form": "FULL_TEXT",
+    "page_count": 24,
+    "text_chars": 1681,
+    "issues": [],
+    "sha256": "28fa846aa4236397624385319a67aa4fa4894ffff24a750b9836ab4941320104",
+    "cover_text_chars": 69,
+    "identity_probe_chars": 4755,
+    "issuer_search_scope": "P1-8",
+    "issuer_match_mode": "FULL_ABBR",
+    "period_match_method": "BODY_PHRASE"
+   }
   },
   "q3_2026": {
    "security_id": "BJ:920469",
@@ -1074,11 +1574,16 @@
    "source_attempts": [],
    "document": {},
    "checkpoint": {},
-   "status": "NOT_TRIED",
-   "status_reason": "目录检索未完成：cninfo_issuer_index；未尝试不等于缺件",
-   "last_error": "cninfo_issuer_index",
-   "next_action": "WAIT_CIRCUIT_HALF_OPEN",
-   "updated_at": "2026-10-27T22:26:27+08:00"
+   "status": "NOT_YET_DISCLOSED",
+   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+   "last_error": null,
+   "next_action": "WAIT_NEXT_CYCLE",
+   "updated_at": "2026-10-28T12:36:27+08:00",
+   "index_ref": {
+    "category": "category_sjdbg_szsh",
+    "fetched_at": "2026-10-28T12:36:23+08:00",
+    "status": "RECONCILED"
+   }
   }
  },
  "indexes": {
@@ -1494,8 +1999,8 @@
       "pageNum": "1",
       "pageSize": "30"
      },
-     "fetched_at": "2026-10-27T11:57:46+08:00",
-     "elapsed_ms": 512
+     "fetched_at": "2026-10-28T12:36:21+08:00",
+     "elapsed_ms": 683
     }
    ],
    "rows": [
@@ -1527,8 +2032,103 @@
      "adjunct_size": 669
     }
    ],
-   "fetched_at": "2026-10-27T11:57:46+08:00"
+   "fetched_at": "2026-10-28T12:36:21+08:00"
+  },
+  "category_sjdbg_szsh": {
+   "security_id": "BJ:920469",
+   "category": "category_sjdbg_szsh",
+   "column": "szse",
+   "org_id": "gfbj0832469",
+   "request_base": {
+    "tabName": "fulltext",
+    "searchkey": "",
+    "isHLtitle": "true",
+    "column": "szse",
+    "category": "category_sjdbg_szsh",
+    "stock": "920469,gfbj0832469",
+    "seDate": "2023-01-01~2026-10-25"
+   },
+   "total_announcement": 5,
+   "rows_fetched": 5,
+   "pages_fetched": 1,
+   "reconciled": true,
+   "status": "RECONCILED",
+   "pages": [
+    {
+     "page": 1,
+     "http_status": 200,
+     "rows": 5,
+     "new_rows": 5,
+     "total_announcement": 5,
+     "totalpages": 0,
+     "has_more": false,
+     "response_sha256": "d348847b069c2a7fe1f735d07fe59228dc38f12846749dd36cdd2d1eb0455c2a",
+     "response_bytes": 3068,
+     "raw_path": "sources/collection/raw/920469/category_sjdbg_szsh_p1.json",
+     "request_params": {
+      "tabName": "fulltext",
+      "searchkey": "",
+      "isHLtitle": "true",
+      "column": "szse",
+      "category": "category_sjdbg_szsh",
+      "stock": "920469,gfbj0832469",
+      "seDate": "2023-01-01~2026-10-25",
+      "pageNum": "1",
+      "pageSize": "30"
+     },
+     "fetched_at": "2026-10-28T12:36:23+08:00",
+     "elapsed_ms": 674
+    }
+   ],
+   "rows": [
+    {
+     "announcement_id": "1225267369",
+     "title": "2025年三季度报告（更正公告）",
+     "sec_code": "920469",
+     "sec_name": "富恒新材",
+     "published_on": "2026-04-28",
+     "adjunct_url": "finalpage/2026-04-29/1225267369.PDF",
+     "adjunct_size": 174
+    },
+    {
+     "announcement_id": "1225267360",
+     "title": "2025年三季度报告（更正后）",
+     "sec_code": "920469",
+     "sec_name": "富恒新材",
+     "published_on": "2026-04-28",
+     "adjunct_url": "finalpage/2026-04-29/1225267360.PDF",
+     "adjunct_size": 614
+    },
+    {
+     "announcement_id": "1224768441",
+     "title": "2025年三季度报告",
+     "sec_code": "920469",
+     "sec_name": "富恒新材",
+     "published_on": "2025-10-28",
+     "adjunct_url": "finalpage/2025-10-29/1224768441.PDF",
+     "adjunct_size": 588
+    },
+    {
+     "announcement_id": "1221561179",
+     "title": "2024年三季度报告",
+     "sec_code": "832469",
+     "sec_name": "富恒新材",
+     "published_on": "2024-10-28",
+     "adjunct_url": "finalpage/2024-10-29/1221561179.PDF",
+     "adjunct_size": 536
+    },
+    {
+     "announcement_id": "1218148300",
+     "title": "2023年三季度报告",
+     "sec_code": "832469",
+     "sec_name": "富恒新材",
+     "published_on": "2023-10-24",
+     "adjunct_url": "finalpage/2023-10-25/1218148300.PDF",
+     "adjunct_size": 760
+    }
+   ],
+   "fetched_at": "2026-10-28T12:36:23+08:00"
   }
  },
- "updated_at": "2026-10-27T22:26:27+08:00"
+ "updated_at": "2026-10-28T12:36:27+08:00"
 }
