@@ -77,6 +77,10 @@ def main() -> int:
     hits = sum(len(a["keyword_hits"]) for a in ann)
     revs = sum(len(a["revision_rows"]) for a in ann)
     irs = sum(len(a["ir_rows"]) for a in ann)
+    rev_bd = {}
+    rev_path = OUT / "revision_chain_breakdown.json"
+    if rev_path.exists():
+        rev_bd = json.loads(rev_path.read_text(encoding="utf-8"))
     hit_dl = 0
     hit_manifest = OUT / "keyword_originals.jsonl"
     if hit_manifest.exists():
@@ -162,6 +166,9 @@ def main() -> int:
         "",
         f"- 覆盖公司 {len(ann_codes)}/1054，分页对账通过 {ann_ok}/1054（累计行数 == totalAnnouncement）。",
         f"- 关键词命中行 {hits}，已下载原件 {hit_dl}；更正/修订行 {revs}；IR 类行 {irs}。",
+        (f"- 更正/修订拆分：财务更正或重述 {rev_bd.get('financial_correction_or_restatement')}、"
+         f"交易文件修订稿 {rev_bd.get('transaction_document_revision')}、其他补充 {rev_bd.get('other_revision_supplement')}；"
+         "「修订稿」不是财务重述，引用时不得混算。" if rev_bd else "- 更正/修订拆分：未生成。"),
         "- 关键词只用于取件排序，不作为机器人业务证据；未命中不等于无业务。",
         "",
         "## 四、限制与未解决",
