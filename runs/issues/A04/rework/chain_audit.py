@@ -19,7 +19,7 @@ BAD = re.compile(r"(预案|股东大会|说明会|问询|回复|审计报告|专
 H1 = re.compile(r"(20\d{2})\s*年\s*半年度报告")
 Q1 = re.compile(r"(20\d{2})\s*年(?:度)?[\s_\-]*(?:第)?[\s_\-]*一[\s_\-]*季(?:度)?报告")
 Q3 = re.compile(r"(20\d{2})\s*年(?:度)?[\s_\-]*(?:第)?[\s_\-]*三[\s_\-]*季(?:度)?报告")
-AN = re.compile(r"(20\d{2})\s*年(?:度)?\s*年度报告")
+AN = re.compile(r"(20\d{2})\s*(?:年)?(?:度)?\s*年度报告")
 
 
 def slot_of(title: str) -> str | None:
@@ -30,22 +30,41 @@ def slot_of(title: str) -> str | None:
     return None
 
 
-def discover(ann_path: Path, valid_slots: set[str]) -> set[tuple[str, str]]:
+def discover(ann_path: Path, valid_slots: set[str]) -> tuple[set[tuple[str, str]], list[dict]]:
+    """返回 (在冻结范围内的财报版本事件集合, 逐行处置登记表)。
+
+    登记表覆盖**所有**含「报告 + 更正/重述/勘误/修订」的公告行，逐条写明处置与原因，
+    便于复核「排除项为什么被排除」，而不是只给一个筛选后的子集。
+    """
     out: set[tuple[str, str]] = set()
+    register: list[dict] = []
     if not ann_path.exists():
-        return out
+        return out, register
     for line in ann_path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         rec = json.loads(line)
         for it in rec.get("revision_rows") or []:
             t = it.get("title") or ""
-            if not (REP.search(t) and FIX.search(t)) or BAD.search(t) or "摘要" in t:
+            if not (REP.search(t) and FIX.search(t)):
                 continue
             sl = slot_of(t)
-            if sl in valid_slots:
+            row = {"security_id": rec["security_id"], "stock_code": rec["stock_code"],
+                   "title": t, "published_on": it.get("published_on", ""),
+                   "matched_slot": sl or "", "url": it.get("url", "")}
+            if "摘要" in t:
+                row.update(disposition="EXCLUDED_SUMMARY", reason="摘要件，不是报告全文")
+            elif BAD.search(t):
+                row.update(disposition="EXCLUDED_NON_FINANCIAL",
+                           reason="命中预案/股东大会/说明会/审计报告/独立董事制度/提示性公告等非财报更正关键词")
+            elif sl not in valid_slots:
+                row.update(disposition="EXCLUDED_OUT_OF_FROZEN_SCOPE",
+                           reason=f"标题可解析到 {sl or 'NA'}，不在冻结 12 槽内")
+            else:
+                row.update(disposition="IN_SCOPE", reason="计入冻结范围内的财报版本事件")
                 out.add((rec["security_id"], sl))
-    return out
+            register.append(row)
+    return out, register
 
 
 def verify_file(root: Path, entry: dict | None, sha) -> tuple[bool, bool, str]:
@@ -64,7 +83,7 @@ def audit(root: Path, period_end: dict[str, str], sha) -> dict:
     chain_path = root / "runs/issues/A04R/correction_chains.json"
     ann_path = root / "runs/issues/A04R/announcement_index.jsonl"
     chain = json.loads(chain_path.read_text(encoding="utf-8")) if chain_path.exists() else {}
-    discovered = discover(ann_path, set(period_end))
+    discovered, register = discover(ann_path, set(period_end))
     chains = {(r["security_id"], r["slot_id"]): r for r in chain.get("rows", [])}
     gaps = {(g["security_id"], g["slot_id"]): g for g in chain.get("gap_rows", [])}
     missing = sorted(discovered - set(chains) - set(gaps))
@@ -122,6 +141,8 @@ def audit(root: Path, period_end: dict[str, str], sha) -> dict:
         "notice_chains": sum(1 for r in rows if r["notice_id"]),
         "notice_with_file_and_hash": sum(1 for r in rows if r["notice_id"] and r["notice_file"] == "ok" and r["notice_hash"]),
         "notice_only_chains": sum(1 for r in chains.values() if r.get("corrected_full_text_missing")),
+        "disposition_counts": {k: sum(1 for r in register if r["disposition"] == k)
+                               for k in sorted({r["disposition"] for r in register})},
         "pass": (not missing and not extra and not violations and ok_rows == len(chains) and len(chains) > 0),
     }
-    return {"summary": result, "rows": rows}
+    return {"summary": result, "rows": rows, "register": register}

@@ -316,6 +316,7 @@ if chain_path.exists():
 audit_result = chain_audit.audit(ROOT, period_end, sha)
 chain_summary = audit_result["summary"]
 csvout("correction_chain_audit.csv", audit_result["rows"])
+csvout("correction_discovery_register.csv", audit_result["register"])
 chain_pairs = chain_summary["chains"]
 chain_complete = chain_summary["chains_verified_ok"]
 chain_gaps = [{"security_id": k[0], "slot_id": k[1]} for k in []]
@@ -371,6 +372,7 @@ checks = [
                   "notice_chains": chain_summary["notice_chains"],
                   "notice_with_file_and_hash": chain_summary["notice_with_file_and_hash"],
                   "notice_only_chains": chain_summary["notice_only_chains"],
+                  "disposition_counts": chain_summary["disposition_counts"],
                   "rule": ("发现范围（全量公告目录里的财报更正行）必须与链集合+缺口双向一致；"
                            "每组逐项核原件/更正件/公告件的文件存在、sha256、supersedes 互链、标题不同；"
                            "不读取上游 complete 计数"),

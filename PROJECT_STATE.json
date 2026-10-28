@@ -939,7 +939,7 @@
   "a04_stage": {
     "decision": "ACCEPTED_WITH_LIMITS",
     "review_file": "runs/issues/A04/rework/review.json",
-    "reviewed_at": "2026-10-28T20:36:41+08:00",
+    "reviewed_at": "2026-10-28T20:38:48+08:00",
     "release_S00": true,
     "checks": "12/12 PASS",
     "prior_review_preserved": "runs/issues/A04/review.json (RETURN_FOR_REWORK)",
@@ -957,9 +957,9 @@
     },
     "fixes_after_review": [
       "北交所不适用改用真实股转挂牌日（12→8，4 槽改判未披露）",
-      "AC06 逐行核挂牌日并纳入放行门槛",
-      "财务更正版本链 127 组闭环；发现规则并入修订；仅公告链补公告原件 55 份",
-      "AC12 改为发现范围对账 + 逐项文件/哈希/关联核验（304 份文件）"
+      "AC06 逐行核挂牌日并纳入 12 项放行门槛",
+      "版本发现并入「修订」，更正链 120→127 组；55 份更正公告落盘并登记独立 ID/哈希",
+      "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
   "current_gate": "S00_READY",
@@ -999,12 +999,13 @@
     "correction_chain_gaps": 0,
     "neeq_listing_dates_source": "LOCAL_ANNUAL_REPORT_PAGE",
     "neeq_listing_dates_found": 15,
-    "recheck_after_codex_review": "2026-10-28 (round 2)",
+    "recheck_after_codex_review": "2026-10-28 (round 3)",
     "correction_chain_verified_ok": 127,
     "correction_notice_originals": 55,
-    "correction_notice_only_chains": 5,
-    "correction_files_checked": 304,
-    "version_discovery_rule": "REP + (更正|重述|勘误|修订)"
+    "correction_notice_only_chains": 4,
+    "correction_files_checked": 305,
+    "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除摘要/非财报更正/冻结范围外期间",
+    "correction_discovery_rows": 223
   },
   "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/35"
 }

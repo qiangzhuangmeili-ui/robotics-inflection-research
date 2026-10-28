@@ -151,6 +151,13 @@ lines = [
     f"（`runs/issues/A04R/correction_chains.json`）。发现规则已并入「修订版/修订公告」；"
     f"原「576 条财务更正」把发行预案、股东大会通知算进来，现按「年度/半年度/季度报告 + 更正/重述/勘误/修订」"
     f"并排除预案、股东大会、摘要等，重算为 {rev_bd.get('financial_correction_or_restatement', 'NA')} 条。",
+    f"   发现登记：全目录含「报告+更正/重述/勘误/修订」的公告行 "
+    f"{sum((_ac12.get('disposition_counts') or {}).values())} 条，其中计入冻结范围 "
+    f"{(_ac12.get('disposition_counts') or {}).get('IN_SCOPE', 0)} 条、摘要 "
+    f"{(_ac12.get('disposition_counts') or {}).get('EXCLUDED_SUMMARY', 0)} 条、非财报更正 "
+    f"{(_ac12.get('disposition_counts') or {}).get('EXCLUDED_NON_FINANCIAL', 0)} 条、"
+    f"冻结范围外期间 {(_ac12.get('disposition_counts') or {}).get('EXCLUDED_OUT_OF_FROZEN_SCOPE', 0)} 条，"
+    "逐条原因见 `correction_discovery_register.csv`。",
     "",
     "## 二、12 个冻结报告槽复算",
     "",

@@ -4,7 +4,7 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": "2026-10-27T20:54:25+08:00",
-  "status": "IDLE_A04_ACCEPTED_WITH_LIMITS_RECHECKED_V2",
+  "status": "IDLE_A04_ACCEPTED_WITH_LIMITS_RECHECKED_V3",
   "claim_note": "A04 复验（第二轮复核意见）：修订纳入版本发现规则、仅公告链补公告原件、AC12 改为发现范围对账+逐项文件/哈希/关联核验；12/12 PASS，放行 S00。",
   "last_completed": {
     "issue_number": 34,
@@ -13,7 +13,7 @@
     "review_file": "runs/issues/A04/rework/review.json",
     "decision": "ACCEPTED_WITH_LIMITS",
     "acceptance": "12/12",
-    "summary": "12648 槽全终态：已核 11468、未到期 864、不适用 274、未披露 42；公告目录 1054/1054；更正链 127/127（含公告原件 55 份）"
+    "summary": "12648 槽全终态：已核 11468、未到期 864、不适用 274、未披露 42；公告目录 1054/1054；更正链 127/127（公告原件 55 份）"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -176,9 +176,16 @@
     "neeq_listing_dates_from_local_annuals": 15,
     "correction_chain_verified_ok": 127,
     "correction_notice_originals": 55,
-    "correction_notice_only_chains": 5,
-    "correction_files_checked": 304,
-    "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除预案/股东大会/说明会/审计报告/提示性公告/摘要"
+    "correction_notice_only_chains": 4,
+    "correction_files_checked": 305,
+    "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除预案/股东大会/说明会/审计报告/提示性公告/摘要",
+    "correction_discovery_rows": 223,
+    "correction_discovery_dispositions": {
+      "IN_SCOPE": 180,
+      "EXCLUDED_SUMMARY": 28,
+      "EXCLUDED_NON_FINANCIAL": 3,
+      "EXCLUDED_OUT_OF_FROZEN_SCOPE": 12
+    }
   },
   "history": {
     "a04_first_review": {
@@ -223,9 +230,9 @@
     "decision": "ACCEPTED_WITH_LIMITS",
     "release_S00": true,
     "review_file": "runs/issues/A04/rework/review.json",
-    "reviewed_at": "2026-10-28T20:36:41+08:00",
+    "reviewed_at": "2026-10-28T20:38:48+08:00",
     "review_round": "REWORK_20261028_AFTER_CODEX_REVIEW",
-    "checks": "12/12 PASS（AC12 逐项核验 127 组）",
+    "checks": "12/12 PASS（AC12：发现 127 组、逐项核 305 份文件、违规 0）",
     "prior_review_preserved": "runs/issues/A04/review.json",
     "gate": "全部 12 项必需检查 PASS 才放行（任一 FAIL/HOLD 不放行）"
   }
