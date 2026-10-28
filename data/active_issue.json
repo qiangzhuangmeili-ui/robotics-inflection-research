@@ -1,19 +1,19 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 50,
-  "active_issue_key": "A04R",
-  "executor": "WorkBuddy AI (executor=AI, review=SELF_CHECK)",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
   "started_at": "2026-10-27T20:54:25+08:00",
-  "status": "IN_PROGRESS_A04R_RESUMED",
-  "claim_note": "A04R #50 执行中按用户要求当日停机（非故障）：12 槽 12648 行已全部落台账，565 槽（116 家）仍 NOT_TRIED，公告目录未开始。断点与续跑命令见 runs/issues/A04R/PAUSE_STATE.md。",
+  "status": "IDLE_A04_ACCEPTED_WITH_LIMITS",
+  "claim_note": "A04R #50 完成（SELF_CHECK_PASS），A04 #34 复验 ACCEPTED_WITH_LIMITS，放行 S00；未做业务结论/指标/估值。",
   "last_completed": {
-    "issue_number": 33,
-    "issue_key": "A03",
-    "completed_at": "2026-10-27T20:13:55+08:00",
-    "review_file": "runs/issues/A03/review.json",
-    "decision": "SELF_CHECK_PASS",
-    "acceptance": "2/2",
-    "self_check": "补件 0 条；文档层 7378=7223+151+4；重复登记 71；字段层 42873/49296=86.97%；Drive 0 上传 0 回读"
+    "issue_number": 34,
+    "issue_key": "A04",
+    "completed_at": "2026-10-28T16:48:02+08:00",
+    "review_file": "runs/issues/A04/rework/review.json",
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "acceptance": "11/11 检查 PASS",
+    "summary": "12 槽 12648 行全部有终态；已核 11468、未到期 864、不适用 278、未披露 38；公告目录 1054/1054 对账通过"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 50,
-  "next_recommended_issue_key": "A04R",
-  "next_recommended_reason": "A04 复验依赖 A04R 补齐 5270 个季度槽终态与近两年公告/IR 目录覆盖；完成后回 A04 重验。",
+  "next_recommended_issue_number": 35,
+  "next_recommended_issue_key": "S00",
+  "next_recommended_reason": "A04 已放行资料轮；S00 可开始全池财务标准化（保留原值/单位/版本），仍不得直接跳业务深研或估值。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -190,5 +190,17 @@
     "runs/issues/A04R/progress_pass1.json": "ca37f8375c2e3756aca1b29dac0633b30e581f55750e3ef29baf69f1e671df99"
   },
   "resumed_at": "2026-10-28T12:27:24+08:00",
-  "resume_note": "按 PAUSE_STATE.md 续跑：先补 116 家 565 槽，再做北交所挂牌期判定与两年公告/IR 目录。"
+  "resume_note": "按 PAUSE_STATE.md 续跑：先补 116 家 565 槽，再做北交所挂牌期判定与两年公告/IR 目录。",
+  "a04r_result": {
+    "issue_number": 50,
+    "decision": "SELF_CHECK_PASS",
+    "review_file": "runs/issues/A04R/review.json",
+    "slot_pairs": 12648,
+    "verified": 11468,
+    "not_tried": 0,
+    "announcement_companies": 1054,
+    "keyword_originals": 264,
+    "revision_rows": 11183,
+    "financial_corrections": 576
+  }
 }
