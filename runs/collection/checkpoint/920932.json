@@ -1,2035 +1,2121 @@
 {
- "security_id": "BJ:920932",
- "slots": {
-  "annual_2023": {
-   "security_id": "BJ:920932",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425654.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1309,
-     "at": "2026-10-27T12:03:59+08:00",
-     "response_sha256": null,
-     "bytes": 3150111,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425654.PDF",
-    "request_params": {
-     "Range": null
+  "security_id": "BJ:920932",
+  "slots": {
+    "annual_2023": {
+      "security_id": "BJ:920932",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425654.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1309,
+          "at": "2026-10-27T12:03:59+08:00",
+          "response_sha256": null,
+          "bytes": 3150111,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425654.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1309,
+        "at": "2026-10-27T12:03:59+08:00",
+        "response_sha256": null,
+        "bytes": 3150111,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T12:03:59+08:00",
+        "bytes_written": 3150111
+      },
+      "document": {
+        "document_id": "DOC-52BBEBE888127B80",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|1",
+        "revision_no": 1,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2023年年度报告（更正后）",
+        "published_on": "2025-04-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425654.PDF",
+        "local_file": "sources/collection/originals/920932/annual_2023/DOC-52BBEBE888127B80.pdf",
+        "sha256": "d5b356c2fc51abce57360dc552259b90008ea78ec9bad2fe4d21852c7104745c",
+        "bytes": 3150111,
+        "page_count": 210,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3150111 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "210 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "210 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2023年年度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告（更正后）"
+          }
+        },
+        "version_chain": {
+          "policy": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+          "effective_document_id": "DOC-52BBEBE888127B80",
+          "versions": [
+            {
+              "revision_no": 0,
+              "document_id": "DOC-CA73E610AEEA06AC",
+              "title": "2023年年度报告",
+              "published_on": "2024-04-22",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219748909.PDF",
+              "role": "original",
+              "local_file": "sources/collection/originals/920932/annual_2023/DOC-CA73E610AEEA06AC.pdf",
+              "sha256": "a1205f91e05a19ea822719136c629e4558bd3f6cdda84b0a8b86468155ec231e",
+              "bytes": 3269420,
+              "downloaded_now": false,
+              "supersedes": null,
+              "superseded_by": "DOC-52BBEBE888127B80"
+            },
+            {
+              "revision_no": 1,
+              "document_id": "DOC-52BBEBE888127B80",
+              "title": "2023年年度报告（更正后）",
+              "published_on": "2025-04-29",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425654.PDF",
+              "role": "corrected",
+              "local_file": "sources/collection/originals/920932/annual_2023/DOC-52BBEBE888127B80.pdf",
+              "sha256": "d5b356c2fc51abce57360dc552259b90008ea78ec9bad2fe4d21852c7104745c",
+              "bytes": 3150111,
+              "downloaded_now": false,
+              "supersedes": "DOC-CA73E610AEEA06AC",
+              "superseded_by": null
+            }
+          ],
+          "correction_notice": {
+            "role": "notice",
+            "title": "2023年年度报告（更正公告）",
+            "published_on": "2025-04-29",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425617.PDF"
+          },
+          "complete": true,
+          "recorded_at": "2026-10-28T20:24:25+08:00"
+        },
+        "supersedes": "DOC-CA73E610AEEA06AC"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\annual_2023\\DOC-52BBEBE888127B80.pdf.part",
+        "bytes": 3150111,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3150111 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "210 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "210 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2023年年度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告（更正后）"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 210,
+        "text_chars": 1683,
+        "issues": [],
+        "sha256": "d5b356c2fc51abce57360dc552259b90008ea78ec9bad2fe4d21852c7104745c",
+        "cover_text_chars": 31,
+        "identity_probe_chars": 3163,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T12:03:59+08:00"
     },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1309,
-    "at": "2026-10-27T12:03:59+08:00",
-    "response_sha256": null,
-    "bytes": 3150111,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T12:03:59+08:00",
-    "bytes_written": 3150111
-   },
-   "document": {
-    "document_id": "DOC-52BBEBE888127B80",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|1",
-    "revision_no": 1,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2023年年度报告（更正后）",
-    "published_on": "2025-04-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425654.PDF",
-    "local_file": "sources/collection/originals/920932/annual_2023/DOC-52BBEBE888127B80.pdf",
-    "sha256": "d5b356c2fc51abce57360dc552259b90008ea78ec9bad2fe4d21852c7104745c",
-    "bytes": 3150111,
-    "page_count": 210,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3150111 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "210 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "210 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2023年年度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告（更正后）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\annual_2023\\DOC-52BBEBE888127B80.pdf.part",
-    "bytes": 3150111,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3150111 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "210 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "210 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2023年年度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告（更正后）"
-     }
+    "annual_2024": {
+      "security_id": "BJ:920932",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425612.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1147,
+          "at": "2026-10-27T12:04:00+08:00",
+          "response_sha256": null,
+          "bytes": 3395170,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425612.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1147,
+        "at": "2026-10-27T12:04:00+08:00",
+        "response_sha256": null,
+        "bytes": 3395170,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T12:04:01+08:00",
+        "bytes_written": 3395170
+      },
+      "document": {
+        "document_id": "DOC-68A1C7230D374DD7",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年年度报告",
+        "published_on": "2025-04-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425612.PDF",
+        "local_file": "sources/collection/originals/920932/annual_2024/DOC-68A1C7230D374DD7.pdf",
+        "sha256": "aeec532c106adc03162d391acf0f8b3fe2f15807158fd1a15831e10f8082517e",
+        "bytes": 3395170,
+        "page_count": 195,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3395170 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "195 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "195 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\annual_2024\\DOC-68A1C7230D374DD7.pdf.part",
+        "bytes": 3395170,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3395170 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "195 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "195 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 195,
+        "text_chars": 1797,
+        "issues": [],
+        "sha256": "aeec532c106adc03162d391acf0f8b3fe2f15807158fd1a15831e10f8082517e",
+        "cover_text_chars": 45,
+        "identity_probe_chars": 3675,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T12:04:01+08:00"
     },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 210,
-    "text_chars": 1683,
-    "issues": [],
-    "sha256": "d5b356c2fc51abce57360dc552259b90008ea78ec9bad2fe4d21852c7104745c",
-    "cover_text_chars": 31,
-    "identity_probe_chars": 3163,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T12:03:59+08:00"
+    "annual_2025": {
+      "security_id": "BJ:920932",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221183.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1032,
+          "at": "2026-10-27T12:04:02+08:00",
+          "response_sha256": null,
+          "bytes": 3109947,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221183.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1032,
+        "at": "2026-10-27T12:04:02+08:00",
+        "response_sha256": null,
+        "bytes": 3109947,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T12:04:02+08:00",
+        "bytes_written": 3109947
+      },
+      "document": {
+        "document_id": "DOC-70D7F3AFFE6A215B",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-04-26",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221183.PDF",
+        "local_file": "sources/collection/originals/920932/annual_2025/DOC-70D7F3AFFE6A215B.pdf",
+        "sha256": "0c80b9d573d11031137831ae143db55499e84f127f535db3aaaecdf4dd105e23",
+        "bytes": 3109947,
+        "page_count": 201,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3109947 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "201 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "201 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\annual_2025\\DOC-70D7F3AFFE6A215B.pdf.part",
+        "bytes": 3109947,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3109947 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "201 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "201 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 201,
+        "text_chars": 1686,
+        "issues": [],
+        "sha256": "0c80b9d573d11031137831ae143db55499e84f127f535db3aaaecdf4dd105e23",
+        "cover_text_chars": 27,
+        "identity_probe_chars": 3389,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T12:04:02+08:00"
+    },
+    "h1_2024": {
+      "security_id": "BJ:920932",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-08-26/1220988720.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1417,
+          "at": "2026-10-27T12:04:04+08:00",
+          "response_sha256": null,
+          "bytes": 2485795,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-08-26/1220988720.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1417,
+        "at": "2026-10-27T12:04:04+08:00",
+        "response_sha256": null,
+        "bytes": 2485795,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T12:04:05+08:00",
+        "bytes_written": 2485795
+      },
+      "document": {
+        "document_id": "DOC-790E8228EFE02E03",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年半年度报告",
+        "published_on": "2024-08-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-26/1220988720.PDF",
+        "local_file": "sources/collection/originals/920932/h1_2024/DOC-790E8228EFE02E03.pdf",
+        "sha256": "0c22e94581df0855f80c32b471f0eb5dfae712987e4f9a5ce016b7e0a7186d61",
+        "bytes": 2485795,
+        "page_count": 133,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2485795 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "133 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "133 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\h1_2024\\DOC-790E8228EFE02E03.pdf.part",
+        "bytes": 2485795,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2485795 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "133 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "133 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 133,
+        "text_chars": 1645,
+        "issues": [],
+        "sha256": "0c22e94581df0855f80c32b471f0eb5dfae712987e4f9a5ce016b7e0a7186d61",
+        "cover_text_chars": 1,
+        "identity_probe_chars": 3647,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T12:04:05+08:00"
+    },
+    "h1_2025": {
+      "security_id": "BJ:920932",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224561668.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1506,
+          "at": "2026-10-27T12:04:06+08:00",
+          "response_sha256": null,
+          "bytes": 2516801,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224561668.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1506,
+        "at": "2026-10-27T12:04:06+08:00",
+        "response_sha256": null,
+        "bytes": 2516801,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T12:04:06+08:00",
+        "bytes_written": 2516801
+      },
+      "document": {
+        "document_id": "DOC-FD11040AEEEBF1DD",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年半年度报告",
+        "published_on": "2025-08-21",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224561668.PDF",
+        "local_file": "sources/collection/originals/920932/h1_2025/DOC-FD11040AEEEBF1DD.pdf",
+        "sha256": "1d7eb393ee2721f437dde715c126dc2d65b5f43bdf5b7af1c6a8acebe6afe202",
+        "bytes": 2516801,
+        "page_count": 138,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2516801 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "138 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "138 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\h1_2025\\DOC-FD11040AEEEBF1DD.pdf.part",
+        "bytes": 2516801,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2516801 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "138 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "138 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 138,
+        "text_chars": 1762,
+        "issues": [],
+        "sha256": "1d7eb393ee2721f437dde715c126dc2d65b5f43bdf5b7af1c6a8acebe6afe202",
+        "cover_text_chars": 41,
+        "identity_probe_chars": 3206,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T12:04:06+08:00"
+    },
+    "h1_2026": {
+      "security_id": "BJ:920932",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225487234.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1770,
+          "at": "2026-10-27T12:04:08+08:00",
+          "response_sha256": null,
+          "bytes": 2843534,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225487234.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1770,
+        "at": "2026-10-27T12:04:08+08:00",
+        "response_sha256": null,
+        "bytes": 2843534,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T12:04:08+08:00",
+        "bytes_written": 2843534
+      },
+      "document": {
+        "document_id": "DOC-A656DE59E0040919",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-19",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225487234.PDF",
+        "local_file": "sources/collection/originals/920932/h1_2026/DOC-A656DE59E0040919.pdf",
+        "sha256": "9b9eb299456f875a9436469180c219b530c984fc1afa00a9d4c025bc7b84d961",
+        "bytes": 2843534,
+        "page_count": 134,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2843534 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "134 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "134 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\h1_2026\\DOC-A656DE59E0040919.pdf.part",
+        "bytes": 2843534,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2843534 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "134 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "134 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 134,
+        "text_chars": 1471,
+        "issues": [],
+        "sha256": "9b9eb299456f875a9436469180c219b530c984fc1afa00a9d4c025bc7b84d961",
+        "cover_text_chars": 31,
+        "identity_probe_chars": 2815,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
+      },
+      "updated_at": "2026-10-27T12:04:08+08:00"
+    },
+    "q1_2026": {
+      "security_id": "BJ:920932",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225220856.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1143,
+          "at": "2026-10-27T12:04:10+08:00",
+          "response_sha256": null,
+          "bytes": 952907,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225220856.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1143,
+        "at": "2026-10-27T12:04:10+08:00",
+        "response_sha256": null,
+        "bytes": 952907,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T12:04:10+08:00",
+        "bytes_written": 952907
+      },
+      "document": {
+        "document_id": "DOC-5637934B3A899C9A",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年一季度报告",
+        "published_on": "2026-04-26",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225220856.PDF",
+        "local_file": "sources/collection/originals/920932/q1_2026/DOC-5637934B3A899C9A.pdf",
+        "sha256": "96c410658867bb15bbb6da3923c8f9e177587d45036bd9f545dd754c50d2d072",
+        "bytes": 952907,
+        "page_count": 17,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "952907 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "17 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "17 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q1_2026\\DOC-5637934B3A899C9A.pdf.part",
+        "bytes": 952907,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "952907 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "17 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "17 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 17,
+        "text_chars": 1560,
+        "issues": [],
+        "sha256": "96c410658867bb15bbb6da3923c8f9e177587d45036bd9f545dd754c50d2d072",
+        "cover_text_chars": 38,
+        "identity_probe_chars": 4137,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T12:04:10+08:00"
+    },
+    "q1_2024": {
+      "security_id": "BJ:920932",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219748986.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1240,
+          "at": "2026-10-28T12:39:51+08:00",
+          "response_sha256": null,
+          "bytes": 1170098,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-9FD98FAA8970877D",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年一季度报告",
+        "published_on": "2024-04-21",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219748986.PDF",
+        "local_file": "sources/collection/originals/920932/q1_2024/DOC-9FD98FAA8970877D.pdf",
+        "sha256": "d9a6ac2a724f38a065a0897b60054d0823bcff4f42b63674759ab11fd9fd65d8",
+        "bytes": 1170098,
+        "page_count": 20,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1170098 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "20 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "20 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年一季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-28T12:39:51+08:00",
+        "bytes_written": 1170098
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:39:51+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219748986.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1240,
+        "at": "2026-10-28T12:39:51+08:00",
+        "response_sha256": null,
+        "bytes": 1170098,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q1_2024\\DOC-9FD98FAA8970877D.pdf.part",
+        "bytes": 1170098,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1170098 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "20 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "20 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 20,
+        "text_chars": 1528,
+        "issues": [],
+        "sha256": "d9a6ac2a724f38a065a0897b60054d0823bcff4f42b63674759ab11fd9fd65d8",
+        "cover_text_chars": 38,
+        "identity_probe_chars": 3911,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2024": {
+      "security_id": "BJ:920932",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425656.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 900,
+          "at": "2026-10-28T12:39:53+08:00",
+          "response_sha256": null,
+          "bytes": 995405,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-A31D99562339C81B",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|1",
+        "revision_no": 1,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年三季度报告（更正后）",
+        "published_on": "2025-04-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425656.PDF",
+        "local_file": "sources/collection/originals/920932/q3_2024/DOC-A31D99562339C81B.pdf",
+        "sha256": "3ae454e962c55c7f38a88b0d88ca20eba8a36af83aaa8c4a03d8680d6db85692",
+        "bytes": 995405,
+        "page_count": 18,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "995405 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "18 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "18 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告（更正后）"
+          }
+        },
+        "version_chain": {
+          "policy": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+          "effective_document_id": "DOC-A31D99562339C81B",
+          "versions": [
+            {
+              "revision_no": 0,
+              "document_id": "DOC-714CAE6B65CB6E11",
+              "title": "2024年三季度报告",
+              "published_on": "2024-10-28",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221544248.PDF",
+              "role": "original",
+              "local_file": "sources/collection/originals/920932/q3_2024/DOC-714CAE6B65CB6E11.pdf",
+              "sha256": "55ebe4a5d906dfe504ddd6c2a22e44b6efe0095d922e45038da3f7ee2d9e0e41",
+              "bytes": 1332256,
+              "downloaded_now": false,
+              "supersedes": null,
+              "superseded_by": "DOC-A31D99562339C81B"
+            },
+            {
+              "revision_no": 1,
+              "document_id": "DOC-A31D99562339C81B",
+              "title": "2024年三季度报告（更正后）",
+              "published_on": "2025-04-29",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425656.PDF",
+              "role": "corrected",
+              "local_file": "sources/collection/originals/920932/q3_2024/DOC-A31D99562339C81B.pdf",
+              "sha256": "3ae454e962c55c7f38a88b0d88ca20eba8a36af83aaa8c4a03d8680d6db85692",
+              "bytes": 995405,
+              "downloaded_now": false,
+              "supersedes": "DOC-714CAE6B65CB6E11",
+              "superseded_by": null
+            }
+          ],
+          "correction_notice": {
+            "role": "notice",
+            "title": "2024年三季度报告（更正公告）",
+            "published_on": "2025-04-29",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425643.PDF"
+          },
+          "complete": true,
+          "recorded_at": "2026-10-28T20:24:25+08:00"
+        },
+        "supersedes": "DOC-714CAE6B65CB6E11"
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-28T12:39:53+08:00",
+        "bytes_written": 995405
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:39:53+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425656.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 900,
+        "at": "2026-10-28T12:39:53+08:00",
+        "response_sha256": null,
+        "bytes": 995405,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q3_2024\\DOC-A31D99562339C81B.pdf.part",
+        "bytes": 995405,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "995405 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "18 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "18 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告（更正后）"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 18,
+        "text_chars": 1593,
+        "issues": [],
+        "sha256": "3ae454e962c55c7f38a88b0d88ca20eba8a36af83aaa8c4a03d8680d6db85692",
+        "cover_text_chars": 38,
+        "identity_probe_chars": 4408,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q1_2025": {
+      "security_id": "BJ:920932",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425930.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1164,
+          "at": "2026-10-28T12:39:54+08:00",
+          "response_sha256": null,
+          "bytes": 1429250,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-D1ACDB3190CA5D76",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年一季度报告",
+        "published_on": "2025-04-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425930.PDF",
+        "local_file": "sources/collection/originals/920932/q1_2025/DOC-D1ACDB3190CA5D76.pdf",
+        "sha256": "63b74ff96561f59411caf10d7bf69c44de09f3823990be18b14cc6a8c68024d4",
+        "bytes": 1429250,
+        "page_count": 19,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1429250 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "19 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "19 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-28T12:39:54+08:00",
+        "bytes_written": 1429250
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:39:54+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425930.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1164,
+        "at": "2026-10-28T12:39:54+08:00",
+        "response_sha256": null,
+        "bytes": 1429250,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q1_2025\\DOC-D1ACDB3190CA5D76.pdf.part",
+        "bytes": 1429250,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1429250 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "19 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "19 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 19,
+        "text_chars": 1489,
+        "issues": [],
+        "sha256": "63b74ff96561f59411caf10d7bf69c44de09f3823990be18b14cc6a8c68024d4",
+        "cover_text_chars": 38,
+        "identity_probe_chars": 3788,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2025": {
+      "security_id": "BJ:920932",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224745720.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 809,
+          "at": "2026-10-28T12:39:55+08:00",
+          "response_sha256": null,
+          "bytes": 868667,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-E429CCBD90A22E09",
+        "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年三季度报告",
+        "published_on": "2025-10-26",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224745720.PDF",
+        "local_file": "sources/collection/originals/920932/q3_2025/DOC-E429CCBD90A22E09.pdf",
+        "sha256": "597e0860c0cb159e3a78584dc6f670f6a1d21c964fc8fd9025a8c2ec58ea4f09",
+        "bytes": 868667,
+        "page_count": 18,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "868667 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "18 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "18 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-28T12:39:56+08:00",
+        "bytes_written": 868667
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-28T12:39:56+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224745720.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 809,
+        "at": "2026-10-28T12:39:55+08:00",
+        "response_sha256": null,
+        "bytes": 868667,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q3_2025\\DOC-E429CCBD90A22E09.pdf.part",
+        "bytes": 868667,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "868667 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "18 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "18 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 18,
+        "text_chars": 1580,
+        "issues": [],
+        "sha256": "597e0860c0cb159e3a78584dc6f670f6a1d21c964fc8fd9025a8c2ec58ea4f09",
+        "cover_text_chars": 38,
+        "identity_probe_chars": 4276,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2026": {
+      "security_id": "BJ:920932",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "updated_at": "2026-10-28T12:39:56+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-28T12:39:52+08:00",
+        "status": "RECONCILED"
+      }
+    }
   },
-  "annual_2024": {
-   "security_id": "BJ:920932",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425612.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1147,
-     "at": "2026-10-27T12:04:00+08:00",
-     "response_sha256": null,
-     "bytes": 3395170,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425612.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1147,
-    "at": "2026-10-27T12:04:00+08:00",
-    "response_sha256": null,
-    "bytes": 3395170,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T12:04:01+08:00",
-    "bytes_written": 3395170
-   },
-   "document": {
-    "document_id": "DOC-68A1C7230D374DD7",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年年度报告",
-    "published_on": "2025-04-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425612.PDF",
-    "local_file": "sources/collection/originals/920932/annual_2024/DOC-68A1C7230D374DD7.pdf",
-    "sha256": "aeec532c106adc03162d391acf0f8b3fe2f15807158fd1a15831e10f8082517e",
-    "bytes": 3395170,
-    "page_count": 195,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3395170 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "195 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "195 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\annual_2024\\DOC-68A1C7230D374DD7.pdf.part",
-    "bytes": 3395170,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3395170 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "195 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "195 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 195,
-    "text_chars": 1797,
-    "issues": [],
-    "sha256": "aeec532c106adc03162d391acf0f8b3fe2f15807158fd1a15831e10f8082517e",
-    "cover_text_chars": 45,
-    "identity_probe_chars": 3675,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T12:04:01+08:00"
-  },
-  "annual_2025": {
-   "security_id": "BJ:920932",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221183.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1032,
-     "at": "2026-10-27T12:04:02+08:00",
-     "response_sha256": null,
-     "bytes": 3109947,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221183.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1032,
-    "at": "2026-10-27T12:04:02+08:00",
-    "response_sha256": null,
-    "bytes": 3109947,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T12:04:02+08:00",
-    "bytes_written": 3109947
-   },
-   "document": {
-    "document_id": "DOC-70D7F3AFFE6A215B",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-04-26",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225221183.PDF",
-    "local_file": "sources/collection/originals/920932/annual_2025/DOC-70D7F3AFFE6A215B.pdf",
-    "sha256": "0c80b9d573d11031137831ae143db55499e84f127f535db3aaaecdf4dd105e23",
-    "bytes": 3109947,
-    "page_count": 201,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3109947 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "201 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "201 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\annual_2025\\DOC-70D7F3AFFE6A215B.pdf.part",
-    "bytes": 3109947,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3109947 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "201 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "201 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 201,
-    "text_chars": 1686,
-    "issues": [],
-    "sha256": "0c80b9d573d11031137831ae143db55499e84f127f535db3aaaecdf4dd105e23",
-    "cover_text_chars": 27,
-    "identity_probe_chars": 3389,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T12:04:02+08:00"
-  },
-  "h1_2024": {
-   "security_id": "BJ:920932",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-08-26/1220988720.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1417,
-     "at": "2026-10-27T12:04:04+08:00",
-     "response_sha256": null,
-     "bytes": 2485795,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-08-26/1220988720.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1417,
-    "at": "2026-10-27T12:04:04+08:00",
-    "response_sha256": null,
-    "bytes": 2485795,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T12:04:05+08:00",
-    "bytes_written": 2485795
-   },
-   "document": {
-    "document_id": "DOC-790E8228EFE02E03",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年半年度报告",
-    "published_on": "2024-08-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-26/1220988720.PDF",
-    "local_file": "sources/collection/originals/920932/h1_2024/DOC-790E8228EFE02E03.pdf",
-    "sha256": "0c22e94581df0855f80c32b471f0eb5dfae712987e4f9a5ce016b7e0a7186d61",
-    "bytes": 2485795,
-    "page_count": 133,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2485795 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "133 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "133 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\h1_2024\\DOC-790E8228EFE02E03.pdf.part",
-    "bytes": 2485795,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2485795 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "133 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "133 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 133,
-    "text_chars": 1645,
-    "issues": [],
-    "sha256": "0c22e94581df0855f80c32b471f0eb5dfae712987e4f9a5ce016b7e0a7186d61",
-    "cover_text_chars": 1,
-    "identity_probe_chars": 3647,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T12:04:05+08:00"
-  },
-  "h1_2025": {
-   "security_id": "BJ:920932",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224561668.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1506,
-     "at": "2026-10-27T12:04:06+08:00",
-     "response_sha256": null,
-     "bytes": 2516801,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224561668.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1506,
-    "at": "2026-10-27T12:04:06+08:00",
-    "response_sha256": null,
-    "bytes": 2516801,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T12:04:06+08:00",
-    "bytes_written": 2516801
-   },
-   "document": {
-    "document_id": "DOC-FD11040AEEEBF1DD",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年半年度报告",
-    "published_on": "2025-08-21",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224561668.PDF",
-    "local_file": "sources/collection/originals/920932/h1_2025/DOC-FD11040AEEEBF1DD.pdf",
-    "sha256": "1d7eb393ee2721f437dde715c126dc2d65b5f43bdf5b7af1c6a8acebe6afe202",
-    "bytes": 2516801,
-    "page_count": 138,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2516801 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "138 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "138 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\h1_2025\\DOC-FD11040AEEEBF1DD.pdf.part",
-    "bytes": 2516801,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2516801 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "138 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "138 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 138,
-    "text_chars": 1762,
-    "issues": [],
-    "sha256": "1d7eb393ee2721f437dde715c126dc2d65b5f43bdf5b7af1c6a8acebe6afe202",
-    "cover_text_chars": 41,
-    "identity_probe_chars": 3206,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T12:04:06+08:00"
-  },
-  "h1_2026": {
-   "security_id": "BJ:920932",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225487234.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1770,
-     "at": "2026-10-27T12:04:08+08:00",
-     "response_sha256": null,
-     "bytes": 2843534,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225487234.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1770,
-    "at": "2026-10-27T12:04:08+08:00",
-    "response_sha256": null,
-    "bytes": 2843534,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T12:04:08+08:00",
-    "bytes_written": 2843534
-   },
-   "document": {
-    "document_id": "DOC-A656DE59E0040919",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-19",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225487234.PDF",
-    "local_file": "sources/collection/originals/920932/h1_2026/DOC-A656DE59E0040919.pdf",
-    "sha256": "9b9eb299456f875a9436469180c219b530c984fc1afa00a9d4c025bc7b84d961",
-    "bytes": 2843534,
-    "page_count": 134,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2843534 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "134 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "134 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\h1_2026\\DOC-A656DE59E0040919.pdf.part",
-    "bytes": 2843534,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2843534 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "134 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "134 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=TITLE_PLUS_YEAR_IN_BODY; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 134,
-    "text_chars": 1471,
-    "issues": [],
-    "sha256": "9b9eb299456f875a9436469180c219b530c984fc1afa00a9d4c025bc7b84d961",
-    "cover_text_chars": 31,
-    "identity_probe_chars": 2815,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "TITLE_PLUS_YEAR_IN_BODY"
-   },
-   "updated_at": "2026-10-27T12:04:08+08:00"
-  },
-  "q1_2026": {
-   "security_id": "BJ:920932",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225220856.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1143,
-     "at": "2026-10-27T12:04:10+08:00",
-     "response_sha256": null,
-     "bytes": 952907,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225220856.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1143,
-    "at": "2026-10-27T12:04:10+08:00",
-    "response_sha256": null,
-    "bytes": 952907,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T12:04:10+08:00",
-    "bytes_written": 952907
-   },
-   "document": {
-    "document_id": "DOC-5637934B3A899C9A",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年一季度报告",
-    "published_on": "2026-04-26",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225220856.PDF",
-    "local_file": "sources/collection/originals/920932/q1_2026/DOC-5637934B3A899C9A.pdf",
-    "sha256": "96c410658867bb15bbb6da3923c8f9e177587d45036bd9f545dd754c50d2d072",
-    "bytes": 952907,
-    "page_count": 17,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "952907 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "17 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "17 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q1_2026\\DOC-5637934B3A899C9A.pdf.part",
-    "bytes": 952907,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "952907 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "17 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "17 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 17,
-    "text_chars": 1560,
-    "issues": [],
-    "sha256": "96c410658867bb15bbb6da3923c8f9e177587d45036bd9f545dd754c50d2d072",
-    "cover_text_chars": 38,
-    "identity_probe_chars": 4137,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T12:04:10+08:00"
-  },
-  "q1_2024": {
-   "security_id": "BJ:920932",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219748986.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1240,
-     "at": "2026-10-28T12:39:51+08:00",
-     "response_sha256": null,
-     "bytes": 1170098,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-9FD98FAA8970877D",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年一季度报告",
-    "published_on": "2024-04-21",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219748986.PDF",
-    "local_file": "sources/collection/originals/920932/q1_2024/DOC-9FD98FAA8970877D.pdf",
-    "sha256": "d9a6ac2a724f38a065a0897b60054d0823bcff4f42b63674759ab11fd9fd65d8",
-    "bytes": 1170098,
-    "page_count": 20,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1170098 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "20 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "20 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年一季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-28T12:39:51+08:00",
-    "bytes_written": 1170098
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-28T12:39:51+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-22/1219748986.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1240,
-    "at": "2026-10-28T12:39:51+08:00",
-    "response_sha256": null,
-    "bytes": 1170098,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q1_2024\\DOC-9FD98FAA8970877D.pdf.part",
-    "bytes": 1170098,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1170098 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "20 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "20 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 20,
-    "text_chars": 1528,
-    "issues": [],
-    "sha256": "d9a6ac2a724f38a065a0897b60054d0823bcff4f42b63674759ab11fd9fd65d8",
-    "cover_text_chars": 38,
-    "identity_probe_chars": 3911,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q3_2024": {
-   "security_id": "BJ:920932",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425656.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 900,
-     "at": "2026-10-28T12:39:53+08:00",
-     "response_sha256": null,
-     "bytes": 995405,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-A31D99562339C81B",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|1",
-    "revision_no": 1,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年三季度报告（更正后）",
-    "published_on": "2025-04-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425656.PDF",
-    "local_file": "sources/collection/originals/920932/q3_2024/DOC-A31D99562339C81B.pdf",
-    "sha256": "3ae454e962c55c7f38a88b0d88ca20eba8a36af83aaa8c4a03d8680d6db85692",
-    "bytes": 995405,
-    "page_count": 18,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "995405 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "18 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "18 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告（更正后）"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-28T12:39:53+08:00",
-    "bytes_written": 995405
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-28T12:39:53+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425656.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 900,
-    "at": "2026-10-28T12:39:53+08:00",
-    "response_sha256": null,
-    "bytes": 995405,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q3_2024\\DOC-A31D99562339C81B.pdf.part",
-    "bytes": 995405,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "995405 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "18 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "18 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告（更正后）"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 18,
-    "text_chars": 1593,
-    "issues": [],
-    "sha256": "3ae454e962c55c7f38a88b0d88ca20eba8a36af83aaa8c4a03d8680d6db85692",
-    "cover_text_chars": 38,
-    "identity_probe_chars": 4408,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q1_2025": {
-   "security_id": "BJ:920932",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425930.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1164,
-     "at": "2026-10-28T12:39:54+08:00",
-     "response_sha256": null,
-     "bytes": 1429250,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-D1ACDB3190CA5D76",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年一季度报告",
-    "published_on": "2025-04-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425930.PDF",
-    "local_file": "sources/collection/originals/920932/q1_2025/DOC-D1ACDB3190CA5D76.pdf",
-    "sha256": "63b74ff96561f59411caf10d7bf69c44de09f3823990be18b14cc6a8c68024d4",
-    "bytes": 1429250,
-    "page_count": 19,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1429250 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "19 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "19 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-28T12:39:54+08:00",
-    "bytes_written": 1429250
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-28T12:39:54+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223425930.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1164,
-    "at": "2026-10-28T12:39:54+08:00",
-    "response_sha256": null,
-    "bytes": 1429250,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q1_2025\\DOC-D1ACDB3190CA5D76.pdf.part",
-    "bytes": 1429250,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1429250 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "19 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "19 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 19,
-    "text_chars": 1489,
-    "issues": [],
-    "sha256": "63b74ff96561f59411caf10d7bf69c44de09f3823990be18b14cc6a8c68024d4",
-    "cover_text_chars": 38,
-    "identity_probe_chars": 3788,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q3_2025": {
-   "security_id": "BJ:920932",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224745720.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 809,
-     "at": "2026-10-28T12:39:55+08:00",
-     "response_sha256": null,
-     "bytes": 868667,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-E429CCBD90A22E09",
-    "identity_key": "BJ:920932|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年三季度报告",
-    "published_on": "2025-10-26",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224745720.PDF",
-    "local_file": "sources/collection/originals/920932/q3_2025/DOC-E429CCBD90A22E09.pdf",
-    "sha256": "597e0860c0cb159e3a78584dc6f670f6a1d21c964fc8fd9025a8c2ec58ea4f09",
-    "bytes": 868667,
-    "page_count": 18,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "868667 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "18 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "18 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年三季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-28T12:39:56+08:00",
-    "bytes_written": 868667
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-28T12:39:56+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224745720.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 809,
-    "at": "2026-10-28T12:39:55+08:00",
-    "response_sha256": null,
-    "bytes": 868667,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\920932\\q3_2025\\DOC-E429CCBD90A22E09.pdf.part",
-    "bytes": 868667,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "868667 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "18 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "18 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=科达自控 代码=920932 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 18,
-    "text_chars": 1580,
-    "issues": [],
-    "sha256": "597e0860c0cb159e3a78584dc6f670f6a1d21c964fc8fd9025a8c2ec58ea4f09",
-    "cover_text_chars": 38,
-    "identity_probe_chars": 4276,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q3_2026": {
-   "security_id": "BJ:920932",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_YET_DISCLOSED",
-   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
-   "last_error": null,
-   "next_action": "WAIT_NEXT_CYCLE",
-   "updated_at": "2026-10-28T12:39:56+08:00",
-   "index_ref": {
-    "category": "category_sjdbg_szsh",
-    "fetched_at": "2026-10-28T12:39:52+08:00",
-    "status": "RECONCILED"
-   }
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "BJ:920932",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0831832",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "920932,gfbj0831832",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 10,
-   "rows_fetched": 10,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 10,
-     "new_rows": 10,
-     "total_announcement": 10,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "ce21f734ca002422d3985ee22008d63e12b4098963fadf909a52e4da5d93e53d",
-     "response_bytes": 5937,
-     "raw_path": "sources/collection/raw/920932/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "BJ:920932",
       "category": "category_ndbg_szsh",
-      "stock": "920932,gfbj0831832",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T12:03:58+08:00",
-     "elapsed_ms": 784
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225221183",
-     "title": "2025年年度报告",
-     "sec_code": "920932",
-     "sec_name": "科达自控",
-     "published_on": "2026-04-26",
-     "adjunct_url": "finalpage/2026-04-27/1225221183.PDF",
-     "adjunct_size": 3038
-    },
-    {
-     "announcement_id": "1225221182",
-     "title": "2025年年度报告摘要",
-     "sec_code": "920932",
-     "sec_name": "科达自控",
-     "published_on": "2026-04-26",
-     "adjunct_url": "finalpage/2026-04-27/1225221182.PDF",
-     "adjunct_size": 1055
-    },
-    {
-     "announcement_id": "1223425654",
-     "title": "2023年年度报告（更正后）",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-04-28",
-     "adjunct_url": "finalpage/2025-04-29/1223425654.PDF",
-     "adjunct_size": 3077
-    },
-    {
-     "announcement_id": "1223425624",
-     "title": "2024年年度报告摘要",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-04-28",
-     "adjunct_url": "finalpage/2025-04-29/1223425624.PDF",
-     "adjunct_size": 1442
-    },
-    {
-     "announcement_id": "1223425617",
-     "title": "2023年年度报告（更正公告）",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-04-28",
-     "adjunct_url": "finalpage/2025-04-29/1223425617.PDF",
-     "adjunct_size": 319
-    },
-    {
-     "announcement_id": "1223425612",
-     "title": "2024年年度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-04-28",
-     "adjunct_url": "finalpage/2025-04-29/1223425612.PDF",
-     "adjunct_size": 3317
-    },
-    {
-     "announcement_id": "1219748924",
-     "title": "2023年年度报告摘要",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2024-04-21",
-     "adjunct_url": "finalpage/2024-04-22/1219748924.PDF",
-     "adjunct_size": 1272
-    },
-    {
-     "announcement_id": "1219748909",
-     "title": "2023年年度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2024-04-21",
-     "adjunct_url": "finalpage/2024-04-22/1219748909.PDF",
-     "adjunct_size": 3194
-    },
-    {
-     "announcement_id": "1216551892",
-     "title": "2022年年度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2023-04-23",
-     "adjunct_url": "finalpage/2023-04-24/1216551892.PDF",
-     "adjunct_size": 3176
-    },
-    {
-     "announcement_id": "1216551876",
-     "title": "2022年年度报告摘要",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2023-04-23",
-     "adjunct_url": "finalpage/2023-04-24/1216551876.PDF",
-     "adjunct_size": 859
-    }
-   ],
-   "fetched_at": "2026-10-27T12:03:58+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "BJ:920932",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0831832",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "920932,gfbj0831832",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "38c22ac5774e912067c83b90d34b33937364fab80bd284a9aa87d64d244e0662",
-     "response_bytes": 4777,
-     "raw_path": "sources/collection/raw/920932/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0831832",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "920932,gfbj0831832",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 10,
+      "rows_fetched": 10,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 10,
+          "new_rows": 10,
+          "total_announcement": 10,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "ce21f734ca002422d3985ee22008d63e12b4098963fadf909a52e4da5d93e53d",
+          "response_bytes": 5937,
+          "raw_path": "sources/collection/raw/920932/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "920932,gfbj0831832",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T12:03:58+08:00",
+          "elapsed_ms": 784
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225221183",
+          "title": "2025年年度报告",
+          "sec_code": "920932",
+          "sec_name": "科达自控",
+          "published_on": "2026-04-26",
+          "adjunct_url": "finalpage/2026-04-27/1225221183.PDF",
+          "adjunct_size": 3038
+        },
+        {
+          "announcement_id": "1225221182",
+          "title": "2025年年度报告摘要",
+          "sec_code": "920932",
+          "sec_name": "科达自控",
+          "published_on": "2026-04-26",
+          "adjunct_url": "finalpage/2026-04-27/1225221182.PDF",
+          "adjunct_size": 1055
+        },
+        {
+          "announcement_id": "1223425654",
+          "title": "2023年年度报告（更正后）",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-04-28",
+          "adjunct_url": "finalpage/2025-04-29/1223425654.PDF",
+          "adjunct_size": 3077
+        },
+        {
+          "announcement_id": "1223425624",
+          "title": "2024年年度报告摘要",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-04-28",
+          "adjunct_url": "finalpage/2025-04-29/1223425624.PDF",
+          "adjunct_size": 1442
+        },
+        {
+          "announcement_id": "1223425617",
+          "title": "2023年年度报告（更正公告）",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-04-28",
+          "adjunct_url": "finalpage/2025-04-29/1223425617.PDF",
+          "adjunct_size": 319
+        },
+        {
+          "announcement_id": "1223425612",
+          "title": "2024年年度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-04-28",
+          "adjunct_url": "finalpage/2025-04-29/1223425612.PDF",
+          "adjunct_size": 3317
+        },
+        {
+          "announcement_id": "1219748924",
+          "title": "2023年年度报告摘要",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2024-04-21",
+          "adjunct_url": "finalpage/2024-04-22/1219748924.PDF",
+          "adjunct_size": 1272
+        },
+        {
+          "announcement_id": "1219748909",
+          "title": "2023年年度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2024-04-21",
+          "adjunct_url": "finalpage/2024-04-22/1219748909.PDF",
+          "adjunct_size": 3194
+        },
+        {
+          "announcement_id": "1216551892",
+          "title": "2022年年度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2023-04-23",
+          "adjunct_url": "finalpage/2023-04-24/1216551892.PDF",
+          "adjunct_size": 3176
+        },
+        {
+          "announcement_id": "1216551876",
+          "title": "2022年年度报告摘要",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2023-04-23",
+          "adjunct_url": "finalpage/2023-04-24/1216551876.PDF",
+          "adjunct_size": 859
+        }
+      ],
+      "fetched_at": "2026-10-27T12:03:58+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "BJ:920932",
       "category": "category_bndbg_szsh",
-      "stock": "920932,gfbj0831832",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T12:04:03+08:00",
-     "elapsed_ms": 703
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225487234",
-     "title": "2026年半年度报告",
-     "sec_code": "920932",
-     "sec_name": "科达自控",
-     "published_on": "2026-08-19",
-     "adjunct_url": "finalpage/2026-08-20/1225487234.PDF",
-     "adjunct_size": 2778
-    },
-    {
-     "announcement_id": "1225487233",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "920932",
-     "sec_name": "科达自控",
-     "published_on": "2026-08-19",
-     "adjunct_url": "finalpage/2026-08-20/1225487233.PDF",
-     "adjunct_size": 1536
-    },
-    {
-     "announcement_id": "1224561668",
-     "title": "2025年半年度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-08-21",
-     "adjunct_url": "finalpage/2025-08-22/1224561668.PDF",
-     "adjunct_size": 2459
-    },
-    {
-     "announcement_id": "1224561667",
-     "title": "2025年半年度报告摘要",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-08-21",
-     "adjunct_url": "finalpage/2025-08-22/1224561667.PDF",
-     "adjunct_size": 1327
-    },
-    {
-     "announcement_id": "1220988720",
-     "title": "2024年半年度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2024-08-25",
-     "adjunct_url": "finalpage/2024-08-26/1220988720.PDF",
-     "adjunct_size": 2429
-    },
-    {
-     "announcement_id": "1220988716",
-     "title": "2024年半年度报告摘要",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2024-08-25",
-     "adjunct_url": "finalpage/2024-08-26/1220988716.PDF",
-     "adjunct_size": 1323
-    },
-    {
-     "announcement_id": "1217596349",
-     "title": "2023年半年度报告摘要",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2023-08-20",
-     "adjunct_url": "finalpage/2023-08-21/1217596349.PDF",
-     "adjunct_size": 840
-    },
-    {
-     "announcement_id": "1217596340",
-     "title": "2023年半年度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2023-08-20",
-     "adjunct_url": "finalpage/2023-08-21/1217596340.PDF",
-     "adjunct_size": 2341
-    }
-   ],
-   "fetched_at": "2026-10-27T12:04:03+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "BJ:920932",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0831832",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "920932,gfbj0831832",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 4,
-   "rows_fetched": 4,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 4,
-     "new_rows": 4,
-     "total_announcement": 4,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "2d969bd9903f649dc4e73cd7c014f8db5fb6654f64273bb9f2819900a50e2900",
-     "response_bytes": 2457,
-     "raw_path": "sources/collection/raw/920932/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0831832",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "920932,gfbj0831832",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "38c22ac5774e912067c83b90d34b33937364fab80bd284a9aa87d64d244e0662",
+          "response_bytes": 4777,
+          "raw_path": "sources/collection/raw/920932/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "920932,gfbj0831832",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T12:04:03+08:00",
+          "elapsed_ms": 703
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225487234",
+          "title": "2026年半年度报告",
+          "sec_code": "920932",
+          "sec_name": "科达自控",
+          "published_on": "2026-08-19",
+          "adjunct_url": "finalpage/2026-08-20/1225487234.PDF",
+          "adjunct_size": 2778
+        },
+        {
+          "announcement_id": "1225487233",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "920932",
+          "sec_name": "科达自控",
+          "published_on": "2026-08-19",
+          "adjunct_url": "finalpage/2026-08-20/1225487233.PDF",
+          "adjunct_size": 1536
+        },
+        {
+          "announcement_id": "1224561668",
+          "title": "2025年半年度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-08-21",
+          "adjunct_url": "finalpage/2025-08-22/1224561668.PDF",
+          "adjunct_size": 2459
+        },
+        {
+          "announcement_id": "1224561667",
+          "title": "2025年半年度报告摘要",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-08-21",
+          "adjunct_url": "finalpage/2025-08-22/1224561667.PDF",
+          "adjunct_size": 1327
+        },
+        {
+          "announcement_id": "1220988720",
+          "title": "2024年半年度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2024-08-25",
+          "adjunct_url": "finalpage/2024-08-26/1220988720.PDF",
+          "adjunct_size": 2429
+        },
+        {
+          "announcement_id": "1220988716",
+          "title": "2024年半年度报告摘要",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2024-08-25",
+          "adjunct_url": "finalpage/2024-08-26/1220988716.PDF",
+          "adjunct_size": 1323
+        },
+        {
+          "announcement_id": "1217596349",
+          "title": "2023年半年度报告摘要",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2023-08-20",
+          "adjunct_url": "finalpage/2023-08-21/1217596349.PDF",
+          "adjunct_size": 840
+        },
+        {
+          "announcement_id": "1217596340",
+          "title": "2023年半年度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2023-08-20",
+          "adjunct_url": "finalpage/2023-08-21/1217596340.PDF",
+          "adjunct_size": 2341
+        }
+      ],
+      "fetched_at": "2026-10-27T12:04:03+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "BJ:920932",
       "category": "category_yjdbg_szsh",
-      "stock": "920932,gfbj0831832",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-28T12:39:50+08:00",
-     "elapsed_ms": 954
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225220856",
-     "title": "2026年一季度报告",
-     "sec_code": "920932",
-     "sec_name": "科达自控",
-     "published_on": "2026-04-26",
-     "adjunct_url": "finalpage/2026-04-27/1225220856.PDF",
-     "adjunct_size": 932
-    },
-    {
-     "announcement_id": "1223425930",
-     "title": "2025年一季度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-04-28",
-     "adjunct_url": "finalpage/2025-04-29/1223425930.PDF",
-     "adjunct_size": 1397
-    },
-    {
-     "announcement_id": "1219748986",
-     "title": "2024年一季度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2024-04-21",
-     "adjunct_url": "finalpage/2024-04-22/1219748986.PDF",
-     "adjunct_size": 1144
-    },
-    {
-     "announcement_id": "1216552056",
-     "title": "2023年一季度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2023-04-23",
-     "adjunct_url": "finalpage/2023-04-24/1216552056.PDF",
-     "adjunct_size": 1124
-    }
-   ],
-   "fetched_at": "2026-10-28T12:39:50+08:00"
-  },
-  "category_sjdbg_szsh": {
-   "security_id": "BJ:920932",
-   "category": "category_sjdbg_szsh",
-   "column": "szse",
-   "org_id": "gfbj0831832",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_sjdbg_szsh",
-    "stock": "920932,gfbj0831832",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 5,
-   "rows_fetched": 5,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 5,
-     "new_rows": 5,
-     "total_announcement": 5,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "116a5e97b71637ba97f79ef3f86eacdccc5626037b7bb98060606e12157f45c4",
-     "response_bytes": 3070,
-     "raw_path": "sources/collection/raw/920932/category_sjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "gfbj0831832",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "920932,gfbj0831832",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 4,
+      "rows_fetched": 4,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 4,
+          "new_rows": 4,
+          "total_announcement": 4,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "2d969bd9903f649dc4e73cd7c014f8db5fb6654f64273bb9f2819900a50e2900",
+          "response_bytes": 2457,
+          "raw_path": "sources/collection/raw/920932/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "920932,gfbj0831832",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:39:50+08:00",
+          "elapsed_ms": 954
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225220856",
+          "title": "2026年一季度报告",
+          "sec_code": "920932",
+          "sec_name": "科达自控",
+          "published_on": "2026-04-26",
+          "adjunct_url": "finalpage/2026-04-27/1225220856.PDF",
+          "adjunct_size": 932
+        },
+        {
+          "announcement_id": "1223425930",
+          "title": "2025年一季度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-04-28",
+          "adjunct_url": "finalpage/2025-04-29/1223425930.PDF",
+          "adjunct_size": 1397
+        },
+        {
+          "announcement_id": "1219748986",
+          "title": "2024年一季度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2024-04-21",
+          "adjunct_url": "finalpage/2024-04-22/1219748986.PDF",
+          "adjunct_size": 1144
+        },
+        {
+          "announcement_id": "1216552056",
+          "title": "2023年一季度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2023-04-23",
+          "adjunct_url": "finalpage/2023-04-24/1216552056.PDF",
+          "adjunct_size": 1124
+        }
+      ],
+      "fetched_at": "2026-10-28T12:39:50+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "BJ:920932",
       "category": "category_sjdbg_szsh",
-      "stock": "920932,gfbj0831832",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-28T12:39:52+08:00",
-     "elapsed_ms": 548
+      "column": "szse",
+      "org_id": "gfbj0831832",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "920932,gfbj0831832",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 5,
+      "rows_fetched": 5,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 5,
+          "new_rows": 5,
+          "total_announcement": 5,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "116a5e97b71637ba97f79ef3f86eacdccc5626037b7bb98060606e12157f45c4",
+          "response_bytes": 3070,
+          "raw_path": "sources/collection/raw/920932/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "920932,gfbj0831832",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-28T12:39:52+08:00",
+          "elapsed_ms": 548
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224745720",
+          "title": "2025年三季度报告",
+          "sec_code": "920932",
+          "sec_name": "科达自控",
+          "published_on": "2025-10-26",
+          "adjunct_url": "finalpage/2025-10-27/1224745720.PDF",
+          "adjunct_size": 849
+        },
+        {
+          "announcement_id": "1223425656",
+          "title": "2024年三季度报告（更正后）",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-04-28",
+          "adjunct_url": "finalpage/2025-04-29/1223425656.PDF",
+          "adjunct_size": 973
+        },
+        {
+          "announcement_id": "1223425643",
+          "title": "2024年三季度报告（更正公告）",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2025-04-28",
+          "adjunct_url": "finalpage/2025-04-29/1223425643.PDF",
+          "adjunct_size": 319
+        },
+        {
+          "announcement_id": "1221544248",
+          "title": "2024年三季度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2024-10-27",
+          "adjunct_url": "finalpage/2024-10-28/1221544248.PDF",
+          "adjunct_size": 1302
+        },
+        {
+          "announcement_id": "1218192230",
+          "title": "2023年三季度报告",
+          "sec_code": "831832",
+          "sec_name": "科达自控",
+          "published_on": "2023-10-26",
+          "adjunct_url": "finalpage/2023-10-27/1218192230.PDF",
+          "adjunct_size": 1071
+        }
+      ],
+      "fetched_at": "2026-10-28T12:39:52+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1224745720",
-     "title": "2025年三季度报告",
-     "sec_code": "920932",
-     "sec_name": "科达自控",
-     "published_on": "2025-10-26",
-     "adjunct_url": "finalpage/2025-10-27/1224745720.PDF",
-     "adjunct_size": 849
-    },
-    {
-     "announcement_id": "1223425656",
-     "title": "2024年三季度报告（更正后）",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-04-28",
-     "adjunct_url": "finalpage/2025-04-29/1223425656.PDF",
-     "adjunct_size": 973
-    },
-    {
-     "announcement_id": "1223425643",
-     "title": "2024年三季度报告（更正公告）",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2025-04-28",
-     "adjunct_url": "finalpage/2025-04-29/1223425643.PDF",
-     "adjunct_size": 319
-    },
-    {
-     "announcement_id": "1221544248",
-     "title": "2024年三季度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2024-10-27",
-     "adjunct_url": "finalpage/2024-10-28/1221544248.PDF",
-     "adjunct_size": 1302
-    },
-    {
-     "announcement_id": "1218192230",
-     "title": "2023年三季度报告",
-     "sec_code": "831832",
-     "sec_name": "科达自控",
-     "published_on": "2023-10-26",
-     "adjunct_url": "finalpage/2023-10-27/1218192230.PDF",
-     "adjunct_size": 1071
-    }
-   ],
-   "fetched_at": "2026-10-28T12:39:52+08:00"
-  }
- },
- "updated_at": "2026-10-28T12:39:56+08:00"
+  },
+  "updated_at": "2026-10-28T12:39:56+08:00"
 }

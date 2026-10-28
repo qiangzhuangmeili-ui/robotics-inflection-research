@@ -67,6 +67,13 @@ for b in batches:
                          "actual": len(rr), "pass": len(rr) == int(b["company_count"])})
 ledger = rows("runs/collection/collection_index.csv")
 listing = {r["security_id"]: r for r in rows("data/company_listing_dates.csv")}
+neeq_path = ROOT / "runs/issues/A04R/neeq_listing_dates.json"
+neeq = {}
+if neeq_path.exists():
+    inputs[neeq_path.relative_to(ROOT).as_posix()] = sha(neeq_path)
+    neeq = {r["security_id"]: r for r in json.loads(neeq_path.read_text(encoding="utf-8"))["rows"]
+            if r.get("neeq_listing_date")}
+period_end = {s["slot_id"]: s["period_end"] for s in scope["report_slots"] + scope["quarterly_slots"]}
 slotdefs = scope["report_slots"] + scope["quarterly_slots"]
 cutoff = scope["time_axis"]["knowledge_as_of"]
 status = Counter(r["status"] for r in ledger)
@@ -132,7 +139,34 @@ nonterm_total = sum(c["non_terminal_rows"] for c in coverage)
 
 # ---------------------------------------------------------------- AC06 / AC07 / AC08 / AC10
 na_rows = [r for r in ledger if r["status"] == "NOT_APPLICABLE_PRE_LISTING"]
-na_no_date = [r for r in na_rows if listing.get(r["security_id"], {}).get("listing_date", "") in ("", "UNKNOWN")]
+
+
+def na_check(row: dict) -> dict:
+    """逐行验证：不适用必须由「报告期结束 < 该公司在该市场的实际挂牌日」支撑。
+
+    北交所用股转挂牌日（挂牌期报告在股转，不能用交易所上市日代替）；
+    沪/深用交易所上市日。
+    """
+    sid, slot = row["security_id"], row["slot_id"]
+    pe = period_end[slot]
+    if sid.startswith("BJ"):
+        rec = neeq.get(sid)
+        date = rec["neeq_listing_date"] if rec else ""
+        ok = bool(date) and pe < date
+        return {"security_id": sid, "slot_id": slot, "market": "BJ",
+                "date_kind": "NEEQ_LISTING_DATE", "date": date or "MISSING",
+                "period_end": pe, "ok": ok,
+                "evidence": (f"年报第 {rec['evidence_page']} 页「挂牌时间」" if rec else "未取得股转挂牌日")}
+    date = listing.get(sid, {}).get("listing_date", "")
+    ok = date not in ("", "UNKNOWN") and pe < date
+    return {"security_id": sid, "slot_id": slot, "market": sid[:2],
+            "date_kind": "EXCHANGE_LISTING_DATE", "date": date or "MISSING",
+            "period_end": pe, "ok": ok, "evidence": "data/company_listing_dates.csv"}
+
+
+na_audit = [na_check(r) for r in na_rows]
+na_violations = [x for x in na_audit if not x["ok"]]
+csvout("na_applicability_audit.csv", na_audit)
 verified = [r for r in ledger if r["status"] == "COLLECTED_IDENTITY_VERIFIED"]
 local_missing = [r for r in verified if not (ROOT / (r["local_file"] or "")).is_file()]
 trace_missing = [r for r in verified if not all(r.get(k) for k in ["document_id", "primary_url", "sha256", "local_file"])]
@@ -273,6 +307,18 @@ erratum = {
 }
 write("handoff_correction.json", erratum)
 
+# ---------------------------------------------------------------- 更正版本链
+chain_path = ROOT / "runs/issues/A04R/correction_chains.json"
+chain = {}
+if chain_path.exists():
+    inputs[chain_path.relative_to(ROOT).as_posix()] = sha(chain_path)
+    chain = json.loads(chain_path.read_text(encoding="utf-8"))
+chain_pairs = chain.get("pairs", 0)
+chain_complete = chain.get("complete", 0)
+chain_gaps = chain.get("gap_rows", [])
+notice_only = sum(1 for r in chain.get("rows", []) if r.get("corrected_full_text_missing"))
+csvout("correction_chain_summary.csv", chain.get("rows", []))
+
 # ---------------------------------------------------------------- 检查项
 checks = [
     {"id": "AC01", "result": "PASS" if len(ids) == 1054 and roster_hash == fp["canonical_form"]["canonical_sha256"] else "FAIL",
@@ -288,9 +334,12 @@ checks = [
     {"id": "AC05", "result": "PASS" if status.get("NOT_TRIED", 0) == 0 else "FAIL",
      "evidence": {"not_tried": status.get("NOT_TRIED", 0),
                   "by_slot": {c["slot_id"]: c["not_tried"] for c in coverage if c["not_tried"]}}},
-    {"id": "AC06", "result": "PASS" if not na_no_date else "FAIL",
-     "evidence": {"na_rows": len(na_rows), "without_listing_side_table_date": len(na_no_date),
-                  "limit": "只核侧表日期存在与规则一致，未重新独立核验交易所原始公告"}},
+    {"id": "AC06", "result": "PASS" if not na_violations else "FAIL",
+     "evidence": {"na_rows": len(na_rows), "violations": len(na_violations),
+                  "rule": "period_end < 实际挂牌日（北交所用股转挂牌日，沪/深用交易所上市日）",
+                  "by_market": {m: sum(1 for x in na_audit if x["market"] == m) for m in ("SZ", "SH", "BJ")},
+                  "violation_samples": na_violations[:5],
+                  "limit": "挂牌日取本地年报「挂牌时间」页或交易所上市日侧表；未重新独立核验交易所原始公告"}},
     {"id": "AC07", "result": "PASS" if not trace_missing and not local_missing else "FAIL",
      "evidence": {"verified": len(verified), "missing_trace_fields": len(trace_missing),
                   "local_missing": len(local_missing),
@@ -307,6 +356,12 @@ checks = [
                   "unknown_disclosure_date": len(unknown_date),
                   "after_cutoff_registered_not_used": len(after_cutoff_rows),
                   "cutoff": cutoff}},
+    {"id": "AC12_CORRECTION_CHAIN",
+     "result": "PASS" if chain_pairs and chain_complete == chain_pairs and not chain_gaps else "FAIL",
+     "evidence": {"pairs": chain_pairs, "complete": chain_complete, "gaps": len(chain_gaps),
+                  "notice_only_chains": notice_only,
+                  "gap_samples": chain_gaps[:5],
+                  "policy": "原版 + 更正版（或更正公告）+ supersedes 关联；不覆盖原件"}},
     {"id": "AC11_SUPPLEMENTARY", "result": "PASS" if sup_summary["companies_with_index"] == len(ids)
      and sup_summary["pagination_reconciled"] == len(ids) else "FAIL",
      "evidence": sup_summary},

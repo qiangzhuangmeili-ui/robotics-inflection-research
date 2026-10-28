@@ -1,1455 +1,1498 @@
 {
- "security_id": "SH:603072",
- "slots": {
-  "annual_2023": {
-   "security_id": "SH:603072",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "NOT_APPLICABLE_PRE_LISTING",
-   "status_reason": "上市日 2025-01-03 晚于报告期结束日 2023-12-31，公司当时未上市",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {},
-   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
-   "listing_date_evidence": {
-    "listing_date": "2025-01-03",
-    "period_end": "2023-12-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T10:21:28+08:00",
-   "index_ref": {
-    "category": "category_ndbg_szsh",
-    "fetched_at": "2026-10-27T10:21:28+08:00",
-    "status": "RECONCILED"
-   }
+  "security_id": "SH:603072",
+  "slots": {
+    "annual_2023": {
+      "security_id": "SH:603072",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "上市日 2025-01-03 晚于报告期结束日 2023-12-31，公司当时未上市",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {},
+      "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+      "listing_date_evidence": {
+        "listing_date": "2025-01-03",
+        "period_end": "2023-12-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T10:21:28+08:00",
+      "index_ref": {
+        "category": "category_ndbg_szsh",
+        "fetched_at": "2026-10-27T10:21:28+08:00",
+        "status": "RECONCILED"
+      }
+    },
+    "annual_2024": {
+      "security_id": "SH:603072",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324264.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1202,
+          "at": "2026-10-27T10:21:30+08:00",
+          "response_sha256": null,
+          "bytes": 1338904,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324264.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1202,
+        "at": "2026-10-27T10:21:30+08:00",
+        "response_sha256": null,
+        "bytes": 1338904,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T10:21:30+08:00",
+        "bytes_written": 1338904
+      },
+      "document": {
+        "document_id": "DOC-5DE86321556034F4",
+        "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年年度报告",
+        "published_on": "2025-04-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324264.PDF",
+        "local_file": "sources/collection/originals/603072/annual_2024/DOC-5DE86321556034F4.pdf",
+        "sha256": "41b5c6f424a1b3bd7833ba574627d8e1007541b7155584ed20dc0d09c495521a",
+        "bytes": 1338904,
+        "page_count": 204,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1338904 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "204 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "204 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\annual_2024\\DOC-5DE86321556034F4.pdf.part",
+        "bytes": 1338904,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1338904 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "204 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "204 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 204,
+        "text_chars": 2166,
+        "issues": [],
+        "sha256": "41b5c6f424a1b3bd7833ba574627d8e1007541b7155584ed20dc0d09c495521a",
+        "cover_text_chars": 68,
+        "identity_probe_chars": 4576,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T10:21:30+08:00"
+    },
+    "annual_2025": {
+      "security_id": "SH:603072",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203035.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1185,
+          "at": "2026-10-27T10:21:31+08:00",
+          "response_sha256": null,
+          "bytes": 1836694,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203035.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1185,
+        "at": "2026-10-27T10:21:31+08:00",
+        "response_sha256": null,
+        "bytes": 1836694,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T10:21:31+08:00",
+        "bytes_written": 1836694
+      },
+      "document": {
+        "document_id": "DOC-480C0DDD8CF5EB52",
+        "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-04-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203035.PDF",
+        "local_file": "sources/collection/originals/603072/annual_2025/DOC-480C0DDD8CF5EB52.pdf",
+        "sha256": "950c13d6ae47d1cd7efcc47bae3ee8ea2ebcaee9b52716bc731f1290c2c9d924",
+        "bytes": 1836694,
+        "page_count": 244,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1836694 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "244 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "244 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\annual_2025\\DOC-480C0DDD8CF5EB52.pdf.part",
+        "bytes": 1836694,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1836694 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "244 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "244 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 244,
+        "text_chars": 891,
+        "issues": [],
+        "sha256": "950c13d6ae47d1cd7efcc47bae3ee8ea2ebcaee9b52716bc731f1290c2c9d924",
+        "cover_text_chars": 68,
+        "identity_probe_chars": 4234,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T10:21:31+08:00"
+    },
+    "h1_2024": {
+      "security_id": "SH:603072",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "上市日 2025-01-03 晚于报告期结束日 2024-06-30，公司当时未上市",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {},
+      "document": {},
+      "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+      "listing_date_evidence": {
+        "listing_date": "2025-01-03",
+        "period_end": "2024-06-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "updated_at": "2026-10-27T10:21:32+08:00",
+      "index_ref": {
+        "category": "category_bndbg_szsh",
+        "fetched_at": "2026-10-27T10:21:32+08:00",
+        "status": "RECONCILED"
+      }
+    },
+    "h1_2025": {
+      "security_id": "SH:603072",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224591188.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1192,
+          "at": "2026-10-27T10:21:33+08:00",
+          "response_sha256": null,
+          "bytes": 1127530,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224591188.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1192,
+        "at": "2026-10-27T10:21:33+08:00",
+        "response_sha256": null,
+        "bytes": 1127530,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T10:21:34+08:00",
+        "bytes_written": 1127530
+      },
+      "document": {
+        "document_id": "DOC-050BE18AEA1407C2",
+        "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年半年度报告",
+        "published_on": "2025-08-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224591188.PDF",
+        "local_file": "sources/collection/originals/603072/h1_2025/DOC-050BE18AEA1407C2.pdf",
+        "sha256": "4e967412503e0a39ae3a6c6100770544a6eb5b9ea80fbba2d512ed092cd0c9d0",
+        "bytes": 1127530,
+        "page_count": 176,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1127530 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "176 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "176 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\h1_2025\\DOC-050BE18AEA1407C2.pdf.part",
+        "bytes": 1127530,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1127530 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "176 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "176 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 176,
+        "text_chars": 1790,
+        "issues": [],
+        "sha256": "4e967412503e0a39ae3a6c6100770544a6eb5b9ea80fbba2d512ed092cd0c9d0",
+        "cover_text_chars": 70,
+        "identity_probe_chars": 4669,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T10:21:34+08:00"
+    },
+    "h1_2026": {
+      "security_id": "SH:603072",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225505915.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1166,
+          "at": "2026-10-27T10:21:35+08:00",
+          "response_sha256": null,
+          "bytes": 1176994,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225505915.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1166,
+        "at": "2026-10-27T10:21:35+08:00",
+        "response_sha256": null,
+        "bytes": 1176994,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T10:21:35+08:00",
+        "bytes_written": 1176994
+      },
+      "document": {
+        "document_id": "DOC-86A4F9768091DB1E",
+        "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225505915.PDF",
+        "local_file": "sources/collection/originals/603072/h1_2026/DOC-86A4F9768091DB1E.pdf",
+        "sha256": "de8eb845ee4d95fd3811c27b5c70e6408d01fba0d97c8e1852de14b56f692965",
+        "bytes": 1176994,
+        "page_count": 205,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1176994 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "205 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "205 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\h1_2026\\DOC-86A4F9768091DB1E.pdf.part",
+        "bytes": 1176994,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1176994 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "205 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "205 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 205,
+        "text_chars": 1815,
+        "issues": [],
+        "sha256": "de8eb845ee4d95fd3811c27b5c70e6408d01fba0d97c8e1852de14b56f692965",
+        "cover_text_chars": 70,
+        "identity_probe_chars": 4566,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T10:21:35+08:00"
+    },
+    "q1_2026": {
+      "security_id": "SH:603072",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203156.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 632,
+          "at": "2026-10-27T10:21:37+08:00",
+          "response_sha256": null,
+          "bytes": 191152,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203156.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 632,
+        "at": "2026-10-27T10:21:37+08:00",
+        "response_sha256": null,
+        "bytes": 191152,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T10:21:37+08:00",
+        "bytes_written": 191152
+      },
+      "document": {
+        "document_id": "DOC-3284D8634869ECF4",
+        "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年第一季度报告",
+        "published_on": "2026-04-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203156.PDF",
+        "local_file": "sources/collection/originals/603072/q1_2026/DOC-3284D8634869ECF4.pdf",
+        "sha256": "f47dab1528c9ccbbe628aeaf0ab93f192ac4f2d9f079bfae3460631e72008cb5",
+        "bytes": 191152,
+        "page_count": 12,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "191152 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年第一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\q1_2026\\DOC-3284D8634869ECF4.pdf.part",
+        "bytes": 191152,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "191152 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年第一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 12,
+        "text_chars": 2227,
+        "issues": [],
+        "sha256": "f47dab1528c9ccbbe628aeaf0ab93f192ac4f2d9f079bfae3460631e72008cb5",
+        "cover_text_chars": 548,
+        "identity_probe_chars": 4697,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T10:21:37+08:00"
+    },
+    "q1_2024": {
+      "security_id": "SH:603072",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "上市日 2025-01-03 晚于报告期结束日 2024-03-31，公司当时未上市",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-27T23:29:20+08:00",
+      "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+      "listing_date_evidence": {
+        "listing_date": "2025-01-03",
+        "period_end": "2024-03-31",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_yjdbg_szsh",
+        "fetched_at": "2026-10-27T23:29:20+08:00",
+        "status": "RECONCILED"
+      }
+    },
+    "q3_2024": {
+      "security_id": "SH:603072",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_APPLICABLE_PRE_LISTING",
+      "status_reason": "上市日 2025-01-03 晚于报告期结束日 2024-09-30，公司当时未上市",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-27T23:29:21+08:00",
+      "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
+      "listing_date_evidence": {
+        "listing_date": "2025-01-03",
+        "period_end": "2024-09-30",
+        "rule": "P00 not_applicable_decision_table: listing_date > period_end"
+      },
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-27T23:29:21+08:00",
+        "status": "RECONCILED"
+      }
+    },
+    "q1_2025": {
+      "security_id": "SH:603072",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324270.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 873,
+          "at": "2026-10-27T23:29:22+08:00",
+          "response_sha256": null,
+          "bytes": 227118,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-CC1BF80929B33DD3",
+        "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年第一季度报告",
+        "published_on": "2025-04-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324270.PDF",
+        "local_file": "sources/collection/originals/603072/q1_2025/DOC-CC1BF80929B33DD3.pdf",
+        "sha256": "f9333825a8afaf169ec3b5821b3cf3b2f46e1385a290215e741a71fcc367f904",
+        "bytes": 227118,
+        "page_count": 18,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "227118 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "18 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "18 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年第一季度报告"
+          }
+        },
+        "version_chain": {
+          "policy": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+          "effective_document_id": "DOC-0D2AF2262165DE19",
+          "versions": [
+            {
+              "revision_no": 0,
+              "document_id": "DOC-CC1BF80929B33DD3",
+              "title": "2025年第一季度报告",
+              "published_on": "2025-04-26",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324270.PDF",
+              "role": "original",
+              "local_file": "sources/collection/originals/603072/q1_2025/DOC-CC1BF80929B33DD3.pdf",
+              "sha256": "f9333825a8afaf169ec3b5821b3cf3b2f46e1385a290215e741a71fcc367f904",
+              "bytes": 227118,
+              "downloaded_now": false,
+              "supersedes": null,
+              "superseded_by": "DOC-0D2AF2262165DE19"
+            },
+            {
+              "revision_no": 1,
+              "document_id": "DOC-0D2AF2262165DE19",
+              "title": "2025年第一季度报告（更新后）",
+              "published_on": "2025-04-28",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223348279.PDF",
+              "role": "corrected",
+              "local_file": "sources/collection/originals/603072/q1_2025/DOC-0D2AF2262165DE19.pdf",
+              "sha256": "09959ac19fab8000c5a15c3fe117aff98a3d9f80fac2f3bc1aa2825b3c6ce02f",
+              "bytes": 225525,
+              "downloaded_now": false,
+              "supersedes": "DOC-CC1BF80929B33DD3",
+              "superseded_by": null
+            }
+          ],
+          "correction_notice": {
+            "role": "notice",
+            "title": "关于2025年第一季度报告的更正公告",
+            "published_on": "2025-04-28",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-28/1223348278.PDF"
+          },
+          "complete": true,
+          "recorded_at": "2026-10-28T20:24:29+08:00"
+        },
+        "supersedes": "DOC-CC1BF80929B33DD3"
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T23:29:22+08:00",
+        "bytes_written": 227118
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-27T23:29:22+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324270.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 873,
+        "at": "2026-10-27T23:29:22+08:00",
+        "response_sha256": null,
+        "bytes": 227118,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\q1_2025\\DOC-CC1BF80929B33DD3.pdf.part",
+        "bytes": 227118,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "227118 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "18 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "18 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年第一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 18,
+        "text_chars": 2503,
+        "issues": [],
+        "sha256": "f9333825a8afaf169ec3b5821b3cf3b2f46e1385a290215e741a71fcc367f904",
+        "cover_text_chars": 554,
+        "identity_probe_chars": 5505,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2025": {
+      "security_id": "SH:603072",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224750628.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 887,
+          "at": "2026-10-27T23:29:23+08:00",
+          "response_sha256": null,
+          "bytes": 193893,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-53DAFE93DA67F246",
+        "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年第三季度报告",
+        "published_on": "2025-10-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224750628.PDF",
+        "local_file": "sources/collection/originals/603072/q3_2025/DOC-53DAFE93DA67F246.pdf",
+        "sha256": "d75a57c3a0f430e720cd66528446d4f2b00e0d63264e8aa2a3a29f7012144a15",
+        "bytes": 193893,
+        "page_count": 12,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "193893 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年第三季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T23:29:23+08:00",
+        "bytes_written": 193893
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-27T23:29:23+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224750628.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 887,
+        "at": "2026-10-27T23:29:23+08:00",
+        "response_sha256": null,
+        "bytes": 193893,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\q3_2025\\DOC-53DAFE93DA67F246.pdf.part",
+        "bytes": 193893,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "193893 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年第三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 12,
+        "text_chars": 2247,
+        "issues": [],
+        "sha256": "d75a57c3a0f430e720cd66528446d4f2b00e0d63264e8aa2a3a29f7012144a15",
+        "cover_text_chars": 543,
+        "identity_probe_chars": 5109,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2026": {
+      "security_id": "SH:603072",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "updated_at": "2026-10-27T23:29:23+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-27T23:29:21+08:00",
+        "status": "RECONCILED"
+      }
+    }
   },
-  "annual_2024": {
-   "security_id": "SH:603072",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324264.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1202,
-     "at": "2026-10-27T10:21:30+08:00",
-     "response_sha256": null,
-     "bytes": 1338904,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324264.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1202,
-    "at": "2026-10-27T10:21:30+08:00",
-    "response_sha256": null,
-    "bytes": 1338904,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T10:21:30+08:00",
-    "bytes_written": 1338904
-   },
-   "document": {
-    "document_id": "DOC-5DE86321556034F4",
-    "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年年度报告",
-    "published_on": "2025-04-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324264.PDF",
-    "local_file": "sources/collection/originals/603072/annual_2024/DOC-5DE86321556034F4.pdf",
-    "sha256": "41b5c6f424a1b3bd7833ba574627d8e1007541b7155584ed20dc0d09c495521a",
-    "bytes": 1338904,
-    "page_count": 204,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1338904 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "204 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "204 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\annual_2024\\DOC-5DE86321556034F4.pdf.part",
-    "bytes": 1338904,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1338904 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "204 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "204 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 204,
-    "text_chars": 2166,
-    "issues": [],
-    "sha256": "41b5c6f424a1b3bd7833ba574627d8e1007541b7155584ed20dc0d09c495521a",
-    "cover_text_chars": 68,
-    "identity_probe_chars": 4576,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T10:21:30+08:00"
-  },
-  "annual_2025": {
-   "security_id": "SH:603072",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203035.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1185,
-     "at": "2026-10-27T10:21:31+08:00",
-     "response_sha256": null,
-     "bytes": 1836694,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203035.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1185,
-    "at": "2026-10-27T10:21:31+08:00",
-    "response_sha256": null,
-    "bytes": 1836694,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T10:21:31+08:00",
-    "bytes_written": 1836694
-   },
-   "document": {
-    "document_id": "DOC-480C0DDD8CF5EB52",
-    "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-04-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203035.PDF",
-    "local_file": "sources/collection/originals/603072/annual_2025/DOC-480C0DDD8CF5EB52.pdf",
-    "sha256": "950c13d6ae47d1cd7efcc47bae3ee8ea2ebcaee9b52716bc731f1290c2c9d924",
-    "bytes": 1836694,
-    "page_count": 244,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1836694 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "244 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "244 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\annual_2025\\DOC-480C0DDD8CF5EB52.pdf.part",
-    "bytes": 1836694,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1836694 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "244 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "244 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 244,
-    "text_chars": 891,
-    "issues": [],
-    "sha256": "950c13d6ae47d1cd7efcc47bae3ee8ea2ebcaee9b52716bc731f1290c2c9d924",
-    "cover_text_chars": 68,
-    "identity_probe_chars": 4234,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T10:21:31+08:00"
-  },
-  "h1_2024": {
-   "security_id": "SH:603072",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "NOT_APPLICABLE_PRE_LISTING",
-   "status_reason": "上市日 2025-01-03 晚于报告期结束日 2024-06-30，公司当时未上市",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {},
-   "document": {},
-   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
-   "listing_date_evidence": {
-    "listing_date": "2025-01-03",
-    "period_end": "2024-06-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "updated_at": "2026-10-27T10:21:32+08:00",
-   "index_ref": {
-    "category": "category_bndbg_szsh",
-    "fetched_at": "2026-10-27T10:21:32+08:00",
-    "status": "RECONCILED"
-   }
-  },
-  "h1_2025": {
-   "security_id": "SH:603072",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224591188.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1192,
-     "at": "2026-10-27T10:21:33+08:00",
-     "response_sha256": null,
-     "bytes": 1127530,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224591188.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1192,
-    "at": "2026-10-27T10:21:33+08:00",
-    "response_sha256": null,
-    "bytes": 1127530,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T10:21:34+08:00",
-    "bytes_written": 1127530
-   },
-   "document": {
-    "document_id": "DOC-050BE18AEA1407C2",
-    "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年半年度报告",
-    "published_on": "2025-08-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224591188.PDF",
-    "local_file": "sources/collection/originals/603072/h1_2025/DOC-050BE18AEA1407C2.pdf",
-    "sha256": "4e967412503e0a39ae3a6c6100770544a6eb5b9ea80fbba2d512ed092cd0c9d0",
-    "bytes": 1127530,
-    "page_count": 176,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1127530 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "176 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "176 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\h1_2025\\DOC-050BE18AEA1407C2.pdf.part",
-    "bytes": 1127530,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1127530 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "176 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "176 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 176,
-    "text_chars": 1790,
-    "issues": [],
-    "sha256": "4e967412503e0a39ae3a6c6100770544a6eb5b9ea80fbba2d512ed092cd0c9d0",
-    "cover_text_chars": 70,
-    "identity_probe_chars": 4669,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T10:21:34+08:00"
-  },
-  "h1_2026": {
-   "security_id": "SH:603072",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225505915.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1166,
-     "at": "2026-10-27T10:21:35+08:00",
-     "response_sha256": null,
-     "bytes": 1176994,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225505915.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1166,
-    "at": "2026-10-27T10:21:35+08:00",
-    "response_sha256": null,
-    "bytes": 1176994,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T10:21:35+08:00",
-    "bytes_written": 1176994
-   },
-   "document": {
-    "document_id": "DOC-86A4F9768091DB1E",
-    "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225505915.PDF",
-    "local_file": "sources/collection/originals/603072/h1_2026/DOC-86A4F9768091DB1E.pdf",
-    "sha256": "de8eb845ee4d95fd3811c27b5c70e6408d01fba0d97c8e1852de14b56f692965",
-    "bytes": 1176994,
-    "page_count": 205,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1176994 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "205 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "205 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\h1_2026\\DOC-86A4F9768091DB1E.pdf.part",
-    "bytes": 1176994,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1176994 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "205 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "205 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 205,
-    "text_chars": 1815,
-    "issues": [],
-    "sha256": "de8eb845ee4d95fd3811c27b5c70e6408d01fba0d97c8e1852de14b56f692965",
-    "cover_text_chars": 70,
-    "identity_probe_chars": 4566,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T10:21:35+08:00"
-  },
-  "q1_2026": {
-   "security_id": "SH:603072",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203156.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 632,
-     "at": "2026-10-27T10:21:37+08:00",
-     "response_sha256": null,
-     "bytes": 191152,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203156.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 632,
-    "at": "2026-10-27T10:21:37+08:00",
-    "response_sha256": null,
-    "bytes": 191152,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T10:21:37+08:00",
-    "bytes_written": 191152
-   },
-   "document": {
-    "document_id": "DOC-3284D8634869ECF4",
-    "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年第一季度报告",
-    "published_on": "2026-04-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225203156.PDF",
-    "local_file": "sources/collection/originals/603072/q1_2026/DOC-3284D8634869ECF4.pdf",
-    "sha256": "f47dab1528c9ccbbe628aeaf0ab93f192ac4f2d9f079bfae3460631e72008cb5",
-    "bytes": 191152,
-    "page_count": 12,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "191152 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年第一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\q1_2026\\DOC-3284D8634869ECF4.pdf.part",
-    "bytes": 191152,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "191152 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年第一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 12,
-    "text_chars": 2227,
-    "issues": [],
-    "sha256": "f47dab1528c9ccbbe628aeaf0ab93f192ac4f2d9f079bfae3460631e72008cb5",
-    "cover_text_chars": 548,
-    "identity_probe_chars": 4697,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T10:21:37+08:00"
-  },
-  "q1_2024": {
-   "security_id": "SH:603072",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_APPLICABLE_PRE_LISTING",
-   "status_reason": "上市日 2025-01-03 晚于报告期结束日 2024-03-31，公司当时未上市",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-27T23:29:20+08:00",
-   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
-   "listing_date_evidence": {
-    "listing_date": "2025-01-03",
-    "period_end": "2024-03-31",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "index_ref": {
-    "category": "category_yjdbg_szsh",
-    "fetched_at": "2026-10-27T23:29:20+08:00",
-    "status": "RECONCILED"
-   }
-  },
-  "q3_2024": {
-   "security_id": "SH:603072",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_APPLICABLE_PRE_LISTING",
-   "status_reason": "上市日 2025-01-03 晚于报告期结束日 2024-09-30，公司当时未上市",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-27T23:29:21+08:00",
-   "reason_code": "LISTING_DATE_AFTER_PERIOD_END",
-   "listing_date_evidence": {
-    "listing_date": "2025-01-03",
-    "period_end": "2024-09-30",
-    "rule": "P00 not_applicable_decision_table: listing_date > period_end"
-   },
-   "index_ref": {
-    "category": "category_sjdbg_szsh",
-    "fetched_at": "2026-10-27T23:29:21+08:00",
-    "status": "RECONCILED"
-   }
-  },
-  "q1_2025": {
-   "security_id": "SH:603072",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324270.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 873,
-     "at": "2026-10-27T23:29:22+08:00",
-     "response_sha256": null,
-     "bytes": 227118,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-CC1BF80929B33DD3",
-    "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年第一季度报告",
-    "published_on": "2025-04-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324270.PDF",
-    "local_file": "sources/collection/originals/603072/q1_2025/DOC-CC1BF80929B33DD3.pdf",
-    "sha256": "f9333825a8afaf169ec3b5821b3cf3b2f46e1385a290215e741a71fcc367f904",
-    "bytes": 227118,
-    "page_count": 18,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "227118 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "18 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "18 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年第一季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T23:29:22+08:00",
-    "bytes_written": 227118
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-27T23:29:22+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223324270.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 873,
-    "at": "2026-10-27T23:29:22+08:00",
-    "response_sha256": null,
-    "bytes": 227118,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\q1_2025\\DOC-CC1BF80929B33DD3.pdf.part",
-    "bytes": 227118,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "227118 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "18 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "18 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年第一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 18,
-    "text_chars": 2503,
-    "issues": [],
-    "sha256": "f9333825a8afaf169ec3b5821b3cf3b2f46e1385a290215e741a71fcc367f904",
-    "cover_text_chars": 554,
-    "identity_probe_chars": 5505,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q3_2025": {
-   "security_id": "SH:603072",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224750628.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 887,
-     "at": "2026-10-27T23:29:23+08:00",
-     "response_sha256": null,
-     "bytes": 193893,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-53DAFE93DA67F246",
-    "identity_key": "SH:603072|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年第三季度报告",
-    "published_on": "2025-10-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224750628.PDF",
-    "local_file": "sources/collection/originals/603072/q3_2025/DOC-53DAFE93DA67F246.pdf",
-    "sha256": "d75a57c3a0f430e720cd66528446d4f2b00e0d63264e8aa2a3a29f7012144a15",
-    "bytes": 193893,
-    "page_count": 12,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "193893 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年第三季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T23:29:23+08:00",
-    "bytes_written": 193893
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-27T23:29:23+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-10-29/1224750628.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 887,
-    "at": "2026-10-27T23:29:23+08:00",
-    "response_sha256": null,
-    "bytes": 193893,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\603072\\q3_2025\\DOC-53DAFE93DA67F246.pdf.part",
-    "bytes": 193893,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "193893 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=天和磁材 代码=603072 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年第三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 12,
-    "text_chars": 2247,
-    "issues": [],
-    "sha256": "d75a57c3a0f430e720cd66528446d4f2b00e0d63264e8aa2a3a29f7012144a15",
-    "cover_text_chars": 543,
-    "identity_probe_chars": 5109,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q3_2026": {
-   "security_id": "SH:603072",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_YET_DISCLOSED",
-   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
-   "last_error": null,
-   "next_action": "WAIT_NEXT_CYCLE",
-   "updated_at": "2026-10-27T23:29:23+08:00",
-   "index_ref": {
-    "category": "category_sjdbg_szsh",
-    "fetched_at": "2026-10-27T23:29:21+08:00",
-    "status": "RECONCILED"
-   }
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "SH:603072",
-   "category": "category_ndbg_szsh",
-   "column": "sse",
-   "org_id": "9900041650",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "sse",
-    "category": "category_ndbg_szsh",
-    "stock": "603072,9900041650",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 5,
-   "rows_fetched": 5,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 5,
-     "new_rows": 5,
-     "total_announcement": 5,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "8a01d8725a12280e889e4aca19a67abf9085ed8d4739a34b3b053af88707399a",
-     "response_bytes": 3174,
-     "raw_path": "sources/collection/raw/603072/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "sse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "SH:603072",
       "category": "category_ndbg_szsh",
-      "stock": "603072,9900041650",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T10:21:28+08:00",
-     "elapsed_ms": 804
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225203169",
-     "title": "2025年年度报告摘要",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2026-04-27",
-     "adjunct_url": "finalpage/2026-04-28/1225203169.PDF",
-     "adjunct_size": 330
-    },
-    {
-     "announcement_id": "1225203035",
-     "title": "2025年年度报告",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2026-04-27",
-     "adjunct_url": "finalpage/2026-04-28/1225203035.PDF",
-     "adjunct_size": 1795
-    },
-    {
-     "announcement_id": "1223324282",
-     "title": "2024年年度报告摘要",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2025-04-25",
-     "adjunct_url": "finalpage/2025-04-26/1223324282.PDF",
-     "adjunct_size": 395
-    },
-    {
-     "announcement_id": "1223324264",
-     "title": "2024年年度报告",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2025-04-25",
-     "adjunct_url": "finalpage/2025-04-26/1223324264.PDF",
-     "adjunct_size": 1309
-    },
-    {
-     "announcement_id": "1223324237",
-     "title": "2024年年度报告",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2025-04-25",
-     "adjunct_url": "finalpage/2025-04-26/1223324237.PDF",
-     "adjunct_size": 1309
-    }
-   ],
-   "fetched_at": "2026-10-27T10:21:28+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "SH:603072",
-   "category": "category_bndbg_szsh",
-   "column": "sse",
-   "org_id": "9900041650",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "sse",
-    "category": "category_bndbg_szsh",
-    "stock": "603072,9900041650",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 4,
-   "rows_fetched": 4,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 4,
-     "new_rows": 4,
-     "total_announcement": 4,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "cfb5514b08ecfe6bf1bbd0c1f74117d1cc44beee1819da822205211ddbe03f5a",
-     "response_bytes": 2600,
-     "raw_path": "sources/collection/raw/603072/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "sse",
+      "org_id": "9900041650",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "sse",
+        "category": "category_ndbg_szsh",
+        "stock": "603072,9900041650",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 5,
+      "rows_fetched": 5,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 5,
+          "new_rows": 5,
+          "total_announcement": 5,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "8a01d8725a12280e889e4aca19a67abf9085ed8d4739a34b3b053af88707399a",
+          "response_bytes": 3174,
+          "raw_path": "sources/collection/raw/603072/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "sse",
+            "category": "category_ndbg_szsh",
+            "stock": "603072,9900041650",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T10:21:28+08:00",
+          "elapsed_ms": 804
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225203169",
+          "title": "2025年年度报告摘要",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2026-04-27",
+          "adjunct_url": "finalpage/2026-04-28/1225203169.PDF",
+          "adjunct_size": 330
+        },
+        {
+          "announcement_id": "1225203035",
+          "title": "2025年年度报告",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2026-04-27",
+          "adjunct_url": "finalpage/2026-04-28/1225203035.PDF",
+          "adjunct_size": 1795
+        },
+        {
+          "announcement_id": "1223324282",
+          "title": "2024年年度报告摘要",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2025-04-25",
+          "adjunct_url": "finalpage/2025-04-26/1223324282.PDF",
+          "adjunct_size": 395
+        },
+        {
+          "announcement_id": "1223324264",
+          "title": "2024年年度报告",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2025-04-25",
+          "adjunct_url": "finalpage/2025-04-26/1223324264.PDF",
+          "adjunct_size": 1309
+        },
+        {
+          "announcement_id": "1223324237",
+          "title": "2024年年度报告",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2025-04-25",
+          "adjunct_url": "finalpage/2025-04-26/1223324237.PDF",
+          "adjunct_size": 1309
+        }
+      ],
+      "fetched_at": "2026-10-27T10:21:28+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "SH:603072",
       "category": "category_bndbg_szsh",
-      "stock": "603072,9900041650",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T10:21:32+08:00",
-     "elapsed_ms": 811
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225505915",
-     "title": "2026年半年度报告",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2026-08-25",
-     "adjunct_url": "finalpage/2026-08-26/1225505915.PDF",
-     "adjunct_size": 1150
-    },
-    {
-     "announcement_id": "1225505465",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2026-08-25",
-     "adjunct_url": "finalpage/2026-08-26/1225505465.PDF",
-     "adjunct_size": 154
-    },
-    {
-     "announcement_id": "1224591188",
-     "title": "2025年半年度报告",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2025-08-27",
-     "adjunct_url": "finalpage/2025-08-28/1224591188.PDF",
-     "adjunct_size": 1102
-    },
-    {
-     "announcement_id": "1224591186",
-     "title": "2025年半年度报告摘要",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2025-08-27",
-     "adjunct_url": "finalpage/2025-08-28/1224591186.PDF",
-     "adjunct_size": 153
-    }
-   ],
-   "fetched_at": "2026-10-27T10:21:32+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "SH:603072",
-   "category": "category_yjdbg_szsh",
-   "column": "sse",
-   "org_id": "9900041650",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "sse",
-    "category": "category_yjdbg_szsh",
-    "stock": "603072,9900041650",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 3,
-   "rows_fetched": 3,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 3,
-     "new_rows": 3,
-     "total_announcement": 3,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "8a816f1e7d49b5679e6779dcedf37421ea5a864b7b5518fd661e15cdeafe81f3",
-     "response_bytes": 2019,
-     "raw_path": "sources/collection/raw/603072/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "sse",
+      "org_id": "9900041650",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "sse",
+        "category": "category_bndbg_szsh",
+        "stock": "603072,9900041650",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 4,
+      "rows_fetched": 4,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 4,
+          "new_rows": 4,
+          "total_announcement": 4,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "cfb5514b08ecfe6bf1bbd0c1f74117d1cc44beee1819da822205211ddbe03f5a",
+          "response_bytes": 2600,
+          "raw_path": "sources/collection/raw/603072/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "sse",
+            "category": "category_bndbg_szsh",
+            "stock": "603072,9900041650",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T10:21:32+08:00",
+          "elapsed_ms": 811
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225505915",
+          "title": "2026年半年度报告",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2026-08-25",
+          "adjunct_url": "finalpage/2026-08-26/1225505915.PDF",
+          "adjunct_size": 1150
+        },
+        {
+          "announcement_id": "1225505465",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2026-08-25",
+          "adjunct_url": "finalpage/2026-08-26/1225505465.PDF",
+          "adjunct_size": 154
+        },
+        {
+          "announcement_id": "1224591188",
+          "title": "2025年半年度报告",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2025-08-27",
+          "adjunct_url": "finalpage/2025-08-28/1224591188.PDF",
+          "adjunct_size": 1102
+        },
+        {
+          "announcement_id": "1224591186",
+          "title": "2025年半年度报告摘要",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2025-08-27",
+          "adjunct_url": "finalpage/2025-08-28/1224591186.PDF",
+          "adjunct_size": 153
+        }
+      ],
+      "fetched_at": "2026-10-27T10:21:32+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "SH:603072",
       "category": "category_yjdbg_szsh",
-      "stock": "603072,9900041650",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T23:29:20+08:00",
-     "elapsed_ms": 5322
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225203156",
-     "title": "2026年第一季度报告",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2026-04-27",
-     "adjunct_url": "finalpage/2026-04-28/1225203156.PDF",
-     "adjunct_size": 188
-    },
-    {
-     "announcement_id": "1223348279",
-     "title": "2025年第一季度报告（更新后）",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2025-04-27",
-     "adjunct_url": "finalpage/2025-04-28/1223348279.PDF",
-     "adjunct_size": 221
-    },
-    {
-     "announcement_id": "1223324270",
-     "title": "2025年第一季度报告",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2025-04-25",
-     "adjunct_url": "finalpage/2025-04-26/1223324270.PDF",
-     "adjunct_size": 223
-    }
-   ],
-   "fetched_at": "2026-10-27T23:29:20+08:00"
-  },
-  "category_sjdbg_szsh": {
-   "security_id": "SH:603072",
-   "category": "category_sjdbg_szsh",
-   "column": "sse",
-   "org_id": "9900041650",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "sse",
-    "category": "category_sjdbg_szsh",
-    "stock": "603072,9900041650",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 1,
-   "rows_fetched": 1,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 1,
-     "new_rows": 1,
-     "total_announcement": 1,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "ddb97f0a7ecec30e19196ad70fd3c2471d1c73c22ef23e4ef8541fd7a92e0c0f",
-     "response_bytes": 781,
-     "raw_path": "sources/collection/raw/603072/category_sjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "sse",
+      "org_id": "9900041650",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "sse",
+        "category": "category_yjdbg_szsh",
+        "stock": "603072,9900041650",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 3,
+      "rows_fetched": 3,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 3,
+          "new_rows": 3,
+          "total_announcement": 3,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "8a816f1e7d49b5679e6779dcedf37421ea5a864b7b5518fd661e15cdeafe81f3",
+          "response_bytes": 2019,
+          "raw_path": "sources/collection/raw/603072/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "sse",
+            "category": "category_yjdbg_szsh",
+            "stock": "603072,9900041650",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T23:29:20+08:00",
+          "elapsed_ms": 5322
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225203156",
+          "title": "2026年第一季度报告",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2026-04-27",
+          "adjunct_url": "finalpage/2026-04-28/1225203156.PDF",
+          "adjunct_size": 188
+        },
+        {
+          "announcement_id": "1223348279",
+          "title": "2025年第一季度报告（更新后）",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2025-04-27",
+          "adjunct_url": "finalpage/2025-04-28/1223348279.PDF",
+          "adjunct_size": 221
+        },
+        {
+          "announcement_id": "1223324270",
+          "title": "2025年第一季度报告",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2025-04-25",
+          "adjunct_url": "finalpage/2025-04-26/1223324270.PDF",
+          "adjunct_size": 223
+        }
+      ],
+      "fetched_at": "2026-10-27T23:29:20+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "SH:603072",
       "category": "category_sjdbg_szsh",
-      "stock": "603072,9900041650",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T23:29:21+08:00",
-     "elapsed_ms": 838
+      "column": "sse",
+      "org_id": "9900041650",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "sse",
+        "category": "category_sjdbg_szsh",
+        "stock": "603072,9900041650",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 1,
+      "rows_fetched": 1,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 1,
+          "new_rows": 1,
+          "total_announcement": 1,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "ddb97f0a7ecec30e19196ad70fd3c2471d1c73c22ef23e4ef8541fd7a92e0c0f",
+          "response_bytes": 781,
+          "raw_path": "sources/collection/raw/603072/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "sse",
+            "category": "category_sjdbg_szsh",
+            "stock": "603072,9900041650",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T23:29:21+08:00",
+          "elapsed_ms": 838
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224750628",
+          "title": "2025年第三季度报告",
+          "sec_code": "603072",
+          "sec_name": "天和磁材",
+          "published_on": "2025-10-28",
+          "adjunct_url": "finalpage/2025-10-29/1224750628.PDF",
+          "adjunct_size": 190
+        }
+      ],
+      "fetched_at": "2026-10-27T23:29:21+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1224750628",
-     "title": "2025年第三季度报告",
-     "sec_code": "603072",
-     "sec_name": "天和磁材",
-     "published_on": "2025-10-28",
-     "adjunct_url": "finalpage/2025-10-29/1224750628.PDF",
-     "adjunct_size": 190
-    }
-   ],
-   "fetched_at": "2026-10-27T23:29:21+08:00"
-  }
- },
- "updated_at": "2026-10-27T23:29:23+08:00"
+  },
+  "updated_at": "2026-10-27T23:29:23+08:00"
 }

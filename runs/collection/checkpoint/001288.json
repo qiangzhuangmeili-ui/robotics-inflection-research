@@ -1,1992 +1,2030 @@
 {
- "security_id": "SZ:001288",
- "slots": {
-  "annual_2023": {
-   "security_id": "SZ:001288",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219463615.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1457,
-     "at": "2026-10-26T21:17:46+08:00",
-     "response_sha256": null,
-     "bytes": 3291325,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219463615.PDF",
-    "request_params": {
-     "Range": null
+  "security_id": "SZ:001288",
+  "slots": {
+    "annual_2023": {
+      "security_id": "SZ:001288",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219463615.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1457,
+          "at": "2026-10-26T21:17:46+08:00",
+          "response_sha256": null,
+          "bytes": 3291325,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219463615.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1457,
+        "at": "2026-10-26T21:17:46+08:00",
+        "response_sha256": null,
+        "bytes": 3291325,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:17:46+08:00",
+        "bytes_written": 3291325
+      },
+      "document": {
+        "document_id": "DOC-5309171126D9D64A",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2023年年度报告",
+        "published_on": "2024-03-29",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219463615.PDF",
+        "local_file": "sources/collection/originals/001288/annual_2023/DOC-5309171126D9D64A.pdf",
+        "sha256": "c1976ee89c0ebf212060b36d05c44333d036ef53f10695d54358a9a5464f3776",
+        "bytes": 3291325,
+        "page_count": 204,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3291325 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "204 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "204 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\annual_2023\\DOC-5309171126D9D64A.pdf.part",
+        "bytes": 3291325,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3291325 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "204 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "204 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 204,
+        "text_chars": 2088,
+        "issues": [],
+        "sha256": "c1976ee89c0ebf212060b36d05c44333d036ef53f10695d54358a9a5464f3776",
+        "cover_text_chars": 63,
+        "identity_probe_chars": 3705,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:17:46+08:00"
     },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1457,
-    "at": "2026-10-26T21:17:46+08:00",
-    "response_sha256": null,
-    "bytes": 3291325,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:17:46+08:00",
-    "bytes_written": 3291325
-   },
-   "document": {
-    "document_id": "DOC-5309171126D9D64A",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2023年年度报告",
-    "published_on": "2024-03-29",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219463615.PDF",
-    "local_file": "sources/collection/originals/001288/annual_2023/DOC-5309171126D9D64A.pdf",
-    "sha256": "c1976ee89c0ebf212060b36d05c44333d036ef53f10695d54358a9a5464f3776",
-    "bytes": 3291325,
-    "page_count": 204,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3291325 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "204 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "204 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\annual_2023\\DOC-5309171126D9D64A.pdf.part",
-    "bytes": 3291325,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3291325 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "204 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "204 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告"
-     }
+    "annual_2024": {
+      "security_id": "SZ:001288",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-06-14/1223879712.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1969,
+          "at": "2026-10-26T21:17:48+08:00",
+          "response_sha256": null,
+          "bytes": 4245646,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-06-14/1223879712.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1969,
+        "at": "2026-10-26T21:17:48+08:00",
+        "response_sha256": null,
+        "bytes": 4245646,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:17:48+08:00",
+        "bytes_written": 4245646
+      },
+      "document": {
+        "document_id": "DOC-0BE25A2961552A62",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|1",
+        "revision_no": 1,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年年度报告（更正后）",
+        "published_on": "2025-06-13",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-06-14/1223879712.PDF",
+        "local_file": "sources/collection/originals/001288/annual_2024/DOC-0BE25A2961552A62.pdf",
+        "sha256": "2fbd91151f9de51e984826d4fd11efe61cedc60dddef22a7e7d5d4b1d3365615",
+        "bytes": 4245646,
+        "page_count": 265,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4245646 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "265 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "265 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告（更正后）"
+          }
+        },
+        "version_chain": {
+          "policy": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+          "effective_document_id": "DOC-0BE25A2961552A62",
+          "versions": [
+            {
+              "revision_no": 0,
+              "document_id": "DOC-C75470C0D8F4797C",
+              "title": "2024年年度报告",
+              "published_on": "2025-04-08",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-08/1223022076.PDF",
+              "role": "original",
+              "local_file": "sources/collection/originals/001288/annual_2024/DOC-C75470C0D8F4797C.pdf",
+              "sha256": "f2344ed3513ad20a08aaf919ce01f03c7b24ff2787a8ff4d546ca25bafe39c8d",
+              "bytes": 6394693,
+              "downloaded_now": false,
+              "supersedes": null,
+              "superseded_by": "DOC-0BE25A2961552A62"
+            },
+            {
+              "revision_no": 1,
+              "document_id": "DOC-0BE25A2961552A62",
+              "title": "2024年年度报告（更正后）",
+              "published_on": "2025-06-14",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-06-14/1223879712.PDF",
+              "role": "corrected",
+              "local_file": "sources/collection/originals/001288/annual_2024/DOC-0BE25A2961552A62.pdf",
+              "sha256": "2fbd91151f9de51e984826d4fd11efe61cedc60dddef22a7e7d5d4b1d3365615",
+              "bytes": 4245646,
+              "downloaded_now": false,
+              "supersedes": "DOC-C75470C0D8F4797C",
+              "superseded_by": null
+            }
+          ],
+          "correction_notice": null,
+          "complete": true,
+          "recorded_at": "2026-10-28T20:24:31+08:00"
+        },
+        "supersedes": "DOC-C75470C0D8F4797C"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\annual_2024\\DOC-0BE25A2961552A62.pdf.part",
+        "bytes": 4245646,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4245646 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "265 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "265 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告（更正后）"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 265,
+        "text_chars": 2169,
+        "issues": [],
+        "sha256": "2fbd91151f9de51e984826d4fd11efe61cedc60dddef22a7e7d5d4b1d3365615",
+        "cover_text_chars": 62,
+        "identity_probe_chars": 3643,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:17:48+08:00"
     },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 204,
-    "text_chars": 2088,
-    "issues": [],
-    "sha256": "c1976ee89c0ebf212060b36d05c44333d036ef53f10695d54358a9a5464f3776",
-    "cover_text_chars": 63,
-    "identity_probe_chars": 3705,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:17:46+08:00"
+    "annual_2025": {
+      "security_id": "SZ:001288",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225089310.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1862,
+          "at": "2026-10-26T21:17:50+08:00",
+          "response_sha256": null,
+          "bytes": 1576279,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225089310.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1862,
+        "at": "2026-10-26T21:17:50+08:00",
+        "response_sha256": null,
+        "bytes": 1576279,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:17:50+08:00",
+        "bytes_written": 1576279
+      },
+      "document": {
+        "document_id": "DOC-B530C6A8FF803691",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-04-09",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225089310.PDF",
+        "local_file": "sources/collection/originals/001288/annual_2025/DOC-B530C6A8FF803691.pdf",
+        "sha256": "048344c2841dda81555b4f61b2d4f17a95190f371073428b99ece4ca59e02f70",
+        "bytes": 1576279,
+        "page_count": 250,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1576279 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "250 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "250 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\annual_2025\\DOC-B530C6A8FF803691.pdf.part",
+        "bytes": 1576279,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1576279 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "250 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "250 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 250,
+        "text_chars": 1856,
+        "issues": [],
+        "sha256": "048344c2841dda81555b4f61b2d4f17a95190f371073428b99ece4ca59e02f70",
+        "cover_text_chars": 63,
+        "identity_probe_chars": 3528,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:17:50+08:00"
+    },
+    "h1_2024": {
+      "security_id": "SZ:001288",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221005879.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1738,
+          "at": "2026-10-26T21:17:53+08:00",
+          "response_sha256": null,
+          "bytes": 4821061,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221005879.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1738,
+        "at": "2026-10-26T21:17:53+08:00",
+        "response_sha256": null,
+        "bytes": 4821061,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:17:54+08:00",
+        "bytes_written": 4821061
+      },
+      "document": {
+        "document_id": "DOC-9D7F030B00C302A4",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年半年度报告",
+        "published_on": "2024-08-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221005879.PDF",
+        "local_file": "sources/collection/originals/001288/h1_2024/DOC-9D7F030B00C302A4.pdf",
+        "sha256": "e4f3f9d9bb986056baf62be6cffb58d84c01bda7f1e97bd1df10a9b73ff65d98",
+        "bytes": 4821061,
+        "page_count": 218,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4821061 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "218 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "218 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\h1_2024\\DOC-9D7F030B00C302A4.pdf.part",
+        "bytes": 4821061,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4821061 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "218 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "218 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 218,
+        "text_chars": 1868,
+        "issues": [],
+        "sha256": "e4f3f9d9bb986056baf62be6cffb58d84c01bda7f1e97bd1df10a9b73ff65d98",
+        "cover_text_chars": 64,
+        "identity_probe_chars": 2672,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:17:54+08:00"
+    },
+    "h1_2025": {
+      "security_id": "SZ:001288",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224568326.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1339,
+          "at": "2026-10-26T21:17:55+08:00",
+          "response_sha256": null,
+          "bytes": 1304086,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224568326.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1339,
+        "at": "2026-10-26T21:17:55+08:00",
+        "response_sha256": null,
+        "bytes": 1304086,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:17:55+08:00",
+        "bytes_written": 1304086
+      },
+      "document": {
+        "document_id": "DOC-C2E8140546F2FCFA",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年半年度报告",
+        "published_on": "2025-08-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224568326.PDF",
+        "local_file": "sources/collection/originals/001288/h1_2025/DOC-C2E8140546F2FCFA.pdf",
+        "sha256": "1ddfc8d798cdc1184ae10b342f21237e578d1479d5eca7f138d6fd372c0b80d1",
+        "bytes": 1304086,
+        "page_count": 221,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1304086 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "221 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "221 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\h1_2025\\DOC-C2E8140546F2FCFA.pdf.part",
+        "bytes": 1304086,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1304086 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "221 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "221 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 221,
+        "text_chars": 1067,
+        "issues": [],
+        "sha256": "1ddfc8d798cdc1184ae10b342f21237e578d1479d5eca7f138d6fd372c0b80d1",
+        "cover_text_chars": 64,
+        "identity_probe_chars": 3446,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:17:55+08:00"
+    },
+    "h1_2026": {
+      "security_id": "SZ:001288",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225517963.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1299,
+          "at": "2026-10-26T21:17:57+08:00",
+          "response_sha256": null,
+          "bytes": 1261775,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225517963.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1299,
+        "at": "2026-10-26T21:17:57+08:00",
+        "response_sha256": null,
+        "bytes": 1261775,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:17:57+08:00",
+        "bytes_written": 1261775
+      },
+      "document": {
+        "document_id": "DOC-AFFE09690797D1D5",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225517963.PDF",
+        "local_file": "sources/collection/originals/001288/h1_2026/DOC-AFFE09690797D1D5.pdf",
+        "sha256": "b4092e4347c7cb4ededbc8980ae1e84be0f30818a36fe6c2391b0d564c077336",
+        "bytes": 1261775,
+        "page_count": 206,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1261775 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "206 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "206 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\h1_2026\\DOC-AFFE09690797D1D5.pdf.part",
+        "bytes": 1261775,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1261775 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "206 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "206 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 206,
+        "text_chars": 1769,
+        "issues": [],
+        "sha256": "b4092e4347c7cb4ededbc8980ae1e84be0f30818a36fe6c2391b0d564c077336",
+        "cover_text_chars": 65,
+        "identity_probe_chars": 3346,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:17:57+08:00"
+    },
+    "q1_2026": {
+      "security_id": "SZ:001288",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225201155.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1061,
+          "at": "2026-10-26T21:17:59+08:00",
+          "response_sha256": null,
+          "bytes": 229162,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225201155.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1061,
+        "at": "2026-10-26T21:17:59+08:00",
+        "response_sha256": null,
+        "bytes": 229162,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:17:59+08:00",
+        "bytes_written": 229162
+      },
+      "document": {
+        "document_id": "DOC-D87E116A6D4FF9EF",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年一季度报告",
+        "published_on": "2026-04-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225201155.PDF",
+        "local_file": "sources/collection/originals/001288/q1_2026/DOC-D87E116A6D4FF9EF.pdf",
+        "sha256": "13ca11b05b41156b1a18f62030993f259af72bcb8b58eb90ce573f128e071475",
+        "bytes": 229162,
+        "page_count": 11,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "229162 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q1_2026\\DOC-D87E116A6D4FF9EF.pdf.part",
+        "bytes": 229162,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "229162 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 11,
+        "text_chars": 2858,
+        "issues": [],
+        "sha256": "13ca11b05b41156b1a18f62030993f259af72bcb8b58eb90ce573f128e071475",
+        "cover_text_chars": 257,
+        "identity_probe_chars": 7186,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:17:59+08:00"
+    },
+    "q1_2024": {
+      "security_id": "SZ:001288",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219665291.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1153,
+          "at": "2026-10-27T20:56:50+08:00",
+          "response_sha256": null,
+          "bytes": 409050,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219665291.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1153,
+        "at": "2026-10-27T20:56:50+08:00",
+        "response_sha256": null,
+        "bytes": 409050,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T20:56:50+08:00",
+        "bytes_written": 409050
+      },
+      "document": {
+        "document_id": "DOC-5D4CED1150349636",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年一季度报告",
+        "published_on": "2024-04-18",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219665291.PDF",
+        "local_file": "sources/collection/originals/001288/q1_2024/DOC-5D4CED1150349636.pdf",
+        "sha256": "aa938aa31ae3be23112dae87825bb24db955faf7f556654445e65923f69174df",
+        "bytes": 409050,
+        "page_count": 11,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "409050 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q1_2024\\DOC-5D4CED1150349636.pdf.part",
+        "bytes": 409050,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "409050 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 11,
+        "text_chars": 2907,
+        "issues": [],
+        "sha256": "aa938aa31ae3be23112dae87825bb24db955faf7f556654445e65923f69174df",
+        "cover_text_chars": 258,
+        "identity_probe_chars": 7095,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T20:56:50+08:00"
+    },
+    "q3_2024": {
+      "security_id": "SZ:001288",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221553202.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1143,
+          "at": "2026-10-27T20:56:52+08:00",
+          "response_sha256": null,
+          "bytes": 698308,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221553202.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1143,
+        "at": "2026-10-27T20:56:52+08:00",
+        "response_sha256": null,
+        "bytes": 698308,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T20:56:52+08:00",
+        "bytes_written": 698308
+      },
+      "document": {
+        "document_id": "DOC-DA420F6CB48F45D7",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年三季度报告",
+        "published_on": "2024-10-29",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221553202.PDF",
+        "local_file": "sources/collection/originals/001288/q3_2024/DOC-DA420F6CB48F45D7.pdf",
+        "sha256": "897ea4fbb865b21de9eda2ce23b30313cc4b6af2746f1ae421b695e225660576",
+        "bytes": 698308,
+        "page_count": 13,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "698308 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q3_2024\\DOC-DA420F6CB48F45D7.pdf.part",
+        "bytes": 698308,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "698308 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 13,
+        "text_chars": 2848,
+        "issues": [],
+        "sha256": "897ea4fbb865b21de9eda2ce23b30313cc4b6af2746f1ae421b695e225660576",
+        "cover_text_chars": 259,
+        "identity_probe_chars": 7913,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T20:56:52+08:00"
+    },
+    "q1_2025": {
+      "security_id": "SZ:001288",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223359207.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1008,
+          "at": "2026-10-27T20:56:53+08:00",
+          "response_sha256": null,
+          "bytes": 763147,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223359207.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1008,
+        "at": "2026-10-27T20:56:53+08:00",
+        "response_sha256": null,
+        "bytes": 763147,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T20:56:53+08:00",
+        "bytes_written": 763147
+      },
+      "document": {
+        "document_id": "DOC-2E347488F1969150",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年一季度报告",
+        "published_on": "2025-04-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223359207.PDF",
+        "local_file": "sources/collection/originals/001288/q1_2025/DOC-2E347488F1969150.pdf",
+        "sha256": "694e9bbb23ee39b06257b3b2ba56094949820560256a49be00a4cad573e8b9db",
+        "bytes": 763147,
+        "page_count": 12,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "763147 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q1_2025\\DOC-2E347488F1969150.pdf.part",
+        "bytes": 763147,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "763147 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 12,
+        "text_chars": 2992,
+        "issues": [],
+        "sha256": "694e9bbb23ee39b06257b3b2ba56094949820560256a49be00a4cad573e8b9db",
+        "cover_text_chars": 258,
+        "identity_probe_chars": 7196,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T20:56:53+08:00"
+    },
+    "q3_2025": {
+      "security_id": "SZ:001288",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224739890.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 852,
+          "at": "2026-10-27T20:56:54+08:00",
+          "response_sha256": null,
+          "bytes": 449330,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224739890.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 852,
+        "at": "2026-10-27T20:56:54+08:00",
+        "response_sha256": null,
+        "bytes": 449330,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T20:56:55+08:00",
+        "bytes_written": 449330
+      },
+      "document": {
+        "document_id": "DOC-2E672C23A5170296",
+        "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年三季度报告",
+        "published_on": "2025-10-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224739890.PDF",
+        "local_file": "sources/collection/originals/001288/q3_2025/DOC-2E672C23A5170296.pdf",
+        "sha256": "f21a51920080d7d93b3378151b66eff4d3759b004a2230258fe3d8488eb89968",
+        "bytes": 449330,
+        "page_count": 13,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "449330 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q3_2025\\DOC-2E672C23A5170296.pdf.part",
+        "bytes": 449330,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "449330 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 13,
+        "text_chars": 2676,
+        "issues": [],
+        "sha256": "f21a51920080d7d93b3378151b66eff4d3759b004a2230258fe3d8488eb89968",
+        "cover_text_chars": 258,
+        "identity_probe_chars": 7768,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T20:56:55+08:00"
+    },
+    "q3_2026": {
+      "security_id": "SZ:001288",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "checkpoint": {},
+      "document": {},
+      "updated_at": "2026-10-27T20:56:55+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-27T20:56:51+08:00",
+        "status": "RECONCILED"
+      }
+    }
   },
-  "annual_2024": {
-   "security_id": "SZ:001288",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-06-14/1223879712.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1969,
-     "at": "2026-10-26T21:17:48+08:00",
-     "response_sha256": null,
-     "bytes": 4245646,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-06-14/1223879712.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1969,
-    "at": "2026-10-26T21:17:48+08:00",
-    "response_sha256": null,
-    "bytes": 4245646,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:17:48+08:00",
-    "bytes_written": 4245646
-   },
-   "document": {
-    "document_id": "DOC-0BE25A2961552A62",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|1",
-    "revision_no": 1,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年年度报告（更正后）",
-    "published_on": "2025-06-13",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-06-14/1223879712.PDF",
-    "local_file": "sources/collection/originals/001288/annual_2024/DOC-0BE25A2961552A62.pdf",
-    "sha256": "2fbd91151f9de51e984826d4fd11efe61cedc60dddef22a7e7d5d4b1d3365615",
-    "bytes": 4245646,
-    "page_count": 265,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4245646 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "265 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "265 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告（更正后）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\annual_2024\\DOC-0BE25A2961552A62.pdf.part",
-    "bytes": 4245646,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4245646 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "265 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "265 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告（更正后）"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 265,
-    "text_chars": 2169,
-    "issues": [],
-    "sha256": "2fbd91151f9de51e984826d4fd11efe61cedc60dddef22a7e7d5d4b1d3365615",
-    "cover_text_chars": 62,
-    "identity_probe_chars": 3643,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:17:48+08:00"
-  },
-  "annual_2025": {
-   "security_id": "SZ:001288",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225089310.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1862,
-     "at": "2026-10-26T21:17:50+08:00",
-     "response_sha256": null,
-     "bytes": 1576279,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225089310.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1862,
-    "at": "2026-10-26T21:17:50+08:00",
-    "response_sha256": null,
-    "bytes": 1576279,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:17:50+08:00",
-    "bytes_written": 1576279
-   },
-   "document": {
-    "document_id": "DOC-B530C6A8FF803691",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-04-09",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225089310.PDF",
-    "local_file": "sources/collection/originals/001288/annual_2025/DOC-B530C6A8FF803691.pdf",
-    "sha256": "048344c2841dda81555b4f61b2d4f17a95190f371073428b99ece4ca59e02f70",
-    "bytes": 1576279,
-    "page_count": 250,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1576279 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "250 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "250 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\annual_2025\\DOC-B530C6A8FF803691.pdf.part",
-    "bytes": 1576279,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1576279 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "250 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "250 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 250,
-    "text_chars": 1856,
-    "issues": [],
-    "sha256": "048344c2841dda81555b4f61b2d4f17a95190f371073428b99ece4ca59e02f70",
-    "cover_text_chars": 63,
-    "identity_probe_chars": 3528,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:17:50+08:00"
-  },
-  "h1_2024": {
-   "security_id": "SZ:001288",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221005879.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1738,
-     "at": "2026-10-26T21:17:53+08:00",
-     "response_sha256": null,
-     "bytes": 4821061,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221005879.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1738,
-    "at": "2026-10-26T21:17:53+08:00",
-    "response_sha256": null,
-    "bytes": 4821061,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:17:54+08:00",
-    "bytes_written": 4821061
-   },
-   "document": {
-    "document_id": "DOC-9D7F030B00C302A4",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年半年度报告",
-    "published_on": "2024-08-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-28/1221005879.PDF",
-    "local_file": "sources/collection/originals/001288/h1_2024/DOC-9D7F030B00C302A4.pdf",
-    "sha256": "e4f3f9d9bb986056baf62be6cffb58d84c01bda7f1e97bd1df10a9b73ff65d98",
-    "bytes": 4821061,
-    "page_count": 218,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4821061 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "218 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "218 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\h1_2024\\DOC-9D7F030B00C302A4.pdf.part",
-    "bytes": 4821061,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4821061 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "218 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "218 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 218,
-    "text_chars": 1868,
-    "issues": [],
-    "sha256": "e4f3f9d9bb986056baf62be6cffb58d84c01bda7f1e97bd1df10a9b73ff65d98",
-    "cover_text_chars": 64,
-    "identity_probe_chars": 2672,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:17:54+08:00"
-  },
-  "h1_2025": {
-   "security_id": "SZ:001288",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224568326.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1339,
-     "at": "2026-10-26T21:17:55+08:00",
-     "response_sha256": null,
-     "bytes": 1304086,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224568326.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1339,
-    "at": "2026-10-26T21:17:55+08:00",
-    "response_sha256": null,
-    "bytes": 1304086,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:17:55+08:00",
-    "bytes_written": 1304086
-   },
-   "document": {
-    "document_id": "DOC-C2E8140546F2FCFA",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年半年度报告",
-    "published_on": "2025-08-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224568326.PDF",
-    "local_file": "sources/collection/originals/001288/h1_2025/DOC-C2E8140546F2FCFA.pdf",
-    "sha256": "1ddfc8d798cdc1184ae10b342f21237e578d1479d5eca7f138d6fd372c0b80d1",
-    "bytes": 1304086,
-    "page_count": 221,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1304086 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "221 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "221 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\h1_2025\\DOC-C2E8140546F2FCFA.pdf.part",
-    "bytes": 1304086,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1304086 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "221 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "221 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 221,
-    "text_chars": 1067,
-    "issues": [],
-    "sha256": "1ddfc8d798cdc1184ae10b342f21237e578d1479d5eca7f138d6fd372c0b80d1",
-    "cover_text_chars": 64,
-    "identity_probe_chars": 3446,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:17:55+08:00"
-  },
-  "h1_2026": {
-   "security_id": "SZ:001288",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225517963.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1299,
-     "at": "2026-10-26T21:17:57+08:00",
-     "response_sha256": null,
-     "bytes": 1261775,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225517963.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1299,
-    "at": "2026-10-26T21:17:57+08:00",
-    "response_sha256": null,
-    "bytes": 1261775,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:17:57+08:00",
-    "bytes_written": 1261775
-   },
-   "document": {
-    "document_id": "DOC-AFFE09690797D1D5",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225517963.PDF",
-    "local_file": "sources/collection/originals/001288/h1_2026/DOC-AFFE09690797D1D5.pdf",
-    "sha256": "b4092e4347c7cb4ededbc8980ae1e84be0f30818a36fe6c2391b0d564c077336",
-    "bytes": 1261775,
-    "page_count": 206,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1261775 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "206 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "206 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\h1_2026\\DOC-AFFE09690797D1D5.pdf.part",
-    "bytes": 1261775,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1261775 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "206 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "206 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 206,
-    "text_chars": 1769,
-    "issues": [],
-    "sha256": "b4092e4347c7cb4ededbc8980ae1e84be0f30818a36fe6c2391b0d564c077336",
-    "cover_text_chars": 65,
-    "identity_probe_chars": 3346,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:17:57+08:00"
-  },
-  "q1_2026": {
-   "security_id": "SZ:001288",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225201155.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1061,
-     "at": "2026-10-26T21:17:59+08:00",
-     "response_sha256": null,
-     "bytes": 229162,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225201155.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1061,
-    "at": "2026-10-26T21:17:59+08:00",
-    "response_sha256": null,
-    "bytes": 229162,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:17:59+08:00",
-    "bytes_written": 229162
-   },
-   "document": {
-    "document_id": "DOC-D87E116A6D4FF9EF",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年一季度报告",
-    "published_on": "2026-04-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225201155.PDF",
-    "local_file": "sources/collection/originals/001288/q1_2026/DOC-D87E116A6D4FF9EF.pdf",
-    "sha256": "13ca11b05b41156b1a18f62030993f259af72bcb8b58eb90ce573f128e071475",
-    "bytes": 229162,
-    "page_count": 11,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "229162 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q1_2026\\DOC-D87E116A6D4FF9EF.pdf.part",
-    "bytes": 229162,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "229162 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 11,
-    "text_chars": 2858,
-    "issues": [],
-    "sha256": "13ca11b05b41156b1a18f62030993f259af72bcb8b58eb90ce573f128e071475",
-    "cover_text_chars": 257,
-    "identity_probe_chars": 7186,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:17:59+08:00"
-  },
-  "q1_2024": {
-   "security_id": "SZ:001288",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219665291.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1153,
-     "at": "2026-10-27T20:56:50+08:00",
-     "response_sha256": null,
-     "bytes": 409050,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219665291.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1153,
-    "at": "2026-10-27T20:56:50+08:00",
-    "response_sha256": null,
-    "bytes": 409050,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T20:56:50+08:00",
-    "bytes_written": 409050
-   },
-   "document": {
-    "document_id": "DOC-5D4CED1150349636",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年一季度报告",
-    "published_on": "2024-04-18",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219665291.PDF",
-    "local_file": "sources/collection/originals/001288/q1_2024/DOC-5D4CED1150349636.pdf",
-    "sha256": "aa938aa31ae3be23112dae87825bb24db955faf7f556654445e65923f69174df",
-    "bytes": 409050,
-    "page_count": 11,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "409050 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q1_2024\\DOC-5D4CED1150349636.pdf.part",
-    "bytes": 409050,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "409050 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 11,
-    "text_chars": 2907,
-    "issues": [],
-    "sha256": "aa938aa31ae3be23112dae87825bb24db955faf7f556654445e65923f69174df",
-    "cover_text_chars": 258,
-    "identity_probe_chars": 7095,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T20:56:50+08:00"
-  },
-  "q3_2024": {
-   "security_id": "SZ:001288",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221553202.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1143,
-     "at": "2026-10-27T20:56:52+08:00",
-     "response_sha256": null,
-     "bytes": 698308,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221553202.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1143,
-    "at": "2026-10-27T20:56:52+08:00",
-    "response_sha256": null,
-    "bytes": 698308,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T20:56:52+08:00",
-    "bytes_written": 698308
-   },
-   "document": {
-    "document_id": "DOC-DA420F6CB48F45D7",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年三季度报告",
-    "published_on": "2024-10-29",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-30/1221553202.PDF",
-    "local_file": "sources/collection/originals/001288/q3_2024/DOC-DA420F6CB48F45D7.pdf",
-    "sha256": "897ea4fbb865b21de9eda2ce23b30313cc4b6af2746f1ae421b695e225660576",
-    "bytes": 698308,
-    "page_count": 13,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "698308 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q3_2024\\DOC-DA420F6CB48F45D7.pdf.part",
-    "bytes": 698308,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "698308 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 13,
-    "text_chars": 2848,
-    "issues": [],
-    "sha256": "897ea4fbb865b21de9eda2ce23b30313cc4b6af2746f1ae421b695e225660576",
-    "cover_text_chars": 259,
-    "identity_probe_chars": 7913,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T20:56:52+08:00"
-  },
-  "q1_2025": {
-   "security_id": "SZ:001288",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223359207.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1008,
-     "at": "2026-10-27T20:56:53+08:00",
-     "response_sha256": null,
-     "bytes": 763147,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223359207.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1008,
-    "at": "2026-10-27T20:56:53+08:00",
-    "response_sha256": null,
-    "bytes": 763147,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T20:56:53+08:00",
-    "bytes_written": 763147
-   },
-   "document": {
-    "document_id": "DOC-2E347488F1969150",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年一季度报告",
-    "published_on": "2025-04-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-29/1223359207.PDF",
-    "local_file": "sources/collection/originals/001288/q1_2025/DOC-2E347488F1969150.pdf",
-    "sha256": "694e9bbb23ee39b06257b3b2ba56094949820560256a49be00a4cad573e8b9db",
-    "bytes": 763147,
-    "page_count": 12,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "763147 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q1_2025\\DOC-2E347488F1969150.pdf.part",
-    "bytes": 763147,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "763147 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 12,
-    "text_chars": 2992,
-    "issues": [],
-    "sha256": "694e9bbb23ee39b06257b3b2ba56094949820560256a49be00a4cad573e8b9db",
-    "cover_text_chars": 258,
-    "identity_probe_chars": 7196,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T20:56:53+08:00"
-  },
-  "q3_2025": {
-   "security_id": "SZ:001288",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224739890.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 852,
-     "at": "2026-10-27T20:56:54+08:00",
-     "response_sha256": null,
-     "bytes": 449330,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224739890.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 852,
-    "at": "2026-10-27T20:56:54+08:00",
-    "response_sha256": null,
-    "bytes": 449330,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T20:56:55+08:00",
-    "bytes_written": 449330
-   },
-   "document": {
-    "document_id": "DOC-2E672C23A5170296",
-    "identity_key": "SZ:001288|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年三季度报告",
-    "published_on": "2025-10-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224739890.PDF",
-    "local_file": "sources/collection/originals/001288/q3_2025/DOC-2E672C23A5170296.pdf",
-    "sha256": "f21a51920080d7d93b3378151b66eff4d3759b004a2230258fe3d8488eb89968",
-    "bytes": 449330,
-    "page_count": 13,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "449330 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年三季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\001288\\q3_2025\\DOC-2E672C23A5170296.pdf.part",
-    "bytes": 449330,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "449330 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=运机集团 代码=001288 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 13,
-    "text_chars": 2676,
-    "issues": [],
-    "sha256": "f21a51920080d7d93b3378151b66eff4d3759b004a2230258fe3d8488eb89968",
-    "cover_text_chars": 258,
-    "identity_probe_chars": 7768,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T20:56:55+08:00"
-  },
-  "q3_2026": {
-   "security_id": "SZ:001288",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "status": "NOT_YET_DISCLOSED",
-   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "WAIT_NEXT_CYCLE",
-   "checkpoint": {},
-   "document": {},
-   "updated_at": "2026-10-27T20:56:55+08:00",
-   "index_ref": {
-    "category": "category_sjdbg_szsh",
-    "fetched_at": "2026-10-27T20:56:51+08:00",
-    "status": "RECONCILED"
-   }
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "SZ:001288",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "9900041838",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "001288,9900041838",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 9,
-   "rows_fetched": 9,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 9,
-     "new_rows": 9,
-     "total_announcement": 9,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "7db896107490642a29b9e5ff9e540d6cd7c9744a7697f8b723b184ef8df09e92",
-     "response_bytes": 5708,
-     "raw_path": "sources/collection/raw/001288/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "SZ:001288",
       "category": "category_ndbg_szsh",
-      "stock": "001288,9900041838",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T21:17:44+08:00",
-     "elapsed_ms": 526
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225089310",
-     "title": "2025年年度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2026-04-09",
-     "adjunct_url": "finalpage/2026-04-10/1225089310.PDF"
-    },
-    {
-     "announcement_id": "1225089309",
-     "title": "2025年年度报告摘要",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2026-04-09",
-     "adjunct_url": "finalpage/2026-04-10/1225089309.PDF"
-    },
-    {
-     "announcement_id": "1223879712",
-     "title": "2024年年度报告（更正后）",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2025-06-13",
-     "adjunct_url": "finalpage/2025-06-14/1223879712.PDF"
-    },
-    {
-     "announcement_id": "1223022076",
-     "title": "2024年年度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2025-04-07",
-     "adjunct_url": "finalpage/2025-04-08/1223022076.PDF"
-    },
-    {
-     "announcement_id": "1223022073",
-     "title": "2024年年度报告摘要",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2025-04-07",
-     "adjunct_url": "finalpage/2025-04-08/1223022073.PDF"
-    },
-    {
-     "announcement_id": "1219463658",
-     "title": "2023年年度报告摘要",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2024-03-29",
-     "adjunct_url": "finalpage/2024-03-30/1219463658.PDF"
-    },
-    {
-     "announcement_id": "1219463615",
-     "title": "2023年年度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2024-03-29",
-     "adjunct_url": "finalpage/2024-03-30/1219463615.PDF"
-    },
-    {
-     "announcement_id": "1216180707",
-     "title": "2022年年度报告摘要",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2023-03-21",
-     "adjunct_url": "finalpage/2023-03-22/1216180707.PDF"
-    },
-    {
-     "announcement_id": "1216180683",
-     "title": "2022年年度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2023-03-21",
-     "adjunct_url": "finalpage/2023-03-22/1216180683.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T21:17:44+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "SZ:001288",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "9900041838",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "001288,9900041838",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "ba14cd7745e067a7b413812cc5fa976d587dfe37329ae9311286c87eeeec4630",
-     "response_bytes": 5116,
-     "raw_path": "sources/collection/raw/001288/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900041838",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "001288,9900041838",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 9,
+      "rows_fetched": 9,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 9,
+          "new_rows": 9,
+          "total_announcement": 9,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "7db896107490642a29b9e5ff9e540d6cd7c9744a7697f8b723b184ef8df09e92",
+          "response_bytes": 5708,
+          "raw_path": "sources/collection/raw/001288/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "001288,9900041838",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T21:17:44+08:00",
+          "elapsed_ms": 526
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225089310",
+          "title": "2025年年度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2026-04-09",
+          "adjunct_url": "finalpage/2026-04-10/1225089310.PDF"
+        },
+        {
+          "announcement_id": "1225089309",
+          "title": "2025年年度报告摘要",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2026-04-09",
+          "adjunct_url": "finalpage/2026-04-10/1225089309.PDF"
+        },
+        {
+          "announcement_id": "1223879712",
+          "title": "2024年年度报告（更正后）",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2025-06-13",
+          "adjunct_url": "finalpage/2025-06-14/1223879712.PDF"
+        },
+        {
+          "announcement_id": "1223022076",
+          "title": "2024年年度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2025-04-07",
+          "adjunct_url": "finalpage/2025-04-08/1223022076.PDF"
+        },
+        {
+          "announcement_id": "1223022073",
+          "title": "2024年年度报告摘要",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2025-04-07",
+          "adjunct_url": "finalpage/2025-04-08/1223022073.PDF"
+        },
+        {
+          "announcement_id": "1219463658",
+          "title": "2023年年度报告摘要",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2024-03-29",
+          "adjunct_url": "finalpage/2024-03-30/1219463658.PDF"
+        },
+        {
+          "announcement_id": "1219463615",
+          "title": "2023年年度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2024-03-29",
+          "adjunct_url": "finalpage/2024-03-30/1219463615.PDF"
+        },
+        {
+          "announcement_id": "1216180707",
+          "title": "2022年年度报告摘要",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2023-03-21",
+          "adjunct_url": "finalpage/2023-03-22/1216180707.PDF"
+        },
+        {
+          "announcement_id": "1216180683",
+          "title": "2022年年度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2023-03-21",
+          "adjunct_url": "finalpage/2023-03-22/1216180683.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T21:17:44+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "SZ:001288",
       "category": "category_bndbg_szsh",
-      "stock": "001288,9900041838",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T21:17:52+08:00",
-     "elapsed_ms": 1416
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225517963",
-     "title": "2026年半年度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2026-08-27",
-     "adjunct_url": "finalpage/2026-08-28/1225517963.PDF"
-    },
-    {
-     "announcement_id": "1225517962",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2026-08-27",
-     "adjunct_url": "finalpage/2026-08-28/1225517962.PDF"
-    },
-    {
-     "announcement_id": "1224568328",
-     "title": "2025年半年度报告摘要",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2025-08-25",
-     "adjunct_url": "finalpage/2025-08-26/1224568328.PDF"
-    },
-    {
-     "announcement_id": "1224568326",
-     "title": "2025年半年度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2025-08-25",
-     "adjunct_url": "finalpage/2025-08-26/1224568326.PDF"
-    },
-    {
-     "announcement_id": "1221005885",
-     "title": "2024年半年度报告摘要",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2024-08-27",
-     "adjunct_url": "finalpage/2024-08-28/1221005885.PDF"
-    },
-    {
-     "announcement_id": "1221005879",
-     "title": "2024年半年度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2024-08-27",
-     "adjunct_url": "finalpage/2024-08-28/1221005879.PDF"
-    },
-    {
-     "announcement_id": "1217715507",
-     "title": "2023年半年度报告摘要",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2023-08-30",
-     "adjunct_url": "finalpage/2023-08-31/1217715507.PDF"
-    },
-    {
-     "announcement_id": "1217715501",
-     "title": "2023年半年度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2023-08-30",
-     "adjunct_url": "finalpage/2023-08-31/1217715501.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T21:17:52+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "SZ:001288",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "9900041838",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "001288,9900041838",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 4,
-   "rows_fetched": 4,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 4,
-     "new_rows": 4,
-     "total_announcement": 4,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "ce0621381e975efea50c58ec6a8fb37f798057fc6c714b92d4561133cd122165",
-     "response_bytes": 2614,
-     "raw_path": "sources/collection/raw/001288/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900041838",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "001288,9900041838",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "ba14cd7745e067a7b413812cc5fa976d587dfe37329ae9311286c87eeeec4630",
+          "response_bytes": 5116,
+          "raw_path": "sources/collection/raw/001288/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "001288,9900041838",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T21:17:52+08:00",
+          "elapsed_ms": 1416
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225517963",
+          "title": "2026年半年度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2026-08-27",
+          "adjunct_url": "finalpage/2026-08-28/1225517963.PDF"
+        },
+        {
+          "announcement_id": "1225517962",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2026-08-27",
+          "adjunct_url": "finalpage/2026-08-28/1225517962.PDF"
+        },
+        {
+          "announcement_id": "1224568328",
+          "title": "2025年半年度报告摘要",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2025-08-25",
+          "adjunct_url": "finalpage/2025-08-26/1224568328.PDF"
+        },
+        {
+          "announcement_id": "1224568326",
+          "title": "2025年半年度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2025-08-25",
+          "adjunct_url": "finalpage/2025-08-26/1224568326.PDF"
+        },
+        {
+          "announcement_id": "1221005885",
+          "title": "2024年半年度报告摘要",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2024-08-27",
+          "adjunct_url": "finalpage/2024-08-28/1221005885.PDF"
+        },
+        {
+          "announcement_id": "1221005879",
+          "title": "2024年半年度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2024-08-27",
+          "adjunct_url": "finalpage/2024-08-28/1221005879.PDF"
+        },
+        {
+          "announcement_id": "1217715507",
+          "title": "2023年半年度报告摘要",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2023-08-30",
+          "adjunct_url": "finalpage/2023-08-31/1217715507.PDF"
+        },
+        {
+          "announcement_id": "1217715501",
+          "title": "2023年半年度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2023-08-30",
+          "adjunct_url": "finalpage/2023-08-31/1217715501.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T21:17:52+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "SZ:001288",
       "category": "category_yjdbg_szsh",
-      "stock": "001288,9900041838",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T20:56:48+08:00",
-     "elapsed_ms": 541
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225201155",
-     "title": "2026年一季度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2026-04-27",
-     "adjunct_url": "finalpage/2026-04-28/1225201155.PDF",
-     "adjunct_size": 225
-    },
-    {
-     "announcement_id": "1223359207",
-     "title": "2025年一季度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2025-04-28",
-     "adjunct_url": "finalpage/2025-04-29/1223359207.PDF",
-     "adjunct_size": 746
-    },
-    {
-     "announcement_id": "1219665291",
-     "title": "2024年一季度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2024-04-18",
-     "adjunct_url": "finalpage/2024-04-19/1219665291.PDF",
-     "adjunct_size": 400
-    },
-    {
-     "announcement_id": "1216435636",
-     "title": "2023年一季度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2023-04-17",
-     "adjunct_url": "finalpage/2023-04-18/1216435636.PDF",
-     "adjunct_size": 275
-    }
-   ],
-   "fetched_at": "2026-10-27T20:56:48+08:00"
-  },
-  "category_sjdbg_szsh": {
-   "security_id": "SZ:001288",
-   "category": "category_sjdbg_szsh",
-   "column": "szse",
-   "org_id": "9900041838",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_sjdbg_szsh",
-    "stock": "001288,9900041838",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 3,
-   "rows_fetched": 3,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 3,
-     "new_rows": 3,
-     "total_announcement": 3,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "8416d0394d0fd9184ffaa37660e8fedac253b1ed5d6b37d30aae184285e66dc6",
-     "response_bytes": 2001,
-     "raw_path": "sources/collection/raw/001288/category_sjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900041838",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "001288,9900041838",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 4,
+      "rows_fetched": 4,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 4,
+          "new_rows": 4,
+          "total_announcement": 4,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "ce0621381e975efea50c58ec6a8fb37f798057fc6c714b92d4561133cd122165",
+          "response_bytes": 2614,
+          "raw_path": "sources/collection/raw/001288/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "001288,9900041838",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T20:56:48+08:00",
+          "elapsed_ms": 541
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225201155",
+          "title": "2026年一季度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2026-04-27",
+          "adjunct_url": "finalpage/2026-04-28/1225201155.PDF",
+          "adjunct_size": 225
+        },
+        {
+          "announcement_id": "1223359207",
+          "title": "2025年一季度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2025-04-28",
+          "adjunct_url": "finalpage/2025-04-29/1223359207.PDF",
+          "adjunct_size": 746
+        },
+        {
+          "announcement_id": "1219665291",
+          "title": "2024年一季度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2024-04-18",
+          "adjunct_url": "finalpage/2024-04-19/1219665291.PDF",
+          "adjunct_size": 400
+        },
+        {
+          "announcement_id": "1216435636",
+          "title": "2023年一季度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2023-04-17",
+          "adjunct_url": "finalpage/2023-04-18/1216435636.PDF",
+          "adjunct_size": 275
+        }
+      ],
+      "fetched_at": "2026-10-27T20:56:48+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "SZ:001288",
       "category": "category_sjdbg_szsh",
-      "stock": "001288,9900041838",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T20:56:51+08:00",
-     "elapsed_ms": 517
+      "column": "szse",
+      "org_id": "9900041838",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "001288,9900041838",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 3,
+      "rows_fetched": 3,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 3,
+          "new_rows": 3,
+          "total_announcement": 3,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "8416d0394d0fd9184ffaa37660e8fedac253b1ed5d6b37d30aae184285e66dc6",
+          "response_bytes": 2001,
+          "raw_path": "sources/collection/raw/001288/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "001288,9900041838",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T20:56:51+08:00",
+          "elapsed_ms": 517
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224739890",
+          "title": "2025年三季度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2025-10-27",
+          "adjunct_url": "finalpage/2025-10-28/1224739890.PDF",
+          "adjunct_size": 440
+        },
+        {
+          "announcement_id": "1221553202",
+          "title": "2024年三季度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2024-10-29",
+          "adjunct_url": "finalpage/2024-10-30/1221553202.PDF",
+          "adjunct_size": 683
+        },
+        {
+          "announcement_id": "1218165428",
+          "title": "2023年三季度报告",
+          "sec_code": "001288",
+          "sec_name": "运机集团",
+          "published_on": "2023-10-26",
+          "adjunct_url": "finalpage/2023-10-27/1218165428.PDF",
+          "adjunct_size": 369
+        }
+      ],
+      "fetched_at": "2026-10-27T20:56:51+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1224739890",
-     "title": "2025年三季度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2025-10-27",
-     "adjunct_url": "finalpage/2025-10-28/1224739890.PDF",
-     "adjunct_size": 440
-    },
-    {
-     "announcement_id": "1221553202",
-     "title": "2024年三季度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2024-10-29",
-     "adjunct_url": "finalpage/2024-10-30/1221553202.PDF",
-     "adjunct_size": 683
-    },
-    {
-     "announcement_id": "1218165428",
-     "title": "2023年三季度报告",
-     "sec_code": "001288",
-     "sec_name": "运机集团",
-     "published_on": "2023-10-26",
-     "adjunct_url": "finalpage/2023-10-27/1218165428.PDF",
-     "adjunct_size": 369
-    }
-   ],
-   "fetched_at": "2026-10-27T20:56:51+08:00"
-  }
- },
- "updated_at": "2026-10-27T20:56:55+08:00"
+  },
+  "updated_at": "2026-10-27T20:56:55+08:00"
 }

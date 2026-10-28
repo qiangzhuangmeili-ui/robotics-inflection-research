@@ -2,7 +2,7 @@
   "issue_key": "A04",
   "issue_number": 34,
   "review_round": "REWORK_20261027",
-  "generated_at": "2026-10-28T16:50:09+08:00",
+  "generated_at": "2026-10-28T20:25:07+08:00",
   "review_nature": "SELF_CHECK",
   "decision": "ACCEPTED_WITH_LIMITS",
   "release_S00": true,
@@ -14,13 +14,18 @@
     },
     {
       "path": "runs/issues/A04/rework/audit_rework.py",
-      "bytes": 18746,
-      "sha256": "5fa7151255a6bf4ac6c3386255dcfe7be79b211b6d7b1e95a4fe062cba08650b"
+      "bytes": 21753,
+      "sha256": "8287933e7ff5f7a273acb38e2ca528fcef41f04d52f63976bd47badc2ba900c8"
     },
     {
       "path": "runs/issues/A04/rework/checks.json",
-      "bytes": 4616,
-      "sha256": "245ae1d69aa551c7dab61071c5ac0f97639bfe402c31d8ebdb6add8a9940e7f2"
+      "bytes": 5212,
+      "sha256": "42afa675393646c6b14800192a821ce721b3e3a9bb69b662951129df174877fb"
+    },
+    {
+      "path": "runs/issues/A04/rework/correction_chain_summary.csv",
+      "bytes": 21736,
+      "sha256": "4b3ab3c0e67961ef81b5c9282455420df0d5ff9f8586cf698c80f95ee3ca6f95"
     },
     {
       "path": "runs/issues/A04/rework/cutoff_hold_resolution.json",
@@ -44,43 +49,48 @@
     },
     {
       "path": "runs/issues/A04/rework/finalize_rework.py",
-      "bytes": 11097,
-      "sha256": "13b5096fe63b0974af3613f559697cbeacb5dd7a1d80fa89f860ad372d4737fe"
+      "bytes": 13355,
+      "sha256": "5fe1fb7be5ba9086b6556d601a16e2db115878886bab8c099c0df633a3502d90"
     },
     {
       "path": "runs/issues/A04/rework/frozen_scope_coverage.csv",
       "bytes": 1773,
-      "sha256": "e7bfe051164883816216ae7263312c5e72cc6f4ab38d3353d09932da0799b00f"
+      "sha256": "2374a90dd1e0c3510fcf41626f0caab1266c0bda90f9f092fa68e4695487ab53"
     },
     {
       "path": "runs/issues/A04/rework/handoff.md",
-      "bytes": 4809,
-      "sha256": "9183704158a83066b075bb4da7322047f5693663dadb0dc2a88b32ed616a245a"
+      "bytes": 6110,
+      "sha256": "8cd3ca9b7e61e5a49d36f19dd8f33d5b2f35d6c8b70b5fba017b4c74f0a2beba"
     },
     {
       "path": "runs/issues/A04/rework/handoff_correction.json",
       "bytes": 790,
-      "sha256": "308194681494ce9e5c1228e17a51cd99a075dd31a924cac975f44e47e42822c9"
+      "sha256": "f81b4aca55e6e887bd7cabe5db444e7bb0b1556320dffe6b3b1aa1711bb545e9"
     },
     {
       "path": "runs/issues/A04/rework/input_fingerprints.json",
-      "bytes": 3072,
-      "sha256": "cf8b1b827357e675147783b1bdfb84e0c5d1a2adfa413dead66ad659f4ededd6"
+      "bytes": 3301,
+      "sha256": "46c213c99b1b6bcf50ba789fdd9fa8d8ca1fcbfeae4665b99b0c43f90ee7aed5"
+    },
+    {
+      "path": "runs/issues/A04/rework/na_applicability_audit.csv",
+      "bytes": 28318,
+      "sha256": "0ced16e44f2d14426a557de6db532ddeebc1bb4296683b0930a1f3491790a02c"
     },
     {
       "path": "runs/issues/A04/rework/quarter_slot_dispositions.csv",
-      "bytes": 2924906,
-      "sha256": "795f430db6c02ba741457ee1587910f79819c39b812780487fdb712fc7326d30"
+      "bytes": 2927680,
+      "sha256": "b3f4a91406620b524b31efd30253fb746d44ed33da8059a1c42240814fe771b9"
     },
     {
       "path": "runs/issues/A04/rework/review.json",
-      "bytes": 12856,
-      "sha256": "c1ec7931048b0f528f5bb4396c7b5c1b50cc30bcc05e8b7d4166c50cd67722a9"
+      "bytes": 13923,
+      "sha256": "605a84fc3ad1444948032036b6371555ef80d4531ef26dc1739095e0930d2873"
     },
     {
       "path": "runs/issues/A04/rework/rework_summary.json",
       "bytes": 383,
-      "sha256": "acc83b49ca2d9187c699ba41e7eae614a72863354e83ab9a97864bc6a19b9518"
+      "sha256": "2e6bf8a65769ca35a1369afb85318a0058571143976625ce641469863db63f1a"
     },
     {
       "path": "runs/issues/A04/rework/supplementary_scope_coverage.csv",
@@ -116,8 +126,9 @@
     "intake_batches/M00_09/assignment.csv": "c69a930076b61653627796113a43a89875ac2a4bda11434ae8443fc0082b99af",
     "intake_batches/M00_10/assignment.csv": "6b0176485f5e2f066799d8828995e798f4e16adc956fb8fb129b78a144d45817",
     "intake_batches/M00_11/assignment.csv": "65354e337dfc641650358e787793d4d5e84cb14ae73bcacd69f368ed2dfe67ad",
-    "runs/collection/collection_index.csv": "78b593393aca71bae5ba0e393c9cf7d8e252b44cb904b016e086f2a4f08e71a2",
+    "runs/collection/collection_index.csv": "42eb70f12a84d7489d13501796acd6e9ba174ddb678b0197e4829ee1bd2dce11",
     "data/company_listing_dates.csv": "5a1eced9b3392bb78399a81a0ee4fdf51d1387997062a1cc359bacb0c4d2f9ef",
+    "runs/issues/A04R/neeq_listing_dates.json": "a30fd09b6c960f85d73c33df9c8490f80da8e7c962953e68686933c57cc82888",
     "runs/issues/A04R/announcement_index.jsonl": "ad5f0266b9c590ed2a31b0102966742025229a9748ad8d6b1047c2064c6c754d",
     "runs/issues/A03/financial_fields_extracted_annual_full.csv": "06e5b56315b7eb48373429dd2058a34ddd444d951790e4836abee25abe101f9a",
     "runs/issues/A03/extraction_diagnostics_annual_full.csv": "d82cbf8cd0eda1f6ba2497d26f67b371802dde2ed0fcb616db3c085c1f0d221e",
@@ -125,6 +136,7 @@
     "runs/issues/P04/financial_field_dictionary.csv": "d009e0dc57dd78336d18c6b5d9389fcce2e3900ac338396256089625082cc410",
     "runs/issues/A03/extraction_summary_annual_full.json": "1844889e52af07943e730f43f1c5849b6028ac838a4edaaa725099aaa93adb8e",
     "runs/issues/A03/remaining_gaps.csv": "d9be93f2ca83ed6804dea49a304e8b71a2728bc7b2e9e7ac298d06c0cce99253",
+    "runs/issues/A04R/correction_chains.json": "0095f4d3a5fcbecae3cce1b0cf0641b62b4e66b451ea61f83cd837dace7a634c",
     "runs/issues/A03/manual_intake_receipts.csv": "fd111eb103a72356da069166b68d2320c70551e996b4f51d10047be8809cda34"
   },
   "preserved_prior_review": {

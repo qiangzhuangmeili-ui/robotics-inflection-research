@@ -1,2017 +1,2060 @@
 {
- "security_id": "SH:605100",
- "slots": {
-  "annual_2023": {
-   "security_id": "SH:605100",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919184.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1287,
-     "at": "2026-10-27T11:03:51+08:00",
-     "response_sha256": null,
-     "bytes": 3885919,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919184.PDF",
-    "request_params": {
-     "Range": null
+  "security_id": "SH:605100",
+  "slots": {
+    "annual_2023": {
+      "security_id": "SH:605100",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919184.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1287,
+          "at": "2026-10-27T11:03:51+08:00",
+          "response_sha256": null,
+          "bytes": 3885919,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919184.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1287,
+        "at": "2026-10-27T11:03:51+08:00",
+        "response_sha256": null,
+        "bytes": 3885919,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:03:51+08:00",
+        "bytes_written": 3885919
+      },
+      "document": {
+        "document_id": "DOC-ABC308577712A928",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2023年年度报告",
+        "published_on": "2024-04-29",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919184.PDF",
+        "local_file": "sources/collection/originals/605100/annual_2023/DOC-ABC308577712A928.pdf",
+        "sha256": "89e19f1a35b1c546ff0973fed3eb13be3becd568919f81a73112b2b2e12bc0e6",
+        "bytes": 3885919,
+        "page_count": 192,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3885919 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "192 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "192 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2023年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\annual_2023\\DOC-ABC308577712A928.pdf.part",
+        "bytes": 3885919,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3885919 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "192 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "192 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2023年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 192,
+        "text_chars": 2457,
+        "issues": [],
+        "sha256": "89e19f1a35b1c546ff0973fed3eb13be3becd568919f81a73112b2b2e12bc0e6",
+        "cover_text_chars": 50,
+        "identity_probe_chars": 4906,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:03:51+08:00"
     },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1287,
-    "at": "2026-10-27T11:03:51+08:00",
-    "response_sha256": null,
-    "bytes": 3885919,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:03:51+08:00",
-    "bytes_written": 3885919
-   },
-   "document": {
-    "document_id": "DOC-ABC308577712A928",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2023年年度报告",
-    "published_on": "2024-04-29",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919184.PDF",
-    "local_file": "sources/collection/originals/605100/annual_2023/DOC-ABC308577712A928.pdf",
-    "sha256": "89e19f1a35b1c546ff0973fed3eb13be3becd568919f81a73112b2b2e12bc0e6",
-    "bytes": 3885919,
-    "page_count": 192,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3885919 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "192 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "192 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2023年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\annual_2023\\DOC-ABC308577712A928.pdf.part",
-    "bytes": 3885919,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3885919 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "192 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "192 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2023年年度报告"
-     }
+    "annual_2024": {
+      "security_id": "SH:605100",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-18/1223123675.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1640,
+          "at": "2026-10-27T11:03:53+08:00",
+          "response_sha256": null,
+          "bytes": 4206908,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-18/1223123675.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1640,
+        "at": "2026-10-27T11:03:53+08:00",
+        "response_sha256": null,
+        "bytes": 4206908,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:03:53+08:00",
+        "bytes_written": 4206908
+      },
+      "document": {
+        "document_id": "DOC-1A141FFCD9BD1164",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2024年年度报告",
+        "published_on": "2025-04-17",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-18/1223123675.PDF",
+        "local_file": "sources/collection/originals/605100/annual_2024/DOC-1A141FFCD9BD1164.pdf",
+        "sha256": "72833a33f3b2d6331d7fccb6f764a19cd2b34ea3f61e4593be48c5f2b9ea41c9",
+        "bytes": 4206908,
+        "page_count": 205,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4206908 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "205 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "205 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2024年年度报告"
+          }
+        },
+        "version_chain": {
+          "policy": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+          "effective_document_id": "DOC-518ADB2CEFCE88F4",
+          "versions": [
+            {
+              "revision_no": 0,
+              "document_id": "DOC-1A141FFCD9BD1164",
+              "title": "华丰动力股份有限公司2024年年度报告",
+              "published_on": "2025-04-18",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-18/1223123675.PDF",
+              "role": "original",
+              "local_file": "sources/collection/originals/605100/annual_2024/DOC-1A141FFCD9BD1164.pdf",
+              "sha256": "72833a33f3b2d6331d7fccb6f764a19cd2b34ea3f61e4593be48c5f2b9ea41c9",
+              "bytes": 4206908,
+              "downloaded_now": false,
+              "supersedes": null,
+              "superseded_by": "DOC-518ADB2CEFCE88F4"
+            },
+            {
+              "revision_no": 1,
+              "document_id": "DOC-518ADB2CEFCE88F4",
+              "title": "华丰动力股份有限公司2024年年度报告（更新后）",
+              "published_on": "2025-04-30",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405825.PDF",
+              "role": "corrected",
+              "local_file": "sources/collection/originals/605100/annual_2024/DOC-518ADB2CEFCE88F4.pdf",
+              "sha256": "3f4b22810ae326ecab8af69aa1ad2f89e07bd752d1ac490323bd2dccae27875d",
+              "bytes": 1521711,
+              "downloaded_now": false,
+              "supersedes": "DOC-1A141FFCD9BD1164",
+              "superseded_by": null
+            }
+          ],
+          "correction_notice": {
+            "role": "notice",
+            "title": "华丰动力股份有限公司关于2024年年度报告的更正公告",
+            "published_on": "2025-04-30",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405821.PDF"
+          },
+          "complete": true,
+          "recorded_at": "2026-10-28T20:24:29+08:00"
+        },
+        "supersedes": "DOC-1A141FFCD9BD1164"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\annual_2024\\DOC-1A141FFCD9BD1164.pdf.part",
+        "bytes": 4206908,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4206908 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "205 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "205 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 205,
+        "text_chars": 1095,
+        "issues": [],
+        "sha256": "72833a33f3b2d6331d7fccb6f764a19cd2b34ea3f61e4593be48c5f2b9ea41c9",
+        "cover_text_chars": 60,
+        "identity_probe_chars": 4051,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:03:53+08:00"
     },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 192,
-    "text_chars": 2457,
-    "issues": [],
-    "sha256": "89e19f1a35b1c546ff0973fed3eb13be3becd568919f81a73112b2b2e12bc0e6",
-    "cover_text_chars": 50,
-    "identity_probe_chars": 4906,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:03:51+08:00"
+    "annual_2025": {
+      "security_id": "SH:605100",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-11/1225093743.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1176,
+          "at": "2026-10-27T11:03:55+08:00",
+          "response_sha256": null,
+          "bytes": 1498886,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-11/1225093743.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1176,
+        "at": "2026-10-27T11:03:55+08:00",
+        "response_sha256": null,
+        "bytes": 1498886,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:03:55+08:00",
+        "bytes_written": 1498886
+      },
+      "document": {
+        "document_id": "DOC-3487FE24319F0AB1",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2025年年度报告",
+        "published_on": "2026-04-10",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-11/1225093743.PDF",
+        "local_file": "sources/collection/originals/605100/annual_2025/DOC-3487FE24319F0AB1.pdf",
+        "sha256": "83dfa1fee0f4e25d15ca335a145928fb6215b2dd2a86a9e0d28e73de813d3456",
+        "bytes": 1498886,
+        "page_count": 207,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1498886 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "207 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "207 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\annual_2025\\DOC-3487FE24319F0AB1.pdf.part",
+        "bytes": 1498886,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1498886 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "207 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "207 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 207,
+        "text_chars": 953,
+        "issues": [],
+        "sha256": "83dfa1fee0f4e25d15ca335a145928fb6215b2dd2a86a9e0d28e73de813d3456",
+        "cover_text_chars": 60,
+        "identity_probe_chars": 4217,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:03:55+08:00"
+    },
+    "h1_2024": {
+      "security_id": "SH:605100",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-08-31/1221077217.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1037,
+          "at": "2026-10-27T11:03:57+08:00",
+          "response_sha256": null,
+          "bytes": 3174568,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-08-31/1221077217.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1037,
+        "at": "2026-10-27T11:03:57+08:00",
+        "response_sha256": null,
+        "bytes": 3174568,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:03:57+08:00",
+        "bytes_written": 3174568
+      },
+      "document": {
+        "document_id": "DOC-7E08932CBC6857A3",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2024年半年度报告",
+        "published_on": "2024-08-30",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-31/1221077217.PDF",
+        "local_file": "sources/collection/originals/605100/h1_2024/DOC-7E08932CBC6857A3.pdf",
+        "sha256": "34b730f624001566b46530f2f23456b4f7b595333bafc1a1da6024684a7f835b",
+        "bytes": 3174568,
+        "page_count": 155,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3174568 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "155 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "155 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2024年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\h1_2024\\DOC-7E08932CBC6857A3.pdf.part",
+        "bytes": 3174568,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3174568 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "155 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "155 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 155,
+        "text_chars": 2318,
+        "issues": [],
+        "sha256": "34b730f624001566b46530f2f23456b4f7b595333bafc1a1da6024684a7f835b",
+        "cover_text_chars": 52,
+        "identity_probe_chars": 4729,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:03:57+08:00"
+    },
+    "h1_2025": {
+      "security_id": "SH:605100",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224589981.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 745,
+          "at": "2026-10-27T11:03:58+08:00",
+          "response_sha256": null,
+          "bytes": 1043361,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224589981.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 745,
+        "at": "2026-10-27T11:03:58+08:00",
+        "response_sha256": null,
+        "bytes": 1043361,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:03:58+08:00",
+        "bytes_written": 1043361
+      },
+      "document": {
+        "document_id": "DOC-549C5AD96E7F7748",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2025年半年度报告",
+        "published_on": "2025-08-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224589981.PDF",
+        "local_file": "sources/collection/originals/605100/h1_2025/DOC-549C5AD96E7F7748.pdf",
+        "sha256": "e01082764db051ba3181da466dac14341b20fff886b73ebbe267296a1134fa46",
+        "bytes": 1043361,
+        "page_count": 154,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1043361 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "154 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "154 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2025年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\h1_2025\\DOC-549C5AD96E7F7748.pdf.part",
+        "bytes": 1043361,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1043361 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "154 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "154 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 154,
+        "text_chars": 2025,
+        "issues": [],
+        "sha256": "e01082764db051ba3181da466dac14341b20fff886b73ebbe267296a1134fa46",
+        "cover_text_chars": 62,
+        "identity_probe_chars": 4996,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:03:58+08:00"
+    },
+    "h1_2026": {
+      "security_id": "SH:605100",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-31/1225535245.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1013,
+          "at": "2026-10-27T11:03:59+08:00",
+          "response_sha256": null,
+          "bytes": 1106100,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-31/1225535245.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1013,
+        "at": "2026-10-27T11:03:59+08:00",
+        "response_sha256": null,
+        "bytes": 1106100,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:03:59+08:00",
+        "bytes_written": 1106100
+      },
+      "document": {
+        "document_id": "DOC-B37B4874B3799BD7",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2026年半年度报告",
+        "published_on": "2026-08-30",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-31/1225535245.PDF",
+        "local_file": "sources/collection/originals/605100/h1_2026/DOC-B37B4874B3799BD7.pdf",
+        "sha256": "611ed5dd83c79306be12fba771c47840411b62b9f1fe7d08a626065399ced674",
+        "bytes": 1106100,
+        "page_count": 160,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1106100 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "160 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "160 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\h1_2026\\DOC-B37B4874B3799BD7.pdf.part",
+        "bytes": 1106100,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1106100 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "160 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "160 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 160,
+        "text_chars": 1764,
+        "issues": [],
+        "sha256": "611ed5dd83c79306be12fba771c47840411b62b9f1fe7d08a626065399ced674",
+        "cover_text_chars": 62,
+        "identity_probe_chars": 4684,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:03:59+08:00"
+    },
+    "q1_2026": {
+      "security_id": "SH:605100",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199564.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 789,
+          "at": "2026-10-27T11:04:01+08:00",
+          "response_sha256": null,
+          "bytes": 200022,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199564.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 789,
+        "at": "2026-10-27T11:04:01+08:00",
+        "response_sha256": null,
+        "bytes": 200022,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T11:04:01+08:00",
+        "bytes_written": 200022
+      },
+      "document": {
+        "document_id": "DOC-F629D12F78FEAD4B",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2026年第一季度报告",
+        "published_on": "2026-04-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199564.PDF",
+        "local_file": "sources/collection/originals/605100/q1_2026/DOC-F629D12F78FEAD4B.pdf",
+        "sha256": "30e895646df0cbe0b2964f6e69cb09137f3b27e56d44a08dbcbd28ac06f36e04",
+        "bytes": 200022,
+        "page_count": 11,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "200022 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2026年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2026年第一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q1_2026\\DOC-F629D12F78FEAD4B.pdf.part",
+        "bytes": 200022,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "200022 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2026年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2026年第一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 11,
+        "text_chars": 2123,
+        "issues": [],
+        "sha256": "30e895646df0cbe0b2964f6e69cb09137f3b27e56d44a08dbcbd28ac06f36e04",
+        "cover_text_chars": 477,
+        "identity_probe_chars": 4888,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T11:04:01+08:00"
+    },
+    "q1_2024": {
+      "security_id": "SH:605100",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919202.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1305,
+          "at": "2026-10-27T23:42:58+08:00",
+          "response_sha256": null,
+          "bytes": 478302,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-184367D670941F8E",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2024年第一季度报告",
+        "published_on": "2024-04-29",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919202.PDF",
+        "local_file": "sources/collection/originals/605100/q1_2024/DOC-184367D670941F8E.pdf",
+        "sha256": "78da4b8e97998802f56eb39070e454226ab304c216b437c702206e3276ea29b8",
+        "bytes": 478302,
+        "page_count": 12,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "478302 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2024年第一季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T23:42:59+08:00",
+        "bytes_written": 478302
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-27T23:42:59+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919202.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1305,
+        "at": "2026-10-27T23:42:58+08:00",
+        "response_sha256": null,
+        "bytes": 478302,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q1_2024\\DOC-184367D670941F8E.pdf.part",
+        "bytes": 478302,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "478302 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2024年第一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 12,
+        "text_chars": 2327,
+        "issues": [],
+        "sha256": "78da4b8e97998802f56eb39070e454226ab304c216b437c702206e3276ea29b8",
+        "cover_text_chars": 415,
+        "identity_probe_chars": 4857,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2024": {
+      "security_id": "SH:605100",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221568551.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 848,
+          "at": "2026-10-27T23:43:00+08:00",
+          "response_sha256": null,
+          "bytes": 476860,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-887DC509224D0F79",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2024年第三季度报告",
+        "published_on": "2024-10-30",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221568551.PDF",
+        "local_file": "sources/collection/originals/605100/q3_2024/DOC-887DC509224D0F79.pdf",
+        "sha256": "e87e8d8f7955aae4fde53b22cf88bda426c317eca363d5769cc1d5427102a351",
+        "bytes": 476860,
+        "page_count": 12,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "476860 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年第三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2024年第三季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T23:43:01+08:00",
+        "bytes_written": 476860
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-27T23:43:01+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221568551.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 848,
+        "at": "2026-10-27T23:43:00+08:00",
+        "response_sha256": null,
+        "bytes": 476860,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q3_2024\\DOC-887DC509224D0F79.pdf.part",
+        "bytes": 476860,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "476860 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年第三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2024年第三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 12,
+        "text_chars": 2445,
+        "issues": [],
+        "sha256": "e87e8d8f7955aae4fde53b22cf88bda426c317eca363d5769cc1d5427102a351",
+        "cover_text_chars": 483,
+        "identity_probe_chars": 4980,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q1_2025": {
+      "security_id": "SH:605100",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405824.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 883,
+          "at": "2026-10-27T23:43:02+08:00",
+          "response_sha256": null,
+          "bytes": 193887,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-DDE8EE7AC8BF3685",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2025年第一季度报告",
+        "published_on": "2025-04-29",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405824.PDF",
+        "local_file": "sources/collection/originals/605100/q1_2025/DOC-DDE8EE7AC8BF3685.pdf",
+        "sha256": "de0843022b9ce1f9d6ad74a8507de227c7e0a6ea062de6de0ecff700298eea26",
+        "bytes": 193887,
+        "page_count": 11,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "193887 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2025年第一季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T23:43:02+08:00",
+        "bytes_written": 193887
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-27T23:43:02+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405824.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 883,
+        "at": "2026-10-27T23:43:02+08:00",
+        "response_sha256": null,
+        "bytes": 193887,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q1_2025\\DOC-DDE8EE7AC8BF3685.pdf.part",
+        "bytes": 193887,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "193887 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年第一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2025年第一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 11,
+        "text_chars": 2230,
+        "issues": [],
+        "sha256": "de0843022b9ce1f9d6ad74a8507de227c7e0a6ea062de6de0ecff700298eea26",
+        "cover_text_chars": 516,
+        "identity_probe_chars": 5084,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2025": {
+      "security_id": "SH:605100",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758321.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 846,
+          "at": "2026-10-27T23:43:03+08:00",
+          "response_sha256": null,
+          "bytes": 205517,
+          "resumed_from": 0
+        }
+      ],
+      "document": {
+        "document_id": "DOC-C5FC255E3D7F81DC",
+        "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "华丰动力股份有限公司2025年第三季度报告",
+        "published_on": "2025-10-29",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758321.PDF",
+        "local_file": "sources/collection/originals/605100/q3_2025/DOC-C5FC255E3D7F81DC.pdf",
+        "sha256": "bd885691afa008c2e16534e1406ab741079a6f3065a95b39519e3a7b7b58c2c9",
+        "bytes": 205517,
+        "page_count": 12,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "205517 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年第三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2025年第三季度报告"
+          }
+        }
+      },
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T23:43:03+08:00",
+        "bytes_written": 205517
+      },
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "last_error": null,
+      "next_action": "NONE",
+      "updated_at": "2026-10-27T23:43:03+08:00",
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758321.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 846,
+        "at": "2026-10-27T23:43:03+08:00",
+        "response_sha256": null,
+        "bytes": 205517,
+        "resumed_from": 0
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q3_2025\\DOC-C5FC255E3D7F81DC.pdf.part",
+        "bytes": 205517,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "205517 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年第三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=华丰动力股份有限公司2025年第三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 12,
+        "text_chars": 2476,
+        "issues": [],
+        "sha256": "bd885691afa008c2e16534e1406ab741079a6f3065a95b39519e3a7b7b58c2c9",
+        "cover_text_chars": 477,
+        "identity_probe_chars": 5326,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      }
+    },
+    "q3_2026": {
+      "security_id": "SH:605100",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "document": {},
+      "checkpoint": {},
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "updated_at": "2026-10-27T23:43:03+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-27T23:43:00+08:00",
+        "status": "RECONCILED"
+      }
+    }
   },
-  "annual_2024": {
-   "security_id": "SH:605100",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-18/1223123675.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1640,
-     "at": "2026-10-27T11:03:53+08:00",
-     "response_sha256": null,
-     "bytes": 4206908,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-18/1223123675.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1640,
-    "at": "2026-10-27T11:03:53+08:00",
-    "response_sha256": null,
-    "bytes": 4206908,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:03:53+08:00",
-    "bytes_written": 4206908
-   },
-   "document": {
-    "document_id": "DOC-1A141FFCD9BD1164",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2024年年度报告",
-    "published_on": "2025-04-17",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-18/1223123675.PDF",
-    "local_file": "sources/collection/originals/605100/annual_2024/DOC-1A141FFCD9BD1164.pdf",
-    "sha256": "72833a33f3b2d6331d7fccb6f764a19cd2b34ea3f61e4593be48c5f2b9ea41c9",
-    "bytes": 4206908,
-    "page_count": 205,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4206908 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "205 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "205 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2024年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\annual_2024\\DOC-1A141FFCD9BD1164.pdf.part",
-    "bytes": 4206908,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4206908 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "205 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "205 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 205,
-    "text_chars": 1095,
-    "issues": [],
-    "sha256": "72833a33f3b2d6331d7fccb6f764a19cd2b34ea3f61e4593be48c5f2b9ea41c9",
-    "cover_text_chars": 60,
-    "identity_probe_chars": 4051,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:03:53+08:00"
-  },
-  "annual_2025": {
-   "security_id": "SH:605100",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-11/1225093743.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1176,
-     "at": "2026-10-27T11:03:55+08:00",
-     "response_sha256": null,
-     "bytes": 1498886,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-11/1225093743.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1176,
-    "at": "2026-10-27T11:03:55+08:00",
-    "response_sha256": null,
-    "bytes": 1498886,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:03:55+08:00",
-    "bytes_written": 1498886
-   },
-   "document": {
-    "document_id": "DOC-3487FE24319F0AB1",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2025年年度报告",
-    "published_on": "2026-04-10",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-11/1225093743.PDF",
-    "local_file": "sources/collection/originals/605100/annual_2025/DOC-3487FE24319F0AB1.pdf",
-    "sha256": "83dfa1fee0f4e25d15ca335a145928fb6215b2dd2a86a9e0d28e73de813d3456",
-    "bytes": 1498886,
-    "page_count": 207,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1498886 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "207 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "207 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\annual_2025\\DOC-3487FE24319F0AB1.pdf.part",
-    "bytes": 1498886,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1498886 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "207 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "207 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 207,
-    "text_chars": 953,
-    "issues": [],
-    "sha256": "83dfa1fee0f4e25d15ca335a145928fb6215b2dd2a86a9e0d28e73de813d3456",
-    "cover_text_chars": 60,
-    "identity_probe_chars": 4217,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:03:55+08:00"
-  },
-  "h1_2024": {
-   "security_id": "SH:605100",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-08-31/1221077217.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1037,
-     "at": "2026-10-27T11:03:57+08:00",
-     "response_sha256": null,
-     "bytes": 3174568,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-08-31/1221077217.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1037,
-    "at": "2026-10-27T11:03:57+08:00",
-    "response_sha256": null,
-    "bytes": 3174568,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:03:57+08:00",
-    "bytes_written": 3174568
-   },
-   "document": {
-    "document_id": "DOC-7E08932CBC6857A3",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2024年半年度报告",
-    "published_on": "2024-08-30",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-31/1221077217.PDF",
-    "local_file": "sources/collection/originals/605100/h1_2024/DOC-7E08932CBC6857A3.pdf",
-    "sha256": "34b730f624001566b46530f2f23456b4f7b595333bafc1a1da6024684a7f835b",
-    "bytes": 3174568,
-    "page_count": 155,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3174568 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "155 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "155 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2024年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\h1_2024\\DOC-7E08932CBC6857A3.pdf.part",
-    "bytes": 3174568,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3174568 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "155 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "155 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 155,
-    "text_chars": 2318,
-    "issues": [],
-    "sha256": "34b730f624001566b46530f2f23456b4f7b595333bafc1a1da6024684a7f835b",
-    "cover_text_chars": 52,
-    "identity_probe_chars": 4729,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:03:57+08:00"
-  },
-  "h1_2025": {
-   "security_id": "SH:605100",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224589981.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 745,
-     "at": "2026-10-27T11:03:58+08:00",
-     "response_sha256": null,
-     "bytes": 1043361,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224589981.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 745,
-    "at": "2026-10-27T11:03:58+08:00",
-    "response_sha256": null,
-    "bytes": 1043361,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:03:58+08:00",
-    "bytes_written": 1043361
-   },
-   "document": {
-    "document_id": "DOC-549C5AD96E7F7748",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2025年半年度报告",
-    "published_on": "2025-08-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-28/1224589981.PDF",
-    "local_file": "sources/collection/originals/605100/h1_2025/DOC-549C5AD96E7F7748.pdf",
-    "sha256": "e01082764db051ba3181da466dac14341b20fff886b73ebbe267296a1134fa46",
-    "bytes": 1043361,
-    "page_count": 154,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1043361 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "154 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "154 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2025年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\h1_2025\\DOC-549C5AD96E7F7748.pdf.part",
-    "bytes": 1043361,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1043361 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "154 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "154 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 154,
-    "text_chars": 2025,
-    "issues": [],
-    "sha256": "e01082764db051ba3181da466dac14341b20fff886b73ebbe267296a1134fa46",
-    "cover_text_chars": 62,
-    "identity_probe_chars": 4996,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:03:58+08:00"
-  },
-  "h1_2026": {
-   "security_id": "SH:605100",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-31/1225535245.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1013,
-     "at": "2026-10-27T11:03:59+08:00",
-     "response_sha256": null,
-     "bytes": 1106100,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-31/1225535245.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1013,
-    "at": "2026-10-27T11:03:59+08:00",
-    "response_sha256": null,
-    "bytes": 1106100,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:03:59+08:00",
-    "bytes_written": 1106100
-   },
-   "document": {
-    "document_id": "DOC-B37B4874B3799BD7",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2026年半年度报告",
-    "published_on": "2026-08-30",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-31/1225535245.PDF",
-    "local_file": "sources/collection/originals/605100/h1_2026/DOC-B37B4874B3799BD7.pdf",
-    "sha256": "611ed5dd83c79306be12fba771c47840411b62b9f1fe7d08a626065399ced674",
-    "bytes": 1106100,
-    "page_count": 160,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1106100 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "160 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "160 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\h1_2026\\DOC-B37B4874B3799BD7.pdf.part",
-    "bytes": 1106100,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1106100 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "160 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "160 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 160,
-    "text_chars": 1764,
-    "issues": [],
-    "sha256": "611ed5dd83c79306be12fba771c47840411b62b9f1fe7d08a626065399ced674",
-    "cover_text_chars": 62,
-    "identity_probe_chars": 4684,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:03:59+08:00"
-  },
-  "q1_2026": {
-   "security_id": "SH:605100",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199564.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 789,
-     "at": "2026-10-27T11:04:01+08:00",
-     "response_sha256": null,
-     "bytes": 200022,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199564.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 789,
-    "at": "2026-10-27T11:04:01+08:00",
-    "response_sha256": null,
-    "bytes": 200022,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T11:04:01+08:00",
-    "bytes_written": 200022
-   },
-   "document": {
-    "document_id": "DOC-F629D12F78FEAD4B",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2026年第一季度报告",
-    "published_on": "2026-04-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199564.PDF",
-    "local_file": "sources/collection/originals/605100/q1_2026/DOC-F629D12F78FEAD4B.pdf",
-    "sha256": "30e895646df0cbe0b2964f6e69cb09137f3b27e56d44a08dbcbd28ac06f36e04",
-    "bytes": 200022,
-    "page_count": 11,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "200022 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2026年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2026年第一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q1_2026\\DOC-F629D12F78FEAD4B.pdf.part",
-    "bytes": 200022,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "200022 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2026年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2026年第一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 11,
-    "text_chars": 2123,
-    "issues": [],
-    "sha256": "30e895646df0cbe0b2964f6e69cb09137f3b27e56d44a08dbcbd28ac06f36e04",
-    "cover_text_chars": 477,
-    "identity_probe_chars": 4888,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T11:04:01+08:00"
-  },
-  "q1_2024": {
-   "security_id": "SH:605100",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919202.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1305,
-     "at": "2026-10-27T23:42:58+08:00",
-     "response_sha256": null,
-     "bytes": 478302,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-184367D670941F8E",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2024年第一季度报告",
-    "published_on": "2024-04-29",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919202.PDF",
-    "local_file": "sources/collection/originals/605100/q1_2024/DOC-184367D670941F8E.pdf",
-    "sha256": "78da4b8e97998802f56eb39070e454226ab304c216b437c702206e3276ea29b8",
-    "bytes": 478302,
-    "page_count": 12,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "478302 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2024年第一季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T23:42:59+08:00",
-    "bytes_written": 478302
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-27T23:42:59+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-30/1219919202.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1305,
-    "at": "2026-10-27T23:42:58+08:00",
-    "response_sha256": null,
-    "bytes": 478302,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q1_2024\\DOC-184367D670941F8E.pdf.part",
-    "bytes": 478302,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "478302 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2024年第一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 12,
-    "text_chars": 2327,
-    "issues": [],
-    "sha256": "78da4b8e97998802f56eb39070e454226ab304c216b437c702206e3276ea29b8",
-    "cover_text_chars": 415,
-    "identity_probe_chars": 4857,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q3_2024": {
-   "security_id": "SH:605100",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221568551.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 848,
-     "at": "2026-10-27T23:43:00+08:00",
-     "response_sha256": null,
-     "bytes": 476860,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-887DC509224D0F79",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2024年第三季度报告",
-    "published_on": "2024-10-30",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221568551.PDF",
-    "local_file": "sources/collection/originals/605100/q3_2024/DOC-887DC509224D0F79.pdf",
-    "sha256": "e87e8d8f7955aae4fde53b22cf88bda426c317eca363d5769cc1d5427102a351",
-    "bytes": 476860,
-    "page_count": 12,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "476860 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年第三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2024年第三季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T23:43:01+08:00",
-    "bytes_written": 476860
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-27T23:43:01+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-10-31/1221568551.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 848,
-    "at": "2026-10-27T23:43:00+08:00",
-    "response_sha256": null,
-    "bytes": 476860,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q3_2024\\DOC-887DC509224D0F79.pdf.part",
-    "bytes": 476860,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "476860 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2024年第三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2024年第三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 12,
-    "text_chars": 2445,
-    "issues": [],
-    "sha256": "e87e8d8f7955aae4fde53b22cf88bda426c317eca363d5769cc1d5427102a351",
-    "cover_text_chars": 483,
-    "identity_probe_chars": 4980,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q1_2025": {
-   "security_id": "SH:605100",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405824.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 883,
-     "at": "2026-10-27T23:43:02+08:00",
-     "response_sha256": null,
-     "bytes": 193887,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-DDE8EE7AC8BF3685",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2025年第一季度报告",
-    "published_on": "2025-04-29",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405824.PDF",
-    "local_file": "sources/collection/originals/605100/q1_2025/DOC-DDE8EE7AC8BF3685.pdf",
-    "sha256": "de0843022b9ce1f9d6ad74a8507de227c7e0a6ea062de6de0ecff700298eea26",
-    "bytes": 193887,
-    "page_count": 11,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "193887 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2025年第一季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T23:43:02+08:00",
-    "bytes_written": 193887
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-27T23:43:02+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-30/1223405824.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 883,
-    "at": "2026-10-27T23:43:02+08:00",
-    "response_sha256": null,
-    "bytes": 193887,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q1_2025\\DOC-DDE8EE7AC8BF3685.pdf.part",
-    "bytes": 193887,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "193887 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年第一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2025年第一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 11,
-    "text_chars": 2230,
-    "issues": [],
-    "sha256": "de0843022b9ce1f9d6ad74a8507de227c7e0a6ea062de6de0ecff700298eea26",
-    "cover_text_chars": 516,
-    "identity_probe_chars": 5084,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q3_2025": {
-   "security_id": "SH:605100",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758321.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 846,
-     "at": "2026-10-27T23:43:03+08:00",
-     "response_sha256": null,
-     "bytes": 205517,
-     "resumed_from": 0
-    }
-   ],
-   "document": {
-    "document_id": "DOC-C5FC255E3D7F81DC",
-    "identity_key": "SH:605100|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "华丰动力股份有限公司2025年第三季度报告",
-    "published_on": "2025-10-29",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758321.PDF",
-    "local_file": "sources/collection/originals/605100/q3_2025/DOC-C5FC255E3D7F81DC.pdf",
-    "sha256": "bd885691afa008c2e16534e1406ab741079a6f3065a95b39519e3a7b7b58c2c9",
-    "bytes": 205517,
-    "page_count": 12,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "205517 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年第三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2025年第三季度报告"
-     }
-    }
-   },
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T23:43:03+08:00",
-    "bytes_written": 205517
-   },
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "last_error": null,
-   "next_action": "NONE",
-   "updated_at": "2026-10-27T23:43:03+08:00",
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-10-30/1224758321.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 846,
-    "at": "2026-10-27T23:43:03+08:00",
-    "response_sha256": null,
-    "bytes": 205517,
-    "resumed_from": 0
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\605100\\q3_2025\\DOC-C5FC255E3D7F81DC.pdf.part",
-    "bytes": 205517,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "205517 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=华丰股份 代码=605100 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=华丰动力股份有限公司2025年第三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=华丰动力股份有限公司2025年第三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 12,
-    "text_chars": 2476,
-    "issues": [],
-    "sha256": "bd885691afa008c2e16534e1406ab741079a6f3065a95b39519e3a7b7b58c2c9",
-    "cover_text_chars": 477,
-    "identity_probe_chars": 5326,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   }
-  },
-  "q3_2026": {
-   "security_id": "SH:605100",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "document": {},
-   "checkpoint": {},
-   "status": "NOT_YET_DISCLOSED",
-   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
-   "last_error": null,
-   "next_action": "WAIT_NEXT_CYCLE",
-   "updated_at": "2026-10-27T23:43:03+08:00",
-   "index_ref": {
-    "category": "category_sjdbg_szsh",
-    "fetched_at": "2026-10-27T23:43:00+08:00",
-    "status": "RECONCILED"
-   }
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "SH:605100",
-   "category": "category_ndbg_szsh",
-   "column": "sse",
-   "org_id": "gfbj0837398",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "sse",
-    "category": "category_ndbg_szsh",
-    "stock": "605100,gfbj0837398",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 9,
-   "rows_fetched": 9,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 9,
-     "new_rows": 9,
-     "total_announcement": 9,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "f1bcafcf4174942536d10865fd83d7b806f44200ec64cf08fdc8f6233053b2f6",
-     "response_bytes": 6167,
-     "raw_path": "sources/collection/raw/605100/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "sse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "SH:605100",
       "category": "category_ndbg_szsh",
-      "stock": "605100,gfbj0837398",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:03:50+08:00",
-     "elapsed_ms": 511
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225093855",
-     "title": "华丰动力股份有限公司2025年年度报告摘要",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2026-04-10",
-     "adjunct_url": "finalpage/2026-04-11/1225093855.PDF",
-     "adjunct_size": 319
-    },
-    {
-     "announcement_id": "1225093743",
-     "title": "华丰动力股份有限公司2025年年度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2026-04-10",
-     "adjunct_url": "finalpage/2026-04-11/1225093743.PDF",
-     "adjunct_size": 1465
-    },
-    {
-     "announcement_id": "1223405825",
-     "title": "华丰动力股份有限公司2024年年度报告（更新后）",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2025-04-29",
-     "adjunct_url": "finalpage/2025-04-30/1223405825.PDF",
-     "adjunct_size": 1487
-    },
-    {
-     "announcement_id": "1223123675",
-     "title": "华丰动力股份有限公司2024年年度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2025-04-17",
-     "adjunct_url": "finalpage/2025-04-18/1223123675.PDF",
-     "adjunct_size": 4109
-    },
-    {
-     "announcement_id": "1223123656",
-     "title": "华丰动力股份有限公司2024年年度报告摘要",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2025-04-17",
-     "adjunct_url": "finalpage/2025-04-18/1223123656.PDF",
-     "adjunct_size": 712
-    },
-    {
-     "announcement_id": "1219919184",
-     "title": "华丰动力股份有限公司2023年年度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2024-04-29",
-     "adjunct_url": "finalpage/2024-04-30/1219919184.PDF",
-     "adjunct_size": 3796
-    },
-    {
-     "announcement_id": "1219919174",
-     "title": "华丰动力股份有限公司2023年年度报告摘要",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2024-04-29",
-     "adjunct_url": "finalpage/2024-04-30/1219919174.PDF",
-     "adjunct_size": 906
-    },
-    {
-     "announcement_id": "1216411595",
-     "title": "华丰动力股份有限公司2022年年度报告摘要",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2023-04-14",
-     "adjunct_url": "finalpage/2023-04-15/1216411595.PDF",
-     "adjunct_size": 956
-    },
-    {
-     "announcement_id": "1216411587",
-     "title": "华丰动力股份有限公司2022年年度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2023-04-14",
-     "adjunct_url": "finalpage/2023-04-15/1216411587.PDF",
-     "adjunct_size": 3749
-    }
-   ],
-   "fetched_at": "2026-10-27T11:03:50+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "SH:605100",
-   "category": "category_bndbg_szsh",
-   "column": "sse",
-   "org_id": "gfbj0837398",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "sse",
-    "category": "category_bndbg_szsh",
-    "stock": "605100,gfbj0837398",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "93b78aaffcf20e0829cbf247315c1cf9b79aa92bbfb3d6abc4bf8c88f609f81d",
-     "response_bytes": 5526,
-     "raw_path": "sources/collection/raw/605100/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "sse",
+      "org_id": "gfbj0837398",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "sse",
+        "category": "category_ndbg_szsh",
+        "stock": "605100,gfbj0837398",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 9,
+      "rows_fetched": 9,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 9,
+          "new_rows": 9,
+          "total_announcement": 9,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "f1bcafcf4174942536d10865fd83d7b806f44200ec64cf08fdc8f6233053b2f6",
+          "response_bytes": 6167,
+          "raw_path": "sources/collection/raw/605100/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "sse",
+            "category": "category_ndbg_szsh",
+            "stock": "605100,gfbj0837398",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:03:50+08:00",
+          "elapsed_ms": 511
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225093855",
+          "title": "华丰动力股份有限公司2025年年度报告摘要",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2026-04-10",
+          "adjunct_url": "finalpage/2026-04-11/1225093855.PDF",
+          "adjunct_size": 319
+        },
+        {
+          "announcement_id": "1225093743",
+          "title": "华丰动力股份有限公司2025年年度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2026-04-10",
+          "adjunct_url": "finalpage/2026-04-11/1225093743.PDF",
+          "adjunct_size": 1465
+        },
+        {
+          "announcement_id": "1223405825",
+          "title": "华丰动力股份有限公司2024年年度报告（更新后）",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2025-04-29",
+          "adjunct_url": "finalpage/2025-04-30/1223405825.PDF",
+          "adjunct_size": 1487
+        },
+        {
+          "announcement_id": "1223123675",
+          "title": "华丰动力股份有限公司2024年年度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2025-04-17",
+          "adjunct_url": "finalpage/2025-04-18/1223123675.PDF",
+          "adjunct_size": 4109
+        },
+        {
+          "announcement_id": "1223123656",
+          "title": "华丰动力股份有限公司2024年年度报告摘要",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2025-04-17",
+          "adjunct_url": "finalpage/2025-04-18/1223123656.PDF",
+          "adjunct_size": 712
+        },
+        {
+          "announcement_id": "1219919184",
+          "title": "华丰动力股份有限公司2023年年度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2024-04-29",
+          "adjunct_url": "finalpage/2024-04-30/1219919184.PDF",
+          "adjunct_size": 3796
+        },
+        {
+          "announcement_id": "1219919174",
+          "title": "华丰动力股份有限公司2023年年度报告摘要",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2024-04-29",
+          "adjunct_url": "finalpage/2024-04-30/1219919174.PDF",
+          "adjunct_size": 906
+        },
+        {
+          "announcement_id": "1216411595",
+          "title": "华丰动力股份有限公司2022年年度报告摘要",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2023-04-14",
+          "adjunct_url": "finalpage/2023-04-15/1216411595.PDF",
+          "adjunct_size": 956
+        },
+        {
+          "announcement_id": "1216411587",
+          "title": "华丰动力股份有限公司2022年年度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2023-04-14",
+          "adjunct_url": "finalpage/2023-04-15/1216411587.PDF",
+          "adjunct_size": 3749
+        }
+      ],
+      "fetched_at": "2026-10-27T11:03:50+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "SH:605100",
       "category": "category_bndbg_szsh",
-      "stock": "605100,gfbj0837398",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T11:03:56+08:00",
-     "elapsed_ms": 1051
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225535245",
-     "title": "华丰动力股份有限公司2026年半年度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2026-08-30",
-     "adjunct_url": "finalpage/2026-08-31/1225535245.PDF",
-     "adjunct_size": 1081
-    },
-    {
-     "announcement_id": "1225534718",
-     "title": "华丰动力股份有限公司2026年半年度报告摘要",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2026-08-30",
-     "adjunct_url": "finalpage/2026-08-31/1225534718.PDF",
-     "adjunct_size": 146
-    },
-    {
-     "announcement_id": "1224589981",
-     "title": "华丰动力股份有限公司2025年半年度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2025-08-27",
-     "adjunct_url": "finalpage/2025-08-28/1224589981.PDF",
-     "adjunct_size": 1020
-    },
-    {
-     "announcement_id": "1224589980",
-     "title": "华丰动力股份有限公司2025年半年度报告摘要",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2025-08-27",
-     "adjunct_url": "finalpage/2025-08-28/1224589980.PDF",
-     "adjunct_size": 146
-    },
-    {
-     "announcement_id": "1221077217",
-     "title": "华丰动力股份有限公司2024年半年度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2024-08-30",
-     "adjunct_url": "finalpage/2024-08-31/1221077217.PDF",
-     "adjunct_size": 3101
-    },
-    {
-     "announcement_id": "1221077211",
-     "title": "华丰动力股份有限公司2024年半年度报告摘要",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2024-08-30",
-     "adjunct_url": "finalpage/2024-08-31/1221077211.PDF",
-     "adjunct_size": 474
-    },
-    {
-     "announcement_id": "1217555289",
-     "title": "华丰动力股份有限公司2023年半年度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2023-08-16",
-     "adjunct_url": "finalpage/2023-08-17/1217555289.PDF",
-     "adjunct_size": 2660
-    },
-    {
-     "announcement_id": "1217555284",
-     "title": "华丰动力股份有限公司2023年半年度报告摘要",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2023-08-16",
-     "adjunct_url": "finalpage/2023-08-17/1217555284.PDF",
-     "adjunct_size": 484
-    }
-   ],
-   "fetched_at": "2026-10-27T11:03:56+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "SH:605100",
-   "category": "category_yjdbg_szsh",
-   "column": "sse",
-   "org_id": "gfbj0837398",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "sse",
-    "category": "category_yjdbg_szsh",
-    "stock": "605100,gfbj0837398",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 5,
-   "rows_fetched": 5,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 5,
-     "new_rows": 5,
-     "total_announcement": 5,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "f650021be301086d33eedc95af7b27e14532ef17a47df19a3f6e1865b0adcd73",
-     "response_bytes": 3512,
-     "raw_path": "sources/collection/raw/605100/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "sse",
+      "org_id": "gfbj0837398",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "sse",
+        "category": "category_bndbg_szsh",
+        "stock": "605100,gfbj0837398",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "93b78aaffcf20e0829cbf247315c1cf9b79aa92bbfb3d6abc4bf8c88f609f81d",
+          "response_bytes": 5526,
+          "raw_path": "sources/collection/raw/605100/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "sse",
+            "category": "category_bndbg_szsh",
+            "stock": "605100,gfbj0837398",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T11:03:56+08:00",
+          "elapsed_ms": 1051
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225535245",
+          "title": "华丰动力股份有限公司2026年半年度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2026-08-30",
+          "adjunct_url": "finalpage/2026-08-31/1225535245.PDF",
+          "adjunct_size": 1081
+        },
+        {
+          "announcement_id": "1225534718",
+          "title": "华丰动力股份有限公司2026年半年度报告摘要",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2026-08-30",
+          "adjunct_url": "finalpage/2026-08-31/1225534718.PDF",
+          "adjunct_size": 146
+        },
+        {
+          "announcement_id": "1224589981",
+          "title": "华丰动力股份有限公司2025年半年度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2025-08-27",
+          "adjunct_url": "finalpage/2025-08-28/1224589981.PDF",
+          "adjunct_size": 1020
+        },
+        {
+          "announcement_id": "1224589980",
+          "title": "华丰动力股份有限公司2025年半年度报告摘要",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2025-08-27",
+          "adjunct_url": "finalpage/2025-08-28/1224589980.PDF",
+          "adjunct_size": 146
+        },
+        {
+          "announcement_id": "1221077217",
+          "title": "华丰动力股份有限公司2024年半年度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2024-08-30",
+          "adjunct_url": "finalpage/2024-08-31/1221077217.PDF",
+          "adjunct_size": 3101
+        },
+        {
+          "announcement_id": "1221077211",
+          "title": "华丰动力股份有限公司2024年半年度报告摘要",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2024-08-30",
+          "adjunct_url": "finalpage/2024-08-31/1221077211.PDF",
+          "adjunct_size": 474
+        },
+        {
+          "announcement_id": "1217555289",
+          "title": "华丰动力股份有限公司2023年半年度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2023-08-16",
+          "adjunct_url": "finalpage/2023-08-17/1217555289.PDF",
+          "adjunct_size": 2660
+        },
+        {
+          "announcement_id": "1217555284",
+          "title": "华丰动力股份有限公司2023年半年度报告摘要",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2023-08-16",
+          "adjunct_url": "finalpage/2023-08-17/1217555284.PDF",
+          "adjunct_size": 484
+        }
+      ],
+      "fetched_at": "2026-10-27T11:03:56+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "SH:605100",
       "category": "category_yjdbg_szsh",
-      "stock": "605100,gfbj0837398",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T23:42:57+08:00",
-     "elapsed_ms": 521
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225199564",
-     "title": "华丰动力股份有限公司2026年第一季度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2026-04-27",
-     "adjunct_url": "finalpage/2026-04-28/1225199564.PDF",
-     "adjunct_size": 196
-    },
-    {
-     "announcement_id": "1223405824",
-     "title": "华丰动力股份有限公司2025年第一季度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2025-04-29",
-     "adjunct_url": "finalpage/2025-04-30/1223405824.PDF",
-     "adjunct_size": 190
-    },
-    {
-     "announcement_id": "1219919202",
-     "title": "华丰动力股份有限公司2024年第一季度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2024-04-29",
-     "adjunct_url": "finalpage/2024-04-30/1219919202.PDF",
-     "adjunct_size": 468
-    },
-    {
-     "announcement_id": "1219919191",
-     "title": "华丰动力股份有限公司2023年第一季度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2024-04-29",
-     "adjunct_url": "finalpage/2024-04-30/1219919191.PDF",
-     "adjunct_size": 468
-    },
-    {
-     "announcement_id": "1216684094",
-     "title": "华丰动力股份有限公司2023年第一季度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2023-04-28",
-     "adjunct_url": "finalpage/2023-04-29/1216684094.PDF",
-     "adjunct_size": 455
-    }
-   ],
-   "fetched_at": "2026-10-27T23:42:57+08:00"
-  },
-  "category_sjdbg_szsh": {
-   "security_id": "SH:605100",
-   "category": "category_sjdbg_szsh",
-   "column": "sse",
-   "org_id": "gfbj0837398",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "sse",
-    "category": "category_sjdbg_szsh",
-    "stock": "605100,gfbj0837398",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 3,
-   "rows_fetched": 3,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 3,
-     "new_rows": 3,
-     "total_announcement": 3,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "ca1d0d2160ddef22e7be2a09d62c87ab164e7cca7ddaee0eda7c6c53ad5af7a0",
-     "response_bytes": 2192,
-     "raw_path": "sources/collection/raw/605100/category_sjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "sse",
+      "org_id": "gfbj0837398",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "sse",
+        "category": "category_yjdbg_szsh",
+        "stock": "605100,gfbj0837398",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 5,
+      "rows_fetched": 5,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 5,
+          "new_rows": 5,
+          "total_announcement": 5,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "f650021be301086d33eedc95af7b27e14532ef17a47df19a3f6e1865b0adcd73",
+          "response_bytes": 3512,
+          "raw_path": "sources/collection/raw/605100/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "sse",
+            "category": "category_yjdbg_szsh",
+            "stock": "605100,gfbj0837398",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T23:42:57+08:00",
+          "elapsed_ms": 521
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225199564",
+          "title": "华丰动力股份有限公司2026年第一季度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2026-04-27",
+          "adjunct_url": "finalpage/2026-04-28/1225199564.PDF",
+          "adjunct_size": 196
+        },
+        {
+          "announcement_id": "1223405824",
+          "title": "华丰动力股份有限公司2025年第一季度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2025-04-29",
+          "adjunct_url": "finalpage/2025-04-30/1223405824.PDF",
+          "adjunct_size": 190
+        },
+        {
+          "announcement_id": "1219919202",
+          "title": "华丰动力股份有限公司2024年第一季度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2024-04-29",
+          "adjunct_url": "finalpage/2024-04-30/1219919202.PDF",
+          "adjunct_size": 468
+        },
+        {
+          "announcement_id": "1219919191",
+          "title": "华丰动力股份有限公司2023年第一季度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2024-04-29",
+          "adjunct_url": "finalpage/2024-04-30/1219919191.PDF",
+          "adjunct_size": 468
+        },
+        {
+          "announcement_id": "1216684094",
+          "title": "华丰动力股份有限公司2023年第一季度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2023-04-28",
+          "adjunct_url": "finalpage/2023-04-29/1216684094.PDF",
+          "adjunct_size": 455
+        }
+      ],
+      "fetched_at": "2026-10-27T23:42:57+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "SH:605100",
       "category": "category_sjdbg_szsh",
-      "stock": "605100,gfbj0837398",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T23:43:00+08:00",
-     "elapsed_ms": 755
+      "column": "sse",
+      "org_id": "gfbj0837398",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "sse",
+        "category": "category_sjdbg_szsh",
+        "stock": "605100,gfbj0837398",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 3,
+      "rows_fetched": 3,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 3,
+          "new_rows": 3,
+          "total_announcement": 3,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "ca1d0d2160ddef22e7be2a09d62c87ab164e7cca7ddaee0eda7c6c53ad5af7a0",
+          "response_bytes": 2192,
+          "raw_path": "sources/collection/raw/605100/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "sse",
+            "category": "category_sjdbg_szsh",
+            "stock": "605100,gfbj0837398",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T23:43:00+08:00",
+          "elapsed_ms": 755
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224758321",
+          "title": "华丰动力股份有限公司2025年第三季度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2025-10-29",
+          "adjunct_url": "finalpage/2025-10-30/1224758321.PDF",
+          "adjunct_size": 202
+        },
+        {
+          "announcement_id": "1221568551",
+          "title": "华丰动力股份有限公司2024年第三季度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2024-10-30",
+          "adjunct_url": "finalpage/2024-10-31/1221568551.PDF",
+          "adjunct_size": 467
+        },
+        {
+          "announcement_id": "1218184678",
+          "title": "华丰动力股份有限公司2023年第三季度报告",
+          "sec_code": "605100",
+          "sec_name": "华丰股份",
+          "published_on": "2023-10-27",
+          "adjunct_url": "finalpage/2023-10-28/1218184678.PDF",
+          "adjunct_size": 462
+        }
+      ],
+      "fetched_at": "2026-10-27T23:43:00+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1224758321",
-     "title": "华丰动力股份有限公司2025年第三季度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2025-10-29",
-     "adjunct_url": "finalpage/2025-10-30/1224758321.PDF",
-     "adjunct_size": 202
-    },
-    {
-     "announcement_id": "1221568551",
-     "title": "华丰动力股份有限公司2024年第三季度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2024-10-30",
-     "adjunct_url": "finalpage/2024-10-31/1221568551.PDF",
-     "adjunct_size": 467
-    },
-    {
-     "announcement_id": "1218184678",
-     "title": "华丰动力股份有限公司2023年第三季度报告",
-     "sec_code": "605100",
-     "sec_name": "华丰股份",
-     "published_on": "2023-10-27",
-     "adjunct_url": "finalpage/2023-10-28/1218184678.PDF",
-     "adjunct_size": 462
-    }
-   ],
-   "fetched_at": "2026-10-27T23:43:00+08:00"
-  }
- },
- "updated_at": "2026-10-27T23:43:03+08:00"
+  },
+  "updated_at": "2026-10-27T23:43:03+08:00"
 }

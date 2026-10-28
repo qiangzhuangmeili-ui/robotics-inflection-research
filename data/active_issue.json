@@ -4,16 +4,16 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": "2026-10-27T20:54:25+08:00",
-  "status": "IDLE_A04_ACCEPTED_WITH_LIMITS",
-  "claim_note": "A04R #50 完成（SELF_CHECK_PASS），A04 #34 复验 ACCEPTED_WITH_LIMITS，放行 S00；未做业务结论/指标/估值。",
+  "status": "IDLE_A04_ACCEPTED_WITH_LIMITS_RECHECKED",
+  "claim_note": "A04 复验（按 Codex 2026-10-28 复核意见局部修正）：北交所改用真实股转挂牌日重判、AC06 逐行核挂牌日并纳入放行门槛、财务更正版本链 120 组闭环；12/12 PASS，放行 S00。",
   "last_completed": {
     "issue_number": 34,
     "issue_key": "A04",
-    "completed_at": "2026-10-28T16:48:02+08:00",
+    "completed_at": "2026-10-28T20:22:33+08:00",
     "review_file": "runs/issues/A04/rework/review.json",
     "decision": "ACCEPTED_WITH_LIMITS",
-    "acceptance": "11/11 检查 PASS",
-    "summary": "12 槽 12648 行全部有终态；已核 11468、未到期 864、不适用 278、未披露 38；公告目录 1054/1054 对账通过"
+    "acceptance": "12/12",
+    "summary": "12648 槽全终态：已核 11468、未到期 864、不适用 274、未披露 42；公告目录 1054/1054；更正链 120/120"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -126,15 +126,6 @@
     "crosscheck_match": 2813,
     "crosscheck_mismatch": 119
   },
-  "a04_review": {
-    "decision": "RETURN_FOR_REWORK",
-    "review_file": "runs/issues/A04/review.json",
-    "reviewed_at": "2026-10-27 12:33:58 UTC",
-    "release_S00": false,
-    "known_after_cutoff": 0,
-    "unknown_disclosure_dates": 7,
-    "missing_predeadline_quarter_dispositions": 4216
-  },
   "claim_basis": {
     "issue_state": "OPEN",
     "github_checked_at": "2026-10-27T20:54:25+08:00",
@@ -162,28 +153,6 @@
     "config_sha256": "ba2c81d5502ff593176f70fea24b5d2bc9f15ccc12e6452c50ec85a5d9b5e5e2"
   },
   "paused_at": "2026-10-27T23:58:55+08:00",
-  "resume": {
-    "issue_key": "A04R",
-    "issue_number": 50,
-    "state_file": "runs/issues/A04R/PAUSE_STATE.md",
-    "commands": [
-      "python tools/a04r_scope_backfill.py",
-      "python tools/a04r_bj_applicability.py --probe",
-      "python tools/a04r_bj_applicability.py --decide",
-      "python tools/a04r_announcement_index.py --resume",
-      "python tools/a04r_announcement_index.py --download-hits",
-      "python tools/a04r_finalize.py",
-      "python runs/issues/A04/rework/audit_rework.py",
-      "python runs/issues/A04/rework/finalize_rework.py"
-    ],
-    "pending": {
-      "not_tried_slots": 565,
-      "companies_with_pending": 116,
-      "announcement_index_companies": 1,
-      "announcement_index_target": 1054
-    },
-    "then": "A04R 通过后回 A04 #34 复验；未通过前 S00 保持 WAITING_DEPENDENCIES"
-  },
   "checkpoint_sha256": {
     "runs/collection/collection_index.csv": "dbfbdd1106e45deae79de459dd9c54a7a20b73a7b874b1ad588ea304bd28ae31",
     "runs/issues/A04R/progress.json": "7623e53ab56a88b061f16e586147b0ee126ff7d12297d49fafa7f0fc74bf35cf",
@@ -201,6 +170,58 @@
     "announcement_companies": 1054,
     "keyword_originals": 264,
     "revision_rows": 11183,
-    "financial_corrections": 576
+    "financial_corrections": 207,
+    "correction_chain_pairs": 120,
+    "correction_chain_gaps": 0,
+    "neeq_listing_dates_from_local_annuals": 15
+  },
+  "history": {
+    "a04_first_review": {
+      "decision": "RETURN_FOR_REWORK",
+      "review_file": "runs/issues/A04/review.json",
+      "reviewed_at": "2026-10-27 12:33:58 UTC",
+      "release_S00": false,
+      "known_after_cutoff": 0,
+      "unknown_disclosure_dates": 7,
+      "missing_predeadline_quarter_dispositions": 4216,
+      "superseded": true,
+      "note": "首次验收 RETURN_FOR_REWORK 已作废，当前验收以 current_acceptance 为准"
+    },
+    "a04r_day_end_pause_20261027": {
+      "issue_key": "A04R",
+      "issue_number": 50,
+      "state_file": "runs/issues/A04R/PAUSE_STATE.md",
+      "commands": [
+        "python tools/a04r_scope_backfill.py",
+        "python tools/a04r_bj_applicability.py --probe",
+        "python tools/a04r_bj_applicability.py --decide",
+        "python tools/a04r_announcement_index.py --resume",
+        "python tools/a04r_announcement_index.py --download-hits",
+        "python tools/a04r_finalize.py",
+        "python runs/issues/A04/rework/audit_rework.py",
+        "python runs/issues/A04/rework/finalize_rework.py"
+      ],
+      "pending": {
+        "not_tried_slots": 565,
+        "companies_with_pending": 116,
+        "announcement_index_companies": 1,
+        "announcement_index_target": 1054
+      },
+      "then": "A04R 通过后回 A04 #34 复验；未通过前 S00 保持 WAITING_DEPENDENCIES",
+      "resolved": true,
+      "note": "2026-10-27 停机断点已于 2026-10-28 跑完，不再需要按此续跑"
+    }
+  },
+  "current_acceptance": {
+    "issue_key": "A04",
+    "issue_number": 34,
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "release_S00": true,
+    "review_file": "runs/issues/A04/rework/review.json",
+    "reviewed_at": "2026-10-28T20:22:33+08:00",
+    "review_round": "REWORK_20261028_AFTER_CODEX_REVIEW",
+    "checks": "12/12 PASS",
+    "prior_review_preserved": "runs/issues/A04/review.json",
+    "gate": "全部 12 项必需检查 PASS 才放行（任一 FAIL/HOLD 不放行）"
   }
 }

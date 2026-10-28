@@ -1,1993 +1,2036 @@
 {
- "security_id": "SZ:300223",
- "slots": {
-  "annual_2023": {
-   "security_id": "SZ:300223",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-13/1219599649.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 3071,
-     "at": "2026-10-26T23:02:25+08:00",
-     "response_sha256": null,
-     "bytes": 1384545,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-13/1219599649.PDF",
-    "request_params": {
-     "Range": null
+  "security_id": "SZ:300223",
+  "slots": {
+    "annual_2023": {
+      "security_id": "SZ:300223",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-04-13/1219599649.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 3071,
+          "at": "2026-10-26T23:02:25+08:00",
+          "response_sha256": null,
+          "bytes": 1384545,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-04-13/1219599649.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 3071,
+        "at": "2026-10-26T23:02:25+08:00",
+        "response_sha256": null,
+        "bytes": 1384545,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:02:25+08:00",
+        "bytes_written": 1384545
+      },
+      "document": {
+        "document_id": "DOC-3973018315F85C8E",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2023年年度报告",
+        "published_on": "2024-04-12",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-13/1219599649.PDF",
+        "local_file": "sources/collection/originals/300223/annual_2023/DOC-3973018315F85C8E.pdf",
+        "sha256": "e845425a0c1f03b5d7330255855cdd45ce321ae21d5f1387566a4778fba3285f",
+        "bytes": 1384545,
+        "page_count": 209,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1384545 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "209 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "209 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\annual_2023\\DOC-3973018315F85C8E.pdf.part",
+        "bytes": 1384545,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1384545 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "209 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "209 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 209,
+        "text_chars": 1686,
+        "issues": [],
+        "sha256": "e845425a0c1f03b5d7330255855cdd45ce321ae21d5f1387566a4778fba3285f",
+        "cover_text_chars": 88,
+        "identity_probe_chars": 4294,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:02:25+08:00"
     },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 3071,
-    "at": "2026-10-26T23:02:25+08:00",
-    "response_sha256": null,
-    "bytes": 1384545,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:02:25+08:00",
-    "bytes_written": 1384545
-   },
-   "document": {
-    "document_id": "DOC-3973018315F85C8E",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2023年年度报告",
-    "published_on": "2024-04-12",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-13/1219599649.PDF",
-    "local_file": "sources/collection/originals/300223/annual_2023/DOC-3973018315F85C8E.pdf",
-    "sha256": "e845425a0c1f03b5d7330255855cdd45ce321ae21d5f1387566a4778fba3285f",
-    "bytes": 1384545,
-    "page_count": 209,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1384545 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "209 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "209 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\annual_2023\\DOC-3973018315F85C8E.pdf.part",
-    "bytes": 1384545,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1384545 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "209 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "209 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告"
-     }
+    "annual_2024": {
+      "security_id": "SZ:300223",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223154348.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1476,
+          "at": "2026-10-26T23:02:27+08:00",
+          "response_sha256": null,
+          "bytes": 1435131,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223154348.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1476,
+        "at": "2026-10-26T23:02:27+08:00",
+        "response_sha256": null,
+        "bytes": 1435131,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:02:27+08:00",
+        "bytes_written": 1435131
+      },
+      "document": {
+        "document_id": "DOC-4588A61544246B27",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年年度报告",
+        "published_on": "2025-04-18",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223154348.PDF",
+        "local_file": "sources/collection/originals/300223/annual_2024/DOC-4588A61544246B27.pdf",
+        "sha256": "95e23448b22f17e9643252ed32d1c54ae6bc05ba94e15baba6f4a9fbe3687a66",
+        "bytes": 1435131,
+        "page_count": 201,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1435131 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "201 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "201 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\annual_2024\\DOC-4588A61544246B27.pdf.part",
+        "bytes": 1435131,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1435131 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "201 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "201 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 201,
+        "text_chars": 1998,
+        "issues": [],
+        "sha256": "95e23448b22f17e9643252ed32d1c54ae6bc05ba94e15baba6f4a9fbe3687a66",
+        "cover_text_chars": 85,
+        "identity_probe_chars": 4486,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:02:27+08:00"
     },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 209,
-    "text_chars": 1686,
-    "issues": [],
-    "sha256": "e845425a0c1f03b5d7330255855cdd45ce321ae21d5f1387566a4778fba3285f",
-    "cover_text_chars": 88,
-    "identity_probe_chars": 4294,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:02:25+08:00"
+    "annual_2025": {
+      "security_id": "SZ:300223",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225045085.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1537,
+          "at": "2026-10-26T23:02:28+08:00",
+          "response_sha256": null,
+          "bytes": 1493197,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225045085.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1537,
+        "at": "2026-10-26T23:02:28+08:00",
+        "response_sha256": null,
+        "bytes": 1493197,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:02:29+08:00",
+        "bytes_written": 1493197
+      },
+      "document": {
+        "document_id": "DOC-616300B3D0D279C5",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-03-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225045085.PDF",
+        "local_file": "sources/collection/originals/300223/annual_2025/DOC-616300B3D0D279C5.pdf",
+        "sha256": "8dbeb6fb2eab282c3120ea8a00dda095c161714e896e87a74cda312e2546e5eb",
+        "bytes": 1493197,
+        "page_count": 206,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1493197 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "206 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "206 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\annual_2025\\DOC-616300B3D0D279C5.pdf.part",
+        "bytes": 1493197,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1493197 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "206 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "206 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 206,
+        "text_chars": 1264,
+        "issues": [],
+        "sha256": "8dbeb6fb2eab282c3120ea8a00dda095c161714e896e87a74cda312e2546e5eb",
+        "cover_text_chars": 88,
+        "identity_probe_chars": 3869,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:02:29+08:00"
+    },
+    "h1_2024": {
+      "security_id": "SZ:300223",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221032199.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1458,
+          "at": "2026-10-26T23:02:32+08:00",
+          "response_sha256": null,
+          "bytes": 1073625,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221032199.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1458,
+        "at": "2026-10-26T23:02:32+08:00",
+        "response_sha256": null,
+        "bytes": 1073625,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:02:33+08:00",
+        "bytes_written": 1073625
+      },
+      "document": {
+        "document_id": "DOC-9E4166F2320D1B2F",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年半年度报告",
+        "published_on": "2024-08-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221032199.PDF",
+        "local_file": "sources/collection/originals/300223/h1_2024/DOC-9E4166F2320D1B2F.pdf",
+        "sha256": "005776cdbf307825086da05d2455082a1389068439c8431044c3cb2e2e8facf9",
+        "bytes": 1073625,
+        "page_count": 164,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1073625 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "164 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "164 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\h1_2024\\DOC-9E4166F2320D1B2F.pdf.part",
+        "bytes": 1073625,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1073625 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "164 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "164 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 164,
+        "text_chars": 1294,
+        "issues": [],
+        "sha256": "005776cdbf307825086da05d2455082a1389068439c8431044c3cb2e2e8facf9",
+        "cover_text_chars": 65,
+        "identity_probe_chars": 3501,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:02:33+08:00"
+    },
+    "h1_2025": {
+      "security_id": "SZ:300223",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224572853.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 999,
+          "at": "2026-10-26T23:02:34+08:00",
+          "response_sha256": null,
+          "bytes": 1356191,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224572853.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 999,
+        "at": "2026-10-26T23:02:34+08:00",
+        "response_sha256": null,
+        "bytes": 1356191,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:02:34+08:00",
+        "bytes_written": 1356191
+      },
+      "document": {
+        "document_id": "DOC-061A7473DBE8E848",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年半年度报告",
+        "published_on": "2025-08-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224572853.PDF",
+        "local_file": "sources/collection/originals/300223/h1_2025/DOC-061A7473DBE8E848.pdf",
+        "sha256": "a7404bcf7f8df3207199ec3cdddf2c7a1770932a8a3375317fa0b708ede05acb",
+        "bytes": 1356191,
+        "page_count": 174,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1356191 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "174 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "174 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\h1_2025\\DOC-061A7473DBE8E848.pdf.part",
+        "bytes": 1356191,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1356191 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "174 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "174 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 174,
+        "text_chars": 1819,
+        "issues": [],
+        "sha256": "a7404bcf7f8df3207199ec3cdddf2c7a1770932a8a3375317fa0b708ede05acb",
+        "cover_text_chars": 87,
+        "identity_probe_chars": 3357,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:02:34+08:00"
+    },
+    "h1_2026": {
+      "security_id": "SZ:300223",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225524759.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1365,
+          "at": "2026-10-26T23:02:35+08:00",
+          "response_sha256": null,
+          "bytes": 1089736,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225524759.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1365,
+        "at": "2026-10-26T23:02:35+08:00",
+        "response_sha256": null,
+        "bytes": 1089736,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:02:35+08:00",
+        "bytes_written": 1089736
+      },
+      "document": {
+        "document_id": "DOC-AAF8772C137925B1",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225524759.PDF",
+        "local_file": "sources/collection/originals/300223/h1_2026/DOC-AAF8772C137925B1.pdf",
+        "sha256": "5cb21a45ad1d2e374898493983326f6eb9df01deb45c7aa707f37a5a06e67004",
+        "bytes": 1089736,
+        "page_count": 162,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1089736 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "162 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "162 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\h1_2026\\DOC-AAF8772C137925B1.pdf.part",
+        "bytes": 1089736,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1089736 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "162 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "162 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 162,
+        "text_chars": 1837,
+        "issues": [],
+        "sha256": "5cb21a45ad1d2e374898493983326f6eb9df01deb45c7aa707f37a5a06e67004",
+        "cover_text_chars": 65,
+        "identity_probe_chars": 3502,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:02:35+08:00"
+    },
+    "q1_2026": {
+      "security_id": "SZ:300223",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225229907.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 905,
+          "at": "2026-10-26T23:02:37+08:00",
+          "response_sha256": null,
+          "bytes": 163457,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225229907.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 905,
+        "at": "2026-10-26T23:02:37+08:00",
+        "response_sha256": null,
+        "bytes": 163457,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:02:37+08:00",
+        "bytes_written": 163457
+      },
+      "document": {
+        "document_id": "DOC-6599D2F8A620000B",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年一季度报告",
+        "published_on": "2026-04-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225229907.PDF",
+        "local_file": "sources/collection/originals/300223/q1_2026/DOC-6599D2F8A620000B.pdf",
+        "sha256": "495395d70ec9835fcc061e91bc483d5bda188d8efeebc16d7cf15589bd14bfef",
+        "bytes": 163457,
+        "page_count": 12,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "163457 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q1_2026\\DOC-6599D2F8A620000B.pdf.part",
+        "bytes": 163457,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "163457 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 12,
+        "text_chars": 2566,
+        "issues": [],
+        "sha256": "495395d70ec9835fcc061e91bc483d5bda188d8efeebc16d7cf15589bd14bfef",
+        "cover_text_chars": 252,
+        "identity_probe_chars": 5689,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:02:37+08:00"
+    },
+    "q1_2024": {
+      "security_id": "SZ:300223",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219793674.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 999,
+          "at": "2026-10-27T21:33:04+08:00",
+          "response_sha256": null,
+          "bytes": 183221,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219793674.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 999,
+        "at": "2026-10-27T21:33:04+08:00",
+        "response_sha256": null,
+        "bytes": 183221,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:33:04+08:00",
+        "bytes_written": 183221
+      },
+      "document": {
+        "document_id": "DOC-C284DCE35C29D273",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年一季度报告",
+        "published_on": "2024-04-24",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219793674.PDF",
+        "local_file": "sources/collection/originals/300223/q1_2024/DOC-C284DCE35C29D273.pdf",
+        "sha256": "05906b08fa7633b3905037614dd4c9483ec9be41b4b0ad6798834ac7903ccb86",
+        "bytes": 183221,
+        "page_count": 11,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "183221 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q1_2024\\DOC-C284DCE35C29D273.pdf.part",
+        "bytes": 183221,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "183221 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 11,
+        "text_chars": 2794,
+        "issues": [],
+        "sha256": "05906b08fa7633b3905037614dd4c9483ec9be41b4b0ad6798834ac7903ccb86",
+        "cover_text_chars": 253,
+        "identity_probe_chars": 6597,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:33:04+08:00"
+    },
+    "q3_2024": {
+      "security_id": "SZ:300223",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221522127.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 864,
+          "at": "2026-10-27T21:33:06+08:00",
+          "response_sha256": null,
+          "bytes": 188240,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221522127.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 864,
+        "at": "2026-10-27T21:33:06+08:00",
+        "response_sha256": null,
+        "bytes": 188240,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:33:06+08:00",
+        "bytes_written": 188240
+      },
+      "document": {
+        "document_id": "DOC-02A2E61D5874324B",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年三季度报告",
+        "published_on": "2024-10-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221522127.PDF",
+        "local_file": "sources/collection/originals/300223/q3_2024/DOC-02A2E61D5874324B.pdf",
+        "sha256": "61331be625d7ff4a191a467c708ab4e848741e9a7963633833db551176531e52",
+        "bytes": 188240,
+        "page_count": 12,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "188240 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q3_2024\\DOC-02A2E61D5874324B.pdf.part",
+        "bytes": 188240,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "188240 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "12 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "12 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 12,
+        "text_chars": 2584,
+        "issues": [],
+        "sha256": "61331be625d7ff4a191a467c708ab4e848741e9a7963633833db551176531e52",
+        "cover_text_chars": 253,
+        "identity_probe_chars": 5848,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:33:06+08:00"
+    },
+    "q1_2025": {
+      "security_id": "SZ:300223",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269388.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 993,
+          "at": "2026-10-27T21:33:07+08:00",
+          "response_sha256": null,
+          "bytes": 163443,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269388.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 993,
+        "at": "2026-10-27T21:33:07+08:00",
+        "response_sha256": null,
+        "bytes": 163443,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:33:07+08:00",
+        "bytes_written": 163443
+      },
+      "document": {
+        "document_id": "DOC-70B25BB80336BC0A",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年一季度报告",
+        "published_on": "2025-04-24",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269388.PDF",
+        "local_file": "sources/collection/originals/300223/q1_2025/DOC-70B25BB80336BC0A.pdf",
+        "sha256": "a5446c357728a9be3bc4f354785f7d2d4087b2147af2e2d4ecebb3b4e22a3b62",
+        "bytes": 163443,
+        "page_count": 11,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "163443 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q1_2025\\DOC-70B25BB80336BC0A.pdf.part",
+        "bytes": 163443,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "163443 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "11 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "11 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 11,
+        "text_chars": 2254,
+        "issues": [],
+        "sha256": "a5446c357728a9be3bc4f354785f7d2d4087b2147af2e2d4ecebb3b4e22a3b62",
+        "cover_text_chars": 253,
+        "identity_probe_chars": 6119,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:33:07+08:00"
+    },
+    "q3_2025": {
+      "security_id": "SZ:300223",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-11-24/1224823836.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 862,
+          "at": "2026-10-27T21:33:08+08:00",
+          "response_sha256": null,
+          "bytes": 175379,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-11-24/1224823836.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 862,
+        "at": "2026-10-27T21:33:08+08:00",
+        "response_sha256": null,
+        "bytes": 175379,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:33:09+08:00",
+        "bytes_written": 175379
+      },
+      "document": {
+        "document_id": "DOC-94557BABAD0B1E5E",
+        "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|1",
+        "revision_no": 1,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年第三季度报告（更正后）",
+        "published_on": "2025-11-24",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-11-24/1224823836.PDF",
+        "local_file": "sources/collection/originals/300223/q3_2025/DOC-94557BABAD0B1E5E.pdf",
+        "sha256": "80d539ad8a40edcf3d91502dce3ca850a5cc1fd27a33d978de1aea8cef0b5c05",
+        "bytes": 175379,
+        "page_count": 13,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "175379 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年第三季度报告（更正后）"
+          }
+        },
+        "version_chain": {
+          "policy": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+          "effective_document_id": "DOC-94557BABAD0B1E5E",
+          "versions": [
+            {
+              "revision_no": 0,
+              "document_id": "DOC-AB7155997C2A6273",
+              "title": "2025年三季度报告",
+              "published_on": "2025-10-28",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224746937.PDF",
+              "role": "original",
+              "local_file": "sources/collection/originals/300223/q3_2025/DOC-AB7155997C2A6273.pdf",
+              "sha256": "69ce272ebeaa7321243ea7e27185572551a7c7a538bfc08796bb7b016270fa3d",
+              "bytes": 202780,
+              "downloaded_now": false,
+              "supersedes": null,
+              "superseded_by": "DOC-94557BABAD0B1E5E"
+            },
+            {
+              "revision_no": 1,
+              "document_id": "DOC-94557BABAD0B1E5E",
+              "title": "2025年第三季度报告（更正后）",
+              "published_on": "2025-11-24",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-11-24/1224823836.PDF",
+              "role": "corrected",
+              "local_file": "sources/collection/originals/300223/q3_2025/DOC-94557BABAD0B1E5E.pdf",
+              "sha256": "80d539ad8a40edcf3d91502dce3ca850a5cc1fd27a33d978de1aea8cef0b5c05",
+              "bytes": 175379,
+              "downloaded_now": false,
+              "supersedes": "DOC-AB7155997C2A6273",
+              "superseded_by": null
+            }
+          ],
+          "correction_notice": {
+            "role": "notice",
+            "title": "关于2025年第三季度报告的更正公告",
+            "published_on": "2025-11-24",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2025-11-24/1224823835.PDF"
+          },
+          "complete": true,
+          "recorded_at": "2026-10-28T20:24:31+08:00"
+        },
+        "supersedes": "DOC-AB7155997C2A6273"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q3_2025\\DOC-94557BABAD0B1E5E.pdf.part",
+        "bytes": 175379,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "175379 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年第三季度报告（更正后）"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 13,
+        "text_chars": 2451,
+        "issues": [],
+        "sha256": "80d539ad8a40edcf3d91502dce3ca850a5cc1fd27a33d978de1aea8cef0b5c05",
+        "cover_text_chars": 257,
+        "identity_probe_chars": 5759,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "STOCK_CODE",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:33:09+08:00"
+    },
+    "q3_2026": {
+      "security_id": "SZ:300223",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "checkpoint": {},
+      "document": {},
+      "updated_at": "2026-10-27T21:33:09+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-27T21:33:05+08:00",
+        "status": "RECONCILED"
+      }
+    }
   },
-  "annual_2024": {
-   "security_id": "SZ:300223",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223154348.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1476,
-     "at": "2026-10-26T23:02:27+08:00",
-     "response_sha256": null,
-     "bytes": 1435131,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223154348.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1476,
-    "at": "2026-10-26T23:02:27+08:00",
-    "response_sha256": null,
-    "bytes": 1435131,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:02:27+08:00",
-    "bytes_written": 1435131
-   },
-   "document": {
-    "document_id": "DOC-4588A61544246B27",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年年度报告",
-    "published_on": "2025-04-18",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223154348.PDF",
-    "local_file": "sources/collection/originals/300223/annual_2024/DOC-4588A61544246B27.pdf",
-    "sha256": "95e23448b22f17e9643252ed32d1c54ae6bc05ba94e15baba6f4a9fbe3687a66",
-    "bytes": 1435131,
-    "page_count": 201,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1435131 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "201 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "201 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\annual_2024\\DOC-4588A61544246B27.pdf.part",
-    "bytes": 1435131,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1435131 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "201 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "201 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 201,
-    "text_chars": 1998,
-    "issues": [],
-    "sha256": "95e23448b22f17e9643252ed32d1c54ae6bc05ba94e15baba6f4a9fbe3687a66",
-    "cover_text_chars": 85,
-    "identity_probe_chars": 4486,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:02:27+08:00"
-  },
-  "annual_2025": {
-   "security_id": "SZ:300223",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225045085.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1537,
-     "at": "2026-10-26T23:02:28+08:00",
-     "response_sha256": null,
-     "bytes": 1493197,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225045085.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1537,
-    "at": "2026-10-26T23:02:28+08:00",
-    "response_sha256": null,
-    "bytes": 1493197,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:02:29+08:00",
-    "bytes_written": 1493197
-   },
-   "document": {
-    "document_id": "DOC-616300B3D0D279C5",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-03-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225045085.PDF",
-    "local_file": "sources/collection/originals/300223/annual_2025/DOC-616300B3D0D279C5.pdf",
-    "sha256": "8dbeb6fb2eab282c3120ea8a00dda095c161714e896e87a74cda312e2546e5eb",
-    "bytes": 1493197,
-    "page_count": 206,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1493197 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "206 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "206 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\annual_2025\\DOC-616300B3D0D279C5.pdf.part",
-    "bytes": 1493197,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1493197 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "206 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "206 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 206,
-    "text_chars": 1264,
-    "issues": [],
-    "sha256": "8dbeb6fb2eab282c3120ea8a00dda095c161714e896e87a74cda312e2546e5eb",
-    "cover_text_chars": 88,
-    "identity_probe_chars": 3869,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:02:29+08:00"
-  },
-  "h1_2024": {
-   "security_id": "SZ:300223",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221032199.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1458,
-     "at": "2026-10-26T23:02:32+08:00",
-     "response_sha256": null,
-     "bytes": 1073625,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221032199.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1458,
-    "at": "2026-10-26T23:02:32+08:00",
-    "response_sha256": null,
-    "bytes": 1073625,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:02:33+08:00",
-    "bytes_written": 1073625
-   },
-   "document": {
-    "document_id": "DOC-9E4166F2320D1B2F",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年半年度报告",
-    "published_on": "2024-08-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221032199.PDF",
-    "local_file": "sources/collection/originals/300223/h1_2024/DOC-9E4166F2320D1B2F.pdf",
-    "sha256": "005776cdbf307825086da05d2455082a1389068439c8431044c3cb2e2e8facf9",
-    "bytes": 1073625,
-    "page_count": 164,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1073625 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "164 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "164 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\h1_2024\\DOC-9E4166F2320D1B2F.pdf.part",
-    "bytes": 1073625,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1073625 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "164 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "164 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 164,
-    "text_chars": 1294,
-    "issues": [],
-    "sha256": "005776cdbf307825086da05d2455082a1389068439c8431044c3cb2e2e8facf9",
-    "cover_text_chars": 65,
-    "identity_probe_chars": 3501,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:02:33+08:00"
-  },
-  "h1_2025": {
-   "security_id": "SZ:300223",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224572853.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 999,
-     "at": "2026-10-26T23:02:34+08:00",
-     "response_sha256": null,
-     "bytes": 1356191,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224572853.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 999,
-    "at": "2026-10-26T23:02:34+08:00",
-    "response_sha256": null,
-    "bytes": 1356191,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:02:34+08:00",
-    "bytes_written": 1356191
-   },
-   "document": {
-    "document_id": "DOC-061A7473DBE8E848",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年半年度报告",
-    "published_on": "2025-08-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-26/1224572853.PDF",
-    "local_file": "sources/collection/originals/300223/h1_2025/DOC-061A7473DBE8E848.pdf",
-    "sha256": "a7404bcf7f8df3207199ec3cdddf2c7a1770932a8a3375317fa0b708ede05acb",
-    "bytes": 1356191,
-    "page_count": 174,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1356191 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "174 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "174 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\h1_2025\\DOC-061A7473DBE8E848.pdf.part",
-    "bytes": 1356191,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1356191 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "174 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "174 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 174,
-    "text_chars": 1819,
-    "issues": [],
-    "sha256": "a7404bcf7f8df3207199ec3cdddf2c7a1770932a8a3375317fa0b708ede05acb",
-    "cover_text_chars": 87,
-    "identity_probe_chars": 3357,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:02:34+08:00"
-  },
-  "h1_2026": {
-   "security_id": "SZ:300223",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225524759.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1365,
-     "at": "2026-10-26T23:02:35+08:00",
-     "response_sha256": null,
-     "bytes": 1089736,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225524759.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1365,
-    "at": "2026-10-26T23:02:35+08:00",
-    "response_sha256": null,
-    "bytes": 1089736,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:02:35+08:00",
-    "bytes_written": 1089736
-   },
-   "document": {
-    "document_id": "DOC-AAF8772C137925B1",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225524759.PDF",
-    "local_file": "sources/collection/originals/300223/h1_2026/DOC-AAF8772C137925B1.pdf",
-    "sha256": "5cb21a45ad1d2e374898493983326f6eb9df01deb45c7aa707f37a5a06e67004",
-    "bytes": 1089736,
-    "page_count": 162,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1089736 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "162 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "162 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\h1_2026\\DOC-AAF8772C137925B1.pdf.part",
-    "bytes": 1089736,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1089736 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "162 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "162 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 162,
-    "text_chars": 1837,
-    "issues": [],
-    "sha256": "5cb21a45ad1d2e374898493983326f6eb9df01deb45c7aa707f37a5a06e67004",
-    "cover_text_chars": 65,
-    "identity_probe_chars": 3502,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:02:35+08:00"
-  },
-  "q1_2026": {
-   "security_id": "SZ:300223",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225229907.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 905,
-     "at": "2026-10-26T23:02:37+08:00",
-     "response_sha256": null,
-     "bytes": 163457,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225229907.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 905,
-    "at": "2026-10-26T23:02:37+08:00",
-    "response_sha256": null,
-    "bytes": 163457,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:02:37+08:00",
-    "bytes_written": 163457
-   },
-   "document": {
-    "document_id": "DOC-6599D2F8A620000B",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年一季度报告",
-    "published_on": "2026-04-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225229907.PDF",
-    "local_file": "sources/collection/originals/300223/q1_2026/DOC-6599D2F8A620000B.pdf",
-    "sha256": "495395d70ec9835fcc061e91bc483d5bda188d8efeebc16d7cf15589bd14bfef",
-    "bytes": 163457,
-    "page_count": 12,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "163457 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q1_2026\\DOC-6599D2F8A620000B.pdf.part",
-    "bytes": 163457,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "163457 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 12,
-    "text_chars": 2566,
-    "issues": [],
-    "sha256": "495395d70ec9835fcc061e91bc483d5bda188d8efeebc16d7cf15589bd14bfef",
-    "cover_text_chars": 252,
-    "identity_probe_chars": 5689,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:02:37+08:00"
-  },
-  "q1_2024": {
-   "security_id": "SZ:300223",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219793674.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 999,
-     "at": "2026-10-27T21:33:04+08:00",
-     "response_sha256": null,
-     "bytes": 183221,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219793674.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 999,
-    "at": "2026-10-27T21:33:04+08:00",
-    "response_sha256": null,
-    "bytes": 183221,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:33:04+08:00",
-    "bytes_written": 183221
-   },
-   "document": {
-    "document_id": "DOC-C284DCE35C29D273",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年一季度报告",
-    "published_on": "2024-04-24",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-25/1219793674.PDF",
-    "local_file": "sources/collection/originals/300223/q1_2024/DOC-C284DCE35C29D273.pdf",
-    "sha256": "05906b08fa7633b3905037614dd4c9483ec9be41b4b0ad6798834ac7903ccb86",
-    "bytes": 183221,
-    "page_count": 11,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "183221 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q1_2024\\DOC-C284DCE35C29D273.pdf.part",
-    "bytes": 183221,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "183221 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 11,
-    "text_chars": 2794,
-    "issues": [],
-    "sha256": "05906b08fa7633b3905037614dd4c9483ec9be41b4b0ad6798834ac7903ccb86",
-    "cover_text_chars": 253,
-    "identity_probe_chars": 6597,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:33:04+08:00"
-  },
-  "q3_2024": {
-   "security_id": "SZ:300223",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221522127.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 864,
-     "at": "2026-10-27T21:33:06+08:00",
-     "response_sha256": null,
-     "bytes": 188240,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221522127.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 864,
-    "at": "2026-10-27T21:33:06+08:00",
-    "response_sha256": null,
-    "bytes": 188240,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:33:06+08:00",
-    "bytes_written": 188240
-   },
-   "document": {
-    "document_id": "DOC-02A2E61D5874324B",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年三季度报告",
-    "published_on": "2024-10-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221522127.PDF",
-    "local_file": "sources/collection/originals/300223/q3_2024/DOC-02A2E61D5874324B.pdf",
-    "sha256": "61331be625d7ff4a191a467c708ab4e848741e9a7963633833db551176531e52",
-    "bytes": 188240,
-    "page_count": 12,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "188240 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q3_2024\\DOC-02A2E61D5874324B.pdf.part",
-    "bytes": 188240,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "188240 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "12 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "12 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 12,
-    "text_chars": 2584,
-    "issues": [],
-    "sha256": "61331be625d7ff4a191a467c708ab4e848741e9a7963633833db551176531e52",
-    "cover_text_chars": 253,
-    "identity_probe_chars": 5848,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:33:06+08:00"
-  },
-  "q1_2025": {
-   "security_id": "SZ:300223",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269388.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 993,
-     "at": "2026-10-27T21:33:07+08:00",
-     "response_sha256": null,
-     "bytes": 163443,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269388.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 993,
-    "at": "2026-10-27T21:33:07+08:00",
-    "response_sha256": null,
-    "bytes": 163443,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:33:07+08:00",
-    "bytes_written": 163443
-   },
-   "document": {
-    "document_id": "DOC-70B25BB80336BC0A",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年一季度报告",
-    "published_on": "2025-04-24",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-25/1223269388.PDF",
-    "local_file": "sources/collection/originals/300223/q1_2025/DOC-70B25BB80336BC0A.pdf",
-    "sha256": "a5446c357728a9be3bc4f354785f7d2d4087b2147af2e2d4ecebb3b4e22a3b62",
-    "bytes": 163443,
-    "page_count": 11,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "163443 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q1_2025\\DOC-70B25BB80336BC0A.pdf.part",
-    "bytes": 163443,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "163443 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "11 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "11 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 11,
-    "text_chars": 2254,
-    "issues": [],
-    "sha256": "a5446c357728a9be3bc4f354785f7d2d4087b2147af2e2d4ecebb3b4e22a3b62",
-    "cover_text_chars": 253,
-    "identity_probe_chars": 6119,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:33:07+08:00"
-  },
-  "q3_2025": {
-   "security_id": "SZ:300223",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-11-24/1224823836.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 862,
-     "at": "2026-10-27T21:33:08+08:00",
-     "response_sha256": null,
-     "bytes": 175379,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-11-24/1224823836.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 862,
-    "at": "2026-10-27T21:33:08+08:00",
-    "response_sha256": null,
-    "bytes": 175379,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:33:09+08:00",
-    "bytes_written": 175379
-   },
-   "document": {
-    "document_id": "DOC-94557BABAD0B1E5E",
-    "identity_key": "SZ:300223|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|1",
-    "revision_no": 1,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年第三季度报告（更正后）",
-    "published_on": "2025-11-24",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-11-24/1224823836.PDF",
-    "local_file": "sources/collection/originals/300223/q3_2025/DOC-94557BABAD0B1E5E.pdf",
-    "sha256": "80d539ad8a40edcf3d91502dce3ca850a5cc1fd27a33d978de1aea8cef0b5c05",
-    "bytes": 175379,
-    "page_count": 13,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "175379 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年第三季度报告（更正后）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300223\\q3_2025\\DOC-94557BABAD0B1E5E.pdf.part",
-    "bytes": 175379,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "175379 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=君正股份 代码=300223 方式=STOCK_CODE 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年第三季度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年第三季度报告（更正后）"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 13,
-    "text_chars": 2451,
-    "issues": [],
-    "sha256": "80d539ad8a40edcf3d91502dce3ca850a5cc1fd27a33d978de1aea8cef0b5c05",
-    "cover_text_chars": 257,
-    "identity_probe_chars": 5759,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "STOCK_CODE",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:33:09+08:00"
-  },
-  "q3_2026": {
-   "security_id": "SZ:300223",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "status": "NOT_YET_DISCLOSED",
-   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "WAIT_NEXT_CYCLE",
-   "checkpoint": {},
-   "document": {},
-   "updated_at": "2026-10-27T21:33:09+08:00",
-   "index_ref": {
-    "category": "category_sjdbg_szsh",
-    "fetched_at": "2026-10-27T21:33:05+08:00",
-    "status": "RECONCILED"
-   }
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "SZ:300223",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "9900016187",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "300223,9900016187",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "137317ee43977c60ae6d42b332d56385ac1e1ab64cba5b824a1cc289be6ae365",
-     "response_bytes": 5198,
-     "raw_path": "sources/collection/raw/300223/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "SZ:300223",
       "category": "category_ndbg_szsh",
-      "stock": "300223,9900016187",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T23:02:22+08:00",
-     "elapsed_ms": 1288
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225045085",
-     "title": "2025年年度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2026-03-27",
-     "adjunct_url": "finalpage/2026-03-28/1225045085.PDF"
-    },
-    {
-     "announcement_id": "1225045084",
-     "title": "2025年年度报告摘要",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2026-03-27",
-     "adjunct_url": "finalpage/2026-03-28/1225045084.PDF"
-    },
-    {
-     "announcement_id": "1223154348",
-     "title": "2024年年度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2025-04-18",
-     "adjunct_url": "finalpage/2025-04-19/1223154348.PDF"
-    },
-    {
-     "announcement_id": "1223154268",
-     "title": "2024年年度报告摘要",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2025-04-18",
-     "adjunct_url": "finalpage/2025-04-19/1223154268.PDF"
-    },
-    {
-     "announcement_id": "1219599666",
-     "title": "2023年年度报告摘要",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2024-04-12",
-     "adjunct_url": "finalpage/2024-04-13/1219599666.PDF"
-    },
-    {
-     "announcement_id": "1219599649",
-     "title": "2023年年度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2024-04-12",
-     "adjunct_url": "finalpage/2024-04-13/1219599649.PDF"
-    },
-    {
-     "announcement_id": "1216358941",
-     "title": "2022年年度报告摘要",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2023-04-09",
-     "adjunct_url": "finalpage/2023-04-10/1216358941.PDF"
-    },
-    {
-     "announcement_id": "1216358936",
-     "title": "2022年年度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2023-04-09",
-     "adjunct_url": "finalpage/2023-04-10/1216358936.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T23:02:22+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "SZ:300223",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "9900016187",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "300223,9900016187",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "84fdd34f9750c14ec3c5c0c69b6d3877c49d20673cf8cbddab4325f1b3ce5b21",
-     "response_bytes": 5245,
-     "raw_path": "sources/collection/raw/300223/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900016187",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "300223,9900016187",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "137317ee43977c60ae6d42b332d56385ac1e1ab64cba5b824a1cc289be6ae365",
+          "response_bytes": 5198,
+          "raw_path": "sources/collection/raw/300223/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "300223,9900016187",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T23:02:22+08:00",
+          "elapsed_ms": 1288
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225045085",
+          "title": "2025年年度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2026-03-27",
+          "adjunct_url": "finalpage/2026-03-28/1225045085.PDF"
+        },
+        {
+          "announcement_id": "1225045084",
+          "title": "2025年年度报告摘要",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2026-03-27",
+          "adjunct_url": "finalpage/2026-03-28/1225045084.PDF"
+        },
+        {
+          "announcement_id": "1223154348",
+          "title": "2024年年度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2025-04-18",
+          "adjunct_url": "finalpage/2025-04-19/1223154348.PDF"
+        },
+        {
+          "announcement_id": "1223154268",
+          "title": "2024年年度报告摘要",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2025-04-18",
+          "adjunct_url": "finalpage/2025-04-19/1223154268.PDF"
+        },
+        {
+          "announcement_id": "1219599666",
+          "title": "2023年年度报告摘要",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2024-04-12",
+          "adjunct_url": "finalpage/2024-04-13/1219599666.PDF"
+        },
+        {
+          "announcement_id": "1219599649",
+          "title": "2023年年度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2024-04-12",
+          "adjunct_url": "finalpage/2024-04-13/1219599649.PDF"
+        },
+        {
+          "announcement_id": "1216358941",
+          "title": "2022年年度报告摘要",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2023-04-09",
+          "adjunct_url": "finalpage/2023-04-10/1216358941.PDF"
+        },
+        {
+          "announcement_id": "1216358936",
+          "title": "2022年年度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2023-04-09",
+          "adjunct_url": "finalpage/2023-04-10/1216358936.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T23:02:22+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "SZ:300223",
       "category": "category_bndbg_szsh",
-      "stock": "300223,9900016187",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T23:02:31+08:00",
-     "elapsed_ms": 2248
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225524759",
-     "title": "2026年半年度报告",
-     "sec_code": "300223",
-     "sec_name": "君正股份",
-     "published_on": "2026-08-28",
-     "adjunct_url": "finalpage/2026-08-29/1225524759.PDF"
-    },
-    {
-     "announcement_id": "1225524758",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "300223",
-     "sec_name": "君正股份",
-     "published_on": "2026-08-28",
-     "adjunct_url": "finalpage/2026-08-29/1225524758.PDF"
-    },
-    {
-     "announcement_id": "1224572853",
-     "title": "2025年半年度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2025-08-25",
-     "adjunct_url": "finalpage/2025-08-26/1224572853.PDF"
-    },
-    {
-     "announcement_id": "1224572850",
-     "title": "2025年半年度报告摘要",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2025-08-25",
-     "adjunct_url": "finalpage/2025-08-26/1224572850.PDF"
-    },
-    {
-     "announcement_id": "1221032200",
-     "title": "2024年半年度报告摘要",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2024-08-28",
-     "adjunct_url": "finalpage/2024-08-29/1221032200.PDF"
-    },
-    {
-     "announcement_id": "1221032199",
-     "title": "2024年半年度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2024-08-28",
-     "adjunct_url": "finalpage/2024-08-29/1221032199.PDF"
-    },
-    {
-     "announcement_id": "1217713041",
-     "title": "2023年半年度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2023-08-30",
-     "adjunct_url": "finalpage/2023-08-31/1217713041.PDF"
-    },
-    {
-     "announcement_id": "1217713039",
-     "title": "2023年半年度报告摘要",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2023-08-30",
-     "adjunct_url": "finalpage/2023-08-31/1217713039.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T23:02:31+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "SZ:300223",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "9900016187",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "300223,9900016187",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 4,
-   "rows_fetched": 4,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 4,
-     "new_rows": 4,
-     "total_announcement": 4,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "0fa2a93f14b4a0f8199acc01bb5b85e85989e0c412526678c5a747f7e87dcaf7",
-     "response_bytes": 2678,
-     "raw_path": "sources/collection/raw/300223/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900016187",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "300223,9900016187",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "84fdd34f9750c14ec3c5c0c69b6d3877c49d20673cf8cbddab4325f1b3ce5b21",
+          "response_bytes": 5245,
+          "raw_path": "sources/collection/raw/300223/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "300223,9900016187",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T23:02:31+08:00",
+          "elapsed_ms": 2248
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225524759",
+          "title": "2026年半年度报告",
+          "sec_code": "300223",
+          "sec_name": "君正股份",
+          "published_on": "2026-08-28",
+          "adjunct_url": "finalpage/2026-08-29/1225524759.PDF"
+        },
+        {
+          "announcement_id": "1225524758",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "300223",
+          "sec_name": "君正股份",
+          "published_on": "2026-08-28",
+          "adjunct_url": "finalpage/2026-08-29/1225524758.PDF"
+        },
+        {
+          "announcement_id": "1224572853",
+          "title": "2025年半年度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2025-08-25",
+          "adjunct_url": "finalpage/2025-08-26/1224572853.PDF"
+        },
+        {
+          "announcement_id": "1224572850",
+          "title": "2025年半年度报告摘要",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2025-08-25",
+          "adjunct_url": "finalpage/2025-08-26/1224572850.PDF"
+        },
+        {
+          "announcement_id": "1221032200",
+          "title": "2024年半年度报告摘要",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2024-08-28",
+          "adjunct_url": "finalpage/2024-08-29/1221032200.PDF"
+        },
+        {
+          "announcement_id": "1221032199",
+          "title": "2024年半年度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2024-08-28",
+          "adjunct_url": "finalpage/2024-08-29/1221032199.PDF"
+        },
+        {
+          "announcement_id": "1217713041",
+          "title": "2023年半年度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2023-08-30",
+          "adjunct_url": "finalpage/2023-08-31/1217713041.PDF"
+        },
+        {
+          "announcement_id": "1217713039",
+          "title": "2023年半年度报告摘要",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2023-08-30",
+          "adjunct_url": "finalpage/2023-08-31/1217713039.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T23:02:31+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "SZ:300223",
       "category": "category_yjdbg_szsh",
-      "stock": "300223,9900016187",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T21:33:03+08:00",
-     "elapsed_ms": 1032
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225229907",
-     "title": "2026年一季度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2026-04-28",
-     "adjunct_url": "finalpage/2026-04-29/1225229907.PDF",
-     "adjunct_size": 161
-    },
-    {
-     "announcement_id": "1223269388",
-     "title": "2025年一季度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2025-04-24",
-     "adjunct_url": "finalpage/2025-04-25/1223269388.PDF",
-     "adjunct_size": 161
-    },
-    {
-     "announcement_id": "1219793674",
-     "title": "2024年一季度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2024-04-24",
-     "adjunct_url": "finalpage/2024-04-25/1219793674.PDF",
-     "adjunct_size": 180
-    },
-    {
-     "announcement_id": "1216559756",
-     "title": "2023年一季度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2023-04-24",
-     "adjunct_url": "finalpage/2023-04-25/1216559756.PDF",
-     "adjunct_size": 479
-    }
-   ],
-   "fetched_at": "2026-10-27T21:33:03+08:00"
-  },
-  "category_sjdbg_szsh": {
-   "security_id": "SZ:300223",
-   "category": "category_sjdbg_szsh",
-   "column": "szse",
-   "org_id": "9900016187",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_sjdbg_szsh",
-    "stock": "300223,9900016187",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 4,
-   "rows_fetched": 4,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 4,
-     "new_rows": 4,
-     "total_announcement": 4,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "4bdbc051203cca2accc546eff92822d89b7935cca14101dc519b445e2a953432",
-     "response_bytes": 2714,
-     "raw_path": "sources/collection/raw/300223/category_sjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900016187",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "300223,9900016187",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 4,
+      "rows_fetched": 4,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 4,
+          "new_rows": 4,
+          "total_announcement": 4,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "0fa2a93f14b4a0f8199acc01bb5b85e85989e0c412526678c5a747f7e87dcaf7",
+          "response_bytes": 2678,
+          "raw_path": "sources/collection/raw/300223/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "300223,9900016187",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T21:33:03+08:00",
+          "elapsed_ms": 1032
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225229907",
+          "title": "2026年一季度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2026-04-28",
+          "adjunct_url": "finalpage/2026-04-29/1225229907.PDF",
+          "adjunct_size": 161
+        },
+        {
+          "announcement_id": "1223269388",
+          "title": "2025年一季度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2025-04-24",
+          "adjunct_url": "finalpage/2025-04-25/1223269388.PDF",
+          "adjunct_size": 161
+        },
+        {
+          "announcement_id": "1219793674",
+          "title": "2024年一季度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2024-04-24",
+          "adjunct_url": "finalpage/2024-04-25/1219793674.PDF",
+          "adjunct_size": 180
+        },
+        {
+          "announcement_id": "1216559756",
+          "title": "2023年一季度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2023-04-24",
+          "adjunct_url": "finalpage/2023-04-25/1216559756.PDF",
+          "adjunct_size": 479
+        }
+      ],
+      "fetched_at": "2026-10-27T21:33:03+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "SZ:300223",
       "category": "category_sjdbg_szsh",
-      "stock": "300223,9900016187",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T21:33:05+08:00",
-     "elapsed_ms": 528
+      "column": "szse",
+      "org_id": "9900016187",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "300223,9900016187",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 4,
+      "rows_fetched": 4,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 4,
+          "new_rows": 4,
+          "total_announcement": 4,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "4bdbc051203cca2accc546eff92822d89b7935cca14101dc519b445e2a953432",
+          "response_bytes": 2714,
+          "raw_path": "sources/collection/raw/300223/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "300223,9900016187",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T21:33:05+08:00",
+          "elapsed_ms": 528
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224823836",
+          "title": "2025年第三季度报告（更正后）",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2025-11-24",
+          "adjunct_url": "finalpage/2025-11-24/1224823836.PDF",
+          "adjunct_size": 172
+        },
+        {
+          "announcement_id": "1224746937",
+          "title": "2025年三季度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2025-10-27",
+          "adjunct_url": "finalpage/2025-10-28/1224746937.PDF",
+          "adjunct_size": 199
+        },
+        {
+          "announcement_id": "1221522127",
+          "title": "2024年三季度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2024-10-27",
+          "adjunct_url": "finalpage/2024-10-28/1221522127.PDF",
+          "adjunct_size": 185
+        },
+        {
+          "announcement_id": "1218150897",
+          "title": "2023年三季度报告",
+          "sec_code": "300223",
+          "sec_name": "北京君正",
+          "published_on": "2023-10-25",
+          "adjunct_url": "finalpage/2023-10-26/1218150897.PDF",
+          "adjunct_size": 493
+        }
+      ],
+      "fetched_at": "2026-10-27T21:33:05+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1224823836",
-     "title": "2025年第三季度报告（更正后）",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2025-11-24",
-     "adjunct_url": "finalpage/2025-11-24/1224823836.PDF",
-     "adjunct_size": 172
-    },
-    {
-     "announcement_id": "1224746937",
-     "title": "2025年三季度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2025-10-27",
-     "adjunct_url": "finalpage/2025-10-28/1224746937.PDF",
-     "adjunct_size": 199
-    },
-    {
-     "announcement_id": "1221522127",
-     "title": "2024年三季度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2024-10-27",
-     "adjunct_url": "finalpage/2024-10-28/1221522127.PDF",
-     "adjunct_size": 185
-    },
-    {
-     "announcement_id": "1218150897",
-     "title": "2023年三季度报告",
-     "sec_code": "300223",
-     "sec_name": "北京君正",
-     "published_on": "2023-10-25",
-     "adjunct_url": "finalpage/2023-10-26/1218150897.PDF",
-     "adjunct_size": 493
-    }
-   ],
-   "fetched_at": "2026-10-27T21:33:05+08:00"
-  }
- },
- "updated_at": "2026-10-27T21:33:09+08:00"
+  },
+  "updated_at": "2026-10-27T21:33:09+08:00"
 }

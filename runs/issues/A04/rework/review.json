@@ -6,7 +6,7 @@
   "executor": "WorkBuddy AI",
   "reviewer": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
-  "reviewed_at": "2026-10-28T16:50:09+08:00",
+  "reviewed_at": "2026-10-28T20:25:07+08:00",
   "prior_review_preserved": "runs/issues/A04/review.json (RETURN_FOR_REWORK, 2026-10-27T20:30:41+08:00)",
   "decision": "ACCEPTED_WITH_LIMITS",
   "release_S00": true,
@@ -134,9 +134,16 @@
       "id": "AC06",
       "result": "PASS",
       "evidence": {
-        "na_rows": 278,
-        "without_listing_side_table_date": 0,
-        "limit": "只核侧表日期存在与规则一致，未重新独立核验交易所原始公告"
+        "na_rows": 274,
+        "violations": 0,
+        "rule": "period_end < 实际挂牌日（北交所用股转挂牌日，沪/深用交易所上市日）",
+        "by_market": {
+          "SZ": 145,
+          "SH": 110,
+          "BJ": 19
+        },
+        "violation_samples": [],
+        "limit": "挂牌日取本地年报「挂牌时间」页或交易所上市日侧表；未重新独立核验交易所原始公告"
       }
     },
     {
@@ -178,6 +185,18 @@
       }
     },
     {
+      "id": "AC12_CORRECTION_CHAIN",
+      "result": "PASS",
+      "evidence": {
+        "pairs": 120,
+        "complete": 120,
+        "gaps": 0,
+        "notice_only_chains": 5,
+        "gap_samples": [],
+        "policy": "原版 + 更正版（或更正公告）+ supersedes 关联；不覆盖原件"
+      }
+    },
+    {
       "id": "AC11_SUPPLEMENTARY",
       "result": "PASS",
       "evidence": {
@@ -198,6 +217,24 @@
       }
     }
   ],
+  "release_gate": {
+    "required": [
+      "AC01",
+      "AC02",
+      "AC03",
+      "AC04",
+      "AC05",
+      "AC06",
+      "AC07",
+      "AC08",
+      "AC09",
+      "AC10",
+      "AC11_SUPPLEMENTARY",
+      "AC12_CORRECTION_CHAIN"
+    ],
+    "failed": [],
+    "rule": "全部必需项 PASS 才放行；任一 FAIL/HOLD 均不放行"
+  },
   "scope_reconciliation": {
     "frozen_slots": 12,
     "frozen_pairs": 12648,
@@ -207,8 +244,8 @@
     "status_counts": {
       "COLLECTED_IDENTITY_VERIFIED": 11468,
       "NOT_YET_DISCLOSED": 864,
-      "NOT_APPLICABLE_PRE_LISTING": 278,
-      "NOT_DISCLOSED_BY_ISSUER": 38
+      "NOT_APPLICABLE_PRE_LISTING": 274,
+      "NOT_DISCLOSED_BY_ISSUER": 42
     }
   },
   "field_layer": {
@@ -378,6 +415,12 @@
       "2024-10-26~2026-10-25"
     ],
     "keyword_hits_are_not_business_evidence": true
+  },
+  "correction_chain": {
+    "pairs": 120,
+    "complete": 120,
+    "gaps": 0,
+    "notice_only": 5
   },
   "cutoff_hold": {
     "documents": 7,

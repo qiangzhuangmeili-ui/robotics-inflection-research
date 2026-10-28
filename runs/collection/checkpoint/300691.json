@@ -1,2001 +1,2044 @@
 {
- "security_id": "SZ:300691",
- "slots": {
-  "annual_2023": {
-   "security_id": "SZ:300691",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-03-24/1222879333.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 4868,
-     "at": "2026-10-26T23:44:18+08:00",
-     "response_sha256": null,
-     "bytes": 4578783,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-03-24/1222879333.PDF",
-    "request_params": {
-     "Range": null
+  "security_id": "SZ:300691",
+  "slots": {
+    "annual_2023": {
+      "security_id": "SZ:300691",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-03-24/1222879333.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 4868,
+          "at": "2026-10-26T23:44:18+08:00",
+          "response_sha256": null,
+          "bytes": 4578783,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-03-24/1222879333.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 4868,
+        "at": "2026-10-26T23:44:18+08:00",
+        "response_sha256": null,
+        "bytes": 4578783,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:44:18+08:00",
+        "bytes_written": 4578783
+      },
+      "document": {
+        "document_id": "DOC-597B70EA985945BC",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|1",
+        "revision_no": 1,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "中山联合光电科技股份有限公司2023年年度报告（更正后）",
+        "published_on": "2025-03-24",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-03-24/1222879333.PDF",
+        "local_file": "sources/collection/originals/300691/annual_2023/DOC-597B70EA985945BC.pdf",
+        "sha256": "ba18fe152862393a0f0626072af205e20422a19868b88458ab05dcf5d16acbcf",
+        "bytes": 4578783,
+        "page_count": 241,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4578783 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "241 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "241 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中山联合光电科技股份有限公司2023年年度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=中山联合光电科技股份有限公司2023年年度报告（更正后）"
+          }
+        },
+        "version_chain": {
+          "policy": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+          "effective_document_id": "DOC-597B70EA985945BC",
+          "versions": [
+            {
+              "revision_no": 0,
+              "document_id": "DOC-130C3FF76FB50D2C",
+              "title": "2023年年度报告",
+              "published_on": "2024-04-26",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219822568.PDF",
+              "role": "original",
+              "local_file": "sources/collection/originals/300691/annual_2023/DOC-130C3FF76FB50D2C.pdf",
+              "sha256": "834595160ac28c426326862a992039b31b7b9a1fe2e061dfae4046e2da2098ff",
+              "bytes": 4591169,
+              "downloaded_now": false,
+              "supersedes": null,
+              "superseded_by": "DOC-597B70EA985945BC"
+            },
+            {
+              "revision_no": 1,
+              "document_id": "DOC-597B70EA985945BC",
+              "title": "中山联合光电科技股份有限公司2023年年度报告（更正后）",
+              "published_on": "2025-03-24",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2025-03-24/1222879333.PDF",
+              "role": "corrected",
+              "local_file": "sources/collection/originals/300691/annual_2023/DOC-597B70EA985945BC.pdf",
+              "sha256": "ba18fe152862393a0f0626072af205e20422a19868b88458ab05dcf5d16acbcf",
+              "bytes": 4578783,
+              "downloaded_now": false,
+              "supersedes": "DOC-130C3FF76FB50D2C",
+              "superseded_by": null
+            }
+          ],
+          "correction_notice": {
+            "role": "notice",
+            "title": "关于《2023年年度报告》的更正公告",
+            "published_on": "2025-03-24",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2025-03-24/1222879331.PDF"
+          },
+          "complete": true,
+          "recorded_at": "2026-10-28T20:24:35+08:00"
+        },
+        "supersedes": "DOC-130C3FF76FB50D2C"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\annual_2023\\DOC-597B70EA985945BC.pdf.part",
+        "bytes": 4578783,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4578783 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "241 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "241 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中山联合光电科技股份有限公司2023年年度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=中山联合光电科技股份有限公司2023年年度报告（更正后）"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 241,
+        "text_chars": 2122,
+        "issues": [],
+        "sha256": "ba18fe152862393a0f0626072af205e20422a19868b88458ab05dcf5d16acbcf",
+        "cover_text_chars": 66,
+        "identity_probe_chars": 2781,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:44:18+08:00"
     },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 4868,
-    "at": "2026-10-26T23:44:18+08:00",
-    "response_sha256": null,
-    "bytes": 4578783,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:44:18+08:00",
-    "bytes_written": 4578783
-   },
-   "document": {
-    "document_id": "DOC-597B70EA985945BC",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|1",
-    "revision_no": 1,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "中山联合光电科技股份有限公司2023年年度报告（更正后）",
-    "published_on": "2025-03-24",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-03-24/1222879333.PDF",
-    "local_file": "sources/collection/originals/300691/annual_2023/DOC-597B70EA985945BC.pdf",
-    "sha256": "ba18fe152862393a0f0626072af205e20422a19868b88458ab05dcf5d16acbcf",
-    "bytes": 4578783,
-    "page_count": 241,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4578783 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "241 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "241 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中山联合光电科技股份有限公司2023年年度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=中山联合光电科技股份有限公司2023年年度报告（更正后）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\annual_2023\\DOC-597B70EA985945BC.pdf.part",
-    "bytes": 4578783,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4578783 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "241 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "241 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=中山联合光电科技股份有限公司2023年年度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=中山联合光电科技股份有限公司2023年年度报告（更正后）"
-     }
+    "annual_2024": {
+      "security_id": "SZ:300691",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153104.pdf",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 2081,
+          "at": "2026-10-26T23:44:20+08:00",
+          "response_sha256": null,
+          "bytes": 2020919,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153104.pdf",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 2081,
+        "at": "2026-10-26T23:44:20+08:00",
+        "response_sha256": null,
+        "bytes": 2020919,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:44:21+08:00",
+        "bytes_written": 2020919
+      },
+      "document": {
+        "document_id": "DOC-AFC2EADBA7DD739F",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年年度报告",
+        "published_on": "2025-04-20",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153104.pdf",
+        "local_file": "sources/collection/originals/300691/annual_2024/DOC-AFC2EADBA7DD739F.pdf",
+        "sha256": "a915c65f894242a80816435509b330a6f75a1de5201ddd25fb7dc9df776c52c3",
+        "bytes": 2020919,
+        "page_count": 268,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2020919 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "268 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "268 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\annual_2024\\DOC-AFC2EADBA7DD739F.pdf.part",
+        "bytes": 2020919,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "2020919 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "268 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "268 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 268,
+        "text_chars": 1896,
+        "issues": [],
+        "sha256": "a915c65f894242a80816435509b330a6f75a1de5201ddd25fb7dc9df776c52c3",
+        "cover_text_chars": 66,
+        "identity_probe_chars": 2741,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:44:21+08:00"
     },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 241,
-    "text_chars": 2122,
-    "issues": [],
-    "sha256": "ba18fe152862393a0f0626072af205e20422a19868b88458ab05dcf5d16acbcf",
-    "cover_text_chars": 66,
-    "identity_probe_chars": 2781,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:44:18+08:00"
+    "annual_2025": {
+      "security_id": "SZ:300691",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156814.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 2127,
+          "at": "2026-10-26T23:44:23+08:00",
+          "response_sha256": null,
+          "bytes": 1678701,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156814.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 2127,
+        "at": "2026-10-26T23:44:23+08:00",
+        "response_sha256": null,
+        "bytes": 1678701,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:44:23+08:00",
+        "bytes_written": 1678701
+      },
+      "document": {
+        "document_id": "DOC-90E63C00A65D95BA",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-04-22",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156814.PDF",
+        "local_file": "sources/collection/originals/300691/annual_2025/DOC-90E63C00A65D95BA.pdf",
+        "sha256": "264cb7f9662a4d72f81d8bea202482c52a20f53019bac14c6d1751b494e6c7c8",
+        "bytes": 1678701,
+        "page_count": 233,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1678701 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "233 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "233 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\annual_2025\\DOC-90E63C00A65D95BA.pdf.part",
+        "bytes": 1678701,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1678701 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "233 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "233 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 233,
+        "text_chars": 1459,
+        "issues": [],
+        "sha256": "264cb7f9662a4d72f81d8bea202482c52a20f53019bac14c6d1751b494e6c7c8",
+        "cover_text_chars": 66,
+        "identity_probe_chars": 3182,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:44:23+08:00"
+    },
+    "h1_2024": {
+      "security_id": "SZ:300691",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221031089.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 2366,
+          "at": "2026-10-26T23:44:26+08:00",
+          "response_sha256": null,
+          "bytes": 3706986,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221031089.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 2366,
+        "at": "2026-10-26T23:44:26+08:00",
+        "response_sha256": null,
+        "bytes": 3706986,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:44:26+08:00",
+        "bytes_written": 3706986
+      },
+      "document": {
+        "document_id": "DOC-965657E6C9B275F7",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年半年度报告",
+        "published_on": "2024-08-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221031089.PDF",
+        "local_file": "sources/collection/originals/300691/h1_2024/DOC-965657E6C9B275F7.pdf",
+        "sha256": "e12d01a3e17daad45236b68efaac60847fce4fa7f2778c1776460d218dfe0178",
+        "bytes": 3706986,
+        "page_count": 177,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3706986 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "177 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "177 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\h1_2024\\DOC-965657E6C9B275F7.pdf.part",
+        "bytes": 3706986,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3706986 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "177 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "177 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 177,
+        "text_chars": 1760,
+        "issues": [],
+        "sha256": "e12d01a3e17daad45236b68efaac60847fce4fa7f2778c1776460d218dfe0178",
+        "cover_text_chars": 64,
+        "identity_probe_chars": 2853,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:44:26+08:00"
+    },
+    "h1_2025": {
+      "security_id": "SZ:300691",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-08-29/1224615627.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1604,
+          "at": "2026-10-26T23:44:28+08:00",
+          "response_sha256": null,
+          "bytes": 1161315,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-29/1224615627.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1604,
+        "at": "2026-10-26T23:44:28+08:00",
+        "response_sha256": null,
+        "bytes": 1161315,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:44:28+08:00",
+        "bytes_written": 1161315
+      },
+      "document": {
+        "document_id": "DOC-316A45112E7C2E66",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年半年度报告",
+        "published_on": "2025-08-28",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-29/1224615627.PDF",
+        "local_file": "sources/collection/originals/300691/h1_2025/DOC-316A45112E7C2E66.pdf",
+        "sha256": "f8069e40afb7b1c6befc02f1836d7ae308cf3d39cb25199e44d78ee9b2ef0d10",
+        "bytes": 1161315,
+        "page_count": 175,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1161315 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "175 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "175 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\h1_2025\\DOC-316A45112E7C2E66.pdf.part",
+        "bytes": 1161315,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1161315 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "175 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "175 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 175,
+        "text_chars": 1516,
+        "issues": [],
+        "sha256": "f8069e40afb7b1c6befc02f1836d7ae308cf3d39cb25199e44d78ee9b2ef0d10",
+        "cover_text_chars": 65,
+        "identity_probe_chars": 2574,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:44:28+08:00"
+    },
+    "h1_2026": {
+      "security_id": "SZ:300691",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225519385.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1638,
+          "at": "2026-10-26T23:44:30+08:00",
+          "response_sha256": null,
+          "bytes": 1685001,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225519385.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1638,
+        "at": "2026-10-26T23:44:30+08:00",
+        "response_sha256": null,
+        "bytes": 1685001,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:44:30+08:00",
+        "bytes_written": 1685001
+      },
+      "document": {
+        "document_id": "DOC-50F3679309B60D08",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225519385.PDF",
+        "local_file": "sources/collection/originals/300691/h1_2026/DOC-50F3679309B60D08.pdf",
+        "sha256": "2cc349eab897e1530af7840ed90ee3ff881d9130c1e464117cf68d31b72a0b55",
+        "bytes": 1685001,
+        "page_count": 189,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1685001 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "189 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "189 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\h1_2026\\DOC-50F3679309B60D08.pdf.part",
+        "bytes": 1685001,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1685001 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "189 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "189 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 189,
+        "text_chars": 961,
+        "issues": [],
+        "sha256": "2cc349eab897e1530af7840ed90ee3ff881d9130c1e464117cf68d31b72a0b55",
+        "cover_text_chars": 67,
+        "identity_probe_chars": 3217,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:44:30+08:00"
+    },
+    "q1_2026": {
+      "security_id": "SZ:300691",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156825.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1481,
+          "at": "2026-10-26T23:44:32+08:00",
+          "response_sha256": null,
+          "bytes": 341819,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156825.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1481,
+        "at": "2026-10-26T23:44:32+08:00",
+        "response_sha256": null,
+        "bytes": 341819,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T23:44:32+08:00",
+        "bytes_written": 341819
+      },
+      "document": {
+        "document_id": "DOC-779ED0CB7A87AECC",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年一季度报告",
+        "published_on": "2026-04-22",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156825.PDF",
+        "local_file": "sources/collection/originals/300691/q1_2026/DOC-779ED0CB7A87AECC.pdf",
+        "sha256": "7af6dd377bd9af05a76463a2c7a5501b0d74e07785763273d85f5af1956cd2e5",
+        "bytes": 341819,
+        "page_count": 14,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "341819 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "14 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "14 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q1_2026\\DOC-779ED0CB7A87AECC.pdf.part",
+        "bytes": 341819,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "341819 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "14 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "14 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 14,
+        "text_chars": 1564,
+        "issues": [],
+        "sha256": "7af6dd377bd9af05a76463a2c7a5501b0d74e07785763273d85f5af1956cd2e5",
+        "cover_text_chars": 252,
+        "identity_probe_chars": 4357,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T23:44:32+08:00"
+    },
+    "q1_2024": {
+      "security_id": "SZ:300691",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-05-08/1220011504.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1853,
+          "at": "2026-10-27T21:49:09+08:00",
+          "response_sha256": null,
+          "bytes": 570361,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-05-08/1220011504.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1853,
+        "at": "2026-10-27T21:49:09+08:00",
+        "response_sha256": null,
+        "bytes": 570361,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:49:09+08:00",
+        "bytes_written": 570361
+      },
+      "document": {
+        "document_id": "DOC-2694F4A78CF38550",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|1",
+        "revision_no": 1,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年第一季度报告（更正后）",
+        "published_on": "2024-05-08",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-05-08/1220011504.PDF",
+        "local_file": "sources/collection/originals/300691/q1_2024/DOC-2694F4A78CF38550.pdf",
+        "sha256": "a4bd6baea454a61cd07fb6fea0ed33f1d5e66404ab58db3840ffa0211ed376b5",
+        "bytes": 570361,
+        "page_count": 17,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "570361 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "17 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "17 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第一季度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年第一季度报告（更正后）"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q1_2024\\DOC-2694F4A78CF38550.pdf.part",
+        "bytes": 570361,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "570361 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "17 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "17 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第一季度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年第一季度报告（更正后）"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 17,
+        "text_chars": 2145,
+        "issues": [],
+        "sha256": "a4bd6baea454a61cd07fb6fea0ed33f1d5e66404ab58db3840ffa0211ed376b5",
+        "cover_text_chars": 253,
+        "identity_probe_chars": 5162,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:49:09+08:00"
+    },
+    "q3_2024": {
+      "security_id": "SZ:300691",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221505966.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 919,
+          "at": "2026-10-27T21:49:11+08:00",
+          "response_sha256": null,
+          "bytes": 193189,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221505966.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 919,
+        "at": "2026-10-27T21:49:11+08:00",
+        "response_sha256": null,
+        "bytes": 193189,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:49:11+08:00",
+        "bytes_written": 193189
+      },
+      "document": {
+        "document_id": "DOC-EF64929B8488BD50",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年三季度报告",
+        "published_on": "2024-10-24",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221505966.PDF",
+        "local_file": "sources/collection/originals/300691/q3_2024/DOC-EF64929B8488BD50.pdf",
+        "sha256": "d5bdc5dfed3846d8b1ba8dcbe6adda9546749439c2c1c9eaf4536a33cd05b42a",
+        "bytes": 193189,
+        "page_count": 14,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "193189 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "14 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "14 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q3_2024\\DOC-EF64929B8488BD50.pdf.part",
+        "bytes": 193189,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "193189 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "14 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "14 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 14,
+        "text_chars": 2384,
+        "issues": [],
+        "sha256": "d5bdc5dfed3846d8b1ba8dcbe6adda9546749439c2c1c9eaf4536a33cd05b42a",
+        "cover_text_chars": 253,
+        "identity_probe_chars": 5624,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:49:11+08:00"
+    },
+    "q1_2025": {
+      "security_id": "SZ:300691",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153063.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1089,
+          "at": "2026-10-27T21:49:12+08:00",
+          "response_sha256": null,
+          "bytes": 506926,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153063.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1089,
+        "at": "2026-10-27T21:49:12+08:00",
+        "response_sha256": null,
+        "bytes": 506926,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:49:12+08:00",
+        "bytes_written": 506926
+      },
+      "document": {
+        "document_id": "DOC-4E9CBE10EC4EEFC4",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年一季度报告",
+        "published_on": "2025-04-20",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153063.PDF",
+        "local_file": "sources/collection/originals/300691/q1_2025/DOC-4E9CBE10EC4EEFC4.pdf",
+        "sha256": "102ee73fdf68ac82df7cd99619d744b6a625e34087ff2596d85797bea3207307",
+        "bytes": 506926,
+        "page_count": 14,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "506926 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "14 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "14 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q1_2025\\DOC-4E9CBE10EC4EEFC4.pdf.part",
+        "bytes": 506926,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "506926 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "14 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "14 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 14,
+        "text_chars": 2357,
+        "issues": [],
+        "sha256": "102ee73fdf68ac82df7cd99619d744b6a625e34087ff2596d85797bea3207307",
+        "cover_text_chars": 253,
+        "identity_probe_chars": 4666,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:49:12+08:00"
+    },
+    "q3_2025": {
+      "security_id": "SZ:300691",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737308.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 690,
+          "at": "2026-10-27T21:49:13+08:00",
+          "response_sha256": null,
+          "bytes": 176056,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737308.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 690,
+        "at": "2026-10-27T21:49:13+08:00",
+        "response_sha256": null,
+        "bytes": 176056,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:49:13+08:00",
+        "bytes_written": 176056
+      },
+      "document": {
+        "document_id": "DOC-E2DD9B4936F01B1E",
+        "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年三季度报告",
+        "published_on": "2025-10-26",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737308.PDF",
+        "local_file": "sources/collection/originals/300691/q3_2025/DOC-E2DD9B4936F01B1E.pdf",
+        "sha256": "401ef6e882182a75f887b5fe29a835b73ff0b9a595a161441b90b2128a5dda22",
+        "bytes": 176056,
+        "page_count": 13,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "176056 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q3_2025\\DOC-E2DD9B4936F01B1E.pdf.part",
+        "bytes": 176056,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "176056 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 13,
+        "text_chars": 2820,
+        "issues": [],
+        "sha256": "401ef6e882182a75f887b5fe29a835b73ff0b9a595a161441b90b2128a5dda22",
+        "cover_text_chars": 257,
+        "identity_probe_chars": 6260,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:49:13+08:00"
+    },
+    "q3_2026": {
+      "security_id": "SZ:300691",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "checkpoint": {},
+      "document": {},
+      "updated_at": "2026-10-27T21:49:13+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-27T21:49:10+08:00",
+        "status": "RECONCILED"
+      }
+    }
   },
-  "annual_2024": {
-   "security_id": "SZ:300691",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153104.pdf",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 2081,
-     "at": "2026-10-26T23:44:20+08:00",
-     "response_sha256": null,
-     "bytes": 2020919,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153104.pdf",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 2081,
-    "at": "2026-10-26T23:44:20+08:00",
-    "response_sha256": null,
-    "bytes": 2020919,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:44:21+08:00",
-    "bytes_written": 2020919
-   },
-   "document": {
-    "document_id": "DOC-AFC2EADBA7DD739F",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年年度报告",
-    "published_on": "2025-04-20",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153104.pdf",
-    "local_file": "sources/collection/originals/300691/annual_2024/DOC-AFC2EADBA7DD739F.pdf",
-    "sha256": "a915c65f894242a80816435509b330a6f75a1de5201ddd25fb7dc9df776c52c3",
-    "bytes": 2020919,
-    "page_count": 268,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2020919 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "268 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "268 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\annual_2024\\DOC-AFC2EADBA7DD739F.pdf.part",
-    "bytes": 2020919,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "2020919 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "268 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "268 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 268,
-    "text_chars": 1896,
-    "issues": [],
-    "sha256": "a915c65f894242a80816435509b330a6f75a1de5201ddd25fb7dc9df776c52c3",
-    "cover_text_chars": 66,
-    "identity_probe_chars": 2741,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:44:21+08:00"
-  },
-  "annual_2025": {
-   "security_id": "SZ:300691",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156814.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 2127,
-     "at": "2026-10-26T23:44:23+08:00",
-     "response_sha256": null,
-     "bytes": 1678701,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156814.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 2127,
-    "at": "2026-10-26T23:44:23+08:00",
-    "response_sha256": null,
-    "bytes": 1678701,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:44:23+08:00",
-    "bytes_written": 1678701
-   },
-   "document": {
-    "document_id": "DOC-90E63C00A65D95BA",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-04-22",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156814.PDF",
-    "local_file": "sources/collection/originals/300691/annual_2025/DOC-90E63C00A65D95BA.pdf",
-    "sha256": "264cb7f9662a4d72f81d8bea202482c52a20f53019bac14c6d1751b494e6c7c8",
-    "bytes": 1678701,
-    "page_count": 233,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1678701 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "233 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "233 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\annual_2025\\DOC-90E63C00A65D95BA.pdf.part",
-    "bytes": 1678701,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1678701 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "233 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "233 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 233,
-    "text_chars": 1459,
-    "issues": [],
-    "sha256": "264cb7f9662a4d72f81d8bea202482c52a20f53019bac14c6d1751b494e6c7c8",
-    "cover_text_chars": 66,
-    "identity_probe_chars": 3182,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:44:23+08:00"
-  },
-  "h1_2024": {
-   "security_id": "SZ:300691",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221031089.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 2366,
-     "at": "2026-10-26T23:44:26+08:00",
-     "response_sha256": null,
-     "bytes": 3706986,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221031089.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 2366,
-    "at": "2026-10-26T23:44:26+08:00",
-    "response_sha256": null,
-    "bytes": 3706986,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:44:26+08:00",
-    "bytes_written": 3706986
-   },
-   "document": {
-    "document_id": "DOC-965657E6C9B275F7",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年半年度报告",
-    "published_on": "2024-08-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-29/1221031089.PDF",
-    "local_file": "sources/collection/originals/300691/h1_2024/DOC-965657E6C9B275F7.pdf",
-    "sha256": "e12d01a3e17daad45236b68efaac60847fce4fa7f2778c1776460d218dfe0178",
-    "bytes": 3706986,
-    "page_count": 177,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3706986 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "177 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "177 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\h1_2024\\DOC-965657E6C9B275F7.pdf.part",
-    "bytes": 3706986,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3706986 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "177 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "177 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 177,
-    "text_chars": 1760,
-    "issues": [],
-    "sha256": "e12d01a3e17daad45236b68efaac60847fce4fa7f2778c1776460d218dfe0178",
-    "cover_text_chars": 64,
-    "identity_probe_chars": 2853,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:44:26+08:00"
-  },
-  "h1_2025": {
-   "security_id": "SZ:300691",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-08-29/1224615627.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1604,
-     "at": "2026-10-26T23:44:28+08:00",
-     "response_sha256": null,
-     "bytes": 1161315,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-08-29/1224615627.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1604,
-    "at": "2026-10-26T23:44:28+08:00",
-    "response_sha256": null,
-    "bytes": 1161315,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:44:28+08:00",
-    "bytes_written": 1161315
-   },
-   "document": {
-    "document_id": "DOC-316A45112E7C2E66",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年半年度报告",
-    "published_on": "2025-08-28",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-29/1224615627.PDF",
-    "local_file": "sources/collection/originals/300691/h1_2025/DOC-316A45112E7C2E66.pdf",
-    "sha256": "f8069e40afb7b1c6befc02f1836d7ae308cf3d39cb25199e44d78ee9b2ef0d10",
-    "bytes": 1161315,
-    "page_count": 175,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1161315 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "175 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "175 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\h1_2025\\DOC-316A45112E7C2E66.pdf.part",
-    "bytes": 1161315,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1161315 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "175 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "175 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 175,
-    "text_chars": 1516,
-    "issues": [],
-    "sha256": "f8069e40afb7b1c6befc02f1836d7ae308cf3d39cb25199e44d78ee9b2ef0d10",
-    "cover_text_chars": 65,
-    "identity_probe_chars": 2574,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:44:28+08:00"
-  },
-  "h1_2026": {
-   "security_id": "SZ:300691",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225519385.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1638,
-     "at": "2026-10-26T23:44:30+08:00",
-     "response_sha256": null,
-     "bytes": 1685001,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225519385.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1638,
-    "at": "2026-10-26T23:44:30+08:00",
-    "response_sha256": null,
-    "bytes": 1685001,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:44:30+08:00",
-    "bytes_written": 1685001
-   },
-   "document": {
-    "document_id": "DOC-50F3679309B60D08",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225519385.PDF",
-    "local_file": "sources/collection/originals/300691/h1_2026/DOC-50F3679309B60D08.pdf",
-    "sha256": "2cc349eab897e1530af7840ed90ee3ff881d9130c1e464117cf68d31b72a0b55",
-    "bytes": 1685001,
-    "page_count": 189,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1685001 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "189 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "189 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\h1_2026\\DOC-50F3679309B60D08.pdf.part",
-    "bytes": 1685001,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1685001 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "189 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "189 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 189,
-    "text_chars": 961,
-    "issues": [],
-    "sha256": "2cc349eab897e1530af7840ed90ee3ff881d9130c1e464117cf68d31b72a0b55",
-    "cover_text_chars": 67,
-    "identity_probe_chars": 3217,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:44:30+08:00"
-  },
-  "q1_2026": {
-   "security_id": "SZ:300691",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156825.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1481,
-     "at": "2026-10-26T23:44:32+08:00",
-     "response_sha256": null,
-     "bytes": 341819,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156825.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1481,
-    "at": "2026-10-26T23:44:32+08:00",
-    "response_sha256": null,
-    "bytes": 341819,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T23:44:32+08:00",
-    "bytes_written": 341819
-   },
-   "document": {
-    "document_id": "DOC-779ED0CB7A87AECC",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年一季度报告",
-    "published_on": "2026-04-22",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156825.PDF",
-    "local_file": "sources/collection/originals/300691/q1_2026/DOC-779ED0CB7A87AECC.pdf",
-    "sha256": "7af6dd377bd9af05a76463a2c7a5501b0d74e07785763273d85f5af1956cd2e5",
-    "bytes": 341819,
-    "page_count": 14,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "341819 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "14 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "14 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q1_2026\\DOC-779ED0CB7A87AECC.pdf.part",
-    "bytes": 341819,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "341819 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "14 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "14 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 14,
-    "text_chars": 1564,
-    "issues": [],
-    "sha256": "7af6dd377bd9af05a76463a2c7a5501b0d74e07785763273d85f5af1956cd2e5",
-    "cover_text_chars": 252,
-    "identity_probe_chars": 4357,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T23:44:32+08:00"
-  },
-  "q1_2024": {
-   "security_id": "SZ:300691",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-05-08/1220011504.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1853,
-     "at": "2026-10-27T21:49:09+08:00",
-     "response_sha256": null,
-     "bytes": 570361,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-05-08/1220011504.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1853,
-    "at": "2026-10-27T21:49:09+08:00",
-    "response_sha256": null,
-    "bytes": 570361,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:49:09+08:00",
-    "bytes_written": 570361
-   },
-   "document": {
-    "document_id": "DOC-2694F4A78CF38550",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|1",
-    "revision_no": 1,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年第一季度报告（更正后）",
-    "published_on": "2024-05-08",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-05-08/1220011504.PDF",
-    "local_file": "sources/collection/originals/300691/q1_2024/DOC-2694F4A78CF38550.pdf",
-    "sha256": "a4bd6baea454a61cd07fb6fea0ed33f1d5e66404ab58db3840ffa0211ed376b5",
-    "bytes": 570361,
-    "page_count": 17,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "570361 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "17 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "17 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第一季度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年第一季度报告（更正后）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q1_2024\\DOC-2694F4A78CF38550.pdf.part",
-    "bytes": 570361,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "570361 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "17 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "17 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年第一季度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年第一季度报告（更正后）"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 17,
-    "text_chars": 2145,
-    "issues": [],
-    "sha256": "a4bd6baea454a61cd07fb6fea0ed33f1d5e66404ab58db3840ffa0211ed376b5",
-    "cover_text_chars": 253,
-    "identity_probe_chars": 5162,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:49:09+08:00"
-  },
-  "q3_2024": {
-   "security_id": "SZ:300691",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221505966.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 919,
-     "at": "2026-10-27T21:49:11+08:00",
-     "response_sha256": null,
-     "bytes": 193189,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221505966.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 919,
-    "at": "2026-10-27T21:49:11+08:00",
-    "response_sha256": null,
-    "bytes": 193189,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:49:11+08:00",
-    "bytes_written": 193189
-   },
-   "document": {
-    "document_id": "DOC-EF64929B8488BD50",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年三季度报告",
-    "published_on": "2024-10-24",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-25/1221505966.PDF",
-    "local_file": "sources/collection/originals/300691/q3_2024/DOC-EF64929B8488BD50.pdf",
-    "sha256": "d5bdc5dfed3846d8b1ba8dcbe6adda9546749439c2c1c9eaf4536a33cd05b42a",
-    "bytes": 193189,
-    "page_count": 14,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "193189 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "14 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "14 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q3_2024\\DOC-EF64929B8488BD50.pdf.part",
-    "bytes": 193189,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "193189 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "14 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "14 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 14,
-    "text_chars": 2384,
-    "issues": [],
-    "sha256": "d5bdc5dfed3846d8b1ba8dcbe6adda9546749439c2c1c9eaf4536a33cd05b42a",
-    "cover_text_chars": 253,
-    "identity_probe_chars": 5624,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:49:11+08:00"
-  },
-  "q1_2025": {
-   "security_id": "SZ:300691",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153063.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1089,
-     "at": "2026-10-27T21:49:12+08:00",
-     "response_sha256": null,
-     "bytes": 506926,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153063.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1089,
-    "at": "2026-10-27T21:49:12+08:00",
-    "response_sha256": null,
-    "bytes": 506926,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:49:12+08:00",
-    "bytes_written": 506926
-   },
-   "document": {
-    "document_id": "DOC-4E9CBE10EC4EEFC4",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年一季度报告",
-    "published_on": "2025-04-20",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-21/1223153063.PDF",
-    "local_file": "sources/collection/originals/300691/q1_2025/DOC-4E9CBE10EC4EEFC4.pdf",
-    "sha256": "102ee73fdf68ac82df7cd99619d744b6a625e34087ff2596d85797bea3207307",
-    "bytes": 506926,
-    "page_count": 14,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "506926 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "14 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "14 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q1_2025\\DOC-4E9CBE10EC4EEFC4.pdf.part",
-    "bytes": 506926,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "506926 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "14 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "14 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 14,
-    "text_chars": 2357,
-    "issues": [],
-    "sha256": "102ee73fdf68ac82df7cd99619d744b6a625e34087ff2596d85797bea3207307",
-    "cover_text_chars": 253,
-    "identity_probe_chars": 4666,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:49:12+08:00"
-  },
-  "q3_2025": {
-   "security_id": "SZ:300691",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737308.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 690,
-     "at": "2026-10-27T21:49:13+08:00",
-     "response_sha256": null,
-     "bytes": 176056,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737308.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 690,
-    "at": "2026-10-27T21:49:13+08:00",
-    "response_sha256": null,
-    "bytes": 176056,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:49:13+08:00",
-    "bytes_written": 176056
-   },
-   "document": {
-    "document_id": "DOC-E2DD9B4936F01B1E",
-    "identity_key": "SZ:300691|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年三季度报告",
-    "published_on": "2025-10-26",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-27/1224737308.PDF",
-    "local_file": "sources/collection/originals/300691/q3_2025/DOC-E2DD9B4936F01B1E.pdf",
-    "sha256": "401ef6e882182a75f887b5fe29a835b73ff0b9a595a161441b90b2128a5dda22",
-    "bytes": 176056,
-    "page_count": 13,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "176056 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年三季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\300691\\q3_2025\\DOC-E2DD9B4936F01B1E.pdf.part",
-    "bytes": 176056,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "176056 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=联合光电 代码=300691 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 13,
-    "text_chars": 2820,
-    "issues": [],
-    "sha256": "401ef6e882182a75f887b5fe29a835b73ff0b9a595a161441b90b2128a5dda22",
-    "cover_text_chars": 257,
-    "identity_probe_chars": 6260,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:49:13+08:00"
-  },
-  "q3_2026": {
-   "security_id": "SZ:300691",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "status": "NOT_YET_DISCLOSED",
-   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "WAIT_NEXT_CYCLE",
-   "checkpoint": {},
-   "document": {},
-   "updated_at": "2026-10-27T21:49:13+08:00",
-   "index_ref": {
-    "category": "category_sjdbg_szsh",
-    "fetched_at": "2026-10-27T21:49:10+08:00",
-    "status": "RECONCILED"
-   }
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "SZ:300691",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "9900032804",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "300691,9900032804",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 9,
-   "rows_fetched": 9,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 9,
-     "new_rows": 9,
-     "total_announcement": 9,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "04e8453219f66a9cc1311a06b73c46207d01c162bdd95fbcd2b79472e287674f",
-     "response_bytes": 5936,
-     "raw_path": "sources/collection/raw/300691/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "SZ:300691",
       "category": "category_ndbg_szsh",
-      "stock": "300691,9900032804",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T23:44:13+08:00",
-     "elapsed_ms": 718
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225156814",
-     "title": "2025年年度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2026-04-22",
-     "adjunct_url": "finalpage/2026-04-23/1225156814.PDF"
-    },
-    {
-     "announcement_id": "1225156813",
-     "title": "2025年年度报告摘要",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2026-04-22",
-     "adjunct_url": "finalpage/2026-04-23/1225156813.PDF"
-    },
-    {
-     "announcement_id": "1223153104",
-     "title": "2024年年度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2025-04-20",
-     "adjunct_url": "finalpage/2025-04-21/1223153104.pdf"
-    },
-    {
-     "announcement_id": "1223153004",
-     "title": "2024年年度报告摘要",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2025-04-20",
-     "adjunct_url": "finalpage/2025-04-21/1223153004.PDF"
-    },
-    {
-     "announcement_id": "1222879333",
-     "title": "中山联合光电科技股份有限公司2023年年度报告（更正后）",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2025-03-24",
-     "adjunct_url": "finalpage/2025-03-24/1222879333.PDF"
-    },
-    {
-     "announcement_id": "1219822580",
-     "title": "2023年年度报告摘要",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2024-04-25",
-     "adjunct_url": "finalpage/2024-04-26/1219822580.PDF"
-    },
-    {
-     "announcement_id": "1219822568",
-     "title": "2023年年度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2024-04-25",
-     "adjunct_url": "finalpage/2024-04-26/1219822568.PDF"
-    },
-    {
-     "announcement_id": "1216555775",
-     "title": "2022年年度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2023-04-24",
-     "adjunct_url": "finalpage/2023-04-25/1216555775.PDF"
-    },
-    {
-     "announcement_id": "1216555770",
-     "title": "2022年年度报告摘要",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2023-04-24",
-     "adjunct_url": "finalpage/2023-04-25/1216555770.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T23:44:13+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "SZ:300691",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "9900032804",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "300691,9900032804",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "55525a56a2c36bc01a4734fe40b261b3e17c803ecb02d1ffe9ebb7b2f180f7db",
-     "response_bytes": 5245,
-     "raw_path": "sources/collection/raw/300691/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900032804",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "300691,9900032804",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 9,
+      "rows_fetched": 9,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 9,
+          "new_rows": 9,
+          "total_announcement": 9,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "04e8453219f66a9cc1311a06b73c46207d01c162bdd95fbcd2b79472e287674f",
+          "response_bytes": 5936,
+          "raw_path": "sources/collection/raw/300691/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "300691,9900032804",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T23:44:13+08:00",
+          "elapsed_ms": 718
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225156814",
+          "title": "2025年年度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2026-04-22",
+          "adjunct_url": "finalpage/2026-04-23/1225156814.PDF"
+        },
+        {
+          "announcement_id": "1225156813",
+          "title": "2025年年度报告摘要",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2026-04-22",
+          "adjunct_url": "finalpage/2026-04-23/1225156813.PDF"
+        },
+        {
+          "announcement_id": "1223153104",
+          "title": "2024年年度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2025-04-20",
+          "adjunct_url": "finalpage/2025-04-21/1223153104.pdf"
+        },
+        {
+          "announcement_id": "1223153004",
+          "title": "2024年年度报告摘要",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2025-04-20",
+          "adjunct_url": "finalpage/2025-04-21/1223153004.PDF"
+        },
+        {
+          "announcement_id": "1222879333",
+          "title": "中山联合光电科技股份有限公司2023年年度报告（更正后）",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2025-03-24",
+          "adjunct_url": "finalpage/2025-03-24/1222879333.PDF"
+        },
+        {
+          "announcement_id": "1219822580",
+          "title": "2023年年度报告摘要",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2024-04-25",
+          "adjunct_url": "finalpage/2024-04-26/1219822580.PDF"
+        },
+        {
+          "announcement_id": "1219822568",
+          "title": "2023年年度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2024-04-25",
+          "adjunct_url": "finalpage/2024-04-26/1219822568.PDF"
+        },
+        {
+          "announcement_id": "1216555775",
+          "title": "2022年年度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2023-04-24",
+          "adjunct_url": "finalpage/2023-04-25/1216555775.PDF"
+        },
+        {
+          "announcement_id": "1216555770",
+          "title": "2022年年度报告摘要",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2023-04-24",
+          "adjunct_url": "finalpage/2023-04-25/1216555770.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T23:44:13+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "SZ:300691",
       "category": "category_bndbg_szsh",
-      "stock": "300691,9900032804",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T23:44:24+08:00",
-     "elapsed_ms": 722
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225519385",
-     "title": "2026年半年度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2026-08-27",
-     "adjunct_url": "finalpage/2026-08-28/1225519385.PDF"
-    },
-    {
-     "announcement_id": "1225519384",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2026-08-27",
-     "adjunct_url": "finalpage/2026-08-28/1225519384.PDF"
-    },
-    {
-     "announcement_id": "1224615630",
-     "title": "2025年半年度报告摘要",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2025-08-28",
-     "adjunct_url": "finalpage/2025-08-29/1224615630.PDF"
-    },
-    {
-     "announcement_id": "1224615627",
-     "title": "2025年半年度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2025-08-28",
-     "adjunct_url": "finalpage/2025-08-29/1224615627.PDF"
-    },
-    {
-     "announcement_id": "1221031095",
-     "title": "2024年半年度报告摘要",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2024-08-28",
-     "adjunct_url": "finalpage/2024-08-29/1221031095.PDF"
-    },
-    {
-     "announcement_id": "1221031089",
-     "title": "2024年半年度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2024-08-28",
-     "adjunct_url": "finalpage/2024-08-29/1221031089.PDF"
-    },
-    {
-     "announcement_id": "1217675282",
-     "title": "2023年半年度报告摘要",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2023-08-28",
-     "adjunct_url": "finalpage/2023-08-29/1217675282.PDF"
-    },
-    {
-     "announcement_id": "1217675280",
-     "title": "2023年半年度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2023-08-28",
-     "adjunct_url": "finalpage/2023-08-29/1217675280.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T23:44:24+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "SZ:300691",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "9900032804",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "300691,9900032804",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 5,
-   "rows_fetched": 5,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 5,
-     "new_rows": 5,
-     "total_announcement": 5,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "870932363845aa70c4b1d34ad2aef152daf21e136a5f49f5b43572ada6eca47e",
-     "response_bytes": 3343,
-     "raw_path": "sources/collection/raw/300691/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900032804",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "300691,9900032804",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "55525a56a2c36bc01a4734fe40b261b3e17c803ecb02d1ffe9ebb7b2f180f7db",
+          "response_bytes": 5245,
+          "raw_path": "sources/collection/raw/300691/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "300691,9900032804",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T23:44:24+08:00",
+          "elapsed_ms": 722
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225519385",
+          "title": "2026年半年度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2026-08-27",
+          "adjunct_url": "finalpage/2026-08-28/1225519385.PDF"
+        },
+        {
+          "announcement_id": "1225519384",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2026-08-27",
+          "adjunct_url": "finalpage/2026-08-28/1225519384.PDF"
+        },
+        {
+          "announcement_id": "1224615630",
+          "title": "2025年半年度报告摘要",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2025-08-28",
+          "adjunct_url": "finalpage/2025-08-29/1224615630.PDF"
+        },
+        {
+          "announcement_id": "1224615627",
+          "title": "2025年半年度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2025-08-28",
+          "adjunct_url": "finalpage/2025-08-29/1224615627.PDF"
+        },
+        {
+          "announcement_id": "1221031095",
+          "title": "2024年半年度报告摘要",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2024-08-28",
+          "adjunct_url": "finalpage/2024-08-29/1221031095.PDF"
+        },
+        {
+          "announcement_id": "1221031089",
+          "title": "2024年半年度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2024-08-28",
+          "adjunct_url": "finalpage/2024-08-29/1221031089.PDF"
+        },
+        {
+          "announcement_id": "1217675282",
+          "title": "2023年半年度报告摘要",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2023-08-28",
+          "adjunct_url": "finalpage/2023-08-29/1217675282.PDF"
+        },
+        {
+          "announcement_id": "1217675280",
+          "title": "2023年半年度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2023-08-28",
+          "adjunct_url": "finalpage/2023-08-29/1217675280.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T23:44:24+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "SZ:300691",
       "category": "category_yjdbg_szsh",
-      "stock": "300691,9900032804",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T21:49:07+08:00",
-     "elapsed_ms": 515
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225156825",
-     "title": "2026年一季度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2026-04-22",
-     "adjunct_url": "finalpage/2026-04-23/1225156825.PDF",
-     "adjunct_size": 335
-    },
-    {
-     "announcement_id": "1223153063",
-     "title": "2025年一季度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2025-04-20",
-     "adjunct_url": "finalpage/2025-04-21/1223153063.PDF",
-     "adjunct_size": 496
-    },
-    {
-     "announcement_id": "1220011504",
-     "title": "2024年第一季度报告（更正后）",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2024-05-08",
-     "adjunct_url": "finalpage/2024-05-08/1220011504.PDF",
-     "adjunct_size": 558
-    },
-    {
-     "announcement_id": "1219822617",
-     "title": "2024年一季度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2024-04-25",
-     "adjunct_url": "finalpage/2024-04-26/1219822617.PDF",
-     "adjunct_size": 490
-    },
-    {
-     "announcement_id": "1216555779",
-     "title": "2023年一季度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2023-04-24",
-     "adjunct_url": "finalpage/2023-04-25/1216555779.PDF",
-     "adjunct_size": 468
-    }
-   ],
-   "fetched_at": "2026-10-27T21:49:07+08:00"
-  },
-  "category_sjdbg_szsh": {
-   "security_id": "SZ:300691",
-   "category": "category_sjdbg_szsh",
-   "column": "szse",
-   "org_id": "9900032804",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_sjdbg_szsh",
-    "stock": "300691,9900032804",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 3,
-   "rows_fetched": 3,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 3,
-     "new_rows": 3,
-     "total_announcement": 3,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "c34d11d520aa436462375fb219ff18cc4e936dd87ca41338f63124abbf673ccc",
-     "response_bytes": 2049,
-     "raw_path": "sources/collection/raw/300691/category_sjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900032804",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "300691,9900032804",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 5,
+      "rows_fetched": 5,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 5,
+          "new_rows": 5,
+          "total_announcement": 5,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "870932363845aa70c4b1d34ad2aef152daf21e136a5f49f5b43572ada6eca47e",
+          "response_bytes": 3343,
+          "raw_path": "sources/collection/raw/300691/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "300691,9900032804",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T21:49:07+08:00",
+          "elapsed_ms": 515
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225156825",
+          "title": "2026年一季度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2026-04-22",
+          "adjunct_url": "finalpage/2026-04-23/1225156825.PDF",
+          "adjunct_size": 335
+        },
+        {
+          "announcement_id": "1223153063",
+          "title": "2025年一季度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2025-04-20",
+          "adjunct_url": "finalpage/2025-04-21/1223153063.PDF",
+          "adjunct_size": 496
+        },
+        {
+          "announcement_id": "1220011504",
+          "title": "2024年第一季度报告（更正后）",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2024-05-08",
+          "adjunct_url": "finalpage/2024-05-08/1220011504.PDF",
+          "adjunct_size": 558
+        },
+        {
+          "announcement_id": "1219822617",
+          "title": "2024年一季度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2024-04-25",
+          "adjunct_url": "finalpage/2024-04-26/1219822617.PDF",
+          "adjunct_size": 490
+        },
+        {
+          "announcement_id": "1216555779",
+          "title": "2023年一季度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2023-04-24",
+          "adjunct_url": "finalpage/2023-04-25/1216555779.PDF",
+          "adjunct_size": 468
+        }
+      ],
+      "fetched_at": "2026-10-27T21:49:07+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "SZ:300691",
       "category": "category_sjdbg_szsh",
-      "stock": "300691,9900032804",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T21:49:10+08:00",
-     "elapsed_ms": 747
+      "column": "szse",
+      "org_id": "9900032804",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "300691,9900032804",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 3,
+      "rows_fetched": 3,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 3,
+          "new_rows": 3,
+          "total_announcement": 3,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "c34d11d520aa436462375fb219ff18cc4e936dd87ca41338f63124abbf673ccc",
+          "response_bytes": 2049,
+          "raw_path": "sources/collection/raw/300691/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "300691,9900032804",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T21:49:10+08:00",
+          "elapsed_ms": 747
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224737308",
+          "title": "2025年三季度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2025-10-26",
+          "adjunct_url": "finalpage/2025-10-27/1224737308.PDF",
+          "adjunct_size": 173
+        },
+        {
+          "announcement_id": "1221505966",
+          "title": "2024年三季度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2024-10-24",
+          "adjunct_url": "finalpage/2024-10-25/1221505966.PDF",
+          "adjunct_size": 190
+        },
+        {
+          "announcement_id": "1218109059",
+          "title": "2023年三季度报告",
+          "sec_code": "300691",
+          "sec_name": "联合光电",
+          "published_on": "2023-10-22",
+          "adjunct_url": "finalpage/2023-10-23/1218109059.PDF",
+          "adjunct_size": 547
+        }
+      ],
+      "fetched_at": "2026-10-27T21:49:10+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1224737308",
-     "title": "2025年三季度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2025-10-26",
-     "adjunct_url": "finalpage/2025-10-27/1224737308.PDF",
-     "adjunct_size": 173
-    },
-    {
-     "announcement_id": "1221505966",
-     "title": "2024年三季度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2024-10-24",
-     "adjunct_url": "finalpage/2024-10-25/1221505966.PDF",
-     "adjunct_size": 190
-    },
-    {
-     "announcement_id": "1218109059",
-     "title": "2023年三季度报告",
-     "sec_code": "300691",
-     "sec_name": "联合光电",
-     "published_on": "2023-10-22",
-     "adjunct_url": "finalpage/2023-10-23/1218109059.PDF",
-     "adjunct_size": 547
-    }
-   ],
-   "fetched_at": "2026-10-27T21:49:10+08:00"
-  }
- },
- "updated_at": "2026-10-27T21:49:13+08:00"
+  },
+  "updated_at": "2026-10-27T21:49:13+08:00"
 }

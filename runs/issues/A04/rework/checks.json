@@ -124,9 +124,16 @@
       "id": "AC06",
       "result": "PASS",
       "evidence": {
-        "na_rows": 278,
-        "without_listing_side_table_date": 0,
-        "limit": "只核侧表日期存在与规则一致，未重新独立核验交易所原始公告"
+        "na_rows": 274,
+        "violations": 0,
+        "rule": "period_end < 实际挂牌日（北交所用股转挂牌日，沪/深用交易所上市日）",
+        "by_market": {
+          "SZ": 145,
+          "SH": 110,
+          "BJ": 19
+        },
+        "violation_samples": [],
+        "limit": "挂牌日取本地年报「挂牌时间」页或交易所上市日侧表；未重新独立核验交易所原始公告"
       }
     },
     {
@@ -165,6 +172,18 @@
         "unknown_disclosure_date": 0,
         "after_cutoff_registered_not_used": 0,
         "cutoff": "2026-10-25"
+      }
+    },
+    {
+      "id": "AC12_CORRECTION_CHAIN",
+      "result": "PASS",
+      "evidence": {
+        "pairs": 120,
+        "complete": 120,
+        "gaps": 0,
+        "notice_only_chains": 5,
+        "gap_samples": [],
+        "policy": "原版 + 更正版（或更正公告）+ supersedes 关联；不覆盖原件"
       }
     },
     {

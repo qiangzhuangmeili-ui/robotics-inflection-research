@@ -180,6 +180,11 @@ def probe() -> dict:
 
 def decide() -> dict:
     ev = json.loads((OUT / "neeq_quarter_evidence.json").read_text(encoding="utf-8"))["issuers"]
+    ld_path = OUT / "neeq_listing_dates.json"
+    listing = {}
+    if ld_path.exists():
+        listing = {r["security_id"]: r for r in
+                   json.loads(ld_path.read_text(encoding="utf-8"))["rows"] if r.get("neeq_listing_date")}
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
     slots = {s["slot_id"]: s for s in cfg["slots"]}
     names = {r["security_id"]: r["stock_name"]
@@ -264,25 +269,49 @@ def decide() -> dict:
                 rec.update({"status": FAILED, "status_reason": f"A04R 股转季度报告下载失败：{err}",
                             "next_action": "RETRY_AFTER_BACKOFF", "updated_at": now()})
                 rows.append({**case, "decision": "DOWNLOAD_FAILED", "evidence": err})
-        elif earliest and earliest > case["period_end"]:
+        elif sid in listing and case["period_end"] < listing[sid]["neeq_listing_date"]:
+            evid = listing[sid]
             rec.update({
                 "status": NA,
-                "status_reason": (f"A04R 股转索引最早一条 {earliest} 晚于报告期结束 {case['period_end']}，"
-                                  "公司当时未在股转挂牌"),
+                "status_reason": (f"A04R 复核：股转挂牌日 {evid['neeq_listing_date']} 晚于报告期结束 "
+                                  f"{case['period_end']}，公司当时未在股转挂牌（依据本地年报第 {evid['evidence_page']} 页"
+                                  f"「挂牌时间」）"),
                 "next_action": "NONE", "reason_code": "NEEQ_LISTING_AFTER_PERIOD_END",
+                "listing_date_evidence": {
+                    "neeq_listing_date": evid["neeq_listing_date"],
+                    "source": "LOCAL_ANNUAL_REPORT_PAGE",
+                    "document_id": evid["evidence_document_id"],
+                    "page": evid["evidence_page"], "snippet": evid["evidence_snippet"]},
                 "updated_at": now(),
             })
-            rows.append({**case, "decision": NA, "evidence": f"earliest_neeq_publish={earliest}"})
-        else:
+            rows.append({**case, "decision": NA,
+                         "evidence": f"neeq_listing_date={evid['neeq_listing_date']} > period_end={case['period_end']}"})
+        elif sid in listing:
             rec.update({
                 "status": ND,
-                "status_reason": ("A04R 股转定期报告索引完整但无该期季度报告；现行《挂牌公司信息披露规则》"
-                                  "第十一条季度报告为自愿披露，同索引可返回他司季报，缺失即未披露"),
+                "status_reason": (f"A04R 复核：股转挂牌日 {listing[sid]['neeq_listing_date']} 早于报告期结束 "
+                                  f"{case['period_end']}，公司应属适用；股转定期报告索引完整但无该期季度报告，"
+                                  "现行《挂牌公司信息披露规则》第十一条季度报告为自愿披露，判未披露"),
                 "next_action": "NONE", "reason_code": "NEEQ_VOLUNTARY_QUARTER_NOT_DISCLOSED",
+                "listing_date_evidence": {
+                    "neeq_listing_date": listing[sid]["neeq_listing_date"],
+                    "source": "LOCAL_ANNUAL_REPORT_PAGE",
+                    "document_id": listing[sid]["evidence_document_id"],
+                    "page": listing[sid]["evidence_page"]},
                 "updated_at": now(),
             })
             rows.append({**case, "decision": ND,
-                         "evidence": f"index_total={info['index_total']}, no {slot} row"})
+                         "evidence": (f"neeq_listing_date={listing[sid]['neeq_listing_date']} <= period_end="
+                                      f"{case['period_end']}; index_total={info['index_total']}, no {slot} row")})
+        else:
+            rec.update({
+                "status": "NOT_TRIED",
+                "status_reason": "A04R 未取得该公司股转挂牌日，适用性证据不足，保留 HOLD（禁止硬判不适用）",
+                "next_action": "RESOLVE_NEEQ_LISTING_DATE",
+                "reason_code": "NEEQ_LISTING_DATE_UNKNOWN_HOLD",
+                "updated_at": now(),
+            })
+            rows.append({**case, "decision": "HOLD_NO_LISTING_DATE", "evidence": "no neeq listing date"})
         data["slots"][slot] = rec
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 

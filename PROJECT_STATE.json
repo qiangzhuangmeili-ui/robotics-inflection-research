@@ -939,9 +939,9 @@
   "a04_stage": {
     "decision": "ACCEPTED_WITH_LIMITS",
     "review_file": "runs/issues/A04/rework/review.json",
-    "reviewed_at": "2026-10-28T16:48:12+08:00",
+    "reviewed_at": "2026-10-28T20:22:33+08:00",
     "release_S00": true,
-    "checks": "11/11 PASS",
+    "checks": "12/12 PASS",
     "prior_review_preserved": "runs/issues/A04/review.json (RETURN_FOR_REWORK)",
     "limits": [
       "字段层只覆盖年报 3081 份；半年报/季报字段未抽取",
@@ -949,6 +949,16 @@
       "Drive 无回读回执，archive_status 不写 VERIFIED",
       "7162 份台账文档未进 document_registry；71 同件双 ID 保留",
       "公告目录只证明目录覆盖，不等于逐份原文已读"
+    ],
+    "review_round": "REWORK_20261028_AFTER_CODEX_REVIEW",
+    "release_gate": {
+      "required": 12,
+      "failed": []
+    },
+    "fixes_after_review": [
+      "北交所不适用改用真实股转挂牌日（12→8，4 槽改判未披露）",
+      "AC06 逐行核挂牌日并纳入放行门槛",
+      "财务更正版本链 120 组闭环，分类 576→207"
     ]
   },
   "current_gate": "S00_READY",
@@ -965,9 +975,9 @@
     "ledger_pairs": 12648,
     "collected_identity_verified": 11468,
     "pending_identity": 0,
-    "na_prelisting": 278,
+    "na_prelisting": 274,
     "not_yet_disclosed": 864,
-    "not_disclosed": 38,
+    "not_disclosed": 42,
     "after_cutoff": 0,
     "not_tried": 0,
     "applicable_slots": 12370,
@@ -980,9 +990,15 @@
     "keyword_originals_downloaded": 264,
     "keyword_originals_bytes": 321400000,
     "revision_rows": 11183,
-    "financial_correction_rows": 576,
+    "financial_correction_rows": 207,
     "ir_rows": 5379,
-    "review_nature": "SELF_CHECK"
+    "review_nature": "SELF_CHECK",
+    "correction_chain_pairs": 120,
+    "correction_chain_complete": 120,
+    "correction_chain_gaps": 0,
+    "neeq_listing_dates_source": "LOCAL_ANNUAL_REPORT_PAGE",
+    "neeq_listing_dates_found": 15,
+    "recheck_after_codex_review": "2026-10-28"
   },
   "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/35"
 }

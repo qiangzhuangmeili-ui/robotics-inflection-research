@@ -1,1993 +1,2036 @@
 {
- "security_id": "SZ:002324",
- "slots": {
-  "annual_2023": {
-   "security_id": "SZ:002324",
-   "slot_id": "annual_2023",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2023",
-   "period_end": "2023-12-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219670523.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 3906,
-     "at": "2026-10-26T21:48:06+08:00",
-     "response_sha256": null,
-     "bytes": 4005441,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219670523.PDF",
-    "request_params": {
-     "Range": null
+  "security_id": "SZ:002324",
+  "slots": {
+    "annual_2023": {
+      "security_id": "SZ:002324",
+      "slot_id": "annual_2023",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2023",
+      "period_end": "2023-12-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219670523.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 3906,
+          "at": "2026-10-26T21:48:06+08:00",
+          "response_sha256": null,
+          "bytes": 4005441,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219670523.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 3906,
+        "at": "2026-10-26T21:48:06+08:00",
+        "response_sha256": null,
+        "bytes": 4005441,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:48:06+08:00",
+        "bytes_written": 4005441
+      },
+      "document": {
+        "document_id": "DOC-D62DA96491C5C46A",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2023年年度报告",
+        "published_on": "2024-04-18",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219670523.PDF",
+        "local_file": "sources/collection/originals/002324/annual_2023/DOC-D62DA96491C5C46A.pdf",
+        "sha256": "510507a9e4dcf5fd566ea96d9d74e56216dd20af4778b8e1616fa0b055f00acc",
+        "bytes": 4005441,
+        "page_count": 253,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4005441 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "253 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "253 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\annual_2023\\DOC-D62DA96491C5C46A.pdf.part",
+        "bytes": 4005441,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4005441 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "253 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "253 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2023年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 253,
+        "text_chars": 1222,
+        "issues": [],
+        "sha256": "510507a9e4dcf5fd566ea96d9d74e56216dd20af4778b8e1616fa0b055f00acc",
+        "cover_text_chars": 58,
+        "identity_probe_chars": 3367,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:48:06+08:00"
     },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 3906,
-    "at": "2026-10-26T21:48:06+08:00",
-    "response_sha256": null,
-    "bytes": 4005441,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:48:06+08:00",
-    "bytes_written": 4005441
-   },
-   "document": {
-    "document_id": "DOC-D62DA96491C5C46A",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2023|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2023年年度报告",
-    "published_on": "2024-04-18",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219670523.PDF",
-    "local_file": "sources/collection/originals/002324/annual_2023/DOC-D62DA96491C5C46A.pdf",
-    "sha256": "510507a9e4dcf5fd566ea96d9d74e56216dd20af4778b8e1616fa0b055f00acc",
-    "bytes": 4005441,
-    "page_count": 253,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4005441 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "253 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "253 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\annual_2023\\DOC-D62DA96491C5C46A.pdf.part",
-    "bytes": 4005441,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4005441 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "253 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "253 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2023年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2023年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2023年年度报告"
-     }
+    "annual_2024": {
+      "security_id": "SZ:002324",
+      "slot_id": "annual_2024",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2024",
+      "period_end": "2024-12-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223153726.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1486,
+          "at": "2026-10-26T21:48:07+08:00",
+          "response_sha256": null,
+          "bytes": 3932521,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223153726.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1486,
+        "at": "2026-10-26T21:48:07+08:00",
+        "response_sha256": null,
+        "bytes": 3932521,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:48:08+08:00",
+        "bytes_written": 3932521
+      },
+      "document": {
+        "document_id": "DOC-3FBADB9719692FA4",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年年度报告",
+        "published_on": "2025-04-18",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223153726.PDF",
+        "local_file": "sources/collection/originals/002324/annual_2024/DOC-3FBADB9719692FA4.pdf",
+        "sha256": "66742bc13d5020c59b2ca9fe69862f68ae6714e6ba611d7b96ea46c8c58f7ed0",
+        "bytes": 3932521,
+        "page_count": 246,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3932521 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "246 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "246 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\annual_2024\\DOC-3FBADB9719692FA4.pdf.part",
+        "bytes": 3932521,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "3932521 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "246 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "246 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 246,
+        "text_chars": 1219,
+        "issues": [],
+        "sha256": "66742bc13d5020c59b2ca9fe69862f68ae6714e6ba611d7b96ea46c8c58f7ed0",
+        "cover_text_chars": 58,
+        "identity_probe_chars": 3509,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:48:08+08:00"
     },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 253,
-    "text_chars": 1222,
-    "issues": [],
-    "sha256": "510507a9e4dcf5fd566ea96d9d74e56216dd20af4778b8e1616fa0b055f00acc",
-    "cover_text_chars": 58,
-    "identity_probe_chars": 3367,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:48:06+08:00"
+    "annual_2025": {
+      "security_id": "SZ:002324",
+      "slot_id": "annual_2025",
+      "report_type": "ANNUAL_REPORT",
+      "period_label": "FY2025",
+      "period_end": "2025-12-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225163957.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1458,
+          "at": "2026-10-26T21:48:09+08:00",
+          "response_sha256": null,
+          "bytes": 1522070,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225163957.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1458,
+        "at": "2026-10-26T21:48:09+08:00",
+        "response_sha256": null,
+        "bytes": 1522070,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:48:09+08:00",
+        "bytes_written": 1522070
+      },
+      "document": {
+        "document_id": "DOC-C5E55F7C292E2F6E",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年年度报告",
+        "published_on": "2026-04-23",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225163957.PDF",
+        "local_file": "sources/collection/originals/002324/annual_2025/DOC-C5E55F7C292E2F6E.pdf",
+        "sha256": "b5b99f3aa26b1646ef752ab20071569ae511edc8401d76f5cec36344fdc9f873",
+        "bytes": 1522070,
+        "page_count": 239,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1522070 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "239 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "239 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\annual_2025\\DOC-C5E55F7C292E2F6E.pdf.part",
+        "bytes": 1522070,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1522070 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "239 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "239 >= 20"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 239,
+        "text_chars": 1127,
+        "issues": [],
+        "sha256": "b5b99f3aa26b1646ef752ab20071569ae511edc8401d76f5cec36344fdc9f873",
+        "cover_text_chars": 58,
+        "identity_probe_chars": 3435,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:48:09+08:00"
+    },
+    "h1_2024": {
+      "security_id": "SZ:002324",
+      "slot_id": "h1_2024",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2024H1",
+      "period_end": "2024-06-30",
+      "statutory_deadline": "2024-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-08-27/1220981908.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1735,
+          "at": "2026-10-26T21:48:12+08:00",
+          "response_sha256": null,
+          "bytes": 4516785,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-08-27/1220981908.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1735,
+        "at": "2026-10-26T21:48:12+08:00",
+        "response_sha256": null,
+        "bytes": 4516785,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:48:12+08:00",
+        "bytes_written": 4516785
+      },
+      "document": {
+        "document_id": "DOC-74EBE483E4251F8E",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年半年度报告",
+        "published_on": "2024-08-26",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-27/1220981908.PDF",
+        "local_file": "sources/collection/originals/002324/h1_2024/DOC-74EBE483E4251F8E.pdf",
+        "sha256": "958e236ed828173eda8842ae6be72baf1dafb429b3a7b0da4155bd7c4cb351ba",
+        "bytes": 4516785,
+        "page_count": 182,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4516785 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "182 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "182 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\h1_2024\\DOC-74EBE483E4251F8E.pdf.part",
+        "bytes": 4516785,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "4516785 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "182 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "182 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 182,
+        "text_chars": 1488,
+        "issues": [],
+        "sha256": "958e236ed828173eda8842ae6be72baf1dafb429b3a7b0da4155bd7c4cb351ba",
+        "cover_text_chars": 60,
+        "identity_probe_chars": 3029,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:48:12+08:00"
+    },
+    "h1_2025": {
+      "security_id": "SZ:002324",
+      "slot_id": "h1_2025",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2025H1",
+      "period_end": "2025-06-30",
+      "statutory_deadline": "2025-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224532144.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1101,
+          "at": "2026-10-26T21:48:13+08:00",
+          "response_sha256": null,
+          "bytes": 1160529,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224532144.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1101,
+        "at": "2026-10-26T21:48:13+08:00",
+        "response_sha256": null,
+        "bytes": 1160529,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:48:13+08:00",
+        "bytes_written": 1160529
+      },
+      "document": {
+        "document_id": "DOC-03F5DD90817338CB",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年半年度报告",
+        "published_on": "2025-08-21",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224532144.PDF",
+        "local_file": "sources/collection/originals/002324/h1_2025/DOC-03F5DD90817338CB.pdf",
+        "sha256": "a90aabc39c4bca471f1cb44c625b523d213b3b344a0a80c82a8048dec72d8fa8",
+        "bytes": 1160529,
+        "page_count": 182,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1160529 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "182 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "182 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\h1_2025\\DOC-03F5DD90817338CB.pdf.part",
+        "bytes": 1160529,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1160529 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "182 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "182 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 182,
+        "text_chars": 1291,
+        "issues": [],
+        "sha256": "a90aabc39c4bca471f1cb44c625b523d213b3b344a0a80c82a8048dec72d8fa8",
+        "cover_text_chars": 60,
+        "identity_probe_chars": 3177,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:48:13+08:00"
+    },
+    "h1_2026": {
+      "security_id": "SZ:002324",
+      "slot_id": "h1_2026",
+      "report_type": "SEMI_ANNUAL_REPORT",
+      "period_label": "2026H1",
+      "period_end": "2026-06-30",
+      "statutory_deadline": "2026-08-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502407.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1134,
+          "at": "2026-10-26T21:48:15+08:00",
+          "response_sha256": null,
+          "bytes": 1170699,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502407.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1134,
+        "at": "2026-10-26T21:48:15+08:00",
+        "response_sha256": null,
+        "bytes": 1170699,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:48:15+08:00",
+        "bytes_written": 1170699
+      },
+      "document": {
+        "document_id": "DOC-F99D8768A61E15D4",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年半年度报告",
+        "published_on": "2026-08-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502407.PDF",
+        "local_file": "sources/collection/originals/002324/h1_2026/DOC-F99D8768A61E15D4.pdf",
+        "sha256": "052326422c6912284e219329ddff76dc8769623931c52d1115cd9689452410f2",
+        "bytes": 1170699,
+        "page_count": 189,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1170699 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "189 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "189 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\h1_2026\\DOC-F99D8768A61E15D4.pdf.part",
+        "bytes": 1170699,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "1170699 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "189 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "189 >= 10"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年半年度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 189,
+        "text_chars": 1194,
+        "issues": [],
+        "sha256": "052326422c6912284e219329ddff76dc8769623931c52d1115cd9689452410f2",
+        "cover_text_chars": 60,
+        "identity_probe_chars": 3008,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:48:15+08:00"
+    },
+    "q1_2026": {
+      "security_id": "SZ:002324",
+      "slot_id": "q1_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q1",
+      "period_end": "2026-03-31",
+      "statutory_deadline": "2026-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199202.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1093,
+          "at": "2026-10-26T21:48:16+08:00",
+          "response_sha256": null,
+          "bytes": 189847,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199202.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1093,
+        "at": "2026-10-26T21:48:16+08:00",
+        "response_sha256": null,
+        "bytes": 189847,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-26T21:48:17+08:00",
+        "bytes_written": 189847
+      },
+      "document": {
+        "document_id": "DOC-B40541BAB0484D2A",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|1",
+        "revision_no": 1,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2026年第一季度报告（更正后）",
+        "published_on": "2026-04-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199202.PDF",
+        "local_file": "sources/collection/originals/002324/q1_2026/DOC-B40541BAB0484D2A.pdf",
+        "sha256": "cf64513d70892f79824492725b6022b31ba22bec4023ad0bbf764663333fdf38",
+        "bytes": 189847,
+        "page_count": 15,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "189847 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "15 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "15 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第一季度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年第一季度报告（更正后）"
+          }
+        },
+        "version_chain": {
+          "policy": "ORIGINAL_PDF_PLUS_LINK_TO_SUPERSEDED",
+          "effective_document_id": "DOC-B40541BAB0484D2A",
+          "versions": [
+            {
+              "revision_no": 0,
+              "document_id": "DOC-5082DD01BAC1E934",
+              "title": "2026年一季度报告",
+              "published_on": "2026-04-25",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225175014.PDF",
+              "role": "original",
+              "local_file": "sources/collection/originals/002324/q1_2026/DOC-5082DD01BAC1E934.pdf",
+              "sha256": "94a52cb022e2301ff1eeca6fa8e397d1790f2a058c85721e822d3ff5e3735f5c",
+              "bytes": 211394,
+              "downloaded_now": false,
+              "supersedes": null,
+              "superseded_by": "DOC-B40541BAB0484D2A"
+            },
+            {
+              "revision_no": 1,
+              "document_id": "DOC-B40541BAB0484D2A",
+              "title": "2026年第一季度报告（更正后）",
+              "published_on": "2026-04-28",
+              "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199202.PDF",
+              "role": "corrected",
+              "local_file": "sources/collection/originals/002324/q1_2026/DOC-B40541BAB0484D2A.pdf",
+              "sha256": "cf64513d70892f79824492725b6022b31ba22bec4023ad0bbf764663333fdf38",
+              "bytes": 189847,
+              "downloaded_now": false,
+              "supersedes": "DOC-5082DD01BAC1E934",
+              "superseded_by": null
+            }
+          ],
+          "correction_notice": {
+            "role": "notice",
+            "title": "关于2026年第一季度报告的更正公告",
+            "published_on": "2026-04-28",
+            "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199201.PDF"
+          },
+          "complete": true,
+          "recorded_at": "2026-10-28T20:24:31+08:00"
+        },
+        "supersedes": "DOC-5082DD01BAC1E934"
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q1_2026\\DOC-B40541BAB0484D2A.pdf.part",
+        "bytes": 189847,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "189847 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "15 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "15 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第一季度报告（更正后）"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2026年第一季度报告（更正后）"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 15,
+        "text_chars": 2548,
+        "issues": [],
+        "sha256": "cf64513d70892f79824492725b6022b31ba22bec4023ad0bbf764663333fdf38",
+        "cover_text_chars": 509,
+        "identity_probe_chars": 5049,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-26T21:48:17+08:00"
+    },
+    "q1_2024": {
+      "security_id": "SZ:002324",
+      "slot_id": "q1_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q1",
+      "period_end": "2024-03-31",
+      "statutory_deadline": "2024-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219815101.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1358,
+          "at": "2026-10-27T21:07:50+08:00",
+          "response_sha256": null,
+          "bytes": 434091,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219815101.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1358,
+        "at": "2026-10-27T21:07:50+08:00",
+        "response_sha256": null,
+        "bytes": 434091,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:07:50+08:00",
+        "bytes_written": 434091
+      },
+      "document": {
+        "document_id": "DOC-1E4308F787CF79D7",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年一季度报告",
+        "published_on": "2024-04-25",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219815101.PDF",
+        "local_file": "sources/collection/originals/002324/q1_2024/DOC-1E4308F787CF79D7.pdf",
+        "sha256": "ba20d4215f9f9d7f3f3f10ac9aaff88c36966281bdee760b7b0e3c8d63adf27b",
+        "bytes": 434091,
+        "page_count": 13,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "434091 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q1_2024\\DOC-1E4308F787CF79D7.pdf.part",
+        "bytes": 434091,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "434091 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 13,
+        "text_chars": 2761,
+        "issues": [],
+        "sha256": "ba20d4215f9f9d7f3f3f10ac9aaff88c36966281bdee760b7b0e3c8d63adf27b",
+        "cover_text_chars": 468,
+        "identity_probe_chars": 5489,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:07:50+08:00"
+    },
+    "q3_2024": {
+      "security_id": "SZ:002324",
+      "slot_id": "q3_2024",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2024Q3",
+      "period_end": "2024-09-30",
+      "statutory_deadline": "2024-10-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221519053.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 1124,
+          "at": "2026-10-27T21:07:52+08:00",
+          "response_sha256": null,
+          "bytes": 399146,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221519053.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 1124,
+        "at": "2026-10-27T21:07:52+08:00",
+        "response_sha256": null,
+        "bytes": 399146,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:07:52+08:00",
+        "bytes_written": 399146
+      },
+      "document": {
+        "document_id": "DOC-8FB44C3E5D538020",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2024年三季度报告",
+        "published_on": "2024-10-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221519053.PDF",
+        "local_file": "sources/collection/originals/002324/q3_2024/DOC-8FB44C3E5D538020.pdf",
+        "sha256": "0d4a5ffb6fdd1d79430cdcedc9e3ba9d3082490119c52ee84fdefbf683e5b3c1",
+        "bytes": 399146,
+        "page_count": 15,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "399146 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "15 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "15 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q3_2024\\DOC-8FB44C3E5D538020.pdf.part",
+        "bytes": 399146,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "399146 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "15 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "15 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2024年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 15,
+        "text_chars": 2895,
+        "issues": [],
+        "sha256": "0d4a5ffb6fdd1d79430cdcedc9e3ba9d3082490119c52ee84fdefbf683e5b3c1",
+        "cover_text_chars": 544,
+        "identity_probe_chars": 5868,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:07:52+08:00"
+    },
+    "q1_2025": {
+      "security_id": "SZ:002324",
+      "slot_id": "q1_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q1",
+      "period_end": "2025-03-31",
+      "statutory_deadline": "2025-04-30",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223237788.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 2838,
+          "at": "2026-10-27T21:07:55+08:00",
+          "response_sha256": null,
+          "bytes": 382403,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223237788.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 2838,
+        "at": "2026-10-27T21:07:55+08:00",
+        "response_sha256": null,
+        "bytes": 382403,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:07:55+08:00",
+        "bytes_written": 382403
+      },
+      "document": {
+        "document_id": "DOC-84712B4DBE22979D",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年一季度报告",
+        "published_on": "2025-04-23",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223237788.PDF",
+        "local_file": "sources/collection/originals/002324/q1_2025/DOC-84712B4DBE22979D.pdf",
+        "sha256": "1a618ec6e1a45d14c6d5f815d9a54e08b779b2c608396a742d30debd6f3e2c16",
+        "bytes": 382403,
+        "page_count": 14,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "382403 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "14 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "14 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q1_2025\\DOC-84712B4DBE22979D.pdf.part",
+        "bytes": 382403,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.5"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "382403 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "14 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "14 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年一季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 14,
+        "text_chars": 2663,
+        "issues": [],
+        "sha256": "1a618ec6e1a45d14c6d5f815d9a54e08b779b2c608396a742d30debd6f3e2c16",
+        "cover_text_chars": 472,
+        "identity_probe_chars": 5033,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:07:55+08:00"
+    },
+    "q3_2025": {
+      "security_id": "SZ:002324",
+      "slot_id": "q3_2025",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2025Q3",
+      "period_end": "2025-09-30",
+      "statutory_deadline": "2025-10-31",
+      "status": "COLLECTED_IDENTITY_VERIFIED",
+      "status_reason": "校验通过",
+      "attempt_count": 1,
+      "source_attempts": [
+        {
+          "route": "cninfo_pdf",
+          "method": "GET",
+          "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741068.PDF",
+          "request_params": {
+            "Range": null
+          },
+          "http_status": 200,
+          "outcome": "SUCCESS",
+          "error_code": null,
+          "elapsed_ms": 775,
+          "at": "2026-10-27T21:07:56+08:00",
+          "response_sha256": null,
+          "bytes": 203981,
+          "resumed_from": 0
+        }
+      ],
+      "last_source_attempt": {
+        "route": "cninfo_pdf",
+        "method": "GET",
+        "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741068.PDF",
+        "request_params": {
+          "Range": null
+        },
+        "http_status": 200,
+        "outcome": "SUCCESS",
+        "error_code": null,
+        "elapsed_ms": 775,
+        "at": "2026-10-27T21:07:56+08:00",
+        "response_sha256": null,
+        "bytes": 203981,
+        "resumed_from": 0
+      },
+      "last_error": null,
+      "next_action": "NONE",
+      "checkpoint": {
+        "stage": "DONE",
+        "at": "2026-10-27T21:07:56+08:00",
+        "bytes_written": 203981
+      },
+      "document": {
+        "document_id": "DOC-7D078DAFF03F85CE",
+        "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
+        "revision_no": 0,
+        "source_type": "CNINFO_OFFICIAL_PDF",
+        "title": "2025年三季度报告",
+        "published_on": "2025-10-27",
+        "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741068.PDF",
+        "local_file": "sources/collection/originals/002324/q3_2025/DOC-7D078DAFF03F85CE.pdf",
+        "sha256": "1d45182aedbbb20420b0df895cd7ac4393f86534ecb10f2cd0b02fabd9b8c3d1",
+        "bytes": 203981,
+        "page_count": 13,
+        "form": "FULL_TEXT",
+        "identity_checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "203981 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        }
+      },
+      "validation": {
+        "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q3_2025\\DOC-7D078DAFF03F85CE.pdf.part",
+        "bytes": 203981,
+        "checks": {
+          "MAGIC_HEADER": {
+            "result": "PASS",
+            "detail": "%PDF-1.7"
+          },
+          "SIZE_FLOOR": {
+            "result": "PASS",
+            "detail": "203981 bytes"
+          },
+          "PDF_OPENABLE": {
+            "result": "PASS",
+            "detail": "13 pages"
+          },
+          "PAGE_COUNT_FLOOR": {
+            "result": "PASS",
+            "detail": "13 >= 3"
+          },
+          "ISSUER_MATCH": {
+            "result": "PASS",
+            "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
+          },
+          "PERIOD_MATCH": {
+            "result": "PASS",
+            "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
+          },
+          "FORM_FULL_TEXT": {
+            "result": "PASS",
+            "detail": "title=2025年三季度报告"
+          }
+        },
+        "identity_status": "COLLECTED_IDENTITY_VERIFIED",
+        "form": "FULL_TEXT",
+        "page_count": 13,
+        "text_chars": 2913,
+        "issues": [],
+        "sha256": "1d45182aedbbb20420b0df895cd7ac4393f86534ecb10f2cd0b02fabd9b8c3d1",
+        "cover_text_chars": 519,
+        "identity_probe_chars": 5838,
+        "issuer_search_scope": "P1-8",
+        "issuer_match_mode": "FULL_ABBR",
+        "period_match_method": "BODY_PHRASE"
+      },
+      "updated_at": "2026-10-27T21:07:56+08:00"
+    },
+    "q3_2026": {
+      "security_id": "SZ:002324",
+      "slot_id": "q3_2026",
+      "report_type": "QUARTERLY_REPORT",
+      "period_label": "2026Q3",
+      "period_end": "2026-09-30",
+      "statutory_deadline": "2026-10-31",
+      "status": "NOT_YET_DISCLOSED",
+      "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
+      "attempt_count": 0,
+      "source_attempts": [],
+      "last_source_attempt": null,
+      "last_error": null,
+      "next_action": "WAIT_NEXT_CYCLE",
+      "checkpoint": {},
+      "document": {},
+      "updated_at": "2026-10-27T21:07:56+08:00",
+      "index_ref": {
+        "category": "category_sjdbg_szsh",
+        "fetched_at": "2026-10-27T21:07:51+08:00",
+        "status": "RECONCILED"
+      }
+    }
   },
-  "annual_2024": {
-   "security_id": "SZ:002324",
-   "slot_id": "annual_2024",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2024",
-   "period_end": "2024-12-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223153726.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1486,
-     "at": "2026-10-26T21:48:07+08:00",
-     "response_sha256": null,
-     "bytes": 3932521,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223153726.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1486,
-    "at": "2026-10-26T21:48:07+08:00",
-    "response_sha256": null,
-    "bytes": 3932521,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:48:08+08:00",
-    "bytes_written": 3932521
-   },
-   "document": {
-    "document_id": "DOC-3FBADB9719692FA4",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2024|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年年度报告",
-    "published_on": "2025-04-18",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223153726.PDF",
-    "local_file": "sources/collection/originals/002324/annual_2024/DOC-3FBADB9719692FA4.pdf",
-    "sha256": "66742bc13d5020c59b2ca9fe69862f68ae6714e6ba611d7b96ea46c8c58f7ed0",
-    "bytes": 3932521,
-    "page_count": 246,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3932521 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "246 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "246 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\annual_2024\\DOC-3FBADB9719692FA4.pdf.part",
-    "bytes": 3932521,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "3932521 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "246 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "246 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 246,
-    "text_chars": 1219,
-    "issues": [],
-    "sha256": "66742bc13d5020c59b2ca9fe69862f68ae6714e6ba611d7b96ea46c8c58f7ed0",
-    "cover_text_chars": 58,
-    "identity_probe_chars": 3509,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:48:08+08:00"
-  },
-  "annual_2025": {
-   "security_id": "SZ:002324",
-   "slot_id": "annual_2025",
-   "report_type": "ANNUAL_REPORT",
-   "period_label": "FY2025",
-   "period_end": "2025-12-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225163957.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1458,
-     "at": "2026-10-26T21:48:09+08:00",
-     "response_sha256": null,
-     "bytes": 1522070,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225163957.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1458,
-    "at": "2026-10-26T21:48:09+08:00",
-    "response_sha256": null,
-    "bytes": 1522070,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:48:09+08:00",
-    "bytes_written": 1522070
-   },
-   "document": {
-    "document_id": "DOC-C5E55F7C292E2F6E",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|ANNUAL_REPORT|FY2025|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年年度报告",
-    "published_on": "2026-04-23",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225163957.PDF",
-    "local_file": "sources/collection/originals/002324/annual_2025/DOC-C5E55F7C292E2F6E.pdf",
-    "sha256": "b5b99f3aa26b1646ef752ab20071569ae511edc8401d76f5cec36344fdc9f873",
-    "bytes": 1522070,
-    "page_count": 239,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1522070 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "239 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "239 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\annual_2025\\DOC-C5E55F7C292E2F6E.pdf.part",
-    "bytes": 1522070,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1522070 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "239 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "239 >= 20"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 239,
-    "text_chars": 1127,
-    "issues": [],
-    "sha256": "b5b99f3aa26b1646ef752ab20071569ae511edc8401d76f5cec36344fdc9f873",
-    "cover_text_chars": 58,
-    "identity_probe_chars": 3435,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:48:09+08:00"
-  },
-  "h1_2024": {
-   "security_id": "SZ:002324",
-   "slot_id": "h1_2024",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2024H1",
-   "period_end": "2024-06-30",
-   "statutory_deadline": "2024-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-08-27/1220981908.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1735,
-     "at": "2026-10-26T21:48:12+08:00",
-     "response_sha256": null,
-     "bytes": 4516785,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-08-27/1220981908.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1735,
-    "at": "2026-10-26T21:48:12+08:00",
-    "response_sha256": null,
-    "bytes": 4516785,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:48:12+08:00",
-    "bytes_written": 4516785
-   },
-   "document": {
-    "document_id": "DOC-74EBE483E4251F8E",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2024H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年半年度报告",
-    "published_on": "2024-08-26",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-08-27/1220981908.PDF",
-    "local_file": "sources/collection/originals/002324/h1_2024/DOC-74EBE483E4251F8E.pdf",
-    "sha256": "958e236ed828173eda8842ae6be72baf1dafb429b3a7b0da4155bd7c4cb351ba",
-    "bytes": 4516785,
-    "page_count": 182,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4516785 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "182 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "182 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\h1_2024\\DOC-74EBE483E4251F8E.pdf.part",
-    "bytes": 4516785,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "4516785 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "182 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "182 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 182,
-    "text_chars": 1488,
-    "issues": [],
-    "sha256": "958e236ed828173eda8842ae6be72baf1dafb429b3a7b0da4155bd7c4cb351ba",
-    "cover_text_chars": 60,
-    "identity_probe_chars": 3029,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:48:12+08:00"
-  },
-  "h1_2025": {
-   "security_id": "SZ:002324",
-   "slot_id": "h1_2025",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2025H1",
-   "period_end": "2025-06-30",
-   "statutory_deadline": "2025-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224532144.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1101,
-     "at": "2026-10-26T21:48:13+08:00",
-     "response_sha256": null,
-     "bytes": 1160529,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224532144.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1101,
-    "at": "2026-10-26T21:48:13+08:00",
-    "response_sha256": null,
-    "bytes": 1160529,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:48:13+08:00",
-    "bytes_written": 1160529
-   },
-   "document": {
-    "document_id": "DOC-03F5DD90817338CB",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2025H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年半年度报告",
-    "published_on": "2025-08-21",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-08-22/1224532144.PDF",
-    "local_file": "sources/collection/originals/002324/h1_2025/DOC-03F5DD90817338CB.pdf",
-    "sha256": "a90aabc39c4bca471f1cb44c625b523d213b3b344a0a80c82a8048dec72d8fa8",
-    "bytes": 1160529,
-    "page_count": 182,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1160529 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "182 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "182 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\h1_2025\\DOC-03F5DD90817338CB.pdf.part",
-    "bytes": 1160529,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1160529 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "182 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "182 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 182,
-    "text_chars": 1291,
-    "issues": [],
-    "sha256": "a90aabc39c4bca471f1cb44c625b523d213b3b344a0a80c82a8048dec72d8fa8",
-    "cover_text_chars": 60,
-    "identity_probe_chars": 3177,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:48:13+08:00"
-  },
-  "h1_2026": {
-   "security_id": "SZ:002324",
-   "slot_id": "h1_2026",
-   "report_type": "SEMI_ANNUAL_REPORT",
-   "period_label": "2026H1",
-   "period_end": "2026-06-30",
-   "statutory_deadline": "2026-08-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502407.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1134,
-     "at": "2026-10-26T21:48:15+08:00",
-     "response_sha256": null,
-     "bytes": 1170699,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502407.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1134,
-    "at": "2026-10-26T21:48:15+08:00",
-    "response_sha256": null,
-    "bytes": 1170699,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:48:15+08:00",
-    "bytes_written": 1170699
-   },
-   "document": {
-    "document_id": "DOC-F99D8768A61E15D4",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|SEMI_ANNUAL_REPORT|2026H1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年半年度报告",
-    "published_on": "2026-08-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225502407.PDF",
-    "local_file": "sources/collection/originals/002324/h1_2026/DOC-F99D8768A61E15D4.pdf",
-    "sha256": "052326422c6912284e219329ddff76dc8769623931c52d1115cd9689452410f2",
-    "bytes": 1170699,
-    "page_count": 189,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1170699 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "189 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "189 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\h1_2026\\DOC-F99D8768A61E15D4.pdf.part",
-    "bytes": 1170699,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "1170699 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "189 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "189 >= 10"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年半年度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年半年度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年半年度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 189,
-    "text_chars": 1194,
-    "issues": [],
-    "sha256": "052326422c6912284e219329ddff76dc8769623931c52d1115cd9689452410f2",
-    "cover_text_chars": 60,
-    "identity_probe_chars": 3008,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:48:15+08:00"
-  },
-  "q1_2026": {
-   "security_id": "SZ:002324",
-   "slot_id": "q1_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q1",
-   "period_end": "2026-03-31",
-   "statutory_deadline": "2026-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199202.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1093,
-     "at": "2026-10-26T21:48:16+08:00",
-     "response_sha256": null,
-     "bytes": 189847,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199202.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1093,
-    "at": "2026-10-26T21:48:16+08:00",
-    "response_sha256": null,
-    "bytes": 189847,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-26T21:48:17+08:00",
-    "bytes_written": 189847
-   },
-   "document": {
-    "document_id": "DOC-B40541BAB0484D2A",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2026Q1|1",
-    "revision_no": 1,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2026年第一季度报告（更正后）",
-    "published_on": "2026-04-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199202.PDF",
-    "local_file": "sources/collection/originals/002324/q1_2026/DOC-B40541BAB0484D2A.pdf",
-    "sha256": "cf64513d70892f79824492725b6022b31ba22bec4023ad0bbf764663333fdf38",
-    "bytes": 189847,
-    "page_count": 15,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "189847 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "15 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "15 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第一季度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年第一季度报告（更正后）"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q1_2026\\DOC-B40541BAB0484D2A.pdf.part",
-    "bytes": 189847,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "189847 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "15 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "15 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2026年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2026年第一季度报告（更正后）"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2026年第一季度报告（更正后）"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 15,
-    "text_chars": 2548,
-    "issues": [],
-    "sha256": "cf64513d70892f79824492725b6022b31ba22bec4023ad0bbf764663333fdf38",
-    "cover_text_chars": 509,
-    "identity_probe_chars": 5049,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-26T21:48:17+08:00"
-  },
-  "q1_2024": {
-   "security_id": "SZ:002324",
-   "slot_id": "q1_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q1",
-   "period_end": "2024-03-31",
-   "statutory_deadline": "2024-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219815101.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1358,
-     "at": "2026-10-27T21:07:50+08:00",
-     "response_sha256": null,
-     "bytes": 434091,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219815101.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1358,
-    "at": "2026-10-27T21:07:50+08:00",
-    "response_sha256": null,
-    "bytes": 434091,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:07:50+08:00",
-    "bytes_written": 434091
-   },
-   "document": {
-    "document_id": "DOC-1E4308F787CF79D7",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年一季度报告",
-    "published_on": "2024-04-25",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-04-26/1219815101.PDF",
-    "local_file": "sources/collection/originals/002324/q1_2024/DOC-1E4308F787CF79D7.pdf",
-    "sha256": "ba20d4215f9f9d7f3f3f10ac9aaff88c36966281bdee760b7b0e3c8d63adf27b",
-    "bytes": 434091,
-    "page_count": 13,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "434091 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q1_2024\\DOC-1E4308F787CF79D7.pdf.part",
-    "bytes": 434091,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "434091 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 13,
-    "text_chars": 2761,
-    "issues": [],
-    "sha256": "ba20d4215f9f9d7f3f3f10ac9aaff88c36966281bdee760b7b0e3c8d63adf27b",
-    "cover_text_chars": 468,
-    "identity_probe_chars": 5489,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:07:50+08:00"
-  },
-  "q3_2024": {
-   "security_id": "SZ:002324",
-   "slot_id": "q3_2024",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2024Q3",
-   "period_end": "2024-09-30",
-   "statutory_deadline": "2024-10-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221519053.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 1124,
-     "at": "2026-10-27T21:07:52+08:00",
-     "response_sha256": null,
-     "bytes": 399146,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221519053.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 1124,
-    "at": "2026-10-27T21:07:52+08:00",
-    "response_sha256": null,
-    "bytes": 399146,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:07:52+08:00",
-    "bytes_written": 399146
-   },
-   "document": {
-    "document_id": "DOC-8FB44C3E5D538020",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2024Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2024年三季度报告",
-    "published_on": "2024-10-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2024-10-28/1221519053.PDF",
-    "local_file": "sources/collection/originals/002324/q3_2024/DOC-8FB44C3E5D538020.pdf",
-    "sha256": "0d4a5ffb6fdd1d79430cdcedc9e3ba9d3082490119c52ee84fdefbf683e5b3c1",
-    "bytes": 399146,
-    "page_count": 15,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "399146 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "15 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "15 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q3_2024\\DOC-8FB44C3E5D538020.pdf.part",
-    "bytes": 399146,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "399146 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "15 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "15 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2024年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2024年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2024年三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 15,
-    "text_chars": 2895,
-    "issues": [],
-    "sha256": "0d4a5ffb6fdd1d79430cdcedc9e3ba9d3082490119c52ee84fdefbf683e5b3c1",
-    "cover_text_chars": 544,
-    "identity_probe_chars": 5868,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:07:52+08:00"
-  },
-  "q1_2025": {
-   "security_id": "SZ:002324",
-   "slot_id": "q1_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q1",
-   "period_end": "2025-03-31",
-   "statutory_deadline": "2025-04-30",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223237788.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 2838,
-     "at": "2026-10-27T21:07:55+08:00",
-     "response_sha256": null,
-     "bytes": 382403,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223237788.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 2838,
-    "at": "2026-10-27T21:07:55+08:00",
-    "response_sha256": null,
-    "bytes": 382403,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:07:55+08:00",
-    "bytes_written": 382403
-   },
-   "document": {
-    "document_id": "DOC-84712B4DBE22979D",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q1|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年一季度报告",
-    "published_on": "2025-04-23",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-04-24/1223237788.PDF",
-    "local_file": "sources/collection/originals/002324/q1_2025/DOC-84712B4DBE22979D.pdf",
-    "sha256": "1a618ec6e1a45d14c6d5f815d9a54e08b779b2c608396a742d30debd6f3e2c16",
-    "bytes": 382403,
-    "page_count": 14,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "382403 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "14 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "14 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q1_2025\\DOC-84712B4DBE22979D.pdf.part",
-    "bytes": 382403,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.5"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "382403 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "14 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "14 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年一季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年一季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 14,
-    "text_chars": 2663,
-    "issues": [],
-    "sha256": "1a618ec6e1a45d14c6d5f815d9a54e08b779b2c608396a742d30debd6f3e2c16",
-    "cover_text_chars": 472,
-    "identity_probe_chars": 5033,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:07:55+08:00"
-  },
-  "q3_2025": {
-   "security_id": "SZ:002324",
-   "slot_id": "q3_2025",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2025Q3",
-   "period_end": "2025-09-30",
-   "statutory_deadline": "2025-10-31",
-   "status": "COLLECTED_IDENTITY_VERIFIED",
-   "status_reason": "校验通过",
-   "attempt_count": 1,
-   "source_attempts": [
-    {
-     "route": "cninfo_pdf",
-     "method": "GET",
-     "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741068.PDF",
-     "request_params": {
-      "Range": null
-     },
-     "http_status": 200,
-     "outcome": "SUCCESS",
-     "error_code": null,
-     "elapsed_ms": 775,
-     "at": "2026-10-27T21:07:56+08:00",
-     "response_sha256": null,
-     "bytes": 203981,
-     "resumed_from": 0
-    }
-   ],
-   "last_source_attempt": {
-    "route": "cninfo_pdf",
-    "method": "GET",
-    "url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741068.PDF",
-    "request_params": {
-     "Range": null
-    },
-    "http_status": 200,
-    "outcome": "SUCCESS",
-    "error_code": null,
-    "elapsed_ms": 775,
-    "at": "2026-10-27T21:07:56+08:00",
-    "response_sha256": null,
-    "bytes": 203981,
-    "resumed_from": 0
-   },
-   "last_error": null,
-   "next_action": "NONE",
-   "checkpoint": {
-    "stage": "DONE",
-    "at": "2026-10-27T21:07:56+08:00",
-    "bytes_written": 203981
-   },
-   "document": {
-    "document_id": "DOC-7D078DAFF03F85CE",
-    "identity_key": "SZ:002324|CONSOLIDATED_LISTED_ISSUER|QUARTERLY_REPORT|2025Q3|0",
-    "revision_no": 0,
-    "source_type": "CNINFO_OFFICIAL_PDF",
-    "title": "2025年三季度报告",
-    "published_on": "2025-10-27",
-    "primary_url": "https://static.cninfo.com.cn/finalpage/2025-10-28/1224741068.PDF",
-    "local_file": "sources/collection/originals/002324/q3_2025/DOC-7D078DAFF03F85CE.pdf",
-    "sha256": "1d45182aedbbb20420b0df895cd7ac4393f86534ecb10f2cd0b02fabd9b8c3d1",
-    "bytes": 203981,
-    "page_count": 13,
-    "form": "FULL_TEXT",
-    "identity_checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "203981 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年三季度报告"
-     }
-    }
-   },
-   "validation": {
-    "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\sources\\collection\\originals\\002324\\q3_2025\\DOC-7D078DAFF03F85CE.pdf.part",
-    "bytes": 203981,
-    "checks": {
-     "MAGIC_HEADER": {
-      "result": "PASS",
-      "detail": "%PDF-1.7"
-     },
-     "SIZE_FLOOR": {
-      "result": "PASS",
-      "detail": "203981 bytes"
-     },
-     "PDF_OPENABLE": {
-      "result": "PASS",
-      "detail": "13 pages"
-     },
-     "PAGE_COUNT_FLOOR": {
-      "result": "PASS",
-      "detail": "13 >= 3"
-     },
-     "ISSUER_MATCH": {
-      "result": "PASS",
-      "detail": "证券简称=普利特 代码=002324 方式=FULL_ABBR 范围=P1-8"
-     },
-     "PERIOD_MATCH": {
-      "result": "PASS",
-      "detail": "pattern=2025年第?[一三]季度报告; method=BODY_PHRASE; year_in_body=True; other_years=[]; title=2025年三季度报告"
-     },
-     "FORM_FULL_TEXT": {
-      "result": "PASS",
-      "detail": "title=2025年三季度报告"
-     }
-    },
-    "identity_status": "COLLECTED_IDENTITY_VERIFIED",
-    "form": "FULL_TEXT",
-    "page_count": 13,
-    "text_chars": 2913,
-    "issues": [],
-    "sha256": "1d45182aedbbb20420b0df895cd7ac4393f86534ecb10f2cd0b02fabd9b8c3d1",
-    "cover_text_chars": 519,
-    "identity_probe_chars": 5838,
-    "issuer_search_scope": "P1-8",
-    "issuer_match_mode": "FULL_ABBR",
-    "period_match_method": "BODY_PHRASE"
-   },
-   "updated_at": "2026-10-27T21:07:56+08:00"
-  },
-  "q3_2026": {
-   "security_id": "SZ:002324",
-   "slot_id": "q3_2026",
-   "report_type": "QUARTERLY_REPORT",
-   "period_label": "2026Q3",
-   "period_end": "2026-09-30",
-   "statutory_deadline": "2026-10-31",
-   "status": "NOT_YET_DISCLOSED",
-   "status_reason": "法定披露期 2026-10-31 晚于截止日 2026-10-25",
-   "attempt_count": 0,
-   "source_attempts": [],
-   "last_source_attempt": null,
-   "last_error": null,
-   "next_action": "WAIT_NEXT_CYCLE",
-   "checkpoint": {},
-   "document": {},
-   "updated_at": "2026-10-27T21:07:56+08:00",
-   "index_ref": {
-    "category": "category_sjdbg_szsh",
-    "fetched_at": "2026-10-27T21:07:51+08:00",
-    "status": "RECONCILED"
-   }
-  }
- },
- "indexes": {
-  "category_ndbg_szsh": {
-   "security_id": "SZ:002324",
-   "category": "category_ndbg_szsh",
-   "column": "szse",
-   "org_id": "9900009450",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_ndbg_szsh",
-    "stock": "002324,9900009450",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "710d8434fd5e28dd0124454c74e85f59afc4d6083c54db81480deda8e0dd8f14",
-     "response_bytes": 5022,
-     "raw_path": "sources/collection/raw/002324/category_ndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
-      "column": "szse",
+  "indexes": {
+    "category_ndbg_szsh": {
+      "security_id": "SZ:002324",
       "category": "category_ndbg_szsh",
-      "stock": "002324,9900009450",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T21:48:02+08:00",
-     "elapsed_ms": 777
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225163957",
-     "title": "2025年年度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2026-04-23",
-     "adjunct_url": "finalpage/2026-04-24/1225163957.PDF"
-    },
-    {
-     "announcement_id": "1225163956",
-     "title": "2025年年度报告摘要",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2026-04-23",
-     "adjunct_url": "finalpage/2026-04-24/1225163956.PDF"
-    },
-    {
-     "announcement_id": "1223153726",
-     "title": "2024年年度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2025-04-18",
-     "adjunct_url": "finalpage/2025-04-19/1223153726.PDF"
-    },
-    {
-     "announcement_id": "1223153687",
-     "title": "2024年年度报告摘要",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2025-04-18",
-     "adjunct_url": "finalpage/2025-04-19/1223153687.PDF"
-    },
-    {
-     "announcement_id": "1219670573",
-     "title": "2023年年度报告摘要",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2024-04-18",
-     "adjunct_url": "finalpage/2024-04-19/1219670573.PDF"
-    },
-    {
-     "announcement_id": "1219670523",
-     "title": "2023年年度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2024-04-18",
-     "adjunct_url": "finalpage/2024-04-19/1219670523.PDF"
-    },
-    {
-     "announcement_id": "1216475451",
-     "title": "2022年年度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2023-04-19",
-     "adjunct_url": "finalpage/2023-04-20/1216475451.PDF"
-    },
-    {
-     "announcement_id": "1216475441",
-     "title": "2022年年度报告摘要",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2023-04-19",
-     "adjunct_url": "finalpage/2023-04-20/1216475441.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T21:48:02+08:00"
-  },
-  "category_bndbg_szsh": {
-   "security_id": "SZ:002324",
-   "category": "category_bndbg_szsh",
-   "column": "szse",
-   "org_id": "9900009450",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_bndbg_szsh",
-    "stock": "002324,9900009450",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 8,
-   "rows_fetched": 8,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 8,
-     "new_rows": 8,
-     "total_announcement": 8,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "fccc7792db9e0ba1a38be637b4e55986b5938fb4faf8d813436563bd91d49467",
-     "response_bytes": 5070,
-     "raw_path": "sources/collection/raw/002324/category_bndbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900009450",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_ndbg_szsh",
+        "stock": "002324,9900009450",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "710d8434fd5e28dd0124454c74e85f59afc4d6083c54db81480deda8e0dd8f14",
+          "response_bytes": 5022,
+          "raw_path": "sources/collection/raw/002324/category_ndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_ndbg_szsh",
+            "stock": "002324,9900009450",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T21:48:02+08:00",
+          "elapsed_ms": 777
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225163957",
+          "title": "2025年年度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2026-04-23",
+          "adjunct_url": "finalpage/2026-04-24/1225163957.PDF"
+        },
+        {
+          "announcement_id": "1225163956",
+          "title": "2025年年度报告摘要",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2026-04-23",
+          "adjunct_url": "finalpage/2026-04-24/1225163956.PDF"
+        },
+        {
+          "announcement_id": "1223153726",
+          "title": "2024年年度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2025-04-18",
+          "adjunct_url": "finalpage/2025-04-19/1223153726.PDF"
+        },
+        {
+          "announcement_id": "1223153687",
+          "title": "2024年年度报告摘要",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2025-04-18",
+          "adjunct_url": "finalpage/2025-04-19/1223153687.PDF"
+        },
+        {
+          "announcement_id": "1219670573",
+          "title": "2023年年度报告摘要",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2024-04-18",
+          "adjunct_url": "finalpage/2024-04-19/1219670573.PDF"
+        },
+        {
+          "announcement_id": "1219670523",
+          "title": "2023年年度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2024-04-18",
+          "adjunct_url": "finalpage/2024-04-19/1219670523.PDF"
+        },
+        {
+          "announcement_id": "1216475451",
+          "title": "2022年年度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2023-04-19",
+          "adjunct_url": "finalpage/2023-04-20/1216475451.PDF"
+        },
+        {
+          "announcement_id": "1216475441",
+          "title": "2022年年度报告摘要",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2023-04-19",
+          "adjunct_url": "finalpage/2023-04-20/1216475441.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T21:48:02+08:00"
+    },
+    "category_bndbg_szsh": {
+      "security_id": "SZ:002324",
       "category": "category_bndbg_szsh",
-      "stock": "002324,9900009450",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-26T21:48:10+08:00",
-     "elapsed_ms": 568
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225502407",
-     "title": "2026年半年度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2026-08-25",
-     "adjunct_url": "finalpage/2026-08-26/1225502407.PDF"
-    },
-    {
-     "announcement_id": "1225502406",
-     "title": "2026年半年度报告摘要",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2026-08-25",
-     "adjunct_url": "finalpage/2026-08-26/1225502406.PDF"
-    },
-    {
-     "announcement_id": "1224532144",
-     "title": "2025年半年度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2025-08-21",
-     "adjunct_url": "finalpage/2025-08-22/1224532144.PDF"
-    },
-    {
-     "announcement_id": "1224532143",
-     "title": "2025年半年度报告摘要",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2025-08-21",
-     "adjunct_url": "finalpage/2025-08-22/1224532143.PDF"
-    },
-    {
-     "announcement_id": "1220981918",
-     "title": "2024年半年度报告摘要",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2024-08-26",
-     "adjunct_url": "finalpage/2024-08-27/1220981918.PDF"
-    },
-    {
-     "announcement_id": "1220981908",
-     "title": "2024年半年度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2024-08-26",
-     "adjunct_url": "finalpage/2024-08-27/1220981908.PDF"
-    },
-    {
-     "announcement_id": "1217633235",
-     "title": "2023年半年度报告摘要",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2023-08-24",
-     "adjunct_url": "finalpage/2023-08-25/1217633235.PDF"
-    },
-    {
-     "announcement_id": "1217633230",
-     "title": "2023年半年度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2023-08-24",
-     "adjunct_url": "finalpage/2023-08-25/1217633230.PDF"
-    }
-   ],
-   "fetched_at": "2026-10-26T21:48:10+08:00"
-  },
-  "category_yjdbg_szsh": {
-   "security_id": "SZ:002324",
-   "category": "category_yjdbg_szsh",
-   "column": "szse",
-   "org_id": "9900009450",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_yjdbg_szsh",
-    "stock": "002324,9900009450",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 5,
-   "rows_fetched": 5,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 5,
-     "new_rows": 5,
-     "total_announcement": 5,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "8f6a9fce3cba86d3fe6a4e135bfe056014bb942d6e97b009667f7ca0672fd054",
-     "response_bytes": 3233,
-     "raw_path": "sources/collection/raw/002324/category_yjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900009450",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_bndbg_szsh",
+        "stock": "002324,9900009450",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 8,
+      "rows_fetched": 8,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 8,
+          "new_rows": 8,
+          "total_announcement": 8,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "fccc7792db9e0ba1a38be637b4e55986b5938fb4faf8d813436563bd91d49467",
+          "response_bytes": 5070,
+          "raw_path": "sources/collection/raw/002324/category_bndbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_bndbg_szsh",
+            "stock": "002324,9900009450",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-26T21:48:10+08:00",
+          "elapsed_ms": 568
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225502407",
+          "title": "2026年半年度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2026-08-25",
+          "adjunct_url": "finalpage/2026-08-26/1225502407.PDF"
+        },
+        {
+          "announcement_id": "1225502406",
+          "title": "2026年半年度报告摘要",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2026-08-25",
+          "adjunct_url": "finalpage/2026-08-26/1225502406.PDF"
+        },
+        {
+          "announcement_id": "1224532144",
+          "title": "2025年半年度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2025-08-21",
+          "adjunct_url": "finalpage/2025-08-22/1224532144.PDF"
+        },
+        {
+          "announcement_id": "1224532143",
+          "title": "2025年半年度报告摘要",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2025-08-21",
+          "adjunct_url": "finalpage/2025-08-22/1224532143.PDF"
+        },
+        {
+          "announcement_id": "1220981918",
+          "title": "2024年半年度报告摘要",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2024-08-26",
+          "adjunct_url": "finalpage/2024-08-27/1220981918.PDF"
+        },
+        {
+          "announcement_id": "1220981908",
+          "title": "2024年半年度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2024-08-26",
+          "adjunct_url": "finalpage/2024-08-27/1220981908.PDF"
+        },
+        {
+          "announcement_id": "1217633235",
+          "title": "2023年半年度报告摘要",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2023-08-24",
+          "adjunct_url": "finalpage/2023-08-25/1217633235.PDF"
+        },
+        {
+          "announcement_id": "1217633230",
+          "title": "2023年半年度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2023-08-24",
+          "adjunct_url": "finalpage/2023-08-25/1217633230.PDF"
+        }
+      ],
+      "fetched_at": "2026-10-26T21:48:10+08:00"
+    },
+    "category_yjdbg_szsh": {
+      "security_id": "SZ:002324",
       "category": "category_yjdbg_szsh",
-      "stock": "002324,9900009450",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T21:07:48+08:00",
-     "elapsed_ms": 503
-    }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1225199202",
-     "title": "2026年第一季度报告（更正后）",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2026-04-27",
-     "adjunct_url": "finalpage/2026-04-28/1225199202.PDF",
-     "adjunct_size": 186
-    },
-    {
-     "announcement_id": "1225175014",
-     "title": "2026年一季度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2026-04-24",
-     "adjunct_url": "finalpage/2026-04-25/1225175014.PDF",
-     "adjunct_size": 207
-    },
-    {
-     "announcement_id": "1223237788",
-     "title": "2025年一季度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2025-04-23",
-     "adjunct_url": "finalpage/2025-04-24/1223237788.PDF",
-     "adjunct_size": 374
-    },
-    {
-     "announcement_id": "1219815101",
-     "title": "2024年一季度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2024-04-25",
-     "adjunct_url": "finalpage/2024-04-26/1219815101.PDF",
-     "adjunct_size": 425
-    },
-    {
-     "announcement_id": "1216546795",
-     "title": "2023年一季度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2023-04-24",
-     "adjunct_url": "finalpage/2023-04-25/1216546795.PDF",
-     "adjunct_size": 669
-    }
-   ],
-   "fetched_at": "2026-10-27T21:07:48+08:00"
-  },
-  "category_sjdbg_szsh": {
-   "security_id": "SZ:002324",
-   "category": "category_sjdbg_szsh",
-   "column": "szse",
-   "org_id": "9900009450",
-   "request_base": {
-    "tabName": "fulltext",
-    "searchkey": "",
-    "isHLtitle": "true",
-    "column": "szse",
-    "category": "category_sjdbg_szsh",
-    "stock": "002324,9900009450",
-    "seDate": "2023-01-01~2026-10-25"
-   },
-   "total_announcement": 3,
-   "rows_fetched": 3,
-   "pages_fetched": 1,
-   "reconciled": true,
-   "status": "RECONCILED",
-   "pages": [
-    {
-     "page": 1,
-     "http_status": 200,
-     "rows": 3,
-     "new_rows": 3,
-     "total_announcement": 3,
-     "totalpages": 0,
-     "has_more": false,
-     "response_sha256": "3c820511217344789e7c95e4e367f29e59390aba37fdfd4247e11b48ed62bc41",
-     "response_bytes": 1983,
-     "raw_path": "sources/collection/raw/002324/category_sjdbg_szsh_p1.json",
-     "request_params": {
-      "tabName": "fulltext",
-      "searchkey": "",
-      "isHLtitle": "true",
       "column": "szse",
+      "org_id": "9900009450",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_yjdbg_szsh",
+        "stock": "002324,9900009450",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 5,
+      "rows_fetched": 5,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 5,
+          "new_rows": 5,
+          "total_announcement": 5,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "8f6a9fce3cba86d3fe6a4e135bfe056014bb942d6e97b009667f7ca0672fd054",
+          "response_bytes": 3233,
+          "raw_path": "sources/collection/raw/002324/category_yjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_yjdbg_szsh",
+            "stock": "002324,9900009450",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T21:07:48+08:00",
+          "elapsed_ms": 503
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1225199202",
+          "title": "2026年第一季度报告（更正后）",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2026-04-27",
+          "adjunct_url": "finalpage/2026-04-28/1225199202.PDF",
+          "adjunct_size": 186
+        },
+        {
+          "announcement_id": "1225175014",
+          "title": "2026年一季度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2026-04-24",
+          "adjunct_url": "finalpage/2026-04-25/1225175014.PDF",
+          "adjunct_size": 207
+        },
+        {
+          "announcement_id": "1223237788",
+          "title": "2025年一季度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2025-04-23",
+          "adjunct_url": "finalpage/2025-04-24/1223237788.PDF",
+          "adjunct_size": 374
+        },
+        {
+          "announcement_id": "1219815101",
+          "title": "2024年一季度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2024-04-25",
+          "adjunct_url": "finalpage/2024-04-26/1219815101.PDF",
+          "adjunct_size": 425
+        },
+        {
+          "announcement_id": "1216546795",
+          "title": "2023年一季度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2023-04-24",
+          "adjunct_url": "finalpage/2023-04-25/1216546795.PDF",
+          "adjunct_size": 669
+        }
+      ],
+      "fetched_at": "2026-10-27T21:07:48+08:00"
+    },
+    "category_sjdbg_szsh": {
+      "security_id": "SZ:002324",
       "category": "category_sjdbg_szsh",
-      "stock": "002324,9900009450",
-      "seDate": "2023-01-01~2026-10-25",
-      "pageNum": "1",
-      "pageSize": "30"
-     },
-     "fetched_at": "2026-10-27T21:07:51+08:00",
-     "elapsed_ms": 511
+      "column": "szse",
+      "org_id": "9900009450",
+      "request_base": {
+        "tabName": "fulltext",
+        "searchkey": "",
+        "isHLtitle": "true",
+        "column": "szse",
+        "category": "category_sjdbg_szsh",
+        "stock": "002324,9900009450",
+        "seDate": "2023-01-01~2026-10-25"
+      },
+      "total_announcement": 3,
+      "rows_fetched": 3,
+      "pages_fetched": 1,
+      "reconciled": true,
+      "status": "RECONCILED",
+      "pages": [
+        {
+          "page": 1,
+          "http_status": 200,
+          "rows": 3,
+          "new_rows": 3,
+          "total_announcement": 3,
+          "totalpages": 0,
+          "has_more": false,
+          "response_sha256": "3c820511217344789e7c95e4e367f29e59390aba37fdfd4247e11b48ed62bc41",
+          "response_bytes": 1983,
+          "raw_path": "sources/collection/raw/002324/category_sjdbg_szsh_p1.json",
+          "request_params": {
+            "tabName": "fulltext",
+            "searchkey": "",
+            "isHLtitle": "true",
+            "column": "szse",
+            "category": "category_sjdbg_szsh",
+            "stock": "002324,9900009450",
+            "seDate": "2023-01-01~2026-10-25",
+            "pageNum": "1",
+            "pageSize": "30"
+          },
+          "fetched_at": "2026-10-27T21:07:51+08:00",
+          "elapsed_ms": 511
+        }
+      ],
+      "rows": [
+        {
+          "announcement_id": "1224741068",
+          "title": "2025年三季度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2025-10-27",
+          "adjunct_url": "finalpage/2025-10-28/1224741068.PDF",
+          "adjunct_size": 200
+        },
+        {
+          "announcement_id": "1221519053",
+          "title": "2024年三季度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2024-10-27",
+          "adjunct_url": "finalpage/2024-10-28/1221519053.PDF",
+          "adjunct_size": 391
+        },
+        {
+          "announcement_id": "1218123221",
+          "title": "2023年三季度报告",
+          "sec_code": "002324",
+          "sec_name": "普利特",
+          "published_on": "2023-10-23",
+          "adjunct_url": "finalpage/2023-10-24/1218123221.PDF",
+          "adjunct_size": 584
+        }
+      ],
+      "fetched_at": "2026-10-27T21:07:51+08:00"
     }
-   ],
-   "rows": [
-    {
-     "announcement_id": "1224741068",
-     "title": "2025年三季度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2025-10-27",
-     "adjunct_url": "finalpage/2025-10-28/1224741068.PDF",
-     "adjunct_size": 200
-    },
-    {
-     "announcement_id": "1221519053",
-     "title": "2024年三季度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2024-10-27",
-     "adjunct_url": "finalpage/2024-10-28/1221519053.PDF",
-     "adjunct_size": 391
-    },
-    {
-     "announcement_id": "1218123221",
-     "title": "2023年三季度报告",
-     "sec_code": "002324",
-     "sec_name": "普利特",
-     "published_on": "2023-10-23",
-     "adjunct_url": "finalpage/2023-10-24/1218123221.PDF",
-     "adjunct_size": 584
-    }
-   ],
-   "fetched_at": "2026-10-27T21:07:51+08:00"
-  }
- },
- "updated_at": "2026-10-27T21:07:56+08:00"
+  },
+  "updated_at": "2026-10-27T21:07:56+08:00"
 }

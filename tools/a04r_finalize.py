@@ -81,12 +81,21 @@ def main() -> int:
     rev_path = OUT / "revision_chain_breakdown.json"
     if rev_path.exists():
         rev_bd = json.loads(rev_path.read_text(encoding="utf-8"))
+    chain = {}
+    chain_path = OUT / "correction_chains.json"
+    if chain_path.exists():
+        chain = json.loads(chain_path.read_text(encoding="utf-8"))
     hit_dl = 0
     hit_manifest = OUT / "keyword_originals.jsonl"
     if hit_manifest.exists():
         hit_dl = sum(1 for line in hit_manifest.read_text(encoding="utf-8").splitlines()
                      if line.strip() and json.loads(line).get("status") == "DOWNLOADED")
 
+    cutoff = scope["time_axis"]["knowledge_as_of"]
+    late_used = [{"security_id": r["security_id"], "slot_id": r["slot_id"], "published_on": r["published_on"]}
+                 for r in ledger
+                 if str(r["status"]).startswith("COLLECTED") and r["published_on"]
+                 and r["published_on"] > cutoff]
     checks = [
         {"id": "AC04", "item": "12 槽 × 1054 家全部有且仅有一个终态（NOT_TRIED 不算终态）",
          "result": "PASS" if absent == 0 and dup == 0 and not_tried == 0 else "FAIL",
@@ -97,8 +106,10 @@ def main() -> int:
          "evidence": {"not_tried": not_tried,
                       "by_slot": {c["slot_id"]: c["not_tried"] for c in coverage if c["not_tried"]}}},
         {"id": "AC10", "item": "截止日后披露不作为本轮证据",
-         "result": "PASS" if status.get("AFTER_CUTOFF_DISCLOSED", 0) >= 0 else "FAIL",
-         "evidence": {"after_cutoff_registered": status.get("AFTER_CUTOFF_DISCLOSED", 0),
+         "result": "PASS" if not late_used else "FAIL",
+         "evidence": {"collected_rows_with_publish_after_cutoff": len(late_used),
+                      "late_samples": late_used[:5],
+                      "after_cutoff_registered": status.get("AFTER_CUTOFF_DISCLOSED", 0),
                       "cutoff": scope["time_axis"]["knowledge_as_of"]}},
         {"id": "AC11", "item": "近两年公告/IR 目录全池覆盖且分页对账",
          "result": "PASS" if len(ann_codes) == len(ids) and ann_ok == len(ids) else "FAIL",
@@ -170,6 +181,15 @@ def main() -> int:
          f"交易文件修订稿 {rev_bd.get('transaction_document_revision')}、其他补充 {rev_bd.get('other_revision_supplement')}；"
          "「修订稿」不是财务重述，引用时不得混算。" if rev_bd else "- 更正/修订拆分：未生成。"),
         "- 关键词只用于取件排序，不作为机器人业务证据；未命中不等于无业务。",
+        "",
+        "## 三之二、复核后的两项补充",
+        "",
+        "- **北交所适用性改用真实股转挂牌日**：15 家挂牌日取自本地年报「挂牌时间」页"
+        "（`runs/issues/A04R/neeq_listing_dates.json`），50 槽重判后不适用 12→8、未披露 34→38，"
+        "4 槽由「不适用」改判「未披露」。原「最早定期报告披露日」推断已废弃。",
+        (f"- **财务更正版本链**：{chain.get('pairs', 0)} 组原版—更正版（或更正公告）闭环，"
+         f"缺口 {len(chain.get('gap_rows', []))}；分类由 576 修正为 207（剔除发行预案、股东大会通知等非财报更正）。"
+         if chain else "- **财务更正版本链**：未生成。"),
         "",
         "## 四、限制与未解决",
         "",
