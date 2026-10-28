@@ -36,7 +36,7 @@ RAW = ROOT / "sources/collection/raw_ann"
 CKPT = ROOT / "runs/collection/checkpoint"
 
 REP = re.compile(r"(年度报告|半年度报告|季度报告)")
-FIX = re.compile(r"(更正|重述|勘误)")
+FIX = re.compile(r"(更正|重述|勘误|修订)")  # 复核要求：修订版/修订公告同样纳入版本发现
 BAD = re.compile(r"(预案|股东大会|说明会|问询|回复|审计报告|专项报告|核查意见|法律意见|保荐|督导|"
                  r"募集资金|内部控制|社会责任|可持续发展|审计委员会|独立董事|监事会|"
                  r"提示性公告|披露提示|预约披露|业绩预告|业绩快报)")
@@ -72,7 +72,8 @@ def kind_of(title: str) -> str:
         return "summary"
     if re.search(r"更正后|更正版|修订后|修订版|更新后|更新稿|更新版|修正版|（更正）|\(更正\)", title):
         return "corrected"
-    if "更正公告" in title or "更正的公告" in title or ("更正" in title and "公告" in title):
+    if ("更正公告" in title or "更正的公告" in title or "修订公告" in title
+            or ("更正" in title and "公告" in title) or ("修订" in title and "公告" in title)):
         return "notice"
     if "专项说明" in title or "专项意见" in title or "专项鉴证" in title:
         return "auditor_note"
@@ -184,7 +185,7 @@ def main() -> int:
                 t = a.get("announcementTitle") or ""
                 if slot_of(t) != slot or "摘要" in t or "英文" in t:
                     continue
-                if "更正" in t or "修订" in t:
+                if re.search(r"更正|修订|更新|重述|勘误", t):
                     continue
                 original = {"announcement_id": a.get("announcementId"), "title": t,
                             "published_on": to_date(a.get("announcementTime")),
@@ -241,9 +242,32 @@ def main() -> int:
 
         notice_entry = None
         if notice:
-            notice_entry = {"role": "notice", "title": notice["title"],
+            nkey = (f"{sid}|CONSOLIDATED_LISTED_ISSUER|CORRECTION_NOTICE|"
+                    f"{slots[slot]['period_label']}|0")
+            ndid = "DOC-" + hashlib.sha256(nkey.encode()).hexdigest()[:16].upper()
+            ntarget = ROOT / "sources/collection/originals" / code / slot / f"{ndid}.pdf"
+            ntarget.parent.mkdir(parents=True, exist_ok=True)
+            nprev = (prev_titles or {}).get(ndid)
+            if ntarget.exists() and nprev and nprev != notice["title"]:
+                ntarget.unlink()
+            notice_entry = {"role": "notice", "document_id": ndid, "title": notice["title"],
                             "published_on": notice["published_on"], "primary_url": notice["url"]}
-        ok = all("sha256" in e for e in chain)
+            if ntarget.exists():
+                notice_entry.update({"local_file": ntarget.relative_to(ROOT).as_posix(),
+                                     "sha256": hashlib.sha256(ntarget.read_bytes()).hexdigest(),
+                                     "bytes": ntarget.stat().st_size, "downloaded_now": False})
+            else:
+                npart = ntarget.with_suffix(".pdf.part")
+                try:
+                    out_n, _ = collector.http.download("cninfo_pdf", notice["url"], npart, expect_pdf=True)
+                    npart.replace(ntarget)
+                    notice_entry.update({"local_file": ntarget.relative_to(ROOT).as_posix(),
+                                         "sha256": out_n.get("sha256"), "bytes": out_n.get("bytes"),
+                                         "downloaded_now": True})
+                except Exception as exc:
+                    notice_entry["download_error"] = f"{type(exc).__name__}: {exc}"[:200]
+            print(f"  {sid} {slot} notice {'OK' if 'sha256' in notice_entry else 'FAIL'} {notice['title'][:36]}", flush=True)
+        ok = all("sha256" in e for e in chain) and (notice_entry is None or "sha256" in notice_entry)
         for e in chain:
             e["supersedes"] = chain[0]["document_id"] if e["role"] == "corrected" else None
             e["superseded_by"] = chain[1]["document_id"] if (e["role"] == "original" and len(chain) > 1) else None
@@ -264,6 +288,9 @@ def main() -> int:
                        "original_title": chain[0]["title"],
                        "corrected_title": chain[1]["title"] if len(chain) > 1 else "",
                        "notice": notice_entry["primary_url"] if notice_entry else "",
+                       "notice_document_id": (notice_entry or {}).get("document_id", ""),
+                       "notice_title": (notice_entry or {}).get("title", ""),
+                       "notice_sha256": (notice_entry or {}).get("sha256", ""),
                        "complete": ok})
         if not ok:
             gaps.append({"security_id": sid, "slot_id": slot, "gap": "DOWNLOAD_FAILED",
@@ -280,7 +307,8 @@ def main() -> int:
                                                encoding="utf-8")
     with (OUT / "correction_chains.csv").open("w", encoding="utf-8-sig", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=["security_id", "slot_id", "original", "corrected", "notice", "complete",
-                         "corrected_full_text_missing", "original_title", "corrected_title"])
+                         "corrected_full_text_missing", "original_title", "corrected_title",
+                         "notice_document_id", "notice_sha256", "notice_title"])
         w.writeheader()
         w.writerows(chains)
     print(json.dumps({"pairs": len(chains), "complete": payload["complete"], "gaps": len(gaps)},

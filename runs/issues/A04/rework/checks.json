@@ -178,11 +178,19 @@
       "id": "AC12_CORRECTION_CHAIN",
       "result": "PASS",
       "evidence": {
-        "pairs": 120,
-        "complete": 120,
+        "discovered_pairs": 127,
+        "chains": 127,
         "gaps": 0,
+        "missing_from_chains": 0,
+        "extra_chains": 0,
+        "chains_verified_ok": 127,
+        "violations": 0,
+        "violation_samples": [],
+        "files_checked": 304,
+        "notice_chains": 55,
+        "notice_with_file_and_hash": 55,
         "notice_only_chains": 5,
-        "gap_samples": [],
+        "rule": "发现范围（全量公告目录里的财报更正行）必须与链集合+缺口双向一致；每组逐项核原件/更正件/公告件的文件存在、sha256、supersedes 互链、标题不同；不读取上游 complete 计数",
         "policy": "原版 + 更正版（或更正公告）+ supersedes 关联；不覆盖原件"
       }
     },

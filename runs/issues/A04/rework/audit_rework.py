@@ -307,17 +307,19 @@ erratum = {
 }
 write("handoff_correction.json", erratum)
 
-# ---------------------------------------------------------------- 更正版本链
+# ---------------------------------------------------------------- 更正版本链（独立核验）
+import chain_audit  # noqa: E402
+
 chain_path = ROOT / "runs/issues/A04R/correction_chains.json"
-chain = {}
 if chain_path.exists():
     inputs[chain_path.relative_to(ROOT).as_posix()] = sha(chain_path)
-    chain = json.loads(chain_path.read_text(encoding="utf-8"))
-chain_pairs = chain.get("pairs", 0)
-chain_complete = chain.get("complete", 0)
-chain_gaps = chain.get("gap_rows", [])
-notice_only = sum(1 for r in chain.get("rows", []) if r.get("corrected_full_text_missing"))
-csvout("correction_chain_summary.csv", chain.get("rows", []))
+audit_result = chain_audit.audit(ROOT, period_end, sha)
+chain_summary = audit_result["summary"]
+csvout("correction_chain_audit.csv", audit_result["rows"])
+chain_pairs = chain_summary["chains"]
+chain_complete = chain_summary["chains_verified_ok"]
+chain_gaps = [{"security_id": k[0], "slot_id": k[1]} for k in []]
+notice_only = chain_summary["notice_only_chains"]
 
 # ---------------------------------------------------------------- 检查项
 checks = [
@@ -357,10 +359,21 @@ checks = [
                   "after_cutoff_registered_not_used": len(after_cutoff_rows),
                   "cutoff": cutoff}},
     {"id": "AC12_CORRECTION_CHAIN",
-     "result": "PASS" if chain_pairs and chain_complete == chain_pairs and not chain_gaps else "FAIL",
-     "evidence": {"pairs": chain_pairs, "complete": chain_complete, "gaps": len(chain_gaps),
-                  "notice_only_chains": notice_only,
-                  "gap_samples": chain_gaps[:5],
+     "result": "PASS" if chain_summary["pass"] else "FAIL",
+     "evidence": {"discovered_pairs": chain_summary["discovered_pairs"],
+                  "chains": chain_summary["chains"], "gaps": chain_summary["gaps"],
+                  "missing_from_chains": len(chain_summary["missing_from_chains"]),
+                  "extra_chains": len(chain_summary["extra_chains"]),
+                  "chains_verified_ok": chain_summary["chains_verified_ok"],
+                  "violations": len(chain_summary["violations"]),
+                  "violation_samples": chain_summary["violations"][:5],
+                  "files_checked": chain_summary["files_checked"],
+                  "notice_chains": chain_summary["notice_chains"],
+                  "notice_with_file_and_hash": chain_summary["notice_with_file_and_hash"],
+                  "notice_only_chains": chain_summary["notice_only_chains"],
+                  "rule": ("发现范围（全量公告目录里的财报更正行）必须与链集合+缺口双向一致；"
+                           "每组逐项核原件/更正件/公告件的文件存在、sha256、supersedes 互链、标题不同；"
+                           "不读取上游 complete 计数"),
                   "policy": "原版 + 更正版（或更正公告）+ supersedes 关联；不覆盖原件"}},
     {"id": "AC11_SUPPLEMENTARY", "result": "PASS" if sup_summary["companies_with_index"] == len(ids)
      and sup_summary["pagination_reconciled"] == len(ids) else "FAIL",

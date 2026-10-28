@@ -188,7 +188,9 @@ def main() -> int:
         "（`runs/issues/A04R/neeq_listing_dates.json`），50 槽重判后不适用 12→8、未披露 34→38，"
         "4 槽由「不适用」改判「未披露」。原「最早定期报告披露日」推断已废弃。",
         (f"- **财务更正版本链**：{chain.get('pairs', 0)} 组原版—更正版（或更正公告）闭环，"
-         f"缺口 {len(chain.get('gap_rows', []))}；分类由 576 修正为 207（剔除发行预案、股东大会通知等非财报更正）。"
+         f"缺口 {len(chain.get('gap_rows', []))}；发现规则已并入「修订版/修订公告」，"
+         f"财务更正行 {rev_bd.get('financial_correction_or_restatement', 'NA')} 条"
+         f"（v3 口径，剔除预案/股东大会/摘要等非财报更正）。"
          if chain else "- **财务更正版本链**：未生成。"),
         "",
         "## 四、限制与未解决",

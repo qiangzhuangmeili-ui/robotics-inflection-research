@@ -1,20 +1,41 @@
 {
-  "scope": "A04R_REVISION_CHAIN_BREAKDOWN_V2",
-  "generated_at": "2026-10-28T20:05:06+08:00",
+  "scope": "A04R_REVISION_CHAIN_BREAKDOWN_V3",
+  "generated_at": "2026-10-28T20:35:32+08:00",
   "window": "2024-10-26~2026-10-25",
-  "classification_rule": "财务更正仅计「年度报告/半年度报告/季度报告」且含 更正/重述/勘误，并排除 预案/股东大会/说明会/问询回复/审计报告/专项报告/核查意见/法律意见/保荐/督导 等",
+  "classification_rule": "财务更正计「年度报告/半年度报告/季度报告」且含 更正/重述/勘误/修订，排除 预案/股东大会/说明会/问询回复/审计报告/专项报告/核查意见/法律意见/保荐/督导/提示性公告/业绩预告 及各类摘要",
   "total_revision_marked_rows": 11183,
-  "financial_correction_or_restatement": 207,
+  "financial_correction_or_restatement": 192,
   "transaction_document_revision": 2363,
-  "other_revision_supplement": 8612,
-  "excluded_report_related_non_financial": 1,
+  "other_revision_supplement": 8597,
+  "excluded_report_related_non_financial": 31,
   "excluded_examples": [
+    {
+      "stock_code": "000559",
+      "title": "2024年半年度报告摘要（更正后）"
+    },
     {
       "stock_code": "001288",
       "title": "关于2024年年度报告、审计报告更正的公告"
+    },
+    {
+      "stock_code": "002682",
+      "title": "2025年年度报告摘要（更正后）"
+    },
+    {
+      "stock_code": "300161",
+      "title": "独立董事年度报告工作制度（2025年11月修订）"
+    },
+    {
+      "stock_code": "300265",
+      "title": "2024年半年度报告摘要（更正后）"
+    },
+    {
+      "stock_code": "300417",
+      "title": "2024年半年度报告摘要（更正后）"
     }
   ],
+  "financial_correction_pairs": 127,
   "financial_correction_pairs_file": "runs/issues/A04R/correction_chains.json",
-  "note": "v1 的 576 把发行预案、股东大会通知等非财报更正也算进财务更正，已作废；本文件为修正后口径。财务更正的闭环证据看 correction_chains.json（原版+更正版+更正公告+替代关系）。",
+  "note": "v1 的 576 与 v2 的 207 均未纳入「修订版/修订公告」；按复核要求把「修订」并入版本发现规则后重算为 v3。闭环证据看 correction_chains.json 与 runs/issues/A04/rework/correction_chain_audit.csv。",
   "policy": "更正版另存另 ID、关联被替代版本；不覆盖任何原件。"
 }

@@ -29,12 +29,15 @@ sup = load("supplementary_scope_summary.json")
 cutoff = load("cutoff_hold_resolution.json")
 erratum = load("handoff_correction.json")
 existing = load("existing_assets_check.json")
-chain_path = ROOT / "runs/issues/A04R/correction_chains.json"
-chain = json.loads(chain_path.read_text(encoding="utf-8")) if chain_path.exists() else {}
-chain_pairs = chain.get("pairs", 0)
-chain_complete = chain.get("complete", 0)
-chain_gaps = chain.get("gap_rows", [])
-notice_only = sum(1 for r in chain.get("rows", []) if r.get("corrected_full_text_missing"))
+_rev_path = ROOT / "runs/issues/A04R/revision_chain_breakdown.json"
+rev_bd = json.loads(_rev_path.read_text(encoding="utf-8")) if _rev_path.exists() else {}
+_ac12 = {c["id"]: c for c in checks}.get("AC12_CORRECTION_CHAIN", {}).get("evidence", {})
+chain_pairs = _ac12.get("chains", 0)
+chain_complete = _ac12.get("chains_verified_ok", 0)
+chain_gaps = [{}] * _ac12.get("gaps", 0)
+notice_only = _ac12.get("notice_only_chains", 0)
+notice_with_file = _ac12.get("notice_with_file_and_hash", 0)
+files_checked = _ac12.get("files_checked", 0)
 coverage = list(csv.DictReader((OUT / "frozen_scope_coverage.csv").open(encoding="utf-8-sig")))
 
 by_id = {c["id"]: c for c in checks}
@@ -89,8 +92,10 @@ review = {
         "crosscheck_documents": field["crosscheck_documents"],
     },
     "supplementary_scope": sup,
-    "correction_chain": {"pairs": chain_pairs, "complete": chain_complete,
-                         "gaps": len(chain_gaps), "notice_only": notice_only},
+    "correction_chain": {"pairs": chain_pairs, "verified_ok": chain_complete,
+                         "gaps": len(chain_gaps), "notice_only": notice_only,
+                         "notice_with_file_and_hash": notice_with_file,
+                         "files_checked": files_checked},
     "cutoff_hold": {"documents": cutoff["documents"],
                     "resolved_within_cutoff": cutoff["resolved_within_cutoff"],
                     "after_cutoff": cutoff["after_cutoff"],
@@ -141,9 +146,11 @@ lines = [
     f"当前 {by_id['AC06']['evidence']['na_rows']} 条不适用行、违规 0 条（明细 `na_applicability_audit.csv`）；"
     f"放行门槛改为 12 项全部必需，任一 FAIL/HOLD 均不放行（`release_gate`）。",
     f"3. **财务更正版本链**：{chain_pairs} 组原版—更正版（或更正公告）已闭环，"
-    f"其中 {notice_only} 组公司只发更正公告未重发全文；每组含原版/更正版两个 document_id、supersedes 关联与本地 sha256"
-    f"（`runs/issues/A04R/correction_chains.json`）。原「576 条财务更正」把发行预案、股东大会通知算进来，"
-    f"已按「年度/半年度/季度报告 + 更正/重述/勘误」重算为 207 条。",
+    f"其中 {notice_only} 组公司只发更正公告未重发全文，公告原件已按 CORRECTION_NOTICE 单独登记 document_id、路径与 sha256；"
+    f"每组含原版/更正版两个 document_id、supersedes 关联与本地 sha256"
+    f"（`runs/issues/A04R/correction_chains.json`）。发现规则已并入「修订版/修订公告」；"
+    f"原「576 条财务更正」把发行预案、股东大会通知算进来，现按「年度/半年度/季度报告 + 更正/重述/勘误/修订」"
+    f"并排除预案、股东大会、摘要等，重算为 {rev_bd.get('financial_correction_or_restatement', 'NA')} 条。",
     "",
     "## 二、12 个冻结报告槽复算",
     "",
