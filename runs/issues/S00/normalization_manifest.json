@@ -1,7 +1,7 @@
 {
   "issue": "S00 / #35",
   "plan_version": "20261026_collection_first_v2",
-  "generated_at": "2026-10-28T22:20:18+0800",
+  "generated_at": "2026-10-29T09:49:48+0800",
   "as_of": "2026-10-25",
   "executor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
@@ -15,20 +15,20 @@
   },
   "outputs": {
     "financial_normalized.csv": {
-      "rows": 228154,
-      "bytes": 80471995,
-      "sha256": "5c6b936b74889ebdbf2b9ddb6ae01c25b0fa71ab0a624066508f951b1cfb7bed",
+      "rows": 228155,
+      "bytes": 87383498,
+      "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6",
       "note": "明文大表留本机，不入 Git；解压 .gz 可逐字节复现"
     },
     "financial_normalized.csv.gz": {
-      "bytes": 5780244,
-      "sha256": "acf1edec2d3b0594e5d192dace7c3030c213db8765d8f93f872f4f730abe5926",
+      "bytes": 5922025,
+      "sha256": "9d124e64959d1c65ca9f646a24e349c2a2b299587522801506e140ae0a1c0702",
       "committed": true
     },
     "normalization_issues.csv": {
-      "rows": 14350,
-      "bytes": 2688175,
-      "sha256": "6ac870aac1536200453d6eaba52a81312ddf4dfb5446dcf0a8bcef7324da6b4c"
+      "rows": 16513,
+      "bytes": 3366499,
+      "sha256": "f3969dd181317fc18d300ff81c043cb91cfa84c841381bab0998659f1dae3167"
     }
   },
   "universe": {
@@ -64,7 +64,7 @@
     "FIN.NR.INSTANT": 10108,
     "FIN.OCF.SQ": 13188,
     "FIN.OCF.YTD": 11174,
-    "FIN.OCF_TO_NP.RATIO": 8854,
+    "FIN.OCF_TO_NP.RATIO": 8855,
     "FIN.REV.SQ": 13914,
     "FIN.REV.YTD": 13308
   },
@@ -96,6 +96,7 @@
     "low_or_negative_base_flagged": 1921
   },
   "issue_type_counts": {
+    "CORRECTED_VERSION_ADOPTED": 6,
     "CROSS_SOURCE_SUBTRACTION_BLOCKED": 27,
     "DOCUMENT_IS_ENGLISH_OR_NON_ZH": 26,
     "DOCUMENT_MIXED_LANGUAGE": 2,
@@ -111,9 +112,58 @@
     "PERIOD_INCONSISTENT": 114,
     "PRE_IPO_REPORT": 30,
     "PROVIDER_VS_PDF_MISMATCH": 151,
+    "RESTATEMENT_INDICATED_NEEDS_REVIEW": 2157,
     "STATEMENT_NOT_FOUND": 1410,
     "THREE_STATEMENT_VS_KEY_TABLE_MISMATCH": 453,
     "UNIT_UNKNOWN_VALUE_NOT_CONVERTED": 221
+  },
+  "version_adoption": {
+    "slots_with_corrected_fulltext": 6,
+    "items": [
+      {
+        "security_id": "SH:600775",
+        "slot_id": "annual_2024",
+        "version_used": "CORRECTED_FULLTEXT",
+        "original_document_id": "DOC-3B39555C8D1D9CA1",
+        "adopted_document_id": "DOC-F86D11DF081C2880"
+      },
+      {
+        "security_id": "SH:603072",
+        "slot_id": "q1_2025",
+        "version_used": "CORRECTED_FULLTEXT",
+        "original_document_id": "DOC-CC1BF80929B33DD3",
+        "adopted_document_id": "DOC-0D2AF2262165DE19"
+      },
+      {
+        "security_id": "SH:605100",
+        "slot_id": "annual_2024",
+        "version_used": "CORRECTED_FULLTEXT",
+        "original_document_id": "DOC-1A141FFCD9BD1164",
+        "adopted_document_id": "DOC-518ADB2CEFCE88F4"
+      },
+      {
+        "security_id": "SH:688661",
+        "slot_id": "q3_2024",
+        "version_used": "CORRECTED_FULLTEXT",
+        "original_document_id": "DOC-24049C9DCA0CAD61",
+        "adopted_document_id": "DOC-90BB6DE1873B4550"
+      },
+      {
+        "security_id": "SZ:001380",
+        "slot_id": "annual_2024",
+        "version_used": "CORRECTED_FULLTEXT",
+        "original_document_id": "DOC-837BDE9D222C9953",
+        "adopted_document_id": "DOC-682168F4BA8934CF"
+      },
+      {
+        "security_id": "SZ:300887",
+        "slot_id": "q3_2024",
+        "version_used": "CORRECTED_FULLTEXT",
+        "original_document_id": "DOC-672D82E6A21171E5",
+        "adopted_document_id": "DOC-125CCC8742096B2D"
+      }
+    ],
+    "note": "6 个槽原用非更正版；已重抽更正版并逐字段比对（132 个字段对，0 处不同），故数值不变但溯源改为更正版，原版 id 保留在 original_document_id 列"
   },
   "empty_slots_no_value": {
     "count": 62,
@@ -910,7 +960,7 @@
     "合同资产未列示的公司记 NOT_IN_STATEMENT，不填 0。",
     "单季扣非在无官方分季表且累计不齐时不可派生，记 NOT_DERIVABLE。"
   ],
-  "elapsed_s": 14.1,
+  "elapsed_s": 18.0,
   "extract_artifacts": [
     {
       "file": "extract/annual_2023_fields.csv",

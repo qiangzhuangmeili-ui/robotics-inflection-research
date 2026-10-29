@@ -1,0 +1,259 @@
+{
+  "rows": 228154,
+  "issues": 14350,
+  "companies": 1054,
+  "missing_companies": [],
+  "extra_companies": [],
+  "duplicate_cell_keys": 0,
+  "status_counts": {
+    "EXTRACTED": 103818,
+    "DERIVED": 44498,
+    "EXTRACTED_KEY_TABLE": 10557,
+    "DERIVED_CUMULATIVE_DIFF": 8603,
+    "EXTRACTED_QUARTERLY_TABLE": 40264,
+    "DERIVED_Q1_EQUALS_YTD": 5372,
+    "EXTRACTED_XCHECK_MISMATCH": 1326,
+    "LEGACY_SNAPSHOT": 13652,
+    "DERIVED_QUARTERLY_SUM_OVERRIDE": 64
+  },
+  "conversion_mismatch_count": 64,
+  "conversion_mismatch_samples": [
+    {
+      "security_id": "SH:600100",
+      "period_key": "20231231",
+      "field_id": "FIN.REV.YTD",
+      "status": "DERIVED_QUARTERLY_SUM_OVERRIDE",
+      "value_raw": "4,014,977,373.82",
+      "unit_raw": "元",
+      "unit_scale": "1",
+      "value_cny": "28833463784.14"
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20241231",
+      "field_id": "FIN.REV.YTD",
+      "status": "DERIVED_QUARTERLY_SUM_OVERRIDE",
+      "value_raw": "2,700,086,089.16",
+      "unit_raw": "元",
+      "unit_scale": "1",
+      "value_cny": "16801783043.91"
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20251231",
+      "field_id": "FIN.REV.YTD",
+      "status": "DERIVED_QUARTERLY_SUM_OVERRIDE",
+      "value_raw": "2,093,450,698.62",
+      "unit_raw": "元",
+      "unit_scale": "1",
+      "value_cny": "15064892096.09"
+    },
+    {
+      "security_id": "SH:600184",
+      "period_key": "20231231",
+      "field_id": "FIN.NPDEDT.YTD",
+      "status": "DERIVED_QUARTERLY_SUM_OVERRIDE",
+      "value_raw": "6,270,618.93",
+      "unit_raw": "元",
+      "unit_scale": "1",
+      "value_cny": "43275566.68"
+    },
+    {
+      "security_id": "SH:600366",
+      "period_key": "20231231",
+      "field_id": "FIN.NPDEDT.YTD",
+      "status": "DERIVED_QUARTERLY_SUM_OVERRIDE",
+      "value_raw": "14,262,405.51",
+      "unit_raw": "元",
+      "unit_scale": "1",
+      "value_cny": "-201420530.63"
+    },
+    {
+      "security_id": "SH:600480",
+      "period_key": "20241231",
+      "field_id": "FIN.NPDEDT.YTD",
+      "status": "DERIVED_QUARTERLY_SUM_OVERRIDE",
+      "value_raw": "199,020,858.56",
+      "unit_raw": "元",
+      "unit_scale": "1",
+      "value_cny": "545438596.01"
+    },
+    {
+      "security_id": "SH:600843",
+      "period_key": "20241231",
+      "field_id": "FIN.NPDEDT.YTD",
+      "status": "DERIVED_QUARTERLY_SUM_OVERRIDE",
+      "value_raw": "6,973,765.17",
+      "unit_raw": "元",
+      "unit_scale": "1",
+      "value_cny": "-283781901.14"
+    },
+    {
+      "security_id": "SH:600843",
+      "period_key": "20251231",
+      "field_id": "FIN.NPDEDT.YTD",
+      "status": "DERIVED_QUARTERLY_SUM_OVERRIDE",
+      "value_raw": "-30,261,651.67",
+      "unit_raw": "元",
+      "unit_scale": "1",
+      "value_cny": "-359195837.35"
+    }
+  ],
+  "formula_mismatch_counts": {
+    "FIN.GROSSMARGIN.PCT": 6,
+    "FIN.GROSSPROFIT.YTD": 6,
+    "FIN.NPMARGIN.PCT": 9,
+    "FIN.OCF_TO_NP.RATIO": 2
+  },
+  "formula_mismatch_samples": [
+    {
+      "security_id": "SH:600100",
+      "period_key": "20231231",
+      "field_id": "FIN.GROSSMARGIN.PCT",
+      "actual": "-490.60725",
+      "expected": 17.759629390960225,
+      "input_statuses": [
+        "DERIVED_QUARTERLY_SUM_OVERRIDE",
+        "EXTRACTED"
+      ]
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20231231",
+      "field_id": "FIN.GROSSPROFIT.YTD",
+      "actual": "-19697770101.68",
+      "expected": 5120716308.639999,
+      "input_statuses": [
+        "DERIVED_QUARTERLY_SUM_OVERRIDE",
+        "EXTRACTED"
+      ]
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20231231",
+      "field_id": "FIN.NPMARGIN.PCT",
+      "actual": "-19.0515",
+      "expected": -2.6528668941979308,
+      "input_statuses": [
+        "EXTRACTED_XCHECK_MISMATCH",
+        "DERIVED_QUARTERLY_SUM_OVERRIDE"
+      ]
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20241231",
+      "field_id": "FIN.GROSSMARGIN.PCT",
+      "actual": "-370.40371",
+      "expected": 24.4050163853667,
+      "input_statuses": [
+        "DERIVED_QUARTERLY_SUM_OVERRIDE",
+        "EXTRACTED"
+      ]
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20241231",
+      "field_id": "FIN.GROSSPROFIT.YTD",
+      "actual": "-10001219049.85",
+      "expected": 4100477904.8999996,
+      "input_statuses": [
+        "DERIVED_QUARTERLY_SUM_OVERRIDE",
+        "EXTRACTED"
+      ]
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20241231",
+      "field_id": "FIN.NPMARGIN.PCT",
+      "actual": "5.207833",
+      "expected": 0.8369110989143971,
+      "input_statuses": [
+        "EXTRACTED_XCHECK_MISMATCH",
+        "DERIVED_QUARTERLY_SUM_OVERRIDE"
+      ]
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20251231",
+      "field_id": "FIN.GROSSMARGIN.PCT",
+      "actual": "-427.114775",
+      "expected": 26.750965995806652,
+      "input_statuses": [
+        "DERIVED_QUARTERLY_SUM_OVERRIDE",
+        "EXTRACTED"
+      ]
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20251231",
+      "field_id": "FIN.GROSSPROFIT.YTD",
+      "actual": "-8941437235.54",
+      "expected": 4030004161.9300003,
+      "input_statuses": [
+        "DERIVED_QUARTERLY_SUM_OVERRIDE",
+        "EXTRACTED"
+      ]
+    },
+    {
+      "security_id": "SH:600100",
+      "period_key": "20251231",
+      "field_id": "FIN.NPMARGIN.PCT",
+      "actual": "23.645444",
+      "expected": 3.285823221053642,
+      "input_statuses": [
+        "EXTRACTED_XCHECK_MISMATCH",
+        "DERIVED_QUARTERLY_SUM_OVERRIDE"
+      ]
+    },
+    {
+      "security_id": "SH:603119",
+      "period_key": "20231231",
+      "field_id": "FIN.NPMARGIN.PCT",
+      "actual": "0.015345",
+      "expected": 21.468444381024216,
+      "input_statuses": [
+        "DERIVED_QUARTERLY_SUM_OVERRIDE",
+        "EXTRACTED_XCHECK_MISMATCH"
+      ]
+    },
+    {
+      "security_id": "SH:603119",
+      "period_key": "20231231",
+      "field_id": "FIN.OCF_TO_NP.RATIO",
+      "actual": "1800.730059",
+      "expected": 1.287109606099569,
+      "input_statuses": [
+        "EXTRACTED_XCHECK_MISMATCH",
+        "DERIVED_QUARTERLY_SUM_OVERRIDE"
+      ]
+    },
+    {
+      "security_id": "SH:688139",
+      "period_key": "20231231",
+      "field_id": "FIN.NPMARGIN.PCT",
+      "actual": "0.003229",
+      "expected": 17.80325102531789,
+      "input_statuses": [
+        "DERIVED_QUARTERLY_SUM_OVERRIDE",
+        "EXTRACTED_XCHECK_MISMATCH"
+      ]
+    }
+  ],
+  "manifest_mismatches": [],
+  "extract_hash_mismatches": [],
+  "gzip_matches_plain": true,
+  "blank_values": 0,
+  "blocking_issues": 1307,
+  "extract_restatement_counts": {
+    "RESTATEMENT_INDICATED_NEEDS_REVIEW:": 2157,
+    "NOT_APPLICABLE:": 577,
+    "EXTRACTED:是": 1089,
+    "EXTRACTED:否": 5688,
+    "NOT_FOUND:": 1942
+  },
+  "normalized_restatement_counts": {
+    "": 228154
+  },
+  "restatement_issue_rows": 0,
+  "derived_ratios_or_gp_from_mismatch_parent": 1627
+}

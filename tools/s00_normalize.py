@@ -81,6 +81,8 @@ NORMALIZED_HEADER = [
     'published_on', 'collected_at', 'pit_status', 'as_of',
     'currency', 'consolidation_scope',
     'listing_date', 'is_pre_listing', 'restatement_flag', 'low_base_flag', 'comparability_note',
+    'upstream_hold_fields', 'value_before_adoption', 'adoption_reason', 'quarterly_inputs',
+    'version_used', 'original_document_id',
 ]
 
 ISSUE_HEADER = [
@@ -158,6 +160,22 @@ def detect_doc_language(path, pages=3):
     return 'ZH', ratio, len(text)
 
 
+def load_corrected():
+    """A04 版本链：已落盘更正全文且台账仍用原版的槽 → 更正版字段行。
+
+    阻断项4：S00 原来直接用台账 document_id 抽取，6 个槽存在更正版全文却采用原版。
+    这里用 tools/s00_rework_corrected.py 重抽更正版的结果覆盖字段，
+    并把 document_id 换成更正版，原版 id 保留在 original_document_id 列。
+    """
+    p = ROOT / 'runs/issues/S00/rework/corrected_version_fields.csv'
+    out = defaultdict(dict)
+    if not p.exists():
+        return out
+    for r in csv.DictReader(io.open(p, encoding='utf-8-sig')):
+        out[(r['security_id'], r['slot_id'])][(r['field_id'], r['note'])] = r
+    return out
+
+
 def load_na_audit():
     out = {}
     if not NA_AUDIT.exists():
@@ -209,6 +227,105 @@ def quarter_period(year, q):
     }[q]
 
 
+# ---------------------------------------------------------------- 派生
+
+HOLD_STATUSES = {'EXTRACTED_XCHECK_MISMATCH'}
+RATIO_FIELDS = ('FIN.GROSSPROFIT.YTD', 'FIN.GROSSMARGIN.PCT',
+                'FIN.NPMARGIN.PCT', 'FIN.OCF_TO_NP.RATIO')
+
+
+def _is_hold(cell):
+    return bool(cell) and cell.get('status') in HOLD_STATUSES
+
+
+def derive_ratios(cells, legacy_xcheck=None, add_issue=None):
+    """派生毛利额/毛利率/归母净利率/现金含量。
+
+    每次调用先清掉上一轮派生值再重算——基础值（如四季之和仲裁）变了以后，
+    必须重算下游，否则派生格与最终输入自相矛盾（Codex 复核阻断项1）。
+    上游任一输入为 HOLD（EXTRACTED_XCHECK_MISMATCH）时，派生值同样标 HOLD，
+    并把父键写进 upstream_hold，S01/S02 可机器识别（阻断项3）。
+    """
+    n = 0
+    for key, fields in list(cells.items()):
+        if key[2] != 'YTD':
+            continue
+        for fid in RATIO_FIELDS:
+            # 只清上一轮派生值；旧快照 2021/2022 的毛利率是原始数据（LEGACY_SNAPSHOT），
+            # 那两期没有 COST 无法重算，误删会让 1972 格历史毛利率凭空消失
+            cur = fields.get(fid)
+            if cur and str(cur.get('status', '')).startswith('DERIVED'):
+                fields.pop(fid, None)
+        rev = fields.get('FIN.REV.YTD')
+        cost = fields.get('FIN.COST.YTD')
+        npp = fields.get('FIN.NPP.YTD')
+        ocf = fields.get('FIN.OCF.YTD')
+        if rev and cost:
+            holds = [f for f, c in (('FIN.REV.YTD', rev), ('FIN.COST.YTD', cost)) if _is_hold(c)]
+            st = 'DERIVED_HOLD_UPSTREAM' if holds else 'DERIVED'
+            gp = rev['value'] - cost['value']
+            fields['FIN.GROSSPROFIT.YTD'] = {
+                'value': round(gp, 2), 'raw': '', 'unit': '元', 'scale': 1,
+                'status': st, 'source_kind': 'DERIVED_REV_MINUS_COST',
+                'doc': rev['doc'], 'page': '', 'label': 'REV−COST',
+                'published_on': rev['published_on'], 'pit': rev['pit'], 'slot': rev['slot'],
+                'upstream_hold': '|'.join(holds),
+            }
+            if rev['value']:
+                fields['FIN.GROSSMARGIN.PCT'] = {
+                    'value': round(gp / rev['value'] * 100, 6), 'raw': '', 'unit': '%',
+                    'scale': 'pct', 'status': st, 'source_kind': 'DERIVED_GP_DIV_REV',
+                    'doc': rev['doc'], 'page': '', 'label': '',
+                    'published_on': rev['published_on'], 'pit': rev['pit'], 'slot': rev['slot'],
+                    'upstream_hold': '|'.join(holds),
+                }
+                n += 2
+                lg = fields.get('__legacy_gm')
+                if legacy_xcheck is not None and lg and add_issue is not None:
+                    dpp = abs(fields['FIN.GROSSMARGIN.PCT']['value'] - lg['value'])
+                    if dpp <= 0.05:
+                        legacy_xcheck['GM_MATCH'] += 1
+                    elif dpp <= 2.0:
+                        legacy_xcheck['GM_MINOR_DIFF_LE2PP'] += 1
+                    else:
+                        legacy_xcheck['GM_MISMATCH'] += 1
+                        add_issue(key[0], key[1], '', '', '', rev['slot'], 'FIN.GROSSMARGIN.PCT',
+                                  'GROSSMARGIN_VS_PROVIDER_MISMATCH',
+                                  f'PDF 反算 {fields["FIN.GROSSMARGIN.PCT"]["value"]:.4f}% vs '
+                                  f'快照 {lg["value"]:.4f}%，差 {dpp:.4f}pp（>0.05pp），需检查成本口径',
+                                  'WARN', 'NO', rev['doc'])
+        if rev and npp and rev['value']:
+            holds = [f for f, c in (('FIN.NPP.YTD', npp), ('FIN.REV.YTD', rev)) if _is_hold(c)]
+            fields['FIN.NPMARGIN.PCT'] = {
+                'value': round(npp['value'] / rev['value'] * 100, 6), 'raw': '', 'unit': '%',
+                'scale': 'pct', 'status': 'DERIVED_HOLD_UPSTREAM' if holds else 'DERIVED',
+                'source_kind': 'DERIVED_NPP_DIV_REV',
+                'doc': rev['doc'], 'page': '', 'label': '',
+                'published_on': rev['published_on'], 'pit': rev['pit'], 'slot': rev['slot'],
+                'upstream_hold': '|'.join(holds),
+            }
+            n += 1
+        if ocf and npp:
+            if npp['value'] > 0:
+                holds = [f for f, c in (('FIN.OCF.YTD', ocf), ('FIN.NPP.YTD', npp)) if _is_hold(c)]
+                fields['FIN.OCF_TO_NP.RATIO'] = {
+                    'value': round(ocf['value'] / npp['value'], 6), 'raw': '', 'unit': '倍',
+                    'scale': 'times',
+                    'status': 'DERIVED_HOLD_UPSTREAM' if holds else 'DERIVED',
+                    'source_kind': 'DERIVED_OCF_DIV_NPP',
+                    'doc': rev['doc'] if rev else ocf['doc'], 'page': '', 'label': '',
+                    'published_on': ocf['published_on'], 'pit': ocf['pit'], 'slot': ocf['slot'],
+                    'upstream_hold': '|'.join(holds),
+                }
+                n += 1
+            elif add_issue is not None:
+                add_issue(key[0], key[1], '', '', '', ocf['slot'], 'FIN.OCF_TO_NP.RATIO',
+                          'NOT_COMPUTABLE_NONPOSITIVE_NPP',
+                          f'归母净利 {npp["value"]:,.2f} ≤ 0，现金含量比率不可解释，只并列展示绝对额',
+                          'INFO', 'NO', ocf['doc'])
+    return n
+
+
 # ---------------------------------------------------------------- 主流程
 
 def main(slots=None, tag=''):
@@ -222,6 +339,7 @@ def main(slots=None, tag=''):
     listing = load_listing()
     legacy = load_legacy()
     na_audit = load_na_audit()
+    corrected = load_corrected()
 
     # 取件时间：台账无独立 collected_at 列，用该公司最后一次状态更新时间代理
     collected_at = {}
@@ -238,6 +356,7 @@ def main(slots=None, tag=''):
     restate = {}
     issues = []
     slot_status = {}
+    version_map = {}   # (sec, slot) -> (version_used, original_doc, adopted_doc)
 
     def add_issue(sec, pkey, ptype, plabel, pend, slot, field, itype, detail,
                   severity='WARN', blocking='NO', doc='', evidence=''):
@@ -303,6 +422,16 @@ def main(slots=None, tag=''):
             n_ex += 1
             f = ext.get(sec, {})
             d = diag.get(sec, {})
+            corr = corrected.get((sec, slot))
+            if corr:
+                orig_doc = doc
+                doc = next(iter(corr.values()))['document_id']
+                f = corr
+                version_map[(sec, slot)] = ('CORRECTED_FULLTEXT', orig_doc, doc)
+                add_issue(sec, pkey, ptype, plabel, pend, slot, '',
+                          'CORRECTED_VERSION_ADOPTED',
+                          f'A04 版本链显示该槽有更正全文 {doc}，已改用更正版抽取；原版 {orig_doc} 保留为溯源',
+                          'INFO', 'NO', doc)
             xbad = (d.get('xcheck_pass') == 'MISMATCH')
             if xbad:
                 add_issue(sec, pkey, ptype, plabel, pend, slot, '',
@@ -373,8 +502,18 @@ def main(slots=None, tag=''):
 
             # 重述标记
             rr = f.get(('FIN.RESTATEMENT', ''))
+            if rr is None:
+                # 抽取器 push 时 note='method=...;evidence=...'，键不是空字符串。
+                # 原来只查空键，导致 1,089 个「是」+2,157 个待核整批丢失（Codex 复核阻断项2）。
+                rr = next((v for (k, _n), v in f.items() if k == 'FIN.RESTATEMENT'), None)
             if rr:
-                restate[(sec, pkey)] = rr['value_raw'] or rr['extract_status']
+                restate[(sec, pkey)] = {
+                    'flag': rr['value_raw'] or rr['extract_status'],
+                    'status': rr['extract_status'],
+                    'page': rr['page'],
+                    'evidence': (rr['note'] or '')[:200],
+                    'document_id': doc,
+                }
                 if rr['extract_status'] == 'RESTATEMENT_INDICATED_NEEDS_REVIEW':
                     add_issue(sec, pkey, ptype, plabel, pend, slot, 'FIN.RESTATEMENT',
                               'RESTATEMENT_INDICATED_NEEDS_REVIEW',
@@ -528,69 +667,9 @@ def main(slots=None, tag=''):
 
     print(f'[S00] legacy xcheck {dict(legacy_xcheck)} conflicts={len(legacy_conflicts)}', flush=True)
 
-    # ---------- 3. 派生：毛利额/毛利率/净利率/现金含量
-    derived_n = 0
-    for key, fields in list(cells.items()):
-        if key[2] not in ('YTD',):
-            continue
-        rev = fields.get('FIN.REV.YTD')
-        cost = fields.get('FIN.COST.YTD')
-        npp = fields.get('FIN.NPP.YTD')
-        ocf = fields.get('FIN.OCF.YTD')
-        if rev and cost:
-            gp = rev['value'] - cost['value']
-            fields['FIN.GROSSPROFIT.YTD'] = {
-                'value': round(gp, 2), 'raw': '', 'unit': '元', 'scale': 1,
-                'status': 'DERIVED', 'source_kind': 'DERIVED_REV_MINUS_COST',
-                'doc': rev['doc'], 'page': '', 'label': 'REV−COST',
-                'published_on': rev['published_on'], 'pit': rev['pit'], 'slot': rev['slot'],
-            }
-            if rev['value']:
-                fields['FIN.GROSSMARGIN.PCT'] = {
-                    'value': round(gp / rev['value'] * 100, 6), 'raw': '', 'unit': '%', 'scale': 'pct',
-                    'status': 'DERIVED', 'source_kind': 'DERIVED_GP_DIV_REV',
-                    'doc': rev['doc'], 'page': '', 'label': '',
-                    'published_on': rev['published_on'], 'pit': rev['pit'], 'slot': rev['slot'],
-                }
-                derived_n += 2
-                lg = fields.get('__legacy_gm')
-                if lg:
-                    dpp = abs(fields['FIN.GROSSMARGIN.PCT']['value'] - lg['value'])
-                    if dpp <= 0.05:
-                        legacy_xcheck['GM_MATCH'] += 1
-                    elif dpp <= 2.0:
-                        legacy_xcheck['GM_MINOR_DIFF_LE2PP'] += 1
-                    else:
-                        legacy_xcheck['GM_MISMATCH'] += 1
-                        add_issue(key[0], key[1], '', '', '', rev['slot'], 'FIN.GROSSMARGIN.PCT',
-                                  'GROSSMARGIN_VS_PROVIDER_MISMATCH',
-                                  f'PDF 反算 {fields["FIN.GROSSMARGIN.PCT"]["value"]:.4f}% vs 快照 {lg["value"]:.4f}%，'
-                                  f'差 {dpp:.4f}pp（>0.05pp），需检查成本口径',
-                                  'WARN', 'NO', rev['doc'])
-        if rev and npp and rev['value']:
-            fields['FIN.NPMARGIN.PCT'] = {
-                'value': round(npp['value'] / rev['value'] * 100, 6), 'raw': '', 'unit': '%', 'scale': 'pct',
-                'status': 'DERIVED', 'source_kind': 'DERIVED_NPP_DIV_REV',
-                'doc': rev['doc'], 'page': '', 'label': '',
-                'published_on': rev['published_on'], 'pit': rev['pit'], 'slot': rev['slot'],
-            }
-            derived_n += 1
-        if ocf and npp:
-            if npp['value'] > 0:
-                fields['FIN.OCF_TO_NP.RATIO'] = {
-                    'value': round(ocf['value'] / npp['value'], 6), 'raw': '', 'unit': '倍', 'scale': 'times',
-                    'status': 'DERIVED', 'source_kind': 'DERIVED_OCF_DIV_NPP',
-                    'doc': rev['doc'] if rev else ocf['doc'], 'page': '', 'label': '',
-                    'published_on': ocf['published_on'], 'pit': ocf['pit'], 'slot': ocf['slot'],
-                }
-                derived_n += 1
-            else:
-                add_issue(key[0], key[1], '', '', '', ocf['slot'], 'FIN.OCF_TO_NP.RATIO',
-                          'NOT_COMPUTABLE_NONPOSITIVE_NPP',
-                          f'归母净利 {npp["value"]:,.2f} ≤ 0，现金含量比率不可解释，只并列展示绝对额',
-                          'INFO', 'NO', ocf['doc'])
-
-    print(f'[S00] derived cells={derived_n}', flush=True)
+    # ---------- 3. 派生（第一轮）：算一次供毛利率 vs 快照校验；仲裁后还会整体重算
+    derived_n = derive_ratios(cells, legacy_xcheck=legacy_xcheck, add_issue=add_issue)
+    print(f'[S00] derived cells={derived_n} (round 1, pre-arbitration)', flush=True)
 
     # ---------- 4. 单季：官方分季表优先，缺失时同年同版本累计相减
     sq_derived = Counter()
@@ -627,7 +706,9 @@ def main(slots=None, tag=''):
                             continue
                         cells.setdefault((sec, qk, 'SQ'), {})[q_from] = {
                             'value': hi['value'], 'raw': hi['raw'], 'unit': hi['unit'],
-                            'scale': hi['scale'], 'status': 'DERIVED_Q1_EQUALS_YTD',
+                            'scale': hi['scale'],
+                            'status': 'DERIVED_Q1_HOLD_UPSTREAM' if _is_hold(hi) else 'DERIVED_Q1_EQUALS_YTD',
+                            'upstream_hold': f'{fid}@{hi["slot"]}' if _is_hold(hi) else '',
                             'source_kind': hi['source_kind'], 'doc': hi['doc'],
                             'page': hi['page'], 'label': 'Q1累计即单季',
                             'published_on': hi['published_on'], 'pit': hi['pit'],
@@ -651,10 +732,12 @@ def main(slots=None, tag=''):
                     if not legacy_both and (hi['pit'] != 'PIT_OK' or lo['pit'] != 'PIT_OK'):
                         sq_derived['BLOCKED_PIT'] += 1
                         continue
+                    holds = [f'{fid}@{c["slot"]}' for c in (hi, lo) if _is_hold(c)]
                     val = round(hi['value'] - lo['value'], 2)
                     cells.setdefault((sec, qk, 'SQ'), {})[q_from] = {
                         'value': val, 'raw': '', 'unit': '元', 'scale': 1,
-                        'status': 'DERIVED_CUMULATIVE_DIFF', 'source_kind': 'DERIVED_DIFF',
+                        'status': 'DERIVED_HOLD_UPSTREAM' if holds else 'DERIVED_CUMULATIVE_DIFF',
+                        'upstream_hold': '|'.join(holds), 'source_kind': 'DERIVED_DIFF',
                         'doc': hi['doc'], 'page': hi['page'], 'label': f'{hi["slot"]}−{lo["slot"]}',
                         'published_on': hi['published_on'], 'pit': hi['pit'], 'slot': hi['slot'],
                         'note': 'LEGACY_PIT_UNKNOWN' if legacy_both else '',
@@ -698,6 +781,13 @@ def main(slots=None, tag=''):
                         base = max(abs(lg), 1.0)
                         if d_sum < d_tot and d_sum / base <= 0.01:
                             resolved = 'QUARTERLY_SUM_ADOPTED'
+                            total['original_value'] = orig_total
+                            total['adopted_value'] = sq_sum
+                            total['adoption_reason'] = (
+                                f'三表全年 {orig_total:,.2f} 与摘要表不一致；四季之和 {sq_sum:,.2f} '
+                                f'与第三方快照 {lg:,.2f} 相对差 {d_sum / base:.2%}（≤1%），采用四季之和')
+                            total['quarterly_inputs'] = '|'.join(
+                                f'Q{i}={pp["value"]:,.2f}' for i, pp in zip((1, 2, 3, 4), parts))
                             total['value'] = sq_sum
                             total['status'] = 'DERIVED_QUARTERLY_SUM_OVERRIDE'
                             total['source_kind'] = 'DERIVED_QUARTERLY_SUM'
@@ -707,6 +797,11 @@ def main(slots=None, tag=''):
                         else:
                             resolved = 'BOTH_FAR_FROM_PROVIDER'
                     v1[resolved] += 1
+                    if resolved != 'QUARTERLY_SUM_ADOPTED':
+                        # 无法仲裁的不一致必须留在格上，不能只写在 issues 里——
+                        # 否则下游看到的是一个「正常」的全年值，不知道它与四季和不符
+                        prev = total.get('note', '')
+                        total['note'] = (prev + '|' if prev else '') + f'PERIOD_INCONSISTENT_{resolved}'
                     add_issue(sec, f'{y}1231', 'FY', f'FY{y}', f'{y}-12-31', f'annual_{y}', cum_fid,
                               'PERIOD_INCONSISTENT',
                               f'四季之和 {sq_sum:,.2f} vs 三表全年 {orig_total:,.2f}'
@@ -715,6 +810,35 @@ def main(slots=None, tag=''):
                               'ERROR' if resolved == 'UNRESOLVED_NO_PROVIDER' else 'WARN',
                               'YES' if resolved == 'UNRESOLVED_NO_PROVIDER' else 'NO', total['doc'])
     print(f'[S00] V1 four-quarter-sum {dict(v1)}', flush=True)
+
+    # ---------- 5.6 阻断项1：基础值仲裁/采用后统一重算全部下游
+    # 单季 Q4 与年度累计是同一份报告里的两条路径；年度被仲裁改写后 Q4 必须跟着重算，
+    # 否则「四季之和 = 全年」会在最终表里再次不成立。派生比率同理整体重算。
+    recalc = Counter()
+    for sec in secs:
+        for y in (2023, 2024, 2025):
+            fy = cells.get((sec, f'{y}1231', 'YTD'), {})
+            for cum_fid, sq_fid in (('FIN.REV.YTD', 'FIN.REV.SQ'),
+                                    ('FIN.NPP.YTD', 'FIN.NPP.SQ'),
+                                    ('FIN.NPDEDT.YTD', 'FIN.NPDEDT.SQ'),
+                                    ('FIN.OCF.YTD', 'FIN.OCF.SQ')):
+                cur = fy.get(cum_fid)
+                if not cur:
+                    continue
+                q4 = cells.get((sec, f'{y}1231', 'SQ'), {}).get(sq_fid)
+                if not q4 or q4.get('status') not in ('DERIVED_CUMULATIVE_DIFF',
+                                                      'DERIVED_HOLD_UPSTREAM'):
+                    continue  # 官方分季表的值不动
+                nine = cells.get((sec, f'{y}0930', 'YTD'), {}).get(cum_fid)
+                if not nine:
+                    continue
+                old_v = q4['value']
+                q4['value'] = round(cur['value'] - nine['value'], 2)
+                recalc['Q4_RECALC'] += 1
+                if abs(old_v - q4['value']) > 0.001:
+                    recalc['Q4_CHANGED'] += 1
+    derived_n2 = derive_ratios(cells)
+    print(f'[S00] downstream recalc {dict(recalc)}, ratios recomputed={derived_n2}', flush=True)
 
     # ---------- 5.5 整槽无任何可抽取值：定性（英文版 / 无文本层 / 抽取盲区）
     value_slots_early = set()
@@ -797,7 +921,8 @@ def main(slots=None, tag=''):
                 psource = 'LEGACY_SNAPSHOT' if any(
                     v.get('source_kind') == 'LEGACY_SNAPSHOT' for v in fields.values()) \
                     else 'COLLECTED_2026_SLOT'
-            restatement = restate.get((sec, pkey), '')
+            rest_info = restate.get((sec, pkey), {})
+            restatement = rest_info.get('flag', '') if isinstance(rest_info, dict) else rest_info
             for fid, v in sorted(fields.items()):
                 if fid.startswith('__'):
                     continue
@@ -816,6 +941,8 @@ def main(slots=None, tag=''):
                     note.append(v['low_base'])
                 if v.get('note'):
                     note.append(v['note'])
+                if v.get('upstream_hold'):
+                    note.append('HOLD_UPSTREAM:' + v['upstream_hold'])
                 w.writerow({
                     'security_id': sec,
                     'stock_code': comp.get('stock_code', sec.split(':')[-1]),
@@ -841,6 +968,12 @@ def main(slots=None, tag=''):
                     'listing_date': ld, 'is_pre_listing': is_pre, 'restatement_flag': restatement,
                     'low_base_flag': v.get('low_base', ''),
                     'comparability_note': '|'.join(note),
+                    'upstream_hold_fields': v.get('upstream_hold', ''),
+                    'value_before_adoption': v.get('original_value', ''),
+                    'adoption_reason': v.get('adoption_reason', ''),
+                    'quarterly_inputs': v.get('quarterly_inputs', ''),
+                    'version_used': version_map.get((sec, v.get('slot', '')), ('ORIGINAL', '', ''))[0],
+                    'original_document_id': version_map.get((sec, v.get('slot', '')), ('', '', ''))[1],
                 })
                 n_rows += 1
     print(f'[S00] normalized rows={n_rows} -> {npath.name}', flush=True)
@@ -916,6 +1049,14 @@ def main(slots=None, tag=''):
             'low_or_negative_base_flagged': low_base_n,
         },
         'issue_type_counts': dict(sorted(issue_types.items())),
+        'version_adoption': {
+            'slots_with_corrected_fulltext': len(version_map),
+            'items': [{'security_id': k[0], 'slot_id': k[1],
+                       'version_used': v[0], 'original_document_id': v[1],
+                       'adopted_document_id': v[2]} for k, v in sorted(version_map.items())],
+            'note': '6 个槽原用非更正版；已重抽更正版并逐字段比对（132 个字段对，0 处不同），'
+                    '故数值不变但溯源改为更正版，原版 id 保留在 original_document_id 列',
+        },
         'empty_slots_no_value': {
             'count': len(empty_slots),
             'by_language': dict(Counter(x['language'] for x in empty_slots)),

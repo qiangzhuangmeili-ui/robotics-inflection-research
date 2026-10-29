@@ -3,17 +3,18 @@
   "active_issue_number": null,
   "active_issue_key": null,
   "executor": null,
-  "started_at": "2026-10-28T20:52:00+08:00",
-  "status": "IDLE_S00_SELF_CHECK_PASS_S01_READY",
-  "claim_note": "S00 完成：全池 12 槽重抽 + 旧快照 2021/2022，228,154 行逐格可复算；1054 家全在、缺失不填 0、62 个整槽无值已定性并交接；放行 S01。",
+  "started_at": "2026-10-29T09:50:00+08:00",
+  "status": "IDLE_S00_REWORK_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
+  "claim_note": "Codex 复核四项阻断已全部修复并通过 19 项机器复算；等待复核方复验后正式放行 S01。",
   "last_completed": {
     "issue_number": 35,
     "issue_key": "S00",
-    "completed_at": "2026-10-28T22:24:13+08:00",
+    "completed_at": "2026-10-29T10:45:00+08:00",
     "review_file": "runs/issues/S00/review.json",
     "decision": "SELF_CHECK_PASS",
-    "acceptance": "2/2",
-    "summary": "228,154 行标准化财务；1054 家 / 12,648 槽全覆盖；V1 四季和 10,745 通过；V3 PDF vs 快照 16,921/17,363 一致；单季官方分季表 40,264 格；62 个整槽无值（英文版 26 / 无文本层 14 / 抽取盲区 20 / 混排 2）"
+    "review_round": "REWORK_20261029",
+    "acceptance": "2/2 + 4/4 阻断关闭",
+    "summary": "派生重算(同方股份FY2023毛利率 -490.61%→17.76%)、重述标记恢复(是1155/否9490/待核6373)、HOLD传播2037格、6槽更正版采用"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -24,7 +25,7 @@
   },
   "next_recommended_issue_number": 36,
   "next_recommended_issue_key": "S01",
-  "next_recommended_reason": "S00 已放行：标准化财务表可用，S01 可登记筛选公式/阈值/缺失与亏损规则；仍不得跳业务深研或估值。",
+  "next_recommended_reason": "S00 返工自检 19/19 PASS，依赖在代码层已满足；按复核要求，S01 可先备草案，待 S00 复验通过后正式执行。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",

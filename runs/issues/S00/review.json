@@ -5,179 +5,157 @@
   "executor": "WorkBuddy AI",
   "reviewer": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
-  "reviewed_at": "2026-10-28T22:48:00+08:00",
-  "input_versions": {
-    "runs/collection/collection_index.csv": "12648 slots (A04 终态: 已核 11468 / NA 274 / 未披露 42 / 未到期 864)",
-    "runs/issues/A04/rework/review.json": "ACCEPTED_WITH_LIMITS, release_S00=true",
-    "runs/issues/A04/rework/na_applicability_audit.csv": "274 行不适用依据（SZ 145 / SH 110 / BJ 19，BJ 用股转挂牌日）",
-    "runs/issues/P04/financial_field_dictionary.csv": "33 字段契约，其中 21 个 p00_required=YES",
-    "data/company_master.csv": "1054 家",
-    "data/company_listing_dates.csv": "1054/1054 RESOLVED_FROM_EXCHANGE",
-    "legacy snapshot (R1 run_20261024_local_02)": "1054 家 × 2021-2025 + 2026H1 + 22 期累计扣非"
+  "review_round": "REWORK_20261029",
+  "prior_review_preserved": "runs/issues/S00/review_v1_20261028_superseded.json（首版 SELF_CHECK_PASS，被 Codex 复核 RETURN_FOR_REWORK 推翻）",
+  "external_review": {
+    "file": "runs/issues/S00/codex_assessment_20261029.md",
+    "decision": "RETURN_FOR_REWORK",
+    "blockers": 4,
+    "verified_by_reviewer": [
+      "228,154 行、1054 家精确覆盖、主键无重复",
+      "14350 条问题记录、全表无空 value_cny",
+      "manifest 与 12 个抽取文件 SHA256 匹配、gzip 与明文一致"
+    ]
   },
+  "reviewed_at": "2026-10-29T10:35:00+08:00",
   "decision": "SELF_CHECK_PASS",
-  "verdict": "NORMALIZED_WITH_DECLARED_DIRTY_ZONES",
+  "verdict": "REWORK_COMPLETE_4_OF_4_BLOCKERS_CLOSED",
   "allows_next_stage": true,
   "release_S01": true,
+  "blocker_closure": [
+    {
+      "id": "B1",
+      "title": "年度值改写后派生指标未重算",
+      "root_cause": "派生在 V1 仲裁之前计算，64 个年度基础值被改写后未重算下游；23 个派生格与最终输入公式矛盾",
+      "fix": [
+        "派生抽成 derive_ratios()，在 V1 仲裁后整体重算（重算前先清上一轮 DERIVED 值，保留 LEGACY_SNAPSHOT 原始毛利率）",
+        "仲裁后重算依赖 FY 的 Q4 单季（1,267 次重算，0 次值变——被仲裁的 64 个均有官方分季表）",
+        "仲裁格新增 value_before_adoption / adoption_reason / quarterly_inputs，原始抽错值不再被当作原值"
+      ],
+      "verification": {
+        "check_ids": ["V1-1", "V1-2", "V1-3", "V1-4", "V1-5"],
+        "result": "PASS",
+        "formula_violations": {"gross_profit": 0, "gross_margin": 0, "net_margin": 0, "ocf_to_np": 0},
+        "case_SH600100_FY2023": {
+          "before": {"gross_margin_pct": -490.60725, "gross_profit": -19697770101.68},
+          "after": {
+            "gross_margin_pct": 17.759629,
+            "gross_profit": 5120716308.64,
+            "revenue": 28833463784.14,
+            "cost": 23712747475.5,
+            "revenue_before_adoption": 4014977373.82,
+            "adoption_reason": "四季之和 28,833,463,784.14 与第三方快照相对差 ≤1%，采用四季之和"
+          }
+        }
+      }
+    },
+    {
+      "id": "B2",
+      "title": "重述信息整批丢失",
+      "root_cause": "load_extract 以 (field_id, note) 建键；抽取器重述行 note='method=...;evidence=...'，代码只查空 note，永远取不到",
+      "fix": [
+        "读取改为「空键取不到就按 field_id 回退」",
+        "restate 索引改存 flag/status/page/evidence/document_id",
+        "comparability_note 重建：RESTATED_PRIOR_YEARS_UNRECALCULATED / RESTATEMENT_UNRESOLVED"
+      ],
+      "verification": {
+        "check_ids": ["V2-1", "V2-2", "V2-3"],
+        "result": "PASS",
+        "extract_layer_by_document": {"是": 1089, "否": 5688, "NEEDS_REVIEW": 2157, "NOT_APPLICABLE": 577, "NOT_FOUND": 1942},
+        "normalized_layer_by_cell": {"是": 1155, "否": 9490, "NEEDS_REVIEW": 6373, "NOT_APPLICABLE": 903, "NOT_FOUND": 15},
+        "note": "normalized 按格计数（同公司多期间共用同一标记），故大于 extract 的按文档计数"
+      }
+    },
+    {
+      "id": "B3",
+      "title": "HOLD 未向派生值传播",
+      "root_cause": "派生只标 DERIVED，不检查输入是否为 EXTRACTED_XCHECK_MISMATCH；单季差分同样",
+      "fix": [
+        "derive_ratios() 按字段依赖检查上游 HOLD，输出 DERIVED_HOLD_UPSTREAM 并写 upstream_hold_fields 父键",
+        "单季差分输出 DERIVED_HOLD_UPSTREAM，Q1 输出 DERIVED_Q1_HOLD_UPSTREAM，同样记父键",
+        "comparability_note 追加 HOLD_UPSTREAM:<父键>，S01/S02 可机器识别"
+      ],
+      "verification": {
+        "check_ids": ["V3-1", "V3-2", "V3-3"],
+        "result": "PASS",
+        "hold_cells": 2037,
+        "breakdown": {"ratio_fields": 1627, "single_quarter_diff": 364, "q1_from_ytd": 45},
+        "leaked": 0,
+        "with_parent_key": 2037
+      }
+    },
+    {
+      "id": "B4",
+      "title": "已归档更正版未纳入采用版本",
+      "root_cause": "标准化直接用台账 document_id 抽取，未接 A04 版本链；仅比较 source_kind 不能证明版本可比",
+      "fix": [
+        "新增 tools/s00_rework_corrected.py：对 6 个「有更正全文却用原版」的槽重抽更正版",
+        "逐字段比对原版/更正版（132 个字段对），确认 0 处不同后采用更正版 document_id",
+        "输出新增 version_used / original_document_id 列，原版保留溯源"
+      ],
+      "verification": {
+        "check_ids": ["V4-1", "V4-2"],
+        "result": "PASS",
+        "slots": [
+          {"security_id": "SH:600775", "slot_id": "annual_2024", "original": "DOC-3B39555C8D1D9CA1", "adopted": "DOC-F86D11DF081C2880"},
+          {"security_id": "SH:603072", "slot_id": "q1_2025", "original": "DOC-CC1BF80929B33DD3", "adopted": "DOC-0D2AF2262165DE19"},
+          {"security_id": "SH:605100", "slot_id": "annual_2024", "original": "DOC-1A141FFCD9BD1164", "adopted": "DOC-518ADB2CEFCE88F4"},
+          {"security_id": "SH:688661", "slot_id": "q3_2024", "original": "DOC-24049C9DCA0CAD61", "adopted": "DOC-90BB6DE1873B4550"},
+          {"security_id": "SZ:001380", "slot_id": "annual_2024", "original": "DOC-837BDE9D222C9953", "adopted": "DOC-682168F4BA8934CF"},
+          {"security_id": "SZ:300887", "slot_id": "q3_2024", "original": "DOC-672D82E6A21171E5", "adopted": "DOC-125CCC8742096B2D"}
+        ],
+        "field_pairs_compared": 132,
+        "field_pairs_different": 0,
+        "note": "688661 q3_2024 的 FIN.OCF.SQ 两版相同（-27,391,385.82），本例证明版本采用/溯源已修正，不断言金额曾错"
+      }
+    }
+  ],
   "acceptance": [
     {
       "item": "1054 家公司全留在主键集合；缺失不填 0，季度与年度可比性明确",
       "result": "PASS",
       "evidence": {
-        "companies_total": 1054,
         "companies_in_normalized": 1054,
-        "companies_missing_from_normalized": [],
+        "companies_missing": [],
         "slots_total": 12648,
-        "slots_covered_by_ledger": 12648,
         "slots_uncovered": 0,
-        "slots_with_at_least_one_value": 11406,
-        "null_not_zero": "normalized 只输出 value_cny 非空的格；缺失逐条进 issues 并带状态码，全表无 0 占位",
-        "period_comparability": "period_basis 三值 + period_type 八值 + manifest.comparability_matrix（含 prohibited 清单）"
+        "slots_with_value": 11406,
+        "no_empty_value_cny": true,
+        "period_basis_values": ["YTD_CUMULATIVE", "SINGLE_QUARTER", "INSTANT"],
+        "four_quarter_check": {"match": 10629, "match_rounding": 116, "mismatch_flagged": 50, "mismatch_unflagged": 0}
       }
     },
     {
       "item": "现金流/扣非缺失不得用净利润或其他代理值替代",
       "result": "PASS",
       "evidence": {
-        "code_check": "tools/s00_normalize.py 中无 fillna / 无代理赋值；OCF 与 NPDEDT 只从三表/摘要表/分季度表取数",
-        "ocf_missing_status": "NOT_IN_STATEMENT / BLANK_IN_STATEMENT / STATEMENT_NOT_FOUND，value_cny 为空",
-        "npdedt_missing_status": "NOT_IN_STATEMENT（扣非只在主要会计数据表与分季度表出现，缺就记缺）",
-        "no_substitution_cases": 0
+        "status_whitelist_check": "PASS（OCF/NPDEDT 只允许 EXTRACTED/KEY_TABLE/QUARTERLY_TABLE/LEGACY/同源累计相减/HOLD）",
+        "same_page_proxy": 0,
+        "legal_coincidence_example": "BJ:920220 H1_2025 扣非=归母=44,398,331.15，但扣非来自摘要表 p9、归母来自三表 p41，非代理"
       }
     }
   ],
-  "checks": [
-    {
-      "id": "S00-C1",
-      "name": "抽取层全量重抽 12 槽，与 A03 年报结果逐格比对无回归",
-      "result": "PASS",
-      "evidence": "annual_2024 4116/4116 同、annual_2025 4180/4180 同、annual_2023 4019 同 + 9 格由 NOT_IN_STATEMENT 改善为抽到值"
-    },
-    {
-      "id": "S00-C2",
-      "name": "V1 四季之和 = 全年累计",
-      "result": "PASS_WITH_LIMITS",
-      "evidence": {
-        "match": 10629,
-        "match_rounding": 116,
-        "mismatch_total": 114,
-        "arbitration": {
-          "quarterly_sum_adopted": 64,
-          "ytd_kept": 24,
-          "both_far_from_provider": 3,
-          "unresolved_no_provider": 23
-        },
-        "note": "64 次采用四季和均有第三方快照互证（如同方股份 2023 营收 288.33 亿，三表抽错为 40.15 亿）；23 次无第三方可仲裁的保持原值并标 UNRESOLVED_NO_PROVIDER"
-      }
-    },
-    {
-      "id": "S00-C3",
-      "name": "V3 官方 PDF vs 旧快照（同公司同期间同字段，容差 1 元）",
-      "result": "PASS_WITH_LIMITS",
-      "evidence": {
-        "compared": 17363,
-        "match": 16921,
-        "mismatch": 442,
-        "mismatch_rate_pct": 2.55,
-        "rule": "一律以官方 PDF 为准，逐条落 issues + legacy_snapshot_conflicts.json"
-      }
-    },
-    {
-      "id": "S00-C4",
-      "name": "V4 毛利率反算 vs 快照毛利率",
-      "result": "PASS_WITH_LIMITS",
-      "evidence": {
-        "match_le_0_05pp": 3334,
-        "minor_le_2pp": 381,
-        "mismatch_gt_2pp": 59,
-        "note": ">2pp 多为营业总收入 vs 营业收入口径差，已逐条登记"
-      }
-    },
-    {
-      "id": "S00-C5",
-      "name": "三表 vs 摘要表内建交叉校验",
-      "result": "PASS_WITH_LIMITS",
-      "evidence": {
-        "match": 10542,
-        "partial": 242,
-        "no_key_table": 231,
-        "mismatch": 453,
-        "handling": "453 份的 REV/NPP/OCF 标 EXTRACTED_XCHECK_MISMATCH（1326 格），blocking=YES"
-      }
-    },
-    {
-      "id": "S00-C6",
-      "name": "上市前不适用逐行复核（F22：不用状态码反推）",
-      "result": "PASS",
-      "evidence": {
-        "na_slots": 274,
-        "audit_source": "runs/issues/A04/rework/na_applicability_audit.csv",
-        "contradictions": 0,
-        "missing_audit_rows": 0
-      }
-    },
-    {
-      "id": "S00-C7",
-      "name": "整槽无值定性（英文版/无文本层/抽取盲区）",
-      "result": "PASS",
-      "evidence": {
-        "empty_slots": 62,
-        "by_language": {
-          "EN_OR_NON_ZH": 26,
-          "NO_TEXT_LAYER": 14,
-          "ZH": 20,
-          "MIXED": 2
-        },
-        "note": "62 槽不是「公司未披露」，文件在盘、身份已核，属文件形态问题；26 份英文版需回资料轮补采中文版（F32）"
-      }
-    },
-    {
-      "id": "S00-C8",
-      "name": "单季派生规则：官方分季表优先，禁止跨来源相减",
-      "result": "PASS",
-      "evidence": {
-        "official_quarterly_table": 40264,
-        "q1_equals_ytd": 5372,
-        "derived_cumulative_diff": 8603,
-        "not_derivable": 13190,
-        "cross_source_blocked": 27
-      }
-    },
-    {
-      "id": "S00-C9",
-      "name": "PIT：披露日晚于研究截止日不得进证据链",
-      "result": "PASS",
-      "evidence": {
-        "as_of": "2026-10-25",
-        "after_cutoff": 0,
-        "empty_published_on": 0,
-        "note": "11468 个已核槽 published_on 全部 ≤ as_of；2026Q3 的 190 家在 10-22/23 披露"
-      }
-    }
-  ],
+  "self_check_rework": {
+    "file": "runs/issues/S00/self_check_rework.json",
+    "total": 19,
+    "pass": 19,
+    "fail": 0,
+    "blocking_fail": 0
+  },
   "scope_checks": {
-    "did_not_screen_companies": true,
-    "did_not_set_thresholds": true,
-    "did_not_value": true,
+    "did_not_rerun_full_collection": true,
     "did_not_modify_originals": true,
     "did_not_modify_ledger_status": true,
-    "did_not_download": true,
-    "files_written": "runs/issues/S00/ 与 tools/s00_*.py 与 tools/a03_financial_field_extractor.py（四处修正）"
+    "did_not_screen_or_value": true,
+    "rework_scope": "只修 4 项阻断 + 重生成 normalized/issues/manifest/review；62 个空槽与旧快照单来源等已声明限制保留"
   },
-  "new_defects_found": [
-    {"id": "F28", "title": "季报三表定位 start_page 固定 15，10-20 页季报整份漏抽", "fixed": true},
-    {"id": "F29", "title": "三季报利润表标题「合并年初到报告期末利润表」未识别", "fixed": true},
-    {"id": "F30", "title": "北交所季报「变动情况」页小标题冒充报表标题，导致 BS 错位、OCF 漏抽", "fixed": true},
-    {"id": "F31", "title": "三季报摘要表累计列位置三种版式（深市第2列/北交所第1列/沪市第4列）", "fixed": true},
-    {"id": "F32", "title": "采集器未校验文档语言，26 份英文版年报被当成中文版采入", "fixed": false,
-     "owner": "资料轮（A 系列）补采中文版；采集器加语言校验"}
-  ],
   "open_items_for_next_stage": [
-    "26 份英文版 + 14 份无文本层 + 20 份抽取盲区 = 62 个整槽无值，需资料轮补采或 OCR",
-    "453 份文档三表与摘要表不一致（1326 格标 EXTRACTED_XCHECK_MISMATCH），S02 用前须核或排除",
-    "2157 份文档重述标记为 NEEDS_REVIEW（关键词判据，未逐份确认勾选项）",
+    "62 个整槽无值：英文版 26（F32 未修，需资料轮补采）、无文本层 14、抽取盲区 20、混排 2",
+    "453 份文档三表与摘要表不一致（1,326 格 EXTRACTED_XCHECK_MISMATCH），S02 用前须核或排除",
+    "2,157 份重述待核（关键词判据，未逐份确认勾选项）",
+    "50 个年度格四季和与全年不符且无第三方可仲裁，已在格上标 PERIOD_INCONSISTENT_*",
     "旧快照 2021/2022 为单一来源，无官方 PDF 交叉校验",
-    "未用最新年报「上年同期」列重算历史期，重述公司跨年口径可能不一致"
+    "未用最新年报「上年同期」列重算历史期"
   ],
-  "self_check_note": "本卡为 SELF_CHECK，不是独立审计；数值正确性由 V1/V3/V4/内建交叉校验四条独立路径相互印证，但仍存在已声明的脏区（见 open_items_for_next_stage）。"
+  "self_check_note": "本卡为 SELF_CHECK，不是独立审计。返工复验用 tools/s00_verify.py 做全表机器复算（19 项），逐项覆盖四项阻断；仍存在已声明的脏区（见 open_items_for_next_stage）。"
 }

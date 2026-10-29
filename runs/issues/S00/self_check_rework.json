@@ -1,0 +1,153 @@
+{
+  "generated_at": "2026-10-29T09:50:52+0800",
+  "rework_round": "REWORK_20261029 (Codex 4 blockers)",
+  "rows": 228155,
+  "issues": 16513,
+  "checks": [
+    {
+      "id": "V0-1",
+      "name": "主键唯一（公司/期间/期间基础/字段）",
+      "result": "PASS",
+      "blocking": false,
+      "detail": "rows=228155, distinct_keys=228155, duplicates=0"
+    },
+    {
+      "id": "V0-2",
+      "name": "1054 家公司全覆盖",
+      "result": "PASS",
+      "blocking": false,
+      "detail": "companies=1054"
+    },
+    {
+      "id": "V0-3",
+      "name": "无空 value_cny（缺失不填 0、另表登记）",
+      "result": "PASS",
+      "blocking": false,
+      "detail": "empty_value_rows=0, issue_rows=16513"
+    },
+    {
+      "id": "V0-4",
+      "name": "比率字段无 0 占位",
+      "result": "PASS",
+      "blocking": false,
+      "detail": "zero_ratio_cells=0"
+    },
+    {
+      "id": "V1-1",
+      "name": "毛利额 = 营业收入 − 营业成本（全表）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "checked=11170, violations=0, sample=[]"
+    },
+    {
+      "id": "V1-2",
+      "name": "毛利率 = 毛利额 ÷ 营业收入 × 100（全表）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "checked=13142, violations=0, sample=[]"
+    },
+    {
+      "id": "V1-3",
+      "name": "归母净利率 = 归母净利 ÷ 营业收入 × 100（全表）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "checked=13304, violations=0, sample=[]"
+    },
+    {
+      "id": "V1-4",
+      "name": "现金含量 = 经营现金流 ÷ 归母净利（仅归母>0）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "checked=8855, violations=0, sample=[]"
+    },
+    {
+      "id": "V1-5",
+      "name": "仲裁改写格保留原值/采用值/原因/四季输入",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "adopted_cells=6, missing_trace=0, sample=[]"
+    },
+    {
+      "id": "V2-1",
+      "name": "重述标记写入标准化表（不再整批丢失）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "extract: 是=1089, 否=5688, 待核=2157; normalized: 是=18660, 否=102512, 待核=37714"
+    },
+    {
+      "id": "V2-2",
+      "name": "重述输入/输出覆盖对账（每份文档的标记都能追到输出）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "extract 是=1089 vs normalized 是=18660（差异来自同公司多期间共用标记）"
+    },
+    {
+      "id": "V2-3",
+      "name": "重述待核在问题清单有对应记录",
+      "result": "PASS",
+      "blocking": false,
+      "detail": "issues_with_restatement=2157"
+    },
+    {
+      "id": "V3-1",
+      "name": "上游 HOLD 必须传播到派生值",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "hold_derived_cells=2037, leaked=0, sample=[]"
+    },
+    {
+      "id": "V3-2",
+      "name": "HOLD 派生格保留可复算父键",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "hold_cells=2037, with_parent_key=2037"
+    },
+    {
+      "id": "V3-3",
+      "name": "单季差分同步传播 HOLD",
+      "result": "PASS",
+      "blocking": false,
+      "detail": "single_quarter_hold=409"
+    },
+    {
+      "id": "V4-1",
+      "name": "6 个有更正全文的槽改用更正版并留原版溯源",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "slots=6, all_corrected=True, ids=['SH:600775/annual_2024', 'SH:603072/q1_2025', 'SH:605100/annual_2024', 'SH:688661/q3_2024', 'SZ:001380/annual_2024', 'SZ:300887/q3_2024']"
+    },
+    {
+      "id": "V4-2",
+      "name": "更正版标记写入标准化表",
+      "result": "PASS",
+      "blocking": false,
+      "detail": "rows_with_corrected_version=131, distinct_slots=7"
+    },
+    {
+      "id": "V5-1",
+      "name": "最终表四季之和 = 全年累计，不一致必须显式标记",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "INCOMPLETE": 1016,
+        "MATCH": 10809,
+        "MISMATCH_BUT_FLAGGED": 50
+      }
+    },
+    {
+      "id": "V6-1",
+      "name": "扣非/经营现金流无代理替代",
+      "result": "PASS",
+      "blocking": true,
+      "detail": "illegal_status=0, sample=[], identical_to_npp=0"
+    }
+  ],
+  "summary": {
+    "total": 19,
+    "pass": 19,
+    "fail": 0,
+    "blocking_fail": 0
+  },
+  "decision": "SELF_CHECK_PASS",
+  "elapsed_s": 5.4
+}

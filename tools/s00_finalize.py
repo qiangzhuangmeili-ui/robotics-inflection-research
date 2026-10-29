@@ -49,13 +49,16 @@ def main():
     gz = OUT / 'financial_normalized.csv.gz'
     if src.exists():
         h = hashlib.sha256()
-        with io.open(src, 'rb') as f, gzip.open(gz, 'wb', compresslevel=6) as g:
-            while True:
-                b = f.read(1 << 20)
-                if not b:
-                    break
-                h.update(b)
-                g.write(b)
+        # mtime=0：gzip 头不写时间戳，同一份内容重复压缩得到同一 sha256，
+        # 否则复核方每次重压都看到不同哈希，无法证明「gz 与明文一致」
+        with io.open(src, 'rb') as f, io.open(gz, 'wb') as raw:
+            with gzip.GzipFile(filename='', mode='wb', fileobj=raw, compresslevel=6, mtime=0) as g:
+                while True:
+                    b = f.read(1 << 20)
+                    if not b:
+                        break
+                    h.update(b)
+                    g.write(b)
         print(f'[S00] gz {os.path.getsize(gz)/2**20:.1f} MB, csv sha256={h.hexdigest()[:16]}')
 
     # 12 槽抽取明细的指纹（不逐份提交，但记录可复算依据）
