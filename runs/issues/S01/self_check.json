@@ -5,10 +5,10 @@
   "rules_file": "runs/issues/S01/screen_rules_v2.json",
   "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
   "rules_v1_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
-  "checked_at": "2026-10-29T15:34:15+08:00",
-  "implementation_revision": "R3_AFTER_CODEX_ASSESSMENT_522e1cd",
-  "checks_total": 27,
-  "checks_pass": 27,
+  "checked_at": "2026-10-29T15:39:38+08:00",
+  "implementation_revision": "R4_AFTER_CODEX_ASSESSMENT_dfc835d",
+  "checks_total": 28,
+  "checks_pass": 28,
   "checks_fail": 0,
   "blocking_fail": 0,
   "checks": [
@@ -166,6 +166,27 @@
       }
     },
     {
+      "id": "C16",
+      "item": "每个信号都登记了完整依赖（缺项即失败，不默认空集）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "signals": [
+          "SG01",
+          "SG02",
+          "SG03",
+          "SG04",
+          "SG05",
+          "SG06",
+          "SG07",
+          "SG08",
+          "SG09"
+        ],
+        "missing": [],
+        "bad": []
+      }
+    },
+    {
       "id": "C12b",
       "item": "输入指纹与当前文件一致",
       "result": "PASS",
@@ -215,7 +236,7 @@
     },
     {
       "id": "D03",
-      "item": "合成政策测试 21 项全部通过",
+      "item": "合成政策测试 23 项全部通过",
       "result": "PASS",
       "blocking": true,
       "detail": {
@@ -228,8 +249,8 @@
       "result": "PASS",
       "blocking": true,
       "detail": {
-        "q06_signal_fired": 836,
-        "q06_dimension_flip": 202,
+        "q06_signal_fired": 910,
+        "q06_dimension_flip": 199,
         "l2_without_two_clean_dims": 0
       }
     },
@@ -239,8 +260,8 @@
       "result": "PASS",
       "blocking": true,
       "detail": {
-        "confirmed": 23,
-        "unconfirmed": 48,
+        "confirmed": 43,
+        "unconfirmed": 77,
         "no_confirm_input": 34
       }
     },
@@ -274,8 +295,8 @@
           "NO_SIGNAL": 75
         },
         "L2": {
-          "NOT_SHORTLISTED": 715,
-          "SHORTLIST_CANDIDATE": 281,
+          "NOT_SHORTLISTED": 716,
+          "SHORTLIST_CANDIDATE": 280,
           "HOLD_FOR_DATA": 58
         },
         "note": "NOT_A_RESULT"
@@ -287,7 +308,8 @@
       "result": "PASS",
       "blocking": true,
       "detail": {
-        "signal_flags_missing_dep": 0
+        "signal_flags_missing_dep": 0,
+        "signal_deps_unregistered": 0
       }
     },
     {
@@ -491,6 +513,22 @@
       "actual": "False / True",
       "result": "PASS",
       "note": ""
+    },
+    {
+      "id": "T21",
+      "name": "SG09 继承 M07 的 Q06、不进 L2",
+      "expected": "Q06 in SG09 flags / L2 非 SHORTLIST",
+      "actual": "SG09 flags=['Q06'] / L2=NOT_SHORTLISTED",
+      "result": "PASS",
+      "note": ""
+    },
+    {
+      "id": "T22",
+      "name": "SG09 低基数按绝对额确认（1,500 万过、400 万不过）",
+      "expected": "True / True",
+      "actual": "True / True",
+      "result": "PASS",
+      "note": ""
     }
   ],
   "policy_violations": {
@@ -498,10 +536,11 @@
     "ok_with_q12": 0,
     "l2_without_two_clean_dims": 0,
     "signal_flags_missing_dep": 0,
-    "q06_signal_fired": 836,
-    "q06_dimension_flip": 202,
-    "q05_confirmed": 23,
-    "q05_unconfirmed": 48,
+    "signal_deps_unregistered": 0,
+    "q06_signal_fired": 910,
+    "q06_dimension_flip": 199,
+    "q05_confirmed": 43,
+    "q05_unconfirmed": 77,
     "q05_no_confirm_input": 34
   },
   "dryrun": {
@@ -802,16 +841,16 @@
       "NO_SIGNAL": 75
     },
     "L2_counts": {
-      "NOT_SHORTLISTED": 715,
-      "SHORTLIST_CANDIDATE": 281,
+      "NOT_SHORTLISTED": 716,
+      "SHORTLIST_CANDIDATE": 280,
       "HOLD_FOR_DATA": 58
     },
     "breadth_observation": {
       "L1_observe_share": 0.7979,
       "growth_signal_union": 659,
       "growth_signal_union_share": 0.6252,
-      "L2_shortlist_share": 0.2666,
-      "interpretation": "v1 阈值偏松属已声明限制；本次只修实现与 SG02 单位，未按命中率调阈值。"
+      "L2_shortlist_share": 0.2657,
+      "interpretation": "阈值偏松属已声明限制；本次只修信号依赖登记与实现，未按命中率调阈值。"
     },
     "quantiles_exploratory": {
       "M01": {

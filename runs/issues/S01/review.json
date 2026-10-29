@@ -5,14 +5,15 @@
   "executor": "WorkBuddy AI",
   "reviewer": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
-  "review_round": "REWORK_R3_AFTER_CODEX_ASSESSMENT_522e1cd",
+  "review_round": "REWORK_R4_AFTER_CODEX_ASSESSMENT_dfc835d",
   "prior_reviews_preserved": [
     "runs/issues/S01/review_v1_20261029_superseded.json（首版，被第一轮复验退回）",
-    "runs/issues/S01/review_r2_20261029_superseded.json（R2，被 522e1cd 复验退回）"
+    "runs/issues/S01/review_r2_20261029_superseded.json（R2，被 522e1cd 复验退回）",
+    "runs/issues/S01/review_r3_20261029_superseded.json（R3，被 dfc835d 复验退回）"
   ],
-  "reviewed_at": "2026-10-29T16:05:00+08:00",
+  "reviewed_at": "2026-10-29T15:45:00+08:00",
   "decision": "SELF_CHECK_PASS",
-  "verdict": "QUALITY_PROPAGATION_AND_UNIT_CONSISTENCY_FIXED",
+  "verdict": "SIGNAL_DEPENDENCY_REGISTRY_COMPLETE",
   "allows_next_stage": false,
   "release_S02": false,
   "next_stage_release": "PENDING_EXTERNAL_RECHECK",
@@ -22,19 +23,25 @@
     "v1_file_preserved": "runs/issues/S01/screen_rules_v1.json",
     "v1_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
     "v1_unchanged": true,
-    "v1_to_v2_diff": ["rules_version", "frozen_at", "change_log", "signals[1].threshold", "signals[1].note"],
+    "v1_to_v2_diff": [
+      "rules_version",
+      "frozen_at",
+      "change_log",
+      "signals[1].threshold",
+      "signals[1].note"
+    ],
     "unexpected_diff": [],
     "erratum": "runs/issues/S01/erratum_sg02_unit_20261029.md"
   },
   "external_review": {
-    "file": "runs/issues/S01/codex_assessment_522e1cd.md",
+    "file": "runs/issues/S01/codex_assessment_dfc835d.md",
     "decision": "RETURN_FOR_REWORK",
-    "blockers": 3,
+    "blockers": 1,
     "passed_items": [
-      "16 项既有合成测试 16/16 PASS",
-      "规则 SHA256 仍为 c76d0461…，Git blob 与 326ecac 相同",
-      "3 份输入指纹与 manifest 全匹配",
-      "匿名重算 L2=290、M01=565 OK/386 PROVISIONAL 可复现"
+      "v1 未变、v2 仅 5 处声明差异",
+      "输入与交付哈希匹配",
+      "21 项合成测试通过",
+      "SG02 已按 5pp 执行"
     ]
   },
   "blocker_closure": [
@@ -50,7 +57,10 @@
       "verification": {
         "signal_flags_missing_dep": 0,
         "q05_no_confirm_input": 34,
-        "tests": ["T18", "T19"]
+        "tests": [
+          "T18",
+          "T19"
+        ]
       }
     },
     {
@@ -68,7 +78,9 @@
         "unexpected_diff": 0,
         "sg02_hits_v1": 522,
         "sg02_hits_v2": 415,
-        "tests": ["T20"]
+        "tests": [
+          "T20"
+        ]
       }
     },
     {
@@ -78,7 +90,32 @@
       "fix": [
         "非旧快照必须明确 CONSOLIDATED；UNKNOWN 仅在 LEGACY_SNAPSHOT 行放行（记 Q07）"
       ],
-      "verification": {"ok_with_q12": 0, "tests": ["T17", "T17b"]}
+      "verification": {
+        "ok_with_q12": 0,
+        "tests": [
+          "T17",
+          "T17b"
+        ]
+      }
+    },
+    {
+      "id": "B8",
+      "title": "SIGNAL_DEPS 漏登记 SG09 → M07",
+      "root_cause": "依赖表缺 SG09，signal_flags 用 .get(sid, []) 默认空集，SG09 因此被当成「无标记=干净」",
+      "fix": [
+        "补齐 SG09: [\"M07\"]",
+        "signal_flags 不再默认空集：未登记返回 None，L2 判定视为不干净并计违例 signal_deps_unregistered",
+        "新增校验 C16：每个规则信号必须有非空依赖且含主指标，缺项直接 FAIL"
+      ],
+      "verification": {
+        "signal_flags_missing_dep": 0,
+        "signal_deps_unregistered": 0,
+        "tests": [
+          "T21",
+          "T22"
+        ],
+        "sg09_missing_flags_before": 106
+      }
     }
   ],
   "acceptance": [
@@ -86,13 +123,14 @@
       "item": "所有公式/阈值/边界/缺失路径可执行且先于名单产出留痕",
       "result": "PASS",
       "evidence": {
-        "machine_checks": "27/27 PASS，blocking_fail=0",
-        "synthetic_tests": "21/21 PASS",
+        "machine_checks": "28/28 PASS，blocking_fail=0",
+        "synthetic_tests": "23/23 PASS",
         "policy_violations": {
           "ok_with_q06": 0,
           "ok_with_q12": 0,
           "l2_without_two_clean_dims": 0,
-          "signal_flags_missing_dep": 0
+          "signal_flags_missing_dep": 0,
+          "signal_deps_unregistered": 0
         },
         "rules_frozen_before_outputs": true,
         "field_ids_verified": 17,
@@ -116,20 +154,50 @@
     "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
     "rules_version": "S01_SCREEN_RULES_V2",
     "companies": 1054,
-    "latest_period_distribution": {"20251231": 4, "20260331": 5, "20260630": 863, "20260930": 182},
-    "signal_hits": {"SG01": 460, "SG02": 415, "SG03": 307, "SG04": 224, "SG05": 244, "SG06": 35, "SG07": 232, "SG08": 97, "SG09": 203},
-    "L1_counts": {"OBSERVE_QUEUE": 841, "RISK_WATCH": 138, "NO_SIGNAL": 75},
-    "L2_counts": {"SHORTLIST_CANDIDATE": 281, "NOT_SHORTLISTED": 715, "HOLD_FOR_DATA": 58},
-    "breadth_observation": {
-      "growth_signal_union": 718,
-      "growth_signal_union_share": 0.6812,
-      "L1_observe_share": 0.798,
-      "L2_shortlist_share": 0.2666
+    "latest_period_distribution": {
+      "20251231": 4,
+      "20260331": 5,
+      "20260630": 863,
+      "20260930": 182
     },
-    "note": "只用于证明规则可执行；不是筛选结果，不得引用为「多少家改善」。"
+    "signal_hits": {
+      "SG01": 460,
+      "SG02": 415,
+      "SG03": 307,
+      "SG04": 224,
+      "SG05": 244,
+      "SG06": 35,
+      "SG07": 232,
+      "SG08": 97,
+      "SG09": 203
+    },
+    "L1_counts": {
+      "OBSERVE_QUEUE": 841,
+      "RISK_WATCH": 138,
+      "NO_SIGNAL": 75
+    },
+    "L2_counts": {
+      "SHORTLIST_CANDIDATE": 280,
+      "NOT_SHORTLISTED": 716,
+      "HOLD_FOR_DATA": 58
+    },
+    "breadth_observation": {
+      "growth_signal_union": 659,
+      "growth_signal_union_share": 0.6252,
+      "L1_observe_share": 0.7979,
+      "L2_shortlist_share": 0.2657
+    },
+    "note": "只用于证明规则可执行；不是筛选结果，不得引用为「多少家改善」。",
+    "policy_violations": {
+      "q06_signal_fired": 910,
+      "q06_dimension_flip": 199,
+      "q05_confirmed": 43,
+      "q05_unconfirmed": 77,
+      "q05_no_confirm_input": 34
+    }
   },
   "known_limits": [
-    "阈值偏松：SG01∪SG02 覆盖 68%，L1 观察队列 80%",
+    "阈值偏松：SG01∪SG02 覆盖 62.5%，L1 观察队列 79.8%",
     "MARGIN 与 PROFIT 维度同源，L2 仍属重复计数",
     "按预登记原则未回头调阈值（v2 只修单位）；收紧留到 S04 前 screen_rules_v3.json",
     "阈值未做行业分组校准",
@@ -153,5 +221,5 @@
     "行业分组阈值校准留待 v3/v4",
     "PROVISIONAL 面较大：若需更多可用样本，应先补「按最新年报上年同期重算历史期」，而不是放宽 Q06"
   ],
-  "self_check_note": "本卡为 SELF_CHECK，不是独立审计。27 项机器校验与 21 项合成测试只证明实现遵从规则文件，不证明阈值在业务上正确；阈值正确性需在 S03/S04 用实际名单检验，且不得回头修改已冻结版本。"
+  "self_check_note": "本卡为 SELF_CHECK，不是独立审计。28 项机器校验与 23 项合成测试只证明实现遵从规则文件，不证明阈值在业务上正确；阈值正确性需在 S03/S04 用实际名单检验，且不得回头修改已冻结版本。"
 }

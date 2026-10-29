@@ -24,9 +24,11 @@ DELIVERABLES = [
     "review.json",
     "review_v1_20261029_superseded.json",
     "review_r2_20261029_superseded.json",
+    "review_r3_20261029_superseded.json",
     "erratum_sg02_unit_20261029.md",
     "codex_assessment_20261029.md",
     "codex_assessment_522e1cd.md",
+    "codex_assessment_dfc835d.md",
 ]
 TOOLS = ["tools/s01_rules_check.py"]
 

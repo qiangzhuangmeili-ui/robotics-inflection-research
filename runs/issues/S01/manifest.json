@@ -3,7 +3,7 @@
   "issue_number": 36,
   "plan_version": "20261026_collection_first_v2",
   "rules_version": "S01_SCREEN_RULES_V2",
-  "generated_at": "2026-10-29T15:34:16+08:00",
+  "generated_at": "2026-10-29T15:40:27+08:00",
   "executor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
   "frozen_at": "2026-10-29T15:29:41+08:00",
@@ -48,13 +48,13 @@
     },
     {
       "path": "runs/issues/S01/threshold_rationale.md",
-      "bytes": 10121,
-      "sha256": "dcbef907148b320d9431bd073034ec257c53697203bbfd59ac67f87d57f8cf56"
+      "bytes": 10306,
+      "sha256": "2e38b070400ff8ea1c1856bb09048b0ebd3b99a8262603f2c89c3df8ad5d097f"
     },
     {
       "path": "runs/issues/S01/implementation_notes.md",
-      "bytes": 7669,
-      "sha256": "36b7a2b3a8cac379a0e2ea3a889cf2ef9b9511a006c3ae411237eddb0b792357"
+      "bytes": 8498,
+      "sha256": "e7b9f6f28f94e13ffab135bb6c9577ae229abf379074e4abe95a36591af34ad5"
     },
     {
       "path": "runs/issues/S01/metric_coverage_dryrun.csv",
@@ -63,18 +63,18 @@
     },
     {
       "path": "runs/issues/S01/self_check.json",
-      "bytes": 23821,
-      "sha256": "42fd50b357643cc6172096e1e50c483f0f3bc7f0d5511c67dc4445a068eaa776"
+      "bytes": 24834,
+      "sha256": "0b1bc0696274ff1f72111138148ee6a280c836f1a327df5129a98a07b7ac6783"
     },
     {
       "path": "runs/issues/S01/handoff.md",
-      "bytes": 7278,
-      "sha256": "91e6b116f7b0b4c7d6fa0689ed04ab9518b7db0b32bc93775ce77fda1d23b6a4"
+      "bytes": 7937,
+      "sha256": "b92801e23dd1b3fbe18266f859ff7a1dd6385d284f3f082b7b2351275c2b445b"
     },
     {
       "path": "runs/issues/S01/review.json",
-      "bytes": 7026,
-      "sha256": "11916c18ac23f6081414da79b1cda782c5d9a920c5de9f39f9a482e6569d343a"
+      "bytes": 8324,
+      "sha256": "54d6d84f0e164eaa8220596143d1021c0e135f505044f002a3be1c03617cf004"
     },
     {
       "path": "runs/issues/S01/review_v1_20261029_superseded.json",
@@ -87,9 +87,14 @@
       "sha256": "20a87ab09444ecbec7883428e566bfa1a98520546b35919b7d222e86006bea61"
     },
     {
+      "path": "runs/issues/S01/review_r3_20261029_superseded.json",
+      "bytes": 6869,
+      "sha256": "8007895391fbd50968088ecb11d2dc42066cdb10b58c6c7086286adb611019a5"
+    },
+    {
       "path": "runs/issues/S01/erratum_sg02_unit_20261029.md",
-      "bytes": 2821,
-      "sha256": "7b0507d9c1abcddc54dfd11c8ce467289092d3f2dac3869616ce7e6b4dcaf272"
+      "bytes": 2987,
+      "sha256": "7b91ab6a88c02e6c1cba78c90dbb1d0cfcef7b6d8b0e6abd50ee7de0b84c426a"
     },
     {
       "path": "runs/issues/S01/codex_assessment_20261029.md",
@@ -100,6 +105,11 @@
       "path": "runs/issues/S01/codex_assessment_522e1cd.md",
       "bytes": 4392,
       "sha256": "37dfb18526057d9bfbe8bf366d9598c7ab5fb8ae9aaf7a1418960cc5fb41fdbc"
+    },
+    {
+      "path": "runs/issues/S01/codex_assessment_dfc835d.md",
+      "bytes": 2698,
+      "sha256": "aa7c240aab8b97e2604f1274a1e130be3c9c2a5a1f77f3c1dacb0ea117ebf67b"
     }
   ],
   "universe": {
@@ -162,24 +172,25 @@
   },
   "self_check": {
     "file": "runs/issues/S01/self_check.json",
-    "total": 27,
-    "pass": 27,
+    "total": 28,
+    "pass": 28,
     "fail": 0,
     "blocking_fail": 0,
-    "implementation_revision": "R3_AFTER_CODEX_ASSESSMENT_522e1cd",
+    "implementation_revision": "R4_AFTER_CODEX_ASSESSMENT_dfc835d",
     "synthetic_tests": {
-      "total": 21,
-      "pass": 21
+      "total": 23,
+      "pass": 23
     },
     "policy_violations": {
       "ok_with_q06": 0,
       "ok_with_q12": 0,
       "l2_without_two_clean_dims": 0,
       "signal_flags_missing_dep": 0,
-      "q06_signal_fired": 836,
-      "q06_dimension_flip": 202,
-      "q05_confirmed": 23,
-      "q05_unconfirmed": 48,
+      "signal_deps_unregistered": 0,
+      "q06_signal_fired": 910,
+      "q06_dimension_flip": 199,
+      "q05_confirmed": 43,
+      "q05_unconfirmed": 77,
       "q05_no_confirm_input": 34
     }
   },
@@ -198,16 +209,16 @@
       "NO_SIGNAL": 75
     },
     "L2_counts": {
-      "NOT_SHORTLISTED": 715,
-      "SHORTLIST_CANDIDATE": 281,
+      "NOT_SHORTLISTED": 716,
+      "SHORTLIST_CANDIDATE": 280,
       "HOLD_FOR_DATA": 58
     },
     "breadth_observation": {
       "L1_observe_share": 0.7979,
       "growth_signal_union": 659,
       "growth_signal_union_share": 0.6252,
-      "L2_shortlist_share": 0.2666,
-      "interpretation": "v1 阈值偏松属已声明限制；本次只修实现与 SG02 单位，未按命中率调阈值。"
+      "L2_shortlist_share": 0.2657,
+      "interpretation": "阈值偏松属已声明限制；本次只修信号依赖登记与实现，未按命中率调阈值。"
     },
     "note": "只验证规则可执行，不产出名单；不得引用为「多少家改善」。"
   },
@@ -225,7 +236,7 @@
   "tools": [
     {
       "path": "tools/s01_rules_check.py",
-      "sha256": "0ca541fb9a2a432a735ca6bea0c643b176daf68ac02f4f8f94b07df17ea0ad1f"
+      "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
     }
   ],
   "known_limits": [

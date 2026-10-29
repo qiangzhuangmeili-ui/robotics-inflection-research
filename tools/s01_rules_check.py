@@ -51,7 +51,8 @@ CONFIRMABLE = {"M01": "AMOUNT", "M02": "AMOUNT", "M05": "AMOUNT",
 
 # 复合信号的全部必需指标：SG07 需要 M08 与 M09，SG08 需要 M09
 SIGNAL_DEPS = {"SG01": ["M01"], "SG02": ["M03"], "SG03": ["M04"], "SG04": ["M05"],
-               "SG05": ["M06"], "SG06": ["M05"], "SG07": ["M08", "M09"], "SG08": ["M09"]}
+               "SG05": ["M06"], "SG06": ["M05"], "SG07": ["M08", "M09"], "SG08": ["M09"],
+               "SG09": ["M07"]}
 
 checks: list[dict] = []
 tests: list[dict] = []
@@ -404,9 +405,15 @@ EVALUABLE = ("OK", "PROVISIONAL")
 # ---------------------------------------------------------------- 信号与分层
 
 def signal_flags(sid, res_map):
-    """从原始指标结果重新取依赖标记，不信任信号自报的 flags。"""
+    """从原始指标结果重新取依赖标记，不信任信号自报的 flags。
+
+    依赖未登记时返回 None（不得默认空集，否则信号会被当成「干净」）。
+    """
+    deps = SIGNAL_DEPS.get(sid)
+    if not deps:
+        return None
     fl = set()
-    for m in SIGNAL_DEPS.get(sid, []):
+    for m in deps:
         fl |= res_map[m]["flags"]
     return fl
 
@@ -454,6 +461,8 @@ def signals_of(rows, sec, pk, res_map):
 
     for f in fired:
         fl = signal_flags(f["id"], res_map)
+        if fl is None:                      # 依赖未登记 → 不得视为干净
+            fl = {"Q00_DEP_UNREGISTERED"}
         f["flags"] = fl
         cur = res_map[f["metric"]]["cur"]
         base = res_map[f["metric"]]["base"]
@@ -479,7 +488,10 @@ def layers(fired, res_map):
         l1 = "RISK_WATCH" if rh else "NO_SIGNAL"
 
     def clean(f):
-        return "Q06" not in signal_flags(f["id"], res_map) and f["confirmed"]
+        fl = signal_flags(f["id"], res_map)
+        if fl is None:
+            return False
+        return "Q06" not in fl and f["confirmed"]
 
     eligible = [f for f in fired if clean(f)]
     dims = {f["dim"] for f in eligible}
@@ -628,6 +640,20 @@ def structural(rules, field_rows):
     add("C15", "v1→v2 差异仅限 SG02 单位与版本元数据", not extra,
         {"diffs": sorted(set(diffs)), "unexpected": extra})
 
+    sig_ids = [s["id"] for s in rules["signals"]]
+    missing_dep = [i for i in sig_ids if not SIGNAL_DEPS.get(i)]
+    bad_dep = []
+    for sig in rules["signals"]:
+        deps = SIGNAL_DEPS.get(sig["id"]) or []
+        if sig["metric"] not in deps:
+            bad_dep.append({"id": sig["id"], "reason": "主指标不在依赖列表"})
+        unk = [d for d in deps if d not in mid]
+        if unk:
+            bad_dep.append({"id": sig["id"], "unknown_dep": unk})
+    add("C16", "每个信号都登记了完整依赖（缺项即失败，不默认空集）",
+        not missing_dep and not bad_dep,
+        {"signals": sig_ids, "missing": missing_dep, "bad": bad_dep})
+
 
 # ---------------------------------------------------------------- 合成测试
 
@@ -674,6 +700,13 @@ def _sq(sec, accel_pp, a=0.10):
     _mk(rows, meta, sec, 20250630, "FIN.REV.SQ", base)
     _mk(rows, meta, sec, 20260331, "FIN.REV.SQ", base * (1 + b))
     _mk(rows, meta, sec, 20250331, "FIN.REV.SQ", base)
+    return rows, meta
+
+
+def _sq_npdedt(sec, growth=0.4, base=10e6, restate="", low=""):
+    rows, meta = defaultdict(dict), defaultdict(dict)
+    _mk(rows, meta, sec, 20260630, "FIN.NPDEDT.SQ", base * (1 + growth))
+    _mk(rows, meta, sec, 20250630, "FIN.NPDEDT.SQ", base, restate=restate, low=low)
     return rows, meta
 
 
@@ -840,6 +873,27 @@ def synthetic_tests(rules):
     add_test("T20", "SG02 阈值 5pp：1pp 不触发、6pp 触发", "False / True",
              f"{fire_a} / {fire_b}", (not fire_a) and fire_b)
 
+    # T21 SG09 必须继承 M07 的质量标记
+    r, m = _sq_npdedt("T21", growth=0.40, restate=RESTATE_CONFIRMED)
+    x, _ = evaluate(r, m, "T21", 20260630)
+    g = [f for f in signals_of(r, "T21", 20260630, x) if f["id"] == "SG09"]
+    l1, l2, dims, _, _ = layers(signals_of(r, "T21", 20260630, x), x)
+    add_test("T21", "SG09 继承 M07 的 Q06、不进 L2", "Q06 in SG09 flags / L2 非 SHORTLIST",
+             f"SG09 flags={sorted(g[0]['flags']) if g else 'no-fire'} / L2={l2}",
+             bool(g) and "Q06" in g[0]["flags"] and l2 != "SHORTLIST_CANDIDATE")
+
+    # T22 SG09 低基数：增量 1,500 万确认、400 万不确认
+    r, m = _sq_npdedt("T22a", growth=1.50, base=10e6, low="LOW_BASE_PROFIT")
+    x, _ = evaluate(r, m, "T22a", 20260630)
+    g = [f for f in signals_of(r, "T22a", 20260630, x) if f["id"] == "SG09"]
+    ok_a = bool(g) and g[0]["confirmed"] and g[0]["confirm"] == "CONFIRMED_ABS"
+    r, m = _sq_npdedt("T22b", growth=0.40, base=10e6, low="LOW_BASE_PROFIT")
+    x, _ = evaluate(r, m, "T22b", 20260630)
+    g = [f for f in signals_of(r, "T22b", 20260630, x) if f["id"] == "SG09"]
+    ok_b = bool(g) and not g[0]["confirmed"]
+    add_test("T22", "SG09 低基数按绝对额确认（1,500 万过、400 万不过）", "True / True",
+             f"{ok_a} / {ok_b}", ok_a and ok_b)
+
 
 # ---------------------------------------------------------------- 主流程
 
@@ -901,11 +955,15 @@ def main():
         for f in fired:
             sig_hits[f["id"]] += 1
             dim_hits[f["dim"]] += 1
-            if not signal_flags(f["id"], res_map) <= f["flags"]:
+            dep = signal_flags(f["id"], res_map)
+            if dep is None:
+                viol["signal_deps_unregistered"] += 1
+            elif not dep <= f["flags"]:
                 viol["signal_flags_missing_dep"] += 1
-            if "Q06" in signal_flags(f["id"], res_map):
+            dep = signal_flags(f["id"], res_map) or set()
+            if "Q06" in dep:
                 viol["q06_signal_fired"] += 1
-            if "Q05" in signal_flags(f["id"], res_map):
+            if "Q05" in dep:
                 if f["confirmed"]:
                     viol["q05_confirmed"] += 1
                 else:
@@ -919,7 +977,8 @@ def main():
         if y1 == "OBSERVE_QUEUE" and any(f["id"] in ("SG01", "SG02") for f in fired):
             growth_union += 1
         clean_dims = {f["dim"] for f in fired
-                      if "Q06" not in signal_flags(f["id"], res_map) and f["confirmed"]}
+                      if (signal_flags(f["id"], res_map) or {"Q00"}) and
+                      "Q06" not in (signal_flags(f["id"], res_map) or {"Q00"}) and f["confirmed"]}
         if y2 == "SHORTLIST_CANDIDATE" and len(clean_dims) < 2:
             viol["l2_without_two_clean_dims"] += 1
 
@@ -976,8 +1035,10 @@ def main():
         w = csv.DictWriter(fh, fieldnames=list(cov_rows[0].keys()), lineterminator="\n")
         w.writeheader()
         w.writerows(cov_rows)
-    add("D10", "信号对象携带全部依赖指标的质量标记", viol["signal_flags_missing_dep"] == 0,
-        {"signal_flags_missing_dep": viol["signal_flags_missing_dep"]})
+    add("D10", "信号对象携带全部依赖指标的质量标记",
+        viol["signal_flags_missing_dep"] == 0 and viol["signal_deps_unregistered"] == 0,
+        {"signal_flags_missing_dep": viol["signal_flags_missing_dep"],
+         "signal_deps_unregistered": viol["signal_deps_unregistered"]})
     add("D09", "覆盖表不含公司标识列",
         not [c for c in cov_rows[0] if c in ("security_id", "stock_code", "stock_name")],
         {"columns": list(cov_rows[0].keys())})
@@ -995,7 +1056,7 @@ def main():
         "rules_sha256": sha256(RULES),
         "rules_v1_sha256": sha256(RULES_V1),
         "checked_at": datetime.now(CST).isoformat(timespec="seconds"),
-        "implementation_revision": "R3_AFTER_CODEX_ASSESSMENT_522e1cd",
+        "implementation_revision": "R4_AFTER_CODEX_ASSESSMENT_dfc835d",
         "checks_total": len(checks),
         "checks_pass": sum(1 for c in checks if c["result"] == "PASS"),
         "checks_fail": sum(1 for c in checks if c["result"] == "FAIL"),
@@ -1004,7 +1065,8 @@ def main():
         "synthetic_tests": tests,
         "policy_violations": {k: viol.get(k, 0) for k in [
             "ok_with_q06", "ok_with_q12", "l2_without_two_clean_dims",
-            "signal_flags_missing_dep", "q06_signal_fired", "q06_dimension_flip",
+            "signal_flags_missing_dep", "signal_deps_unregistered",
+            "q06_signal_fired", "q06_dimension_flip",
             "q05_confirmed", "q05_unconfirmed", "q05_no_confirm_input"]},
         "dryrun": {
             "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
@@ -1018,7 +1080,7 @@ def main():
                 "growth_signal_union": growth_union,
                 "growth_signal_union_share": round(growth_union / total, 4) if total else 0,
                 "L2_shortlist_share": round(l2["SHORTLIST_CANDIDATE"] / total, 4) if total else 0,
-                "interpretation": "v1 阈值偏松属已声明限制；本次只修实现与 SG02 单位，未按命中率调阈值。"
+                "interpretation": "阈值偏松属已声明限制；本次只修信号依赖登记与实现，未按命中率调阈值。"
             },
             "quantiles_exploratory": quant,
             "note": "只做可执行性验证与匿名分布描述，不产出名单。"
