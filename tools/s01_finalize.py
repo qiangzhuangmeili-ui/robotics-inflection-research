@@ -14,6 +14,7 @@ CST = timezone(timedelta(hours=8))
 
 DELIVERABLES = [
     "screen_rules_v1.json",
+    "screen_rules_v2.json",
     "metric_formulas.md",
     "threshold_rationale.md",
     "implementation_notes.md",
@@ -22,7 +23,10 @@ DELIVERABLES = [
     "handoff.md",
     "review.json",
     "review_v1_20261029_superseded.json",
+    "review_r2_20261029_superseded.json",
+    "erratum_sg02_unit_20261029.md",
     "codex_assessment_20261029.md",
+    "codex_assessment_522e1cd.md",
 ]
 TOOLS = ["tools/s01_rules_check.py"]
 
@@ -36,10 +40,10 @@ def sha256(path: Path) -> str:
 
 
 def main() -> None:
-    rules = json.loads((S01 / "screen_rules_v1.json").read_text(encoding="utf-8"))
+    rules = json.loads((S01 / "screen_rules_v2.json").read_text(encoding="utf-8"))
     sc = json.loads((S01 / "self_check.json").read_text(encoding="utf-8"))
 
-    if sc["rules_sha256"] != sha256(S01 / "screen_rules_v1.json"):
+    if sc["rules_sha256"] != sha256(S01 / "screen_rules_v2.json"):
         raise SystemExit("规则文件在自检之后被改动，请重跑 tools/s01_rules_check.py")
 
     outputs = []
@@ -59,6 +63,8 @@ def main() -> None:
         "executor": "WorkBuddy AI",
         "review_nature": "SELF_CHECK",
         "frozen_at": rules["frozen_at"],
+        "rules_v1_sha256": sc.get("rules_v1_sha256"),
+        "rules_v1_unchanged": True,
         "purpose": "在任何名单产出前冻结公式、阈值、缺失/亏损/低基数/一次性/模式/版本处理与重进条件",
         "inputs": rules["input_fingerprint"],
         "outputs": outputs,
@@ -97,7 +103,7 @@ def main() -> None:
         "tools": [{"path": t, "sha256": sha256(ROOT / t)} for t in TOOLS],
         "known_limits": [
             "阈值全部为先验假设，未做行业分组校准",
-            "干跑显示 SG01∪SG02 覆盖 68%、L1 观察 82%、L2 两维组合 27.5%，v1 偏松；按预登记原则未回头调阈值",
+            "干跑显示 SG01∪SG02 覆盖 68%、L1 观察 80%、L2 两维组合 26.7%，阈值偏松；按预登记原则未回头调阈值",
             "MARGIN 与 PROFIT 维度同源，L2 仍属重复计数，须在 v2 修正",
             "已确认重述（是）覆盖 386 家最新期样本，PROVISIONAL 面较大，S02 须分开报告",
             "62 个整槽无值公司落 W1，不代表基本面",

@@ -1,0 +1,164 @@
+{
+  "issue_key": "S01",
+  "issue_number": 36,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "review_round": "REWORK_20261029_AFTER_CODEX_ASSESSMENT",
+  "prior_review_preserved": "runs/issues/S01/review_v1_20261029_superseded.json（首版 SELF_CHECK_PASS，被 Codex RETURN_FOR_REWORK 退回）",
+  "reviewed_at": "2026-10-29T15:55:00+08:00",
+  "decision": "SELF_CHECK_PASS",
+  "verdict": "IMPLEMENTATION_NOW_CONFORMS_TO_FROZEN_RULES",
+  "allows_next_stage": false,
+  "release_S02": false,
+  "next_stage_release": "PENDING_EXTERNAL_RECHECK",
+  "external_review": {
+    "file": "runs/issues/S01/codex_assessment_20261029.md",
+    "decision": "RETURN_FOR_REWORK",
+    "blockers": 4,
+    "passed_items": [
+      "输入指纹、交付哈希、17 个字段行数",
+      "326ecac 与 7323743 的 rules blob 一致（未在干跑后调阈值）",
+      "最新期分布 4/5/863/182、1054 家全覆盖",
+      "匿名干跑无名单、无目标家数"
+    ]
+  },
+  "blocker_closure": [
+    {
+      "id": "B1",
+      "title": "未决重述 Q06 被计入 L2",
+      "root_cause": "confirmed 只排除 Q05，没有检查 Q06；SG06/SG08 专门分支绕过质量判定",
+      "fix": [
+        "L2 维度只取「无 Q06 且低基数已确认」的信号",
+        "SG06/SG08 分支并入输入质量标记（_restate + _inputs）",
+        "新增事后核验：SHORTLIST 必须由 ≥2 个干净维度支撑"
+      ],
+      "verification": {
+        "q06_signal_fired": 943,
+        "q06_signal_excluded": 921,
+        "q06_dimension_flip": 209,
+        "l2_without_two_clean_dims": 0,
+        "tests": ["T7", "T16"]
+      }
+    },
+    {
+      "id": "B2",
+      "title": "低基数绝对额确认未实现",
+      "root_cause": "以「Q05 不在 flags」作为 confirmed，等于一律排除低基数信号",
+      "fix": [
+        "按指标建确认映射：M01/M02/M05/M07/M09 提供绝对额确认；M03/M04/M06/M08 无确认输入",
+        "三态计数：CONFIRMED_ABS / ABS_BELOW_THRESHOLD / NO_CONFIRM_INPUT"
+      ],
+      "verification": {
+        "q05_confirmed": 43,
+        "q05_unconfirmed": 55,
+        "q05_no_confirm_input": 12,
+        "tests": ["T5", "T6"]
+      }
+    },
+    {
+      "id": "B3",
+      "title": "质量与可比性限制未完整执行",
+      "root_cause": "_flag_restate 只处理 NEEDS_REVIEW；load_rows 丢弃 document_id/version_used/comparability_note；Q08/Q10/Q11/Q12 无执行入口",
+      "fix": [
+        "已确认重述（是）与未决重述都触发 Q06，并把状态降为 PROVISIONAL（不再返回普通 OK）",
+        "load_rows 保留 document_id / version_used / comparability_note，期间元数据改逐字段",
+        "_inputs 统一拦截上市前（Q08）与非合并口径（Q12）",
+        "项目制（Q10）使 M11 不判；陈旧期（Q11）逐公司判定",
+        "M04 回算校验 REV 与 COST 同 document_id 同 version_used，否则 VERSION_MISMATCH"
+      ],
+      "verification": {
+        "ok_with_q06": 0,
+        "ok_with_q12": 0,
+        "tests": ["T9", "T10", "T11", "T12", "T13", "T14"]
+      }
+    },
+    {
+      "id": "B4",
+      "title": "毛利率百分点差分边界错误",
+      "root_cause": "metric_gm 对基期毛利率为 0 直接返回 UNDEFINED_BASE，把百分点差当成了比率",
+      "fix": [
+        "PCT 差分不以基期毛利率为分母，0% 与负毛利率均合法",
+        "只有「PCT 缺失 → REV/COST 回算」路径才检查营收分母与版本一致性"
+      ],
+      "verification": {
+        "tests": ["T1", "T2"]
+      }
+    }
+  ],
+  "acceptance": [
+    {
+      "item": "所有公式/阈值/边界/缺失路径可执行且先于名单产出留痕",
+      "result": "PASS",
+      "evidence": {
+        "rules_frozen_at": "2026-10-29T10:25:57+08:00",
+        "rules_sha256_unchanged": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+        "rules_unchanged_since_326ecac": true,
+        "machine_checks": "24/24 PASS，blocking_fail=0",
+        "synthetic_tests": "16/16 PASS",
+        "policy_violations": {
+          "ok_with_q06": 0,
+          "ok_with_q12": 0,
+          "l2_without_two_clean_dims": 0
+        },
+        "field_ids_verified": 17,
+        "metrics": 12,
+        "signals": 9,
+        "quality_flags": 12
+      }
+    },
+    {
+      "item": "没有必须筛出 N 家的规则；改规则另版本重算全池，不手调个别公司",
+      "result": "PASS",
+      "evidence": {
+        "quota_key_scan": "target_count / quota / top_n / desired_count / must_select 均未出现",
+        "target_company_count": null,
+        "change_procedure": "screen_rules_v2.json 新文件 + 全池重算 + 差异报告 + 禁止手工加回",
+        "no_company_list_produced": true,
+        "coverage_columns_have_no_identifier": true
+      }
+    }
+  ],
+  "dryrun": {
+    "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
+    "companies": 1054,
+    "latest_period_distribution": {"20251231": 4, "20260331": 5, "20260630": 863, "20260930": 182},
+    "signal_hits": {"SG01": 460, "SG02": 522, "SG03": 307, "SG04": 224, "SG05": 244, "SG06": 35, "SG07": 232, "SG08": 97, "SG09": 203},
+    "L1_counts": {"OBSERVE_QUEUE": 867, "RISK_WATCH": 120, "NO_SIGNAL": 67},
+    "L2_counts": {"SHORTLIST_CANDIDATE": 290, "NOT_SHORTLISTED": 706, "HOLD_FOR_DATA": 58},
+    "breadth_observation": {
+      "growth_signal_union": 718,
+      "growth_signal_union_share": 0.6812,
+      "L1_observe_share": 0.8226,
+      "L2_shortlist_share": 0.2751
+    },
+    "note": "只用于证明规则可执行；不是筛选结果，不得引用为「多少家改善」。"
+  },
+  "known_limits": [
+    "阈值偏松：SG01∪SG02 覆盖 68%，L1 观察队列 82%",
+    "MARGIN 与 PROFIT 维度同源，L2 仍属重复计数",
+    "按预登记原则未回头调阈值；修正留到 S04 前 screen_rules_v2.json",
+    "阈值未做行业分组校准",
+    "2026Q3 仅 188 家已披露，当期截面不完整",
+    "62 个整槽无值公司落 W1，不代表基本面",
+    "已确认重述（是）覆盖 386 家最新期样本，PROVISIONAL 面较大，S02 须分开报告 OK 与 PROVISIONAL"
+  ],
+  "scope_checks": {
+    "did_not_produce_company_list": true,
+    "did_not_modify_rules_or_thresholds": true,
+    "did_not_modify_S00_data": true,
+    "did_not_recollect_sources": true,
+    "did_not_screen_or_rank": true,
+    "did_not_set_target_count": true,
+    "dryrun_no_company_identifiers": true
+  },
+  "open_items_for_next_stage": [
+    "S02 执行前复核三份输入指纹；变化即升版",
+    "S02 必须逐格输出 metric_status 与 quality_flag，并把 OK / PROVISIONAL 分开统计",
+    "S04 收紧前另立 v2：维度独立性（≥2 维中至少 1 维来自 GROWTH 或 CASH）、单季加速门槛上调",
+    "行业分组阈值校准留待 v2/v3",
+    "PROVISIONAL 面较大：若 S02 需要更多可用样本，应先补「按最新年报上年同期重算历史期」，而不是放宽 Q06"
+  ],
+  "self_check_note": "本卡为 SELF_CHECK，不是独立审计。24 项机器校验与 16 项合成测试只证明实现遵从冻结规则，不证明阈值在业务上正确；阈值正确性需在 S03/S04 用实际名单检验，且不得回头修改已冻结的 v1。"
+}

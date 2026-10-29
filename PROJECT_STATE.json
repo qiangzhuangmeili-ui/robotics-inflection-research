@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S01_REWORK_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
+  "status": "S01_R3_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -962,7 +962,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S01_REWORK_SELF_CHECK",
+  "current_gate": "S01_R3_SELF_CHECK",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1114,9 +1114,9 @@
     "decision": "SELF_CHECK_PASS",
     "review_nature": "SELF_CHECK",
     "completed_at": "2026-10-29T10:26:56+08:00",
-    "rules_version": "S01_SCREEN_RULES_V1",
+    "rules_version": "S01_SCREEN_RULES_V2",
     "frozen_at": "2026-10-29T10:25:57+08:00",
-    "rules_file": "runs/issues/S01/screen_rules_v1.json",
+    "rules_file": "runs/issues/S01/screen_rules_v2.json",
     "metrics": 12,
     "signals": 9,
     "risk_hints": 6,
@@ -1127,7 +1127,7 @@
       "L2",
       "L3"
     ],
-    "machine_checks": "24/24 PASS + 16/16 合成测试",
+    "machine_checks": "27/27 PASS + 21/21 合成测试",
     "dryrun_companies": 1054,
     "dryrun_latest_period": {
       "20251231": 4,
@@ -1136,36 +1136,46 @@
       "20260930": 182
     },
     "dryrun_L1": {
-      "OBSERVE_QUEUE": 867,
-      "RISK_WATCH": 120,
-      "NO_SIGNAL": 67
+      "OBSERVE_QUEUE": 841,
+      "RISK_WATCH": 138,
+      "NO_SIGNAL": 75
     },
     "dryrun_L2": {
-      "SHORTLIST_CANDIDATE": 290,
-      "NOT_SHORTLISTED": 706,
+      "SHORTLIST_CANDIDATE": 281,
+      "NOT_SHORTLISTED": 715,
       "HOLD_FOR_DATA": 58
     },
     "known_limits": [
-      "SG01∪SG02 覆盖 68%、L1 观察队列 82%、L2 覆盖 27.5%，v1 阈值偏松（未回头调）",
+      "SG01∪SG02 覆盖 68%、L1 观察队列 80%、L2 覆盖 26.7%，阈值偏松（未回头调）",
       "MARGIN 与 PROFIT 维度同源，L2 仍属重复计数",
       "已确认重述（是）覆盖 386 家最新期样本，PROVISIONAL 面较大，S02 须分开报告"
     ],
     "release_S02": false,
     "release_note": "S02 等外部复验后放行；自检不等于验收",
-    "review_round": "REWORK_20261029_AFTER_CODEX_ASSESSMENT",
+    "review_round": "REWORK_R3_AFTER_CODEX_ASSESSMENT_522e1cd",
     "rework": {
-      "trigger": "Codex RETURN_FOR_REWORK（4 项实现违例）",
-      "blockers_closed": "4/4",
-      "rules_unchanged": true,
-      "rules_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
-      "checks": "24/24 PASS",
-      "synthetic_tests": "16/16 PASS",
+      "round": "R3",
+      "trigger": "Codex 复验 522e1cd：SG07 质量并集、SG02 单位、UNKNOWN 口径",
+      "blockers_closed": "3/3",
+      "v1_unchanged": true,
+      "v1_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+      "v2_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+      "v1_v2_diff": [
+        "rules_version",
+        "frozen_at",
+        "change_log",
+        "signals[1].threshold",
+        "signals[1].note"
+      ],
+      "checks": "27/27 PASS",
+      "synthetic_tests": "21/21 PASS",
       "policy_violations": {
         "ok_with_q06": 0,
         "ok_with_q12": 0,
-        "l2_without_two_clean_dims": 0
+        "l2_without_two_clean_dims": 0,
+        "signal_flags_missing_dep": 0
       },
-      "implementation_notes": "runs/issues/S01/implementation_notes.md"
+      "erratum": "runs/issues/S01/erratum_sg02_unit_20261029.md"
     }
   }
 }

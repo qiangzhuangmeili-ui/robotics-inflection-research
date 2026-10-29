@@ -1,6 +1,6 @@
 # S01 指标公式登记 v1
 
-- 规则版本：`S01_SCREEN_RULES_V1`（机器可读版：`screen_rules_v1.json`）
+- 规则版本：`S01_SCREEN_RULES_V2`（机器可读版：`screen_rules_v2.json`；v1 原文件保留，仅 SG02 单位勘误，见 `erratum_sg02_unit_20261029.md`）
 - 输入：`runs/issues/S00/financial_normalized.csv`（228,155 行，1,054 家，19 个字段）
 - 冻结时间：2026-10-29 10:30 (+08)；知识截止 2026-10-25
 - 本文件只定义「怎么算」，不定义「谁入选」；阈值与理由见 `threshold_rationale.md`

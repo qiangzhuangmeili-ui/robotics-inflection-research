@@ -1,19 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""S01 规则可执行性校验 + 匿名干跑覆盖 + 政策合成测试（返工版 v2）。
+"""S01 规则可执行性校验 + 匿名干跑覆盖 + 政策合成测试（实现 R3）。
 
-返工要点（对应 Codex 2026-10-29 四项阻断）：
-B1 Q06 不得贡献 L2 维度（含 SG06/SG08 与组合信号）
-B2 Q05 低基数按「绝对额同向增量 >= 1,000 万元」确认，不再一律排除
-B3 已确认重述(是)/未决重述/上市前/非合并口径/项目制/陈旧期 走真实路径
-B4 毛利率百分点差分不再以基期毛利率为分母（0% 与负毛利率均合法）
+对应三轮复核：
+R1 四项阻断（Q06 进 L2 / 低基数确认 / 质量边界 / 毛利率 pp 边界）
+R2 三项剩余（SG07 质量并集 / SG02 单位矛盾 / UNKNOWN 口径）
 
-输出：
-- runs/issues/S01/metric_coverage_dryrun.csv（仅聚合计数）
-- runs/issues/S01/self_check.json（结构检查 + 合成测试 + 政策违例计数）
+设计原则：**信号与阈值从规则文件读，不在代码里另写一份**，避免单位漂移。
+规则版本：screen_rules_v2.json（v1 原冻结文件保留不改，差异登记在 change_log 与勘误文件）。
 
 用法：
-    python tools/s01_rules_check.py --fill-fingerprint
     python tools/s01_rules_check.py
 """
 from __future__ import annotations
@@ -29,9 +25,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 S01 = ROOT / "runs/issues/S01"
-RULES = S01 / "screen_rules_v1.json"
+RULES = S01 / "screen_rules_v2.json"
+RULES_V1 = S01 / "screen_rules_v1.json"
 NORMALIZED = ROOT / "runs/issues/S00/financial_normalized.csv"
 CST = timezone(timedelta(hours=8))
+V1_SHA_EXPECTED = "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e"
 
 USABLE = {
     "EXTRACTED", "EXTRACTED_KEY_TABLE", "EXTRACTED_QUARTERLY_TABLE",
@@ -43,18 +41,22 @@ HOLD = {"EXTRACTED_XCHECK_MISMATCH", "DERIVED_HOLD_UPSTREAM", "DERIVED_Q1_HOLD_U
 LOW_BASE_FLAGS = {"LOW_BASE_REV", "LOW_BASE_PROFIT", "NEGATIVE_BASE_PROFIT"}
 RESTATE_PENDING = "RESTATEMENT_INDICATED_NEEDS_REVIEW"
 RESTATE_CONFIRMED = "是"
-BAD_SCOPES = {"PARENT_ONLY", "NON_CONSOLIDATED"}
 ZERO_BASE_ABS = 1_000_000.0
 LOW_BASE_REV = 50_000_000.0
 LOW_BASE_NPDEDT = 10_000_000.0
 ABS_CONFIRM = 10_000_000.0
 
-# 哪些指标能提供「绝对额同向确认」；未列出的指标在低基数下无法确认
 CONFIRMABLE = {"M01": "AMOUNT", "M02": "AMOUNT", "M05": "AMOUNT",
                "M07": "AMOUNT", "M09": "AMOUNT"}
 
+# 复合信号的全部必需指标：SG07 需要 M08 与 M09，SG08 需要 M09
+SIGNAL_DEPS = {"SG01": ["M01"], "SG02": ["M03"], "SG03": ["M04"], "SG04": ["M05"],
+               "SG05": ["M06"], "SG06": ["M05"], "SG07": ["M08", "M09"], "SG08": ["M09"]}
+
 checks: list[dict] = []
 tests: list[dict] = []
+SIGNALS: list[dict] = []
+RISK: list[dict] = []
 
 
 def add(cid, item, ok, detail, blocking=True):
@@ -84,11 +86,20 @@ def _v(rec):
     return rec["value"] if rec else None
 
 
+def load_signal_defs(rules):
+    """信号与阈值一律从规则文件读，代码不另写阈值。"""
+    global SIGNALS, RISK
+    SIGNALS = [{"id": s["id"], "metric": s["metric"], "op": s["operator"],
+                "thr": s["threshold"], "dim": s["dimension"]} for s in rules["signals"]]
+    RISK = [{"id": h["id"], "metric": h["metric"], "op": h["operator"], "thr": h["threshold"]}
+            for h in rules["risk_hints"] if h["operator"] in {">=", "<", "<="}]
+
+
 # ---------------------------------------------------------------- 装载
 
 def load_rows():
     rows = defaultdict(dict)
-    meta = defaultdict(dict)          # (sec,pk) -> field -> 期间元数据（逐字段，不共享）
+    meta = defaultdict(dict)
     field_rows = Counter()
     companies = set()
     with NORMALIZED.open(encoding="utf-8-sig", newline="") as fh:
@@ -139,14 +150,17 @@ def days_of(m):
 # ---------------------------------------------------------------- 质量判定
 
 def _inputs(recs):
-    """统一输入可用性判定：OK / HOLD / MISSING / EXCLUDED_SCOPE / NOT_COMPARABLE"""
+    """OK / HOLD / MISSING / EXCLUDED_SCOPE / NOT_COMPARABLE。
+
+    非旧快照必须明确 CONSOLIDATED；UNKNOWN 只有 LEGACY_SNAPSHOT 行可放行（记 Q07）。
+    """
     if any(r is None for r in recs):
         return "MISSING", {"Q02"}
     if any(r["status"] in HOLD for r in recs):
         return "HOLD", {"Q01"}
     if any(r["status"] not in USABLE and r["status"] not in USABLE_FLAG for r in recs):
         return "MISSING", {"Q02"}
-    if any(r["scope"] in BAD_SCOPES for r in recs if r["status"] not in USABLE_FLAG):
+    if any(r["scope"] != "CONSOLIDATED" and r["status"] not in USABLE_FLAG for r in recs):
         return "EXCLUDED_SCOPE", {"Q12"}
     if any(r["pre_listing"] == "YES" for r in recs):
         return "NOT_COMPARABLE", {"Q08"}
@@ -155,7 +169,6 @@ def _inputs(recs):
 
 
 def _restate(recs):
-    """已确认重述(是) 与 未决重述(NEEDS_REVIEW) 都不得当正常样本。"""
     f = set()
     for r in recs:
         if not r:
@@ -207,7 +220,6 @@ def _ratio(rows, sec, pk, pkb, field, low_base_thr=None):
 
 
 def _diff(rows, sec, pk, pkb, field):
-    """绝对额变动：基期为负是有效输入。"""
     rt = rows.get((sec, pk), {}).get(field)
     rb = rows.get((sec, pkb), {}).get(field) if pkb else None
     if rb is None:
@@ -233,11 +245,10 @@ def m03(rows, sec, pk):
             return res(None, x["status"], fl)
     if a["status"] != "OK" or b["status"] != "OK":
         return res(None, "NOT_COMPARABLE", fl | {"Q08"})
-    return res((a["value"] - b["value"]) * 100.0, "OK", fl)
+    return res((a["value"] - b["value"]) * 100.0, "OK", fl)   # 单位：pp
 
 
 def m04(rows, sec, pk, pkb):
-    """毛利率百分点差分：基期 0% 或负毛利率都合法，不以基期毛利率作分母。"""
     gt = rows.get((sec, pk), {}).get("FIN.GROSSMARGIN.PCT")
     gb = rows.get((sec, pkb), {}).get("FIN.GROSSMARGIN.PCT")
     if gt is not None and gb is not None:
@@ -246,12 +257,11 @@ def m04(rows, sec, pk, pkb):
             fl |= _restate([gt, gb])
             if gt["value"] is None or gb["value"] is None:
                 return res(None, "MISSING", fl | {"Q02"})
-            return res(gt["value"] - gb["value"], "OK", fl)
+            return res(gt["value"] - gb["value"], "OK", fl)   # 百分点差分，不以基期为分母
         if st == "HOLD":
             return res(None, "HOLD", {"Q01"})
         if st in ("EXCLUDED_SCOPE", "NOT_COMPARABLE"):
             return res(None, st, fl)
-    # PCT 缺失（单侧或双侧）→ 用 REV/COST 回算，必须同期同版本
     rt = rows.get((sec, pk), {}).get("FIN.REV.YTD")
     ct = rows.get((sec, pk), {}).get("FIN.COST.YTD")
     rb = rows.get((sec, pkb), {}).get("FIN.REV.YTD")
@@ -290,12 +300,15 @@ def m06(rows, sec, pk, pkb):
 
 
 def m08(rows, sec, pk):
+    """现金含量：Q05 必须从原始 OCF / 归母输入传播（没有绝对额确认口径）。"""
     o = rows.get((sec, pk), {}).get("FIN.OCF.YTD")
     n = rows.get((sec, pk), {}).get("FIN.NPP.YTD")
     st, fl = _inputs([o, n])
     if st != "OK":
         return res(None, st, fl)
     fl |= _restate([o, n])
+    if _low_base([o, n], None, None):
+        fl.add("Q05")
     if n["value"] is None or n["value"] <= ZERO_BASE_ABS:
         return res(None, "NOT_APPLICABLE", fl | {"Q03"})
     return res(o["value"] / n["value"], "OK", fl)
@@ -312,7 +325,6 @@ def m_days(rows, meta, sec, pk, pkb, inst, flow):
     if st != "OK":
         return res(None, st, fl)
     fl |= _restate([it, ib, ft, fb])
-    # 天数用流量字段自己的期间元数据（YTD 与单季/时点不共享）
     mt = meta.get((sec, pk), {}).get(flow)
     mb = meta.get((sec, pkb), {}).get(flow)
     dt = days_of(mt) if mt else None
@@ -380,7 +392,6 @@ def evaluate(rows, meta, sec, pk, stale=False):
     if stale:
         for r in out.values():
             r["flags"].add("Q11")
-    # Q06（已确认/未决重述）→ 不得返回普通 OK，降为 PROVISIONAL（值保留，可进 L1、不得进 L2）
     for r in out.values():
         if r["status"] == "OK" and "Q06" in r["flags"]:
             r["status"] = "PROVISIONAL"
@@ -392,75 +403,67 @@ EVALUABLE = ("OK", "PROVISIONAL")
 
 # ---------------------------------------------------------------- 信号与分层
 
-SIGNALS = [
-    {"id": "SG01", "metric": "M01", "op": ">=", "thr": 0.10, "dim": "GROWTH"},
-    {"id": "SG02", "metric": "M03", "op": ">=", "thr": 0.05, "dim": "GROWTH"},
-    {"id": "SG03", "metric": "M04", "op": ">=", "thr": 1.0, "dim": "MARGIN"},
-    {"id": "SG04", "metric": "M05", "op": ">=", "thr": 0.20, "dim": "PROFIT"},
-    {"id": "SG05", "metric": "M06", "op": ">=", "thr": 1.0, "dim": "PROFIT"},
-    {"id": "SG07", "metric": "M08", "op": ">=", "thr": 0.8, "dim": "CASH"},
-    {"id": "SG09", "metric": "M07", "op": ">=", "thr": 0.30, "dim": "PROFIT"},
-]
-RISK = [
-    {"id": "RH01", "metric": "M10", "op": ">=", "thr": 30.0},
-    {"id": "RH02", "metric": "M11", "op": ">=", "thr": 30.0},
-    {"id": "RH03", "metric": "M12", "op": ">=", "thr": 5.0},
-    {"id": "RH04", "metric": "M08", "op": "<", "thr": 0.5},
-    {"id": "RH05", "metric": "M04", "op": "<=", "thr": -2.0},
-]
-DIM_METRICS = {"GROWTH": ["M01", "M02", "M03"], "MARGIN": ["M04"],
-               "PROFIT": ["M05", "M06", "M07"], "CASH": ["M08", "M09"]}
+def signal_flags(sid, res_map):
+    """从原始指标结果重新取依赖标记，不信任信号自报的 flags。"""
+    fl = set()
+    for m in SIGNAL_DEPS.get(sid, []):
+        fl |= res_map[m]["flags"]
+    return fl
 
 
-def confirm_low_base(mid, r):
-    """低基数信号的绝对额确认；返回 (是否确认, 状态)"""
-    if "Q05" not in r["flags"]:
+def confirm_low_base(mid, flags, cur, base):
+    if "Q05" not in flags:
         return True, "NO_LOW_BASE"
     if CONFIRMABLE.get(mid) is None:
         return False, "NO_CONFIRM_INPUT"
-    if r["cur"] is None or r["base"] is None:
+    if cur is None or base is None:
         return False, "NO_CONFIRM_INPUT"
-    inc = r["cur"] - r["base"]
+    inc = cur - base
     return (inc >= ABS_CONFIRM), ("CONFIRMED_ABS" if inc >= ABS_CONFIRM else "ABS_BELOW_THRESHOLD")
 
 
 def signals_of(rows, sec, pk, res_map):
     fired = []
     for s in SIGNALS:
+        if s["op"] not in (">=", "<", "<="):
+            continue                                   # TURN_POSITIVE 走下面的专门分支
         r = res_map[s["metric"]]
         if r["status"] not in EVALUABLE or r["value"] is None:
             continue
-        ok = r["value"] >= s["thr"]
+        ok = r["value"] >= s["thr"] if s["op"] == ">=" else r["value"] <= s["thr"]
         if s["id"] == "SG07":
             m9 = res_map["M09"]
             ok = ok and m9["status"] in EVALUABLE and m9["value"] is not None and m9["value"] > 0
         if ok:
-            conf, why = confirm_low_base(s["metric"], r)
             fired.append({"id": s["id"], "dim": s["dim"], "metric": s["metric"],
-                          "flags": set(r["flags"]), "confirmed": conf,
-                          "confirm": why, "value": r["value"]})
+                          "value": r["value"], "deps": SIGNAL_DEPS.get(s["id"], [s["metric"]])})
 
-    # SG06 扣非转正（走绝对额，不经比率）
     r5 = res_map["M05"]
     if r5["status"] == "UNDEFINED_BASE" and r5["cur"] is not None and r5["base"] is not None:
         if r5["base"] < 0 and r5["cur"] > 0 and r5["cur"] >= ABS_CONFIRM:
             fired.append({"id": "SG06", "dim": "PROFIT", "metric": "M05",
-                          "flags": set(r5["flags"]), "confirmed": True,
-                          "confirm": "CONFIRMED_ABS", "value": r5["cur"]})
-    # SG08 现金流转正
+                          "value": r5["cur"], "deps": ["M05"]})
+
     o = rows.get((sec, pk), {}).get("FIN.OCF.YTD")
     ob = rows.get((sec, prior_year(pk)), {}).get("FIN.OCF.YTD")
     if o and ob and o["status"] in USABLE | USABLE_FLAG and ob["status"] in USABLE | USABLE_FLAG \
             and o["value"] is not None and ob["value"] is not None:
         if o["value"] > 0 and ob["value"] <= 0:
-            fl = _restate([o, ob]) | _inputs([o, ob])[1]
-            inc = o["value"] - ob["value"]
-            conf, why = (inc >= ABS_CONFIRM,
-                         "CONFIRMED_ABS" if inc >= ABS_CONFIRM else "ABS_BELOW_THRESHOLD")
-            if "Q05" not in fl:
-                conf, why = True, "NO_LOW_BASE"
             fired.append({"id": "SG08", "dim": "CASH", "metric": "M09",
-                          "flags": fl, "confirmed": conf, "confirm": why, "value": inc})
+                          "value": o["value"] - ob["value"], "deps": ["M09"]})
+
+    for f in fired:
+        fl = signal_flags(f["id"], res_map)
+        f["flags"] = fl
+        cur = res_map[f["metric"]]["cur"]
+        base = res_map[f["metric"]]["base"]
+        if f["id"] == "SG06":
+            conf, why = True, "CONFIRMED_ABS"
+        elif f["id"] == "SG08":
+            conf, why = confirm_low_base("M09", fl, o["value"], ob["value"])
+        else:
+            conf, why = confirm_low_base(f["metric"], fl, cur, base)
+        f["confirmed"], f["confirm"] = conf, why
     return fired
 
 
@@ -475,10 +478,14 @@ def layers(fired, res_map):
                  for h in RISK)
         l1 = "RISK_WATCH" if rh else "NO_SIGNAL"
 
-    eligible = [f for f in fired if "Q06" not in f["flags"] and f["confirmed"]]
+    def clean(f):
+        return "Q06" not in signal_flags(f["id"], res_map) and f["confirmed"]
+
+    eligible = [f for f in fired if clean(f)]
     dims = {f["dim"] for f in eligible}
     dims_all = {f["dim"] for f in fired if f["confirmed"]}
-    dim_hold = [d for d, ms in DIM_METRICS.items()
+    dim_hold = [d for d, ms in {"GROWTH": ["M01", "M02", "M03"], "MARGIN": ["M04"],
+                                "PROFIT": ["M05", "M06", "M07"], "CASH": ["M08", "M09"]}.items()
                 if all(res_map[m]["status"] == "HOLD" for m in ms)]
     if dim_hold:
         l2 = "HOLD_FOR_DATA"
@@ -586,6 +593,41 @@ def structural(rules, field_rows):
         len(fp) == 3 and all(len(f["sha256"]) == 64 for f in fp),
         {"files": [f["path"] for f in fp]})
 
+    # 版本纪律：v1 原冻结文件不得改动；v1→v2 差异必须只在登记项
+    v1_sha = sha256(RULES_V1) if RULES_V1.exists() else ""
+    add("C14", "v1 原冻结文件未被改动", v1_sha == V1_SHA_EXPECTED,
+        {"v1_sha256": v1_sha, "expected": V1_SHA_EXPECTED})
+
+    v1 = json.loads(RULES_V1.read_text(encoding="utf-8"))
+    diffs = []
+    idx = {s["id"]: i for i, s in enumerate(v1["signals"])}
+
+    def walk(a, b, path=""):
+        if type(a) is not type(b):
+            diffs.append(path)
+            return
+        if isinstance(a, dict):
+            for k in set(a) | set(b):
+                if k not in a or k not in b:
+                    diffs.append(f"{path}.{k}".lstrip("."))
+                else:
+                    walk(a[k], b[k], f"{path}.{k}".lstrip("."))
+        elif isinstance(a, list):
+            if len(a) != len(b):
+                diffs.append(path)
+            else:
+                for i, (x, y) in enumerate(zip(a, b)):
+                    walk(x, y, f"{path}[{i}]")
+        elif a != b:
+            diffs.append(path)
+
+    walk(v1, rules)
+    allowed = {"rules_version", "frozen_at", "change_log",
+               f"signals[{idx['SG02']}].threshold", f"signals[{idx['SG02']}].note"}
+    extra = sorted(set(diffs) - allowed)
+    add("C15", "v1→v2 差异仅限 SG02 单位与版本元数据", not extra,
+        {"diffs": sorted(set(diffs)), "unexpected": extra})
+
 
 # ---------------------------------------------------------------- 合成测试
 
@@ -623,7 +665,21 @@ def _base(sec, pk=20260630, pkb=20250630, rev=(100e6, 90e6), gm=(20.0, 19.0),
     return rows, meta
 
 
-def synthetic_tests():
+def _sq(sec, accel_pp, a=0.10):
+    """构造 M03 = accel_pp 的单季数据：本季同比 a，上季同比 a - accel/100。"""
+    rows, meta = defaultdict(dict), defaultdict(dict)
+    b = a - accel_pp / 100.0
+    base = 100e6
+    _mk(rows, meta, sec, 20260630, "FIN.REV.SQ", base * (1 + a))
+    _mk(rows, meta, sec, 20250630, "FIN.REV.SQ", base)
+    _mk(rows, meta, sec, 20260331, "FIN.REV.SQ", base * (1 + b))
+    _mk(rows, meta, sec, 20250331, "FIN.REV.SQ", base)
+    return rows, meta
+
+
+def synthetic_tests(rules):
+    load_signal_defs(rules)
+
     r, m = _base("T1", gm=(1.0, 0.0))
     x, _ = evaluate(r, m, "T1", 20260630)
     add_test("T1", "毛利率 0%→1% 应为 +1pp", "+1.0pp / OK",
@@ -684,8 +740,7 @@ def synthetic_tests():
     r[("T9", 20250630)]["FIN.REV.YTD"]["comparability"] = "RESTATED_PRIOR_YEARS_UNRECALCULATED"
     x, _ = evaluate(r, m, "T9", 20260630)
     add_test("T9", "已确认重述未重算 → 标 Q06", "Q06 in flags",
-             f"{x['M01']['status']}/{sorted(x['M01']['flags'])}",
-             "Q06" in x["M01"]["flags"])
+             f"{x['M01']['status']}/{sorted(x['M01']['flags'])}", "Q06" in x["M01"]["flags"])
 
     r, m = _base("T10")
     r[("T10", 20260630)]["FIN.REV.YTD"]["pre_listing"] = "YES"
@@ -726,7 +781,6 @@ def synthetic_tests():
     add_test("T15", "扣非由负转正且≥1,000 万 → SG06 触发", "SG06 fired",
              ",".join(f["id"] for f in fired), any(f["id"] == "SG06" for f in fired))
 
-    # T16 组合信号：Q06 的 GROWTH 不得与干净 MARGIN 组成两维
     r, m = _base("T16", rev=(150e6, 90e6), gm=(23.0, 19.0),
                  npdedt=(15e6, 15e6), npp=(15e6, 15e6), ocf=(15e6, 15e6))
     r[("T16", 20250630)]["FIN.REV.YTD"]["restate"] = RESTATE_CONFIRMED
@@ -735,6 +789,56 @@ def synthetic_tests():
     add_test("T16", "Q06 增长 + 干净毛利 → 只剩 1 维，不得进 L2", "NOT_SHORTLISTED/flip=1",
              f"L2={l2} / dims={sorted(dims)} / flip={flip}",
              l2 == "NOT_SHORTLISTED" and flip == 1)
+
+    # T17 UNKNOWN 非旧快照 → EXCLUDED_SCOPE
+    r, m = _base("T17")
+    r[("T17", 20260630)]["FIN.REV.YTD"]["scope"] = "UNKNOWN"
+    x, _ = evaluate(r, m, "T17", 20260630)
+    add_test("T17", "UNKNOWN 非旧快照 → EXCLUDED_SCOPE/Q12", "EXCLUDED_SCOPE/Q12",
+             f"{x['M01']['status']}/{sorted(x['M01']['flags'])}",
+             x["M01"]["status"] == "EXCLUDED_SCOPE" and "Q12" in x["M01"]["flags"])
+
+    # T17b UNKNOWN 旧快照 → 放行但记 Q07
+    r, m = _base("T17b")
+    for pk_ in (20260630, 20250630):
+        r[("T17b", pk_)]["FIN.REV.YTD"]["scope"] = "UNKNOWN"
+        r[("T17b", pk_)]["FIN.REV.YTD"]["status"] = "LEGACY_SNAPSHOT"
+    x, _ = evaluate(r, m, "T17b", 20260630)
+    add_test("T17b", "UNKNOWN 旧快照 → OK + Q07（单列例外）", "OK/Q07",
+             f"{x['M01']['status']}/{sorted(x['M01']['flags'])}",
+             x["M01"]["status"] == "OK" and "Q07" in x["M01"]["flags"])
+
+    # T18 M08 干净、M09 带 Q06 → SG07 必须继承 Q06
+    r, m = _base("T18", rev=(100e6, 95e6), gm=(20.0, 19.8),
+                 npdedt=(15e6, 15e6), npp=(20e6, 20e6), ocf=(20e6, 5e6))
+    r[("T18", 20250630)]["FIN.OCF.YTD"]["restate"] = RESTATE_CONFIRMED
+    x, _ = evaluate(r, m, "T18", 20260630)
+    fired = signals_of(r, "T18", 20260630, x)
+    g = [f for f in fired if f["id"] == "SG07"]
+    l1, l2, dims, _, _ = layers(fired, x)
+    add_test("T18", "M08 干净但 M09 有 Q06 → SG07 继承 Q06、不进 L2", "Q06 in SG07 flags / L2 非 SHORTLIST",
+             f"SG07 flags={sorted(g[0]['flags']) if g else 'no-fire'} / L2={l2}",
+             bool(g) and "Q06" in g[0]["flags"] and l2 != "SHORTLIST_CANDIDATE")
+
+    # T19 M08 原始输入带低基数 → Q05 且无绝对额确认
+    r, m = _base("T19", rev=(100e6, 95e6), gm=(20.0, 19.8),
+                 npdedt=(15e6, 15e6), npp=(20e6, 20e6), ocf=(20e6, 5e6))
+    r[("T19", 20260630)]["FIN.OCF.YTD"]["low_base"] = "LOW_BASE_PROFIT"
+    x, _ = evaluate(r, m, "T19", 20260630)
+    g = [f for f in signals_of(r, "T19", 20260630, x) if f["id"] == "SG07"]
+    add_test("T19", "M08 原始输入带低基数 → Q05 + NO_CONFIRM_INPUT", "Q05 / NO_CONFIRM_INPUT",
+             f"{sorted(g[0]['flags'])} / {g[0]['confirm']}" if g else "no-fire",
+             bool(g) and "Q05" in g[0]["flags"] and g[0]["confirm"] == "NO_CONFIRM_INPUT")
+
+    # T20 SG02 单位：1pp 不触发，6pp 触发
+    r, m = _sq("T20a", 1.0)
+    x, _ = evaluate(r, m, "T20a", 20260630)
+    fire_a = any(f["id"] == "SG02" for f in signals_of(r, "T20a", 20260630, x))
+    r, m = _sq("T20b", 6.0)
+    x, _ = evaluate(r, m, "T20b", 20260630)
+    fire_b = any(f["id"] == "SG02" for f in signals_of(r, "T20b", 20260630, x))
+    add_test("T20", "SG02 阈值 5pp：1pp 不触发、6pp 触发", "False / True",
+             f"{fire_a} / {fire_b}", (not fire_a) and fire_b)
 
 
 # ---------------------------------------------------------------- 主流程
@@ -750,8 +854,8 @@ def main():
             p = ROOT / f["path"]
             f["sha256"] = sha256(p)
             f["bytes"] = p.stat().st_size
-        rules["frozen_at"] = datetime.now(CST).isoformat(timespec="seconds")
         RULES.write_text(json.dumps(rules, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    load_signal_defs(rules)
 
     rows, meta, field_rows, companies = load_rows()
     structural(rules, field_rows)
@@ -797,27 +901,27 @@ def main():
         for f in fired:
             sig_hits[f["id"]] += 1
             dim_hits[f["dim"]] += 1
-        y1, y2, dims, _ex, flip = layers(fired, res_map)
-        l1[y1] += 1
-        l2[y2] += 1
-        viol["q06_dimension_flip"] += flip
-        if y1 == "OBSERVE_QUEUE" and any(f["id"] in ("SG01", "SG02") for f in fired):
-            growth_union += 1
-        clean_dims = {f["dim"] for f in fired if "Q06" not in f["flags"] and f["confirmed"]}
-        if y2 == "SHORTLIST_CANDIDATE" and len(clean_dims) < 2:
-            viol["l2_without_two_clean_dims"] += 1
-        for f in fired:
-            if "Q06" in f["flags"]:
+            if not signal_flags(f["id"], res_map) <= f["flags"]:
+                viol["signal_flags_missing_dep"] += 1
+            if "Q06" in signal_flags(f["id"], res_map):
                 viol["q06_signal_fired"] += 1
-                if f["dim"] not in clean_dims:
-                    viol["q06_signal_excluded"] += 1
-            if "Q05" in f["flags"]:
+            if "Q05" in signal_flags(f["id"], res_map):
                 if f["confirmed"]:
                     viol["q05_confirmed"] += 1
                 else:
                     viol["q05_unconfirmed"] += 1
                     if f["confirm"] == "NO_CONFIRM_INPUT":
                         viol["q05_no_confirm_input"] += 1
+        y1, y2, dims, _ex, flip = layers(fired, res_map)
+        l1[y1] += 1
+        l2[y2] += 1
+        viol["q06_dimension_flip"] += flip
+        if y1 == "OBSERVE_QUEUE" and any(f["id"] in ("SG01", "SG02") for f in fired):
+            growth_union += 1
+        clean_dims = {f["dim"] for f in fired
+                      if "Q06" not in signal_flags(f["id"], res_map) and f["confirmed"]}
+        if y2 == "SHORTLIST_CANDIDATE" and len(clean_dims) < 2:
+            viol["l2_without_two_clean_dims"] += 1
 
     total = len(latest)
     cov_rows = []
@@ -845,14 +949,13 @@ def main():
     add("D02", "每条指标都有可计算样本（OK>0）", all(r["ok"] > 0 for r in cov_rows),
         {r["metric_id"]: r["ok"] for r in cov_rows})
 
-    synthetic_tests()
+    synthetic_tests(rules)
     test_fail = [t for t in tests if t["result"] == "FAIL"]
     add("D03", f"合成政策测试 {len(tests)} 项全部通过", not test_fail, {"fail": test_fail})
 
     add("D04", "L2 只由干净（无 Q06）且已确认的维度支撑",
         viol["l2_without_two_clean_dims"] == 0,
         {"q06_signal_fired": viol["q06_signal_fired"],
-         "q06_signal_excluded": viol["q06_signal_excluded"],
          "q06_dimension_flip": viol["q06_dimension_flip"],
          "l2_without_two_clean_dims": viol["l2_without_two_clean_dims"]})
     add("D05", "Q05 信号按绝对额确认处理",
@@ -861,7 +964,7 @@ def main():
          "no_confirm_input": viol["q05_no_confirm_input"]})
     add("D06", "已确认/未决重述输入不返回普通 OK", viol["ok_with_q06"] == 0,
         {"ok_with_q06": viol["ok_with_q06"]})
-    add("D07", "非合并口径不返回普通 OK", viol["ok_with_q12"] == 0,
+    add("D07", "非合并口径（含 UNKNOWN 非旧快照）不返回普通 OK", viol["ok_with_q12"] == 0,
         {"ok_with_q12": viol["ok_with_q12"]})
     add("D08", "L1/L2 分层可执行（计数仅干跑，不作为结果）",
         sum(l1.values()) == total and sum(l2.values()) == total,
@@ -873,6 +976,8 @@ def main():
         w = csv.DictWriter(fh, fieldnames=list(cov_rows[0].keys()), lineterminator="\n")
         w.writeheader()
         w.writerows(cov_rows)
+    add("D10", "信号对象携带全部依赖指标的质量标记", viol["signal_flags_missing_dep"] == 0,
+        {"signal_flags_missing_dep": viol["signal_flags_missing_dep"]})
     add("D09", "覆盖表不含公司标识列",
         not [c for c in cov_rows[0] if c in ("security_id", "stock_code", "stock_name")],
         {"columns": list(cov_rows[0].keys())})
@@ -886,16 +991,21 @@ def main():
     result = {
         "issue_key": "S01", "issue_number": 36,
         "rules_version": rules["rules_version"],
-        "checked_at": datetime.now(CST).isoformat(timespec="seconds"),
+        "rules_file": "runs/issues/S01/screen_rules_v2.json",
         "rules_sha256": sha256(RULES),
-        "implementation_revision": "R2_AFTER_CODEX_ASSESSMENT_20261029",
+        "rules_v1_sha256": sha256(RULES_V1),
+        "checked_at": datetime.now(CST).isoformat(timespec="seconds"),
+        "implementation_revision": "R3_AFTER_CODEX_ASSESSMENT_522e1cd",
         "checks_total": len(checks),
         "checks_pass": sum(1 for c in checks if c["result"] == "PASS"),
         "checks_fail": sum(1 for c in checks if c["result"] == "FAIL"),
         "blocking_fail": len(blocking_fail),
         "checks": checks,
         "synthetic_tests": tests,
-        "policy_violations": {k: viol[k] for k in sorted(viol)},
+        "policy_violations": {k: viol.get(k, 0) for k in [
+            "ok_with_q06", "ok_with_q12", "l2_without_two_clean_dims",
+            "signal_flags_missing_dep", "q06_signal_fired", "q06_dimension_flip",
+            "q05_confirmed", "q05_unconfirmed", "q05_no_confirm_input"]},
         "dryrun": {
             "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
             "companies": total,
@@ -908,7 +1018,7 @@ def main():
                 "growth_signal_union": growth_union,
                 "growth_signal_union_share": round(growth_union / total, 4) if total else 0,
                 "L2_shortlist_share": round(l2["SHORTLIST_CANDIDATE"] / total, 4) if total else 0,
-                "interpretation": "v1 阈值偏松属已声明限制；本次返工只修实现，不动阈值。"
+                "interpretation": "v1 阈值偏松属已声明限制；本次只修实现与 SG02 单位，未按命中率调阈值。"
             },
             "quantiles_exploratory": quant,
             "note": "只做可执行性验证与匿名分布描述，不产出名单。"
@@ -922,6 +1032,7 @@ def main():
         "tests": f"{len(tests) - len(test_fail)}/{len(tests)} PASS",
         "blocking_fail": result["blocking_fail"],
         "policy_violations": result["policy_violations"],
+        "signal_hits": dict(sig_hits),
         "L1": dict(l1), "L2": dict(l2),
     }, ensure_ascii=False, indent=2))
     for c in blocking_fail:

@@ -1,12 +1,14 @@
 {
   "issue_key": "S01",
   "issue_number": 36,
-  "rules_version": "S01_SCREEN_RULES_V1",
-  "checked_at": "2026-10-29T15:20:19+08:00",
-  "rules_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
-  "implementation_revision": "R2_AFTER_CODEX_ASSESSMENT_20261029",
-  "checks_total": 24,
-  "checks_pass": 24,
+  "rules_version": "S01_SCREEN_RULES_V2",
+  "rules_file": "runs/issues/S01/screen_rules_v2.json",
+  "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+  "rules_v1_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+  "checked_at": "2026-10-29T15:34:15+08:00",
+  "implementation_revision": "R3_AFTER_CODEX_ASSESSMENT_522e1cd",
+  "checks_total": 27,
+  "checks_pass": 27,
   "checks_fail": 0,
   "blocking_fail": 0,
   "checks": [
@@ -138,6 +140,32 @@
       }
     },
     {
+      "id": "C14",
+      "item": "v1 原冻结文件未被改动",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "v1_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+        "expected": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e"
+      }
+    },
+    {
+      "id": "C15",
+      "item": "v1→v2 差异仅限 SG02 单位与版本元数据",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "diffs": [
+          "change_log",
+          "frozen_at",
+          "rules_version",
+          "signals[1].note",
+          "signals[1].threshold"
+        ],
+        "unexpected": []
+      }
+    },
+    {
       "id": "C12b",
       "item": "输入指纹与当前文件一致",
       "result": "PASS",
@@ -187,7 +215,7 @@
     },
     {
       "id": "D03",
-      "item": "合成政策测试 16 项全部通过",
+      "item": "合成政策测试 21 项全部通过",
       "result": "PASS",
       "blocking": true,
       "detail": {
@@ -200,9 +228,8 @@
       "result": "PASS",
       "blocking": true,
       "detail": {
-        "q06_signal_fired": 943,
-        "q06_signal_excluded": 921,
-        "q06_dimension_flip": 209,
+        "q06_signal_fired": 836,
+        "q06_dimension_flip": 202,
         "l2_without_two_clean_dims": 0
       }
     },
@@ -212,9 +239,9 @@
       "result": "PASS",
       "blocking": true,
       "detail": {
-        "confirmed": 43,
-        "unconfirmed": 55,
-        "no_confirm_input": 12
+        "confirmed": 23,
+        "unconfirmed": 48,
+        "no_confirm_input": 34
       }
     },
     {
@@ -228,7 +255,7 @@
     },
     {
       "id": "D07",
-      "item": "非合并口径不返回普通 OK",
+      "item": "非合并口径（含 UNKNOWN 非旧快照）不返回普通 OK",
       "result": "PASS",
       "blocking": true,
       "detail": {
@@ -242,16 +269,25 @@
       "blocking": true,
       "detail": {
         "L1": {
-          "OBSERVE_QUEUE": 867,
-          "RISK_WATCH": 120,
-          "NO_SIGNAL": 67
+          "OBSERVE_QUEUE": 841,
+          "RISK_WATCH": 138,
+          "NO_SIGNAL": 75
         },
         "L2": {
-          "NOT_SHORTLISTED": 706,
-          "SHORTLIST_CANDIDATE": 290,
+          "NOT_SHORTLISTED": 715,
+          "SHORTLIST_CANDIDATE": 281,
           "HOLD_FOR_DATA": 58
         },
         "note": "NOT_A_RESULT"
+      }
+    },
+    {
+      "id": "D10",
+      "item": "信号对象携带全部依赖指标的质量标记",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "signal_flags_missing_dep": 0
       }
     },
     {
@@ -415,15 +451,58 @@
       "actual": "L2=NOT_SHORTLISTED / dims=['MARGIN'] / flip=1",
       "result": "PASS",
       "note": ""
+    },
+    {
+      "id": "T17",
+      "name": "UNKNOWN 非旧快照 → EXCLUDED_SCOPE/Q12",
+      "expected": "EXCLUDED_SCOPE/Q12",
+      "actual": "EXCLUDED_SCOPE/['Q12']",
+      "result": "PASS",
+      "note": ""
+    },
+    {
+      "id": "T17b",
+      "name": "UNKNOWN 旧快照 → OK + Q07（单列例外）",
+      "expected": "OK/Q07",
+      "actual": "OK/['Q07']",
+      "result": "PASS",
+      "note": ""
+    },
+    {
+      "id": "T18",
+      "name": "M08 干净但 M09 有 Q06 → SG07 继承 Q06、不进 L2",
+      "expected": "Q06 in SG07 flags / L2 非 SHORTLIST",
+      "actual": "SG07 flags=['Q06'] / L2=NOT_SHORTLISTED",
+      "result": "PASS",
+      "note": ""
+    },
+    {
+      "id": "T19",
+      "name": "M08 原始输入带低基数 → Q05 + NO_CONFIRM_INPUT",
+      "expected": "Q05 / NO_CONFIRM_INPUT",
+      "actual": "['Q05'] / NO_CONFIRM_INPUT",
+      "result": "PASS",
+      "note": ""
+    },
+    {
+      "id": "T20",
+      "name": "SG02 阈值 5pp：1pp 不触发、6pp 触发",
+      "expected": "False / True",
+      "actual": "False / True",
+      "result": "PASS",
+      "note": ""
     }
   ],
   "policy_violations": {
-    "q05_confirmed": 43,
-    "q05_no_confirm_input": 12,
-    "q05_unconfirmed": 55,
-    "q06_dimension_flip": 209,
-    "q06_signal_excluded": 921,
-    "q06_signal_fired": 943
+    "ok_with_q06": 0,
+    "ok_with_q12": 0,
+    "l2_without_two_clean_dims": 0,
+    "signal_flags_missing_dep": 0,
+    "q06_signal_fired": 836,
+    "q06_dimension_flip": 202,
+    "q05_confirmed": 23,
+    "q05_unconfirmed": 48,
+    "q05_no_confirm_input": 34
   },
   "dryrun": {
     "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
@@ -603,7 +682,7 @@
         "not_applicable": 233,
         "excluded_scope": 0,
         "version_mismatch": 0,
-        "flag_q05_low_base": 0,
+        "flag_q05_low_base": 218,
         "flag_q06_restatement": 353,
         "flag_q07_legacy": 0,
         "flag_q09_one_off": 0,
@@ -702,7 +781,7 @@
     },
     "signal_hits": {
       "SG01": 460,
-      "SG02": 522,
+      "SG02": 415,
       "SG07": 232,
       "SG03": 307,
       "SG04": 224,
@@ -712,27 +791,27 @@
       "SG06": 35
     },
     "dimension_hits": {
-      "GROWTH": 982,
+      "GROWTH": 875,
       "CASH": 329,
       "MARGIN": 307,
       "PROFIT": 706
     },
     "L1_counts": {
-      "OBSERVE_QUEUE": 867,
-      "RISK_WATCH": 120,
-      "NO_SIGNAL": 67
+      "OBSERVE_QUEUE": 841,
+      "RISK_WATCH": 138,
+      "NO_SIGNAL": 75
     },
     "L2_counts": {
-      "NOT_SHORTLISTED": 706,
-      "SHORTLIST_CANDIDATE": 290,
+      "NOT_SHORTLISTED": 715,
+      "SHORTLIST_CANDIDATE": 281,
       "HOLD_FOR_DATA": 58
     },
     "breadth_observation": {
-      "L1_observe_share": 0.8226,
-      "growth_signal_union": 718,
-      "growth_signal_union_share": 0.6812,
-      "L2_shortlist_share": 0.2751,
-      "interpretation": "v1 阈值偏松属已声明限制；本次返工只修实现，不动阈值。"
+      "L1_observe_share": 0.7979,
+      "growth_signal_union": 659,
+      "growth_signal_union_share": 0.6252,
+      "L2_shortlist_share": 0.2666,
+      "interpretation": "v1 阈值偏松属已声明限制；本次只修实现与 SG02 单位，未按命中率调阈值。"
     },
     "quantiles_exploratory": {
       "M01": {
