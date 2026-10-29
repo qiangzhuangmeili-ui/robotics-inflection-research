@@ -1,0 +1,101 @@
+{
+  "issue_key": "S00",
+  "issue_number": 35,
+  "plan_version": "20261026_collection_first_v2",
+  "review_nature": "EXTERNAL_INDEPENDENT_RECHECK",
+  "reviewer": "Codex",
+  "reviewed_at": "2026-10-29",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "verdict": "REWORK_ACCEPTED_4_OF_4_BLOCKERS_CLOSED",
+  "release_S01": true,
+  "release_S02": false,
+  "record_file": "runs/issues/S00/codex_rework_acceptance_20261029.md",
+  "audit_artifacts": [
+    "runs/issues/S00/codex_rework_audit_20261029.py",
+    "runs/issues/S00/codex_rework_audit_results_20261029.json"
+  ],
+  "commits_verified": [
+    "548938641deff6df818ab7d3f35c9cf2948334bf",
+    "fe5b89b6c405b9e97f331db7204ba768ce01f78a"
+  ],
+  "independent_checks": [
+    {
+      "id": "X1",
+      "item": "行数 / 公司集合 / 主键",
+      "result": "PASS",
+      "evidence": "228,155 标准化行、16,513 问题记录；1,054 家公司集合精确一致；主键无重复"
+    },
+    {
+      "id": "X2",
+      "item": "可复算派生格公式",
+      "result": "PASS",
+      "evidence": "44,499 个有完整依赖的比率/毛利格，公式违规 0；旧快照无成本输入的毛利率仍按单一来源限制，未声称已反算"
+    },
+    {
+      "id": "X3",
+      "item": "年度仲裁格溯源",
+      "result": "PASS",
+      "evidence": "64 个仲裁格全部具备 value_before_adoption / adoption_reason / quarterly_inputs，未只抽查营业收入格"
+    },
+    {
+      "id": "X4",
+      "item": "HOLD 派生格状态与父字段指针",
+      "result": "PASS",
+      "evidence": "2,037 格 = 比率/毛利 1,628 + 单季差分 364 + Q1 45；按依赖核验，状态或父键不匹配 0"
+    },
+    {
+      "id": "X5",
+      "item": "重述标记逐键对账",
+      "result": "PASS",
+      "evidence": "12 抽取槽 FIN.RESTATEMENT 按证券+期间逐键映射，202,403 对应输出行、11,438 有输出期间键 0 差异；2,157 个 NEEDS_REVIEW 键与问题清单双向差集 0；15 个输入期间键无数值输出，不构成有值行丢标"
+    },
+    {
+      "id": "X6",
+      "item": "更正版采用与溯源",
+      "result": "PASS",
+      "evidence": "6 个更正槽的 131 个相关采用格全部为更正版 document_id、version_used=CORRECTED_FULLTEXT，并保留正确 original_document_id"
+    },
+    {
+      "id": "X7",
+      "item": "交付哈希与压缩一致性",
+      "result": "PASS",
+      "evidence": "manifest 各交付文件哈希匹配；gzip 解压内容与明文一致"
+    }
+  ],
+  "restatement_flag_row_counts": {
+    "是": 18660,
+    "否": 102512,
+    "RESTATEMENT_INDICATED_NEEDS_REVIEW": 37714,
+    "NOT_APPLICABLE": 9974,
+    "NOT_FOUND": 33543,
+    "空": 25752,
+    "total": 228155,
+    "note": "按财务格（行）计数，合计等于全表行数。S00 自检 review.json 中 1,155/9,490/6,373/903/15 是公司-期间级聚合，不是行级；引用时必须写明口径，勿与行级数字混用。"
+  },
+  "verifier_weak_assertions_not_blocking": [
+    {
+      "id": "W1",
+      "item": "V2-1 / V2-2 只比计数，未逐键覆盖",
+      "disposition": "由父/子审计逐键对账补足；建议后续固化为自动检查"
+    },
+    {
+      "id": "W2",
+      "item": "V3-3 的 sq_hold >= 0 恒真",
+      "disposition": "不构成证据，已在外部复核中由父键核验替代；S01/S02 不得引用该断言"
+    }
+  ],
+  "limits_preserved": [
+    "62 个整槽无值（英 26 / 无文本层 14 / 抽取盲区 20 / 混排 2）",
+    "旧快照 2021/2022 为单一来源，无官方 PDF 交叉校验",
+    "453 份文档三表与摘要表不一致（1,326 格 EXTRACTED_XCHECK_MISMATCH）",
+    "2,157 个重述键仍为 NEEDS_REVIEW",
+    "未用最新年报「上年同期」列重算历史期",
+    "2026Q3 仅 188 家已披露，当期截面不完整"
+  ],
+  "constraints_for_S01": [
+    "HOLD、未知、低基数、亏损与不可比版本必须显式纳入规则",
+    "不得把 HOLD 当正常样本",
+    "S02 仍依赖 S01 及其后续验收"
+  ],
+  "scope": "技术/数据管线复核，不是全池原文业务结论独立采用；复核方未修改 WorkBuddy 结果或远端调度，本地据此记录验收并放行 S01。"
+}

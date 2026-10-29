@@ -1,0 +1,182 @@
+{
+  "issue_key": "S01",
+  "issue_number": 36,
+  "plan_version": "20261026_collection_first_v2",
+  "rules_version": "S01_SCREEN_RULES_V1",
+  "generated_at": "2026-10-29T10:27:04+08:00",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "frozen_at": "2026-10-29T10:25:57+08:00",
+  "purpose": "在任何名单产出前冻结公式、阈值、缺失/亏损/低基数/一次性/模式/版本处理与重进条件",
+  "inputs": {
+    "files": [
+      {
+        "path": "runs/issues/S00/financial_normalized.csv.gz",
+        "sha256": "9d124e64959d1c65ca9f646a24e349c2a2b299587522801506e140ae0a1c0702",
+        "bytes": 5922025
+      },
+      {
+        "path": "runs/issues/S00/normalization_manifest.json",
+        "sha256": "4293a95c1382ef6edb171b670f49aaef9b0ba8d54c7dce34189e173505d1ade8",
+        "bytes": 31093
+      },
+      {
+        "path": "data/company_master.csv",
+        "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+        "bytes": 707054
+      }
+    ],
+    "note": "指纹只覆盖研究输入（标准化表、口径清单、公司主表）；调度文件 issue_execution_plan.csv 会随执行状态变化，不纳入指纹，其版本以 plan_version 字段登记。运行 S02 前须复核三份输入未变，变化即视为新版本输入，规则版本随之升版。"
+  },
+  "outputs": [
+    {
+      "path": "runs/issues/S01/screen_rules_v1.json",
+      "bytes": 37725,
+      "sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e"
+    },
+    {
+      "path": "runs/issues/S01/metric_formulas.md",
+      "bytes": 9855,
+      "sha256": "9623ed35161f2d713ddfea615d7351c906a4318845cead0b0307832d0e3a10ee"
+    },
+    {
+      "path": "runs/issues/S01/threshold_rationale.md",
+      "bytes": 9281,
+      "sha256": "962aeea344cded18ff9eff448e08e571517b910aef374d5036683fe38a3332ea"
+    },
+    {
+      "path": "runs/issues/S01/metric_coverage_dryrun.csv",
+      "bytes": 1094,
+      "sha256": "9c35a6c3f686dee264f1a88f24fd20cb7b221ce87b41b89402986e2f6c24ff7b"
+    },
+    {
+      "path": "runs/issues/S01/self_check.json",
+      "bytes": 14648,
+      "sha256": "a385ca9d1aa082186403ebd30735a77f8334780252d0125fe42c3a26043f4ac1"
+    },
+    {
+      "path": "runs/issues/S01/handoff.md",
+      "bytes": 5710,
+      "sha256": "2db14a257729cc8d2167bb998fb2223b98f08236a83dc6f9068315e45fefa573"
+    },
+    {
+      "path": "runs/issues/S01/review.json",
+      "bytes": 4817,
+      "sha256": "ce1e01a75e55a2df1c4a6bffea0f8e1edf949ae04e4a33666ee619cf0aad5c61"
+    }
+  ],
+  "universe": {
+    "source": "runs/issues/S00/financial_normalized.csv",
+    "companies": 1054,
+    "slots": 12648,
+    "slots_with_value": 11406,
+    "empty_slots": 62,
+    "periods_available": [
+      "2021Q1",
+      "2021H1",
+      "2021Q3",
+      "2021FY",
+      "2022Q1",
+      "2022H1",
+      "2022Q3",
+      "2022FY",
+      "2023Q1",
+      "2023H1",
+      "2023Q3",
+      "2023FY",
+      "2024Q1",
+      "2024H1",
+      "2024Q3",
+      "2024FY",
+      "2025Q1",
+      "2025H1",
+      "2025Q3",
+      "2025FY",
+      "2026Q1",
+      "2026H1",
+      "2026Q3_PARTIAL"
+    ],
+    "latest_period_rule": "逐公司取有可用值的最大 period_key，优先 FIN.REV.YTD；缺失时依次回退 FIN.REV.SQ、FIN.NPDEDT.YTD（北交所有 2 家只有单季字段、无累计营收行）；三者全无则落 W1_NO_DATA。2026Q3 仅 188 家已披露，未披露公司自然回落到 2026H1",
+    "unit": "全部使用 value_cny（元），不混用万元/千元；比率字段为百分数数值（23.28 表示 23.28%）"
+  },
+  "rules_summary": {
+    "metrics": 12,
+    "signals": 9,
+    "risk_hints": 6,
+    "quality_flags": 12,
+    "decision_layers": [
+      "L0",
+      "L1",
+      "L2",
+      "L3"
+    ],
+    "policies": [
+      "loss",
+      "low_base",
+      "missing",
+      "mode",
+      "negative_zero_base",
+      "non_consolidated",
+      "one_off",
+      "pre_listing",
+      "restatement",
+      "stale_period"
+    ]
+  },
+  "self_check": {
+    "file": "runs/issues/S01/self_check.json",
+    "total": 20,
+    "pass": 20,
+    "fail": 0,
+    "blocking_fail": 0
+  },
+  "dryrun": {
+    "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
+    "companies": 1054,
+    "latest_period_distribution": {
+      "20251231": 4,
+      "20260331": 5,
+      "20260630": 863,
+      "20260930": 182
+    },
+    "L1_counts": {
+      "OBSERVE_QUEUE": 892,
+      "RISK_WATCH": 111,
+      "NO_SIGNAL": 51
+    },
+    "L2_counts": {
+      "NOT_SHORTLISTED": 512,
+      "SHORTLIST_CANDIDATE": 542
+    },
+    "breadth_observation": {
+      "L1_observe_share": 0.8463,
+      "L2_shortlist_share": 0.5142,
+      "interpretation": "v1 阈值偏松（SG01∪SG02 覆盖绝大多数公司），属已知局限；按预登记原则本次不据此调整阈值，若需收紧须在 S04 前另立 v2 并全池重算。"
+    },
+    "note": "只验证规则可执行，不产出名单；不得引用为「多少家改善」。"
+  },
+  "no_quota": {
+    "target_company_count": null,
+    "quota_keys_forbidden": [
+      "target_count",
+      "quota",
+      "top_n",
+      "desired_count",
+      "must_select"
+    ],
+    "statement": "本规则集不含任何目标家数、配额或排名截断；L1/L2 的输出数量由数据决定，允许为 0 或为全池。"
+  },
+  "tools": [
+    {
+      "path": "tools/s01_rules_check.py",
+      "sha256": "bc2a97b2d1e1365f106eb1595d39f5726a1eb369be06e321874c72b55340d346"
+    }
+  ],
+  "known_limits": [
+    "阈值全部为先验假设，未做行业分组校准",
+    "干跑显示 SG01∪SG02 覆盖 93%、L2 两维组合覆盖 51%，v1 偏松；按预登记原则未回头调阈值",
+    "MARGIN 与 PROFIT 维度同源，L2 存在重复计数，须在 v2 修正",
+    "62 个整槽无值公司落 W1，不代表基本面",
+    "2026Q3 仅 188 家已披露，当期截面不完整"
+  ]
+}

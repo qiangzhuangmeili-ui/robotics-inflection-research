@@ -1,0 +1,584 @@
+{
+  "issue_key": "S01",
+  "issue_number": 36,
+  "rules_version": "S01_SCREEN_RULES_V1",
+  "checked_at": "2026-10-29T10:26:58+08:00",
+  "rules_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+  "checks_total": 20,
+  "checks_pass": 20,
+  "checks_fail": 0,
+  "blocking_fail": 0,
+  "checks": [
+    {
+      "id": "C01",
+      "item": "顶层必填键齐全",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "id": "C02a",
+      "item": "指标 ID 唯一",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "duplicates": [],
+        "count": 12
+      }
+    },
+    {
+      "id": "C02b",
+      "item": "每条指标 9 个字段 + 8 条路径齐全",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "C03",
+      "item": "指标输入字段均在字段目录中",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "unknown": []
+      }
+    },
+    {
+      "id": "C04",
+      "item": "字段行数与 S00 实测一致",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "mismatch": []
+      }
+    },
+    {
+      "id": "C05",
+      "item": "信号定义合法（指标/算子/维度/阈值）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "C06",
+      "item": "风险提示引用已定义指标或标记",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "C07",
+      "item": "每个指标至少被一条信号/提示/下游指标使用",
+      "result": "PASS",
+      "blocking": false,
+      "detail": {
+        "unused": []
+      }
+    },
+    {
+      "id": "C08",
+      "item": "分层 L0-L3 齐全且输出非空",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "layers": [
+          "L0",
+          "L1",
+          "L2",
+          "L3"
+        ],
+        "bad": []
+      }
+    },
+    {
+      "id": "C09",
+      "item": "无目标家数/配额/截断键",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "hits": []
+      }
+    },
+    {
+      "id": "C10",
+      "item": "每条缺失路径都落到已定义标记",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "C11",
+      "item": "缺失/亏损/低基数/一次性/模式/重述/上市前/陈旧/口径策略齐全",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "id": "C12",
+      "item": "输入指纹已登记（3 个研究输入文件）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "files": [
+          "runs/issues/S00/financial_normalized.csv.gz",
+          "runs/issues/S00/normalization_manifest.json",
+          "data/company_master.csv"
+        ]
+      }
+    },
+    {
+      "id": "C12b",
+      "item": "输入指纹与当前文件一致",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "changed": []
+      }
+    },
+    {
+      "id": "C13",
+      "item": "公司数与 S00 一致（1054）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "companies": 1054
+      }
+    },
+    {
+      "id": "D01",
+      "item": "每家可确定最新可用期或落入 W1（合计 1054）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "resolved": 1054,
+        "w1_no_data": 0
+      }
+    },
+    {
+      "id": "D02",
+      "item": "每条指标都有可计算样本（OK>0）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "M01": 951,
+        "M02": 979,
+        "M03": 978,
+        "M04": 947,
+        "M05": 726,
+        "M06": 897,
+        "M07": 703,
+        "M08": 768,
+        "M09": 948,
+        "M10": 946,
+        "M11": 1005,
+        "M12": 465
+      }
+    },
+    {
+      "id": "D03",
+      "item": "信号全部可触发（9 条信号均有命中或明确为条件型）",
+      "result": "PASS",
+      "blocking": false,
+      "detail": {
+        "hits": {
+          "SG01": 460,
+          "SG02": 522,
+          "SG07": 344,
+          "SG03": 307,
+          "SG04": 224,
+          "SG05": 244,
+          "SG09": 203,
+          "SG08": 97,
+          "SG06": 35
+        }
+      }
+    },
+    {
+      "id": "D04",
+      "item": "L1/L2 分层可执行（计数仅干跑，不作为结果）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "L1": {
+          "OBSERVE_QUEUE": 892,
+          "RISK_WATCH": 111,
+          "NO_SIGNAL": 51
+        },
+        "L2": {
+          "NOT_SHORTLISTED": 512,
+          "SHORTLIST_CANDIDATE": 542
+        },
+        "note": "NOT_A_RESULT：S02/S03 必须重算，本处只验证规则可执行"
+      }
+    },
+    {
+      "id": "D05",
+      "item": "覆盖表不含公司标识列",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "columns": [
+          "metric_id",
+          "metric_name_cn",
+          "unit",
+          "companies_total",
+          "ok",
+          "hold",
+          "missing",
+          "not_comparable",
+          "undefined_base",
+          "not_applicable",
+          "flag_q05_low_base",
+          "flag_q06_restatement",
+          "flag_q07_legacy",
+          "ok_share"
+        ]
+      }
+    }
+  ],
+  "dryrun": {
+    "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
+    "companies": 1054,
+    "latest_period_distribution": {
+      "20251231": 4,
+      "20260331": 5,
+      "20260630": 863,
+      "20260930": 182
+    },
+    "metric_coverage": {
+      "M01": {
+        "metric_id": "M01",
+        "metric_name_cn": "营业收入同比（累计）",
+        "unit": "ratio",
+        "companies_total": 1054,
+        "ok": 951,
+        "hold": 58,
+        "missing": 1,
+        "not_comparable": 44,
+        "undefined_base": 0,
+        "not_applicable": 0,
+        "flag_q05_low_base": 8,
+        "flag_q06_restatement": 325,
+        "flag_q07_legacy": 4,
+        "ok_share": 0.9023
+      },
+      "M02": {
+        "metric_id": "M02",
+        "metric_name_cn": "营业收入同比（单季）",
+        "unit": "ratio",
+        "companies_total": 1054,
+        "ok": 979,
+        "hold": 28,
+        "missing": 19,
+        "not_comparable": 27,
+        "undefined_base": 1,
+        "not_applicable": 0,
+        "flag_q05_low_base": 29,
+        "flag_q06_restatement": 337,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.9288
+      },
+      "M03": {
+        "metric_id": "M03",
+        "metric_name_cn": "单季营收同比加速度",
+        "unit": "pp",
+        "companies_total": 1054,
+        "ok": 978,
+        "hold": 29,
+        "missing": 19,
+        "not_comparable": 28,
+        "undefined_base": 0,
+        "not_applicable": 0,
+        "flag_q05_low_base": 0,
+        "flag_q06_restatement": 394,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.9279
+      },
+      "M04": {
+        "metric_id": "M04",
+        "metric_name_cn": "毛利率同比变动",
+        "unit": "pp",
+        "companies_total": 1054,
+        "ok": 947,
+        "hold": 58,
+        "missing": 49,
+        "not_comparable": 0,
+        "undefined_base": 0,
+        "not_applicable": 0,
+        "flag_q05_low_base": 0,
+        "flag_q06_restatement": 325,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.8985
+      },
+      "M05": {
+        "metric_id": "M05",
+        "metric_name_cn": "扣非归母净利润同比（累计）",
+        "unit": "ratio",
+        "companies_total": 1054,
+        "ok": 726,
+        "hold": 0,
+        "missing": 22,
+        "not_comparable": 59,
+        "undefined_base": 247,
+        "not_applicable": 0,
+        "flag_q05_low_base": 66,
+        "flag_q06_restatement": 235,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.6888
+      },
+      "M06": {
+        "metric_id": "M06",
+        "metric_name_cn": "扣非归母净利率变动",
+        "unit": "pp",
+        "companies_total": 1054,
+        "ok": 897,
+        "hold": 58,
+        "missing": 99,
+        "not_comparable": 0,
+        "undefined_base": 0,
+        "not_applicable": 0,
+        "flag_q05_low_base": 1,
+        "flag_q06_restatement": 286,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.851
+      },
+      "M07": {
+        "metric_id": "M07",
+        "metric_name_cn": "扣非归母净利润同比（单季）",
+        "unit": "ratio",
+        "companies_total": 1054,
+        "ok": 703,
+        "hold": 0,
+        "missing": 87,
+        "not_comparable": 29,
+        "undefined_base": 235,
+        "not_applicable": 0,
+        "flag_q05_low_base": 116,
+        "flag_q06_restatement": 212,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.667
+      },
+      "M08": {
+        "metric_id": "M08",
+        "metric_name_cn": "经营现金流/归母净利润",
+        "unit": "ratio",
+        "companies_total": 1054,
+        "ok": 768,
+        "hold": 26,
+        "missing": 27,
+        "not_comparable": 0,
+        "undefined_base": 0,
+        "not_applicable": 233,
+        "flag_q05_low_base": 218,
+        "flag_q06_restatement": 317,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.7287
+      },
+      "M09": {
+        "metric_id": "M09",
+        "metric_name_cn": "经营现金流同比变动额",
+        "unit": "CNY",
+        "companies_total": 1054,
+        "ok": 948,
+        "hold": 58,
+        "missing": 2,
+        "not_comparable": 46,
+        "undefined_base": 0,
+        "not_applicable": 0,
+        "flag_q05_low_base": 0,
+        "flag_q06_restatement": 325,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.8994
+      },
+      "M10": {
+        "metric_id": "M10",
+        "metric_name_cn": "应收账款周转天数变动",
+        "unit": "days",
+        "companies_total": 1054,
+        "ok": 946,
+        "hold": 58,
+        "missing": 50,
+        "not_comparable": 0,
+        "undefined_base": 0,
+        "not_applicable": 0,
+        "flag_q05_low_base": 1,
+        "flag_q06_restatement": 325,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.8975
+      },
+      "M11": {
+        "metric_id": "M11",
+        "metric_name_cn": "存货周转天数变动",
+        "unit": "days",
+        "companies_total": 1054,
+        "ok": 1005,
+        "hold": 0,
+        "missing": 49,
+        "not_comparable": 0,
+        "undefined_base": 0,
+        "not_applicable": 0,
+        "flag_q05_low_base": 0,
+        "flag_q06_restatement": 349,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.9535
+      },
+      "M12": {
+        "metric_id": "M12",
+        "metric_name_cn": "合同资产占营收比重变动",
+        "unit": "pp",
+        "companies_total": 1054,
+        "ok": 465,
+        "hold": 28,
+        "missing": 1,
+        "not_comparable": 0,
+        "undefined_base": 0,
+        "not_applicable": 560,
+        "flag_q05_low_base": 0,
+        "flag_q06_restatement": 0,
+        "flag_q07_legacy": 0,
+        "ok_share": 0.4412
+      }
+    },
+    "signal_hits": {
+      "SG01": 460,
+      "SG02": 522,
+      "SG07": 344,
+      "SG03": 307,
+      "SG04": 224,
+      "SG05": 244,
+      "SG09": 203,
+      "SG08": 97,
+      "SG06": 35
+    },
+    "dimension_hits": {
+      "GROWTH": 982,
+      "CASH": 441,
+      "MARGIN": 307,
+      "PROFIT": 706
+    },
+    "L1_counts": {
+      "OBSERVE_QUEUE": 892,
+      "RISK_WATCH": 111,
+      "NO_SIGNAL": 51
+    },
+    "L2_counts": {
+      "NOT_SHORTLISTED": 512,
+      "SHORTLIST_CANDIDATE": 542
+    },
+    "breadth_observation": {
+      "L1_observe_share": 0.8463,
+      "L2_shortlist_share": 0.5142,
+      "interpretation": "v1 阈值偏松（SG01∪SG02 覆盖绝大多数公司），属已知局限；按预登记原则本次不据此调整阈值，若需收紧须在 S04 前另立 v2 并全池重算。"
+    },
+    "quantiles_exploratory": {
+      "M01": {
+        "n": 951,
+        "p10": -0.158765,
+        "p25": -0.019692,
+        "p50": 0.092082,
+        "p75": 0.232092,
+        "p90": 0.43763
+      },
+      "M02": {
+        "n": 979,
+        "p10": -0.210302,
+        "p25": -0.043559,
+        "p50": 0.109475,
+        "p75": 0.280873,
+        "p90": 0.525712
+      },
+      "M03": {
+        "n": 978,
+        "p10": -34.422658,
+        "p25": -10.49699,
+        "p50": 1.480641,
+        "p75": 13.137337,
+        "p90": 28.233668
+      },
+      "M04": {
+        "n": 947,
+        "p10": -5.360105,
+        "p25": -2.551005,
+        "p50": -0.483263,
+        "p75": 1.835752,
+        "p90": 4.844145
+      },
+      "M05": {
+        "n": 726,
+        "p10": -1.34729,
+        "p25": -0.501727,
+        "p50": -0.069364,
+        "p75": 0.297004,
+        "p90": 1.120845
+      },
+      "M06": {
+        "n": 897,
+        "p10": -9.280098,
+        "p25": -3.917203,
+        "p50": -0.859157,
+        "p75": 1.336983,
+        "p90": 6.530733
+      },
+      "M07": {
+        "n": 703,
+        "p10": -1.573336,
+        "p25": -0.645275,
+        "p50": -0.08575,
+        "p75": 0.382563,
+        "p90": 1.209835
+      },
+      "M08": {
+        "n": 768,
+        "p10": -3.19984,
+        "p25": -0.503279,
+        "p50": 0.591869,
+        "p75": 1.501085,
+        "p90": 3.077176
+      },
+      "M09": {
+        "n": 948,
+        "p10": -289478419.05,
+        "p25": -90111488.28,
+        "p50": -7213076.34,
+        "p75": 53007624.54,
+        "p90": 192025371.27
+      },
+      "M10": {
+        "n": 946,
+        "p10": -39.993429,
+        "p25": -13.444087,
+        "p50": -1.128723,
+        "p75": 8.779086,
+        "p90": 25.489862
+      },
+      "M11": {
+        "n": 1005,
+        "p10": -41.501539,
+        "p25": -10.424855,
+        "p50": 4.663952,
+        "p75": 24.12872,
+        "p90": 72.647938
+      },
+      "M12": {
+        "n": 465,
+        "p10": -5.02483,
+        "p25": -1.092448,
+        "p50": -0.021851,
+        "p75": 0.738639,
+        "p90": 5.377094
+      }
+    },
+    "note": "只做可执行性验证与匿名分布描述，不产出名单；S02 必须按同一规则重算。"
+  }
+}
