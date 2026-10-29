@@ -1,0 +1,269 @@
+{
+  "contract_id": "S02_S03_GATE_CONTRACT_20261029",
+  "contract_version": "1.1.0",
+  "status": "SELF_CHECK_PASS_READY_FOR_S03_FIRST_STEP_INTEGRATION",
+  "review_nature": "SELF_CHECK",
+  "assessment": {
+    "limited_s03_technical_run_supported": true,
+    "release_scope": "仅允许按冻结 S01 L1 做带状态标签的技术宽筛和观察队列生成；S03 仍不得作为业务最终采用、候选名单或最终淘汰依据。",
+    "release_preconditions": [
+      "S03 第一阶段必须调用纯函数模块 tools/s03_input_gate.py::load_gate_inputs，并在接受任何 L0/L1 路由前校验契约与全部 canonical artifact 哈希。",
+      "Canonical 输入绑定为 remediation_20261029/s02 的计算 manifest、指标 all_pool_metrics.csv、公司 company_metric_summary.csv 与 l0/repaired 产物；不得将独立 s02_recheck 文件当作权威输入。",
+      "运行输入版本必须为 S00_TARGETED_REEXTRACTION_20261029，规则为冻结 S01_SCREEN_RULES_V2，L0 additive patch 必须匹配契约。",
+      "S03 将现有 L0/L1 路由交给纯函数保护路由；对受保护 EVALUABLE 的 NO_SIGNAL 返回 REVIEW_PENDING_UPSTREAM_COVERAGE。",
+      "W5 无触发仍保留 W5 观察名单；W9 保持数据/范围待复核。PROVISIONAL 与 HOLD 不得视为 clean。",
+      "每家公司逐信号保留依赖状态、质量标记和原始 L1 路由；本阶段只做技术路由，不生成候选名单或业务结论。"
+    ],
+    "current_implementation_gate_verified": false,
+    "why_not_automatic_unlock": "纯函数输入守卫已交付并有篡改、旧版本和负面路由测试，但本次未证明 S03 实际调用它；实际消费验证仍为 false。",
+    "unknowns_must_be_zero": false,
+    "final_business_adoption": false,
+    "external_source_pdf_audit_completed": false,
+    "audit_boundary": "父代理参与过 S02 修复；本产物为基于本地交付物的技术 SELF_CHECK，不构成独立第三方原始 PDF/源数据审计。",
+    "first_step_gate_module_path": "tools/s03_input_gate.py"
+  },
+  "frozen_rule_reference": {
+    "rules_version": "S01_SCREEN_RULES_V2",
+    "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+    "s01_acceptance_decision": "ACCEPTED_WITH_LIMITS",
+    "s01_s02_release_scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
+    "l0_patch_version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
+    "l0_patch_status": "PROPOSED_ADDITIVE_RULE_PATCH_SELF_CHECK",
+    "l0_patch_base_rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+    "l0_scope": "L0 company evaluability routing only",
+    "prohibited_changes": [
+      "metric definitions or formulas",
+      "thresholds",
+      "signal definitions or dependencies",
+      "L1/L2 signal logic",
+      "company inputs or source data"
+    ]
+  },
+  "status_protections": {
+    "PROVISIONAL": {
+      "cells": 4303,
+      "handling": "按冻结 S01 标记后可进入 L1 观察，不得混成普通 OK；不得计入 L2 干净维度。W5 无触发仍留观察名单。"
+    },
+    "HOLD": {
+      "cells": 267,
+      "handling": "不得作为改善、恶化或无信号证据；相关依赖未解决时保持 HOLD/复核，不因未触发信号而淘汰。"
+    },
+    "MISSING_NOT_COMPARABLE_UNDEFINED_BASE_VERSION_MISMATCH": {
+      "handling": "保持原状态与空值/规则允许的备选路径。不得当 0 或“无信号”；只有冻结 S01 明确可用的替代判断完成后才计入该信号判断。"
+    },
+    "NOT_APPLICABLE": {
+      "handling": "仅按冻结规则的不适用语义处理，不补零。"
+    }
+  },
+  "l0_branch_protection": {
+    "source": "l0/repaired/l0_reclassification.csv and l0/repaired/self_check.json, checked against the additive patch",
+    "EVALUABLE": {
+      "count": 664,
+      "route": "RUN_FROZEN_L1",
+      "meaning": "至少一格 OK，只代表可评估，不代表信号或候选资格。"
+    },
+    "W5_PROVISIONAL_ONLY": {
+      "count": 387,
+      "route": "PROVISIONAL_OBSERVATION_ONLY",
+      "meaning": "可标记观察；无触发必须仍留 W5 观察名单，不能转 NO_SIGNAL 或候选否决。"
+    },
+    "W9_MIXED_NON_EVALUABLE": {
+      "count": 3,
+      "route": "HOLD_FOR_DATA_OR_SCOPE_REVIEW",
+      "meaning": "保留逐状态向量并等待相关问题解决；绝不转 NO_SIGNAL 或自动淘汰。"
+    },
+    "required_s03_status_vector": [
+      "OK",
+      "PROVISIONAL",
+      "HOLD",
+      "MISSING",
+      "NOT_COMPARABLE",
+      "UNDEFINED_BASE",
+      "NOT_APPLICABLE",
+      "EXCLUDED_SCOPE",
+      "VERSION_MISMATCH"
+    ]
+  },
+  "protected_coverage_queue": {
+    "artifact": "runs/issues/S02/recheck_20261029/gates/protected_21.csv",
+    "rows": 21,
+    "resolution_counts": {
+      "STATEMENT_LOCATION_OR_SCOPE_HOLD": 5,
+      "HOLD_RECONCILIATION_REQUIRED": 11,
+      "NO_CURRENT_PDF_LEGACY_ONLY": 3,
+      "PDF_TEXT_OR_OCR_REQUIRED": 1,
+      "PARTIAL_FIELDS_REMAIN_UNKNOWN": 1
+    },
+    "l0_counts": {
+      "W9_MIXED_NON_EVALUABLE": 3,
+      "W5_PROVISIONAL_ONLY": 8,
+      "EVALUABLE": 10
+    },
+    "all_rows_keep_until_resolution_or_explicit_review": true,
+    "for_evaluable": "10 家保留 RUN_FROZEN_L1。允许有正信号时进入标记观察队列；若原始结果为 NO_SIGNAL，由于覆盖问题尚未关闭，最终路由必须为 REVIEW_PENDING_UPSTREAM_COVERAGE，保留原始 L1 结果供复核，不得静默剔除。",
+    "for_w5": "8 家遵守 W5：触发则带 PROVISIONAL 标志观察；不触发则继续 W5 watchlist。",
+    "for_w9": "3 家保持 HOLD_FOR_DATA_OR_SCOPE_REVIEW，不作 L1 负向判定。",
+    "closure_rule": "单家公司只需解决或被明确接受其自身列出的覆盖问题，不要求全池未知清零；队列移除须保留具体 resolution/reviewer 记录。",
+    "canonical_join_source": "coverage_resolution.csv + remediation_20261029/s02/company_metric_summary.csv + remediation_20261029/l0/repaired/l0_reclassification.csv"
+  },
+  "l1_l2_boundary": {
+    "S03": "仅生成冻结 L1 信号/风险观察路由；L0 不覆盖或改写 L1。未触发不等同无业务。",
+    "S04_S05": "沿用冻结 L2：至少两个干净维度；所用依赖须为 OK 且满足无 HOLD、未决重述和未确认低基数限制；所需维度遇 HOLD 走 HOLD_FOR_DATA，不降级为否决。",
+    "candidate_list_in_this_gate": false
+  },
+  "source_files": [
+    {
+      "id": "company_summary",
+      "path": "runs/issues/S02/remediation_20261029/s02/company_metric_summary.csv",
+      "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95"
+    },
+    {
+      "id": "coverage_resolution",
+      "path": "runs/issues/S02/remediation_20261029/coverage_resolution.csv",
+      "sha256": "bd91619c6f1a8be85538abfb3afdb7ee83d53af1e082e1ab0572397f934efff1"
+    },
+    {
+      "id": "input_1",
+      "path": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv.gz",
+      "sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824"
+    },
+    {
+      "id": "input_2",
+      "path": "runs/issues/S02/remediation_20261029/s00/normalization_manifest.json",
+      "sha256": "4d22392e3344382ea759525c1873abb502275e622ee7f09f9d5311ba8cf7baf6"
+    },
+    {
+      "id": "input_3",
+      "path": "data/company_master.csv",
+      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6"
+    },
+    {
+      "id": "l0_patch",
+      "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+      "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811"
+    },
+    {
+      "id": "l0_routes",
+      "path": "runs/issues/S02/remediation_20261029/l0/repaired/l0_reclassification.csv",
+      "sha256": "6bc02248555e883bf08c1df67ff2b02a6d3a7ef9530c15c2233321ee737b992f"
+    },
+    {
+      "id": "l0_self_check",
+      "path": "runs/issues/S02/remediation_20261029/l0/repaired/self_check.json",
+      "sha256": "cbcb1f7ebcf814e0c3a219964e8d66dc23b3c270e42a606ab5afe403890c9445"
+    },
+    {
+      "id": "metric_file",
+      "path": "runs/issues/S02/remediation_20261029/s02/all_pool_metrics.csv",
+      "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425"
+    },
+    {
+      "id": "protected_queue",
+      "path": "runs/issues/S02/recheck_20261029/gates/protected_21.csv",
+      "sha256": "74753e9ae7c61361aedd7796d91605bb6c0f7070b7d13fdd42490a5d791e6cc2"
+    },
+    {
+      "id": "s01_acceptance",
+      "path": "runs/issues/S01/acceptance_20261029.json",
+      "sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058"
+    },
+    {
+      "id": "s02_calculation_manifest",
+      "path": "runs/issues/S02/remediation_20261029/s02/calculation_manifest.json",
+      "sha256": "2bb41a7b6510b7d0174d1b0baea384accf8919fd730ed5be6eabfb55c76e1af6"
+    },
+    {
+      "id": "screen_rules_v2",
+      "path": "runs/issues/S01/screen_rules_v2.json",
+      "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
+    }
+  ],
+  "canonical_binding": {
+    "input_version": "S00_TARGETED_REEXTRACTION_20261029",
+    "s02_calculation_manifest": {
+      "path": "runs/issues/S02/remediation_20261029/s02/calculation_manifest.json",
+      "sha256": "2bb41a7b6510b7d0174d1b0baea384accf8919fd730ed5be6eabfb55c76e1af6"
+    },
+    "input_files": [
+      {
+        "path": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv.gz",
+        "sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824"
+      },
+      {
+        "path": "runs/issues/S02/remediation_20261029/s00/normalization_manifest.json",
+        "sha256": "4d22392e3344382ea759525c1873abb502275e622ee7f09f9d5311ba8cf7baf6"
+      },
+      {
+        "path": "data/company_master.csv",
+        "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6"
+      }
+    ],
+    "metric_file": {
+      "path": "runs/issues/S02/remediation_20261029/s02/all_pool_metrics.csv",
+      "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425"
+    },
+    "company_summary": {
+      "path": "runs/issues/S02/remediation_20261029/s02/company_metric_summary.csv",
+      "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95"
+    },
+    "l0_patch": {
+      "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+      "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811"
+    },
+    "l0_routes": {
+      "path": "runs/issues/S02/remediation_20261029/l0/repaired/l0_reclassification.csv",
+      "sha256": "6bc02248555e883bf08c1df67ff2b02a6d3a7ef9530c15c2233321ee737b992f"
+    },
+    "l0_self_check": {
+      "path": "runs/issues/S02/remediation_20261029/l0/repaired/self_check.json",
+      "sha256": "cbcb1f7ebcf814e0c3a219964e8d66dc23b3c270e42a606ab5afe403890c9445"
+    },
+    "coverage_resolution": {
+      "path": "runs/issues/S02/remediation_20261029/coverage_resolution.csv",
+      "sha256": "bd91619c6f1a8be85538abfb3afdb7ee83d53af1e082e1ab0572397f934efff1"
+    },
+    "protected_queue": {
+      "path": "runs/issues/S02/recheck_20261029/gates/protected_21.csv",
+      "sha256": "74753e9ae7c61361aedd7796d91605bb6c0f7070b7d13fdd42490a5d791e6cc2"
+    },
+    "screen_rules_v2": {
+      "path": "runs/issues/S01/screen_rules_v2.json",
+      "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
+    },
+    "s01_acceptance": {
+      "path": "runs/issues/S01/acceptance_20261029.json",
+      "sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058"
+    }
+  },
+  "canonical_s02_snapshot": {
+    "companies": 1054,
+    "metrics_per_company": 12,
+    "metric_cells": 12648,
+    "input_version": "S00_TARGETED_REEXTRACTION_20261029",
+    "metric_status_counts": {
+      "OK": 6211,
+      "PROVISIONAL": 4303,
+      "HOLD": 267,
+      "MISSING": 229,
+      "NOT_COMPARABLE": 314,
+      "UNDEFINED_BASE": 469,
+      "NOT_APPLICABLE": 855,
+      "EXCLUDED_SCOPE": 0,
+      "VERSION_MISMATCH": 0
+    },
+    "l0_company_counts": {
+      "EVALUABLE": 664,
+      "W5_PROVISIONAL_ONLY": 387,
+      "W9_MIXED_NON_EVALUABLE": 3
+    },
+    "s02_manifest_sha256": "2bb41a7b6510b7d0174d1b0baea384accf8919fd730ed5be6eabfb55c76e1af6",
+    "formal_outputs": [
+      "runs/issues/S02/remediation_20261029/s02/all_pool_metrics.csv",
+      "runs/issues/S02/remediation_20261029/s02/company_metric_summary.csv"
+    ],
+    "l0_outputs": [
+      "runs/issues/S02/remediation_20261029/l0/repaired/l0_reclassification.csv",
+      "runs/issues/S02/remediation_20261029/l0/repaired/self_check.json"
+    ]
+  }
+}

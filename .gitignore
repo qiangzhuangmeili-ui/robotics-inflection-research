@@ -23,3 +23,14 @@ runs/issues/S00/extract/*_fields.csv
 
 # S02 修复版大表留本机（同 S00 规则：大表不入 Git，提交 .gz 与指纹）
 runs/issues/S02/remediation_20261029/s00/financial_normalized.csv
+
+# S02 接入复核：测试副本/复算大表/原页图留本地与Drive，Git只存脚本和审计摘要。
+runs/issues/S02/recheck_20261029/integration/*/
+runs/issues/S02/recheck_20261029/integration/*.csv
+runs/issues/S02/recheck_20261029/integration/*.gz
+runs/issues/S02/recheck_20261029/integration/tampered_*
+runs/issues/S02/recheck_20261029/integration/rules_with_tampered_*
+runs/issues/S02/recheck_20261029/source_pages/
+runs/issues/S02/recheck_20261029/reproduction/
+runs/issues/S02/recheck_20261029/reasonix/recalc*/
+runs/issues/S02/recheck_20261029/reasonix/*.log

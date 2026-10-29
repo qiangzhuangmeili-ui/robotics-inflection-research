@@ -15,9 +15,11 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import hashlib
 import importlib.util
 import json
+import shutil
 import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
@@ -31,8 +33,16 @@ MASTER = ROOT / "data/company_master.csv"
 CST = timezone(timedelta(hours=8))
 NOW = datetime.now(CST).isoformat(timespec="seconds")
 
+ACCEPTED_BASE_RULES_SHA256 = {
+    "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",  # accepted CRLF bytes
+    "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",  # accepted LF bytes
+}
 RULES_SHA_REQUIRED = "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
 ANCHOR_FIELDS = ("FIN.REV.YTD", "FIN.REV.SQ", "FIN.NPDEDT.YTD")
+BASE_RULES_RELATIVE = "runs/issues/S01/screen_rules_v2.json"
+DEFAULT_L0_PATCH_RELATIVE = "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json"
+RULES_METADATA_KEYS = {"input_fingerprint", "input_version", "base_rules_sha256", "l0_addendum_path"}
+L0_ADDENDUM_VERSION = "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
 
 # 公式唯一来源：S01 已验收执行器
 _spec = importlib.util.spec_from_file_location("s01_exec", ROOT / "tools/s01_rules_check.py")
@@ -43,8 +53,8 @@ checks: list[dict] = []
 findings: list[dict] = []
 
 
-def add(cid, item, ok, detail, blocking=True):
-    result = "PASS" if ok else ("FAIL" if blocking else "WARN")
+def add(cid, item, ok, detail, blocking=True, result_override=None):
+    result = result_override or ("PASS" if ok else ("FAIL" if blocking else "WARN"))
     checks.append({"id": cid, "item": item, "result": result,
                    "blocking": blocking, "detail": detail})
     print(result.ljust(4) + " " + cid + " " + item)
@@ -61,6 +71,218 @@ def sha256(p: Path) -> str:
         for chunk in iter(lambda: fh.read(1 << 20), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def sha256_gzip_payload(p: Path) -> str:
+    h = hashlib.sha256()
+    with gzip.open(p, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def repo_path(value) -> Path:
+    path = Path(value).expanduser()
+    if not path.is_absolute():
+        path = ROOT / path
+    return path.resolve()
+
+
+def display_path(path: Path) -> str:
+    try:
+        return path.resolve().relative_to(ROOT.resolve()).as_posix()
+    except ValueError:
+        return str(path.resolve())
+
+
+def valid_sha256(value) -> bool:
+    if not isinstance(value, str) or len(value) != 64:
+        return False
+    try:
+        int(value, 16)
+    except ValueError:
+        return False
+    return True
+
+
+def science_rules_match(selected: dict, base: dict, base_sha: str) -> tuple[bool, str]:
+    """Accept only the frozen S01 science rules, plus the registered input metadata."""
+    if base_sha not in ACCEPTED_BASE_RULES_SHA256:
+        return False, f"base S01 byte hash is not accepted: {base_sha}"
+    if set(selected) - RULES_METADATA_KEYS != set(base) - {"input_fingerprint"}:
+        return False, "selected rules contain missing or unrecognized top-level fields"
+    selected_core = {k: v for k, v in selected.items() if k not in RULES_METADATA_KEYS}
+    base_core = {k: v for k, v in base.items() if k != "input_fingerprint"}
+    if selected_core != base_core:
+        return False, "scientific rule content differs from frozen S01 v2"
+    changed_fingerprint = selected.get("input_fingerprint") != base.get("input_fingerprint")
+    has_v2_metadata = any(k in selected for k in ("input_version", "base_rules_sha256", "l0_addendum_path"))
+    if changed_fingerprint or has_v2_metadata:
+        declared_base = selected.get("base_rules_sha256")
+        if declared_base not in ACCEPTED_BASE_RULES_SHA256:
+            return False, "alternate input metadata is not anchored to an accepted S01 v2 hash"
+    return True, "scientific rules match frozen S01 v2"
+
+
+def verify_normalized_input(source_path: Path, source_sha: str, payload_sha: str,
+                            rules: dict, explicit_sha256: str | None) -> dict:
+    """Bind CSV payload bytes to an explicit digest, a registered gzip, or v2 state."""
+    source_is_gzip = source_path.name.lower().endswith(".gz")
+    if explicit_sha256 is not None:
+        expected = explicit_sha256.strip().lower()
+        ok = valid_sha256(expected) and payload_sha == expected
+        return {
+            "ok": ok,
+            "source": "--normalized-sha256",
+            "expected_sha256": expected,
+            "verified_source_path": None,
+            "verified_source_sha256": expected,
+            "note": "explicit expected digest matches normalized CSV payload bytes" if ok else "explicit digest is invalid or does not match normalized CSV payload bytes",
+        }
+
+    fingerprint = rules.get("input_fingerprint", {})
+    entries = fingerprint.get("files", []) if isinstance(fingerprint, dict) else []
+    for entry in (entries if isinstance(entries, list) else []):
+        rel = entry.get("path")
+        registered_sha = str(entry.get("sha256", "")).lower()
+        if not rel or not valid_sha256(registered_sha):
+            continue
+        registered_path = repo_path(rel)
+        if registered_path.suffix.lower() == ".csv" and registered_path.is_file():
+            registered_csv_sha = sha256(registered_path)
+            if registered_csv_sha == registered_sha and payload_sha == registered_csv_sha:
+                return {
+                    "ok": True,
+                    "source": f"rules_input_fingerprint:{rel}",
+                    "expected_sha256": registered_sha,
+                    "registered_sha256": registered_sha,
+                    "verified_source_path": rel,
+                    "verified_source_sha256": registered_sha,
+                    "note": "normalized CSV payload matches the registered CSV bytes",
+                }
+        if registered_path.name.lower().endswith(".csv.gz"):
+            if not registered_path.is_file():
+                continue
+            try:
+                compressed_sha = sha256(registered_path)
+                registered_payload_sha = sha256_gzip_payload(registered_path)
+            except (OSError, EOFError):
+                continue
+            if compressed_sha != registered_sha or registered_payload_sha != payload_sha:
+                continue
+            # A supplied gzip must match the registered compressed bytes as well
+            # as its payload. A CSV copy is identified by payload against the
+            # registered gzip, independent of the copy's path.
+            if source_is_gzip and source_sha != compressed_sha:
+                continue
+            return {
+                "ok": True,
+                "source": f"rules_input_fingerprint_gzip:{rel}",
+                "expected_sha256": registered_payload_sha,
+                "registered_sha256": registered_sha,
+                "verified_source_path": rel,
+                "verified_source_sha256": compressed_sha,
+                "compressed_sha256": compressed_sha,
+                "note": "registered gzip SHA and decompressed payload both match the normalized CSV",
+            }
+
+    state_path = ROOT / "PROJECT_STATE.json"
+    if state_path.is_file():
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        v2 = state.get("current_valid_versions", {}).get("S00_data", {})
+        v2_rel = v2.get("v2_repair")
+        v2_sha = str(v2.get("v2_sha256", "")).lower()
+        if v2_rel and valid_sha256(v2_sha) and payload_sha == v2_sha:
+            return {
+                "ok": True,
+                "source": "PROJECT_STATE.current_valid_versions.S00_data.v2_repair",
+                "expected_sha256": v2_sha,
+                "registered_sha256": v2_sha,
+                "verified_source_path": v2_rel,
+                "verified_source_sha256": v2_sha,
+                "note": "normalized CSV payload SHA matches the registered v2 content (copy paths are allowed)",
+            }
+
+    return {
+        "ok": False,
+        "source": None,
+        "expected_sha256": None,
+        "verified_source_path": None,
+        "verified_source_sha256": None,
+        "note": "normalized payload is not bound to a matching registered gzip, v2 content SHA, or explicit digest",
+    }
+
+
+def l0_addendum_required(rules: dict, payload_sha: str, input_identity: dict) -> bool:
+    state_path = ROOT / "PROJECT_STATE.json"
+    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.is_file() else {}
+    v2 = state.get("current_valid_versions", {}).get("S00_data", {})
+    v2_sha = str(v2.get("v2_sha256", "")).lower()
+    registered_v2_payload = valid_sha256(v2_sha) and payload_sha == v2_sha
+    rules_registered_addendum = bool(
+        rules.get("l0_addendum_path")
+        and str(input_identity.get("source", "")).startswith("rules_input_fingerprint_gzip:")
+    )
+    return registered_v2_payload or rules_registered_addendum
+
+
+def load_l0_addendum(rules: dict, actual: Path, actual_sha: str,
+                     input_identity: dict) -> dict:
+    """Load the fixed additive L0 patch only for the registered v2 input version."""
+    state_path = ROOT / "PROJECT_STATE.json"
+    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.is_file() else {}
+    v2 = state.get("current_valid_versions", {}).get("S00_data", {})
+    v2_sha = str(v2.get("v2_sha256", "")).lower()
+    registered_v2 = bool(valid_sha256(v2_sha) and actual_sha == v2_sha)
+    rules_registered_addendum = bool(
+        rules.get("l0_addendum_path")
+        and input_identity.get("source", "").startswith("rules_input_fingerprint_gzip:")
+    )
+    if not (registered_v2 or rules_registered_addendum):
+        return {"applied": False, "version": None, "path": None, "sha256": None,
+                "note": "historical/base input; preserve the original S02 L0 labels"}
+
+    patch_rel = rules.get("l0_addendum_path") or DEFAULT_L0_PATCH_RELATIVE
+    patch_path = repo_path(patch_rel)
+    if patch_path != repo_path(DEFAULT_L0_PATCH_RELATIVE):
+        raise ValueError(f"unsupported L0 addendum path for this repair version: {patch_rel}")
+    if not patch_path.is_file():
+        raise ValueError(f"registered v2 input requires the L0 addendum file: {patch_rel}")
+    patch_sha = sha256(patch_path)
+    patch = json.loads(patch_path.read_text(encoding="utf-8"))
+    if patch.get("rules_version") != L0_ADDENDUM_VERSION:
+        raise ValueError(f"unsupported L0 addendum version: {patch.get('rules_version')!r}")
+    if patch.get("base_rules_sha256") not in ACCEPTED_BASE_RULES_SHA256:
+        raise ValueError("L0 addendum base hash is not an accepted S01 v2 hash")
+    repair_manifest_path = ROOT / "runs/issues/S02/remediation_20261029/s02/calculation_manifest.json"
+    if not repair_manifest_path.is_file():
+        raise ValueError("the repair S02 manifest that freezes the L0 addendum SHA is missing")
+    repair_manifest = json.loads(repair_manifest_path.read_text(encoding="utf-8"))
+    expected_patch_sha = str(repair_manifest.get("l0_addendum_sha256", "")).lower()
+    if not valid_sha256(expected_patch_sha) or patch_sha != expected_patch_sha:
+        raise ValueError("L0 addendum SHA256 differs from the frozen repair S02 manifest")
+
+    spec = importlib.util.spec_from_file_location("s02_l0_classifier", ROOT / "tools/l0_classify.py")
+    if spec is None or spec.loader is None:
+        raise RuntimeError("cannot load tools/l0_classify.py")
+    l0 = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(l0)
+    statuses = tuple(patch.get("classification_input", {}).get("allowed_metric_statuses", []))
+    if set(statuses) != set(l0.COUNT_COLUMNS) or len(statuses) != len(l0.COUNT_COLUMNS):
+        raise ValueError("L0 addendum status vector differs from the classifier input schema")
+    if patch.get("classification_input", {}).get("metric_count") != len(rules.get("metrics", [])):
+        raise ValueError("L0 addendum metric count differs from the S02 metric set")
+    l0.STATUSES = statuses
+    l0.RULE_TABLE = patch["priority_rules"]
+    return {
+        "applied": True,
+        "version": patch["rules_version"],
+        "path": display_path(patch_path),
+        "sha256": patch_sha,
+        "manifest_sha256": expected_patch_sha,
+        "note": "L0 JSON addendum applied to each company status vector",
+        "classifier": l0,
+    }
 
 
 def resolve_period(offset: str, pk: int) -> int | None:
@@ -134,47 +356,155 @@ def period_type_of(meta, sec, pk) -> str:
     return ""
 
 
-def main(argv=None) -> int:
+def main(argv=()) -> int:
     global S02
+    checks.clear()
+    findings.clear()
     ap = argparse.ArgumentParser()
     ap.add_argument("--normalized", default=None, help="标准化表路径（默认 S00 冻结版）")
     ap.add_argument("--out-dir", default=None, help="输出目录（默认 runs/issues/S02）")
     ap.add_argument("--rules", default=None, help="规则文件（默认 S01 v2）")
-    args = ap.parse_args(argv)
+    ap.add_argument("--normalized-sha256", default=None,
+                    help="显式期待的标准化 CSV SHA256（用于注册表之外的新输入）")
+    args = ap.parse_args(list(argv) if argv is not None else [])
 
-    norm = Path(args.normalized) if args.normalized else None
-    if args.out_dir:
-        S02 = Path(args.out_dir)
+    source_path = repo_path(args.normalized if args.normalized else s01.NORMALIZED)
+    source_is_gzip = source_path.name.lower().endswith(".gz")
+    source_sha = sha256(source_path) if source_path.is_file() else ""
+    try:
+        payload_sha = sha256_gzip_payload(source_path) if source_is_gzip and source_sha else source_sha
+    except (OSError, EOFError):
+        payload_sha = ""
+    requested_out_dir = repo_path(args.out_dir) if args.out_dir else None
+    rules_path = repo_path(args.rules) if args.rules else repo_path(RULES)
+    base_rules_path = ROOT / BASE_RULES_RELATIVE
+    base_rules_sha = sha256(base_rules_path)
+    base_rules = json.loads(base_rules_path.read_text(encoding="utf-8"))
+    rules_sha = sha256(rules_path)
+    rules = json.loads(rules_path.read_text(encoding="utf-8"))
+
+    p01_ok, p01_note = science_rules_match(rules, base_rules, base_rules_sha)
+    add("P01", "指标公式与信号阈值严格沿用冻结 S01_SCREEN_RULES_V2", p01_ok,
+        {"rules_file": display_path(rules_path), "rules_sha256": rules_sha,
+         "base_rules_sha256": base_rules_sha, "accepted_base_hashes": sorted(ACCEPTED_BASE_RULES_SHA256),
+         "detail": p01_note})
+
+    fp_bad = []
+    for item in base_rules["input_fingerprint"]["files"]:
+        path = repo_path(item["path"])
+        if not path.is_file() or sha256(path) != item["sha256"]:
+            fp_bad.append(item["path"])
+    add("P02", "冻结 S01 登记的三份基线输入指纹未变", not fp_bad, {"changed": fp_bad})
+
+    input_identity = verify_normalized_input(source_path, source_sha, payload_sha,
+                                             rules, args.normalized_sha256)
+    if not source_path.is_file() or not payload_sha:
+        input_identity["ok"] = False
+        input_identity["note"] = "normalized input is missing or its gzip payload cannot be read"
+    loaded_csv_candidate = source_path
+    cache_dir = None
+    if source_is_gzip:
+        if requested_out_dir is None:
+            input_identity["ok"] = False
+            input_identity["note"] = "a gzip normalized input requires an explicit --out-dir for isolated decompression"
+        else:
+            cache_dir = requested_out_dir / ".input_cache"
+            protected_dirs = set()
+            for entry in base_rules["input_fingerprint"]["files"] + rules.get("input_fingerprint", {}).get("files", []):
+                rel = entry.get("path", "")
+                if rel.lower().endswith(".csv.gz"):
+                    protected_dirs.add(repo_path(rel).parent)
+            state_path = ROOT / "PROJECT_STATE.json"
+            if state_path.is_file():
+                state = json.loads(state_path.read_text(encoding="utf-8"))
+                v2_rel = state.get("current_valid_versions", {}).get("S00_data", {}).get("v2_repair")
+                if v2_rel:
+                    protected_dirs.add(repo_path(v2_rel).parent)
+            if any(cache_dir.resolve() == protected or protected in cache_dir.resolve().parents
+                   for protected in protected_dirs):
+                input_identity["ok"] = False
+                input_identity["note"] = "gzip cache may not be created inside a frozen normalized-input directory"
+            loaded_csv_candidate = cache_dir / f"financial_normalized_{payload_sha[:16]}.csv"
+    if input_identity.get("ok") and source_is_gzip:
+        input_identity["source_kind"] = "gzip"
+    elif input_identity.get("ok"):
+        input_identity["source_kind"] = "csv"
+    add("P05", "实际加载的标准化 CSV 与可信 SHA 来源匹配", input_identity["ok"],
+        {"source_path": display_path(source_path), "source_sha256": source_sha,
+         "loaded_csv_path": display_path(loaded_csv_candidate), "loaded_csv_sha256": payload_sha,
+         "verified_against": input_identity.get("source"),
+         "verified_source_path": input_identity.get("verified_source_path"),
+         "verified_source_sha256": input_identity.get("verified_source_sha256"),
+         "expected_sha256": input_identity.get("expected_sha256"),
+         "registered_sha256": input_identity.get("registered_sha256"),
+         "note": input_identity["note"]}, blocking=True)
+
+    l0_error = None
+    l0_addendum = {"applied": False, "version": None, "path": None, "sha256": None,
+                   "note": "historical/base input; preserve the original S02 L0 labels"}
+    l0_required = input_identity["ok"] and l0_addendum_required(rules, payload_sha, input_identity)
+    if l0_required:
+        try:
+            l0_addendum = load_l0_addendum(rules, loaded_csv_candidate, payload_sha, input_identity)
+        except Exception as exc:
+            l0_error = str(exc)
+    expected_l0_path = display_path(repo_path(DEFAULT_L0_PATCH_RELATIVE))
+    p06_applied = bool(
+        l0_required
+        and l0_error is None
+        and l0_addendum.get("applied") is True
+        and l0_addendum.get("version") == L0_ADDENDUM_VERSION
+        and l0_addendum.get("path") == expected_l0_path
+        and valid_sha256(l0_addendum.get("sha256"))
+        and l0_addendum.get("sha256") == l0_addendum.get("manifest_sha256")
+        and hasattr(l0_addendum.get("classifier"), "classify")
+    )
+    p06_status = "NOT_APPLICABLE" if not l0_required else ("PASS" if p06_applied else "FAIL")
+    add("P06", "按输入版本要求并实际应用锁定的 L0 addendum",
+        not l0_required or p06_applied,
+        {"required": l0_required, "applicable": l0_required,
+         "applied": l0_addendum["applied"], "version": l0_addendum["version"],
+         "path": l0_addendum["path"], "sha256": l0_addendum["sha256"],
+         "error": l0_error, "status": p06_status, "note": l0_addendum["note"]},
+        blocking=True, result_override=p06_status)
+
+    if any(c["result"] == "FAIL" and c["blocking"] for c in checks):
+        return 1
+
+    baseline_entry = next(
+        item for item in base_rules["input_fingerprint"]["files"]
+        if item["path"] == "runs/issues/S00/financial_normalized.csv.gz"
+    )
+    baseline_normalized_sha = sha256_gzip_payload(repo_path(baseline_entry["path"]))
+    alt_input = payload_sha != baseline_normalized_sha
+
+    previous_s02 = S02
+    S02 = requested_out_dir if requested_out_dir else repo_path(S02)
     S02.mkdir(parents=True, exist_ok=True)
-    alt_input = bool(norm and norm.resolve() != (ROOT / "runs/issues/S00/financial_normalized.csv").resolve())
-    if norm:
-        s01.NORMALIZED = norm
-    rules_path = Path(args.rules) if args.rules else RULES
+
+    if source_is_gzip:
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        actual = loaded_csv_candidate
+        if actual.exists():
+            if sha256(actual) != payload_sha:
+                raise ValueError(f"existing gzip cache has unexpected content: {display_path(actual)}")
+        else:
+            with gzip.open(source_path, "rb") as source_stream, actual.open("xb") as output_stream:
+                shutil.copyfileobj(source_stream, output_stream)
+            if sha256(actual) != payload_sha:
+                raise ValueError(f"materialized gzip payload SHA mismatch: {display_path(actual)}")
+    else:
+        actual = source_path
+    actual_sha = sha256(actual)
 
     # ---------- 前置校验
-    rules_sha = sha256(rules_path)
-    add("P01", "规则版本为冻结的 S01_SCREEN_RULES_V2", rules_sha == RULES_SHA_REQUIRED,
-        {"sha256": rules_sha})
-    rules = json.loads(rules_path.read_text(encoding="utf-8"))
-    fp_bad = []
-    for f in rules["input_fingerprint"]["files"]:
-        p = ROOT / f["path"]
-        if not p.exists() or sha256(p) != f["sha256"]:
-            fp_bad.append(f["path"])
-    add("P02", "规则登记的三份研究输入指纹未变", not fp_bad, {"changed": fp_bad})
-    actual = norm or (ROOT / "runs/issues/S00/financial_normalized.csv")
-    actual_sha = sha256(actual)
-    registered = {f["path"]: f["sha256"] for f in rules["input_fingerprint"]["files"]}
-    reg_sha = registered.get("runs/issues/S00/financial_normalized.csv.gz")
-    same_as_registered = bool(reg_sha) and actual_sha == reg_sha
-    add("P05", "实际使用的标准化表与规则登记一致" + ("" if same_as_registered else "（新输入版本）"),
-        same_as_registered,
-        {"used": str(actual), "sha256": actual_sha, "registered_sha256": reg_sha,
-         "note": "不一致即新输入版本，须另记指纹并在复核记录中说明"},
-        blocking=False)
-
     # ---------- 装载与计算
-    rows, meta, field_rows, companies = s01.load_rows()
+    previous_normalized = s01.NORMALIZED
+    s01.NORMALIZED = actual
+    try:
+        rows, meta, field_rows, companies = s01.load_rows()
+    finally:
+        s01.NORMALIZED = previous_normalized
     s01.load_signal_defs(rules)          # 只为了让 evaluate 的常量与规则一致；本脚本不产出信号
     latest = latest_periods(rows)
     add("P03", "公司数与 S00/S01 一致（1054）", len(companies) == 1054, {"companies": len(companies)})
@@ -231,20 +561,24 @@ def main(argv=None) -> int:
                 "source_refs": ";".join(tr["refs"]),
                 "note": res.get("note") or "",
             })
-        sts = {k for k in cnt if k}
-        if cnt["OK"] > 0:
-            l0 = "EVALUABLE"
-        elif sts <= {"HOLD"}:
-            l0 = "W2_ALL_HOLD"
-        elif sts <= {"MISSING"}:
-            l0 = "W1_NO_DATA"
-        elif sts <= {"NOT_COMPARABLE"}:
-            l0 = "W4_EARLY"
-        elif cnt["PROVISIONAL"] > 0:
-            # 无 OK 但有 PROVISIONAL：按 watchlist W5 处理（仅观察、不进 L2）
-            l0 = "W5_PROVISIONAL_ONLY"
+        if l0_addendum["applied"]:
+            l0_counts = {status: cnt[status] for status in l0_addendum["classifier"].STATUSES}
+            l0, _, _ = l0_addendum["classifier"].classify(l0_counts)
         else:
-            l0 = "MIXED_NOT_DEFINED_BY_RULE"
+            sts = {k for k in cnt if k}
+            if cnt["OK"] > 0:
+                l0 = "EVALUABLE"
+            elif sts <= {"HOLD"}:
+                l0 = "W2_ALL_HOLD"
+            elif sts <= {"MISSING"}:
+                l0 = "W1_NO_DATA"
+            elif sts <= {"NOT_COMPARABLE"}:
+                l0 = "W4_EARLY"
+            elif cnt["PROVISIONAL"] > 0:
+                # 无 OK 但有 PROVISIONAL：按 watchlist W5 处理（仅观察、不进 L2）
+                l0 = "W5_PROVISIONAL_ONLY"
+            else:
+                l0 = "MIXED_NOT_DEFINED_BY_RULE"
         company_rows.append({
             "security_id": sec, "stock_code": info["stock_code"], "stock_name": info["stock_name"],
             "period_key": pk, "period_type": ptype,
@@ -463,6 +797,65 @@ def main(argv=None) -> int:
             "undefined_base": c["UNDEFINED_BASE"], "not_applicable": c["NOT_APPLICABLE"],
             "excluded_scope": c["EXCLUDED_SCOPE"], "version_mismatch": c["VERSION_MISMATCH"],
         })
+    l0_manifest = {key: value for key, value in l0_addendum.items() if key != "classifier"}
+    if l0_addendum["applied"]:
+        l0_rule_note = (
+            f"已应用 {l0_addendum['version']}（{l0_addendum['path']}，SHA256 {l0_addendum['sha256']}）；"
+            "L0 仅为证据可得性路由，不是信号或候选结论。"
+        )
+    else:
+        l0_rule_note = (
+            "历史 S02 v1 保留原 L0 分支；无 OK 且有 PROVISIONAL 的公司列 W5，"
+            "其余未定义混合状态保留 MIXED_NOT_DEFINED_BY_RULE。"
+        )
+    known_limits = [
+        "指标全部为公司合并口径，不是机器人分部口径；不得据此推断机器人业务盈利",
+        "2026Q3 截面仅部分公司披露，横截面统计须按最新期分层",
+        "PROVISIONAL 与 OK 分列，PROVISIONAL 不得当正常样本",
+        "MARGIN 与 PROFIT 维度同源，后续 S04 收紧时仍会重复计数",
+        "S00 遗留：62 整槽无值、453 份三表≠摘要表、2,157 重述待核、旧快照单一来源",
+        "本卡不产出名单、不算信号、不做 PIT 回测",
+        "上游缺陷一：53 家最新期可用字段<8（其中 25 家仅 2 个字段，含美的集团/工业富联/广汽集团/中国中铁/石头科技/时代电气/宇树科技等），A03 已记录字段抽取仅覆盖年报，须回 S00 补抽半年报/季报字段",
+        "上游缺陷二：5 家营收上亿而扣非不足营收万分之一（赣锋锂业/中科信息/金百泽/五洋自控/毅昌科技），疑似「万元」被识别为「元」，须回 S00 核 PDF 原表",
+    ]
+    if l0_addendum["applied"]:
+        known_limits.append("L0 addendum 只修补证据可得性分流；W5/W9 不自动判为无信号或候选淘汰")
+    else:
+        known_limits.append("规则 L0 未覆盖无 OK 且非全 HOLD/全 MISSING/全 NOT_COMPARABLE 的混合情形；历史输出按原规则保留 MIXED 标签")
+    calculator_path = Path(__file__).resolve()
+    formula_engine_path = ROOT / "tools/s01_rules_check.py"
+    l0_classifier_path = ROOT / "tools/l0_classify.py"
+    reextract_plan_path = ROOT / "runs/issues/S02/remediation_20261029/reextract_plan.json"
+    a03_source_path = ROOT / "tools/a03_financial_field_extractor.py"
+    reextract_plan = (json.loads(reextract_plan_path.read_text(encoding="utf-8"))
+                      if reextract_plan_path.is_file() else {})
+    a03_sha = sha256(a03_source_path) if a03_source_path.is_file() else None
+    reextract_plan_sha = sha256(reextract_plan_path) if reextract_plan_path.is_file() else None
+    execution_sources = {
+        "calculator": {"path": display_path(calculator_path), "sha256": sha256(calculator_path)},
+        "formula_engine": {"path": display_path(formula_engine_path), "sha256": sha256(formula_engine_path)},
+        "l0_classifier": {
+            "path": display_path(l0_classifier_path),
+            "sha256": sha256(l0_classifier_path),
+            "executed": bool(l0_addendum["applied"]),
+        },
+        "l0_rules": {
+            "applied": bool(l0_addendum["applied"]),
+            "path": l0_addendum["path"],
+            "sha256": l0_addendum["sha256"],
+            "version": l0_addendum["version"],
+        },
+        "upstream_a03": {
+            "source_path": display_path(a03_source_path),
+            "source_sha256": a03_sha,
+            "reextract_plan_path": display_path(reextract_plan_path),
+            "reextract_plan_sha256": reextract_plan_sha,
+            "registered_parser_sha256": reextract_plan.get("parser_sha256"),
+            "source_matches_registered_parser": bool(a03_sha and a03_sha == reextract_plan.get("parser_sha256")),
+            "extraction_executed_this_run": False,
+            "note": "上游解析器与重抽计划仅作来源链记录；本次 S02 未执行字段抽取",
+        },
+    }
     manifest = {
         "issue_key": "S02", "issue_number": 37,
         "plan_version": "20261026_collection_first_v2",
@@ -470,19 +863,31 @@ def main(argv=None) -> int:
         "executor": "WorkBuddy AI",
         "review_nature": "SELF_CHECK",
         "rules_version": rules["rules_version"],
-        "rules_file": "runs/issues/S01/screen_rules_v2.json",
+        "rules_file": display_path(rules_path),
         "rules_sha256": rules_sha,
+        "base_rules_sha256": base_rules_sha,
         "formula_source": {
-            "file": "tools/s01_rules_check.py",
-            "sha256": sha256(ROOT / "tools/s01_rules_check.py"),
+            "file": display_path(formula_engine_path),
+            "sha256": execution_sources["formula_engine"]["sha256"],
             "note": "公式不在本脚本重写；S02 只定最新期、做溯源与口径检查",
         },
+        "execution_sources": execution_sources,
         "inputs": rules["input_fingerprint"]["files"],
         "normalized_input_used": {
-            "path": str(actual),
+            "path": display_path(actual),
             "sha256": actual_sha,
-            "matches_rules_fingerprint": same_as_registered,
-            "note": "新输入版本须在复核记录登记；S01 规则未变",
+            "source_path": display_path(source_path),
+            "source_sha256": source_sha,
+            "source_kind": "gzip" if source_is_gzip else "csv",
+            "loaded_csv_path": display_path(actual),
+            "loaded_csv_sha256": actual_sha,
+            "matches_rules_fingerprint": str(input_identity.get("source", "")).startswith("rules_input_fingerprint"),
+            "verified": input_identity["ok"],
+            "verified_against": input_identity.get("source"),
+            "verified_source_path": input_identity.get("verified_source_path"),
+            "verified_source_sha256": input_identity.get("verified_source_sha256"),
+            "expected_sha256": input_identity.get("expected_sha256"),
+            "note": input_identity["note"],
         },
         "latest_period_definition": {
             "rule": "任一锚定字段（FIN.REV.YTD / FIN.REV.SQ / FIN.NPDEDT.YTD）status ∈ USABLE∪LEGACY_SNAPSHOT 且 value 非空的最新 period_key",
@@ -499,12 +904,8 @@ def main(argv=None) -> int:
         },
         "coverage": coverage,
         "l0_distribution": dict(sorted(Counter(r["l0_evaluability"] for r in company_rows).items())),
-        "l0_rule_note": (
-            "规则 L0 只定义 EVALUABLE / W1_NO_DATA / W2_ALL_HOLD / W4_EARLY。"
-            "无 OK 但有 PROVISIONAL 的公司按 watchlist W5 单列为 W5_PROVISIONAL_ONLY"
-            "（本卡为指标层近似，S03 须按信号层复核）；其余混合情形记 "
-            "MIXED_NOT_DEFINED_BY_RULE，规则未覆盖，S03 前须补 L0 分支，不得由本卡擅自定义。"
-        ),
+        "l0_rule_note": l0_rule_note,
+        "l0_addendum": l0_manifest,
         "counts": {
             "companies": len(latest), "metrics": len(metric_order),
             "cells": len(out_rows),
@@ -529,17 +930,7 @@ def main(argv=None) -> int:
              "sha256": sha256(p3) if findings else None,
              "bytes": p3.stat().st_size if findings else 0},
         ],
-        "known_limits": [
-            "指标全部为公司合并口径，不是机器人分部口径；不得据此推断机器人业务盈利",
-            "2026Q3 截面仅部分公司披露，横截面统计须按最新期分层",
-            "PROVISIONAL 与 OK 分列，PROVISIONAL 不得当正常样本",
-            "MARGIN 与 PROFIT 维度同源，后续 S04 收紧时仍会重复计数",
-            "S00 遗留：62 整槽无值、453 份三表≠摘要表、2,157 重述待核、旧快照单一来源",
-            "本卡不产出名单、不算信号、不做 PIT 回测",
-            "上游缺陷一：53 家最新期可用字段<8（其中 25 家仅 2 个字段，含美的集团/工业富联/广汽集团/中国中铁/石头科技/时代电气/宇树科技等），A03 已记录字段抽取仅覆盖年报，须回 S00 补抽半年报/季报字段",
-            "上游缺陷二：5 家营收上亿而扣非不足营收万分之一（赣锋锂业/中科信息/金百泽/五洋自控/毅昌科技），疑似「万元」被识别为「元」，须回 S00 核 PDF 原表",
-            "规则 L0 未覆盖「无 OK 且非全 HOLD/全 MISSING/全 NOT_COMPARABLE」的混合情形，本卡按 watchlist W5 单列 377 家，另 17 家记 MIXED，S03 前须补 L0 分支",
-        ],
+        "known_limits": known_limits,
     }
     p5 = S02 / "calculation_manifest.json"
     p5.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -556,6 +947,7 @@ def main(argv=None) -> int:
         "checks_pass": sum(1 for c in checks if c["result"] in ("PASS", "WARN")),
         "checks_fail": len([c for c in checks if c["result"] == "FAIL"]),
         "checks_warn": len([c for c in checks if c["result"] == "WARN"]),
+        "checks_not_applicable": len([c for c in checks if c["result"] == "NOT_APPLICABLE"]),
         "blocking_fail": len(fails),
         "checks": checks,
         "counts": manifest["counts"],
@@ -571,6 +963,7 @@ def main(argv=None) -> int:
     print(json.dumps({"checks": f"{review['checks_pass']}/{review['checks_total']}",
                       "blocking_fail": len(fails), "counts": manifest["counts"]},
                      ensure_ascii=False, indent=1))
+    S02 = previous_s02
     return 1 if fails else 0
 
 
@@ -606,4 +999,4 @@ def independent_recompute(rows, latest, out_rows) -> list[dict]:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

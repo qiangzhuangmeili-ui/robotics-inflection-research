@@ -1,0 +1,14 @@
+请在当前工作目录 C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research 做一轮独立会话的 AI 技术审阅，最多12步，禁止修改任何生产代码、规则、输入、控制文件或历史结果。不要创建子代理，不发评论/邮件，不读或改任何密钥和账号配置，只使用CLI已有配置。允许的新文件仅限 runs/issues/S02/recheck_20261029/reasonix/ 下的审查记录。其他文件只读。
+
+目标：判断 S02 #37 的修复版是否具备进入 S03“有状态保护的技术宽筛”的条件。不是业务结论、盈利归因、投资建议或最终名单验收。作者 Codex 参与过修复，本轮请独立判断，允许退回；不得只因作者或WorkBuddy报PASS就通过。
+
+审查材料（不必全池逐家精读）：
+- git diff 547508d -- tools/a03_financial_field_extractor.py tools/s02_calculate.py ，关注原表金额/百分比/脚注/单位以及新输入身份、L0调用和清单的一致性。
+- tools/s03_input_gate.py 与 runs/issues/S02/recheck_20261029/gates/gate_contract.json：21家公司必须保留待核；10家仍EVALUABLE也不得仅因NO_SIGNAL终结淘汰；387家W5无触发仍观察、3家W9待核；PROVISIONAL/HOLD不进干净维度。禁止为家数调阈值。
+- runs/issues/S02/recheck_20261029/integration/ 下测试结果及复现脚本；runs/issues/S02/recheck_20261029/gates/validation.json、source_policy_summary.json。
+- frozen公式 tools/s01_rules_check.py 的 SHA256 应仍为134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f；规则本体未改，仅L0 additive。
+- 参考原页证据：runs/issues/S02/recheck_20261029/source_pages/ 中PDFium新读出的19条来源页文本；360份PDF哈希是作者复验，不可冒称你自己逐份独立核验。复星H1'26注3不是金额前缀；广汽单位在前页“元”，后页另一个子表“万元”不得回灌；泰瑞Q3'25“不适用”占一列，不能挤掉累计列；五家Q3百分比可能超过1000，不能当金额。必要时查看 source_page_checks.json 给出的原PDF相对路径和物理页；不要求全池未知清零。
+
+请实际阅读关键代码并做必要的有界验证（只读或测试输出写入你自己的reasonix目录，不运行会覆盖原交付的脚本）。最终输出中文：1 判定 PASS_TECHNICAL_WITH_LIMITS / RETURN_FOR_REWORK / BLOCKED；2 你实际读/执行的证据；3 具体阻断问题及文件/行号、复现方法（无问题就写无），不要泛泛罗列风险；4 必须保持的限制；5 这不等于原始PDF财务字段或业务证据的第三方完整审计，S03实际执行仍必须调用守卫。
+
+若支持写文件，将最终报告写 runs/issues/S02/recheck_20261029/reasonix/review.md；无论是否写文件，都在stdout完整输出结论。禁止虚构运行结果、审计身份或源文件访问能力。

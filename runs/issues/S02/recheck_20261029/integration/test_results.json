@@ -1,0 +1,129 @@
+{
+  "review_nature": "SELF_CHECK/INTEGRATION_REVIEW",
+  "tests": {
+    "default_v1": {
+      "status": "PASS",
+      "cells": 12648,
+      "l0_counts": {
+        "EVALUABLE": 660,
+        "MIXED_NOT_DEFINED_BY_RULE": 17,
+        "W5_PROVISIONAL_ONLY": 377
+      },
+      "input_sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6"
+    },
+    "old_wrapper": {
+      "status": "PASS",
+      "cells": 12648,
+      "l0_counts": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      },
+      "input_sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
+      "rules_file": "runs/issues/S02/remediation_20261029/rules_recalculation_inputs.json"
+    },
+    "rules_hash_allowlist_and_science_lock": {
+      "status": "PASS"
+    },
+    "unknown_and_tampered_csv": {
+      "status": "PASS",
+      "unknown_blocked": true,
+      "wrong_expected_hash_blocked": true
+    },
+    "tampered_l0_patch": {
+      "status": "PASS",
+      "blocked": true
+    },
+    "v2_cli": {
+      "status": "PASS",
+      "cells": 12648,
+      "l0_counts": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      },
+      "input_sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
+      "rules_file": "runs/issues/S01/screen_rules_v2.json",
+      "addendum": {
+        "applied": true,
+        "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
+        "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+        "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+        "manifest_sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+        "note": "L0 JSON addendum applied to each company status vector"
+      },
+      "execution_sources": {
+        "calculator": {
+          "path": "tools/s02_calculate.py",
+          "sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4"
+        },
+        "formula_engine": {
+          "path": "tools/s01_rules_check.py",
+          "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
+        },
+        "l0_classifier": {
+          "path": "tools/l0_classify.py",
+          "sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+          "executed": true
+        },
+        "l0_rules": {
+          "applied": true,
+          "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+          "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+          "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
+        },
+        "upstream_a03": {
+          "source_path": "tools/a03_financial_field_extractor.py",
+          "source_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+          "reextract_plan_path": "runs/issues/S02/remediation_20261029/reextract_plan.json",
+          "reextract_plan_sha256": "6362e61f4642a764eddcc39e599da7dd2dc3c7588a67432fedbf5cc5c8a1f2aa",
+          "registered_parser_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+          "source_matches_registered_parser": true,
+          "extraction_executed_this_run": false,
+          "note": "上游解析器与重抽计划仅作来源链记录；本次 S02 未执行字段抽取"
+        }
+      },
+      "all_pool_metrics_byte_equal_canonical": true,
+      "company_summary_byte_equal_canonical": true
+    },
+    "v2_csv_copy": {
+      "status": "PASS",
+      "registered_gzip_payload_match": true,
+      "l0_counts": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      }
+    },
+    "v2_gzip_cli": {
+      "status": "PASS",
+      "source_sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+      "loaded_csv_sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
+      "loaded_csv_path": "runs/issues/S02/recheck_20261029/integration/v2_gzip_cli/.input_cache/financial_normalized_e08a2731cd6c5c3e.csv",
+      "l0_counts": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      }
+    },
+    "v2_project_state_copy": {
+      "status": "PASS",
+      "payload_sha_match": true,
+      "l0_counts": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      }
+    },
+    "v2_loader_unapplied": {
+      "status": "PASS",
+      "preflight_blocked": true
+    },
+    "wrong_sha": {
+      "status": "PASS",
+      "blocked": true
+    }
+  },
+  "test_count": 11,
+  "no_s03_started": true
+}

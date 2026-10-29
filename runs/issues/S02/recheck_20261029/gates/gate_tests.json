@@ -1,0 +1,118 @@
+{
+  "status": "SELF_CHECK_PASS",
+  "review_nature": "SELF_CHECK",
+  "test_count": 17,
+  "passed": 17,
+  "failed": 0,
+  "errors": 0,
+  "test_file": "runs/issues/S02/recheck_20261029/gates/test_s03_input_gate.py",
+  "gate_module": "tools/s03_input_gate.py",
+  "rerun_command": "python -m unittest discover -s runs/issues/S02/recheck_20261029/gates -p test_s03_input_gate.py -v",
+  "s03_actual_consumer_verified": false,
+  "scope": "纯输入校验和既有 L0/L1 路由保护；不计算信号、不写 S03 产物。",
+  "metric_readiness_boundary": "Q05 仅在 status=OK 且调用方显式给出 low_base_confirmed=True 时可通过 readiness；该参数须来自冻结 S01 confirm_low_base，不替代 signals_of/confirm_low_base/layers，不可用于拒绝 SG06 等绝对额备选路径，也不判 L2。",
+  "line_ending_audit": [
+    {
+      "path": "runs/issues/S01/screen_rules_v2.json",
+      "worktree_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+      "head_file_bytes_sha256": "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",
+      "lf_sha256": "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",
+      "crlf_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+      "same_content_after_newline_normalization": true,
+      "both_are_pure_lf_or_crlf": true,
+      "allowed_hashes": {
+        "lf_sha256": "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",
+        "crlf_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
+      }
+    },
+    {
+      "path": "runs/issues/S01/acceptance_20261029.json",
+      "worktree_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+      "head_file_bytes_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+      "lf_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+      "crlf_sha256": "4895452e461953193d3baa03ece5c974b02367d42b29a14e8b3e01ea15b074dc",
+      "same_content_after_newline_normalization": true,
+      "both_are_pure_lf_or_crlf": true,
+      "allowed_hashes": {
+        "lf_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+        "crlf_sha256": "4895452e461953193d3baa03ece5c974b02367d42b29a14e8b3e01ea15b074dc"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "test_all_ten_evaluable_open_cases_keep_no_signal_under_review",
+      "result": "PASS"
+    },
+    {
+      "name": "test_all_w5_no_trigger_cases_remain_on_watchlist",
+      "result": "PASS"
+    },
+    {
+      "name": "test_all_w9_cases_stay_in_data_or_scope_review",
+      "result": "PASS"
+    },
+    {
+      "name": "test_evaluable_positive_l1_route_is_preserved_and_stays_queued",
+      "result": "PASS"
+    },
+    {
+      "name": "test_hold_and_provisional_are_never_clean",
+      "result": "PASS"
+    },
+    {
+      "name": "test_low_base_requires_explicit_s01_confirmation",
+      "result": "PASS"
+    },
+    {
+      "name": "test_missing_contract_fails_closed",
+      "result": "PASS"
+    },
+    {
+      "name": "test_only_pure_lf_crlf_variants_of_the_two_frozen_jsons_are_accepted",
+      "result": "PASS"
+    },
+    {
+      "name": "test_only_unflagged_ok_can_be_clean",
+      "result": "PASS"
+    },
+    {
+      "name": "test_pinned_canonical_bundle_loads",
+      "result": "PASS"
+    },
+    {
+      "name": "test_stale_input_version_fails_closed",
+      "result": "PASS"
+    },
+    {
+      "name": "test_tampered_contract_file_fails_closed",
+      "result": "PASS"
+    },
+    {
+      "name": "test_tampered_metric_artifact_fails_hash_check",
+      "result": "PASS"
+    },
+    {
+      "name": "test_unknown_company_or_route_fails_closed",
+      "result": "PASS"
+    },
+    {
+      "name": "test_unknown_metric_status_or_flag_fails_closed",
+      "result": "PASS"
+    },
+    {
+      "name": "test_w5_triggered_case_remains_flagged_observation_only",
+      "result": "PASS"
+    },
+    {
+      "name": "test_wrong_runtime_status_vector_fails_closed",
+      "result": "PASS"
+    }
+  ],
+  "sha256": {
+    "gate_contract.json": "dfe00fc2cea822dfff2c475fb2aee41f3905b7a36bd7a96adc5fbec6797f418a",
+    "protected_21.csv": "74753e9ae7c61361aedd7796d91605bb6c0f7070b7d13fdd42490a5d791e6cc2",
+    "s03_input_gate.py": "a135fddd01de4624a3a5419ddec5baffda4ec61ec2498b3d0ee92be61492df12",
+    "test_s03_input_gate.py": "d16a903047ddc059e977a6e0490790eb4ff685559cd0c4798da0a8fff6d200b9"
+  }
+}

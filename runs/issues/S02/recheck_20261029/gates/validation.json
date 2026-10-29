@@ -1,0 +1,319 @@
+{
+  "status": "SELF_CHECK_PASS_READY_FOR_S03_FIRST_STEP_INTEGRATION",
+  "review_nature": "SELF_CHECK",
+  "created_at": "2026-10-29",
+  "contract": "gate_contract.json",
+  "protected_queue": "protected_21.csv",
+  "gate_module": "tools/s03_input_gate.py",
+  "test_report": "gate_tests.json",
+  "checks_total": 15,
+  "checks_pass": 15,
+  "checks_fail": 0,
+  "checks": [
+    {
+      "id": "V01",
+      "check": "gate loader verifies the pinned contract and every canonical artifact SHA-256",
+      "result": "PASS",
+      "observed": {
+        "contract_sha256": "dfe00fc2cea822dfff2c475fb2aee41f3905b7a36bd7a96adc5fbec6797f418a",
+        "verified_artifacts": 13
+      },
+      "expected": {
+        "contract_sha256": "dfe00fc2cea822dfff2c475fb2aee41f3905b7a36bd7a96adc5fbec6797f418a",
+        "verified_artifacts": 13
+      }
+    },
+    {
+      "id": "V02",
+      "check": "canonical S02 input version and output paths are formal remediation artifacts",
+      "result": "PASS",
+      "observed": {
+        "input_version": "S00_TARGETED_REEXTRACTION_20261029",
+        "metric_file": "runs/issues/S02/remediation_20261029/s02/all_pool_metrics.csv",
+        "company_summary": "runs/issues/S02/remediation_20261029/s02/company_metric_summary.csv",
+        "l0_routes": "runs/issues/S02/remediation_20261029/l0/repaired/l0_reclassification.csv"
+      },
+      "expected": {
+        "input_version": "S00_TARGETED_REEXTRACTION_20261029",
+        "metric_file": "runs/issues/S02/remediation_20261029/s02/all_pool_metrics.csv",
+        "company_summary": "runs/issues/S02/remediation_20261029/s02/company_metric_summary.csv",
+        "l0_routes": "runs/issues/S02/remediation_20261029/l0/repaired/l0_reclassification.csv"
+      }
+    },
+    {
+      "id": "V03",
+      "check": "formal S02 metrics and summary row counts are complete",
+      "result": "PASS",
+      "observed": {
+        "metric_rows": 12648,
+        "summary_rows": 1054,
+        "companies": 1054,
+        "metrics_per_company": 12
+      },
+      "expected": {
+        "metric_rows": 12648,
+        "summary_rows": 1054,
+        "companies": 1054,
+        "metrics_per_company": 12
+      }
+    },
+    {
+      "id": "V04",
+      "check": "formal L0 repaired rows reproduce the expected 664/387/3 branches",
+      "result": "PASS",
+      "observed": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      },
+      "expected": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      }
+    },
+    {
+      "id": "V05",
+      "check": "open coverage rows join exactly to 21 protected IDs and 10/8/3 branches",
+      "result": "PASS",
+      "observed": {
+        "open_coverage_rows": 21,
+        "protected_rows": 21,
+        "l0_counts": {
+          "W9_MIXED_NON_EVALUABLE": 3,
+          "W5_PROVISIONAL_ONLY": 8,
+          "EVALUABLE": 10
+        }
+      },
+      "expected": {
+        "open_coverage_rows": 21,
+        "protected_rows": 21,
+        "l0_counts": {
+          "EVALUABLE": 10,
+          "W5_PROVISIONAL_ONLY": 8,
+          "W9_MIXED_NON_EVALUABLE": 3
+        }
+      }
+    },
+    {
+      "id": "V06",
+      "check": "every protected status vector matches formal S02 and stays open to terminal exclusion",
+      "result": "PASS",
+      "observed": {
+        "rows": 21,
+        "vectors_match": true,
+        "terminal_exclusion_allowed_while_open": false
+      },
+      "expected": {
+        "rows": 21,
+        "vectors_match": true,
+        "terminal_exclusion_allowed_while_open": false
+      }
+    },
+    {
+      "id": "V07",
+      "check": "PROVISIONAL and HOLD counts remain separate and are not clean evidence",
+      "result": "PASS",
+      "observed": {
+        "PROVISIONAL": 4303,
+        "HOLD": 267
+      },
+      "expected": {
+        "PROVISIONAL": 4303,
+        "HOLD": 267
+      }
+    },
+    {
+      "id": "V08",
+      "check": "all 10 protected EVALUABLE NO_SIGNAL routes become review-pending, preserving raw route",
+      "result": "PASS",
+      "observed": {
+        "cases": 10,
+        "final_routes": {
+          "REVIEW_PENDING_UPSTREAM_COVERAGE": 10
+        }
+      },
+      "expected": {
+        "cases": 10,
+        "final_routes": {
+          "REVIEW_PENDING_UPSTREAM_COVERAGE": 10
+        }
+      }
+    },
+    {
+      "id": "V09",
+      "check": "W5 without a trigger stays on its observation watchlist",
+      "result": "PASS",
+      "observed": {
+        "cases": 8,
+        "final_routes": {
+          "W5_PROVISIONAL_WATCHLIST": 8
+        }
+      },
+      "expected": {
+        "cases": 8,
+        "final_routes": {
+          "W5_PROVISIONAL_WATCHLIST": 8
+        }
+      }
+    },
+    {
+      "id": "V10",
+      "check": "W9 with raw NO_SIGNAL remains blocked for data/scope review",
+      "result": "PASS",
+      "observed": {
+        "cases": 3,
+        "final_routes": {
+          "HOLD_FOR_DATA_OR_SCOPE_REVIEW": 3
+        }
+      },
+      "expected": {
+        "cases": 3,
+        "final_routes": {
+          "HOLD_FOR_DATA_OR_SCOPE_REVIEW": 3
+        }
+      }
+    },
+    {
+      "id": "V11",
+      "check": "tamper, stale version, missing contract, unknown ID/status/route tests pass",
+      "result": "PASS",
+      "observed": "6 fail-closed cases",
+      "expected": "6 PASS"
+    },
+    {
+      "id": "V12",
+      "check": "focused S03 input gate test suite passes",
+      "result": "PASS",
+      "observed": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0,
+        "errors": 0
+      },
+      "expected": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0,
+        "errors": 0
+      }
+    },
+    {
+      "id": "V13",
+      "check": "S03 has not been claimed as consuming the gate",
+      "result": "PASS",
+      "observed": {
+        "contract_verified": false,
+        "consumer_verified": false
+      },
+      "expected": {
+        "contract_verified": false,
+        "consumer_verified": false
+      }
+    },
+    {
+      "id": "V14",
+      "check": "only the two known frozen JSONs accept pure LF/CRLF equivalents; HEAD/worktree differences are line-ending only",
+      "result": "PASS",
+      "observed": [
+        {
+          "path": "runs/issues/S01/screen_rules_v2.json",
+          "worktree_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+          "head_file_bytes_sha256": "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",
+          "lf_sha256": "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",
+          "crlf_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+          "same_content_after_newline_normalization": true,
+          "both_are_pure_lf_or_crlf": true,
+          "allowed_hashes": {
+            "lf_sha256": "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",
+            "crlf_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
+          }
+        },
+        {
+          "path": "runs/issues/S01/acceptance_20261029.json",
+          "worktree_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+          "head_file_bytes_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+          "lf_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+          "crlf_sha256": "4895452e461953193d3baa03ece5c974b02367d42b29a14e8b3e01ea15b074dc",
+          "same_content_after_newline_normalization": true,
+          "both_are_pure_lf_or_crlf": true,
+          "allowed_hashes": {
+            "lf_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+            "crlf_sha256": "4895452e461953193d3baa03ece5c974b02367d42b29a14e8b3e01ea15b074dc"
+          }
+        }
+      ],
+      "expected": "Both JSON files normalize byte-for-byte to the same LF content; changed or mixed-ending variants fail."
+    },
+    {
+      "id": "V15",
+      "check": "Q05 readiness needs explicit S01 confirmation and never overrides HOLD/PROVISIONAL or other blockers",
+      "result": "PASS",
+      "observed": {
+        "confirmed_case": "PASS",
+        "unknown_confirmation_type": "PASS",
+        "helper_scope": "metric readiness only; no signal/L2 decision"
+      },
+      "expected": {
+        "Q05_default_or_false": "not clean",
+        "Q05_true_with_OK_no_blockers": "clean",
+        "Q06_or_Q01_or_PROVISIONAL_or_HOLD_with_true": "not clean",
+        "unknown_confirmation_type": "fail closed"
+      }
+    }
+  ],
+  "counts": {
+    "coverage_resolution_rows": 53,
+    "open_coverage_rows": 21,
+    "companies": 1054,
+    "metric_cells": 12648,
+    "global_status_counts": {
+      "OK": 6211,
+      "PROVISIONAL": 4303,
+      "HOLD": 267,
+      "UNDEFINED_BASE": 469,
+      "EXCLUDED_SCOPE": 0,
+      "NOT_APPLICABLE": 855,
+      "NOT_COMPARABLE": 314,
+      "VERSION_MISMATCH": 0,
+      "MISSING": 229
+    },
+    "l0_counts": {
+      "EVALUABLE": 664,
+      "W5_PROVISIONAL_ONLY": 387,
+      "W9_MIXED_NON_EVALUABLE": 3
+    },
+    "protected_queue_l0_counts": {
+      "W9_MIXED_NON_EVALUABLE": 3,
+      "W5_PROVISIONAL_ONLY": 8,
+      "EVALUABLE": 10
+    }
+  },
+  "limitations": [
+    "SELF_CHECK of local technical artifacts and pure-function routing only; not an independent source-PDF audit.",
+    "S03 was not run or modified; actual gate consumption remains unverified.",
+    "No S03 company list, candidate decision, or final business adoption is produced.",
+    "Unknown/old/modified inputs fail closed; snapshot hashes are intentionally pinned to this remediation version.",
+    "Known newline equivalence is restricted to the two frozen S01 JSON files and the two recorded byte forms."
+  ],
+  "canonical_sha256": {
+    "s02_calculation_manifest": "2bb41a7b6510b7d0174d1b0baea384accf8919fd730ed5be6eabfb55c76e1af6",
+    "metric_file": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+    "company_summary": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+    "l0_patch": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+    "l0_routes": "6bc02248555e883bf08c1df67ff2b02a6d3a7ef9530c15c2233321ee737b992f",
+    "l0_self_check": "cbcb1f7ebcf814e0c3a219964e8d66dc23b3c270e42a606ab5afe403890c9445",
+    "coverage_resolution": "bd91619c6f1a8be85538abfb3afdb7ee83d53af1e082e1ab0572397f934efff1",
+    "protected_queue": "74753e9ae7c61361aedd7796d91605bb6c0f7070b7d13fdd42490a5d791e6cc2",
+    "screen_rules_v2": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+    "s01_acceptance": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058"
+  },
+  "output_sha256": {
+    "gate_contract.json": "dfe00fc2cea822dfff2c475fb2aee41f3905b7a36bd7a96adc5fbec6797f418a",
+    "protected_21.csv": "74753e9ae7c61361aedd7796d91605bb6c0f7070b7d13fdd42490a5d791e6cc2",
+    "README.md": "5f2a005c06857cf466ffe403510e4444f4b99d88a7804cb62d8e587be055833e",
+    "gate_tests.json": "1ff5e933598873472b63b449c366d2bd08c3211b82b1c992aa07086efe34d9fd",
+    "test_s03_input_gate.py": "d16a903047ddc059e977a6e0490790eb4ff685559cd0c4798da0a8fff6d200b9",
+    "tools/s03_input_gate.py": "a135fddd01de4624a3a5419ddec5baffda4ec61ec2498b3d0ee92be61492df12"
+  }
+}
