@@ -3,7 +3,7 @@
   "issue_number": 36,
   "plan_version": "20261026_collection_first_v2",
   "rules_version": "S01_SCREEN_RULES_V1",
-  "generated_at": "2026-10-29T10:29:51+08:00",
+  "generated_at": "2026-10-29T15:20:19+08:00",
   "executor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
   "frozen_at": "2026-10-29T10:25:57+08:00",
@@ -36,33 +36,48 @@
     },
     {
       "path": "runs/issues/S01/metric_formulas.md",
-      "bytes": 9855,
-      "sha256": "9623ed35161f2d713ddfea615d7351c906a4318845cead0b0307832d0e3a10ee"
+      "bytes": 10259,
+      "sha256": "3b66adc2de93f3e5e475d17b3359de513199d74d4da6477b3de550528d5d3f61"
     },
     {
       "path": "runs/issues/S01/threshold_rationale.md",
-      "bytes": 9435,
-      "sha256": "5b70468a9ae64c8a08322d15e1fbb2e250cf95e8e00fb25fbf1338df6074a663"
+      "bytes": 9816,
+      "sha256": "d8ec362c2b1a5cc46e50de1b9431bcc95e14171dad0e99cd039734497985c6f3"
+    },
+    {
+      "path": "runs/issues/S01/implementation_notes.md",
+      "bytes": 6333,
+      "sha256": "8392e431c3b9e6c52bbdf1d1fbf6b93ee98fab2bb8b3b38498d3b327000b2127"
     },
     {
       "path": "runs/issues/S01/metric_coverage_dryrun.csv",
-      "bytes": 1094,
-      "sha256": "9c35a6c3f686dee264f1a88f24fd20cb7b221ce87b41b89402986e2f6c24ff7b"
+      "bytes": 1364,
+      "sha256": "9c28bf67bfdf70b1532e4439cfbb79e5957bdd231e4662fd0146202303eb2dc1"
     },
     {
       "path": "runs/issues/S01/self_check.json",
-      "bytes": 14787,
-      "sha256": "3956eeb3bf2c0300036f339e8a7705566bf88ad888c5c8f0f67f5b7bed7c772d"
+      "bytes": 21474,
+      "sha256": "28e4a0b19bd2d285127f6dfae27800771e9279558fef542cc2f0f019010964c4"
     },
     {
       "path": "runs/issues/S01/handoff.md",
-      "bytes": 5739,
-      "sha256": "700f27fdeade49d8616c4395b140369ab2731dd03c5d66605a0a9ca9e2a0db5a"
+      "bytes": 6520,
+      "sha256": "3dff5fff30ca4c8495793b91d23f7d5bd30778230bce6be1635789fa8aaf68c5"
     },
     {
       "path": "runs/issues/S01/review.json",
-      "bytes": 5466,
-      "sha256": "429e681517551fe44c4aa3d20d2592f0db92cd62b4494ddb1aa24d932b93d0de"
+      "bytes": 7474,
+      "sha256": "20a87ab09444ecbec7883428e566bfa1a98520546b35919b7d222e86006bea61"
+    },
+    {
+      "path": "runs/issues/S01/review_v1_20261029_superseded.json",
+      "bytes": 5324,
+      "sha256": "a6bf5cde881a7c9ddbe66597c1dac0ad6c3b8960a5e5ec11e3d7b8d97cfaa4e4"
+    },
+    {
+      "path": "runs/issues/S01/codex_assessment_20261029.md",
+      "bytes": 4935,
+      "sha256": "6aba67e46caae39d277ce6f41ac6dbb07a3e894a9f1cc064b29f9c06db5ec681"
     }
   ],
   "universe": {
@@ -125,10 +140,23 @@
   },
   "self_check": {
     "file": "runs/issues/S01/self_check.json",
-    "total": 20,
-    "pass": 20,
+    "total": 24,
+    "pass": 24,
     "fail": 0,
-    "blocking_fail": 0
+    "blocking_fail": 0,
+    "implementation_revision": "R2_AFTER_CODEX_ASSESSMENT_20261029",
+    "synthetic_tests": {
+      "total": 16,
+      "pass": 16
+    },
+    "policy_violations": {
+      "q05_confirmed": 43,
+      "q05_no_confirm_input": 12,
+      "q05_unconfirmed": 55,
+      "q06_dimension_flip": 209,
+      "q06_signal_excluded": 921,
+      "q06_signal_fired": 943
+    }
   },
   "dryrun": {
     "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
@@ -145,16 +173,16 @@
       "NO_SIGNAL": 67
     },
     "L2_counts": {
-      "NOT_SHORTLISTED": 500,
-      "SHORTLIST_CANDIDATE": 496,
+      "NOT_SHORTLISTED": 706,
+      "SHORTLIST_CANDIDATE": 290,
       "HOLD_FOR_DATA": 58
     },
     "breadth_observation": {
       "L1_observe_share": 0.8226,
       "growth_signal_union": 718,
       "growth_signal_union_share": 0.6812,
-      "L2_shortlist_share": 0.4706,
-      "interpretation": "v1 阈值偏松（SG01∪SG02 覆盖绝大多数公司），属已知局限；按预登记原则本次不据此调整阈值，若需收紧须在 S04 前另立 v2 并全池重算。"
+      "L2_shortlist_share": 0.2751,
+      "interpretation": "v1 阈值偏松属已声明限制；本次返工只修实现，不动阈值。"
     },
     "note": "只验证规则可执行，不产出名单；不得引用为「多少家改善」。"
   },
@@ -172,13 +200,14 @@
   "tools": [
     {
       "path": "tools/s01_rules_check.py",
-      "sha256": "a7949fa7e99f130fe53bd46967afde3f21b1fdd37f854853da0e04610adb62ce"
+      "sha256": "eaa5a023bb84e4e06dfb5e9b7935a95d49a5e4dd8e205b701c127628fe0778c9"
     }
   ],
   "known_limits": [
     "阈值全部为先验假设，未做行业分组校准",
-    "干跑显示 SG01∪SG02 覆盖 93%、L2 两维组合覆盖 51%，v1 偏松；按预登记原则未回头调阈值",
-    "MARGIN 与 PROFIT 维度同源，L2 存在重复计数，须在 v2 修正",
+    "干跑显示 SG01∪SG02 覆盖 68%、L1 观察 82%、L2 两维组合 27.5%，v1 偏松；按预登记原则未回头调阈值",
+    "MARGIN 与 PROFIT 维度同源，L2 仍属重复计数，须在 v2 修正",
+    "已确认重述（是）覆盖 386 家最新期样本，PROVISIONAL 面较大，S02 须分开报告",
     "62 个整槽无值公司落 W1，不代表基本面",
     "2026Q3 仅 188 家已披露，当期截面不完整"
   ]

@@ -4,17 +4,18 @@
   "active_issue_key": null,
   "executor": "WorkBuddy AI",
   "started_at": "2026-10-29T10:19:39+08:00",
-  "status": "IDLE_S01_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
-  "claim_note": "S01 规则已冻结并自检 20/20；S02 未启动，等外部复验。",
+  "status": "IDLE_S01_REWORK_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
+  "claim_note": "S01 按 Codex 四项阻断返工完成：24/24 校验 + 16/16 合成测试；规则 v1 未改；S02 未启动。",
   "last_completed": {
     "issue_number": 36,
     "issue_key": "S01",
-    "completed_at": "2026-10-29T10:26:56+08:00",
+    "completed_at": "2026-10-29T15:20:29+08:00",
     "review_file": "runs/issues/S01/review.json",
     "decision": "SELF_CHECK_PASS",
     "review_nature": "SELF_CHECK",
-    "acceptance": "2/2 验收项自检通过，20/20 机器校验",
-    "summary": "12 指标 + 9 信号 + 6 提示 + 4 层判定冻结；输入指纹登记；匿名干跑 1054 家证明可执行、未出名单"
+    "acceptance": "4/4 阻断闭合 + 24/24 校验 + 16/16 合成测试",
+    "summary": "Q06 不进 L2、低基数绝对额确认、PROVISIONAL 状态与 Q08/Q10/Q11/Q12 落地、毛利率 pp 边界修正",
+    "review_round": "REWORK_20261029_AFTER_CODEX_ASSESSMENT"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -25,7 +26,7 @@
   },
   "next_recommended_issue_number": 37,
   "next_recommended_issue_key": "S02",
-  "next_recommended_reason": "S01 自检通过但未验收；S02 须等外部复验放行后执行",
+  "next_recommended_reason": "S01 返工自检通过但未验收；S02 须等外部复验放行后执行",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",

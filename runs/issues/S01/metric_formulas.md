@@ -31,6 +31,10 @@
 | HOLD | `EXTRACTED_XCHECK_MISMATCH`、`DERIVED_HOLD_UPSTREAM`、`DERIVED_Q1_HOLD_UPSTREAM` |
 | 缺失 | 行不存在（S00 只写有值行） |
 
+**指标状态枚举（计算结果的状态，不是输入状态）**：`OK`、`PROVISIONAL`（值可算但含 Q06 重述，可进 L1、不进 L2）、
+`HOLD`、`MISSING`、`NOT_COMPARABLE`、`UNDEFINED_BASE`、`NOT_APPLICABLE`、`EXCLUDED_SCOPE`、`VERSION_MISMATCH`。
+逐条映射见 `implementation_notes.md`。
+
 ### 质量标记（每条指标都要判）
 
 | 标记 | 触发 | 后果 |
@@ -40,7 +44,7 @@
 | `Q03 NEGATIVE_BASE` | 分母或基期 < 0 | 比率不算，改绝对额 |
 | `Q04 ZERO_BASE` | 分母/基期绝对值 < 100 万元 | 比率不算 |
 | `Q05 LOW_BASE` | `low_base_flag` ∈ {`LOW_BASE_REV`,`LOW_BASE_PROFIT`,`NEGATIVE_BASE_PROFIT`} 或基期营收 < 5,000 万 或 \|基期扣非\| < 1,000 万 | 信号标 PROVISIONAL |
-| `Q06 RESTATEMENT_UNRESOLVED` | 任一侧 `restatement_flag=RESTATEMENT_INDICATED_NEEDS_REVIEW` | 指标 PROVISIONAL，不进 L2 |
+| `Q06 RESTATEMENT_UNRESOLVED` | 任一侧 `restatement_flag=是` 或 `=RESTATEMENT_INDICATED_NEEDS_REVIEW`，或 `comparability_note` 含 `RESTATED_PRIOR_YEARS_UNRECALCULATED` | 指标降为 PROVISIONAL，不进 L2 |
 | `Q07 LEGACY_SINGLE_SOURCE` | 任一侧 `LEGACY_SNAPSHOT` | 标 SINGLE_SOURCE，L2 只作辅助 |
 | `Q08 PRE_LISTING_OR_NO_HISTORY` | `is_pre_listing=YES` 或上年同期缺失 | NOT_COMPARABLE |
 | `Q09 ONE_OFF_DOMINATED` | \|归母−扣非\|/max(\|归母\|,1) > 50% | 盈利信号改用扣非 |

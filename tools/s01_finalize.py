@@ -16,10 +16,13 @@ DELIVERABLES = [
     "screen_rules_v1.json",
     "metric_formulas.md",
     "threshold_rationale.md",
+    "implementation_notes.md",
     "metric_coverage_dryrun.csv",
     "self_check.json",
     "handoff.md",
     "review.json",
+    "review_v1_20261029_superseded.json",
+    "codex_assessment_20261029.md",
 ]
 TOOLS = ["tools/s01_rules_check.py"]
 
@@ -74,6 +77,12 @@ def main() -> None:
             "pass": sc["checks_pass"],
             "fail": sc["checks_fail"],
             "blocking_fail": sc["blocking_fail"],
+            "implementation_revision": sc.get("implementation_revision"),
+            "synthetic_tests": {
+                "total": len(sc.get("synthetic_tests", [])),
+                "pass": sum(1 for t in sc.get("synthetic_tests", []) if t["result"] == "PASS"),
+            },
+            "policy_violations": sc.get("policy_violations"),
         },
         "dryrun": {
             "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
@@ -88,8 +97,9 @@ def main() -> None:
         "tools": [{"path": t, "sha256": sha256(ROOT / t)} for t in TOOLS],
         "known_limits": [
             "阈值全部为先验假设，未做行业分组校准",
-            "干跑显示 SG01∪SG02 覆盖 93%、L2 两维组合覆盖 51%，v1 偏松；按预登记原则未回头调阈值",
-            "MARGIN 与 PROFIT 维度同源，L2 存在重复计数，须在 v2 修正",
+            "干跑显示 SG01∪SG02 覆盖 68%、L1 观察 82%、L2 两维组合 27.5%，v1 偏松；按预登记原则未回头调阈值",
+            "MARGIN 与 PROFIT 维度同源，L2 仍属重复计数，须在 v2 修正",
+            "已确认重述（是）覆盖 386 家最新期样本，PROVISIONAL 面较大，S02 须分开报告",
             "62 个整槽无值公司落 W1，不代表基本面",
             "2026Q3 仅 188 家已披露，当期截面不完整",
         ],

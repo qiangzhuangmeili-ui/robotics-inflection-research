@@ -1,0 +1,142 @@
+{
+  "issue_key": "S01",
+  "issue_number": 36,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "reviewer": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "review_round": "INITIAL_20261029",
+  "reviewed_at": "2026-10-29T10:42:00+08:00",
+  "decision": "SELF_CHECK_PASS",
+  "verdict": "RULES_FROZEN_BEFORE_ANY_COMPANY_LEVEL_OUTPUT",
+  "allows_next_stage": false,
+  "release_S02": false,
+  "next_stage_release": "PENDING_EXTERNAL_RECHECK",
+  "dependency": {
+    "issue_key": "S00",
+    "issue_number": 35,
+    "review_nature": "EXTERNAL_INDEPENDENT_RECHECK",
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "review_file": "runs/issues/S00/acceptance_20261029.json",
+    "release_S01": true
+  },
+  "acceptance": [
+    {
+      "item": "所有公式/阈值/边界/缺失路径可执行且先于名单产出留痕",
+      "result": "PASS",
+      "evidence": {
+        "rules_frozen_at": "2026-10-29T10:25:57+08:00",
+        "rules_frozen_before_outputs": true,
+        "input_fingerprint_files": 3,
+        "machine_checks": "20/20 PASS，blocking_fail=0",
+        "field_ids_verified": 17,
+        "field_row_counts_match": true,
+        "metrics": 12,
+        "metrics_with_8_paths": 12,
+        "signals": 9,
+        "risk_hints": 6,
+        "quality_flags": 12,
+        "dryrun_companies": 1054,
+        "dryrun_companies_unresolved": 0,
+        "dryrun_metrics_with_zero_ok": 0
+      }
+    },
+    {
+      "item": "没有必须筛出 N 家的规则；以后改规则另版本重算全池，不手调个别公司",
+      "result": "PASS",
+      "evidence": {
+        "quota_key_scan": "target_count / quota / top_n / desired_count / must_select 均未出现",
+        "target_company_count": null,
+        "change_procedure": "screen_rules_v2.json 新文件 + 全池重算 + v1/v2 差异报告 + 禁止手工加回",
+        "no_company_list_produced": true,
+        "dryrun_output_columns": [
+          "metric_id",
+          "metric_name_cn",
+          "unit",
+          "companies_total",
+          "ok",
+          "hold",
+          "missing",
+          "not_comparable",
+          "undefined_base",
+          "not_applicable",
+          "flag_q05_low_base",
+          "flag_q06_restatement",
+          "flag_q07_legacy",
+          "ok_share"
+        ]
+      }
+    }
+  ],
+  "rule_highlights": {
+    "hold_policy": "HOLD 既不算改善也不算恶化；缺维度时输出 HOLD_FOR_DATA",
+    "loss_policy": "负基数不算比率，改判转正（≥1,000 万）或绝对额改善；亏损不是淘汰理由",
+    "low_base_policy": "低基数信号标 PROVISIONAL，L2 需增量 ≥1,000 万确认",
+    "restatement_policy": "未决重述的跨期指标 PROVISIONAL，不进 L2",
+    "turnover_days": "期末余额法（平均法需 t-2y，会与旧快照单一来源叠加造成系统性缺值）",
+    "latest_period": "逐公司回落：REV.YTD → REV.SQ → NPDEDT.YTD；2026Q3 仅 182 家可用"
+  },
+  "dryrun": {
+    "label": "ANONYMOUS_DRYRUN_NOT_A_RESULT",
+    "companies": 1054,
+    "latest_period_distribution": {
+      "20251231": 4,
+      "20260331": 5,
+      "20260630": 863,
+      "20260930": 182
+    },
+    "signal_hits": {
+      "SG01": 460,
+      "SG02": 522,
+      "SG03": 307,
+      "SG04": 224,
+      "SG05": 244,
+      "SG06": 35,
+      "SG07": 232,
+      "SG08": 97,
+      "SG09": 203
+    },
+    "L1_counts": {
+      "OBSERVE_QUEUE": 867,
+      "RISK_WATCH": 120,
+      "NO_SIGNAL": 67
+    },
+    "L2_counts": {
+      "SHORTLIST_CANDIDATE": 496,
+      "NOT_SHORTLISTED": 500,
+      "HOLD_FOR_DATA": 58
+    },
+    "note": "只用于证明规则可执行；不是筛选结果，不得引用为「多少家改善」。",
+    "breadth_observation": {
+      "growth_signal_union": 718,
+      "growth_signal_union_share": 0.6812,
+      "L1_observe_share": 0.8226,
+      "L2_shortlist_share": 0.4706
+    }
+  },
+  "known_limits": [
+    "阈值偏松：SG01∪SG02 覆盖 68%，L1 观察队列 82%，L2 两维组合 47%",
+    "MARGIN 与 PROFIT 维度同源，L2 重复计数",
+    "按预登记原则未回头调阈值；修正留到 S04 前 screen_rules_v2.json",
+    "阈值未做行业分组校准",
+    "2026Q3 仅 188 家已披露，当期截面不完整",
+    "62 个整槽无值公司落 W1，不代表基本面"
+  ],
+  "scope_checks": {
+    "did_not_produce_company_list": true,
+    "did_not_modify_S00_data": true,
+    "did_not_modify_originals": true,
+    "did_not_screen_or_rank": true,
+    "did_not_value": true,
+    "did_not_set_target_count": true,
+    "dryrun_no_company_identifiers": true
+  },
+  "open_items_for_next_stage": [
+    "S02 执行前复核三份输入指纹；变化即升版",
+    "S02 必须逐格输出 metric_status 与 quality_flag，不得只出名单",
+    "S04 收紧前另立 v2：维度独立性（≥2 维中至少 1 维来自 GROWTH 或 CASH）、单季加速门槛上调",
+    "行业分组阈值校准（本体/零部件/集成/物流自动化）留待 v2 或 v3",
+    "62 个整槽无值公司的补采进度直接决定 W1 名单规模"
+  ],
+  "self_check_note": "本卡为 SELF_CHECK，不是独立审计；20 项机器校验与匿名干跑只证明规则结构完整、可执行，不证明阈值在业务上正确。阈值正确性需在 S03/S04 用实际名单与后续核验检验，且不得回头修改已冻结的 v1。"
+}

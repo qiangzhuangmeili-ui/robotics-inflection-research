@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S01_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
+  "status": "S01_REWORK_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -962,7 +962,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S01_SELF_CHECK",
+  "current_gate": "S01_REWORK_SELF_CHECK",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1127,7 +1127,7 @@
       "L2",
       "L3"
     ],
-    "machine_checks": "20/20 PASS",
+    "machine_checks": "24/24 PASS + 16/16 合成测试",
     "dryrun_companies": 1054,
     "dryrun_latest_period": {
       "20251231": 4,
@@ -1141,16 +1141,31 @@
       "NO_SIGNAL": 67
     },
     "dryrun_L2": {
-      "SHORTLIST_CANDIDATE": 496,
-      "NOT_SHORTLISTED": 500,
+      "SHORTLIST_CANDIDATE": 290,
+      "NOT_SHORTLISTED": 706,
       "HOLD_FOR_DATA": 58
     },
     "known_limits": [
-      "SG01∪SG02 覆盖 68%、L1 观察队列 82%、L2 覆盖 47%，v1 阈值偏松",
-      "MARGIN 与 PROFIT 维度同源，L2 重复计数",
-      "按预登记原则未回头调阈值，修正留到 S04 前 v2"
+      "SG01∪SG02 覆盖 68%、L1 观察队列 82%、L2 覆盖 27.5%，v1 阈值偏松（未回头调）",
+      "MARGIN 与 PROFIT 维度同源，L2 仍属重复计数",
+      "已确认重述（是）覆盖 386 家最新期样本，PROVISIONAL 面较大，S02 须分开报告"
     ],
     "release_S02": false,
-    "release_note": "S02 等外部复验后放行；自检不等于验收"
+    "release_note": "S02 等外部复验后放行；自检不等于验收",
+    "review_round": "REWORK_20261029_AFTER_CODEX_ASSESSMENT",
+    "rework": {
+      "trigger": "Codex RETURN_FOR_REWORK（4 项实现违例）",
+      "blockers_closed": "4/4",
+      "rules_unchanged": true,
+      "rules_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+      "checks": "24/24 PASS",
+      "synthetic_tests": "16/16 PASS",
+      "policy_violations": {
+        "ok_with_q06": 0,
+        "ok_with_q12": 0,
+        "l2_without_two_clean_dims": 0
+      },
+      "implementation_notes": "runs/issues/S01/implementation_notes.md"
+    }
   }
 }
