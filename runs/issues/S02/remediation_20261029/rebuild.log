@@ -1,0 +1,127 @@
+[S00] companies=1054 listing_dates=1054 legacy=1054
+[S00] annual_2023: verified=1007 pre_listing=47 not_disclosed=0 not_yet=0
+[S00] annual_2024: verified=1029 pre_listing=25 not_disclosed=0 not_yet=0
+[S00] annual_2025: verified=1046 pre_listing=8 not_disclosed=0 not_yet=0
+[S00] h1_2024: verified=1014 pre_listing=40 not_disclosed=0 not_yet=0
+[S00] h1_2025: verified=1034 pre_listing=20 not_disclosed=0 not_yet=0
+[S00] h1_2026: verified=1050 pre_listing=4 not_disclosed=0 not_yet=0
+[S00] q1_2024: verified=998 pre_listing=47 not_disclosed=9 not_yet=0
+[S00] q1_2025: verified=1018 pre_listing=24 not_disclosed=12 not_yet=0
+[S00] q1_2026: verified=1043 pre_listing=7 not_disclosed=4 not_yet=0
+[S00] q3_2024: verified=1010 pre_listing=36 not_disclosed=8 not_yet=0
+[S00] q3_2025: verified=1029 pre_listing=16 not_disclosed=9 not_yet=0
+[S00] q3_2026: verified=190 pre_listing=0 not_disclosed=0 not_yet=864
+[S00] legacy xcheck {'MISMATCH': 371, 'MATCH': 17022} conflicts=371
+[S00] derived cells=44642 (round 1, pre-arbitration)
+[S00] single-quarter {'NOT_DERIVABLE': 13049, 'DERIVED_DIFF': 8695, 'OFFICIAL_TABLE': 40264, 'Q1_FROM_YTD': 5416, 'BLOCKED_CROSS_SOURCE': 32}
+[S00] V1 four-quarter-sum {'INCOMPLETE_QUARTERS': 1009, 'MATCH': 10649, 'MISMATCH': 114, 'UNRESOLVED_NO_PROVIDER': 23, 'QUARTERLY_SUM_ADOPTED': 64, 'YTD_KEPT': 24, 'MATCH_ROUNDING': 116, 'BOTH_FAR_FROM_PROVIDER': 3}
+[S00] downstream recalc {'Q4_RECALC': 1291}, ratios recomputed=44643
+[S00] low/negative base flagged=1886
+[S00] normalized rows=229032 -> financial_normalized.csv
+[S00] issues=15835 -> normalization_issues.csv
+{
+ "universe": {
+  "companies_total": 1054,
+  "companies_in_normalized": 1054,
+  "companies_missing_from_normalized": [],
+  "slot_status_counts": {
+   "COLLECTED_IDENTITY_VERIFIED": 11468,
+   "NOT_APPLICABLE_PRE_LISTING": 274,
+   "NOT_DISCLOSED_BY_ISSUER": 42,
+   "NOT_YET_DISCLOSED": 864
+  },
+  "slots_total": 12648,
+  "slots_covered_by_ledger": 12648,
+  "slots_with_at_least_one_value": 11415,
+  "slots_uncovered": 0,
+  "periods_in_normalized": 47
+ },
+ "checks": {
+  "V1_four_quarter_sum": {
+   "INCOMPLETE_QUARTERS": 1009,
+   "MATCH": 10649,
+   "MISMATCH": 114,
+   "UNRESOLVED_NO_PROVIDER": 23,
+   "QUARTERLY_SUM_ADOPTED": 64,
+   "YTD_KEPT": 24,
+   "MATCH_ROUNDING": 116,
+   "BOTH_FAR_FROM_PROVIDER": 3
+  },
+  "V3_provider_vs_pdf": {
+   "MISMATCH": 371,
+   "MATCH": 17022,
+   "GM_MINOR_DIFF_LE2PP": 381,
+   "GM_MATCH": 3357,
+   "GM_MISMATCH": 63
+  },
+  "single_quarter": {
+   "NOT_DERIVABLE": 13049,
+   "DERIVED_DIFF": 8695,
+   "OFFICIAL_TABLE": 40264,
+   "Q1_FROM_YTD": 5416,
+   "BLOCKED_CROSS_SOURCE": 32
+  },
+  "low_or_negative_base_flagged": 1886
+ },
+ "elapsed_s": 8.4
+}
+PASS P01 新输入版本指纹固定，指标公式沿用冻结 S01 v2
+PASS P02 三份研究输入指纹未变
+PASS P03 公司数与 S00/S01 一致（1054）
+PASS P04 每家都有可确定的最新可用期
+PASS Q01 1054 家公司 × 12 指标全部有状态（12,648 格）
+PASS Q02 公司级汇总 1054 行且每行 12 格
+PASS Q03 股票代码保持 6 位字符串（前导零未丢）
+PASS Q04 非可评估格一律留空，不用 0 代替缺数据
+PASS Q05 可评估格都有数值
+PASS Q06 超出 valid_range 的值只标记不删除
+PASS Q07 对比期一律早于计算期（无反向/同期混算）
+PASS Q08 计算期不超过全池最新期（无未来数据）
+PASS Q09 需要输入的状态都能回溯到具体输入行（MISSING/NOT_COMPARABLE 除外）
+PASS Q10 可评估格的输入齐全（缺输入不得判 OK/PROVISIONAL）
+PASS Q11 M04 回算的 REV/COST 同期同版本（VERSION_MISMATCH 单独列出）
+PASS Q12 M01/M02/M05/M07/M09 独立复算与交付逐格一致
+WARN Q13 与历史S01快照的差异（本轮已修复输入，不要求计数不变）
+WARN Q14 与历史S01快照的差异（本轮已修复输入，不要求计数不变）
+PASS Q15 pp 类指标量级提示（不阻断；超限处置按规则 valid_range 由 Q06 标记）
+WARN Q16 最新期字段覆盖缺口清单（上游抽取问题，本卡不修）
+PASS Q17 数值量级可疑清单（疑似单位/取数错误，本卡不修）
+{
+ "checks": "21/21",
+ "blocking_fail": 0,
+ "counts": {
+  "companies": 1054,
+  "metrics": 12,
+  "cells": 12648,
+  "ok": 6211,
+  "provisional": 4303,
+  "hold": 267,
+  "missing": 229,
+  "not_comparable": 314,
+  "undefined_base": 469,
+  "not_applicable": 855,
+  "excluded_scope": 0,
+  "version_mismatch": 0
+ }
+}
+{
+  "normalized_rows": 229032,
+  "normalized_changes": 2022,
+  "metric_changes": 398,
+  "companies_changed": 46,
+  "unchanged_company_metrics_verified": 998,
+  "status_counts": {
+    "OK": 6211,
+    "NOT_APPLICABLE": 855,
+    "PROVISIONAL": 4303,
+    "NOT_COMPARABLE": 314,
+    "UNDEFINED_BASE": 469,
+    "MISSING": 229,
+    "HOLD": 267
+  },
+  "l0_counts": {
+    "EVALUABLE": 664,
+    "W5_PROVISIONAL_ONLY": 387,
+    "W9_MIXED_NON_EVALUABLE": 3
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "status": "SELF_CHECK_PASS",
+  "review_nature": "SELF_CHECK",
+  "rules_version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
+  "base_rules_version": "S01_SCREEN_RULES_V2",
+  "base_rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+  "observed_base_rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+  "input": "runs/issues/S02/company_metric_summary.csv",
+  "input_sha256": "e3ea8dbe5e2ace9ffa3ffa39455def2603f9805aff5e72d8ca62d3607f4194ab",
+  "input_companies": 1054,
+  "input_cells_per_company": 12,
+  "input_status_cell_totals": {
+    "EXCLUDED_SCOPE": 0,
+    "HOLD": 394,
+    "MISSING": 254,
+    "NOT_APPLICABLE": 856,
+    "NOT_COMPARABLE": 411,
+    "OK": 6092,
+    "PROVISIONAL": 4158,
+    "UNDEFINED_BASE": 483,
+    "VERSION_MISMATCH": 0
+  },
+  "reclassified_company_counts": {
+    "EVALUABLE": 660,
+    "W5_PROVISIONAL_ONLY": 377,
+    "W9_MIXED_NON_EVALUABLE": 17
+  },
+  "historical_baseline_counts": {
+    "EVALUABLE": 660,
+    "MIXED_NOT_DEFINED_BY_RULE": 17,
+    "W5_PROVISIONAL_ONLY": 377
+  },
+  "exhaustive_branch_check": {
+    "legal_count_vectors": 125970,
+    "branch_count_vectors": {
+      "EVALUABLE": 75582,
+      "W1_NO_DATA": 1,
+      "W2_ALL_HOLD": 1,
+      "W4_EARLY": 1,
+      "W5_PROVISIONAL_ONLY": 31824,
+      "W6_UNDEFINED_BASE_ONLY": 1,
+      "W7_SCOPE_ONLY": 13,
+      "W8_VERSION_RECONCILIATION_ONLY": 1,
+      "W9_MIXED_NON_EVALUABLE": 18546
+    },
+    "invalid_input_cases_rejected": 3,
+    "all_declared_branches_reachable": true,
+    "one_rule_per_legal_vector": true,
+    "conditions_source": "l0_rules_patch.json priority_rules[].condition"
+  },
+  "outputs": [
+    "runs/issues/S02/remediation_20261029/l0/l0_reclassification_baseline.csv",
+    "runs/issues/S02/remediation_20261029/l0/self_check.json"
+  ],
+  "limits": [
+    "This is a proposed technical rule addendum and a self-check, not independent acceptance.",
+    "It does not edit the frozen S01 v2 rules, formulas, thresholds, S02 historical files, or source rows.",
+    "The current baseline source is pre-correction; post-remediation counts must be recalculated from the new S02 output.",
+    "L0 classification is not L1 signal evaluation, L2 shortlist qualification, or authorization to start S03."
+  ]
+}

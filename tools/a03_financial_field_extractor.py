@@ -33,8 +33,12 @@ INDEX = ROOT / 'runs/collection/collection_index.csv'
 # 金额：允许千分位；排除日期片段（前后不能紧邻数字或小数点）
 MONEY = re.compile(r'(?<![\d.])-?(?:\d{1,3}(?:,\d{3})+|\d+)\.\d{2}(?![\d.])')
 # 单位：兼容「单位：元币种：人民币」「单位：人民币元」「单位：千元」
-UNIT_RE = re.compile(r'单位\s*[:：]\s*(?:人民币)?\s*(百万元|千万元|千元|万元|元)')
+UNIT_RE = re.compile(r'单位\s*(?:[:：为]\s*)?(?:人民币)?\s*(百万元|千万元|千元|万元|元)')
 UNIT_SCALE = {'元': 1, '千元': 1000, '万元': 10000, '千万元': 10000000, '百万元': 1000000}
+# 摘要表数字列包括金额和同比百分比；百分比可能超过 1000%，不能按数值大小过滤。
+TABLE_NUMBER = re.compile(
+    r'(?<![\d.])([+-]?(?:(?:\d{1,3}(?:,\d{3})+)|\d+)(?:\.\d+)?)(\s*%)?'
+)
 # 行首编号/前缀
 PREFIX = re.compile(
     r'^(?:[一二三四五六七八九十]+[、.．]|[（(][一二三四五六七八九十\d]+[)）]'
@@ -137,7 +141,12 @@ def page_lines(text):
 
 def is_title(line):
     # 深市写「1、合并资产负债表」、北交所写「（一） 合并资产负债表 」，须先剥编号前缀
-    s = normalize(line).replace(' ', '')
+    s = normalize(line).replace(' ', '').lstrip('、.．')
+    # 部分公司把合并与母公司并列在同一张表中；仅匹配明确的合并标题，
+    # 不把没有合并标识的单体报表默认为合并。实际取第一列并要求合并列在前。
+    s = re.sub(r'^\d{4}年(?:半年度|年度|第一季度|第三季度)?', '', s)
+    s = s.replace('合并及公司', '合并').replace('合并及母公司', '合并')
+    s = re.sub(r'(利润表|现金流量表)[（(](?:年初至本季度|年初至报告期末|年初到报告期末)[）)]$', r'\1', s)
     key = TITLES.get(s)
     if key:
         return key
@@ -152,7 +161,38 @@ def detect_unit(lines):
         m = UNIT_RE.search(ln.replace(' ', ''))
         if m:
             return m.group(1)
+        # 审计报表常直接写“2026年6月30日 人民币元”，没有“单位”二字。
+        if len(ln) < 65:
+            m = re.search(r'人民币\s*(百万元|千万元|千元|万元|元)(?:\s|[)）]|$)', ln)
+            if m:
+                return m.group(1)
     return None
+
+
+def table_values(text):
+    """取摘要表一行里的全部数值列，保留带 % 的列以维持表格列位置。"""
+    out = []
+    for m in TABLE_NUMBER.finditer(text):
+        raw = m.group(1)
+        try:
+            out.append((raw, float(raw.replace(',', '')), bool(m.group(2))))
+        except ValueError:
+            continue
+    return out
+
+
+def summary_cells(text):
+    """保留摘要表空位与百分比列；禁止按金额大小压缩列位置。"""
+    # “净利润（净亏损以‘-’号填列）”中的减号是说明文字，不是空数据列。
+    text = re.sub(r'[（(][^()（）]*[亏损失][^()（）]*[)）]', '', text)
+    tokens = re.compile(TABLE_NUMBER.pattern + r'|不适用|[—－–]+|(?<![\d.])--?(?![\d.])')
+    out = []
+    for m in tokens.finditer(text):
+        if m.group(1) is None:
+            out.append((m.group(0), None, False))
+        else:
+            out.append((m.group(1), float(m.group(1).replace(',', '')), bool(m.group(2))))
+    return out
 
 
 def join_ahead(lines, i, max_ahead=3):
@@ -320,6 +360,11 @@ def build_statement_map(pages, start_page=None):
     for pi in range(min(start_page, len(pages)), len(pages)):
         for ln in page_lines(pages[pi]):
             key = is_title(ln)
+            if key and re.search(r'合并及(?:母公司|公司)', normalize(ln)):
+                flat = re.sub(r'\s+', '', pages[pi])
+                if not any(header in flat for header in ('合并合并公司公司', '合并合并母公司母公司')):
+                    # 并列表必须在表头验证合并两列在前；列序不明保持未知。
+                    continue
             if key and _looks_like_statement(pages, pi, key):
                 hits.append((pi, key))
 
@@ -358,6 +403,35 @@ def build_statement_map(pages, start_page=None):
     return out
 
 
+STATEMENT_MONEY = re.compile(r'(?<![\d.])\(?-?(?:\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d{2}|\d+)\)?(?![\d.])')
+
+
+def statement_amounts(text, note_column=False):
+    """三表专用：兼容整数和括号负数，排除附注序号与百分比。
+
+    不扩宽摘要表和季度表的正则，以免把年份/注号当金额。
+    中文附注号先剥离；无格式的小整数附注只在后续有两列金额时剥离。
+    """
+    note_pattern = r'(?:注\s*\d+(?=\s|$|[：:])|[一二三四五六七八九十]+\s*[、(（]\s*\d+(?:[.、]\d+)*[)）]?)'
+    explicit_note = bool(re.search(note_pattern, text))
+    text = re.sub(note_pattern, '', text)
+    text = re.sub(r'\(\s*([+-]?\d[\d,]*(?:\.\d+)?)\s*\)', lambda m:'-'+m.group(1).lstrip('+-'), text)
+    out = []
+    for m in STATEMENT_MONEY.finditer(text):
+        if text[m.end():].lstrip().startswith('%'):
+            continue
+        raw = m.group(0)
+        if raw.startswith('(') and raw.endswith(')'):
+            raw = '-' + raw[1:-1].lstrip('+-')
+        out.append((raw, float(raw.replace(',', ''))))
+    if not explicit_note and note_column and len(summary_cells(text)) >= 3 and out and re.fullmatch(r'\d{1,3}', out[0][0]):
+        out = out[1:]
+    # 附注可能是 5.31 / 7.12；保留原实现的过滤规则。
+    elif not explicit_note and note_column and len(summary_cells(text)) >= 3 and out and re.fullmatch(r'\d{1,2}\.\d{2}', out[0][0]):
+        out = out[1:]
+    return out
+
+
 def extract_statement_field(pages, regions, statement, field_id, labels, use_merge):
     """在指定报表区域内按行首标签取第一个金额。
 
@@ -370,8 +444,11 @@ def extract_statement_field(pages, regions, statement, field_id, labels, use_mer
     if statement not in regions:
         return None, None, None, 'STATEMENT_NOT_FOUND'
     s, e, _unit = regions[statement]
+    note_column = any('附注' in ln for p in pages[s:min(e + 1, s + 2)] for ln in page_lines(p)[:18])
     excl = EXCLUDE_SUFFIX.get(field_id, ())
-    spans = (1, 2, 3, 4, 5) if use_merge else (1,)
+    # PDF逐单元格输出时资产负债表也可能是“标签/本期/上期”三行。
+    # 以下科目边界检查禁止吞下一科目，只接受数值或附注续行。
+    spans = (1, 2, 3, 4, 5)
     blank_found = False
     for pi in range(s, min(e + 1, len(pages))):
         lines = page_lines(pages[pi])
@@ -380,7 +457,7 @@ def extract_statement_field(pages, regions, statement, field_id, labels, use_mer
             for span in spans:
                 if i + span > n:
                     break
-                text = ''.join(lines[i:i + span])
+                text = ' '.join(lines[i:i + span])
                 norm = normalize(text)
                 for label in labels:
                     if not norm.startswith(label):
@@ -388,7 +465,22 @@ def extract_statement_field(pages, regions, statement, field_id, labels, use_mer
                     rest = norm[len(label):]
                     if any(rest.lstrip().startswith(x) for x in excl):
                         continue
-                    vals = amounts(text)
+                    # 空白科目不得吞掉下一科目；只有没有新中文标签的数值续行可拼接。
+                    if span > 1:
+                        prior = normalize(''.join(lines[i:i + span - 1]))
+                        tail = normalize(lines[i + span - 1])
+                        if prior.startswith(label) and re.match(r'^[\u4e00-\u9fff]', tail) and not tail.startswith('注'):
+                            return None, pi + 1, label, 'BLANK_IN_STATEMENT'
+                    # 当前列为破折号时保留空值，不能改取上年或右半张表的数。
+                    current_text = re.sub(r'注\s*\d+(?=\s|$|[：:])', '', text)
+                    current_text = re.sub(r'[一二三四五六七八九十]+\s*[、(（]\s*\d+(?:[.、]\d+)*[)）]?', '', current_text)
+                    current_cells = summary_cells(current_text)
+                    had_explicit_note = bool(re.search(r'注\s*\d+|[一二三四五六七八九十]+\s*[、(（]\s*\d+', text))
+                    if note_column and not had_explicit_note and len(current_cells) >= 3 and re.fullmatch(r'\d{1,3}(?:\.\d{2})?', current_cells[0][0]):
+                        current_cells = current_cells[1:]
+                    if current_cells and current_cells[0][1] is None:
+                        return None, pi + 1, label, 'BLANK_IN_STATEMENT'
+                    vals = statement_amounts(text, note_column=note_column)
                     if vals:
                         return vals[0][0], pi + 1, label, None
                     if span == 1:
@@ -506,7 +598,8 @@ def _ytd_column_index(lines, i, span=1):
             continue
         if pos_cur < 0:
             return 0
-        return 1 if pos_cur < pos_ytd else 0
+        # 数值列包含同比百分比（或其空位），累计在本期/同比后的第三列。
+        return 2 if pos_cur < pos_ytd else 0
     return 0
 
 
@@ -530,14 +623,16 @@ def _anchor_index(lines, anchor_value):
             continue
         if norm[len('营业收入'):].startswith(('增长', '率', '比例')):
             continue
-        for k, (_raw, num) in enumerate(amounts(ln)):
-            if abs(num - target) <= max(1.0, abs(target) * 1e-6):
+        # 包含所有百分比列。筛掉小百分比会让列号错位；只按金额大小过滤
+        # 也会漏掉 1,000% 以上的同比变化，并把它当成扣非金额。
+        for k, (_raw, num, _is_percent) in enumerate(summary_cells(ln)):
+            if num is not None and not _is_percent and abs(num - target) <= max(1.0, abs(target) * 1e-6):
                 return k
         return None
     return None
 
 
-def extract_key_financials(pages, scan=60, anchor_rev=None):
+def extract_key_financials(pages, scan=60, anchor_rev=None, with_details=False):
     """从年报摘要表取累计值，作为三表抽取的独立交叉校验源，并补三表没有的扣非累计。
 
     该表有三种版式：
@@ -549,10 +644,15 @@ def extract_key_financials(pages, scan=60, anchor_rev=None):
     out = {}
     first_page = None
     unit_all = None
+    carried_unit = None
+    details = {}
     for pi in range(min(scan, len(pages))):
-        lines = page_lines(pages[pi])
+        raw_lines = page_lines(pages[pi])
+        # 先在物理行边界去掉“注3”，再拼标签，避免变成 31,144,165,735。
+        lines = [re.sub(r'注\s*\d+(?=\s|$|[：:])', '', line).strip() for line in raw_lines]
         text = '\n'.join(lines)
         if '营业收入' not in text or '归属于' not in text or '增减' not in text:
+            carried_unit = detect_unit(lines) or carried_unit
             continue
         # 三季报摘要表多一列「年初至报告期末」，但列序两种版式完全相反：
         #   深市「本报告期 | 本报告期增减 | 年初至报告期末 | 年初至报告期末增减」→ 累计在第 2 列
@@ -584,7 +684,7 @@ def extract_key_financials(pages, scan=60, anchor_rev=None):
                 for span in (1, 2, 3, 4, 5):
                     if i + span > n:
                         break
-                    t = ''.join(lines[i:i + span])
+                    t = ' '.join(lines[i:i + span])
                     norm = normalize(t)
                     for label in labels:
                         if not norm.startswith(label):
@@ -592,15 +692,27 @@ def extract_key_financials(pages, scan=60, anchor_rev=None):
                         rest = norm[len(label):]
                         if rest.startswith(('增长', '率', '比例')):
                             continue
-                        vals = amounts(t)
+                        vals = summary_cells(t)
                         if vals:
                             # 三季报摘要表有两列以上金额，必须按列语义取累计值：
                             # 深市第一列是 Q3 单季、第二列才是 1-9 月累计（000026：41,360,520.65
                             # 是单季扣非，累计应为 119,737,782.83）；北交所第一列就是累计。
-                            # 增减百分比（-7.53%）不含千分位且绝对值 <1000，已被 amounts() 过滤；
+                            # 按营收锚点列号在所有表格数值列中取值；不可按量级过滤同比百分比，
+                            # 因为高增长率可能超过 1000%。无锚点时使用表头解析的累计列。
                             # OCF 行用「— —」占位时金额列变少，越界则回退第 1 列。
-                            pick = vals[col_idx] if len(vals) > col_idx else vals[0]
+                            if len(vals) <= col_idx:
+                                continue
+                            pick = vals[col_idx]
+                            if pick[1] is None or pick[2]:
+                                continue
                             out[fid] = pick[0]
+                            # 单位取行项目本身或它之前最近的表头；下一子表的单位
+                            # 不能回灌，跨页表头沿用前页明确单位。
+                            inline = re.search(r'[（(](百万元|千万元|千元|万元|元)[）)]', t)
+                            row_unit = inline.group(1) if inline else None
+                            if row_unit is None:
+                                row_unit = next((u for u in (detect_unit([ln]) for ln in reversed(raw_lines[:i])) if u), carried_unit)
+                            details[fid] = dict(page=pi + 1, unit=row_unit, raw_row=t[:600], column_index=col_idx)
                             break
                     if fid in out:
                         break
@@ -616,13 +728,16 @@ def extract_key_financials(pages, scan=60, anchor_rev=None):
                     if f'（{cand}）' in joined or f'({cand})' in joined:
                         unit = cand
                         break
-            unit_all = unit
+            unit_all = details.get('FIN.NPDEDT.YTD', {}).get('unit') or unit
         # 扣非常被排到摘要表下一页，第一页命中就返回会把它丢掉；凑齐 4 个再停
         if len(out) >= 4:
             break
+        carried_unit = next((u for u in (detect_unit([ln]) for ln in reversed(raw_lines)) if u), carried_unit)
     if out:
-        return out, (first_page + 1) if first_page is not None else None, unit_all
-    return {}, None, None
+        result = (out, (first_page + 1) if first_page is not None else None, unit_all)
+    else:
+        result = ({}, None, None)
+    return (*result, details) if with_details else result
 
 
 def extract_one(task):
@@ -722,6 +837,12 @@ def extract_one(task):
             push(fid, None, unit, None, None, reason or 'NOT_FOUND')
         else:
             push(fid, val, unit, page, label, 'EXTRACTED')
+            if fid == 'FIN.COST.YTD' and val.startswith('-') and page:
+                # P04 字段契约规定成本为正数。仅对原表明确用括号列示的
+                # 成本应用展示符号转换，保留带符号原值供核验。
+                if re.search(r'营业成本[^\n]*\(\s*\d', pages[page - 1]):
+                    fields[-1]['value_cny'] = abs(fields[-1]['value_cny']) if fields[-1]['value_cny'] != '' else ''
+                    fields[-1]['note'] = 'EXPENSE_PARENTHESIS_TO_POSITIVE_P04;raw_sign_preserved'
 
     # 重述
     flag, rpage, rev, rmethod = extract_restatement(pages)
@@ -741,13 +862,16 @@ def extract_one(task):
         if row['field_id'] == 'FIN.REV.YTD' and row['extract_status'] == 'EXTRACTED':
             anchor_rev = row['value_raw']
             break
-    kf, kf_page, kf_unit = extract_key_financials(pages, anchor_rev=anchor_rev)
+    kf, kf_page, kf_unit, kf_details = extract_key_financials(pages, anchor_rev=anchor_rev, with_details=True)
+    res['key_financials_values'] = kf
+    res['key_financials_details'] = kf_details
     res['key_financials_page'] = kf_page
     res['key_financials_unit'] = kf_unit
     if 'FIN.NPDEDT.YTD' in kf:
-        push('FIN.NPDEDT.YTD', kf['FIN.NPDEDT.YTD'], kf_unit, kf_page,
+        kd = kf_details.get('FIN.NPDEDT.YTD', {})
+        push('FIN.NPDEDT.YTD', kf['FIN.NPDEDT.YTD'], kd.get('unit') or kf_unit, kd.get('page') or kf_page,
              '归属于上市公司股东的扣除非经常性损益的净利润', 'EXTRACTED',
-             note='source=主要会计数据表')
+             note='source=主要会计数据表', raw=kd.get('raw_row'))
     else:
         push('FIN.NPDEDT.YTD', None, kf_unit, kf_page, None, 'NOT_IN_STATEMENT',
              note='source=主要会计数据表')
@@ -772,6 +896,20 @@ def extract_one(task):
                 xcheck[fid] = 'MATCH' if abs(a - b) <= tol else 'MISMATCH'
             except ValueError:
                 xcheck[fid] = 'UNPARSED'
+    res['crosscheck_raw_legacy'] = dict(xcheck)
+    # 表头单位可能不同。只在各自单位明确后按人民币元交叉校验。
+    direct_rows = {r['field_id']: r for r in fields if r['extract_status'] == 'EXTRACTED'}
+    for fid in ('FIN.REV.YTD', 'FIN.NPP.YTD', 'FIN.OCF.YTD'):
+        if fid not in kf or fid not in direct_rows:
+            continue
+        unit_key = kf_details.get(fid, {}).get('unit') or kf_unit
+        scale_key = UNIT_SCALE.get(unit_key)
+        b = direct_rows[fid]['value_cny']
+        if scale_key is None or b == '':
+            xcheck[fid] = 'UNPARSED'
+            continue
+        a = float(kf[fid].replace(',', '')) * scale_key
+        xcheck[fid] = 'MATCH' if abs(a - b) <= max(1.0, abs(a) * 1e-6) else 'MISMATCH'
     res['crosscheck'] = xcheck
 
     res['fields'] = fields

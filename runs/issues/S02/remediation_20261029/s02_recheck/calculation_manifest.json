@@ -1,0 +1,312 @@
+{
+  "issue_key": "S02",
+  "issue_number": 37,
+  "plan_version": "20261026_collection_first_v2",
+  "generated_at": "2026-10-29T20:44:13+08:00",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "rules_version": "S01_SCREEN_RULES_V2",
+  "rules_file": "runs/issues/S01/screen_rules_v2.json",
+  "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+  "formula_source": {
+    "file": "tools/s01_rules_check.py",
+    "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f",
+    "note": "公式不在本脚本重写；S02 只定最新期、做溯源与口径检查"
+  },
+  "inputs": [
+    {
+      "path": "runs/issues/S00/financial_normalized.csv.gz",
+      "sha256": "9d124e64959d1c65ca9f646a24e349c2a2b299587522801506e140ae0a1c0702",
+      "bytes": 5922025
+    },
+    {
+      "path": "runs/issues/S00/normalization_manifest.json",
+      "sha256": "4293a95c1382ef6edb171b670f49aaef9b0ba8d54c7dce34189e173505d1ade8",
+      "bytes": 31093
+    },
+    {
+      "path": "data/company_master.csv",
+      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+      "bytes": 707054
+    }
+  ],
+  "normalized_input_used": {
+    "path": "runs\\issues\\S02\\remediation_20261029\\s00\\financial_normalized.csv",
+    "sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
+    "matches_rules_fingerprint": false,
+    "note": "新输入版本须在复核记录登记；S01 规则未变"
+  },
+  "latest_period_definition": {
+    "rule": "任一锚定字段（FIN.REV.YTD / FIN.REV.SQ / FIN.NPDEDT.YTD）status ∈ USABLE∪LEGACY_SNAPSHOT 且 value 非空的最新 period_key",
+    "anchor_fields": [
+      "FIN.REV.YTD",
+      "FIN.REV.SQ",
+      "FIN.NPDEDT.YTD"
+    ],
+    "same_as_S01": true,
+    "distribution": {
+      "20251231": 4,
+      "20260331": 4,
+      "20260630": 865,
+      "20260930": 181
+    },
+    "stale_cut": 20260630,
+    "note": "若改为「该字段自身有值的最新期」，S01 复核显示 SG09 会从 203 变 215，故不得改动"
+  },
+  "period_model": {
+    "yoy_base": "period_key - 10000",
+    "prior_quarter": "Q1→上年1231，H1→当年0331，Q3→当年0630，FY→当年0930",
+    "m03_bases": "t-1y 与 t-1q（加速度）"
+  },
+  "coverage": [
+    {
+      "metric_id": "M01",
+      "metric_name_cn": "营业收入同比（累计）",
+      "unit": "ratio",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 580,
+      "provisional": 401,
+      "hold": 43,
+      "missing": 1,
+      "not_comparable": 29,
+      "undefined_base": 0,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M02",
+      "metric_name_cn": "营业收入同比（单季）",
+      "unit": "ratio",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 589,
+      "provisional": 419,
+      "hold": 15,
+      "missing": 14,
+      "not_comparable": 16,
+      "undefined_base": 1,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M03",
+      "metric_name_cn": "单季营收同比加速度",
+      "unit": "pp",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 517,
+      "provisional": 490,
+      "hold": 16,
+      "missing": 14,
+      "not_comparable": 17,
+      "undefined_base": 0,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M04",
+      "metric_name_cn": "毛利率同比变动",
+      "unit": "pp",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 576,
+      "provisional": 401,
+      "hold": 43,
+      "missing": 34,
+      "not_comparable": 0,
+      "undefined_base": 0,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M05",
+      "metric_name_cn": "扣非归母净利润同比（累计）",
+      "unit": "ratio",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 443,
+      "provisional": 293,
+      "hold": 0,
+      "missing": 22,
+      "not_comparable": 59,
+      "undefined_base": 237,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M06",
+      "metric_name_cn": "扣非归母净利率变动",
+      "unit": "pp",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 568,
+      "provisional": 357,
+      "hold": 36,
+      "missing": 23,
+      "not_comparable": 70,
+      "undefined_base": 0,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M07",
+      "metric_name_cn": "扣非归母净利润同比（单季）",
+      "unit": "ratio",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 437,
+      "provisional": 272,
+      "hold": 0,
+      "missing": 87,
+      "not_comparable": 29,
+      "undefined_base": 229,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M08",
+      "metric_name_cn": "经营现金流/归母净利润",
+      "unit": "ratio",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 506,
+      "provisional": 275,
+      "hold": 8,
+      "missing": 27,
+      "not_comparable": 0,
+      "undefined_base": 0,
+      "not_applicable": 238,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M09",
+      "metric_name_cn": "经营现金流同比变动额",
+      "unit": "CNY",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 577,
+      "provisional": 401,
+      "hold": 43,
+      "missing": 2,
+      "not_comparable": 31,
+      "undefined_base": 0,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M10",
+      "metric_name_cn": "应收账款周转天数变动",
+      "unit": "days",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 576,
+      "provisional": 401,
+      "hold": 43,
+      "missing": 2,
+      "not_comparable": 32,
+      "undefined_base": 0,
+      "not_applicable": 0,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M11",
+      "metric_name_cn": "存货周转天数变动",
+      "unit": "days",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 561,
+      "provisional": 393,
+      "hold": 0,
+      "missing": 2,
+      "not_comparable": 31,
+      "undefined_base": 2,
+      "not_applicable": 65,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    {
+      "metric_id": "M12",
+      "metric_name_cn": "合同资产占营收比重变动",
+      "unit": "pp",
+      "companies": 1054,
+      "with_status": 1054,
+      "ok": 281,
+      "provisional": 200,
+      "hold": 20,
+      "missing": 1,
+      "not_comparable": 0,
+      "undefined_base": 0,
+      "not_applicable": 552,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    }
+  ],
+  "l0_distribution": {
+    "EVALUABLE": 664,
+    "MIXED_NOT_DEFINED_BY_RULE": 3,
+    "W5_PROVISIONAL_ONLY": 387
+  },
+  "l0_rule_note": "规则 L0 只定义 EVALUABLE / W1_NO_DATA / W2_ALL_HOLD / W4_EARLY。无 OK 但有 PROVISIONAL 的公司按 watchlist W5 单列为 W5_PROVISIONAL_ONLY（本卡为指标层近似，S03 须按信号层复核）；其余混合情形记 MIXED_NOT_DEFINED_BY_RULE，规则未覆盖，S03 前须补 L0 分支，不得由本卡擅自定义。",
+  "counts": {
+    "companies": 1054,
+    "metrics": 12,
+    "cells": 12648,
+    "ok": 6211,
+    "provisional": 4303,
+    "hold": 267,
+    "missing": 229,
+    "not_comparable": 314,
+    "undefined_base": 469,
+    "not_applicable": 855,
+    "excluded_scope": 0,
+    "version_mismatch": 0
+  },
+  "outputs": [
+    {
+      "path": "runs\\issues\\S02\\remediation_20261029\\s02_recheck\\all_pool_metrics.csv",
+      "rows": 12648,
+      "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+      "bytes": 4371978
+    },
+    {
+      "path": "runs\\issues\\S02\\remediation_20261029\\s02_recheck\\company_metric_summary.csv",
+      "rows": 1054,
+      "sha256": "e25ae4c8a887bb96301479c978f99f4a0ec2df6faa3d2f845c8715c115206fc9",
+      "bytes": 87678
+    },
+    {
+      "path": "runs\\issues\\S02\\remediation_20261029\\s02_recheck\\metric_qc.csv",
+      "rows": 22,
+      "sha256": "5448e06ee22bfcca232e627ed46a4693bd02deba0ab3cf123abec38e5e2c7054",
+      "bytes": 5378
+    },
+    {
+      "path": "runs\\issues\\S02\\remediation_20261029\\s02_recheck\\metric_qc_findings.csv",
+      "rows": 313,
+      "sha256": "18ea8d1b55ea52a10708f8165256cdfddc8968e89e99be3aa8700d28fe1fe5d1",
+      "bytes": 24347
+    }
+  ],
+  "known_limits": [
+    "指标全部为公司合并口径，不是机器人分部口径；不得据此推断机器人业务盈利",
+    "2026Q3 截面仅部分公司披露，横截面统计须按最新期分层",
+    "PROVISIONAL 与 OK 分列，PROVISIONAL 不得当正常样本",
+    "MARGIN 与 PROFIT 维度同源，后续 S04 收紧时仍会重复计数",
+    "S00 遗留：62 整槽无值、453 份三表≠摘要表、2,157 重述待核、旧快照单一来源",
+    "本卡不产出名单、不算信号、不做 PIT 回测",
+    "上游缺陷一：53 家最新期可用字段<8（其中 25 家仅 2 个字段，含美的集团/工业富联/广汽集团/中国中铁/石头科技/时代电气/宇树科技等），A03 已记录字段抽取仅覆盖年报，须回 S00 补抽半年报/季报字段",
+    "上游缺陷二：5 家营收上亿而扣非不足营收万分之一（赣锋锂业/中科信息/金百泽/五洋自控/毅昌科技），疑似「万元」被识别为「元」，须回 S00 核 PDF 原表",
+    "规则 L0 未覆盖「无 OK 且非全 HOLD/全 MISSING/全 NOT_COMPARABLE」的混合情形，本卡按 watchlist W5 单列 377 家，另 17 家记 MIXED，S03 前须补 L0 分支"
+  ]
+}

@@ -4,17 +4,17 @@
   "active_issue_key": "S02",
   "executor": "WorkBuddy AI",
   "started_at": "2026-10-29T19:48:36+08:00",
-  "status": "SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
-  "claim_note": "S02 自检完成：12,648 格全覆盖，21 项检查 18 PASS + 3 WARN、阻断 0；两个上游缺陷（53 家字段缺口、5 家单位可疑）与 L0 规则缺口已记录，等外部复核。",
+  "status": "REPAIR_V2_APPLIED_AWAITING_EXTERNAL_RECHECK",
+  "claim_note": "已接手修复包：433/433 文件校验通过，用包内 s00 独立重算 12,648 格与包内 s02 输出 0 差异，状态分布与 L0 分布逐项一致；S03 仍锁，等外部复核。",
   "last_completed": {
     "issue_number": 37,
     "issue_key": "S02",
-    "completed_at": "2026-10-29T19:54:23+08:00",
-    "review_file": "runs/issues/S02/review.json",
-    "decision": "SELF_CHECK_PASS_WITH_UPSTREAM_FINDINGS",
-    "review_nature": "SELF_CHECK",
-    "acceptance": "12,648 格全覆盖；21 项 18 PASS + 3 WARN，阻断 0",
-    "summary": "用 v2 计算 1054×12 指标，逐格出 status/flags/期间/来源；OK 6,092 / PROVISIONAL 4,158；与 S01 干跑逐项一致"
+    "completed_at": "2026-10-29T20:45:55+08:00",
+    "review_file": "runs/issues/S02/remediation_20261029/review_workbuddy.md",
+    "decision": "REPAIR_APPLIED_PENDING_EXTERNAL_RECHECK",
+    "review_nature": "REPAIR_ACCEPTANCE_REVIEW",
+    "acceptance": "433/433 包校验 + 12,648 格独立重算 0 差异 + L0 664/387/3 一致",
+    "summary": "修复版接管为 S02 v2；21 家待核保留；S03 未放行"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -25,7 +25,7 @@
   },
   "next_recommended_issue_number": 37,
   "next_recommended_issue_key": "S02",
-  "next_recommended_reason": "S02 等外部复核；S03 另需补 L0 混合分支并回 S00 补抽 53 家字段，未完成前不开 S03",
+  "next_recommended_reason": "等 S02 修复版外部复核；复核通过后 S03 须用 v2 输入 + L0 addendum 开工",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",

@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S02_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
+  "status": "S02_REPAIR_V2_APPLIED_AWAITING_EXTERNAL_RECHECK",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -962,7 +962,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S02_SELF_CHECK",
+  "current_gate": "S02_REPAIR_V2_EXTERNAL_RECHECK",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1191,7 +1191,7 @@
   },
   "s02_stage": {
     "issue": "S02 / #37",
-    "status": "SELF_CHECK_PASS",
+    "status": "SELF_CHECK_PASS_REPAIR_V2",
     "rules_version_required": "S01_SCREEN_RULES_V2",
     "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
     "scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
@@ -1267,6 +1267,65 @@
     ],
     "rule_gap": "L0 未覆盖无 OK 的混合情形；377 家按 W5 单列、17 家记 MIXED，S03 前须补分支",
     "release_S03": false,
-    "release_note": "自检不等于验收；S03 另需补 L0 分支与上游字段"
+    "release_note": "自检不等于验收；S03 另需补 L0 分支与上游字段",
+    "repair_applied": true
+  },
+  "s02_repair_stage": {
+    "issue": "S02 / #37",
+    "received_at": "2026-10-29T20:45:55+08:00",
+    "baseline_commit": "547508d",
+    "package": "runs/issues/S02/remediation_20261029/",
+    "package_files_verified": "433/433",
+    "review_file": "runs/issues/S02/remediation_20261029/review_workbuddy.md",
+    "review_file_sha256": "1dc4315050467daf5350b1391ef59d77f2fbf21ceabd3fb8dc599da69d8d11e7",
+    "review_nature": "REPAIR_ACCEPTANCE_REVIEW",
+    "decision": "REPAIR_APPLIED_PENDING_EXTERNAL_RECHECK",
+    "what_changed": [
+      "重抽 59 家 360 份报告：整数金额、脚注混入、跨页单位、百分比错列",
+      "标准化表 228,155 → 229,032 行；指标层 398 格 / 46 家变化",
+      "53 家：32 家恢复≥8 字段，21 家保留待核（不得当无改善）",
+      "L0 补 addendum：EVALUABLE 664 / W5 387 / W9 3，125,970 向量穷举"
+    ],
+    "independent_verification": {
+      "cells_recomputed": 12648,
+      "diff_vs_package_s02": 0,
+      "counts_match": true,
+      "l0_match": true,
+      "cases_checked": [
+        "美的集团 M05=-25.31%",
+        "传智教育 M06=16.36pp",
+        "复星医药 M05=0.19",
+        "石头科技 全 PROVISIONAL",
+        "赣锋锂业 M06=19.26pp"
+      ],
+      "q17_magnitude_suspects_before": 5,
+      "q17_magnitude_suspects_after": 0
+    },
+    "not_independently_verified": [
+      "19 条原页预期未逐条回读 PDF",
+      "360 份源 PDF 的 SHA256 未逐个复算",
+      "a03 采集器 158 行改动只做方向审查"
+    ],
+    "release_S03": false,
+    "release_note": "S03 须等修复版外部复核；本次只是执行方接手复核"
+  },
+  "current_valid_versions": {
+    "S00_data": {
+      "v1_frozen": "runs/issues/S00/financial_normalized.csv.gz",
+      "v2_repair": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv",
+      "v2_sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
+      "use_for_S03": "v2_repair"
+    },
+    "S02_metrics": {
+      "v1": "runs/issues/S02/all_pool_metrics.csv",
+      "v2_repair": "runs/issues/S02/remediation_20261029/s02/all_pool_metrics.csv",
+      "recheck": "runs/issues/S02/remediation_20261029/s02_recheck/all_pool_metrics.csv",
+      "use_for_S03": "v2_repair"
+    },
+    "rules": {
+      "base": "S01_SCREEN_RULES_V2",
+      "addendum": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
+      "note": "只加 L0 分支，未改指标公式与信号阈值"
+    }
   }
 }

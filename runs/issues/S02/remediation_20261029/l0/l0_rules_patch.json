@@ -1,0 +1,265 @@
+{
+  "rules_version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
+  "status": "PROPOSED_ADDITIVE_RULE_PATCH_SELF_CHECK",
+  "base_rules_version": "S01_SCREEN_RULES_V2",
+  "base_rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+  "scope": "L0 company evaluability routing only",
+  "out_of_scope_changes": [
+    "metric definitions or formulas",
+    "thresholds",
+    "signal definitions or dependencies",
+    "L1/L2 signal logic",
+    "company inputs or source data"
+  ],
+  "classification_input": {
+    "unit": "company",
+    "metric_count": 12,
+    "source": "metric_status counts across all 12 metrics at the company anchor period",
+    "allowed_metric_statuses": [
+      "OK",
+      "PROVISIONAL",
+      "HOLD",
+      "MISSING",
+      "NOT_COMPARABLE",
+      "UNDEFINED_BASE",
+      "NOT_APPLICABLE",
+      "EXCLUDED_SCOPE",
+      "VERSION_MISMATCH"
+    ],
+    "validity": "Every count is a non-negative integer and counts sum to exactly 12. Unknown statuses or invalid totals fail closed as INVALID_INPUT; they are never routed to a screening outcome."
+  },
+  "priority_rules": [
+    {
+      "priority": 1,
+      "output": "EVALUABLE",
+      "when": "OK >= 1",
+      "condition": {
+        "count": {
+          "status": "OK",
+          "op": "gte",
+          "value": 1
+        }
+      },
+      "l1_route": "RUN_FROZEN_L1",
+      "l2_route": "FROZEN_L2_CLEAN_DIMENSION_GATE_ONLY",
+      "meaning": "At least one clean metric exists. This is permission to evaluate evidence, not a candidate decision."
+    },
+    {
+      "priority": 2,
+      "output": "W2_ALL_HOLD",
+      "when": "OK = 0 AND every metric status is HOLD",
+      "condition": {
+        "all": [
+          {
+            "count": {
+              "status": "OK",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "active_statuses_exactly": [
+              "HOLD"
+            ]
+          }
+        ]
+      },
+      "l1_route": "WAIT_FOR_HOLD_RESOLUTION",
+      "l2_route": "BLOCKED",
+      "meaning": "All evidence is held; HOLD is not a negative signal."
+    },
+    {
+      "priority": 3,
+      "output": "W1_NO_DATA",
+      "when": "OK = 0 AND every metric status is MISSING",
+      "condition": {
+        "all": [
+          {
+            "count": {
+              "status": "OK",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "active_statuses_exactly": [
+              "MISSING"
+            ]
+          }
+        ]
+      },
+      "l1_route": "WAIT_FOR_DATA",
+      "l2_route": "BLOCKED",
+      "meaning": "No metric input exists; missing is not zero or no signal."
+    },
+    {
+      "priority": 4,
+      "output": "W4_EARLY",
+      "when": "OK = 0 AND every metric status is NOT_COMPARABLE",
+      "condition": {
+        "all": [
+          {
+            "count": {
+              "status": "OK",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "active_statuses_exactly": [
+              "NOT_COMPARABLE"
+            ]
+          }
+        ]
+      },
+      "l1_route": "WAIT_FOR_COMPARABLE_HISTORY",
+      "l2_route": "BLOCKED",
+      "meaning": "No metric has a valid comparison period."
+    },
+    {
+      "priority": 5,
+      "output": "W5_PROVISIONAL_ONLY",
+      "when": "OK = 0 AND PROVISIONAL >= 1",
+      "condition": {
+        "all": [
+          {
+            "count": {
+              "status": "OK",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "count": {
+              "status": "PROVISIONAL",
+              "op": "gte",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "l1_route": "PROVISIONAL_OBSERVATION_ONLY",
+      "l2_route": "BLOCKED_UNTIL_CLEAN_EVIDENCE",
+      "meaning": "There is no clean metric and at least one provisional metric. Other non-evaluable statuses may coexist; preserve their counts and flags. A triggered provisional signal may enter L1 observation with its provisional flag. An absent trigger must remain in this watchlist and must not be converted to NO_SIGNAL or a candidate rejection."
+    },
+    {
+      "priority": 6,
+      "output": "W6_UNDEFINED_BASE_ONLY",
+      "when": "OK = 0 AND PROVISIONAL = 0 AND every metric status is UNDEFINED_BASE",
+      "condition": {
+        "all": [
+          {
+            "count": {
+              "status": "OK",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "count": {
+              "status": "PROVISIONAL",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "active_statuses_exactly": [
+              "UNDEFINED_BASE"
+            ]
+          }
+        ]
+      },
+      "l1_route": "WAIT_FOR_MEANINGFUL_BASE",
+      "l2_route": "BLOCKED",
+      "meaning": "All ratio comparisons lack a meaningful base; this is not deterioration."
+    },
+    {
+      "priority": 7,
+      "output": "W7_SCOPE_ONLY",
+      "when": "OK = 0 AND PROVISIONAL = 0 AND every metric status is in {NOT_APPLICABLE, EXCLUDED_SCOPE}",
+      "condition": {
+        "all": [
+          {
+            "count": {
+              "status": "OK",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "count": {
+              "status": "PROVISIONAL",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "active_statuses_subset_of": [
+              "NOT_APPLICABLE",
+              "EXCLUDED_SCOPE"
+            ]
+          }
+        ]
+      },
+      "l1_route": "REVIEW_SCOPE",
+      "l2_route": "BLOCKED",
+      "meaning": "No metric is applicable to the recorded scope. Do not treat the company as a negative screen."
+    },
+    {
+      "priority": 8,
+      "output": "W8_VERSION_RECONCILIATION_ONLY",
+      "when": "OK = 0 AND PROVISIONAL = 0 AND every metric status is VERSION_MISMATCH",
+      "condition": {
+        "all": [
+          {
+            "count": {
+              "status": "OK",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "count": {
+              "status": "PROVISIONAL",
+              "op": "eq",
+              "value": 0
+            }
+          },
+          {
+            "active_statuses_exactly": [
+              "VERSION_MISMATCH"
+            ]
+          }
+        ]
+      },
+      "l1_route": "WAIT_FOR_VERSION_RECONCILIATION",
+      "l2_route": "BLOCKED",
+      "meaning": "All metric versions require reconciliation."
+    },
+    {
+      "priority": 9,
+      "output": "W9_MIXED_NON_EVALUABLE",
+      "when": "OK = 0 AND PROVISIONAL = 0 AND no preceding homogeneous branch matched",
+      "condition": {
+        "otherwise": true
+      },
+      "l1_route": "HOLD_FOR_DATA_OR_SCOPE_REVIEW",
+      "l2_route": "BLOCKED",
+      "meaning": "A mixed combination of unavailable, incomparable, held, undefined-base, scope, or version statuses. Preserve the per-status vector and re-enter after the blocking cause is resolved. Never translate this branch into NO_SIGNAL or candidate rejection."
+    }
+  ],
+  "downstream_guardrails": [
+    "L0 is an evidence-availability route and is not an L1 signal result or a shortlist decision.",
+    "EVALUABLE does not imply a positive signal or shortlist eligibility; S01 L1/L2 rules remain authoritative.",
+    "W5_PROVISIONAL_ONLY is a metric-layer observation bucket. With OK=0 across all 12 metrics, the current run cannot satisfy the clean L2 candidate gate; the L0 label itself neither rejects on signal grounds nor adds a candidate.",
+    "No OK does not mean no signal: evaluate provisional evidence under the frozen L1 rules and preserve its flag. An absent provisional trigger stays on the W5 watchlist; it is not converted into NO_SIGNAL.",
+    "L0 never assigns a company to a candidate list. Candidate inclusion requires the existing downstream evidence rules; W5 itself cannot add a candidate.",
+    "W1/W2/W4/W6/W7/W8/W9 are unresolved or out-of-scope evidence states, never NO_SIGNAL and never automatic rejection.",
+    "All input counts and the exact 9-status vector must remain in the S03 audit output."
+  ],
+  "migration_note": "Apply as an additive L0 patch only after explicit rule-version handling in the parent workflow. The S01 v2 file and S02 historical outputs remain immutable. Recompute the L0 route from each company's current 12-cell status vector after upstream corrections; historical counts 377/17 are regression baselines, not expected post-correction counts.",
+  "base_rules_line_ending_equivalents": [
+    "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf"
+  ],
+  "base_rules_line_ending_note": "已核实 Git HEAD 的 LF 字节与已验收工作副本 CRLF 字节仅换行不同；不接受其他内容变化，不改写旧冻结文件。"
+}

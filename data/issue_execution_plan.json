@@ -1020,7 +1020,7 @@
       "issue_number": 37,
       "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37",
       "title": "S02｜计算全池指标与口径检查",
-      "status": "SELF_CHECK_PASS",
+      "status": "SELF_CHECK_PASS_REPAIR_V2",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S02/",
       "issue_body_sha256": "ea0aa53e74183772a9c3e4b67a3f23f2d22df7d823a9dee0c6e25a77e5c6ce95",
@@ -1044,7 +1044,30 @@
         "upstream_findings": [
           "Q16 字段覆盖缺口 53 家（25 家仅 2 字段）",
           "Q17 数值量级可疑 5 家（疑似万元/元单位错）"
-        ]
+        ],
+        "repair": {
+          "review_file": "runs/issues/S02/remediation_20261029/review_workbuddy.md",
+          "review_file_sha256": "1dc4315050467daf5350b1391ef59d77f2fbf21ceabd3fb8dc599da69d8d11e7",
+          "review_nature": "REPAIR_ACCEPTANCE_REVIEW",
+          "received_at": "2026-10-29T20:45:55+08:00",
+          "baseline_commit": "547508d",
+          "package_manifest": "runs/issues/S02/remediation_20261029/manifest.json",
+          "package_files_verified": 433,
+          "v2_input": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv",
+          "v2_input_sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
+          "v2_output_dir": "runs/issues/S02/remediation_20261029/s02/",
+          "independent_recheck_dir": "runs/issues/S02/remediation_20261029/s02_recheck/",
+          "independent_recheck_diff_cells": 0,
+          "cells_changed_vs_v1": 398,
+          "companies_changed_vs_v1": 46,
+          "l0_addendum": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
+          "l0_distribution": {
+            "EVALUABLE": 664,
+            "MIXED_NOT_DEFINED_BY_RULE": 3,
+            "W5_PROVISIONAL_ONLY": 387
+          },
+          "pending_external_recheck": true
+        }
       }
     },
     {
@@ -1080,7 +1103,7 @@
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S03/",
       "issue_body_sha256": "f4cda68c7efb64b7b237bdabae10ef742fad2fe54edc9b34b2ceb6b41aece4d7",
-      "blocked_reason": "等 S02 外部复核放行；另需先补 L0 混合分支（377 家 W5 / 17 家 MIXED）与回 S00 补抽 53 家半年报/季报字段"
+      "blocked_reason": "等 S02 修复版（v2）外部复核放行；开工须用 remediation_20261029/s00 输入 + L0 addendum，21 家待核须显式保留为观察/待核，PROVISIONAL/HOLD 不计入干净维度"
     },
     {
       "key": "S04",

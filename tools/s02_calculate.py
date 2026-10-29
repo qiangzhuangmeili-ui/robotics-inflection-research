@@ -13,6 +13,7 @@
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import hashlib
 import importlib.util
@@ -133,20 +134,44 @@ def period_type_of(meta, sec, pk) -> str:
     return ""
 
 
-def main() -> int:
+def main(argv=None) -> int:
+    global S02
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--normalized", default=None, help="标准化表路径（默认 S00 冻结版）")
+    ap.add_argument("--out-dir", default=None, help="输出目录（默认 runs/issues/S02）")
+    ap.add_argument("--rules", default=None, help="规则文件（默认 S01 v2）")
+    args = ap.parse_args(argv)
+
+    norm = Path(args.normalized) if args.normalized else None
+    if args.out_dir:
+        S02 = Path(args.out_dir)
     S02.mkdir(parents=True, exist_ok=True)
+    alt_input = bool(norm and norm.resolve() != (ROOT / "runs/issues/S00/financial_normalized.csv").resolve())
+    if norm:
+        s01.NORMALIZED = norm
+    rules_path = Path(args.rules) if args.rules else RULES
 
     # ---------- 前置校验
-    rules_sha = sha256(RULES)
+    rules_sha = sha256(rules_path)
     add("P01", "规则版本为冻结的 S01_SCREEN_RULES_V2", rules_sha == RULES_SHA_REQUIRED,
         {"sha256": rules_sha})
-    rules = json.loads(RULES.read_text(encoding="utf-8"))
+    rules = json.loads(rules_path.read_text(encoding="utf-8"))
     fp_bad = []
     for f in rules["input_fingerprint"]["files"]:
         p = ROOT / f["path"]
         if not p.exists() or sha256(p) != f["sha256"]:
             fp_bad.append(f["path"])
-    add("P02", "三份研究输入指纹未变", not fp_bad, {"changed": fp_bad})
+    add("P02", "规则登记的三份研究输入指纹未变", not fp_bad, {"changed": fp_bad})
+    actual = norm or (ROOT / "runs/issues/S00/financial_normalized.csv")
+    actual_sha = sha256(actual)
+    registered = {f["path"]: f["sha256"] for f in rules["input_fingerprint"]["files"]}
+    reg_sha = registered.get("runs/issues/S00/financial_normalized.csv.gz")
+    same_as_registered = bool(reg_sha) and actual_sha == reg_sha
+    add("P05", "实际使用的标准化表与规则登记一致" + ("" if same_as_registered else "（新输入版本）"),
+        same_as_registered,
+        {"used": str(actual), "sha256": actual_sha, "registered_sha256": reg_sha,
+         "note": "不一致即新输入版本，须另记指纹并在复核记录中说明"},
+        blocking=False)
 
     # ---------- 装载与计算
     rows, meta, field_rows, companies = s01.load_rows()
@@ -340,13 +365,19 @@ def main() -> int:
             if row[k_s01] != status_by_metric[mid][k_s02]:
                 mismatch.append({"metric": mid, "status": k_s02,
                                  "s01": row[k_s01], "s02": status_by_metric[mid][k_s02]})
-    add("Q13", "每指标状态分布与 S01 干跑逐项一致", not mismatch,
-        {"mismatch": mismatch[:10], "count": len(mismatch)})
+    add("Q13", "每指标状态分布与 S01 干跑逐项一致" + ("（新输入：差异属预期）" if alt_input else ""),
+        not mismatch,
+        {"mismatch": mismatch[:10], "count": len(mismatch),
+         "note": "输入版本已变，与旧 S01 计数不同属预期；非新输入时该差异即缺陷"},
+        blocking=not alt_input)
 
     latest_dist = dict(sorted(Counter(str(v) for v in latest.values()).items()))
     s01_dist = sc["dryrun"]["latest_period_distribution"]
-    add("Q14", "最新期分布与 S01 一致（锚定定义未漂移）", latest_dist == s01_dist,
-        {"s02": latest_dist, "s01": s01_dist})
+    add("Q14", "最新期分布与 S01 一致（锚定定义未漂移）" + ("（新输入：差异属预期）" if alt_input else ""),
+        latest_dist == s01_dist,
+        {"s02": latest_dist, "s01": s01_dist,
+         "note": "锚定定义未改；输入变化导致分布变化属预期"},
+        blocking=not alt_input)
 
     # 单位抽样：value 单位与 metric unit 声明一致（pp 指标的量级检查）
     unit_bad = []
@@ -447,6 +478,12 @@ def main() -> int:
             "note": "公式不在本脚本重写；S02 只定最新期、做溯源与口径检查",
         },
         "inputs": rules["input_fingerprint"]["files"],
+        "normalized_input_used": {
+            "path": str(actual),
+            "sha256": actual_sha,
+            "matches_rules_fingerprint": same_as_registered,
+            "note": "新输入版本须在复核记录登记；S01 规则未变",
+        },
         "latest_period_definition": {
             "rule": "任一锚定字段（FIN.REV.YTD / FIN.REV.SQ / FIN.NPDEDT.YTD）status ∈ USABLE∪LEGACY_SNAPSHOT 且 value 非空的最新 period_key",
             "anchor_fields": list(ANCHOR_FIELDS),
@@ -482,13 +519,13 @@ def main() -> int:
             "version_mismatch": sum(c["VERSION_MISMATCH"] for c in cov.values()),
         },
         "outputs": [
-            {"path": "runs/issues/S02/all_pool_metrics.csv", "rows": len(out_rows),
+            {"path": str(p1), "rows": len(out_rows),
              "sha256": sha256(p1), "bytes": p1.stat().st_size},
-            {"path": "runs/issues/S02/company_metric_summary.csv", "rows": len(company_rows),
+            {"path": str(p2), "rows": len(company_rows),
              "sha256": sha256(p2), "bytes": p2.stat().st_size},
-            {"path": "runs/issues/S02/metric_qc.csv", "rows": len(checks),
+            {"path": str(p4), "rows": len(checks),
              "sha256": sha256(p4), "bytes": p4.stat().st_size},
-            {"path": "runs/issues/S02/metric_qc_findings.csv", "rows": len(findings),
+            {"path": str(p3), "rows": len(findings),
              "sha256": sha256(p3) if findings else None,
              "bytes": p3.stat().st_size if findings else 0},
         ],

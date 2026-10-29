@@ -1,0 +1,78 @@
+{
+  "issue_key": "S02",
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_at": "2026-10-29T20:35:43.271355+08:00",
+  "executor": "Codex with bounded luna_worker tasks",
+  "review_nature": "SELF_CHECK_SOURCE_BACKED_REMEDIATION",
+  "decision": "REPAIR_SELF_CHECK_PASS_EXTERNAL_RECHECK_REQUIRED",
+  "original_S02_disposition": "RETURN_FOR_REWORK_ON_INPUT_QUALITY_AND_L0_GAP",
+  "release_S03": false,
+  "checks_pass": 35,
+  "checks_fail": 0,
+  "coverage": {
+    "disposition_counts": {
+      "STATEMENT_LOCATION_OR_SCOPE_HOLD": 5,
+      "HOLD_RECONCILIATION_REQUIRED": 11,
+      "RECOVERED_AT_LEAST_8_USABLE_FIELDS": 32,
+      "NO_CURRENT_PDF_LEGACY_ONLY": 3,
+      "PDF_TEXT_OR_OCR_REQUIRED": 1,
+      "PARTIAL_FIELDS_REMAIN_UNKNOWN": 1
+    },
+    "remaining_below_8": 21,
+    "initial_only_2": 25,
+    "new_only_2": 10,
+    "text_errors": [
+      {
+        "document_id": "DOC-41A995E12934526B",
+        "error": "IMAGE_ONLY_NO_TEXT_LAYER"
+      },
+      {
+        "document_id": "DOC-D7F653B0C5C02C09",
+        "error": "IMAGE_ONLY_NO_TEXT_LAYER"
+      },
+      {
+        "document_id": "DOC-3F5CD36F615E3BC4",
+        "error": "IMAGE_ONLY_NO_TEXT_LAYER"
+      },
+      {
+        "document_id": "DOC-03B9B2A3EF9B491B",
+        "error": "IMAGE_ONLY_NO_TEXT_LAYER"
+      },
+      {
+        "document_id": "DOC-9DE6D7E8F6A6333C",
+        "error": "IMAGE_ONLY_NO_TEXT_LAYER"
+      }
+    ]
+  },
+  "metric_recalculation": {
+    "normalized_rows": 229032,
+    "normalized_changes": 2022,
+    "metric_changes": 398,
+    "companies_changed": 46,
+    "unchanged_company_metrics_verified": 998,
+    "status_counts": {
+      "OK": 6211,
+      "NOT_APPLICABLE": 855,
+      "PROVISIONAL": 4303,
+      "NOT_COMPARABLE": 314,
+      "UNDEFINED_BASE": 469,
+      "MISSING": 229,
+      "HOLD": 267
+    },
+    "l0_counts": {
+      "EVALUABLE": 664,
+      "W5_PROVISIONAL_ONLY": 387,
+      "W9_MIXED_NON_EVALUABLE": 3
+    }
+  },
+  "formulas_changed": false,
+  "thresholds_changed": false,
+  "frozen_data_overwritten": false,
+  "online_control": "ONLINE_READ_NO_REMOTE_CLAIM_OR_UPDATE",
+  "limits": [
+    "21家最新期仍少于8个可用字段，保留HOLD或未知，不作为无改善淘汰。",
+    "本轮只修59家相关360份文件，没有全池逐家业务精读。",
+    "旧冻结结果保留；新输入/计算版本需由WorkBuddy或其他复核者验证后采用。",
+    "未更改active_issue、PROJECT_STATE或S03状态；没有代发GitHub评论。"
+  ]
+}
