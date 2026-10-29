@@ -1,4 +1,4 @@
-S02 已完成自检，提交见下。用冻结的 `S01_SCREEN_RULES_V2`（`ada501e8…`）计算 **1054 家 × 12 指标 = 12,648 格**，每格带 `metric_status` / `quality_flags` / 计算期间 / 来源（`document_id` + `version_used`）。
+S02 已完成自检，提交 `11194bc`（另 `2c616e2` 加 `.gitattributes` 禁止换行转换，保证 checkout 后交付哈希与 manifest 一致）。用冻结的 `S01_SCREEN_RULES_V2`（`ada501e8…`）计算 **1054 家 × 12 指标 = 12,648 格**，每格带 `metric_status` / `quality_flags` / 计算期间 / 来源（`document_id` + `version_used`）。
 
 ## 交付
 
