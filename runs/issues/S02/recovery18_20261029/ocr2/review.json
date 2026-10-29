@@ -1,0 +1,25 @@
+{
+  "decision": "SELF_CHECK_PASS_SOURCE_RECOVERY_WITH_COMPARABILITY_HOLD",
+  "reviewer": "Codex",
+  "review_nature": "SELF_CHECK",
+  "security_ids": ["SH:601390", "SZ:002083"],
+  "corrected_documents": 8,
+  "source_selection_records": 118,
+  "checks": [
+    "Original PDF binary SHA256 agrees with the frozen collection index.",
+    "All selected amounts occur on their recorded OCR page; record original amounts and explicit CNY scales.",
+    "Rendered original-row panels reviewed for every newly selected statement cell, both official annual quarterly tables, and the disclosed quarterly revenue/profit columns in the two Q3 summaries.",
+    "Revenue, attributable profit and operating cash flow agree exactly with the source summary after explicit unit conversion in all eight reports.",
+    "Five Sunvim restatement answers checked against the original checkbox or explicit text; China Railway unresolved restatement flags retained.",
+    "China Railway uses the formal revenue row, excluding interest and commission income in total revenue.",
+    "Sunvim's absent contract-assets line remains unknown; it is not replaced with zero."
+  ],
+  "limits": [
+    "Source repair author and source reviewer are the same agent; this is not an independent audit.",
+    "No original PDFs or v1/v2 data were overwritten.",
+    "Restored source values are not sufficient by themselves to pass financial comparability checks.",
+    "Sunvim Q3 2026 explicitly adds a subsidiary in August. comparability_holds.json requires a hold on comparisons and cumulative-difference derivation until a consistent basis is established.",
+    "Full-pool v3 normalization and metric recomputation are pending integration."
+  ],
+  "s03_release": false
+}

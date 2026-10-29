@@ -1,0 +1,446 @@
+{
+  "issue_key": "S02",
+  "issue_number": 37,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "Codex",
+  "reviewer": "Codex",
+  "review_nature": "SELF_CHECK",
+  "reviewed_at": "2026-10-30T07:04:04+08:00",
+  "decision": "SELF_CHECK_PASS_EXTERNAL_REVIEW_REQUIRED",
+  "checks_total": 23,
+  "checks_pass": 20,
+  "checks_fail": 0,
+  "checks_warn": 3,
+  "checks_not_applicable": 0,
+  "blocking_fail": 0,
+  "checks": [
+    {
+      "id": "P01",
+      "item": "指标公式与信号阈值严格沿用冻结 S01_SCREEN_RULES_V2",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "rules_file": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/rules_recovery18_v3.json",
+        "rules_sha256": "d3779ac49b6b936522e63de21fdcfb7df88fff58e1429c8285a7d7fed6911dd8",
+        "base_rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+        "accepted_base_hashes": [
+          "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+          "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf"
+        ],
+        "detail": "scientific rules match frozen S01 v2"
+      }
+    },
+    {
+      "id": "P02",
+      "item": "冻结 S01 登记的三份基线输入指纹未变",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "changed": []
+      }
+    },
+    {
+      "id": "P05",
+      "item": "实际加载的标准化 CSV 与可信 SHA 来源匹配",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "source_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s00/financial_normalized.csv.gz",
+        "source_sha256": "316d6c42e2155b792cc1c060ec7f30f37d603a4767ca50a4cee52b984e279169",
+        "loaded_csv_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s02/.input_cache/financial_normalized_81b95d8326acfddf.csv",
+        "loaded_csv_sha256": "81b95d8326acfddf11428bc0d8ce5998e1b76ecfb69ffca9a3f2ef58404163cd",
+        "verified_against": "rules_input_fingerprint_gzip:runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s00/financial_normalized.csv.gz",
+        "verified_source_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s00/financial_normalized.csv.gz",
+        "verified_source_sha256": "316d6c42e2155b792cc1c060ec7f30f37d603a4767ca50a4cee52b984e279169",
+        "expected_sha256": "81b95d8326acfddf11428bc0d8ce5998e1b76ecfb69ffca9a3f2ef58404163cd",
+        "registered_sha256": "316d6c42e2155b792cc1c060ec7f30f37d603a4767ca50a4cee52b984e279169",
+        "note": "registered gzip SHA and decompressed payload both match the normalized CSV"
+      }
+    },
+    {
+      "id": "P06",
+      "item": "按输入版本要求并实际应用锁定的 L0 addendum",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "required": true,
+        "applicable": true,
+        "applied": true,
+        "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
+        "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+        "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+        "error": null,
+        "status": "PASS",
+        "note": "L0 JSON addendum applied to each company status vector"
+      }
+    },
+    {
+      "id": "P03",
+      "item": "公司数与 S00/S01 一致（1054）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "companies": 1054
+      }
+    },
+    {
+      "id": "P04",
+      "item": "每家都有可确定的最新可用期",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "resolved": 1054,
+        "missing": 0
+      }
+    },
+    {
+      "id": "Q01",
+      "item": "1054 家公司 × 12 指标全部有状态（12,648 格）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "rows": 12648,
+        "unique": 12648
+      }
+    },
+    {
+      "id": "Q02",
+      "item": "公司级汇总 1054 行且每行 12 格",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "companies": 1054
+      }
+    },
+    {
+      "id": "Q03",
+      "item": "股票代码保持 6 位字符串（前导零未丢）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "bad": [],
+        "count": 0
+      }
+    },
+    {
+      "id": "Q04",
+      "item": "非可评估格一律留空，不用 0 代替缺数据",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "Q05",
+      "item": "可评估格都有数值",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "violations": 0
+      }
+    },
+    {
+      "id": "Q06",
+      "item": "超出 valid_range 的值只标记不删除",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "flagged": 296,
+        "by_metric": {
+          "M05": 97,
+          "M07": 112,
+          "M08": 59,
+          "M03": 9,
+          "M06": 5,
+          "M10": 6,
+          "M12": 3,
+          "M11": 5
+        },
+        "note": "规则未定义超限处置，本卡不改状态、不裁剪"
+      }
+    },
+    {
+      "id": "Q07",
+      "item": "对比期一律早于计算期（无反向/同期混算）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "violations": 0
+      }
+    },
+    {
+      "id": "Q08",
+      "item": "计算期不超过全池最新期（无未来数据）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "violations": 0,
+        "max_period": 20260930
+      }
+    },
+    {
+      "id": "Q09",
+      "item": "需要输入的状态都能回溯到具体输入行（MISSING/NOT_COMPARABLE 除外）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "violations": 0,
+        "sample": [],
+        "no_input_by_status": {
+          "NOT_COMPARABLE": 63,
+          "MISSING": 4,
+          "NOT_APPLICABLE": 2
+        }
+      }
+    },
+    {
+      "id": "Q10",
+      "item": "可评估格的输入齐全（缺输入不得判 OK/PROVISIONAL）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "Q11",
+      "item": "M04 回算的 REV/COST 同期同版本（VERSION_MISMATCH 单独列出）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "count": 0,
+        "sample": [],
+        "note": "VERSION_MISMATCH 是规则定义的独立状态，不是缺陷"
+      }
+    },
+    {
+      "id": "Q12",
+      "item": "M01/M02/M05/M07/M09 独立复算与交付逐格一致",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "Q13",
+      "item": "每指标状态分布与 S01 干跑逐项一致（新输入：差异属预期）",
+      "result": "WARN",
+      "blocking": false,
+      "detail": {
+        "mismatch": [
+          {
+            "metric": "M01",
+            "status": "OK",
+            "s01": 565,
+            "s02": 585
+          },
+          {
+            "metric": "M01",
+            "status": "PROVISIONAL",
+            "s01": 386,
+            "s02": 410
+          },
+          {
+            "metric": "M01",
+            "status": "HOLD",
+            "s01": 58,
+            "s02": 33
+          },
+          {
+            "metric": "M01",
+            "status": "MISSING",
+            "s01": 1,
+            "s02": 0
+          },
+          {
+            "metric": "M01",
+            "status": "NOT_COMPARABLE",
+            "s01": 44,
+            "s02": 26
+          },
+          {
+            "metric": "M02",
+            "status": "OK",
+            "s01": 574,
+            "s02": 596
+          },
+          {
+            "metric": "M02",
+            "status": "PROVISIONAL",
+            "s01": 405,
+            "s02": 428
+          },
+          {
+            "metric": "M02",
+            "status": "HOLD",
+            "s01": 28,
+            "s02": 6
+          },
+          {
+            "metric": "M02",
+            "status": "MISSING",
+            "s01": 19,
+            "s02": 8
+          },
+          {
+            "metric": "M02",
+            "status": "NOT_COMPARABLE",
+            "s01": 27,
+            "s02": 15
+          }
+        ],
+        "count": 60,
+        "note": "输入版本已变，与旧 S01 计数不同属预期；非新输入时该差异即缺陷"
+      }
+    },
+    {
+      "id": "Q14",
+      "item": "最新期分布与 S01 一致（锚定定义未漂移）（新输入：差异属预期）",
+      "result": "WARN",
+      "blocking": false,
+      "detail": {
+        "s02": {
+          "20251231": 5,
+          "20260331": 5,
+          "20260630": 862,
+          "20260930": 182
+        },
+        "s01": {
+          "20251231": 4,
+          "20260331": 5,
+          "20260630": 863,
+          "20260930": 182
+        },
+        "note": "锚定定义未改；输入变化导致分布变化属预期"
+      }
+    },
+    {
+      "id": "Q15",
+      "item": "pp 类指标量级提示（不阻断；超限处置按规则 valid_range 由 Q06 标记）",
+      "result": "PASS",
+      "blocking": false,
+      "detail": {
+        "violations": 0,
+        "sample": [],
+        "note": "基期净利率接近 0 时 M06 可产生上万 pp，数学正确但无经济意义，S04 使用前须排除"
+      }
+    },
+    {
+      "id": "Q16",
+      "item": "最新期字段覆盖缺口清单（上游抽取问题，本卡不修）",
+      "result": "WARN",
+      "blocking": false,
+      "detail": {
+        "companies": 5,
+        "only_2_fields": 3,
+        "sample": [
+          {
+            "security_id": "BJ:920146",
+            "period_key": 20251231,
+            "fields_usable": 3
+          },
+          {
+            "security_id": "BJ:920198",
+            "period_key": 20251231,
+            "fields_usable": 3
+          },
+          {
+            "security_id": "SH:603448",
+            "period_key": 20251231,
+            "fields_usable": 2
+          },
+          {
+            "security_id": "SH:688836",
+            "period_key": 20251231,
+            "fields_usable": 2
+          },
+          {
+            "security_id": "SZ:301699",
+            "period_key": 20251231,
+            "fields_usable": 2
+          }
+        ],
+        "note": "S00原已覆盖12槽；本轮修的是版式/单位/主体/重述或范围等剩余盲点，不能解释为缺半年报/季报执行"
+      }
+    },
+    {
+      "id": "Q17",
+      "item": "数值量级可疑清单（疑似单位/取数错误，本卡不修）",
+      "result": "PASS",
+      "blocking": false,
+      "detail": {
+        "companies": 0,
+        "sample": [],
+        "note": "按「营收>1亿 且 |扣非|/营收<0.01%」筛出；须回 S00 核 PDF 原表，不得在此手工改数"
+      }
+    }
+  ],
+  "counts": {
+    "companies": 1054,
+    "metrics": 12,
+    "cells": 12648,
+    "ok": 6264,
+    "provisional": 4380,
+    "hold": 187,
+    "missing": 195,
+    "not_comparable": 297,
+    "undefined_base": 467,
+    "not_applicable": 858,
+    "excluded_scope": 0,
+    "version_mismatch": 0
+  },
+  "next_stage_release": "S03_LOCKED",
+  "limits": [
+    "指标全部为公司合并口径，不是机器人分部口径；不得据此推断机器人业务盈利",
+    "2026Q3 截面仅部分公司披露，横截面统计须按最新期分层",
+    "PROVISIONAL 与 OK 分列，PROVISIONAL 不得当正常样本",
+    "MARGIN 与 PROFIT 维度同源，后续 S04 收紧时仍会重复计数",
+    "S00 遗留：62 整槽无值、453 份三表≠摘要表、2,157 重述待核、旧快照单一来源",
+    "本卡不产出名单、不算信号、不做 PIT 回测",
+    "上游缺陷一：53 家最新期可用字段<8（其中 25 家仅 2 个字段，含美的集团/工业富联/广汽集团/中国中铁/石头科技/时代电气/宇树科技等），A03 已记录字段抽取仅覆盖年报，须回 S00 补抽半年报/季报字段",
+    "上游缺陷二：5 家营收上亿而扣非不足营收万分之一（赣锋锂业/中科信息/金百泽/五洋自控/毅昌科技），疑似「万元」被识别为「元」，须回 S00 核 PDF 原表",
+    "L0 addendum 只修补证据可得性分流；W5/W9 不自动判为无信号或候选淘汰",
+    "Recovery18 corrections are machine-ingested but not independently audited against PDF pages.",
+    "S03 remains locked pending external source review and control authorization."
+  ],
+  "issue_body_sha256_observed": "adbf4755e201663ebb589906452111dfcee918adcf95f1e225530cc5f57325b8",
+  "issue_body_sha256_in_plan": "ea0aa53e74183772a9c3e4b67a3f23f2d22df7d823a9dee0c6e25a77e5c6ce95",
+  "issue_body_note": "计划登记哈希与当前正文不一致（多种换行变体均不匹配）；已逐条读取正文，验收标准未变，按已读正文执行",
+  "external_source_evidence_review": "NOT_PERFORMED",
+  "recovery18_v3_checks": [
+    {
+      "id": "Q16_EXPLANATION",
+      "result": "PASS",
+      "note": "S00原已覆盖12槽；本轮修的是版式/单位/主体/重述或范围等剩余盲点，不能解释为缺半年报/季报执行",
+      "qc_result_or_science_rule_changed": false
+    },
+    {
+      "id": "P04_SCOPE_NORMALIZED",
+      "result": "PASS",
+      "tagged_rows": 18,
+      "derived_sq_holds": 1
+    },
+    {
+      "id": "P04_SCOPE_S02_INPUTS",
+      "result": "PASS",
+      "originally_ok_tagged_inputs_held": 11,
+      "preexisting_non_ok_inputs_preserved": 384
+    },
+    {
+      "id": "S03_GATE",
+      "result": "LOCKED"
+    }
+  ],
+  "engine_template_attribution": {
+    "executor": "WorkBuddy AI",
+    "reviewer": "WorkBuddy AI",
+    "checks_pass": 23,
+    "checks_warn": 3
+  },
+  "checks_count_semantics": "Disjoint result counts; WARN can satisfy the nonblocking gate but is not counted again as PASS."
+}

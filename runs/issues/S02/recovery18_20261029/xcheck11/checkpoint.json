@@ -1,0 +1,60 @@
+{
+  "task": "S02 recovery18, xcheck11: reconcile source-level HOLD cases for 11 companies",
+  "status": "SELF_CHECK_PASS",
+  "as_of_local": "2026-10-30 Asia/Shanghai",
+  "scope": "Only outputs under runs/issues/S02/recovery18_20261029/xcheck11/. No production tools, frozen source files, control files, remote Git, or comments.",
+  "source_policy": "Original PDFs read-only. Correct only values/diagnostics supported by a specific physical PDF page. FIN.REV.YTD must follow P04 direct consolidated 营业收入; do not substitute parent-only statement or 营业总收入. The consolidated note line 营業收入 (e.g. principal + other business) is admissible if the source labels it directly.",
+  "root_causes_confirmed_so_far": [
+    {
+      "company": "同方股份",
+      "root_cause": "H1 revenue parser selected parent-company income statement rather than consolidated note table with direct 营业收入 values."
+    },
+    {
+      "company": "上海电气",
+      "root_cause": "Revenue parser captured footnote 65; consolidated attributable profit was missed on a wrapped line."
+    },
+    {
+      "company": "航天电子",
+      "root_cause": "Latest summary revenue parser captured explanatory -22.19% rather than summary revenue; consolidated attributable profit missed."
+    },
+    {
+      "company": "长安汽车",
+      "root_cause": "H1 revenue parser selected parent-company statement; quarterly reports may lack an explicit consolidated 营业收入 line and must be checked against P04 before restoring."
+    },
+    {
+      "company": "芯动联科",
+      "root_cause": "H1 2025 OCF parser selected parent-company cash-flow value; other reported differences may be summary rounding to 万元."
+    },
+    {
+      "company": "和林微纳",
+      "root_cause": "H1 2025 OCF parser selected parent-company cash-flow value; summary and consolidated OCF agree within display rounding."
+    },
+    {
+      "company": "永达股份",
+      "root_cause": "Attributable profit parser captured printed page number 8."
+    },
+    {
+      "company": "佳士科技",
+      "root_cause": "Attributable profit parser captured row number 1."
+    }
+  ],
+  "rounding_rule": "If summary unit is 万元 and displayed to 2 decimals, the source rounding interval is ±0.005万元 = ±50 CNY. Record unchanged statement value, reported summary amount, absolute difference, interval, and adjudication. Do not change S01 tolerances.",
+  "pending": "Complete exact page/row evidence for all corrected fields and dependency periods; render/source-review PDFs; produce corrected_results JSON copies retaining all original keys/fields/restatement; finish checks/review.json with SELF_CHECK (not external acceptance).",
+  "remote_state": "S02 awaiting external review; S03 locked, per parent assignment.",
+  "deliverables": {
+    "corrected_result_documents": 28,
+    "source_correction_rows": 40,
+    "field_value_recoveries": 25,
+    "rounding_diagnostic_rows": 12,
+    "summary_location_corrections": 1,
+    "unresolved_P04_rows": 2,
+    "core_field_audit_rows": 439,
+    "core_field_audit_documents": 43,
+    "core_field_audit_fields": 12,
+    "review": "checks/review.json",
+    "company_review": "company_review.csv",
+    "field_audit": "field_audit.csv",
+    "PDF_page_images": 269
+  },
+  "self_check_errors": []
+}

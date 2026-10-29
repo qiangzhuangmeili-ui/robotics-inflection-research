@@ -1,0 +1,301 @@
+{
+  "issue_key": "S02_RECOVERY18_V3_INDEPENDENT_REPLAY",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_EXTERNAL_SOURCE_REVIEW_REQUIRED",
+  "source_manifest_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/recovery18_manifest.json",
+  "source_manifest_sha256": "847ac8eb6d19e06e0069428134de3c80892f8bc3f20858adfd67bc2e00e16734",
+  "replay_runner": {
+    "path": "runs/issues/S02/recovery18_20261029/integration/replay_metrics_v3.py",
+    "sha256": "8d24ef78e1ba6325e48bf05ea71b944b8bbbb4ccee0ffaba34ae5c7cedf19ad0"
+  },
+  "review_scope": "S02 replay from the frozen v3 normalized gzip",
+  "external_source_evidence_review": "NOT_PERFORMED",
+  "raw_extraction_jsons_loaded": false,
+  "raw_source_pdfs_read": 0,
+  "next_stage_release": "S03_LOCKED",
+  "input": {
+    "normalized_gzip_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s00/financial_normalized.csv.gz",
+    "normalized_gzip_sha256": "316d6c42e2155b792cc1c060ec7f30f37d603a4767ca50a4cee52b984e279169",
+    "normalized_csv_payload_sha256": "81b95d8326acfddf11428bc0d8ce5998e1b76ecfb69ffca9a3f2ef58404163cd",
+    "normalized_csv_header": [
+      "security_id",
+      "stock_code",
+      "stock_name",
+      "period_key",
+      "period_type",
+      "period_label",
+      "period_start",
+      "period_end",
+      "fiscal_year",
+      "period_basis",
+      "period_source",
+      "slot_id",
+      "field_id",
+      "field_name_cn",
+      "value_raw",
+      "unit_raw",
+      "unit_scale",
+      "value_cny",
+      "status",
+      "status_reason",
+      "source_kind",
+      "document_id",
+      "source_page",
+      "evidence_label",
+      "published_on",
+      "collected_at",
+      "pit_status",
+      "as_of",
+      "currency",
+      "consolidation_scope",
+      "listing_date",
+      "is_pre_listing",
+      "restatement_flag",
+      "low_base_flag",
+      "comparability_note",
+      "upstream_hold_fields",
+      "value_before_adoption",
+      "adoption_reason",
+      "quarterly_inputs",
+      "version_used",
+      "original_document_id"
+    ],
+    "rules_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/rules_recovery18_v3.json",
+    "rules_sha256": "d3779ac49b6b936522e63de21fdcfb7df88fff58e1429c8285a7d7fed6911dd8",
+    "scope_spec_path": "runs/issues/S02/recovery18_20261029/comparability_holds.json",
+    "scope_spec_sha256": "a2993dc05f195a08b10246fcfad6f1fecce0670e997a369497b2d8c86e7d7f15",
+    "scope_tag_verification": {
+      "tagged_row_count": 18,
+      "derived_sq_hold_count": 1,
+      "event_row_counts": {
+        "SZ:002083|20260930": 18
+      }
+    },
+    "registered_scope_pdf_identities_not_read": [
+      {
+        "security_id": "SZ:002083",
+        "period_key": "20260930",
+        "document_id": "DOC-9DE6D7E8F6A6333C",
+        "source_pdf": "sources/collection/originals/002083/q3_2026/DOC-9DE6D7E8F6A6333C.pdf",
+        "source_sha256": "db3c284c64a8c55a44a90a70d4eca610dc54a23a566fc3dabcf7b45fda3157d0",
+        "source_page": "4",
+        "read_during_replay": "NO"
+      }
+    ]
+  },
+  "execution_sources_verified_against_v3_manifest": [
+    {
+      "name": "recovery_runner",
+      "path": "runs/issues/S02/recovery18_20261029/integration/rebuild_v3.py",
+      "sha256": "182ff039d46326b5531453872c12b965cc16fdc9e7d65cd1d14d0781504728d1"
+    },
+    {
+      "name": "s00_normalizer",
+      "path": "tools/s00_normalize.py",
+      "sha256": "ea212125edf3059630cf8ede7ab54f262d13ae11d90115f55bf4085904688eeb"
+    },
+    {
+      "name": "s02_calculator",
+      "path": "tools/s02_calculate.py",
+      "sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4"
+    },
+    {
+      "name": "formula_engine",
+      "path": "tools/s01_rules_check.py",
+      "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
+    },
+    {
+      "name": "l0_classifier",
+      "path": "tools/l0_classify.py",
+      "sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3"
+    },
+    {
+      "name": "a03_parser",
+      "path": "tools/a03_financial_field_extractor.py",
+      "sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7"
+    },
+    {
+      "name": "l0_addendum",
+      "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+      "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811"
+    },
+    {
+      "name": "rules_file",
+      "path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/rules_recovery18_v3.json",
+      "sha256": "d3779ac49b6b936522e63de21fdcfb7df88fff58e1429c8285a7d7fed6911dd8"
+    },
+    {
+      "name": "comparability_adapter",
+      "path": "runs/issues/S02/recovery18_20261029/integration/comparability_adapter.py",
+      "sha256": "000db0e901184c7cf6dfafecc45f66f77154755b29a889a2fdb67b0d729d01ef"
+    },
+    {
+      "name": "comparability_adapter_test",
+      "path": "runs/issues/S02/recovery18_20261029/integration/test_comparability_adapter.py",
+      "sha256": "d8f24fdd007644aae750598b808c81f8b28b1e12e1137a11ef34c93772451c0e"
+    },
+    {
+      "name": "comparability_adapter_test",
+      "path": "runs/issues/S02/recovery18_20261029/integration/test_rebuild_v3.py",
+      "sha256": "4a8ef8442feaf0d155ad1d4a59838b3705bb5c27d3dfcee6a08d65c51b5999f6"
+    },
+    {
+      "name": "frozen_s01_rules",
+      "path": "runs/issues/S01/screen_rules_v2.json",
+      "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
+    }
+  ],
+  "comparability_guard": {
+    "adapter_path": "runs/issues/S02/recovery18_20261029/integration/comparability_adapter.py",
+    "adapter_sha256": "000db0e901184c7cf6dfafecc45f66f77154755b29a889a2fdb67b0d729d01ef",
+    "production_s02_alone_reproduces_guard": false,
+    "adapter_installed_during_s02_main": true,
+    "adapter_restored_in_finally": true,
+    "independent_recalculation_after_restore": false,
+    "s02_input_gate": {
+      "calls": 12841,
+      "scope_tag_calls": 11,
+      "scope_hold_calls": 11,
+      "preserved_non_ok_calls": 384,
+      "preserved_original_status_counts": {
+        "MISSING": 203,
+        "HOLD": 181
+      }
+    }
+  },
+  "q16_explanation_override": {
+    "check_id": "Q16",
+    "note": "S00原已覆盖12槽；本轮修的是版式/单位/主体/重述或范围等剩余盲点，不能解释为缺半年报/季报执行",
+    "applied_by_local_s02_add_wrapper": true,
+    "calls": 1,
+    "qc_result_or_science_rule_changed": false
+  },
+  "l0_addendum": {
+    "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+    "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+    "applied": true,
+    "lock_manifest_path": "runs/issues/S02/remediation_20261029/s02/calculation_manifest.json",
+    "lock_manifest_sha256": "2bb41a7b6510b7d0174d1b0baea384accf8919fd730ed5be6eabfb55c76e1af6"
+  },
+  "canonical_comparison": {
+    "all_pool_metrics_rows": 12648,
+    "company_summary_rows": 1054,
+    "all_fields_equal": true,
+    "bytes_equal": true,
+    "outputs": {
+      "all_pool_metrics.csv": {
+        "canonical_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s02/all_pool_metrics.csv",
+        "replay_path": "runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/all_pool_metrics.csv",
+        "byte_equal": true,
+        "header_equal": true,
+        "full_field_rows_equal": true,
+        "canonical_data_rows": 12648,
+        "replay_data_rows": 12648,
+        "canonical_sha256": "47aa9cf11bfe86273ab71d23a2a779e42af30714845ff19c53bd1f6faf600221",
+        "replay_sha256": "47aa9cf11bfe86273ab71d23a2a779e42af30714845ff19c53bd1f6faf600221",
+        "canonical_bytes": 4376278,
+        "replay_bytes": 4376278
+      },
+      "company_metric_summary.csv": {
+        "canonical_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s02/company_metric_summary.csv",
+        "replay_path": "runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/company_metric_summary.csv",
+        "byte_equal": true,
+        "header_equal": true,
+        "full_field_rows_equal": true,
+        "canonical_data_rows": 1054,
+        "replay_data_rows": 1054,
+        "canonical_sha256": "155072fa8b362cefb8a422672bd2b2775d92ce5a96f86636770a0aa472159967",
+        "replay_sha256": "155072fa8b362cefb8a422672bd2b2775d92ce5a96f86636770a0aa472159967",
+        "canonical_bytes": 87669,
+        "replay_bytes": 87669
+      }
+    }
+  },
+  "outputs": [
+    {
+      "path": "runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/all_pool_metrics.csv",
+      "sha256": "47aa9cf11bfe86273ab71d23a2a779e42af30714845ff19c53bd1f6faf600221",
+      "bytes": 4376278
+    },
+    {
+      "path": "runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/company_metric_summary.csv",
+      "sha256": "155072fa8b362cefb8a422672bd2b2775d92ce5a96f86636770a0aa472159967",
+      "bytes": 87669
+    },
+    {
+      "path": "runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/calculation_manifest.json",
+      "sha256": "2f902ae43a218b2caf66f04e73e3c25da27885dbe2bca6297f8b0c0d8fd45754",
+      "bytes": 13747
+    },
+    {
+      "path": "runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/review.json",
+      "sha256": "008d827bd835616dd0e0493b185334c1d7fa59780801b76d89ed3abe381513af",
+      "bytes": 13156
+    }
+  ],
+  "checks": [
+    {
+      "id": "REPLAY_INPUT_HASHES",
+      "result": "PASS"
+    },
+    {
+      "id": "REPLAY_SCOPE_TAGS",
+      "result": "PASS",
+      "tagged_row_count": 18,
+      "derived_sq_hold_count": 1,
+      "event_row_counts": {
+        "SZ:002083|20260930": 18
+      }
+    },
+    {
+      "id": "REPLAY_S02_P01_P05_P06",
+      "result": "PASS"
+    },
+    {
+      "id": "REPLAY_Q16_EXPLANATION",
+      "result": "PASS",
+      "note": "S00原已覆盖12槽；本轮修的是版式/单位/主体/重述或范围等剩余盲点，不能解释为缺半年报/季报执行",
+      "qc_result_or_science_rule_changed": false
+    },
+    {
+      "id": "REPLAY_CANONICAL_BYTES_AND_FIELDS",
+      "result": "PASS",
+      "outputs": {
+        "all_pool_metrics.csv": {
+          "canonical_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s02/all_pool_metrics.csv",
+          "replay_path": "runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/all_pool_metrics.csv",
+          "byte_equal": true,
+          "header_equal": true,
+          "full_field_rows_equal": true,
+          "canonical_data_rows": 12648,
+          "replay_data_rows": 12648,
+          "canonical_sha256": "47aa9cf11bfe86273ab71d23a2a779e42af30714845ff19c53bd1f6faf600221",
+          "replay_sha256": "47aa9cf11bfe86273ab71d23a2a779e42af30714845ff19c53bd1f6faf600221",
+          "canonical_bytes": 4376278,
+          "replay_bytes": 4376278
+        },
+        "company_metric_summary.csv": {
+          "canonical_path": "runs/issues/S02/recovery18_20261029/integration/v3_output_run2/s02/company_metric_summary.csv",
+          "replay_path": "runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/company_metric_summary.csv",
+          "byte_equal": true,
+          "header_equal": true,
+          "full_field_rows_equal": true,
+          "canonical_data_rows": 1054,
+          "replay_data_rows": 1054,
+          "canonical_sha256": "155072fa8b362cefb8a422672bd2b2775d92ce5a96f86636770a0aa472159967",
+          "replay_sha256": "155072fa8b362cefb8a422672bd2b2775d92ce5a96f86636770a0aa472159967",
+          "canonical_bytes": 87669,
+          "replay_bytes": 87669
+        }
+      }
+    },
+    {
+      "id": "RAW_SOURCE_AUDIT",
+      "result": "NOT_PERFORMED"
+    },
+    {
+      "id": "S03_GATE",
+      "result": "LOCKED"
+    }
+  ]
+}
