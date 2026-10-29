@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S01_ACCEPTED_WITH_LIMITS_S02_READY",
+  "status": "S02_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -962,7 +962,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S02_READY",
+  "current_gate": "S02_SELF_CHECK",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1106,7 +1106,7 @@
   "next_issue": {
     "key": "S02",
     "number": 37,
-    "reason": "S01 外部复验 ACCEPTED_WITH_LIMITS，放行全池指标计算与口径检查"
+    "reason": "S02 自检完成，等外部复核；复核通过后再评估 S03 前置"
   },
   "s01_stage": {
     "issue": "S01 / #36",
@@ -1191,7 +1191,7 @@
   },
   "s02_stage": {
     "issue": "S02 / #37",
-    "status": "READY",
+    "status": "SELF_CHECK_PASS",
     "rules_version_required": "S01_SCREEN_RULES_V2",
     "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
     "scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
@@ -1201,6 +1201,72 @@
       "calculation_manifest.json（输入指纹 + 最新可用期定义 + 规则版本）"
     ],
     "must_not": "把 PROVISIONAL 混入 OK；进入 S03 名单筛选、业务深研或估值",
-    "started": false
+    "started": true,
+    "decision": "SELF_CHECK_PASS_WITH_UPSTREAM_FINDINGS",
+    "completed_at": "2026-10-29T19:54:23+08:00",
+    "review_nature": "SELF_CHECK",
+    "review_file": "runs/issues/S02/review.json",
+    "checks": "21 项：18 PASS + 3 WARN，阻断 0",
+    "cells": 12648,
+    "counts": {
+      "companies": 1054,
+      "metrics": 12,
+      "cells": 12648,
+      "ok": 6092,
+      "provisional": 4158,
+      "hold": 394,
+      "missing": 254,
+      "not_comparable": 411,
+      "undefined_base": 483,
+      "not_applicable": 856,
+      "excluded_scope": 0,
+      "version_mismatch": 0
+    },
+    "l0_distribution": {
+      "EVALUABLE": 660,
+      "MIXED_NOT_DEFINED_BY_RULE": 17,
+      "W5_PROVISIONAL_ONLY": 377
+    },
+    "outputs": [
+      {
+        "path": "runs/issues/S02/all_pool_metrics.csv",
+        "rows": 12648,
+        "sha256": "ac590fb4ab512e39fce76cbebf3f45dbd1382b8a13f157841fd9988d0df97793",
+        "bytes": 4355661
+      },
+      {
+        "path": "runs/issues/S02/company_metric_summary.csv",
+        "rows": 1054,
+        "sha256": "e3ea8dbe5e2ace9ffa3ffa39455def2603f9805aff5e72d8ca62d3607f4194ab",
+        "bytes": 87784
+      },
+      {
+        "path": "runs/issues/S02/metric_qc.csv",
+        "rows": 21,
+        "sha256": "ecbb7304f8b146c5c22db34460fe209193b4bb082d989405eb4b2194de1e8a8d",
+        "bytes": 4750
+      },
+      {
+        "path": "runs/issues/S02/metric_qc_findings.csv",
+        "rows": 349,
+        "sha256": "6a635d8c0ff2b50f468d6ef3f8a95e0747e40756d4187581995f27599ea196cd",
+        "bytes": 26628
+      }
+    ],
+    "upstream_findings": [
+      {
+        "id": "Q16",
+        "companies": 53,
+        "note": "最新期可用字段<8，25 家仅 2 字段；A03 已知半年报/季报字段未跑"
+      },
+      {
+        "id": "Q17",
+        "companies": 5,
+        "note": "营收上亿而扣非不足万分之一，疑似万元/元单位错"
+      }
+    ],
+    "rule_gap": "L0 未覆盖无 OK 的混合情形；377 家按 W5 单列、17 家记 MIXED，S03 前须补分支",
+    "release_S03": false,
+    "release_note": "自检不等于验收；S03 另需补 L0 分支与上游字段"
   }
 }

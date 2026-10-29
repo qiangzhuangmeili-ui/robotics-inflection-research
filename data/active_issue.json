@@ -3,19 +3,18 @@
   "active_issue_number": 37,
   "active_issue_key": "S02",
   "executor": "WorkBuddy AI",
-  "started_at": null,
-  "status": "READY_NOT_STARTED",
-  "claim_note": "S01 经 Codex 独立复验 ACCEPTED_WITH_LIMITS（SG09 依赖与传播、23 项测试、匿名重算 280/659、规则与交付哈希均通过），本地放行 S02；S02 只做指标计算与口径检查，须用冻结 v2，S03 名单筛选仍锁。",
+  "started_at": "2026-10-29T19:48:36+08:00",
+  "status": "SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
+  "claim_note": "S02 自检完成：12,648 格全覆盖，21 项检查 18 PASS + 3 WARN、阻断 0；两个上游缺陷（53 家字段缺口、5 家单位可疑）与 L0 规则缺口已记录，等外部复核。",
   "last_completed": {
-    "issue_number": 36,
-    "issue_key": "S01",
-    "completed_at": "2026-10-29T15:49:21+08:00",
-    "review_file": "runs/issues/S01/acceptance_20261029.json",
-    "decision": "ACCEPTED_WITH_LIMITS",
-    "review_nature": "EXTERNAL_INDEPENDENT_RECHECK",
-    "review_round": "REWORK_R4_AFTER_CODEX_ACCEPTANCE_80745cd",
-    "acceptance": "6/6 独立核实 + 23/23 合成测试 + 28/28 校验",
-    "summary": "SIGNAL_DEPS 补 SG09→M07、未登记返回 None、新增 C16；L2=280、SG01∪SG02=659；规则 v2 冻结未改，S02 放行指标计算"
+    "issue_number": 37,
+    "issue_key": "S02",
+    "completed_at": "2026-10-29T19:54:23+08:00",
+    "review_file": "runs/issues/S02/review.json",
+    "decision": "SELF_CHECK_PASS_WITH_UPSTREAM_FINDINGS",
+    "review_nature": "SELF_CHECK",
+    "acceptance": "12,648 格全覆盖；21 项 18 PASS + 3 WARN，阻断 0",
+    "summary": "用 v2 计算 1054×12 指标，逐格出 status/flags/期间/来源；OK 6,092 / PROVISIONAL 4,158；与 S01 干跑逐项一致"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -26,7 +25,7 @@
   },
   "next_recommended_issue_number": 37,
   "next_recommended_issue_key": "S02",
-  "next_recommended_reason": "S01 已验收放行；S02 须用 v2 逐格输出 OK/PROVISIONAL/HOLD 与来源，不得直接进 S03。",
+  "next_recommended_reason": "S02 等外部复核；S03 另需补 L0 混合分支并回 S00 补抽 53 家字段，未完成前不开 S03",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -245,5 +244,6 @@
     "旧快照 2021/2022 为单一来源，无官方 PDF 交叉校验。",
     "未用最新年报「上年同期」列重算历史期，重述公司跨年口径可能不一致。",
     "2026Q3 仅 190 家已披露，其余 864 家未到披露期（NOT_YET_DISCLOSED），当期截面不完整。"
-  ]
+  ],
+  "completed_at": "2026-10-29T19:54:23+08:00"
 }

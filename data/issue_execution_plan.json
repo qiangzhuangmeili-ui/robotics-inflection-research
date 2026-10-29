@@ -1020,7 +1020,7 @@
       "issue_number": 37,
       "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37",
       "title": "S02｜计算全池指标与口径检查",
-      "status": "READY",
+      "status": "SELF_CHECK_PASS",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S02/",
       "issue_body_sha256": "ea0aa53e74183772a9c3e4b67a3f23f2d22df7d823a9dee0c6e25a77e5c6ce95",
@@ -1032,6 +1032,19 @@
         "rules_version_required": "S01_SCREEN_RULES_V2",
         "rules_sha256_required": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
         "must_not": "S03 名单筛选 / 业务深研 / 估值"
+      },
+      "review": {
+        "review_nature": "SELF_CHECK",
+        "decision": "SELF_CHECK_PASS_WITH_UPSTREAM_FINDINGS",
+        "review_file": "runs/issues/S02/review.json",
+        "reviewed_at": "2026-10-29T19:54:23+08:00",
+        "checks": "21 项：18 PASS + 3 WARN，阻断 0",
+        "cells": 12648,
+        "next_stage_release": "PENDING_EXTERNAL_RECHECK",
+        "upstream_findings": [
+          "Q16 字段覆盖缺口 53 家（25 家仅 2 字段）",
+          "Q17 数值量级可疑 5 家（疑似万元/元单位错）"
+        ]
       }
     },
     {
@@ -1066,7 +1079,8 @@
       "status": "WAITING_DEPENDENCIES",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S03/",
-      "issue_body_sha256": "f4cda68c7efb64b7b237bdabae10ef742fad2fe54edc9b34b2ceb6b41aece4d7"
+      "issue_body_sha256": "f4cda68c7efb64b7b237bdabae10ef742fad2fe54edc9b34b2ceb6b41aece4d7",
+      "blocked_reason": "等 S02 外部复核放行；另需先补 L0 混合分支（377 家 W5 / 17 家 MIXED）与回 S00 补抽 53 家半年报/季报字段"
     },
     {
       "key": "S04",
