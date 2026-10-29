@@ -2,7 +2,7 @@
   "issue_key": "S01",
   "issue_number": 36,
   "rules_version": "S01_SCREEN_RULES_V1",
-  "checked_at": "2026-10-29T10:26:58+08:00",
+  "checked_at": "2026-10-29T10:29:21+08:00",
   "rules_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
   "checks_total": 20,
   "checks_pass": 20,
@@ -194,7 +194,7 @@
         "hits": {
           "SG01": 460,
           "SG02": 522,
-          "SG07": 344,
+          "SG07": 232,
           "SG03": 307,
           "SG04": 224,
           "SG05": 244,
@@ -211,13 +211,14 @@
       "blocking": true,
       "detail": {
         "L1": {
-          "OBSERVE_QUEUE": 892,
-          "RISK_WATCH": 111,
-          "NO_SIGNAL": 51
+          "OBSERVE_QUEUE": 867,
+          "RISK_WATCH": 120,
+          "NO_SIGNAL": 67
         },
         "L2": {
-          "NOT_SHORTLISTED": 512,
-          "SHORTLIST_CANDIDATE": 542
+          "NOT_SHORTLISTED": 500,
+          "SHORTLIST_CANDIDATE": 496,
+          "HOLD_FOR_DATA": 58
         },
         "note": "NOT_A_RESULT：S02/S03 必须重算，本处只验证规则可执行"
       }
@@ -453,7 +454,7 @@
     "signal_hits": {
       "SG01": 460,
       "SG02": 522,
-      "SG07": 344,
+      "SG07": 232,
       "SG03": 307,
       "SG04": 224,
       "SG05": 244,
@@ -463,22 +464,25 @@
     },
     "dimension_hits": {
       "GROWTH": 982,
-      "CASH": 441,
+      "CASH": 329,
       "MARGIN": 307,
       "PROFIT": 706
     },
     "L1_counts": {
-      "OBSERVE_QUEUE": 892,
-      "RISK_WATCH": 111,
-      "NO_SIGNAL": 51
+      "OBSERVE_QUEUE": 867,
+      "RISK_WATCH": 120,
+      "NO_SIGNAL": 67
     },
     "L2_counts": {
-      "NOT_SHORTLISTED": 512,
-      "SHORTLIST_CANDIDATE": 542
+      "NOT_SHORTLISTED": 500,
+      "SHORTLIST_CANDIDATE": 496,
+      "HOLD_FOR_DATA": 58
     },
     "breadth_observation": {
-      "L1_observe_share": 0.8463,
-      "L2_shortlist_share": 0.5142,
+      "L1_observe_share": 0.8226,
+      "growth_signal_union": 718,
+      "growth_signal_union_share": 0.6812,
+      "L2_shortlist_share": 0.4706,
       "interpretation": "v1 阈值偏松（SG01∪SG02 覆盖绝大多数公司），属已知局限；按预登记原则本次不据此调整阈值，若需收紧须在 S04 前另立 v2 并全池重算。"
     },
     "quantiles_exploratory": {

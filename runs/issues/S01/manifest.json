@@ -3,7 +3,7 @@
   "issue_number": 36,
   "plan_version": "20261026_collection_first_v2",
   "rules_version": "S01_SCREEN_RULES_V1",
-  "generated_at": "2026-10-29T10:27:04+08:00",
+  "generated_at": "2026-10-29T10:29:51+08:00",
   "executor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
   "frozen_at": "2026-10-29T10:25:57+08:00",
@@ -41,8 +41,8 @@
     },
     {
       "path": "runs/issues/S01/threshold_rationale.md",
-      "bytes": 9281,
-      "sha256": "962aeea344cded18ff9eff448e08e571517b910aef374d5036683fe38a3332ea"
+      "bytes": 9435,
+      "sha256": "5b70468a9ae64c8a08322d15e1fbb2e250cf95e8e00fb25fbf1338df6074a663"
     },
     {
       "path": "runs/issues/S01/metric_coverage_dryrun.csv",
@@ -51,18 +51,18 @@
     },
     {
       "path": "runs/issues/S01/self_check.json",
-      "bytes": 14648,
-      "sha256": "a385ca9d1aa082186403ebd30735a77f8334780252d0125fe42c3a26043f4ac1"
+      "bytes": 14787,
+      "sha256": "3956eeb3bf2c0300036f339e8a7705566bf88ad888c5c8f0f67f5b7bed7c772d"
     },
     {
       "path": "runs/issues/S01/handoff.md",
-      "bytes": 5710,
-      "sha256": "2db14a257729cc8d2167bb998fb2223b98f08236a83dc6f9068315e45fefa573"
+      "bytes": 5739,
+      "sha256": "700f27fdeade49d8616c4395b140369ab2731dd03c5d66605a0a9ca9e2a0db5a"
     },
     {
       "path": "runs/issues/S01/review.json",
-      "bytes": 4817,
-      "sha256": "ce1e01a75e55a2df1c4a6bffea0f8e1edf949ae04e4a33666ee619cf0aad5c61"
+      "bytes": 5466,
+      "sha256": "429e681517551fe44c4aa3d20d2592f0db92cd62b4494ddb1aa24d932b93d0de"
     }
   ],
   "universe": {
@@ -140,17 +140,20 @@
       "20260930": 182
     },
     "L1_counts": {
-      "OBSERVE_QUEUE": 892,
-      "RISK_WATCH": 111,
-      "NO_SIGNAL": 51
+      "OBSERVE_QUEUE": 867,
+      "RISK_WATCH": 120,
+      "NO_SIGNAL": 67
     },
     "L2_counts": {
-      "NOT_SHORTLISTED": 512,
-      "SHORTLIST_CANDIDATE": 542
+      "NOT_SHORTLISTED": 500,
+      "SHORTLIST_CANDIDATE": 496,
+      "HOLD_FOR_DATA": 58
     },
     "breadth_observation": {
-      "L1_observe_share": 0.8463,
-      "L2_shortlist_share": 0.5142,
+      "L1_observe_share": 0.8226,
+      "growth_signal_union": 718,
+      "growth_signal_union_share": 0.6812,
+      "L2_shortlist_share": 0.4706,
       "interpretation": "v1 阈值偏松（SG01∪SG02 覆盖绝大多数公司），属已知局限；按预登记原则本次不据此调整阈值，若需收紧须在 S04 前另立 v2 并全池重算。"
     },
     "note": "只验证规则可执行，不产出名单；不得引用为「多少家改善」。"
@@ -169,7 +172,7 @@
   "tools": [
     {
       "path": "tools/s01_rules_check.py",
-      "sha256": "bc2a97b2d1e1365f106eb1595d39f5726a1eb369be06e321874c72b55340d346"
+      "sha256": "a7949fa7e99f130fe53bd46967afde3f21b1fdd37f854853da0e04610adb62ce"
     }
   ],
   "known_limits": [

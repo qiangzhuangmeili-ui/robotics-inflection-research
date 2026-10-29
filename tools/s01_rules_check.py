@@ -496,6 +496,7 @@ def main() -> int:
     l1 = Counter()
     l2 = Counter()
     dim_hits = Counter()
+    growth_union = 0
 
     for sec, res in per_company.items():
         fired = []
@@ -509,6 +510,10 @@ def main() -> int:
             ok = False
             if s["operator"] == ">=":
                 ok = r["value"] >= s["threshold"]
+            if s["id"] == "SG07":
+                # 规则要求 M08>=0.8 且 M09>0 同时成立
+                m9 = res["M09"]
+                ok = ok and m9["status"] == "OK" and m9["value"] is not None and m9["value"] > 0
             if ok:
                 # 低基数信号需绝对额确认才计入 L2
                 confirmed = "Q05" not in r["flags"]
@@ -535,6 +540,8 @@ def main() -> int:
 
         if fired:
             l1["OBSERVE_QUEUE"] += 1
+            if {f["id"] for f in fired} & {"SG01", "SG02"}:
+                growth_union += 1
         else:
             rh = any(res[h["metric"]]["status"] == "OK" and res[h["metric"]]["value"] is not None
                      and ((h["operator"] == ">=" and res[h["metric"]]["value"] >= h["threshold"])
@@ -544,11 +551,15 @@ def main() -> int:
             l1["RISK_WATCH" if rh else "NO_SIGNAL"] += 1
 
         dims = {f["dim"] for f in fired if f["confirmed"]}
-        used_hold = any(res[f["mid"]]["status"] == "HOLD" for f in fired)
-        if len(dims) >= 2 and not used_hold:
-            l2["SHORTLIST_CANDIDATE"] += 1
-        elif used_hold:
+        # 维度可用性：某维全部指标都 HOLD → 该维不可判，按规则输出 HOLD_FOR_DATA
+        dim_metrics = {"GROWTH": ["M01", "M02", "M03"], "MARGIN": ["M04"],
+                       "PROFIT": ["M05", "M06", "M07"], "CASH": ["M08", "M09"]}
+        dim_hold = [d for d, ms in dim_metrics.items()
+                    if all(res[m]["status"] == "HOLD" for m in ms)]
+        if dim_hold:
             l2["HOLD_FOR_DATA"] += 1
+        elif len(dims) >= 2:
+            l2["SHORTLIST_CANDIDATE"] += 1
         else:
             l2["NOT_SHORTLISTED"] += 1
 
@@ -605,6 +616,8 @@ def main() -> int:
             "L2_counts": dict(l2),
             "breadth_observation": {
                 "L1_observe_share": round(l1["OBSERVE_QUEUE"] / total, 4) if total else 0,
+                "growth_signal_union": growth_union,
+                "growth_signal_union_share": round(growth_union / total, 4) if total else 0,
                 "L2_shortlist_share": round(l2["SHORTLIST_CANDIDATE"] / total, 4) if total else 0,
                 "interpretation": "v1 阈值偏松（SG01∪SG02 覆盖绝大多数公司），属已知局限；按预登记原则本次不据此调整阈值，若需收紧须在 S04 前另立 v2 并全池重算。"
             },
