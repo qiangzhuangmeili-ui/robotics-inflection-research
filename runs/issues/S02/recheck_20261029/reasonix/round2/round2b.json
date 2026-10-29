@@ -1,0 +1,616 @@
+{
+ "my_manifests": {
+  "recalc_copy": {
+   "keys": [
+    "base_rules_sha256",
+    "counts",
+    "coverage",
+    "execution_sources",
+    "executor",
+    "formula_source",
+    "generated_at",
+    "inputs",
+    "issue_key",
+    "issue_number",
+    "known_limits",
+    "l0_addendum",
+    "l0_distribution",
+    "l0_rule_note",
+    "latest_period_definition",
+    "normalized_input_used",
+    "outputs",
+    "period_model",
+    "plan_version",
+    "review_nature",
+    "rules_file",
+    "rules_sha256",
+    "rules_version"
+   ],
+   "inputs": [
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv.gz",
+     "sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+     "bytes": 5886318
+    },
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/normalization_manifest.json",
+     "sha256": "4d22392e3344382ea759525c1873abb502275e622ee7f09f9d5311ba8cf7baf6",
+     "bytes": 26283
+    },
+    {
+     "path": "data/company_master.csv",
+     "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+     "bytes": 707054
+    }
+   ],
+   "counts": {
+    "companies": 1054,
+    "metrics": 12,
+    "cells": 12648,
+    "ok": 6211,
+    "provisional": 4303,
+    "hold": 267,
+    "missing": 229,
+    "not_comparable": 314,
+    "undefined_base": 469,
+    "not_applicable": 855,
+    "excluded_scope": 0,
+    "version_mismatch": 0
+   },
+   "l0_distribution": {
+    "EVALUABLE": 664,
+    "W5_PROVISIONAL_ONLY": 387,
+    "W9_MIXED_NON_EVALUABLE": 3
+   },
+   "outputs": [
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_copy\\all_pool_metrics.csv",
+     "rows": 12648,
+     "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+     "bytes": 4371978
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_copy\\company_metric_summary.csv",
+     "rows": 1054,
+     "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+     "bytes": 87669
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_copy\\metric_qc.csv",
+     "rows": 23,
+     "sha256": "2831581c2046a25cb9cbf454c8eb3b84baed0ac2f387a78eec8ff445b5f0bbfa",
+     "bytes": 6914
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_copy\\metric_qc_findings.csv",
+     "rows": 313,
+     "sha256": "18ea8d1b55ea52a10708f8165256cdfddc8968e89e99be3aa8700d28fe1fe5d1",
+     "bytes": 24347
+    }
+   ],
+   "execution_sources": {
+    "calculator": {
+     "path": "tools/s02_calculate.py",
+     "sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4"
+    },
+    "formula_engine": {
+     "path": "tools/s01_rules_check.py",
+     "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
+    },
+    "l0_classifier": {
+     "path": "tools/l0_classify.py",
+     "sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+     "executed": true
+    },
+    "l0_rules": {
+     "applied": true,
+     "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+     "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+     "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
+    },
+    "upstream_a03": {
+     "source_path": "tools/a03_financial_field_extractor.py",
+     "source_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+     "reextract_plan_path": "runs/issues/S02/remediation_20261029/reextract_plan.json",
+     "reextract_plan_sha256": "6362e61f4642a764eddcc39e599da7dd2dc3c7588a67432fedbf5cc5c8a1f2aa",
+     "registered_parser_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+     "source_matches_registered_parser": true,
+     "extraction_executed_this_run": false,
+     "note": "上游解析器与重抽计划仅作来源链记录；本次 S02 未执行字段抽取"
+    }
+   },
+   "checks_P05_P06": [],
+   "known_limits": [
+    "指标全部为公司合并口径，不是机器人分部口径；不得据此推断机器人业务盈利",
+    "2026Q3 截面仅部分公司披露，横截面统计须按最新期分层",
+    "PROVISIONAL 与 OK 分列，PROVISIONAL 不得当正常样本",
+    "MARGIN 与 PROFIT 维度同源，后续 S04 收紧时仍会重复计数",
+    "S00 遗留：62 整槽无值、453 份三表≠摘要表、2,157 重述待核、旧快照单一来源",
+    "本卡不产出名单、不算信号、不做 PIT 回测",
+    "上游缺陷一：53 家最新期可用字段<8（其中 25 家仅 2 个字段，含美的集团/工业富联/广汽集团/中国中铁/石头科技/时代电气/宇树科技等），A03 已记录字段抽取仅覆盖年报，须回 S00 补抽半年报/季报字段",
+    "上游缺陷二：5 家营收上亿而扣非不足营收万分之一（赣锋锂业/中科信息/金百泽/五洋自控/毅昌科技），疑似「万元」被识别为「元」，须回 S00 核 PDF 原表",
+    "L0 addendum 只修补证据可得性分流；W5/W9 不自动判为无信号或候选淘汰"
+   ],
+   "checks_keys_sample": [
+    "issue_key",
+    "issue_number",
+    "plan_version",
+    "generated_at",
+    "executor",
+    "review_nature",
+    "rules_version",
+    "rules_file",
+    "rules_sha256",
+    "base_rules_sha256",
+    "formula_source",
+    "execution_sources",
+    "inputs",
+    "normalized_input_used",
+    "latest_period_definition",
+    "period_model",
+    "coverage",
+    "l0_distribution",
+    "l0_rule_note",
+    "l0_addendum",
+    "counts",
+    "outputs",
+    "known_limits"
+   ]
+  },
+  "recalc_gzip": {
+   "keys": [
+    "base_rules_sha256",
+    "counts",
+    "coverage",
+    "execution_sources",
+    "executor",
+    "formula_source",
+    "generated_at",
+    "inputs",
+    "issue_key",
+    "issue_number",
+    "known_limits",
+    "l0_addendum",
+    "l0_distribution",
+    "l0_rule_note",
+    "latest_period_definition",
+    "normalized_input_used",
+    "outputs",
+    "period_model",
+    "plan_version",
+    "review_nature",
+    "rules_file",
+    "rules_sha256",
+    "rules_version"
+   ],
+   "inputs": [
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv.gz",
+     "sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+     "bytes": 5886318
+    },
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/normalization_manifest.json",
+     "sha256": "4d22392e3344382ea759525c1873abb502275e622ee7f09f9d5311ba8cf7baf6",
+     "bytes": 26283
+    },
+    {
+     "path": "data/company_master.csv",
+     "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+     "bytes": 707054
+    }
+   ],
+   "counts": {
+    "companies": 1054,
+    "metrics": 12,
+    "cells": 12648,
+    "ok": 6211,
+    "provisional": 4303,
+    "hold": 267,
+    "missing": 229,
+    "not_comparable": 314,
+    "undefined_base": 469,
+    "not_applicable": 855,
+    "excluded_scope": 0,
+    "version_mismatch": 0
+   },
+   "l0_distribution": {
+    "EVALUABLE": 664,
+    "W5_PROVISIONAL_ONLY": 387,
+    "W9_MIXED_NON_EVALUABLE": 3
+   },
+   "outputs": [
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_gzip\\all_pool_metrics.csv",
+     "rows": 12648,
+     "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+     "bytes": 4371978
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_gzip\\company_metric_summary.csv",
+     "rows": 1054,
+     "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+     "bytes": 87669
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_gzip\\metric_qc.csv",
+     "rows": 23,
+     "sha256": "f7fdecd16432c480da52104b26c78606f2dcb99e7ee84ae016b439f5ef93ee29",
+     "bytes": 6925
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_gzip\\metric_qc_findings.csv",
+     "rows": 313,
+     "sha256": "18ea8d1b55ea52a10708f8165256cdfddc8968e89e99be3aa8700d28fe1fe5d1",
+     "bytes": 24347
+    }
+   ],
+   "execution_sources": {
+    "calculator": {
+     "path": "tools/s02_calculate.py",
+     "sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4"
+    },
+    "formula_engine": {
+     "path": "tools/s01_rules_check.py",
+     "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
+    },
+    "l0_classifier": {
+     "path": "tools/l0_classify.py",
+     "sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+     "executed": true
+    },
+    "l0_rules": {
+     "applied": true,
+     "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+     "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+     "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
+    },
+    "upstream_a03": {
+     "source_path": "tools/a03_financial_field_extractor.py",
+     "source_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+     "reextract_plan_path": "runs/issues/S02/remediation_20261029/reextract_plan.json",
+     "reextract_plan_sha256": "6362e61f4642a764eddcc39e599da7dd2dc3c7588a67432fedbf5cc5c8a1f2aa",
+     "registered_parser_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+     "source_matches_registered_parser": true,
+     "extraction_executed_this_run": false,
+     "note": "上游解析器与重抽计划仅作来源链记录；本次 S02 未执行字段抽取"
+    }
+   },
+   "checks_P05_P06": [],
+   "known_limits": [
+    "指标全部为公司合并口径，不是机器人分部口径；不得据此推断机器人业务盈利",
+    "2026Q3 截面仅部分公司披露，横截面统计须按最新期分层",
+    "PROVISIONAL 与 OK 分列，PROVISIONAL 不得当正常样本",
+    "MARGIN 与 PROFIT 维度同源，后续 S04 收紧时仍会重复计数",
+    "S00 遗留：62 整槽无值、453 份三表≠摘要表、2,157 重述待核、旧快照单一来源",
+    "本卡不产出名单、不算信号、不做 PIT 回测",
+    "上游缺陷一：53 家最新期可用字段<8（其中 25 家仅 2 个字段，含美的集团/工业富联/广汽集团/中国中铁/石头科技/时代电气/宇树科技等），A03 已记录字段抽取仅覆盖年报，须回 S00 补抽半年报/季报字段",
+    "上游缺陷二：5 家营收上亿而扣非不足营收万分之一（赣锋锂业/中科信息/金百泽/五洋自控/毅昌科技），疑似「万元」被识别为「元」，须回 S00 核 PDF 原表",
+    "L0 addendum 只修补证据可得性分流；W5/W9 不自动判为无信号或候选淘汰"
+   ],
+   "checks_keys_sample": [
+    "issue_key",
+    "issue_number",
+    "plan_version",
+    "generated_at",
+    "executor",
+    "review_nature",
+    "rules_version",
+    "rules_file",
+    "rules_sha256",
+    "base_rules_sha256",
+    "formula_source",
+    "execution_sources",
+    "inputs",
+    "normalized_input_used",
+    "latest_period_definition",
+    "period_model",
+    "coverage",
+    "l0_distribution",
+    "l0_rule_note",
+    "l0_addendum",
+    "counts",
+    "outputs",
+    "known_limits"
+   ]
+  }
+ },
+ "author_manifests": {
+  "runs\\issues\\S02\\recheck_20261029\\reproduction\\csv_copy\\calculation_manifest.json": {
+   "inputs": [
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv.gz",
+     "sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+     "bytes": 5886318
+    },
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/normalization_manifest.json",
+     "sha256": "4d22392e3344382ea759525c1873abb502275e622ee7f09f9d5311ba8cf7baf6",
+     "bytes": 26283
+    },
+    {
+     "path": "data/company_master.csv",
+     "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+     "bytes": 707054
+    }
+   ],
+   "outputs": [
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\csv_copy\\all_pool_metrics.csv",
+     "rows": 12648,
+     "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+     "bytes": 4371978
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\csv_copy\\company_metric_summary.csv",
+     "rows": 1054,
+     "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+     "bytes": 87669
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\csv_copy\\metric_qc.csv",
+     "rows": 23,
+     "sha256": "1385c9874c75465bfb164c6520cbd94905e500ed6b395d96162b39b4956d092b",
+     "bytes": 6900
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\csv_copy\\metric_qc_findings.csv",
+     "rows": 313,
+     "sha256": "18ea8d1b55ea52a10708f8165256cdfddc8968e89e99be3aa8700d28fe1fe5d1",
+     "bytes": 24347
+    }
+   ],
+   "l0_distribution": {
+    "EVALUABLE": 664,
+    "W5_PROVISIONAL_ONLY": 387,
+    "W9_MIXED_NON_EVALUABLE": 3
+   }
+  },
+  "runs\\issues\\S02\\recheck_20261029\\reproduction\\gzip\\calculation_manifest.json": {
+   "inputs": [
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv.gz",
+     "sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+     "bytes": 5886318
+    },
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/normalization_manifest.json",
+     "sha256": "4d22392e3344382ea759525c1873abb502275e622ee7f09f9d5311ba8cf7baf6",
+     "bytes": 26283
+    },
+    {
+     "path": "data/company_master.csv",
+     "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+     "bytes": 707054
+    }
+   ],
+   "outputs": [
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\gzip\\all_pool_metrics.csv",
+     "rows": 12648,
+     "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+     "bytes": 4371978
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\gzip\\company_metric_summary.csv",
+     "rows": 1054,
+     "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+     "bytes": 87669
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\gzip\\metric_qc.csv",
+     "rows": 23,
+     "sha256": "f3a8bb2b8f02c87b96cc803ac2e5e5f7f1bded052529e21eaa2f5c377ca39e40",
+     "bytes": 6915
+    },
+    {
+     "path": "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\gzip\\metric_qc_findings.csv",
+     "rows": 313,
+     "sha256": "18ea8d1b55ea52a10708f8165256cdfddc8968e89e99be3aa8700d28fe1fe5d1",
+     "bytes": 24347
+    }
+   ],
+   "l0_distribution": {
+    "EVALUABLE": 664,
+    "W5_PROVISIONAL_ONLY": 387,
+    "W9_MIXED_NON_EVALUABLE": 3
+   }
+  }
+ },
+ "src_200_275": [
+  " 200|                 \"registered_sha256\": v2_sha,",
+  " 201|                 \"verified_source_path\": v2_rel,",
+  " 202|                 \"verified_source_sha256\": v2_sha,",
+  " 203|                 \"note\": \"normalized CSV payload SHA matches the registered v2 content (copy paths are allowed)\",",
+  " 204|             }",
+  " 205| ",
+  " 206|     return {",
+  " 207|         \"ok\": False,",
+  " 208|         \"source\": None,",
+  " 209|         \"expected_sha256\": None,",
+  " 210|         \"verified_source_path\": None,",
+  " 211|         \"verified_source_sha256\": None,",
+  " 212|         \"note\": \"normalized payload is not bound to a matching registered gzip, v2 content SHA, or explicit digest\",",
+  " 213|     }",
+  " 214| ",
+  " 215| ",
+  " 216| def l0_addendum_required(rules: dict, payload_sha: str, input_identity: dict) -> bool:",
+  " 217|     state_path = ROOT / \"PROJECT_STATE.json\"",
+  " 218|     state = json.loads(state_path.read_text(encoding=\"utf-8\")) if state_path.is_file() else {}",
+  " 219|     v2 = state.get(\"current_valid_versions\", {}).get(\"S00_data\", {})",
+  " 220|     v2_sha = str(v2.get(\"v2_sha256\", \"\")).lower()",
+  " 221|     registered_v2_payload = valid_sha256(v2_sha) and payload_sha == v2_sha",
+  " 222|     rules_registered_addendum = bool(",
+  " 223|         rules.get(\"l0_addendum_path\")",
+  " 224|         and str(input_identity.get(\"source\", \"\")).startswith(\"rules_input_fingerprint_gzip:\")",
+  " 225|     )",
+  " 226|     return registered_v2_payload or rules_registered_addendum",
+  " 227| ",
+  " 228| ",
+  " 229| def load_l0_addendum(rules: dict, actual: Path, actual_sha: str,",
+  " 230|                      input_identity: dict) -> dict:",
+  " 231|     \"\"\"Load the fixed additive L0 patch only for the registered v2 input version.\"\"\"",
+  " 232|     state_path = ROOT / \"PROJECT_STATE.json\"",
+  " 233|     state = json.loads(state_path.read_text(encoding=\"utf-8\")) if state_path.is_file() else {}",
+  " 234|     v2 = state.get(\"current_valid_versions\", {}).get(\"S00_data\", {})",
+  " 235|     v2_sha = str(v2.get(\"v2_sha256\", \"\")).lower()",
+  " 236|     registered_v2 = bool(valid_sha256(v2_sha) and actual_sha == v2_sha)",
+  " 237|     rules_registered_addendum = bool(",
+  " 238|         rules.get(\"l0_addendum_path\")",
+  " 239|         and input_identity.get(\"source\", \"\").startswith(\"rules_input_fingerprint_gzip:\")",
+  " 240|     )",
+  " 241|     if not (registered_v2 or rules_registered_addendum):",
+  " 242|         return {\"applied\": False, \"version\": None, \"path\": None, \"sha256\": None,",
+  " 243|                 \"note\": \"historical/base input; preserve the original S02 L0 labels\"}",
+  " 244| ",
+  " 245|     patch_rel = rules.get(\"l0_addendum_path\") or DEFAULT_L0_PATCH_RELATIVE",
+  " 246|     patch_path = repo_path(patch_rel)",
+  " 247|     if patch_path != repo_path(DEFAULT_L0_PATCH_RELATIVE):",
+  " 248|         raise ValueError(f\"unsupported L0 addendum path for this repair version: {patch_rel}\")",
+  " 249|     if not patch_path.is_file():",
+  " 250|         raise ValueError(f\"registered v2 input requires the L0 addendum file: {patch_rel}\")",
+  " 251|     patch_sha = sha256(patch_path)",
+  " 252|     patch = json.loads(patch_path.read_text(encoding=\"utf-8\"))",
+  " 253|     if patch.get(\"rules_version\") != L0_ADDENDUM_VERSION:",
+  " 254|         raise ValueError(f\"unsupported L0 addendum version: {patch.get('rules_version')!r}\")",
+  " 255|     if patch.get(\"base_rules_sha256\") not in ACCEPTED_BASE_RULES_SHA256:",
+  " 256|         raise ValueError(\"L0 addendum base hash is not an accepted S01 v2 hash\")",
+  " 257|     repair_manifest_path = ROOT / \"runs/issues/S02/remediation_20261029/s02/calculation_manifest.json\"",
+  " 258|     if not repair_manifest_path.is_file():",
+  " 259|         raise ValueError(\"the repair S02 manifest that freezes the L0 addendum SHA is missing\")",
+  " 260|     repair_manifest = json.loads(repair_manifest_path.read_text(encoding=\"utf-8\"))",
+  " 261|     expected_patch_sha = str(repair_manifest.get(\"l0_addendum_sha256\", \"\")).lower()",
+  " 262|     if not valid_sha256(expected_patch_sha) or patch_sha != expected_patch_sha:",
+  " 263|         raise ValueError(\"L0 addendum SHA256 differs from the frozen repair S02 manifest\")",
+  " 264| ",
+  " 265|     spec = importlib.util.spec_from_file_location(\"s02_l0_classifier\", ROOT / \"tools/l0_classify.py\")",
+  " 266|     if spec is None or spec.loader is None:",
+  " 267|         raise RuntimeError(\"cannot load tools/l0_classify.py\")",
+  " 268|     l0 = importlib.util.module_from_spec(spec)",
+  " 269|     spec.loader.exec_module(l0)",
+  " 270|     statuses = tuple(patch.get(\"classification_input\", {}).get(\"allowed_metric_statuses\", []))",
+  " 271|     if set(statuses) != set(l0.COUNT_COLUMNS) or len(statuses) != len(l0.COUNT_COLUMNS):",
+  " 272|         raise ValueError(\"L0 addendum status vector differs from the classifier input schema\")",
+  " 273|     if patch.get(\"classification_input\", {}).get(\"metric_count\") != len(rules.get(\"metrics\", [])):",
+  " 274|         raise ValueError(\"L0 addendum metric count differs from the S02 metric set\")",
+  " 275|     l0.STATUSES = statuses"
+ ],
+ "src_430_510": [
+  " 430|     elif input_identity.get(\"ok\"):",
+  " 431|         input_identity[\"source_kind\"] = \"csv\"",
+  " 432|     add(\"P05\", \"实际加载的标准化 CSV 与可信 SHA 来源匹配\", input_identity[\"ok\"],",
+  " 433|         {\"source_path\": display_path(source_path), \"source_sha256\": source_sha,",
+  " 434|          \"loaded_csv_path\": display_path(loaded_csv_candidate), \"loaded_csv_sha256\": payload_sha,",
+  " 435|          \"verified_against\": input_identity.get(\"source\"),",
+  " 436|          \"verified_source_path\": input_identity.get(\"verified_source_path\"),",
+  " 437|          \"verified_source_sha256\": input_identity.get(\"verified_source_sha256\"),",
+  " 438|          \"expected_sha256\": input_identity.get(\"expected_sha256\"),",
+  " 439|          \"registered_sha256\": input_identity.get(\"registered_sha256\"),",
+  " 440|          \"note\": input_identity[\"note\"]}, blocking=True)",
+  " 441| ",
+  " 442|     l0_error = None",
+  " 443|     l0_addendum = {\"applied\": False, \"version\": None, \"path\": None, \"sha256\": None,",
+  " 444|                    \"note\": \"historical/base input; preserve the original S02 L0 labels\"}",
+  " 445|     l0_required = input_identity[\"ok\"] and l0_addendum_required(rules, payload_sha, input_identity)",
+  " 446|     if l0_required:",
+  " 447|         try:",
+  " 448|             l0_addendum = load_l0_addendum(rules, loaded_csv_candidate, payload_sha, input_identity)",
+  " 449|         except Exception as exc:",
+  " 450|             l0_error = str(exc)",
+  " 451|     expected_l0_path = display_path(repo_path(DEFAULT_L0_PATCH_RELATIVE))",
+  " 452|     p06_applied = bool(",
+  " 453|         l0_required",
+  " 454|         and l0_error is None",
+  " 455|         and l0_addendum.get(\"applied\") is True",
+  " 456|         and l0_addendum.get(\"version\") == L0_ADDENDUM_VERSION",
+  " 457|         and l0_addendum.get(\"path\") == expected_l0_path",
+  " 458|         and valid_sha256(l0_addendum.get(\"sha256\"))",
+  " 459|         and l0_addendum.get(\"sha256\") == l0_addendum.get(\"manifest_sha256\")",
+  " 460|         and hasattr(l0_addendum.get(\"classifier\"), \"classify\")",
+  " 461|     )",
+  " 462|     p06_status = \"NOT_APPLICABLE\" if not l0_required else (\"PASS\" if p06_applied else \"FAIL\")",
+  " 463|     add(\"P06\", \"按输入版本要求并实际应用锁定的 L0 addendum\",",
+  " 464|         not l0_required or p06_applied,",
+  " 465|         {\"required\": l0_required, \"applicable\": l0_required,",
+  " 466|          \"applied\": l0_addendum[\"applied\"], \"version\": l0_addendum[\"version\"],",
+  " 467|          \"path\": l0_addendum[\"path\"], \"sha256\": l0_addendum[\"sha256\"],",
+  " 468|          \"error\": l0_error, \"status\": p06_status, \"note\": l0_addendum[\"note\"]},",
+  " 469|         blocking=True, result_override=p06_status)",
+  " 470| ",
+  " 471|     if any(c[\"result\"] == \"FAIL\" and c[\"blocking\"] for c in checks):",
+  " 472|         return 1",
+  " 473| ",
+  " 474|     baseline_entry = next(",
+  " 475|         item for item in base_rules[\"input_fingerprint\"][\"files\"]",
+  " 476|         if item[\"path\"] == \"runs/issues/S00/financial_normalized.csv.gz\"",
+  " 477|     )",
+  " 478|     baseline_normalized_sha = sha256_gzip_payload(repo_path(baseline_entry[\"path\"]))",
+  " 479|     alt_input = payload_sha != baseline_normalized_sha",
+  " 480| ",
+  " 481|     previous_s02 = S02",
+  " 482|     S02 = requested_out_dir if requested_out_dir else repo_path(S02)",
+  " 483|     S02.mkdir(parents=True, exist_ok=True)",
+  " 484| ",
+  " 485|     if source_is_gzip:",
+  " 486|         cache_dir.mkdir(parents=True, exist_ok=True)",
+  " 487|         actual = loaded_csv_candidate",
+  " 488|         if actual.exists():",
+  " 489|             if sha256(actual) != payload_sha:",
+  " 490|                 raise ValueError(f\"existing gzip cache has unexpected content: {display_path(actual)}\")",
+  " 491|         else:",
+  " 492|             with gzip.open(source_path, \"rb\") as source_stream, actual.open(\"xb\") as output_stream:",
+  " 493|                 shutil.copyfileobj(source_stream, output_stream)",
+  " 494|             if sha256(actual) != payload_sha:",
+  " 495|                 raise ValueError(f\"materialized gzip payload SHA mismatch: {display_path(actual)}\")",
+  " 496|     else:",
+  " 497|         actual = source_path",
+  " 498|     actual_sha = sha256(actual)",
+  " 499| ",
+  " 500|     # ---------- 前置校验",
+  " 501|     # ---------- 装载与计算",
+  " 502|     previous_normalized = s01.NORMALIZED",
+  " 503|     s01.NORMALIZED = actual",
+  " 504|     try:",
+  " 505|         rows, meta, field_rows, companies = s01.load_rows()",
+  " 506|     finally:",
+  " 507|         s01.NORMALIZED = previous_normalized",
+  " 508|     s01.load_signal_defs(rules)          # 只为了让 evaluate 的常量与规则一致；本脚本不产出信号",
+  " 509|     latest = latest_periods(rows)",
+  " 510|     add(\"P03\", \"公司数与 S00/S01 一致（1054）\", len(companies) == 1054, {\"companies\": len(companies)})"
+ ],
+ "low_base_confirmed_files": [
+  [
+   "tools\\s03_input_gate.py",
+   [
+    "    low_base_confirmed: bool | None = None,",
+    "    PROVISIONAL are never clean, even when ``low_base_confirmed`` is true.",
+    "    if low_base_confirmed is not None and type(low_base_confirmed) is not bool:",
+    "        raise GateError(\"low_base_confirmed must be exactly bool or None\")",
+    "    if \"Q05\" in flags and low_base_confirmed is not True:"
+   ]
+  ],
+  [
+   "tools\\s03_input_gate.py",
+   [
+    "    low_base_confirmed: bool | None = None,",
+    "    PROVISIONAL are never clean, even when ``low_base_confirmed`` is true.",
+    "    if low_base_confirmed is not None and type(low_base_confirmed) is not bool:",
+    "        raise GateError(\"low_base_confirmed must be exactly bool or None\")",
+    "    if \"Q05\" in flags and low_base_confirmed is not True:"
+   ]
+  ]
+ ],
+ "neg_tamper": {
+  "returncode": 1,
+  "stdout_tail": "PASS P01 ָ�깫ʽ���ź���ֵ�ϸ����ö��� S01_SCREEN_RULES_V2\nPASS P02 ���� S01 �Ǽǵ����ݻ�������ָ��δ��\nFAIL P05 ʵ�ʼ��صı�׼�� CSV ����� SHA ��Դƥ��\nNOT_APPLICABLE P06 ������汾Ҫ��ʵ��Ӧ�������� L0 addendum\n",
+  "outputs_written": [],
+  "all_pool_metrics_exists": false
+ },
+ "rules_candidates": [
+  {
+   "path": "runs\\issues\\S02\\remediation_20261029\\rules_recalculation_inputs.json",
+   "input_version": "S00_TARGETED_REEXTRACTION_20261029",
+   "has_l0": true
+  }
+ ]
+}

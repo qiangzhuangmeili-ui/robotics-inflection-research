@@ -1,0 +1,171 @@
+{
+  "status": "PASS_COMMITTED_CONTENT_EXACT_OUTPUT_REPRODUCTION",
+  "source_commit": "d72d4d578cf150b57a5e881bfe5164e8cd2f9e27",
+  "source_sha256": {
+    "tools/s02_calculate.py": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4",
+    "tools/s03_input_gate.py": "a135fddd01de4624a3a5419ddec5baffda4ec61ec2498b3d0ee92be61492df12",
+    "tools/s01_rules_check.py": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f",
+    "tools/l0_classify.py": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+    "tools/a03_financial_field_extractor.py": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7"
+  },
+  "committed_source_bytes": {
+    "tools/s02_calculate.py": {
+      "git_blob_sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4",
+      "working_sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4",
+      "exact_bytes": true,
+      "pure_line_ending_equivalence": false
+    },
+    "tools/s03_input_gate.py": {
+      "git_blob_sha256": "a135fddd01de4624a3a5419ddec5baffda4ec61ec2498b3d0ee92be61492df12",
+      "working_sha256": "a135fddd01de4624a3a5419ddec5baffda4ec61ec2498b3d0ee92be61492df12",
+      "exact_bytes": true,
+      "pure_line_ending_equivalence": false
+    },
+    "tools/s01_rules_check.py": {
+      "git_blob_sha256": "88a2333cce681fbb66759abc869e95ed52b9541fc1ba98080f162d8c002a0e9f",
+      "working_sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f",
+      "exact_bytes": false,
+      "pure_line_ending_equivalence": true
+    },
+    "tools/l0_classify.py": {
+      "git_blob_sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+      "working_sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+      "exact_bytes": true,
+      "pure_line_ending_equivalence": false
+    },
+    "tools/a03_financial_field_extractor.py": {
+      "git_blob_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+      "working_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+      "exact_bytes": true,
+      "pure_line_ending_equivalence": false
+    }
+  },
+  "canonical_metric_cells": 12648,
+  "canonical_csv_sha256": {
+    "all_pool_metrics.csv": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+    "company_metric_summary.csv": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95"
+  },
+  "runs": [
+    {
+      "mode": "csv_copy",
+      "command": [
+        "C:\\Users\\zhangjianmei\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\tools\\s02_calculate.py",
+        "--normalized",
+        "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\copy_input\\financial_normalized.csv",
+        "--rules",
+        "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\remediation_20261029\\rules_recalculation_inputs.json",
+        "--out-dir",
+        "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\csv_copy"
+      ],
+      "input_source_sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
+      "manifest_path": "runs/issues/S02/recheck_20261029/reproduction/csv_copy/calculation_manifest.json",
+      "manifest_sha256": "2ed7124c5f595cc7853eeea07b1951c378aa89825b0d3522af3bfd587286b183",
+      "canonical_csv_byte_matches": {
+        "all_pool_metrics.csv": true,
+        "company_metric_summary.csv": true
+      },
+      "outputs": {
+        "all_pool_metrics.csv": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+        "company_metric_summary.csv": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95"
+      },
+      "execution_sources": {
+        "calculator": {
+          "path": "tools/s02_calculate.py",
+          "sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4"
+        },
+        "formula_engine": {
+          "path": "tools/s01_rules_check.py",
+          "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
+        },
+        "l0_classifier": {
+          "path": "tools/l0_classify.py",
+          "sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+          "executed": true
+        },
+        "l0_rules": {
+          "applied": true,
+          "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+          "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+          "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
+        },
+        "upstream_a03": {
+          "source_path": "tools/a03_financial_field_extractor.py",
+          "source_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+          "reextract_plan_path": "runs/issues/S02/remediation_20261029/reextract_plan.json",
+          "reextract_plan_sha256": "6362e61f4642a764eddcc39e599da7dd2dc3c7588a67432fedbf5cc5c8a1f2aa",
+          "registered_parser_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+          "source_matches_registered_parser": true,
+          "extraction_executed_this_run": false,
+          "note": "上游解析器与重抽计划仅作来源链记录；本次 S02 未执行字段抽取"
+        }
+      },
+      "l0_distribution": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      }
+    },
+    {
+      "mode": "gzip",
+      "command": [
+        "C:\\Users\\zhangjianmei\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\tools\\s02_calculate.py",
+        "--normalized",
+        "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\remediation_20261029\\s00\\financial_normalized.csv.gz",
+        "--rules",
+        "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\remediation_20261029\\rules_recalculation_inputs.json",
+        "--out-dir",
+        "C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research\\runs\\issues\\S02\\recheck_20261029\\reproduction\\gzip"
+      ],
+      "input_source_sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+      "manifest_path": "runs/issues/S02/recheck_20261029/reproduction/gzip/calculation_manifest.json",
+      "manifest_sha256": "b2bd3d8ae18edbf39a6ce6e843be90d62165623b0a72c751192e2bac0471436a",
+      "canonical_csv_byte_matches": {
+        "all_pool_metrics.csv": true,
+        "company_metric_summary.csv": true
+      },
+      "outputs": {
+        "all_pool_metrics.csv": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+        "company_metric_summary.csv": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95"
+      },
+      "execution_sources": {
+        "calculator": {
+          "path": "tools/s02_calculate.py",
+          "sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4"
+        },
+        "formula_engine": {
+          "path": "tools/s01_rules_check.py",
+          "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
+        },
+        "l0_classifier": {
+          "path": "tools/l0_classify.py",
+          "sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+          "executed": true
+        },
+        "l0_rules": {
+          "applied": true,
+          "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+          "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+          "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
+        },
+        "upstream_a03": {
+          "source_path": "tools/a03_financial_field_extractor.py",
+          "source_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+          "reextract_plan_path": "runs/issues/S02/remediation_20261029/reextract_plan.json",
+          "reextract_plan_sha256": "6362e61f4642a764eddcc39e599da7dd2dc3c7588a67432fedbf5cc5c8a1f2aa",
+          "registered_parser_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+          "source_matches_registered_parser": true,
+          "extraction_executed_this_run": false,
+          "note": "上游解析器与重抽计划仅作来源链记录；本次 S02 未执行字段抽取"
+        }
+      },
+      "l0_distribution": {
+        "EVALUABLE": 664,
+        "W5_PROVISIONAL_ONLY": 387,
+        "W9_MIXED_NON_EVALUABLE": 3
+      }
+    }
+  ],
+  "scope": "Exact byte reproduction of metric and company-summary CSVs. Historical canonical manifest is preserved; new execution manifests record script hashes and original/cached input identities. The legacy S01 engine has a verified pure LF/CRLF Git/worktree difference, explicitly recorded. This is not independent financial-source verification."
+}

@@ -1,0 +1,53 @@
+{
+  "issue_key": "S02",
+  "issue_number": 37,
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_at": "2026-10-29T21:43:07.994247+08:00",
+  "review_nature": "AUTHOR_RECHECK_PLUS_INDEPENDENT_SESSION_AI_TECHNICAL_REVIEW",
+  "author_rechecker": "Codex (repair author; not an independent financial-source auditor)",
+  "independent_reviewer": "Reasonix independent session, existing default configuration; underlying model not inspected",
+  "decision": "TECHNICAL_ACCEPTANCE_RECOMMENDED_WITH_LIMITS",
+  "source_commit": "d72d4d578cf150b57a5e881bfe5164e8cd2f9e27",
+  "data_version": "S00_TARGETED_REEXTRACTION_20261029",
+  "metric_formula_version": "S01_SCREEN_RULES_V2",
+  "formulas_changed": false,
+  "thresholds_changed": false,
+  "canonical_data_changed": false,
+  "metric_cells": 12648,
+  "canonical_csv_byte_reproduction": true,
+  "source_pdf_hashes": "360/360",
+  "source_page_amount_and_unit_presence": "19/19; lexical/page-position checks, not full independent financial extraction",
+  "policy_checks": "28/28",
+  "synthetic_tests": "23/23",
+  "integration_tests": "11/11",
+  "guard_tests": "17/17",
+  "gate_contract_checks": "15/15",
+  "independent_session_verdict": {
+    "verdict": "PASS_TECHNICAL_WITH_LIMITS",
+    "p01": "PASS：tools/s02_calculate.py=13a6eb75…a8cd4、s03_input_gate.py=a135fddd…2df12、l0_classify.py=b500b3a1…37d3、a03=11137167…45d7 工作区与 d72d4d5 blob 逐字节相同；s01_rules_check.py 工作区134d0fee…4470f vs blob88a2333c…a0e9f 仅CRLF/LF差异(纯换行等价)，原运行SHA未追改；新execution manifest 记录 calculator/formula_engine/L0/upstream_a03 哈希，canonical manifest 无 execution_sources 未被追溯修改",
+    "p02": "PASS：本轮自行从 s00/financial_normalized.csv.gz 解出 CSV 副本并以 --out-dir round2/recalc_copy 实跑 rc=0、P05 PASS、all_pool_metrics.csv=69f82db2…258425 与 company_metric_summary.csv=1dcd4093…3bf95 均与canonical逐字节相等；直接 .csv.gz 入口 --out-dir round2/recalc_gzip 同样 rc=0 且两CSV逐字节相等；23/23检查、blocking_fail=0、12648格/1054家/6211-4303-267一致；未写canonical",
+    "p03": "PASS_WITH_LIMIT：源码 s02_calculate.py:445/462-466 已改为 l0_required 时 applied 必须为真否则FAIL、v1才NOT_APPLICABLE；我两次实跑 P06=PASS 且 manifest l0_rules.applied=true、l0_classifier.executed=true；但 v1→NOT_APPLICABLE 与 v2未应用→阻断 两条负面路径本轮未由我实跑复现（仅代码阅读+作者 test_results.json SELF_CHECK）",
+    "q05": "UNVERIFIED_THIS_ROUND：low_base_confirmed helper 所在文件已定位但输出被截断，未读到签名与 False/True/未知类型的实际行为，不作独立确认；不构成阻断，闸门侧 Q05 仍由 CLEAN_BLOCKING_FLAGS 覆盖",
+    "s03_actual_consumer_verified": false,
+    "independent_financial_source_audit": false,
+    "remaining_blockers": []
+  },
+  "remaining_coverage_companies": 21,
+  "protected21_l0": {
+    "EVALUABLE": 10,
+    "W5_PROVISIONAL_ONLY": 8,
+    "W9_MIXED_NON_EVALUABLE": 3
+  },
+  "release_S03_applied": false,
+  "remote_controller_updated": false,
+  "proposed_next_scope": "S03 first integrates and verifies load_gate_inputs/protect_existing_route; only after that may it run frozen L1 technical triage. No business/final-candidate adoption.",
+  "s03_actual_consumer_verified": false,
+  "independent_financial_source_audit": false,
+  "limits": [
+    "21家开放覆盖队列不能仅因NO_SIGNAL终结淘汰；W5/W9必须保留。",
+    "PROVISIONAL/HOLD不能充作干净维度；低基数确认和SG06绝对额路径继续由冻结S01执行器处理。",
+    "Reasonix独立复算了同内容CSV副本与gzip入口；P06两条负面路径主要由作者测试及代码审阅支持；Q05 helper在复审中未由Reasonix独立实跑。",
+    "本次不是全池原始PDF、财务字段或业务证据的第三方完整审计。",
+    "远端main推送被自动审批拒绝；控制文件仍维持S02待复核/S03锁定，状态更新只作提案。"
+  ]
+}

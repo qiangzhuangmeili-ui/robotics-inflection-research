@@ -1,0 +1,17 @@
+请做同一S02问题的限范围复审，最多6轮工具调用。当前工作目录 C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research。生产代码只读，不修改任何规则、输入、历史交付、控制文件或密钥；只可在 runs/issues/S02/recheck_20261029/reasonix/round2/ 写你自己的临时复算/报告。不创建子代理、不发外部消息，不扩大范围。
+
+上一轮报告在 reasonix/review_round1.md（相对于recheck_20261029目录），原判定RETURN_FOR_REWORK：P01脚本未提交和来源哈希缺失、P02你解压到自己目录后重算失败及gz入口失败、P03 P06不能证明v2必需的L0已应用。现在只复查这三项和Q05辅助判断，不必重复通读A03/19源页。
+
+补修证据：
+1. 本地生产提交 d72d4d578cf150b57a5e881bfe5164e8cd2f9e27，source工作区与提交一致；tools/s01_rules_check.py旧工作副本CRLF与Git LF只是已核实换行等价，原运行SHA仍134d0fee...4470f。生产代码已经入本地Git；直接推远端main被自动审批拒绝，远端未更新。不要要求绕过审批或替用户推main；本轮判断“本地技术修复是否可交付”，远端同步另需明确授权。
+2. 新CLI calculation_manifest增加execution_sources，记录calculator/formula/L0/上游A03+重抽计划哈希。历史canonical manifest未被追改，而新 execution manifest 和 runs/issues/S02/recheck_20261029/reproduction_manifest.json 将本地代码commit与新重现产物关联；两个CSV全字段字节等同canonical。请独立核验，不要只信作者的PASS。
+3. 已登记gzip的解压内容SHA可识别你自己目录里的同内容CSV副本；直接.csv.gz入口只在明确out-dir内materialize cache，分别登记源压缩SHA、载入CSV路径和payload SHA。未知/篡改payload仍拒绝。v2副本也必须自动L0。
+4. P06对v1显示NOT_APPLICABLE(required=false)；识别v2时required=true且applied=true，否则阻断。integration/test_results.json现11组，包括故障注入loader applied=false；v2两CSV均byte_equal=true。
+5. Q05辅助helper已显式 low_base_confirmed bool参数：未确认False，已确认OK且无其他阻断可True，PROVISIONAL/HOLD/Q06等永不变clean；未知确认类型拒绝。它只做readiness，不替代S01信号/确认/L2，不否决SG06绝对额路径。gates/gate_tests.json现17项，validation.json 15项；contract与13个canonical artifact未改。S03实际消费仍false，没有名单产出。
+
+请实际重跑你上轮同一个CSV副本命令（--out-dir改为你自己的round2/recalc_copy），并跑直接gzip入口（out为round2/recalc_gzip），核2个CSV与canonical hashes：
+all_pool_metrics.csv = 69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425
+company_metric_summary.csv = 1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95
+建议Python使用已可用的 C:\Users\zhangjianmei\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe（也可用你上一轮成功的py）。不得覆盖canonical目录。检查新manifest实际输入、L0 required/applied与脚本SHA；可做少量内联负面测试，但不要写生产文件。
+
+最后输出中文简短复审结论，并在stdout最后附JSON对象：{"verdict":"PASS_TECHNICAL_WITH_LIMITS|RETURN_FOR_REWORK|BLOCKED","p01":"...","p02":"...","p03":"...","q05":"...","s03_actual_consumer_verified":false,"independent_financial_source_audit":false,"remaining_blockers":[]}。必须如实记录实际执行和未执行的边界；通过仅表示可交付的技术修复，不等于全池原始PDF/业务最终采用。若能写最终报告只写 round2/review.md；工具不足时先给结论，不再重复大范围读取。

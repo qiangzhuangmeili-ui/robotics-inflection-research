@@ -1,0 +1,277 @@
+{
+ "sources": {
+  "tools/s02_calculate.py": {
+   "working_sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4",
+   "git_blob_sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4",
+   "exact_bytes": true,
+   "lf_only_equivalent": true
+  },
+  "tools/s03_input_gate.py": {
+   "working_sha256": "a135fddd01de4624a3a5419ddec5baffda4ec61ec2498b3d0ee92be61492df12",
+   "git_blob_sha256": "a135fddd01de4624a3a5419ddec5baffda4ec61ec2498b3d0ee92be61492df12",
+   "exact_bytes": true,
+   "lf_only_equivalent": true
+  },
+  "tools/s01_rules_check.py": {
+   "working_sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f",
+   "git_blob_sha256": "88a2333cce681fbb66759abc869e95ed52b9541fc1ba98080f162d8c002a0e9f",
+   "exact_bytes": false,
+   "lf_only_equivalent": true
+  },
+  "tools/l0_classify.py": {
+   "working_sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+   "git_blob_sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+   "exact_bytes": true,
+   "lf_only_equivalent": true
+  },
+  "tools/a03_financial_field_extractor.py": {
+   "working_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+   "git_blob_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+   "exact_bytes": true,
+   "lf_only_equivalent": true
+  }
+ },
+ "inputs": {
+  "gz_path": "runs\\issues\\S02\\remediation_20261029\\s00\\financial_normalized.csv.gz",
+  "gz_sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+  "payload_path": "runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_input\\financial_normalized.csv",
+  "payload_sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
+  "payload_bytes": 87708796
+ },
+ "runs": [
+  {
+   "mode": "csv_copy",
+   "argv_script": "tools/s02_calculate.py",
+   "out_dir": "runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_copy",
+   "returncode": 0,
+   "stdout_tail": "PASS P01 指标公式与信号阈值严格沿用冻结 S01_SCREEN_RULES_V2\nPASS P02 冻结 S01 登记的三份基线输入指纹未变\nPASS P05 实际加载的标准化 CSV 与可信 SHA 来源匹配\nPASS P06 按输入版本要求并实际应用锁定的 L0 addendum\nPASS P03 公司数与 S00/S01 一致（1054）\nPASS P04 每家都有可确定的最新可用期\nPASS Q01 1054 家公司 × 12 指标全部有状态（12,648 格）\nPASS Q02 公司级汇总 1054 行且每行 12 格\nPASS Q03 股票代码保持 6 位字符串（前导零未丢）\nPASS Q04 非可评估格一律留空，不用 0 代替缺数据\nPASS Q05 可评估格都有数值\nPASS Q06 超出 valid_range 的值只标记不删除\nPASS Q07 对比期一律早于计算期（无反向/同期混算）\nPASS Q08 计算期不超过全池最新期（无未来数据）\nPASS Q09 需要输入的状态都能回溯到具体输入行（MISSING/NOT_COMPARABLE 除外）\nPASS Q10 可评估格的输入齐全（缺输入不得判 OK/PROVISIONAL）\nPASS Q11 M04 回算的 REV/COST 同期同版本（VERSION_MISMATCH 单独列出）\nPASS Q12 M01/M02/M05/M07/M09 独立复算与交付逐格一致\nWARN Q13 每指标状态分布与 S01 干跑逐项一致（新输入：差异属预期）\nWARN Q14 最新期分布与 S01 一致（锚定定义未漂移）（新输入：差异属预期）\nPASS Q15 pp 类指标量级提示（不阻断；超限处置按规则 valid_range 由 Q06 标记）\nWARN Q16 最新期字段覆盖缺口清单（上游抽取问题，本卡不修）\nPASS Q17 数值量级可疑清单（疑似单位/取数错误，本卡不修）\n{\n \"checks\": \"23/23\",\n \"blocking_fail\": 0,\n \"counts\": {\n  \"companies\": 1054,\n  \"metrics\": 12,\n  \"cells\": 12648,\n  \"ok\": 6211,\n  \"provisional\": 4303,\n  \"hold\": 267,\n  \"missing\": 229,\n  \"not_comparable\": 314,\n  \"undefined_base\": 469,\n  \"not_applicable\": 855,\n  \"excluded_scope\": 0,\n  \"version_mismatch\": 0\n }\n}\n",
+   "stderr_tail": "",
+   "outputs": {
+    "all_pool_metrics.csv": {
+     "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+     "expected": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+     "byte_equal": true
+    },
+    "company_metric_summary.csv": {
+     "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+     "expected": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+     "byte_equal": true
+    }
+   },
+   "manifest_sha256": "3b397a85f08592fa1367b7e7b02518e8417c01de12eaca46b78fe635466971fe",
+   "manifest_keys": [
+    "base_rules_sha256",
+    "counts",
+    "coverage",
+    "execution_sources",
+    "executor",
+    "formula_source",
+    "generated_at",
+    "inputs",
+    "issue_key",
+    "issue_number",
+    "known_limits",
+    "l0_addendum",
+    "l0_distribution",
+    "l0_rule_note",
+    "latest_period_definition",
+    "normalized_input_used",
+    "outputs",
+    "period_model",
+    "plan_version",
+    "review_nature",
+    "rules_file",
+    "rules_sha256",
+    "rules_version"
+   ],
+   "manifest_execution_sources": {
+    "calculator": {
+     "path": "tools/s02_calculate.py",
+     "sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4"
+    },
+    "formula_engine": {
+     "path": "tools/s01_rules_check.py",
+     "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
+    },
+    "l0_classifier": {
+     "path": "tools/l0_classify.py",
+     "sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+     "executed": true
+    },
+    "l0_rules": {
+     "applied": true,
+     "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+     "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+     "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
+    },
+    "upstream_a03": {
+     "source_path": "tools/a03_financial_field_extractor.py",
+     "source_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+     "reextract_plan_path": "runs/issues/S02/remediation_20261029/reextract_plan.json",
+     "reextract_plan_sha256": "6362e61f4642a764eddcc39e599da7dd2dc3c7588a67432fedbf5cc5c8a1f2aa",
+     "registered_parser_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+     "source_matches_registered_parser": true,
+     "extraction_executed_this_run": false,
+     "note": "上游解析器与重抽计划仅作来源链记录；本次 S02 未执行字段抽取"
+    }
+   },
+   "manifest_inputs": [
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv.gz",
+     "sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+     "bytes": 5886318
+    },
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/normalization_manifest.json",
+     "sha256": "4d22392e3344382ea759525c1873abb502275e622ee7f09f9d5311ba8cf7baf6",
+     "bytes": 26283
+    },
+    {
+     "path": "data/company_master.csv",
+     "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+     "bytes": 707054
+    }
+   ],
+   "manifest_l0": {
+    "input_version": null,
+    "l0_addendum_sha256": null,
+    "base_metric_rules_sha256": null,
+    "l0_distribution": {
+     "EVALUABLE": 664,
+     "W5_PROVISIONAL_ONLY": 387,
+     "W9_MIXED_NON_EVALUABLE": 3
+    }
+   }
+  },
+  {
+   "mode": "gzip_direct",
+   "argv_script": "tools/s02_calculate.py",
+   "out_dir": "runs\\issues\\S02\\recheck_20261029\\reasonix\\round2\\recalc_gzip",
+   "returncode": 0,
+   "stdout_tail": "PASS P01 指标公式与信号阈值严格沿用冻结 S01_SCREEN_RULES_V2\nPASS P02 冻结 S01 登记的三份基线输入指纹未变\nPASS P05 实际加载的标准化 CSV 与可信 SHA 来源匹配\nPASS P06 按输入版本要求并实际应用锁定的 L0 addendum\nPASS P03 公司数与 S00/S01 一致（1054）\nPASS P04 每家都有可确定的最新可用期\nPASS Q01 1054 家公司 × 12 指标全部有状态（12,648 格）\nPASS Q02 公司级汇总 1054 行且每行 12 格\nPASS Q03 股票代码保持 6 位字符串（前导零未丢）\nPASS Q04 非可评估格一律留空，不用 0 代替缺数据\nPASS Q05 可评估格都有数值\nPASS Q06 超出 valid_range 的值只标记不删除\nPASS Q07 对比期一律早于计算期（无反向/同期混算）\nPASS Q08 计算期不超过全池最新期（无未来数据）\nPASS Q09 需要输入的状态都能回溯到具体输入行（MISSING/NOT_COMPARABLE 除外）\nPASS Q10 可评估格的输入齐全（缺输入不得判 OK/PROVISIONAL）\nPASS Q11 M04 回算的 REV/COST 同期同版本（VERSION_MISMATCH 单独列出）\nPASS Q12 M01/M02/M05/M07/M09 独立复算与交付逐格一致\nWARN Q13 每指标状态分布与 S01 干跑逐项一致（新输入：差异属预期）\nWARN Q14 最新期分布与 S01 一致（锚定定义未漂移）（新输入：差异属预期）\nPASS Q15 pp 类指标量级提示（不阻断；超限处置按规则 valid_range 由 Q06 标记）\nWARN Q16 最新期字段覆盖缺口清单（上游抽取问题，本卡不修）\nPASS Q17 数值量级可疑清单（疑似单位/取数错误，本卡不修）\n{\n \"checks\": \"23/23\",\n \"blocking_fail\": 0,\n \"counts\": {\n  \"companies\": 1054,\n  \"metrics\": 12,\n  \"cells\": 12648,\n  \"ok\": 6211,\n  \"provisional\": 4303,\n  \"hold\": 267,\n  \"missing\": 229,\n  \"not_comparable\": 314,\n  \"undefined_base\": 469,\n  \"not_applicable\": 855,\n  \"excluded_scope\": 0,\n  \"version_mismatch\": 0\n }\n}\n",
+   "stderr_tail": "",
+   "outputs": {
+    "all_pool_metrics.csv": {
+     "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+     "expected": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+     "byte_equal": true
+    },
+    "company_metric_summary.csv": {
+     "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+     "expected": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+     "byte_equal": true
+    }
+   },
+   "manifest_sha256": "9cf8a9a204c87b51db3ffbfea5d98e67f2cf815b5beb06caf8e232f7369da7fc",
+   "manifest_keys": [
+    "base_rules_sha256",
+    "counts",
+    "coverage",
+    "execution_sources",
+    "executor",
+    "formula_source",
+    "generated_at",
+    "inputs",
+    "issue_key",
+    "issue_number",
+    "known_limits",
+    "l0_addendum",
+    "l0_distribution",
+    "l0_rule_note",
+    "latest_period_definition",
+    "normalized_input_used",
+    "outputs",
+    "period_model",
+    "plan_version",
+    "review_nature",
+    "rules_file",
+    "rules_sha256",
+    "rules_version"
+   ],
+   "manifest_execution_sources": {
+    "calculator": {
+     "path": "tools/s02_calculate.py",
+     "sha256": "13a6eb75df089bf4e1eb07e8da6636d420ba77312bd40343a1b3a4de2d2a8cd4"
+    },
+    "formula_engine": {
+     "path": "tools/s01_rules_check.py",
+     "sha256": "134d0feeb2aff67f1a6ab9df0a08a8d96c6a64a294df17382e06e5cd4964470f"
+    },
+    "l0_classifier": {
+     "path": "tools/l0_classify.py",
+     "sha256": "b500b3a190d0a8eeb8c32269e107893f90883f758bad5b6b432675043e8537d3",
+     "executed": true
+    },
+    "l0_rules": {
+     "applied": true,
+     "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+     "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+     "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
+    },
+    "upstream_a03": {
+     "source_path": "tools/a03_financial_field_extractor.py",
+     "source_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+     "reextract_plan_path": "runs/issues/S02/remediation_20261029/reextract_plan.json",
+     "reextract_plan_sha256": "6362e61f4642a764eddcc39e599da7dd2dc3c7588a67432fedbf5cc5c8a1f2aa",
+     "registered_parser_sha256": "11137167f3df86a023a4d52b6be6b25bfba8c246a93355bc98de828dd45945d7",
+     "source_matches_registered_parser": true,
+     "extraction_executed_this_run": false,
+     "note": "上游解析器与重抽计划仅作来源链记录；本次 S02 未执行字段抽取"
+    }
+   },
+   "manifest_inputs": [
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv.gz",
+     "sha256": "b18c807917e3dcdec9241934008b180966a890be67b82816cff1243a48700824",
+     "bytes": 5886318
+    },
+    {
+     "path": "runs/issues/S02/remediation_20261029/s00/normalization_manifest.json",
+     "sha256": "4d22392e3344382ea759525c1873abb502275e622ee7f09f9d5311ba8cf7baf6",
+     "bytes": 26283
+    },
+    {
+     "path": "data/company_master.csv",
+     "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+     "bytes": 707054
+    }
+   ],
+   "manifest_l0": {
+    "input_version": null,
+    "l0_addendum_sha256": null,
+    "base_metric_rules_sha256": null,
+    "l0_distribution": {
+     "EVALUABLE": 664,
+     "W5_PROVISIONAL_ONLY": 387,
+     "W9_MIXED_NON_EVALUABLE": 3
+    }
+   }
+  }
+ ],
+ "canonical_unchanged": {
+  "all_pool_metrics.csv": {
+   "sha256": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425",
+   "expected": "69f82db2896c746ee9e732354708f2d106d32ca115ccada9ee985ba322958425"
+  },
+  "company_metric_summary.csv": {
+   "sha256": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95",
+   "expected": "1dcd40932ec68c4c5d225c56e168906930a1a3b5beda43f3017d33470863bf95"
+  }
+ },
+ "source_hits_s02": [
+  " 216| def l0_addendum_required(rules: dict, payload_sha: str, input_identity: dict) -> bool:",
+  " 229| def load_l0_addendum(rules: dict, actual: Path, actual_sha: str,",
+  " 445|     l0_required = input_identity[\"ok\"] and l0_addendum_required(rules, payload_sha, input_identity)",
+  " 446|     if l0_required:",
+  " 448|             l0_addendum = load_l0_addendum(rules, loaded_csv_candidate, payload_sha, input_identity)",
+  " 453|         l0_required",
+  " 462|     p06_status = \"NOT_APPLICABLE\" if not l0_required else (\"PASS\" if p06_applied else \"FAIL\")",
+  " 463|     add(\"P06\", \"按输入版本要求并实际应用锁定的 L0 addendum\",",
+  " 464|         not l0_required or p06_applied,",
+  " 465|         {\"required\": l0_required, \"applicable\": l0_required,",
+  " 495|                 raise ValueError(f\"materialized gzip payload SHA mismatch: {display_path(actual)}\")",
+  " 834|     execution_sources = {",
+  " 871|             \"sha256\": execution_sources[\"formula_engine\"][\"sha256\"],",
+  " 874|         \"execution_sources\": execution_sources,"
+ ]
+}

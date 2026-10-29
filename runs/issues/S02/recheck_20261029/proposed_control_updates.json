@@ -1,0 +1,24 @@
+{
+  "status": "PREPARED_NOT_APPLIED",
+  "base_remote_commit": "e41f61d",
+  "expected_control_sha256": {
+    "data/active_issue.json": "0e4dc0c73fd4cacd67f31223c68d42c2eba051f40e86dffabe000174eae558b4",
+    "PROJECT_STATE.json": "f92969f2b08ab56f90039d50254365ff39fab8e923c334dbd53d35667dad29dd",
+    "data/issue_execution_plan.csv": "da04e4a8b4baa657f8660c789ab7ad8f2e40b4963d9fdcbd43dd4776fed5125a",
+    "data/issue_execution_plan.json": "9cd2a91d1cd2af4b7f9c815ba6523ee6db7cfca5a762e58e50e7891cda3d040d"
+  },
+  "review_file": "runs/issues/S02/recheck_20261029/acceptance_recommendation.json",
+  "review_file_sha256": "ac1b5a5d7bb263764f5109b722bd5da65c02bd0a796a4e9001e1b6f4f15bec47",
+  "proposed_changes": {
+    "S02_status": "ACCEPTED_WITH_LIMITS",
+    "S02_review_nature": "AUTHOR_RECHECK_PLUS_INDEPENDENT_SESSION_AI_TECHNICAL_REVIEW",
+    "S03_status": "READY (guard integration and verification must precede any L1 triage; no actual consumer proof yet)",
+    "S03_required_input": "S00_TARGETED_REEXTRACTION_20261029",
+    "S03_required_gate": "tools/s03_input_gate.py plus pinned gate_contract.json and protected_21.csv",
+    "S03_pre_execution_rule": "必须实际调用守卫并保存消费验证记录后，才能计算冻结L1观察信号；不要求所有未知清零。",
+    "next_recommended_issue": "S03 #38",
+    "unchanged": "原始PDF、冻结S00/S01/S02数据、阈值与业务采用状态"
+  },
+  "requires_explicit_authorization_for_remote_main": true,
+  "applied": false
+}

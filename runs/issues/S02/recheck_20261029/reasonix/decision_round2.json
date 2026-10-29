@@ -1,0 +1,14 @@
+{
+  "recorded_by": "Codex; exact final JSON extracted from Reasonix stdout",
+  "source_log_sha256": "7265cc98f43384e36b182ce81799ec0a599c9b23f54a75467a17f685a6b40979",
+  "decision": {
+    "verdict": "PASS_TECHNICAL_WITH_LIMITS",
+    "p01": "PASS：tools/s02_calculate.py=13a6eb75…a8cd4、s03_input_gate.py=a135fddd…2df12、l0_classify.py=b500b3a1…37d3、a03=11137167…45d7 工作区与 d72d4d5 blob 逐字节相同；s01_rules_check.py 工作区134d0fee…4470f vs blob88a2333c…a0e9f 仅CRLF/LF差异(纯换行等价)，原运行SHA未追改；新execution manifest 记录 calculator/formula_engine/L0/upstream_a03 哈希，canonical manifest 无 execution_sources 未被追溯修改",
+    "p02": "PASS：本轮自行从 s00/financial_normalized.csv.gz 解出 CSV 副本并以 --out-dir round2/recalc_copy 实跑 rc=0、P05 PASS、all_pool_metrics.csv=69f82db2…258425 与 company_metric_summary.csv=1dcd4093…3bf95 均与canonical逐字节相等；直接 .csv.gz 入口 --out-dir round2/recalc_gzip 同样 rc=0 且两CSV逐字节相等；23/23检查、blocking_fail=0、12648格/1054家/6211-4303-267一致；未写canonical",
+    "p03": "PASS_WITH_LIMIT：源码 s02_calculate.py:445/462-466 已改为 l0_required 时 applied 必须为真否则FAIL、v1才NOT_APPLICABLE；我两次实跑 P06=PASS 且 manifest l0_rules.applied=true、l0_classifier.executed=true；但 v1→NOT_APPLICABLE 与 v2未应用→阻断 两条负面路径本轮未由我实跑复现（仅代码阅读+作者 test_results.json SELF_CHECK）",
+    "q05": "UNVERIFIED_THIS_ROUND：low_base_confirmed helper 所在文件已定位但输出被截断，未读到签名与 False/True/未知类型的实际行为，不作独立确认；不构成阻断，闸门侧 Q05 仍由 CLEAN_BLOCKING_FLAGS 覆盖",
+    "s03_actual_consumer_verified": false,
+    "independent_financial_source_audit": false,
+    "remaining_blockers": []
+  }
+}
