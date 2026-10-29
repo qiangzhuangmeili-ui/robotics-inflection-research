@@ -959,10 +959,18 @@
         "metric_formulas.md",
         "threshold_rationale.md"
       ],
-      "acceptance": [
-        "所有公式/阈值/边界/缺失路径可执行且先于名单产出留痕。",
-        "没有必须筛出N家的规则；以后改规则另版本重算全池，不手调个别公司。"
-      ],
+      "acceptance": {
+        "review_nature": "EXTERNAL_INDEPENDENT_RECHECK",
+        "reviewer": "Codex",
+        "recorded_by": "WorkBuddy AI",
+        "decision": "ACCEPTED_WITH_LIMITS",
+        "review_file": "runs/issues/S01/acceptance_20261029.json",
+        "review_file_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+        "reviewed_at": "2026-10-29",
+        "release_next": "S02",
+        "release_scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
+        "rules_version": "S01_SCREEN_RULES_V2"
+      },
       "stop": [
         "规则不能解释亏损或缺失处理则先修规则，不开始排名。"
       ],
@@ -970,7 +978,7 @@
       "issue_number": 36,
       "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/36",
       "title": "S01｜预先登记筛选公式、阈值、缺失与亏损规则",
-      "status": "SELF_CHECK_PASS",
+      "status": "ACCEPTED_WITH_LIMITS",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S01/",
       "issue_body_sha256": "8f630c3042f69351369b48746ba2a3417a7148fcd778bf400d622e813de31050",
@@ -1012,11 +1020,19 @@
       "issue_number": 37,
       "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37",
       "title": "S02｜计算全池指标与口径检查",
-      "status": "WAITING_DEPENDENCIES",
+      "status": "READY",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S02/",
       "issue_body_sha256": "ea0aa53e74183772a9c3e4b67a3f23f2d22df7d823a9dee0c6e25a77e5c6ce95",
-      "blocked_reason": "等待 S01 R4 的外部复验放行（自检不等于验收）"
+      "release": {
+        "from_issue": "S01",
+        "decision": "ACCEPTED_WITH_LIMITS",
+        "release_file": "runs/issues/S01/acceptance_20261029.json",
+        "scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
+        "rules_version_required": "S01_SCREEN_RULES_V2",
+        "rules_sha256_required": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+        "must_not": "S03 名单筛选 / 业务深研 / 估值"
+      }
     },
     {
       "key": "S03",

@@ -1,21 +1,21 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
+  "active_issue_number": 37,
+  "active_issue_key": "S02",
   "executor": "WorkBuddy AI",
-  "started_at": "2026-10-29T10:19:39+08:00",
-  "status": "IDLE_S01_R4_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
-  "claim_note": "S01 第四轮：补齐 SG09→M07 依赖并禁止默认空集；28/28 校验 + 23/23 测试；S02 未启动。",
+  "started_at": null,
+  "status": "READY_NOT_STARTED",
+  "claim_note": "S01 经 Codex 独立复验 ACCEPTED_WITH_LIMITS（SG09 依赖与传播、23 项测试、匿名重算 280/659、规则与交付哈希均通过），本地放行 S02；S02 只做指标计算与口径检查，须用冻结 v2，S03 名单筛选仍锁。",
   "last_completed": {
     "issue_number": 36,
     "issue_key": "S01",
-    "completed_at": "2026-10-29T15:40:37+08:00",
-    "review_file": "runs/issues/S01/review.json",
-    "decision": "SELF_CHECK_PASS",
-    "review_nature": "SELF_CHECK",
-    "acceptance": "1/1 阻断闭合 + 28/28 校验 + 23/23 合成测试",
-    "summary": "SIGNAL_DEPS 补 SG09: [M07]；signal_flags 未登记返回 None；新增 C16 依赖完整性校验；L2 281→280",
-    "review_round": "REWORK_R4_AFTER_CODEX_ASSESSMENT_dfc835d"
+    "completed_at": "2026-10-29T15:49:21+08:00",
+    "review_file": "runs/issues/S01/acceptance_20261029.json",
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "review_nature": "EXTERNAL_INDEPENDENT_RECHECK",
+    "review_round": "REWORK_R4_AFTER_CODEX_ACCEPTANCE_80745cd",
+    "acceptance": "6/6 独立核实 + 23/23 合成测试 + 28/28 校验",
+    "summary": "SIGNAL_DEPS 补 SG09→M07、未登记返回 None、新增 C16；L2=280、SG01∪SG02=659；规则 v2 冻结未改，S02 放行指标计算"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -26,7 +26,7 @@
   },
   "next_recommended_issue_number": 37,
   "next_recommended_issue_key": "S02",
-  "next_recommended_reason": "S01 返工自检通过但未验收；S02 须等外部复验放行后执行",
+  "next_recommended_reason": "S01 已验收放行；S02 须用 v2 逐格输出 OK/PROVISIONAL/HOLD 与来源，不得直接进 S03。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",

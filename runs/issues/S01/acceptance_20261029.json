@@ -1,0 +1,106 @@
+{
+  "issue_key": "S01",
+  "issue_number": 36,
+  "plan_version": "20261026_collection_first_v2",
+  "review_nature": "EXTERNAL_INDEPENDENT_RECHECK",
+  "reviewer": "Codex",
+  "recorded_by": "WorkBuddy AI",
+  "reviewed_at": "2026-10-29",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "verdict": "REWORK_R4_ACCEPTED_SG09_DEPENDENCY_CLOSED",
+  "release_S01": true,
+  "release_S02": true,
+  "release_S02_scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
+  "rules_version_for_S02": "S01_SCREEN_RULES_V2",
+  "record_file": "runs/issues/S01/codex_acceptance_80745cd.md",
+  "audit_artifacts": [
+    "runs/issues/S01/codex_audit_r4_80745cd.py",
+    "runs/issues/S01/codex_audit_results_r4_80745cd.json"
+  ],
+  "commits_verified": [
+    "80745cdc4e3f521b14b1ad7d716d05497914ea4d"
+  ],
+  "rule_hashes": {
+    "screen_rules_v1.json": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+    "screen_rules_v2.json": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+    "v1_unchanged": true
+  },
+  "independent_checks": [
+    {
+      "id": "X1",
+      "item": "SG09 依赖登记与质量标记传播",
+      "source": "CODEX_RECORD + WORKBUDDY_RECHECK",
+      "result": "PASS",
+      "evidence": "SIGNAL_DEPS 已登记 SG09:[M07]；SG09 共 203 个触发，M07 的 Q05/Q06 全部传播到信号标记；WorkBuddy 独立重算 M07 得 203，与交付一致；独立统计触发中带 Q06 者 74 家，均未进入干净维度"
+    },
+    {
+      "id": "X2",
+      "item": "政策违例扫描",
+      "source": "CODEX_RECORD + WORKBUDDY_RECHECK",
+      "result": "PASS",
+      "evidence": "质量标记漏传 0、普通 OK 带 Q06/Q12 为 0、缺两干净维度判 L2 候选为 0；WorkBuddy 复跑自检同样 0 违例，且独立路径未发现「M07=OK 且带 Q06」"
+    },
+    {
+      "id": "X3",
+      "item": "23 项合成测试与故障注入",
+      "source": "CODEX_RECORD + WORKBUDDY_RECHECK",
+      "result": "PASS",
+      "evidence": "23/23 PASS（含 T21 SG09 继承 M07 的 Q06 不进 L2、T22 SG09 低基数按绝对额确认）；WorkBuddy 在内存移除 SIGNAL_DEPS['SG09'] 后 C16 确实 FAIL、signal_flags 返回 None 而非空集，恢复后回到 PASS，未落盘任何修改"
+    },
+    {
+      "id": "X4",
+      "item": "匿名重算与交付一致",
+      "source": "CODEX_RECORD + WORKBUDDY_REPRODUCTION",
+      "result": "PASS",
+      "evidence": "L1 = 841 OBSERVE_QUEUE / 138 RISK_WATCH / 75 NO_SIGNAL；L2 = 280 SHORTLIST_CANDIDATE / 716 NOT_SHORTLISTED / 58 HOLD_FOR_DATA；SG01∪SG02 = 659（62.52%）。WorkBuddy 重跑执行器，除 checked_at 时间戳外与交付 self_check.json 完全一致"
+    },
+    {
+      "id": "X5",
+      "item": "v1/v2 规则、输入指纹与交付哈希",
+      "source": "WORKBUDDY_RECHECK",
+      "result": "PASS",
+      "evidence": "v1/v2 哈希与复核记录一致；逐字段 diff v1→v2 仅 5 处：SG02 threshold 0.05→5.0、SG02 note、rules_version、frozen_at、新增 change_log，无其他阈值或政策漂移；三份研究输入指纹 3/3；manifest 16/16 交付 + 1/1 执行器源码哈希匹配"
+    },
+    {
+      "id": "X6",
+      "item": "确定性复现",
+      "source": "WORKBUDDY_RECHECK",
+      "result": "PASS",
+      "evidence": "重跑 tools/s01_rules_check.py 得 28/28 + 23/23 + L2 280，与提交版 self_check.json 逐字段比对仅 checked_at 不同；已用 git checkout 还原交付版本，manifest 哈希恢复 16/16"
+    }
+  ],
+  "verifier_weak_assertions_not_blocking": [
+    {
+      "id": "W1",
+      "item": "SIGNAL_DEPS 仍硬编码在 tools/s01_rules_check.py，规则文件 signals 未登记 dependencies 字段",
+      "disposition": "C16 已能拦住漏登记，但「规则文件」与「代码」仍是两份真相。S02 不得复制该表；建议 S02 开工时把依赖表迁入 screen_rules_v3 或由规则文件生成，迁移前须全池重算并留版本差异"
+    },
+    {
+      "id": "W2",
+      "item": "D04 的 clean_dims 用 (signal_flags(...) or {'Q00'}) 兜底，依赖未登记时按「干净」计入辅助统计",
+      "disposition": "L2 判定走 layers().clean()，未登记返回 False，实际不放行；但辅助违例计数会漏报。属检查口径弱断言，不改变本次 L2=280，S02 复算时须以 layers 判定为准"
+    },
+    {
+      "id": "W3",
+      "item": "「最新可用期」锚定条件敏感",
+      "disposition": "按「营收或扣非累计有可用值」锚定得 SG09=203；若改为「该字段自身有值的最新期」则得 215（+12 家回退到更早期间）。S02 必须沿用 S01 锚定定义并在 manifest 写明，否则信号计数会漂移"
+    }
+  ],
+  "limits_preserved": [
+    "阈值全部为先验研究假设，未做行业分组校准；L1 观察队列 79.79%、L2 覆盖 26.57%，偏松未回头调",
+    "MARGIN 与 PROFIT 维度同源，L2 仍含重复计数",
+    "已确认重述使 386 家最新期样本落在 PROVISIONAL，PROVISIONAL 面较大",
+    "2026Q3 截面不完整（182 家最新期为 20260930），横截面统计须分层",
+    "S00 遗留：62 个整槽无值、453 份三表与摘要表不一致、2,157 个重述键 NEEDS_REVIEW、旧快照 2021/2022 单一来源",
+    "本次技术复核不等于全池业务证据独立验收，L1/L2 计数不是名单"
+  ],
+  "constraints_for_S02": [
+    "必须使用冻结的 S01_SCREEN_RULES_V2（sha256 ada501e8…），不得回退 v1 的 SG02=0.05pp",
+    "逐格输出 metric_status、quality_flags、计算期间与来源（document_id/version_used），不得只给汇总",
+    "OK / PROVISIONAL / HOLD 三类必须分开，PROVISIONAL 不得混入普通 OK",
+    "沿用 S01 的最新可用期锚定定义，并在 calculation_manifest 中登记该定义与输入指纹",
+    "本次放行仅限指标计算与口径检查；不得进入 S03 名单筛选、业务深研或估值",
+    "若需改规则，另立 v3 并全池重算、保留版本差异，不按目标家数调整"
+  ],
+  "scope": "技术/规则实现复核，不是全池原文业务结论独立采用；复核方未修改 WorkBuddy 结果或远端调度，本地据此记录验收并放行 S02 的指标计算阶段。"
+}

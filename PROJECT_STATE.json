@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S01_R4_SELF_CHECK_PASS_AWAITING_EXTERNAL_RECHECK",
+  "status": "S01_ACCEPTED_WITH_LIMITS_S02_READY",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -962,7 +962,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S01_R4_SELF_CHECK",
+  "current_gate": "S02_READY",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1106,13 +1106,12 @@
   "next_issue": {
     "key": "S02",
     "number": 37,
-    "reason": "S01 规则已冻结并自检通过，S02 待外部复验后放行",
-    "blocked_until": "S01_EXTERNAL_ACCEPTANCE"
+    "reason": "S01 外部复验 ACCEPTED_WITH_LIMITS，放行全池指标计算与口径检查"
   },
   "s01_stage": {
     "issue": "S01 / #36",
-    "decision": "SELF_CHECK_PASS",
-    "review_nature": "SELF_CHECK",
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "review_nature": "EXTERNAL_INDEPENDENT_RECHECK",
     "completed_at": "2026-10-29T10:26:56+08:00",
     "rules_version": "S01_SCREEN_RULES_V2",
     "frozen_at": "2026-10-29T10:25:57+08:00",
@@ -1150,8 +1149,8 @@
       "MARGIN 与 PROFIT 维度同源，L2 仍属重复计数",
       "已确认重述（是）覆盖 386 家最新期样本，PROVISIONAL 面较大，S02 须分开报告"
     ],
-    "release_S02": false,
-    "release_note": "S02 等外部复验后放行；自检不等于验收",
+    "release_S02": true,
+    "release_note": "S02 仅放行指标计算与口径检查，S03 及以后仍锁",
     "review_round": "REWORK_R4_AFTER_CODEX_ASSESSMENT_dfc835d",
     "rework": {
       "round": "R4",
@@ -1172,6 +1171,36 @@
         "signal_flags_missing_dep": 0,
         "signal_deps_unregistered": 0
       }
+    },
+    "acceptance": {
+      "reviewer": "Codex",
+      "recorded_by": "WorkBuddy AI",
+      "reviewed_at": "2026-10-29",
+      "review_file": "runs/issues/S01/acceptance_20261029.json",
+      "review_file_sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+      "checks_passed": "6/6（含独立重算 SG09=203、C16 故障注入、v1→v2 差异白名单）",
+      "commit": "80745cdc4e3f521b14b1ad7d716d05497914ea4d",
+      "release_S02": true,
+      "release_S02_scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
+      "weak_assertions": [
+        "SIGNAL_DEPS 仍硬编码在代码、规则文件未登记依赖字段",
+        "D04 的 clean_dims 兜底按干净计入辅助统计",
+        "最新可用期锚定定义敏感（203 vs 215）"
+      ]
     }
+  },
+  "s02_stage": {
+    "issue": "S02 / #37",
+    "status": "READY",
+    "rules_version_required": "S01_SCREEN_RULES_V2",
+    "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+    "scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
+    "must_output": [
+      "all_pool_metrics.csv（逐格 metric_status / quality_flags / 期间 / 来源）",
+      "metric_qc.csv",
+      "calculation_manifest.json（输入指纹 + 最新可用期定义 + 规则版本）"
+    ],
+    "must_not": "把 PROVISIONAL 混入 OK；进入 S03 名单筛选、业务深研或估值",
+    "started": false
   }
 }

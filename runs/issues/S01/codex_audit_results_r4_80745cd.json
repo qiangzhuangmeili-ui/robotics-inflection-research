@@ -1,0 +1,206 @@
+{
+  "audit_of_commit": "80745cd",
+  "auditor": "WorkBuddy AI (external recheck of Codex acceptance)",
+  "review_nature": "EXTERNAL_RECHECK_PARTIAL_INDEPENDENT",
+  "rules_v2_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+  "rules_v1_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+  "checks": [
+    {
+      "id": "A1a",
+      "item": "v1 规则哈希未被改动",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e"
+      }
+    },
+    {
+      "id": "A1b",
+      "item": "v2 规则哈希与复核记录一致",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
+      }
+    },
+    {
+      "id": "A1c",
+      "item": "v1→v2 差异仅限 SG02 单位修正与版本元数据",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "diff_paths": [
+          "/change_log",
+          "/frozen_at",
+          "/rules_version",
+          "/signals[1]/note",
+          "/signals[1]/threshold"
+        ],
+        "unexpected": []
+      }
+    },
+    {
+      "id": "A1d",
+      "item": "SG02 阈值 0.05→5.0 且单位仍为 pp",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "v1": 0.05,
+        "v2": 5.0,
+        "unit": "pp"
+      }
+    },
+    {
+      "id": "A2",
+      "item": "三份研究输入指纹与规则文件登记一致",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "files": 3,
+        "mismatch": []
+      }
+    },
+    {
+      "id": "A3a",
+      "item": "manifest 16 份交付哈希全部匹配",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "outputs": 16,
+        "mismatch": []
+      }
+    },
+    {
+      "id": "A3b",
+      "item": "执行器源码哈希与 manifest 登记一致",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "mismatch": []
+      }
+    },
+    {
+      "id": "A4a",
+      "item": "独立重算 SG09 触发数与交付一致（203）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "independent": 203,
+        "declared": 203
+      }
+    },
+    {
+      "id": "A4b",
+      "item": "M07 无「OK 且带 Q06」的政策违例",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "ok_with_q06": 0
+      }
+    },
+    {
+      "id": "A4c",
+      "item": "SG09 触发中的 Q06 已传播到信号标记",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "q06_fired": 74,
+        "fired": 203,
+        "note": "Q06 必须出现在 flags 里才允许该信号支撑 L2；独立统计仅作传播存在性检查"
+      }
+    },
+    {
+      "id": "A4d",
+      "item": "M07 状态分布可解释（无未声明状态）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "OK": 436,
+        "NOT_COMPARABLE": 29,
+        "PROVISIONAL": 267,
+        "UNDEFINED_BASE": 235,
+        "MISSING": 87
+      }
+    },
+    {
+      "id": "A5a",
+      "item": "基线状态下 C16 通过",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "signals": [
+          "SG01",
+          "SG02",
+          "SG03",
+          "SG04",
+          "SG05",
+          "SG06",
+          "SG07",
+          "SG08",
+          "SG09"
+        ],
+        "missing": [],
+        "bad": []
+      }
+    },
+    {
+      "id": "A5b",
+      "item": "内存移除 SG09 依赖后 C16 确实失败",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "signals": [
+          "SG01",
+          "SG02",
+          "SG03",
+          "SG04",
+          "SG05",
+          "SG06",
+          "SG07",
+          "SG08",
+          "SG09"
+        ],
+        "missing": [
+          "SG09"
+        ],
+        "bad": [
+          {
+            "id": "SG09",
+            "reason": "主指标不在依赖列表"
+          }
+        ]
+      }
+    },
+    {
+      "id": "A5c",
+      "item": "依赖未登记时 signal_flags 返回 None 而非空集",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {
+        "returned": null
+      }
+    },
+    {
+      "id": "A5d",
+      "item": "恢复依赖后 C16 回到 PASS（未落盘任何修改）",
+      "result": "PASS",
+      "blocking": true,
+      "detail": {}
+    }
+  ],
+  "checks_pass": 15,
+  "checks_total": 15,
+  "blocking_fail": 0,
+  "independent_sg09": {
+    "sg09_fired": 203,
+    "q06_fired": 74,
+    "m07_status": {
+      "OK": 436,
+      "NOT_COMPARABLE": 29,
+      "PROVISIONAL": 267,
+      "UNDEFINED_BASE": 235,
+      "MISSING": 87
+    }
+  },
+  "scope_note": "本审计独立重算 M07/SG09 与规则版本、指纹、交付哈希；未重写全部 12 指标，L1/L2 全池独立结论引自 Codex 复核记录 codex_acceptance_80745cd.md。"
+}
