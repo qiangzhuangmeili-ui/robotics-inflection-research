@@ -1,0 +1,1193 @@
+{
+  "rules_version": "S01_SCREEN_RULES_V2",
+  "plan_version": "20261026_collection_first_v2",
+  "issue_key": "S01",
+  "issue_number": 36,
+  "author": "WorkBuddy AI",
+  "created_at": "2026-10-29T10:30:00+08:00",
+  "frozen_at": "2026-10-29T15:29:41+08:00",
+  "freeze_order": "RULES_FROZEN_BEFORE_ANY_COMPANY_LEVEL_OUTPUT",
+  "knowledge_as_of": "2026-10-25",
+  "status": "FROZEN",
+  "purpose": "在任何名单产出之前，把筛选用的公式、阈值、缺失/亏损/低基数/一次性/模式/版本处理与重进条件登记为可执行版本。",
+  "non_goals": [
+    "本卡不产出任何公司名单、排名或分数",
+    "本卡不设「必须筛出 N 家」的目标，也不存在按目标家数反推阈值的路径",
+    "本卡不做估值、买卖建议或拐点结论",
+    "本卡不修改 S00 数据、原件或台账状态"
+  ],
+  "universe": {
+    "source": "runs/issues/S00/financial_normalized.csv",
+    "companies": 1054,
+    "slots": 12648,
+    "slots_with_value": 11406,
+    "empty_slots": 62,
+    "periods_available": [
+      "2021Q1",
+      "2021H1",
+      "2021Q3",
+      "2021FY",
+      "2022Q1",
+      "2022H1",
+      "2022Q3",
+      "2022FY",
+      "2023Q1",
+      "2023H1",
+      "2023Q3",
+      "2023FY",
+      "2024Q1",
+      "2024H1",
+      "2024Q3",
+      "2024FY",
+      "2025Q1",
+      "2025H1",
+      "2025Q3",
+      "2025FY",
+      "2026Q1",
+      "2026H1",
+      "2026Q3_PARTIAL"
+    ],
+    "latest_period_rule": "逐公司取有可用值的最大 period_key，优先 FIN.REV.YTD；缺失时依次回退 FIN.REV.SQ、FIN.NPDEDT.YTD（北交所有 2 家只有单季字段、无累计营收行）；三者全无则落 W1_NO_DATA。2026Q3 仅 188 家已披露，未披露公司自然回落到 2026H1",
+    "unit": "全部使用 value_cny（元），不混用万元/千元；比率字段为百分数数值（23.28 表示 23.28%）"
+  },
+  "input_fingerprint": {
+    "files": [
+      {
+        "path": "runs/issues/S02/m07_repair_20261030/s00_v9.csv.gz",
+        "sha256": "8c27f5fbcd9be1ba85bbb94f5face713540b127bb7b95f511b276f937e6f9a73",
+        "bytes": 5905043
+      },
+      {
+        "path": "runs/issues/S02/m07_repair_20261030/s00_v9_manifest.json",
+        "sha256": "d90b70df91d29c24ed85efce250be4315332e6cd39449ccaa5060597623eb445",
+        "bytes": 1255
+      },
+      {
+        "path": "data/company_master.csv",
+        "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+        "bytes": 707054
+      }
+    ],
+    "note": "指纹只覆盖研究输入（标准化表、口径清单、公司主表）；调度文件 issue_execution_plan.csv 会随执行状态变化，不纳入指纹，其版本以 plan_version 字段登记。运行 S02 前须复核三份输入未变，变化即视为新版本输入，规则版本随之升版。"
+  },
+  "period_model": {
+    "period_key": "YYYYMMDD，报告期期末",
+    "period_type": [
+      "Q1",
+      "H1",
+      "9M",
+      "FY",
+      "Q2",
+      "Q3",
+      "Q4"
+    ],
+    "period_basis": [
+      "YTD_CUMULATIVE",
+      "SINGLE_QUARTER",
+      "INSTANT"
+    ],
+    "prior_year_same_period": "period_key - 10000（同 period_type、同月日）",
+    "prior_quarter": "Q1→上年Q4；Q2→同年Q1；Q3→同年Q2；Q4→同年Q3",
+    "days_in_period": "period_end - period_start + 1（由数据行 period_start/period_end 取得，不按 365 硬编码）",
+    "comparability_rule": "同比只允许同 period_type 对同 period_type；禁止年度对 9M、9M 对 H1、累计对单季"
+  },
+  "field_catalog": {
+    "FIN.REV.YTD": {
+      "name_cn": "营业收入（累计）",
+      "basis": "YTD_CUMULATIVE",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 13308
+    },
+    "FIN.REV.SQ": {
+      "name_cn": "营业收入（单季）",
+      "basis": "SINGLE_QUARTER",
+      "periods": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "rows": 13914
+    },
+    "FIN.NPP.YTD": {
+      "name_cn": "归母净利润（累计）",
+      "basis": "YTD_CUMULATIVE",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 13312
+    },
+    "FIN.NPP.SQ": {
+      "name_cn": "归母净利润（单季）",
+      "basis": "SINGLE_QUARTER",
+      "periods": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "rows": 13773
+    },
+    "FIN.NPDEDT.YTD": {
+      "name_cn": "扣非归母净利润（累计）",
+      "basis": "YTD_CUMULATIVE",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 18018
+    },
+    "FIN.NPDEDT.SQ": {
+      "name_cn": "扣非归母净利润（单季）",
+      "basis": "SINGLE_QUARTER",
+      "periods": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "rows": 13364
+    },
+    "FIN.COST.YTD": {
+      "name_cn": "营业成本（累计）",
+      "basis": "YTD_CUMULATIVE",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 11178
+    },
+    "FIN.GROSSMARGIN.PCT": {
+      "name_cn": "毛利率（%）",
+      "basis": "YTD_CUMULATIVE",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 13142
+    },
+    "FIN.GROSSPROFIT.YTD": {
+      "name_cn": "毛利额（派生）",
+      "basis": "YTD_CUMULATIVE",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 11170
+    },
+    "FIN.NPMARGIN.PCT": {
+      "name_cn": "归母净利率（%）",
+      "basis": "YTD_CUMULATIVE",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 13304
+    },
+    "FIN.OCF.YTD": {
+      "name_cn": "经营活动现金流量净额（累计）",
+      "basis": "YTD_CUMULATIVE",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 11174
+    },
+    "FIN.OCF.SQ": {
+      "name_cn": "经营活动现金流量净额（单季）",
+      "basis": "SINGLE_QUARTER",
+      "periods": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "rows": 13188
+    },
+    "FIN.AR.INSTANT": {
+      "name_cn": "应收账款（期末）",
+      "basis": "INSTANT",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 11174
+    },
+    "FIN.NR.INSTANT": {
+      "name_cn": "应收票据（期末）",
+      "basis": "INSTANT",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 10108
+    },
+    "FIN.INV.INSTANT": {
+      "name_cn": "存货（期末）",
+      "basis": "INSTANT",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 11170
+    },
+    "FIN.CONTRACTASSET.INSTANT": {
+      "name_cn": "合同资产（期末）",
+      "basis": "INSTANT",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 5651
+    },
+    "FIN.ASSET.INSTANT": {
+      "name_cn": "资产总计（期末）",
+      "basis": "INSTANT",
+      "periods": [
+        "Q1",
+        "H1",
+        "9M",
+        "FY"
+      ],
+      "rows": 11175
+    }
+  },
+  "status_semantics": {
+    "usable": [
+      "EXTRACTED",
+      "EXTRACTED_KEY_TABLE",
+      "EXTRACTED_QUARTERLY_TABLE",
+      "DERIVED",
+      "DERIVED_CUMULATIVE_DIFF",
+      "DERIVED_Q1_EQUALS_YTD",
+      "DERIVED_QUARTERLY_SUM_OVERRIDE"
+    ],
+    "usable_with_flag": [
+      "LEGACY_SNAPSHOT"
+    ],
+    "hold": [
+      "EXTRACTED_XCHECK_MISMATCH",
+      "DERIVED_HOLD_UPSTREAM",
+      "DERIVED_Q1_HOLD_UPSTREAM"
+    ],
+    "absent": "行不存在 = MISSING（S00 只写有值行，缺失不填 0）",
+    "rule": "hold 状态的输入不得参与任何改善判断，也不得当作恶化；只能产出 HOLD，由人工/补采解决"
+  },
+  "quality_flags": [
+    {
+      "id": "Q01",
+      "name": "HOLD_UPSTREAM",
+      "definition": "任一必需输入 status 属于 status_semantics.hold",
+      "emitted_by": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "handling": "指标值置空、metric_status=HOLD，记上游字段名；不参与 L1/L2 判断"
+    },
+    {
+      "id": "Q02",
+      "name": "MISSING_INPUT",
+      "definition": "必需输入行不存在（含整槽无值）",
+      "handling": "metric_status=MISSING；不填 0；进 W1 观察名单"
+    },
+    {
+      "id": "Q03",
+      "name": "NEGATIVE_BASE",
+      "definition": "分母或基期值 < 0",
+      "handling": "比率不计算；改用绝对额变动与转正判断；打 NEGATIVE_BASE"
+    },
+    {
+      "id": "Q04",
+      "name": "ZERO_BASE",
+      "definition": "分母绝对值 < 1,000,000 元或基期绝对值 < 1,000,000 元",
+      "handling": "比率不计算，同 Q03 处理"
+    },
+    {
+      "id": "Q05",
+      "name": "LOW_BASE",
+      "definition": "low_base_flag ∈ {LOW_BASE_REV, LOW_BASE_PROFIT, NEGATIVE_BASE_PROFIT} 或 基期营收 < 5,000 万元 或 |基期扣非| < 1,000 万元",
+      "handling": "信号可出但标 LOW_BASE_PROVISIONAL；L2 需绝对额同向确认（增量 ≥ 1,000 万元）"
+    },
+    {
+      "id": "Q06",
+      "name": "RESTATEMENT_UNRESOLVED",
+      "definition": "任一侧 restatement_flag=RESTATEMENT_INDICATED_NEEDS_REVIEW",
+      "handling": "跨期指标标 PROVISIONAL；可用于 L1，不得进 L2"
+    },
+    {
+      "id": "Q07",
+      "name": "LEGACY_SINGLE_SOURCE",
+      "definition": "任一侧 status=LEGACY_SNAPSHOT（旧快照 2021/2022，无官方 PDF 交叉校验）",
+      "handling": "标 SINGLE_SOURCE；可用于 L1，L2 仅作辅助证据"
+    },
+    {
+      "id": "Q08",
+      "name": "PRE_LISTING_OR_NO_HISTORY",
+      "definition": "is_pre_listing=YES 或上年同期行不存在",
+      "handling": "metric_status=NOT_COMPARABLE；进 W4 早期/缺历史观察名单，不判改善也不判恶化"
+    },
+    {
+      "id": "Q09",
+      "name": "ONE_OFF_DOMINATED",
+      "definition": "同期间 |NPP.YTD - NPDEDT.YTD| / max(|NPP.YTD|,1) > 0.5",
+      "handling": "盈利类信号优先用扣非；只有归母时信号降级为 PROVISIONAL 并打 ONE_OFF"
+    },
+    {
+      "id": "Q10",
+      "name": "PROJECT_MODE",
+      "definition": "合同资产/资产总计 > 5% 或 合同资产/营业收入(YTD) > 10%",
+      "handling": "项目制：周转看应收天数与合同资产占比，存货天数不作判断；否则按设备制看存货天数"
+    },
+    {
+      "id": "Q11",
+      "name": "STALE_PERIOD",
+      "definition": "公司最新可用期 < 全池最新期往前 1 个季度（即 2026Q3 已披露公司 vs 仍停留 2026H1）",
+      "handling": "标 STALE_PERIOD，横截面比较时分层；不影响同比判断"
+    },
+    {
+      "id": "Q12",
+      "name": "NON_CONSOLIDATED",
+      "definition": "consolidation_scope=UNKNOWN 且 status≠LEGACY_SNAPSHOT；或 consolidation_scope 明确为母公司/非合并口径",
+      "handling": "不进入主筛选，单列；LEGACY_SNAPSHOT 行的 UNKNOWN 只按 Q07 处理，不重复计 Q12"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "M01",
+      "name_cn": "营业收入同比（累计）",
+      "formula": "REV_YOY_YTD = FIN.REV.YTD(t) / FIN.REV.YTD(t-1y) - 1",
+      "inputs": [
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "t-1y"
+        }
+      ],
+      "unit": "ratio",
+      "direction": "higher_is_better",
+      "period_requirement": "同 period_type 上年同期；t 取公司最新可用期",
+      "valid_range": [
+        -1.0,
+        20.0
+      ],
+      "paths": {
+        "missing": "Q02 → metric_status=MISSING，值留空",
+        "hold": "Q01 → metric_status=HOLD，值留空",
+        "negative_base": "Q03 → 不计算比率，输出绝对额差 REV.YTD(t)-REV.YTD(t-1y)",
+        "zero_base": "Q04 → 同 negative_base",
+        "low_base": "Q05 → 计算但标 LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → 计算但标 PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 计算并标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M02",
+      "name_cn": "营业收入同比（单季）",
+      "formula": "REV_YOY_SQ = FIN.REV.SQ(t) / FIN.REV.SQ(t-4q) - 1",
+      "inputs": [
+        {
+          "field_id": "FIN.REV.SQ",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.REV.SQ",
+          "offset": "t-4q"
+        }
+      ],
+      "unit": "ratio",
+      "direction": "higher_is_better",
+      "period_requirement": "t 与 t-4q 均为 SINGLE_QUARTER 且为同一季度序号",
+      "valid_range": [
+        -1.0,
+        20.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 改绝对额差",
+        "zero_base": "Q04 → 同 negative_base",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 计算并标 STALE_PERIOD"
+      },
+      "role": "INTERMEDIATE_AND_REPORTED",
+      "feeds": [
+        "M03"
+      ]
+    },
+    {
+      "id": "M03",
+      "name_cn": "单季营收同比加速度",
+      "formula": "REV_ACCEL_SQ = M02(t) - M02(t-1q)",
+      "inputs": [
+        {
+          "field_id": "FIN.REV.SQ",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.REV.SQ",
+          "offset": "t-4q"
+        },
+        {
+          "field_id": "FIN.REV.SQ",
+          "offset": "t-1q"
+        },
+        {
+          "field_id": "FIN.REV.SQ",
+          "offset": "t-5q"
+        }
+      ],
+      "unit": "pp",
+      "direction": "higher_is_better",
+      "period_requirement": "连续两个单季的同比都可用",
+      "valid_range": [
+        -200.0,
+        200.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING（任一季度缺即不计算，不用其他季度替代）",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 不计算加速度",
+        "zero_base": "Q04 → 不计算加速度",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M04",
+      "name_cn": "毛利率同比变动",
+      "formula": "GM_PP = GM(t) - GM(t-1y)，GM 优先取 FIN.GROSSMARGIN.PCT，缺失时按 (FIN.REV.YTD - FIN.COST.YTD)/FIN.REV.YTD*100 重算",
+      "inputs": [
+        {
+          "field_id": "FIN.GROSSMARGIN.PCT",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.GROSSMARGIN.PCT",
+          "offset": "t-1y"
+        },
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "fallback"
+        },
+        {
+          "field_id": "FIN.COST.YTD",
+          "offset": "fallback"
+        }
+      ],
+      "unit": "pp",
+      "direction": "higher_is_better",
+      "period_requirement": "同 period_type 上年同期；回算时 REV 与 COST 必须同期同版本",
+      "valid_range": [
+        -100.0,
+        100.0
+      ],
+      "paths": {
+        "missing": "Q02 → 若 PCT 缺但 REV+COST 齐则回算，否则 MISSING",
+        "hold": "Q01 → HOLD（PCT 为 DERIVED_HOLD_UPSTREAM 时同样 HOLD）",
+        "negative_base": "Q03 → REV<=0 时不计算",
+        "zero_base": "Q04 → REV 绝对值<100万不计算",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M05",
+      "name_cn": "扣非归母净利润同比（累计）",
+      "formula": "NPDEDT_YOY_YTD = FIN.NPDEDT.YTD(t) / FIN.NPDEDT.YTD(t-1y) - 1（基期>0 才计算）",
+      "inputs": [
+        {
+          "field_id": "FIN.NPDEDT.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.NPDEDT.YTD",
+          "offset": "t-1y"
+        }
+      ],
+      "unit": "ratio",
+      "direction": "higher_is_better",
+      "period_requirement": "同 period_type 上年同期；基期>0",
+      "valid_range": [
+        -1.0,
+        50.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING（不以归母净利润替代扣非）",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 不计算同比，改判 NPDEDT_TURN_POSITIVE（基期<0 且当期>0）或绝对额改善",
+        "zero_base": "Q04 → 同 negative_base",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M06",
+      "name_cn": "扣非归母净利率变动",
+      "formula": "NPDEDT_MARGIN_PP = FIN.NPDEDT.YTD(t)/FIN.REV.YTD(t)*100 - FIN.NPDEDT.YTD(t-1y)/FIN.REV.YTD(t-1y)*100",
+      "inputs": [
+        {
+          "field_id": "FIN.NPDEDT.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.NPDEDT.YTD",
+          "offset": "t-1y"
+        },
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "t-1y"
+        }
+      ],
+      "unit": "pp",
+      "direction": "higher_is_better",
+      "period_requirement": "同 period_type 上年同期；两期营收均>0",
+      "valid_range": [
+        -100.0,
+        100.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 营收<=0 时不计算（扣非为负不影响本指标，负利润率是有效值）",
+        "zero_base": "Q04 → 营收绝对值<100万不计算",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M07",
+      "name_cn": "扣非归母净利润同比（单季）",
+      "formula": "NPDEDT_YOY_SQ = FIN.NPDEDT.SQ(t) / FIN.NPDEDT.SQ(t-4q) - 1（基期>0 才计算）",
+      "inputs": [
+        {
+          "field_id": "FIN.NPDEDT.SQ",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.NPDEDT.SQ",
+          "offset": "t-4q"
+        }
+      ],
+      "unit": "ratio",
+      "direction": "higher_is_better",
+      "period_requirement": "同一季度序号的单季对单季",
+      "valid_range": [
+        -1.0,
+        50.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 改绝对额改善/转正判断",
+        "zero_base": "Q04 → 同 negative_base",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M08",
+      "name_cn": "经营现金流/归母净利润",
+      "formula": "OCF_TO_NP = FIN.OCF.YTD(t) / FIN.NPP.YTD(t)（仅 NPP>0 计算）",
+      "inputs": [
+        {
+          "field_id": "FIN.OCF.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.NPP.YTD",
+          "offset": "t"
+        }
+      ],
+      "unit": "ratio",
+      "direction": "higher_is_better",
+      "period_requirement": "同一期间；NPP>0",
+      "valid_range": [
+        -10.0,
+        10.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING（不以净利润或营业利润替代 OCF）",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 归母<=0 时本指标不适用，改看 OCF 绝对额与转正",
+        "zero_base": "Q04 → 归母绝对值<100万不计算",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M09",
+      "name_cn": "经营现金流同比变动额",
+      "formula": "OCF_CHG_YTD = FIN.OCF.YTD(t) - FIN.OCF.YTD(t-1y)",
+      "inputs": [
+        {
+          "field_id": "FIN.OCF.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.OCF.YTD",
+          "offset": "t-1y"
+        }
+      ],
+      "unit": "CNY",
+      "direction": "higher_is_better",
+      "period_requirement": "同 period_type 上年同期",
+      "valid_range": [
+        -100000000000.0,
+        100000000000.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 绝对额差本身可算（基期<0 是有效输入，不做比率）",
+        "zero_base": "Q04 → 可算，标 ZERO_BASE_REFERENCE",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M10",
+      "name_cn": "应收账款周转天数变动",
+      "formula": "AR_DAYS = FIN.AR.INSTANT(t) / FIN.REV.YTD(t) * days_in_period(t)（期末余额法）；AR_DAYS_CHG = AR_DAYS(t) - AR_DAYS(t-1y)",
+      "inputs": [
+        {
+          "field_id": "FIN.AR.INSTANT",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.AR.INSTANT",
+          "offset": "t-1y"
+        },
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "t-1y"
+        }
+      ],
+      "unit": "days",
+      "direction": "lower_is_better",
+      "period_requirement": "同 period_type；两期 AR 与营收均可用",
+      "valid_range": [
+        -365.0,
+        3650.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING（不假设应收=0）",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 营收<=0 不计算",
+        "zero_base": "Q04 → 营收绝对值<100万不计算",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M11",
+      "name_cn": "存货周转天数变动",
+      "formula": "INV_DAYS = FIN.INV.INSTANT(t) / FIN.COST.YTD(t) * days_in_period(t)（期末余额法）；INV_DAYS_CHG = INV_DAYS(t) - INV_DAYS(t-1y)",
+      "inputs": [
+        {
+          "field_id": "FIN.INV.INSTANT",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.INV.INSTANT",
+          "offset": "t-1y"
+        },
+        {
+          "field_id": "FIN.COST.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.COST.YTD",
+          "offset": "t-1y"
+        }
+      ],
+      "unit": "days",
+      "direction": "lower_is_better",
+      "period_requirement": "同 period_type；项目制公司（Q10）不判本指标",
+      "valid_range": [
+        -365.0,
+        3650.0
+      ],
+      "paths": {
+        "missing": "Q02 → MISSING（无存货科目时记 NOT_IN_STATEMENT，不填 0）",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 成本<=0 不计算",
+        "zero_base": "Q04 → 成本绝对值<100万不计算",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    },
+    {
+      "id": "M12",
+      "name_cn": "合同资产占营收比重变动",
+      "formula": "CA_RATIO = FIN.CONTRACTASSET.INSTANT(t)/FIN.REV.YTD(t)*100；CA_RATIO_CHG = CA_RATIO(t) - CA_RATIO(t-1y)",
+      "inputs": [
+        {
+          "field_id": "FIN.CONTRACTASSET.INSTANT",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "t"
+        },
+        {
+          "field_id": "FIN.CONTRACTASSET.INSTANT",
+          "offset": "t-1y"
+        },
+        {
+          "field_id": "FIN.REV.YTD",
+          "offset": "t-1y"
+        }
+      ],
+      "unit": "pp",
+      "direction": "neutral",
+      "period_requirement": "同 period_type；无合同资产科目的公司记 NOT_IN_STATEMENT，不参与模式判定",
+      "valid_range": [
+        -100.0,
+        500.0
+      ],
+      "paths": {
+        "missing": "Q02 → NOT_IN_STATEMENT / MISSING，不填 0",
+        "hold": "Q01 → HOLD",
+        "negative_base": "Q03 → 营收<=0 不计算",
+        "zero_base": "Q04 → 营收绝对值<100万不计算",
+        "low_base": "Q05 → LOW_BASE_PROVISIONAL",
+        "restatement": "Q06 → PROVISIONAL",
+        "pre_listing": "Q08 → NOT_COMPARABLE",
+        "stale": "Q11 → 标 STALE_PERIOD"
+      }
+    }
+  ],
+  "signals": [
+    {
+      "id": "SG01",
+      "name_cn": "营收增长",
+      "metric": "M01",
+      "operator": ">=",
+      "threshold": 0.1,
+      "unit": "ratio",
+      "dimension": "GROWTH",
+      "rationale_ref": "T1",
+      "note": "10% 为研究假设：高于名义 GDP 与制造业均值，未按当期分布拟合"
+    },
+    {
+      "id": "SG02",
+      "name_cn": "单季营收加速",
+      "metric": "M03",
+      "operator": ">=",
+      "threshold": 5.0,
+      "unit": "pp",
+      "dimension": "GROWTH",
+      "rationale_ref": "T2",
+      "note": "加速度≥5pp 才算加速；阈值单位 pp，与 M03 的 (本季同比−上季同比)×100 一致"
+    },
+    {
+      "id": "SG03",
+      "name_cn": "毛利率改善",
+      "metric": "M04",
+      "operator": ">=",
+      "threshold": 1.0,
+      "unit": "pp",
+      "dimension": "MARGIN",
+      "rationale_ref": "T3",
+      "note": "1pp 为最小经济意义变动，低于此视为噪声"
+    },
+    {
+      "id": "SG04",
+      "name_cn": "扣非增长",
+      "metric": "M05",
+      "operator": ">=",
+      "threshold": 0.2,
+      "unit": "ratio",
+      "dimension": "PROFIT",
+      "rationale_ref": "T4",
+      "note": "仅基期>0 适用；基期<=0 走 SG06"
+    },
+    {
+      "id": "SG05",
+      "name_cn": "扣非净利率改善",
+      "metric": "M06",
+      "operator": ">=",
+      "threshold": 1.0,
+      "unit": "pp",
+      "dimension": "PROFIT",
+      "rationale_ref": "T5",
+      "note": "利润率改善与绝对额改善分开，避免低基数放大"
+    },
+    {
+      "id": "SG06",
+      "name_cn": "扣非转正",
+      "metric": "M05",
+      "operator": "TURN_POSITIVE",
+      "threshold": 10000000.0,
+      "unit": "CNY",
+      "dimension": "PROFIT",
+      "rationale_ref": "T6",
+      "note": "基期<0 且当期>0 且当期绝对值≥1,000 万元，防微利转正"
+    },
+    {
+      "id": "SG07",
+      "name_cn": "现金含量达标且改善",
+      "metric": "M08",
+      "operator": ">=",
+      "threshold": 0.8,
+      "unit": "ratio",
+      "dimension": "CASH",
+      "rationale_ref": "T7",
+      "note": "需同时满足 M09>0（现金流同比增加），两条都成立才算"
+    },
+    {
+      "id": "SG08",
+      "name_cn": "现金流转正",
+      "metric": "M09",
+      "operator": "TURN_POSITIVE",
+      "threshold": 0.0,
+      "unit": "CNY",
+      "dimension": "CASH",
+      "rationale_ref": "T8",
+      "note": "OCF(t)>0 且 OCF(t-1y)<=0"
+    },
+    {
+      "id": "SG09",
+      "name_cn": "单季扣非增长",
+      "metric": "M07",
+      "operator": ">=",
+      "threshold": 0.3,
+      "unit": "ratio",
+      "dimension": "PROFIT",
+      "rationale_ref": "T9",
+      "note": "单季噪声大，门槛高于累计口径（30%）"
+    }
+  ],
+  "risk_hints": [
+    {
+      "id": "RH01",
+      "name_cn": "应收周转显著变慢",
+      "metric": "M10",
+      "operator": ">=",
+      "threshold": 30.0,
+      "unit": "days",
+      "action": "标 RISK_AR_SLOW，不阻断 L1，L2 需附解释"
+    },
+    {
+      "id": "RH02",
+      "name_cn": "存货周转显著变慢",
+      "metric": "M11",
+      "operator": ">=",
+      "threshold": 30.0,
+      "unit": "days",
+      "action": "标 RISK_INV_SLOW；项目制公司不适用"
+    },
+    {
+      "id": "RH03",
+      "name_cn": "合同资产占比抬升",
+      "metric": "M12",
+      "operator": ">=",
+      "threshold": 5.0,
+      "unit": "pp",
+      "action": "标 RISK_CA_UP，提示回款/结算节奏变化，不作为改善信号"
+    },
+    {
+      "id": "RH04",
+      "name_cn": "现金含量偏弱",
+      "metric": "M08",
+      "operator": "<",
+      "threshold": 0.5,
+      "unit": "ratio",
+      "action": "标 RISK_OCF_WEAK"
+    },
+    {
+      "id": "RH05",
+      "name_cn": "毛利率下滑",
+      "metric": "M04",
+      "operator": "<=",
+      "threshold": -2.0,
+      "unit": "pp",
+      "action": "标 RISK_GM_DOWN"
+    },
+    {
+      "id": "RH06",
+      "name_cn": "一次性损益主导",
+      "metric": "Q09",
+      "operator": "FLAG",
+      "threshold": null,
+      "unit": "flag",
+      "action": "标 RISK_ONE_OFF，盈利信号改用扣非口径"
+    }
+  ],
+  "decision_layers": [
+    {
+      "id": "L0",
+      "name": "可评估性",
+      "rule_text": "至少 1 个 metric 的 metric_status=OK 才进入评估；全部 HOLD → W2；全部 MISSING → W1；全部 NOT_COMPARABLE → W4",
+      "outputs": [
+        "EVALUABLE",
+        "W1_NO_DATA",
+        "W2_ALL_HOLD",
+        "W4_EARLY"
+      ],
+      "hold_policy": "HOLD 不计入改善也不计入恶化，只减少可用证据数"
+    },
+    {
+      "id": "L1",
+      "name": "第一道宽筛（S03 执行）",
+      "rule_text": "任一 SG 信号为真 → OBSERVE_QUEUE；无 SG 但有 RH → RISK_WATCH；两者都无 → NO_SIGNAL",
+      "outputs": [
+        "OBSERVE_QUEUE",
+        "RISK_WATCH",
+        "NO_SIGNAL"
+      ],
+      "hold_policy": "HOLD 的指标不参与「任一」判断；不得因 HOLD 判为无信号",
+      "low_base_policy": "低基数触发的信号标 LOW_BASE_PROVISIONAL，仍进观察队列但单列",
+      "restatement_policy": "PROVISIONAL 信号可进 L1，须带标记"
+    },
+    {
+      "id": "L2",
+      "name": "收紧（S04/S05 执行）",
+      "rule_text": "在 GROWTH / MARGIN / PROFIT / CASH 四个维度中，至少 2 个维度各有 1 条 SG 为真，且所用指标均 metric_status=OK、无 Q01 HOLD、无 Q06 未决重述、无 Q05 低基数未确认",
+      "outputs": [
+        "SHORTLIST_CANDIDATE",
+        "HOLD_FOR_DATA",
+        "NOT_SHORTLISTED"
+      ],
+      "hold_policy": "所需维度任一 HOLD → HOLD_FOR_DATA，不得降级为不通过",
+      "low_base_policy": "低基数信号须附绝对额同向确认（增量≥1,000 万元）才计入维度",
+      "restatement_policy": "Q06 未决重述的跨期指标不得计入 L2 维度"
+    },
+    {
+      "id": "L3",
+      "name": "质量闸门（供 S05 复核用）",
+      "rule_text": "所用每个指标须有 document_id + source_page + 非 HOLD 状态；否则 QUALITY_HOLD",
+      "outputs": [
+        "QUALITY_PASS",
+        "QUALITY_HOLD"
+      ],
+      "hold_policy": "缺页码证据即 HOLD，不以推测补"
+    }
+  ],
+  "watchlist": {
+    "W1_NO_DATA": "全部指标 MISSING：62 个整槽无值公司为主，等补采中文版或 OCR 后重进",
+    "W2_ALL_HOLD": "全部指标 HOLD：等 xcheck 复核或重抽后重进",
+    "W3_LOW_BASE_ONLY": "只有低基数信号：保留观察，不进 L2",
+    "W4_EARLY": "上市前/无上年同期：按上市日期登记，满 4 个季度后自动重进",
+    "W5_PROVISIONAL": "仅有 PROVISIONAL 信号（重述未决/旧快照单来源）：L1 观察，不进 L2"
+  },
+  "reentry_conditions": [
+    "补采到中文版年报或完成 OCR → W1 公司重新计算，不需人工改规则",
+    "xcheck 不一致复核完成、HOLD 解除 → W2 公司按同一规则重算",
+    "上市满 4 个季度、有上年同期 → W4 公司自动进入同比口径",
+    "重述标记由 NEEDS_REVIEW 落定为 是/否 → W5 信号可升级",
+    "规则升版（v2）→ 全池重算，不单独重进个别公司"
+  ],
+  "policies": {
+    "missing": {
+      "principle": "缺数据不等于无业务、不等于 0、不等于恶化",
+      "actions": [
+        "不填 0",
+        "不用行业均值/同业值/上年值插补",
+        "不用归母替代扣非、不用净利润替代经营现金流",
+        "记入 normalization_issues 既有条目，不新增臆测"
+      ]
+    },
+    "loss": {
+      "principle": "亏损本身不是淘汰理由，也不是改善信号",
+      "actions": [
+        "亏损公司不计算同比比率（基期<=0），改判绝对额改善或转正",
+        "不使用 PE/PB 等估值指标做筛选",
+        "扣非为负且继续扩大 → 记 RISK_LOSS_WIDENING，不直接剔除"
+      ]
+    },
+    "negative_zero_base": {
+      "principle": "分母非正时比率无经济意义",
+      "actions": [
+        "|分母| < 100 万元视为零基数",
+        "改用绝对额差与转正判断",
+        "输出保留 NEGATIVE_BASE / ZERO_BASE 标记"
+      ]
+    },
+    "low_base": {
+      "principle": "低基数会放大增长率，不能与正常基数同权",
+      "actions": [
+        "基期营收<5,000 万元 或 |基期扣非|<1,000 万元 或 low_base_flag=YES",
+        "L1 可进观察队列但标 PROVISIONAL",
+        "L2 需绝对额同向确认（增量≥1,000 万元）"
+      ]
+    },
+    "one_off": {
+      "principle": "一次性损益不构成经营改善",
+      "actions": [
+        "盈利类信号优先扣非",
+        "|归母-扣非|/|归母|>50% 标 ONE_OFF",
+        "只有归母时信号降级 PROVISIONAL"
+      ]
+    },
+    "mode": {
+      "principle": "设备销售与项目制公司的营运资本结构不同，不能用同一周转指标",
+      "actions": [
+        "合同资产/资产>5% 或 合同资产/营收>10% → PROJECT_MODE",
+        "项目制看应收天数与合同资产占比，不看存货天数",
+        "设备制看存货天数",
+        "模式只影响解释，不改变阈值"
+      ]
+    },
+    "restatement": {
+      "principle": "跨期比较必须同口径",
+      "actions": [
+        "任一侧 NEEDS_REVIEW → 指标 PROVISIONAL",
+        "PROVISIONAL 可进 L1，不进 L2",
+        "不使用未重算的历史期做「改善」结论"
+      ]
+    },
+    "pre_listing": {
+      "principle": "上市前无公开可比期间",
+      "actions": [
+        "is_pre_listing=YES 或上年同期缺失 → NOT_COMPARABLE",
+        "进 W4，不判改善/恶化",
+        "上市满 4 个季度自动重进"
+      ]
+    },
+    "stale_period": {
+      "principle": "披露进度不同导致横截面不可直接比",
+      "actions": [
+        "标 STALE_PERIOD",
+        "横截面统计按最新期分层",
+        "同比结论不受影响"
+      ]
+    },
+    "non_consolidated": {
+      "principle": "母公司口径与合并口径不可混比",
+      "actions": [
+        "consolidation_scope != CONSOLIDATED 不进入主筛选",
+        "单列供人工判断"
+      ]
+    }
+  },
+  "calibration": {
+    "mode": "A_PRIORI_HYPOTHESIS_ONLY",
+    "statement": "V1 全部阈值来自研究假设与最小经济意义，未用当期截面分布拟合，也未参考任何公司结果。",
+    "exploratory_distribution": {
+      "allowed": true,
+      "when": "规则冻结并写入指纹之后",
+      "scope": "只允许匿名分位数统计（P10/P25/P50/P75/P90）与信号命中计数，不允许输出公司名称或可反推个体的明细",
+      "binding": false,
+      "use": "仅用于说明阈值松紧，不回头修改 V1；如需改阈值另立 V2 全池重算"
+    },
+    "forbidden": [
+      "按目标家数反推阈值",
+      "按个别公司表现调阈值",
+      "用未来期数据校准当期",
+      "用筛选结果反过来调整缺失处理"
+    ]
+  },
+  "change_procedure": {
+    "trigger": [
+      "阈值调整",
+      "公式口径变化",
+      "缺失/亏损处理变化",
+      "新增或删除指标"
+    ],
+    "steps": [
+      "新建 screen_rules_v2.json（不覆盖 v1）",
+      "记录变更理由与影响面",
+      "全池重算并出 v1/v2 差异报告",
+      "不得手工把个别公司加回名单"
+    ],
+    "immutability": "v1 冻结后只读；任何修改都以新版本文件体现"
+  },
+  "no_quota_attestation": {
+    "target_company_count": null,
+    "quota_keys_forbidden": [
+      "target_count",
+      "quota",
+      "top_n",
+      "desired_count",
+      "must_select"
+    ],
+    "statement": "本规则集不含任何目标家数、配额或排名截断；L1/L2 的输出数量由数据决定，允许为 0 或为全池。"
+  },
+  "change_log": [
+    {
+      "from_version": "S01_SCREEN_RULES_V1",
+      "from_sha256": "c76d04615669788dddc17425de6afd78ec55be4b7f20bbd75b7322e777858f7e",
+      "from_frozen_at": "2026-10-29T10:25:57+08:00",
+      "reason": "SG02 机器阈值与文字定义单位矛盾：JSON threshold=0.05 且 unit=pp，而 M03 返回 pp，实际等于 0.05pp，比 metric_formulas / threshold_rationale 写的「加速≥5pp」小 100 倍",
+      "changes": [
+        "signals[SG02].threshold: 0.05 → 5.0（单位 pp 不变，与文字定义一致）"
+      ],
+      "not_a_research_decision": "只修单位一致性，未按任何命中率调整门槛；阈值偏松与维度相关性不在本次范围",
+      "recompute": "全池匿名重算，v1/v2 差异在 erratum_sg02_unit_20261029.md 记录"
+    }
+  ],
+  "input_version": "S00_M07_CN_H1_REPAIR_V9_20261030",
+  "base_rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+  "l0_addendum_path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json"
+}

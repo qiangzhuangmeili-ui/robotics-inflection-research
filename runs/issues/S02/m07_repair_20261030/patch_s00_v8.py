@@ -17,6 +17,17 @@ ROOT = Path(r"C:/Users/zhangjianmei/Documents/ChatGPT/机器人企业行业拐�
 HERE = Path(__file__).parent
 V7 = ROOT / 'runs/issues/S02/remediation_20261029/collect_q3_2026/s00_v7.csv'
 SLOT_PERIOD = {'q1_2026': '20260331', 'h1_2026': '20260630', 'q3_2026': '20260930'}
+PERIOD_META = {
+    '20260331': dict(period_key='20260331', period_type='Q1', period_label='Q1_2026',
+                     period_start='2026-01-01', period_end='2026-03-31', fiscal_year='2026',
+                     period_source='COLLECTED_2026_SLOT', slot_id='q1_2026'),
+    '20260630': dict(period_key='20260630', period_type='H1', period_label='H1_2026',
+                     period_start='2026-01-01', period_end='2026-06-30', fiscal_year='2026',
+                     period_source='COLLECTED_2026_SLOT', slot_id='h1_2026'),
+    '20260930': dict(period_key='20260930', period_type='Q3', period_label='Q3_2026',
+                     period_start='2026-01-01', period_end='2026-09-30', fiscal_year='2026',
+                     period_source='COLLECTED_2026_SLOT', slot_id='q3_2026'),
+}
 SLOT_ORDER = {'q1_2026': 1, 'h1_2026': 2, 'q3_2026': 3}
 PERIOD_SLOT = {v: k for k, v in SLOT_PERIOD.items()}
 FIELDS = ['security_id', 'stock_code', 'stock_name', 'period_key', 'period_type', 'period_label',
@@ -65,8 +76,15 @@ def main():
                                 old_value=old[0], new_value=r['value_cny'],
                                 old_status=old[1], new_status=r['status']))
         else:
+            # 整期无任何行时（000856 2026Q1 是图片版），只能从本公司其他期克隆元数据，
+            # 再按目标期改写期间字段；数值仍来自 ov（已按原页核对）。
             base = idx.get((sec, period, 'FIN.REV.YTD'))
-            assert base, f'缺少同期模板行 {sec} {period}'
+            meta = None
+            if base is None:
+                base = next((v for (s2, p2, f2), v in idx.items()
+                             if s2 == sec and f2 == 'FIN.REV.YTD'), None)
+                assert base, f'缺少可克隆模板行 {sec} {period}'
+                meta = PERIOD_META[period]
             r = {k2: base.get(k2, '') for k2 in header}
             r.update(field_id='FIN.NPDEDT.YTD', field_name_cn='扣非归母净利润（累计）',
                      value_raw=ov['value_raw'], unit_raw=ov['unit_raw'] or '元',
@@ -76,6 +94,8 @@ def main():
                      document_id=ov['document_id'], source_page=str(ov['page']),
                      evidence_label=ov['evidence_label'], period_basis='YTD_CUMULATIVE',
                      period_type=base['period_type'], period_label=base['period_label'])
+            if meta:
+                r.update(meta)
             rows.append(r)
             idx[k] = r
             added.append(dict(security_id=sec, period_key=period, field_id='FIN.NPDEDT.YTD',
@@ -115,7 +135,8 @@ def main():
                 if not hi['value_cny'] or not lo['value_cny']:
                     continue
                 val = round(float(hi['value_cny']) - float(lo['value_cny']), 2)
-                tmpl = idx.get((sec, p_hi, 'FIN.NPP.SQ')) or idx.get((sec, p_hi, 'FIN.REV.SQ'))
+                tmpl = (idx.get((sec, p_hi, 'FIN.NPP.SQ')) or idx.get((sec, p_hi, 'FIN.REV.SQ'))
+                        or idx.get((sec, p_hi, 'FIN.NPDEDT.YTD')))
                 assert tmpl, f'缺少单季模板行 {sec} {p_hi}'
                 r = {k2: tmpl.get(k2, '') for k2 in header}
                 r.update(field_id='FIN.NPDEDT.SQ', field_name_cn='扣非归母净利润（单季）',
