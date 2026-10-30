@@ -21,12 +21,12 @@ from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parents[1]
 VDIR = ROOT / "runs/issues/S02/remediation_20261029/restatement_verify"
-SRC = VDIR / "results.csv"
+SRC = VDIR / "results_final2.csv"
 OUT = VDIR / "round4_results.csv"
 INDEX = ROOT / "runs/collection/collection_index.csv"
 
-RE2 = re.compile(r"[（(]二[)）]?\s*公司对重大会计差错更正原因及影响的分析说明(.{0,80})")
-RE1 = re.compile(r"[（(]一[)）]?\s*公司对会计政策、会计估计变更原因及影响的分析说明(.{0,80})")
+RE2 = re.compile(r"重大会计差错更正原因及影响.{0,6}?分析说明(.{0,80})")
+RE1 = re.compile(r"会计政策、会计估计变更原因及影响.{0,6}?分析说明(.{0,60})")
 
 
 def judge(path: Path):
