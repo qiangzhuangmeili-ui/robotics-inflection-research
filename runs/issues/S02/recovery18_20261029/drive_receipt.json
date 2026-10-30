@@ -1,6 +1,6 @@
 {
-  "status": "UPLOAD_BLOCKED_AUTO_REVIEW_PENDING_USER_AUTHORIZATION",
-  "upload_executed": false,
+  "status": "VERIFIED_CLOUD_READBACK_AND_RESTORED",
+  "upload_executed": true,
   "file_name": "S02_18家定向修复_v3_20261030.zip",
   "local_bytes": 109092036,
   "local_sha256": "c6e5db79b6e1a19ad90724cda4aa2e861cdf068f883888d0be9393cde8cd6196",
@@ -9,5 +9,58 @@
   "file_id": null,
   "auto_review_reason": "该操作会将包含研究数据和源证据的完整压缩包上传到 Google Drive；用户仅授权继续处理本地任务，未明确授权此具体敏感数据包上传至该目标。",
   "permission_question_presented": true,
-  "sharing_changes": false
+  "sharing_changes": false,
+  "user_authorization": "2026-10-30用户明确回复：允许上传到项目Drive",
+  "delivery_format": "TWO_BINARY_PARTS_PLUS_MANIFEST_AND_RESTORE_SCRIPT",
+  "single_file_limit_bytes": 104857600,
+  "uploaded_files": [
+    {
+      "name": "S02_18家定向修复_v3_20261030.zip.part01",
+      "id": "1wLug9nhE0R4GOEa4zWrpk8i2dlyRktsR",
+      "url": "https://drive.google.com/file/d/1wLug9nhE0R4GOEa4zWrpk8i2dlyRktsR/view?usp=drivesdk",
+      "bytes": 67108864,
+      "parent_ids": [
+        "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5"
+      ]
+    },
+    {
+      "name": "S02_18家定向修复_v3_20261030.zip.part02",
+      "id": "1F_1f1zQhJhJ1Sd-oRp5_GtEB_H6KZQxo",
+      "url": "https://drive.google.com/file/d/1F_1f1zQhJhJ1Sd-oRp5_GtEB_H6KZQxo/view?usp=drivesdk",
+      "bytes": 41983172,
+      "parent_ids": [
+        "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5"
+      ]
+    },
+    {
+      "name": "S02_v3_parts_manifest.json",
+      "id": "18R6kSsFpvmeihR00znHaMtgxG9HszJzf",
+      "url": "https://drive.google.com/file/d/18R6kSsFpvmeihR00znHaMtgxG9HszJzf/view?usp=drivesdk",
+      "bytes": 616,
+      "parent_ids": [
+        "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5"
+      ]
+    },
+    {
+      "name": "restore_S02_v3.py",
+      "id": "18uR4wv5oOkfCesS7RKN0-iDirX1Xha6y",
+      "url": "https://drive.google.com/file/d/18uR4wv5oOkfCesS7RKN0-iDirX1Xha6y/view?usp=drivesdk",
+      "bytes": 1152,
+      "parent_ids": [
+        "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5"
+      ]
+    }
+  ],
+  "readback": {
+    "status": "VERIFIED",
+    "all_four_files_binary_sha256_match": true,
+    "restored_original_bytes": 109092036,
+    "restored_original_sha256": "c6e5db79b6e1a19ad90724cda4aa2e861cdf068f883888d0be9393cde8cd6196",
+    "archive_manifest_files_verified": 657
+  },
+  "extra_standalone_handoff": {
+    "uploaded": false,
+    "auto_review_rejected": true,
+    "reason": "用户授权修复包及分卷配套文件，未明确授权独立交接说明外传；说明已包含在获授权原包内，未再单独上传。"
+  }
 }
