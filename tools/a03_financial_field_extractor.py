@@ -777,6 +777,126 @@ def extract_key_financials(pages, scan=60, anchor_rev=None, with_details=False):
     return (*result, details) if with_details else result
 
 
+NPDEDT_LABELS = ['归属于上市公司股东的扣除非经常性损益的净利润',
+                 '归属于上市公司股东的扣除非经常性损益后的净利润',
+                 '归属于挂牌公司股东的扣除非经常性损益后的净利润',
+                 '归属于挂牌公司股东的扣除非经常性损益的净利润',
+                 '归属于母公司股东的扣除非经常性损益的净利润',
+                 '扣除非经常性损益后归属于上市公司股东的净利润',
+                 '扣除非经常性损益后归属于公司普通股股东的净利润',
+                 '扣除非经常性损益后归属于母公司股东的净利润']
+
+
+def find_npdedt_row(pages, scan=60, anchor_rev=None):
+    """补漏通道：只找「归属于…扣除非经常性损益的净利润」一行，不碰其他字段。
+
+    与 extract_key_financials 的差别只在三处定位缺陷，全部是「原逻辑看不见」的情形：
+      1. 表头判定用去空白文本——PDF 常把「增减」劈成「增\\n减」（688001「上年同期增/减变动幅度」、
+         603767「同期增减变动幅/度」），按原文本判会把整页摘要表漏掉；
+      2. 摘要表跨页——沪市把扣非整行甩到次页（600143/600487），深市把「归属于」行留到次页
+         （603767/603400），续页无表头，沿用表头页定下的累计列；
+      3. 分页把扣非标签劈成两半（600936/600939/603239/603266/688290），把次页的标签尾接回本页。
+    另外合并 pypdf 拆开的负号（002579「-」/「89,849,644.18」）。
+
+    只在原逻辑取不到扣非时才调用，返回单行；调用方据此只补 FIN.NPDEDT.YTD，
+    已入池的营收/归母/现金流一律不动。
+    """
+    table_col = None
+    table_page = None
+    table_unit = None
+    for pi in range(min(scan, len(pages))):
+        raw_lines = page_lines(pages[pi])
+        lines = [re.sub(r'注\s*\d+(?=\s|$|[：:])', '', line).strip() for line in raw_lines]
+        merged = []
+        for ln in lines:
+            if merged and merged[-1] in ('-', '－', '—'):
+                merged[-1] = merged[-1] + ln
+            else:
+                merged.append(ln)
+        lines = merged
+        if pi + 1 < len(pages) and lines:
+            nxt = [re.sub(r'注\s*\d+(?=\s|$|[：:])', '', line).strip()
+                   for line in page_lines(pages[pi + 1])][:6]
+            frag = []
+            for ln in nxt:
+                if not ln:
+                    continue
+                if MONEY.search(ln):
+                    break
+                if re.match(r'^\d+\s*/\s*\d+$', ln) or '股份有限公司' in ln \
+                        or re.search(r'(年度|季度|半年度)报告\s*$', ln):
+                    continue
+                frag.append(ln)
+                if len(''.join(frag)) >= 12:
+                    break
+            if frag:
+                for k in (1, 2, 3):
+                    if len(lines) < k:
+                        continue
+                    tail = ''.join(lines[-k:])
+                    mm = MONEY.search(tail)
+                    label_part = tail[:mm.start()].strip() if mm else tail.strip()
+                    num_part = tail[mm.start():].strip() if mm else ''
+                    if not label_part or len(label_part) > 40:
+                        continue
+                    cand = normalize(label_part + ''.join(frag))
+                    if any(cand.startswith(lb) for lb in NPDEDT_LABELS):
+                        lines = lines[:-k] + [label_part + ''.join(frag)
+                                              + ((' ' + num_part) if num_part else '')]
+                        break
+        flat = re.sub(r'\s+', '', '\n'.join(lines))
+        is_head = ('营业收入' in flat and '增减' in flat
+                   and ('归属于' in flat or '本报告期' in flat))
+        is_cont = (not is_head and table_col is not None and table_page is not None
+                   and pi - table_page <= 3 and '扣除非经常性损益' in flat)
+        if not (is_head or is_cont):
+            continue
+        if is_head:
+            col = _anchor_index(lines, anchor_rev)
+            if col is None:
+                col = _ytd_column_index(lines, 0)
+            table_col, table_page = col, pi
+            table_unit = detect_unit(lines)
+        else:
+            col = table_col
+        n = len(lines)
+        for i in range(n):
+            for span in (1, 2, 3, 4, 5):
+                if i + span > n:
+                    break
+                t = ' '.join(lines[i:i + span])
+                norm = normalize(t)
+                for label in NPDEDT_LABELS:
+                    if not norm.startswith(label):
+                        continue
+                    rest = norm[len(label):]
+                    if rest.startswith(('增长', '率', '比例')):
+                        continue
+                    vals = summary_cells(t)
+                    if not vals:
+                        continue
+                    # 续页上「变动原因」表也有扣非行，但只有一列比例；真摘要行至少两列金额
+                    if is_cont and sum(1 for v in vals
+                                       if v[1] is not None and not v[2]) < 2:
+                        continue
+                    if len(vals) <= col:
+                        continue
+                    pick = vals[col]
+                    if pick[1] is None or pick[2]:
+                        continue
+                    inline = re.search(r'[（(](百万元|千万元|千元|万元|元)[）)]', t)
+                    row_unit = inline.group(1) if inline else None
+                    if row_unit is None:
+                        row_unit = next((u for u in (detect_unit([ln]) for ln in reversed(raw_lines[:i]))
+                                         if u), None)
+                    # 续页没有单位行，回落到表头页的单位（H1 报告常见，否则整行只能记 UNKNOWN）
+                    if row_unit is None:
+                        row_unit = table_unit
+                    return dict(value=pick[0], page=pi + 1, unit=row_unit,
+                                raw_row=t[:600], column_index=col)
+    return None
+
+
 def extract_one(task):
     """单份 PDF 全字段抽取。task = dict(document_id, security_id, stock_code, slot_id, period_label, path)"""
     t0 = time.time()
@@ -900,6 +1020,17 @@ def extract_one(task):
             anchor_rev = row['value_raw']
             break
     kf, kf_page, kf_unit, kf_details = extract_key_financials(pages, anchor_rev=anchor_rev, with_details=True)
+    if 'FIN.NPDEDT.YTD' not in kf:
+        # 补漏通道：原逻辑没取到扣非时，再用跨页/换行容错扫描找一次。
+        # 只补扣非这一行，营收/归母/现金流的已入池值和交叉校验结论都不动。
+        nd = find_npdedt_row(pages, anchor_rev=anchor_rev)
+        if nd:
+            kf['FIN.NPDEDT.YTD'] = nd['value']
+            kf_details['FIN.NPDEDT.YTD'] = nd
+            if kf_page is None:
+                kf_page = nd['page']
+            if not kf_unit:
+                kf_unit = nd['unit']
     res['key_financials_values'] = kf
     res['key_financials_details'] = kf_details
     res['key_financials_page'] = kf_page
