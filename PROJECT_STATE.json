@@ -1331,7 +1331,28 @@
       "decision": "STOP_FURTHER_COLLECTION_SPECIAL_OBSERVATION",
       "note": "不再追材料；S03 中按观察/待核分流，不得当作无改善或直接淘汰；上市满 4 个季度后自动重进",
       "s03_requirement": "不得因 NOT_COMPARABLE 判为无信号；不得用旧期年报结果冒充本期结论"
-    }
+    },
+    "new_listing_watchlist": {
+      "generated_at": "2026-10-30T18:11:21+08:00",
+      "file": "runs/issues/S02/remediation_20261029/collect_q3_2026/新上市观察名单.csv",
+      "companies": 34,
+      "no_comparison_base": 26,
+      "note": "2025-07-01 后上市；上市未满 4 个季度的同比完全缺基期，S03 只能进观察/待核分流，不得当作无改善",
+      "examples": [
+        "SH:688836 宇树科技 2026-08-19",
+        "SH:603448 天博智能 2026-09-07",
+        "SZ:301699 洛轴股份 2026-09-09"
+      ],
+      "reentry": "上市满 4 个季度后（2027 年一季报起）自动重进"
+    },
+    "open_issues": [
+      "合并范围变更 4 家（北投/孚日/蓝箭/杭叉）需 S03 单独处理，35 家营收异动待逐家确认",
+      "42 份半年报重述状态为宽容假设（ASSUMED_NO_PENDING_REVIEW）",
+      "长安汽车 2026 三季报未披露；M02/M03 缺单季营收（营业总收入不替代营业收入）",
+      "HOLD 176 格三表待核（S00 遗留）、MISSING 188 格（M07 单季扣非 86 格最多）",
+      "UNDEFINED_BASE 469 / NOT_APPLICABLE 858 属经济事实，不可修"
+    ],
+    "report": "runs/issues/S02/S02_总汇报_20261030.md"
   },
   "current_valid_versions": {
     "S00_data": {
