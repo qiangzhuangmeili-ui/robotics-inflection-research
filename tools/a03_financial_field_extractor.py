@@ -316,6 +316,43 @@ def extract_quarterly(pages):
     return got, unit, None
 
 
+def extract_q3_single_quarter(pages):
+    """三季报「主要会计数据」表的「本报告期」列（Q3 单季）。
+
+    与 extract_quarterly 的区别：三季报没有「分季度财务指标」章节，单季数在
+    「主要会计数据」表的第 1 列（本报告期），累计数在第 3 列。百分比会被 amounts 过滤，
+    所以 2 个金额 = (单季, 累计)，1 个金额 = 只有累计（单季列为「--」）。
+    """
+    for pi in range(min(6, len(pages))):
+        text = pages[pi] or ''
+        if '本报告期' not in text or '年初至报告期末' not in text:
+            continue
+        lines = page_lines(text)
+        rows = merge_rows(lines)
+        got = {}
+        for field_id, labels in QUARTERLY_FIELDS:
+            for label in labels:
+                hit = None
+                for row_text, _i in rows:
+                    norm = normalize(row_text)
+                    pos = norm.find(label)
+                    if pos < 0 or pos > 40:
+                        continue
+                    rest = norm[pos + len(label):]
+                    if rest.startswith(('增长', '率', '变动', '比例')):
+                        continue
+                    vals = amounts(row_text)
+                    if len(vals) >= 2:
+                        hit = (vals[0][0], pi + 1, label, row_text)
+                        break
+                if hit:
+                    got[field_id] = hit
+                    break
+        if got:
+            return got, detect_unit(lines), None
+    return {}, None, 'NO_Q3_CURRENT_PERIOD_TABLE'
+
+
 REPORT_FEATURES = {
     'BS_CONS': ('货币资金', '资产总计', '流动资产合计', '负债合计'),
     'BS_PARENT': ('货币资金', '资产总计', '流动资产合计', '负债合计'),
