@@ -170,13 +170,21 @@ def _inputs(recs):
 
 
 def _restate(recs):
+    """仅未解决的追溯重述触发 Q06。
+
+    已确认发生同一控制下合并追溯调整、且当前指标使用了同版本调整后比较基数的，
+    由 comparability_note 中的 RESTATED_COMPARATIVE_ADOPTED 标记豁免 Q06。
+    未采用调整后比较数的确认重述，仍由 RESTATED_PRIOR_YEARS_UNRECALCULATED 触发。
+    """
     f = set()
     for r in recs:
         if not r:
             continue
-        if r["restate"] in (RESTATE_PENDING, RESTATE_CONFIRMED):
-            f.add("Q06")
-        elif "RESTATED_PRIOR_YEARS_UNRECALCULATED" in (r["comparability"] or ""):
+        comparability = r["comparability"] or ""
+        if "RESTATED_COMPARATIVE_ADOPTED" in comparability:
+            continue
+        if (r["restate"] in (RESTATE_PENDING, RESTATE_CONFIRMED)
+                or "RESTATED_PRIOR_YEARS_UNRECALCULATED" in comparability):
             f.add("Q06")
     return f
 
@@ -823,6 +831,14 @@ def synthetic_tests(rules):
              f"L2={l2} / dims={sorted(dims)} / flip={flip}",
              l2 == "NOT_SHORTLISTED" and flip == 1)
 
+    r, m = _base("T17", rev=(120e6, 90e6))
+    r[("T17", 20250630)]["FIN.REV.YTD"]["restate"] = RESTATE_CONFIRMED
+    r[("T17", 20250630)]["FIN.REV.YTD"]["comparability"] = "RESTATED_COMPARATIVE_ADOPTED_SAME_CONTROL"
+    x, _ = evaluate(r, m, "T17", 20260630)
+    add_test("T17", "已确认追溯重述且已采用调整后比较基数 → 不标 Q06", "Q06 absent",
+             f"{x['M01']['status']}/{sorted(x['M01']['flags'])}",
+             "Q06" not in x["M01"]["flags"])
+
     # T17 UNKNOWN 非旧快照 → EXCLUDED_SCOPE
     r, m = _base("T17")
     r[("T17", 20260630)]["FIN.REV.YTD"]["scope"] = "UNKNOWN"
@@ -1056,7 +1072,7 @@ def main():
         "rules_sha256": sha256(RULES),
         "rules_v1_sha256": sha256(RULES_V1),
         "checked_at": datetime.now(CST).isoformat(timespec="seconds"),
-        "implementation_revision": "R4_AFTER_CODEX_ASSESSMENT_dfc835d",
+        "implementation_revision": "R5_RESTATED_COMPARATIVE_ADOPTION_20261031",
         "checks_total": len(checks),
         "checks_pass": sum(1 for c in checks if c["result"] == "PASS"),
         "checks_fail": sum(1 for c in checks if c["result"] == "FAIL"),
