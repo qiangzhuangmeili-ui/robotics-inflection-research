@@ -1,0 +1,87 @@
+{
+  "version": "S02_FINAL_SNAPSHOT_20261102",
+  "status": "LOCKED_FOR_S03_INPUT",
+  "created_at": "2026-11-02T17:20:02+08:00",
+  "as_of": "2026-10-25",
+  "normalized_input": {
+    "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+    "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+    "payload_sha256": "92143c5accb6de1ca8a020024aaad763963c33e8846fa0085f4a1627f6b48891",
+    "rows": 229667,
+    "companies": 1054
+  },
+  "metrics": {
+    "path": "runs\\issues\\S02\\hangcha_restated_20261101\\s02_v10\\all_pool_metrics.csv",
+    "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+    "cells": 12648,
+    "companies": 1054
+  },
+  "company_summary": {
+    "path": "runs\\issues\\S02\\hangcha_restated_20261101\\s02_v10\\company_metric_summary.csv",
+    "sha256": "0a9ad7ae946aea838e586fd4adaac4ee941ce50d92b2d72797d2219a4383f5f6",
+    "companies": 1054
+  },
+  "review": {
+    "path": "runs\\issues\\S02\\hangcha_restated_20261101\\s02_v10\\review.json",
+    "sha256": "ec8fadd7addedcc62da74401e65753e7ff2bf467560af4684cc3f354366f3879",
+    "decision": "SELF_CHECK_PASS_WITH_UPSTREAM_FINDINGS",
+    "checks_total": 24,
+    "checks_pass": 24,
+    "blocking_fail": 0
+  },
+  "status_counts": {
+    "companies": 1054,
+    "metrics": 12,
+    "cells": 12648,
+    "ok": 9798,
+    "provisional": 973,
+    "hold": 176,
+    "missing": 58,
+    "not_comparable": 288,
+    "undefined_base": 497,
+    "not_applicable": 858,
+    "excluded_scope": 0,
+    "version_mismatch": 0
+  },
+  "inherited_fixes": [
+    {
+      "name": "v7 重述标记回原文核实",
+      "scope": "1,007 份报告；962 明确无重述 / 3 确认重述 / 42 宽容假设",
+      "source": "runs/issues/S02/S02_总汇报_20261030.md"
+    },
+    {
+      "name": "m07 两批补修（扣非累计+单季）",
+      "scope": "v8 补扣非 88 行、v9 补单季 144 行 + 2 家换中文原件",
+      "result": "M07 MISSING 86→0",
+      "source": "runs/issues/S02/m07_repair_20261030/REPORT.md"
+    },
+    {
+      "name": "杭叉追溯比较基数 v10",
+      "scope": "仅 SH:603298；56 条审计；2025Q2 三项冲突保留 Q06",
+      "source": "runs/issues/S02/hangcha_restated_20261101/REPORT.md"
+    }
+  ],
+  "m07_missing_cells": 0,
+  "workpaper": {
+    "name": "S02_A_B_调整工作底稿_20261030",
+    "status": "MISSING",
+    "searched": "C:/D: 仓库、桌面、文档目录均未找到；仓库内无 PASS_RESTATED_COMPARABLE / REFERENCE_ONLY_* 字样",
+    "impact": "9 家点名公司的口径状态裁决未落地；S03 以显式覆盖表处理，未覆盖的标记 PENDING_WORKPAPER",
+    "named_companies": [
+      "杭叉集团",
+      "北投科技",
+      "*ST京化",
+      "顺景科技",
+      "美力科技",
+      "雅创电子",
+      "奔图科技",
+      "日发精机",
+      "孚日股份"
+    ]
+  },
+  "notes": [
+    "指令提到的 v10/229,032 行与本次输入 229,667 行不一致：229,032 是 remediation_20261029 包的行数，229,667 是含 m07 补修与杭叉采纳的最新版。S03 以本快照为准。",
+    "runs/issues/S02/ 根目录的 all_pool_metrics.csv（v7，2026-10-29）未纳入 m07 与杭叉，不作为 S03 输入。",
+    "本快照为执行方锁定，不构成外部验收。"
+  ]
+}

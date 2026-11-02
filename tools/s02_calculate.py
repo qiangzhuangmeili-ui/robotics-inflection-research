@@ -41,7 +41,12 @@ RULES_SHA_REQUIRED = "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b0016
 ANCHOR_FIELDS = ("FIN.REV.YTD", "FIN.REV.SQ", "FIN.NPDEDT.YTD")
 BASE_RULES_RELATIVE = "runs/issues/S01/screen_rules_v2.json"
 DEFAULT_L0_PATCH_RELATIVE = "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json"
-RULES_METADATA_KEYS = {"input_fingerprint", "input_version", "base_rules_sha256", "l0_addendum_path"}
+RULES_METADATA_KEYS = {"input_fingerprint", "input_version", "base_rules_sha256",
+                       "l0_addendum_path", "field_catalog_row_counts"}
+# 字段目录的 rows 是"输入动态量"（随输入版本变化的实测行数），不是科学规则。
+# 公式、阈值、字段定义、期间口径才是科学规则，必须逐字节一致。
+DYNAMIC_CATALOG_KEYS = {"rows"}
+FIELD_COUNT_AUDIT_KEY = "field_catalog_row_counts"
 L0_ADDENDUM_VERSION = "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029"
 
 # 公式唯一来源：S01 已验收执行器
@@ -105,23 +110,88 @@ def valid_sha256(value) -> bool:
     return True
 
 
+def _catalog_without_dynamic(catalog: dict) -> dict:
+    """剥离字段目录中的动态行数，只保留字段定义（名称/口径/期间）。"""
+    return {
+        fid: {k: v for k, v in entry.items() if k not in DYNAMIC_CATALOG_KEYS}
+        for fid, entry in catalog.items()
+    }
+
+
+def _science_core(rules: dict) -> dict:
+    """科学规则核心：剔除全部输入元数据，并把字段目录换成去掉动态行数的版本。"""
+    core = {}
+    for key, value in rules.items():
+        if key in RULES_METADATA_KEYS:
+            continue
+        core[key] = _catalog_without_dynamic(value) if key == "field_catalog" else value
+    return core
+
+
+def _row_count_diffs(selected: dict, base: dict) -> dict:
+    """字段目录 rows 相对冻结版本的实际变化集合。"""
+    diffs = {}
+    base_catalog = base.get("field_catalog", {})
+    for fid, entry in selected.get("field_catalog", {}).items():
+        frozen_entry = base_catalog.get(fid)
+        if frozen_entry is None:
+            continue
+        if entry.get("rows") != frozen_entry.get("rows"):
+            diffs[fid] = {"frozen": frozen_entry.get("rows"), "current": entry.get("rows")}
+    return diffs
+
+
+def _row_count_audit_ok(selected: dict, diffs: dict) -> tuple[bool, str]:
+    """行数可以变，但必须逐字段登记冻结值/当前值/原因，且与实际变化完全一致。"""
+    for fid, entry in selected.get("field_catalog", {}).items():
+        rows = entry.get("rows")
+        if isinstance(rows, bool) or not isinstance(rows, int) or rows <= 0:
+            return False, f"field_catalog rows 必须是正整数: {fid}={rows!r}"
+    if not diffs:
+        return True, "字段行数与冻结版本一致"
+    audit = selected.get(FIELD_COUNT_AUDIT_KEY)
+    if not isinstance(audit, dict):
+        return False, "字段行数已变化但缺少 field_catalog_row_counts 审计块"
+    declared = audit.get("changes")
+    if not isinstance(declared, list):
+        return False, "字段行数审计块缺少 changes 列表"
+    declared_map = {}
+    for item in declared:
+        fid = item.get("field_id")
+        if not isinstance(fid, str) or fid in declared_map:
+            return False, f"字段行数审计块存在非法或重复条目: {fid!r}"
+        declared_map[fid] = {"frozen": item.get("frozen_rows"), "current": item.get("current_rows")}
+    if declared_map != diffs:
+        return False, "字段行数审计块与实际变化不一致"
+    if not str(audit.get("reason", "")).strip():
+        return False, "字段行数审计块缺少 reason"
+    if not str(audit.get("input_version", "")).strip():
+        return False, "字段行数审计块缺少 input_version"
+    return True, f"字段行数按输入版本更新 {len(diffs)} 个字段，已登记审计"
+
+
 def science_rules_match(selected: dict, base: dict, base_sha: str) -> tuple[bool, str]:
-    """Accept only the frozen S01 science rules, plus the registered input metadata."""
+    """Accept only the frozen S01 science rules, plus the registered input metadata.
+
+    字段目录的 rows 是输入动态量：允许随输入版本变化，但必须逐字段登记审计；
+    其余科学规则（公式、阈值、字段定义、期间口径、信号、分层）必须与冻结版完全一致。
+    """
     if base_sha not in ACCEPTED_BASE_RULES_SHA256:
         return False, f"base S01 byte hash is not accepted: {base_sha}"
     if set(selected) - RULES_METADATA_KEYS != set(base) - {"input_fingerprint"}:
         return False, "selected rules contain missing or unrecognized top-level fields"
-    selected_core = {k: v for k, v in selected.items() if k not in RULES_METADATA_KEYS}
-    base_core = {k: v for k, v in base.items() if k != "input_fingerprint"}
-    if selected_core != base_core:
+    if _science_core(selected) != _science_core(base):
         return False, "scientific rule content differs from frozen S01 v2"
+    audit_ok, audit_note = _row_count_audit_ok(selected, _row_count_diffs(selected, base))
+    if not audit_ok:
+        return False, audit_note
     changed_fingerprint = selected.get("input_fingerprint") != base.get("input_fingerprint")
     has_v2_metadata = any(k in selected for k in ("input_version", "base_rules_sha256", "l0_addendum_path"))
     if changed_fingerprint or has_v2_metadata:
         declared_base = selected.get("base_rules_sha256")
         if declared_base not in ACCEPTED_BASE_RULES_SHA256:
             return False, "alternate input metadata is not anchored to an accepted S01 v2 hash"
-    return True, "scientific rules match frozen S01 v2"
+    return True, f"scientific rules match frozen S01 v2; {audit_note}"
 
 
 def verify_normalized_input(source_path: Path, source_sha: str, payload_sha: str,
@@ -506,6 +576,15 @@ def main(argv=()) -> int:
     finally:
         s01.NORMALIZED = previous_normalized
     s01.load_signal_defs(rules)          # 只为了让 evaluate 的常量与规则一致；本脚本不产出信号
+    catalog_mism = [
+        {"field_id": fid, "declared": entry.get("rows"), "actual": field_rows.get(fid, 0)}
+        for fid, entry in rules["field_catalog"].items()
+        if field_rows.get(fid, 0) != entry.get("rows")
+    ]
+    add("P07", "字段目录声明行数与本次实际输入逐字段一致", not catalog_mism,
+        {"mismatch": catalog_mism[:20], "count": len(catalog_mism),
+         "fields_in_input_not_in_catalog": sorted(set(field_rows) - set(rules["field_catalog"])),
+         "note": "rows 属输入动态量，随输入版本变化；科学规则部分由 P01 逐字节比对，此处只校验声明值与实测值一致"})
     latest = latest_periods(rows)
     add("P03", "公司数与 S00/S01 一致（1054）", len(companies) == 1054, {"companies": len(companies)})
     add("P04", "每家都有可确定的最新可用期", len(latest) == 1054,

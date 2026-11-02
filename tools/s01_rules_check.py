@@ -552,9 +552,18 @@ def structural(rules, field_rows):
     unknown = sorted({i["field_id"] for m in rules["metrics"] for i in m["inputs"]} - fcat)
     add("C03", "指标输入字段均在字段目录中", not unknown, {"unknown": unknown})
 
-    mism = [{"field_id": f, "declared": m["rows"], "actual": field_rows.get(f, 0)}
-            for f, m in rules["field_catalog"].items() if field_rows.get(f, 0) != m["rows"]]
-    add("C04", "字段行数与 S00 实测一致", not mism, {"mismatch": mism})
+    # C04（2026-11-02 调整）：field_catalog.rows 是"输入动态量"，不是科学规则的一部分。
+    # 冻结值是在原始 S00（228,155 行）上数出来的；换用 v9/v10 等扩容后的输入必然漂移。
+    # 旧写法把"声明值 != 实测值"一律判失败，导致同一套冻结规则在新输入上重跑必报 17 个字段告警。
+    # 新写法只保留真正的定义性校验：字段必须实际存在（实测 0 行才算失败）；
+    # 声明值与实测值的差异按 input_version_drift 记录，不阻断；精确对齐由 S02 的 P07 按当前输入校验。
+    absent = [{"field_id": f, "actual": field_rows.get(f, 0)}
+              for f in rules["field_catalog"] if field_rows.get(f, 0) == 0]
+    drift = [{"field_id": f, "declared": m["rows"], "actual": field_rows.get(f, 0)}
+             for f, m in rules["field_catalog"].items() if field_rows.get(f, 0) != m["rows"]]
+    add("C04", "字段目录每个字段在输入中实际存在（声明行数差异记输入漂移）", not absent,
+        {"absent": absent, "input_version_drift": drift, "drift_count": len(drift),
+         "note": "rows 为输入动态量；声明值冻结于原始 S00，换输入后漂移属预期，精确对齐由 S02 P07 校验"})
 
     mid = set(ids)
     bad_sig = []

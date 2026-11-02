@@ -1,0 +1,309 @@
+{
+  "security_id": "SH:603298",
+  "status": "INDEPENDENT_RECHECK_PASS",
+  "checks_total": 21,
+  "checks_pass": 21,
+  "checks_fail": 0,
+  "v10_gzip_sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+  "v10_rows": 229667,
+  "hangcha_changed_rows": 55,
+  "hangcha_added_rows": 1,
+  "s02_counts": {
+    "companies": 1054,
+    "metrics": 12,
+    "cells": 12648,
+    "ok": 9798,
+    "provisional": 973,
+    "hold": 176,
+    "missing": 58,
+    "not_comparable": 288,
+    "undefined_base": 497,
+    "not_applicable": 858,
+    "excluded_scope": 0,
+    "version_mismatch": 0
+  },
+  "recomputed_metrics": {
+    "M01": "0.086486443971547605729635444858364013518",
+    "M02": "0.069559351333499854923327486853083226125",
+    "M03": "-3.390582121847148927909452665687914450200",
+    "M04": "2.776584",
+    "M05": "0.101213122844618099254760325641858005280",
+    "M06": "0.15915883462939150064873463980672475992",
+    "M07": "0.110959605034333248824478741095718420112",
+    "M08": "0.3147035578040584280784609023893394979679",
+    "M09": "34802612.45"
+  },
+  "s02_metrics": {
+    "M01": {
+      "value": "0.086486444",
+      "status": "OK",
+      "flags": ""
+    },
+    "M02": {
+      "value": "0.0695593513",
+      "status": "PROVISIONAL",
+      "flags": "Q06"
+    },
+    "M03": {
+      "value": "-3.3905821218",
+      "status": "PROVISIONAL",
+      "flags": "Q06"
+    },
+    "M04": {
+      "value": "2.776584",
+      "status": "OK",
+      "flags": ""
+    },
+    "M05": {
+      "value": "0.1012131228",
+      "status": "OK",
+      "flags": ""
+    },
+    "M06": {
+      "value": "0.1591588346",
+      "status": "OK",
+      "flags": ""
+    },
+    "M07": {
+      "value": "0.110959605",
+      "status": "PROVISIONAL",
+      "flags": "Q06"
+    },
+    "M08": {
+      "value": "0.3147035578",
+      "status": "OK",
+      "flags": ""
+    },
+    "M09": {
+      "value": "34802612.4499999881",
+      "status": "OK",
+      "flags": ""
+    },
+    "M10": {
+      "value": "7.0033771064",
+      "status": "PROVISIONAL",
+      "flags": "Q06"
+    },
+    "M11": {
+      "value": "15.1354298328",
+      "status": "PROVISIONAL",
+      "flags": "Q06"
+    },
+    "M12": {
+      "value": "0.3930982753",
+      "status": "PROVISIONAL",
+      "flags": "Q06"
+    }
+  },
+  "checks": [
+    {
+      "id": "A01",
+      "item": "v10 gzip SHA 与 manifest 一致",
+      "result": "PASS",
+      "detail": {
+        "manifest": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+        "actual": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+      }
+    },
+    {
+      "id": "A02",
+      "item": "v10 行数/公司数与 manifest 一致",
+      "result": "PASS",
+      "detail": {
+        "rows": 229667,
+        "companies": 1054
+      }
+    },
+    {
+      "id": "A03",
+      "item": "v10 表头与 v9 完全一致",
+      "result": "PASS",
+      "detail": {
+        "added_cols": []
+      }
+    },
+    {
+      "id": "A04",
+      "item": "v10 比 v9 恰好多 1 行",
+      "result": "PASS",
+      "detail": {
+        "v9": 229666,
+        "v10": 229667
+      }
+    },
+    {
+      "id": "A05",
+      "item": "非杭叉 1053 家逐格完全不变",
+      "result": "PASS",
+      "detail": {
+        "compared": 229430,
+        "diff": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "A06",
+      "item": "杭叉改值行数=审计非补建条数",
+      "result": "PASS",
+      "detail": {
+        "changed": 55,
+        "audit": 56
+      }
+    },
+    {
+      "id": "A07",
+      "item": "杭叉仅新增 1 行且为 2025H1 扣非累计",
+      "result": "PASS",
+      "detail": {
+        "added": [
+          [
+            "SH:603298",
+            "20250630",
+            "YTD_CUMULATIVE",
+            "FIN.NPDEDT.YTD"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "A08",
+      "item": "当前期 28 条只更新比较口径、金额未变",
+      "result": "PASS",
+      "detail": {
+        "mismatch": []
+      }
+    },
+    {
+      "id": "B01",
+      "item": "关键原始值 34 项与官方PDF核对一致",
+      "result": "PASS",
+      "detail": {
+        "mismatch": []
+      }
+    },
+    {
+      "id": "B02",
+      "item": "审计行来源页复核（28 条须在所标页码找到数值；12 条派生值不适用）",
+      "result": "PASS",
+      "detail": {
+        "checked": 28,
+        "derived_skipped": 12,
+        "mismatch": []
+      }
+    },
+    {
+      "id": "C01",
+      "item": "S02 输出杭叉 12 个指标槽位",
+      "result": "PASS",
+      "detail": {
+        "found": [
+          "M01",
+          "M02",
+          "M03",
+          "M04",
+          "M05",
+          "M06",
+          "M07",
+          "M08",
+          "M09",
+          "M10",
+          "M11",
+          "M12"
+        ]
+      }
+    },
+    {
+      "id": "C02",
+      "item": "M01-M09 独立重算与 S02 逐项一致",
+      "result": "PASS",
+      "detail": {
+        "mismatch": []
+      }
+    },
+    {
+      "id": "C03",
+      "item": "Q06 传播与输入行标记独立判定一致",
+      "result": "PASS",
+      "detail": {
+        "mismatch": []
+      }
+    },
+    {
+      "id": "C04",
+      "item": "状态分布符合预期（3项PROVISIONAL+6项OK）",
+      "result": "PASS",
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "D01",
+      "item": "8 条衍生字段重算一致",
+      "result": "PASS",
+      "detail": {
+        "mismatch": []
+      }
+    },
+    {
+      "id": "D02",
+      "item": "单季-累计缺口与 manifest 登记一致",
+      "result": "PASS",
+      "detail": {
+        "mismatch": []
+      }
+    },
+    {
+      "id": "E01",
+      "item": "科学规则核心（公式/阈值/定义）与冻结S01逐项一致",
+      "result": "PASS",
+      "detail": {}
+    },
+    {
+      "id": "E02",
+      "item": "字段行数变化全部登记且有原因",
+      "result": "PASS",
+      "detail": {
+        "changed": 17
+      }
+    },
+    {
+      "id": "F01",
+      "item": "S02 自检无阻断失败",
+      "result": "PASS",
+      "detail": {
+        "blocking_fail": 0,
+        "decision": "SELF_CHECK_PASS_WITH_UPSTREAM_FINDINGS"
+      }
+    },
+    {
+      "id": "F02",
+      "item": "S02 覆盖 12648 格 / 1054 家",
+      "result": "PASS",
+      "detail": {
+        "companies": 1054,
+        "metrics": 12,
+        "cells": 12648,
+        "ok": 9798,
+        "provisional": 973,
+        "hold": 176,
+        "missing": 58,
+        "not_comparable": 288,
+        "undefined_base": 497,
+        "not_applicable": 858,
+        "excluded_scope": 0,
+        "version_mismatch": 0
+      }
+    },
+    {
+      "id": "G01",
+      "item": "v9→v10 仅杭叉 12 格变化，其余 12,647 格零差异",
+      "result": "PASS",
+      "detail": {
+        "non_hangcha_diff": 0,
+        "hangcha_diff": 12,
+        "keys_equal": true
+      }
+    }
+  ],
+  "note": "本报告为执行方独立复算，不替代外部复核；未使用 S01 公式函数。"
+}

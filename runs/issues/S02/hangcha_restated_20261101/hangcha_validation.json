@@ -1,0 +1,235 @@
+{
+  "status": "SELF_CHECK_PASS_CANDIDATE_PENDING_EXTERNAL_REVIEW",
+  "generated_at": "2026-11-01T21:42:23+08:00",
+  "security_id": "SH:603298",
+  "stock_code": "603298",
+  "stock_name": "杭叉集团",
+  "s00_manifest": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10_manifest.json",
+  "s00_gzip_sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+  "s00_payload_sha256": "92143c5accb6de1ca8a020024aaad763963c33e8846fa0085f4a1627f6b48891",
+  "s00_audit_rows": 56,
+  "s02_review_decision": "SELF_CHECK_PASS_WITH_UPSTREAM_FINDINGS",
+  "s02_l0_addendum": {
+    "applied": true,
+    "version": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
+    "path": "runs/issues/S02/remediation_20261029/l0/l0_rules_patch.json",
+    "sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+    "manifest_sha256": "cd949466cae39847038a2f5929e9df9856c8d5900d6d7d42deb6cd7a55ddc811",
+    "note": "L0 JSON addendum applied to each company status vector"
+  },
+  "s02_l0_distribution": {
+    "EVALUABLE": 1007,
+    "W5_PROVISIONAL_ONLY": 47
+  },
+  "s02_input_verified_against": "rules_input_fingerprint_gzip:runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+  "all_pool_coverage": {
+    "metric_rows": 12648,
+    "companies": 1054,
+    "company_summary_rows": 1054
+  },
+  "cross_source_conflicts": [
+    {
+      "field_id": "FIN.REV.SQ",
+      "period": "2025Q2",
+      "annual_report_restated_value": "4846493118.57",
+      "2026H1_minus_2026Q1_adjusted_comparatives": "4840613714.04",
+      "difference_annual_minus_bridge": "5879404.53",
+      "v9_before_value": "4795527480.44",
+      "decision": "Use direct 2025 annual-report Q2 value as the provisional base; retain Q06 because the official sources conflict."
+    },
+    {
+      "field_id": "FIN.NPP.SQ",
+      "period": "2025Q2",
+      "annual_report_restated_value": "687866792.47",
+      "2026H1_minus_2026Q1_adjusted_comparatives": "683415667.31",
+      "difference_annual_minus_bridge": "4451125.16",
+      "decision": "Retain direct annual-report Q2 value; retain Q06 because the official sources conflict."
+    },
+    {
+      "field_id": "FIN.NPDEDT.SQ",
+      "period": "2025Q2",
+      "annual_report_restated_value": "663685128.27",
+      "2026H1_minus_2026Q1_adjusted_comparatives": "672261446.69",
+      "difference_annual_minus_bridge": "-8576318.42",
+      "decision": "Retain direct annual-report Q2 value; retain Q06 because the official sources conflict."
+    }
+  ],
+  "s02_checks": {
+    "total": 24,
+    "pass": 24,
+    "fail": 0,
+    "warnings": 2,
+    "blocking_fail": 0
+  },
+  "hangcha_company_summary": {
+    "security_id": "SH:603298",
+    "stock_code": "603298",
+    "stock_name": "杭叉集团",
+    "period_key": "20260630",
+    "period_type": "H1",
+    "stale_period": "NO",
+    "project_mode": "NO",
+    "l0_evaluability": "EVALUABLE",
+    "ok": "6",
+    "provisional": "6",
+    "hold": "0",
+    "missing": "0",
+    "not_comparable": "0",
+    "undefined_base": "0",
+    "not_applicable": "0",
+    "excluded_scope": "0",
+    "version_mismatch": "0",
+    "metrics_with_status": "12"
+  },
+  "metric_checks": [
+    {
+      "metric_id": "M01",
+      "expected_value": "0.0864864439715476",
+      "actual_value": "0.086486444",
+      "expected_status": "OK",
+      "actual_status": "OK",
+      "quality_flags": "",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": false,
+      "actual_q06": false,
+      "q06_pass": true,
+      "source_refs": "FIN.REV.YTD@20260630|EXTRACTED|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.REV.YTD@20250630|EXTRACTED_KEY_TABLE|DOC-3BBF762B7EF9E776|RESTATED_COMPARATIVE"
+    },
+    {
+      "metric_id": "M02",
+      "expected_value": "0.0695593513335",
+      "actual_value": "0.0695593513",
+      "expected_status": "PROVISIONAL",
+      "actual_status": "PROVISIONAL",
+      "quality_flags": "Q06",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": true,
+      "actual_q06": true,
+      "q06_pass": true,
+      "source_refs": "FIN.REV.SQ@20260630|DERIVED_CUMULATIVE_DIFF|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.REV.SQ@20250630|EXTRACTED_QUARTERLY_TABLE|DOC-FB2C019EFD9674E9|RESTATED_COMPARATIVE_CONFLICTED"
+    },
+    {
+      "metric_id": "M03",
+      "expected_value": "-3.390582121847149",
+      "actual_value": "-3.3905821218",
+      "expected_status": "PROVISIONAL",
+      "actual_status": "PROVISIONAL",
+      "quality_flags": "Q06",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": true,
+      "actual_q06": true,
+      "q06_pass": true,
+      "source_refs": "FIN.REV.SQ@20260630|DERIVED_CUMULATIVE_DIFF|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.REV.SQ@20250630|EXTRACTED_QUARTERLY_TABLE|DOC-FB2C019EFD9674E9|RESTATED_COMPARATIVE_CONFLICTED;FIN.REV.SQ@20260331|DERIVED_Q1_EQUALS_YTD|DOC-18E0EFF334A69C3C|ORIGINAL;FIN.REV.SQ@20250331|DERIVED_Q1_EQUALS_YTD|DOC-18E0EFF334A69C3C|RESTATED_COMPARATIVE"
+    },
+    {
+      "metric_id": "M04",
+      "expected_value": "2.77658393740245",
+      "actual_value": "2.776584",
+      "expected_status": "OK",
+      "actual_status": "OK",
+      "quality_flags": "",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": false,
+      "actual_q06": false,
+      "q06_pass": true,
+      "source_refs": "FIN.GROSSMARGIN.PCT@20260630|DERIVED|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.GROSSMARGIN.PCT@20250630|DERIVED|DOC-3BBF762B7EF9E776|RESTATED_COMPARATIVE"
+    },
+    {
+      "metric_id": "M05",
+      "expected_value": "0.1012131228446181",
+      "actual_value": "0.1012131228",
+      "expected_status": "OK",
+      "actual_status": "OK",
+      "quality_flags": "",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": false,
+      "actual_q06": false,
+      "q06_pass": true,
+      "source_refs": "FIN.NPDEDT.YTD@20260630|EXTRACTED_KEY_TABLE|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.NPDEDT.YTD@20250630|EXTRACTED_KEY_TABLE|DOC-3BBF762B7EF9E776|RESTATED_COMPARATIVE"
+    },
+    {
+      "metric_id": "M06",
+      "expected_value": "0.1591588346293915",
+      "actual_value": "0.1591588346",
+      "expected_status": "OK",
+      "actual_status": "OK",
+      "quality_flags": "",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": false,
+      "actual_q06": false,
+      "q06_pass": true,
+      "source_refs": "FIN.NPDEDT.YTD@20260630|EXTRACTED_KEY_TABLE|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.REV.YTD@20260630|EXTRACTED|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.NPDEDT.YTD@20250630|EXTRACTED_KEY_TABLE|DOC-3BBF762B7EF9E776|RESTATED_COMPARATIVE;FIN.REV.YTD@20250630|EXTRACTED_KEY_TABLE|DOC-3BBF762B7EF9E776|RESTATED_COMPARATIVE"
+    },
+    {
+      "metric_id": "M07",
+      "expected_value": "0.11095960503433333",
+      "actual_value": "0.110959605",
+      "expected_status": "PROVISIONAL",
+      "actual_status": "PROVISIONAL",
+      "quality_flags": "Q06",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": true,
+      "actual_q06": true,
+      "q06_pass": true,
+      "source_refs": "FIN.NPDEDT.SQ@20260630|DERIVED_CUMULATIVE_DIFF|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.NPDEDT.SQ@20250630|EXTRACTED_QUARTERLY_TABLE|DOC-FB2C019EFD9674E9|RESTATED_COMPARATIVE_CONFLICTED"
+    },
+    {
+      "metric_id": "M08",
+      "expected_value": "0.3147035578040584",
+      "actual_value": "0.3147035578",
+      "expected_status": "OK",
+      "actual_status": "OK",
+      "quality_flags": "",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": false,
+      "actual_q06": false,
+      "q06_pass": true,
+      "source_refs": "FIN.OCF.YTD@20260630|EXTRACTED|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.NPP.YTD@20260630|EXTRACTED|DOC-3BBF762B7EF9E776|ORIGINAL"
+    },
+    {
+      "metric_id": "M09",
+      "expected_value": "34802612.45",
+      "actual_value": "34802612.4499999881",
+      "expected_status": "OK",
+      "actual_status": "OK",
+      "quality_flags": "",
+      "value_pass": true,
+      "status_pass": true,
+      "expected_q06": false,
+      "actual_q06": false,
+      "q06_pass": true,
+      "source_refs": "FIN.OCF.YTD@20260630|EXTRACTED|DOC-3BBF762B7EF9E776|ORIGINAL;FIN.OCF.YTD@20250630|EXTRACTED_KEY_TABLE|DOC-3BBF762B7EF9E776|RESTATED_COMPARATIVE"
+    }
+  ],
+  "balance_sheet_limits": {
+    "M10": {
+      "status": "PROVISIONAL",
+      "quality_flags": "Q06",
+      "value": "7.0033771064",
+      "not_promoted_to_ok": true
+    },
+    "M11": {
+      "status": "PROVISIONAL",
+      "quality_flags": "Q06",
+      "value": "15.1354298328",
+      "not_promoted_to_ok": true
+    },
+    "M12": {
+      "status": "PROVISIONAL",
+      "quality_flags": "Q06",
+      "value": "0.3930982753",
+      "not_promoted_to_ok": true
+    }
+  },
+  "s01_implementation_revision": "R6_RESTATED_COMPARATIVE_CONFLICT_AWARE_20261101",
+  "scope": "only Hangcha 603298 changed; other company rows preserved",
+  "next_step": "独立复核 S00 v10 采纳审计与 S02 输出；未外部复核前不更新 PROJECT_STATE 当前有效版本、不放行 S03。"
+}
