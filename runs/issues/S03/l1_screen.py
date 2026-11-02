@@ -81,14 +81,40 @@ def main() -> int:
     signals = rules["signals"]
     risks = [h for h in rules["risk_hints"]]
     dims = cfg["dimensions"]
-    override = {o["security_id"]: o for o in cfg["status_overrides"]}
-    pending = {p["security_id"]: p for p in cfg["pending_workpaper"]}
+    override = {o["security_id"]: o for o in cfg.get("company_overrides", [])}
+    pending = {}                      # 底稿已补齐，PENDING_WORKPAPER 清零
+    ADMIT = set(cfg["admittance_statuses"])
+
+    def base_status(verdict: str) -> str:
+        """底稿裁决 → 逻辑基态（决定能否触发 SG/RH）。"""
+        if verdict.startswith("HOLD"):
+            return "HOLD"
+        if verdict.startswith("MISSING"):
+            return "MISSING"
+        if verdict.startswith("UNDEFINED_BASE"):
+            return "UNDEFINED_BASE"
+        if verdict.startswith("NOT_APPLICABLE"):
+            return "NOT_APPLICABLE"
+        if verdict.startswith("REFERENCE_ONLY") or verdict.startswith("ESTIMATED_REFERENCE_ONLY"):
+            return "REFERENCE_ONLY"
+        return verdict
+
+    # 应用底稿的指标级裁决（状态 + 重算值），S02 原始文件不动
+    for sec, ov in override.items():
+        for mid, spec in ov["metrics"].items():
+            row = metrics.get(sec, {}).get(mid)
+            if row is None:
+                continue
+            row["_verdict"] = spec["verdict"]
+            row["metric_status"] = base_status(spec["verdict"])
+            if spec.get("value") is not None:
+                row["value"] = spec["value"]
 
     def flags_of(row):
         return set((row.get("quality_flags") or "").split(";")) - {""}
 
     def usable_metric(row):
-        return row is not None and row["metric_status"] in ("OK", "PROVISIONAL") and fnum(row["value"]) is not None
+        return row is not None and row["metric_status"] in ADMIT and fnum(row["value"]) is not None
 
     def row_q06(row):
         if row is None:
@@ -156,6 +182,10 @@ def main() -> int:
                 r5 = m.get("M05")
                 if r5 is None or r5["metric_status"] != "UNDEFINED_BASE":
                     continue
+                verdict = r5.get("_verdict") or ""
+                if "SCOPE_CHANGE" in verdict or "STRUCTURAL_BREAK" in verdict:
+                    diag["sg06_suppressed_scope"] += 1
+                    continue          # 底稿明确：范围断裂/结构断裂不得走绝对额通道
                 cur = fnum((norm.get((sec, pk, "FIN.NPDEDT.YTD")) or {}).get("value_cny"))
                 base = fnum((norm.get((sec, py, "FIN.NPDEDT.YTD")) or {}).get("value_cny"))
                 if cur is None or base is None:
@@ -174,6 +204,9 @@ def main() -> int:
                 continue
 
             if sid == "SG08":
+                if blocked:
+                    diag["sg08_suppressed_ref_only"] += 1
+                    continue          # 隔离公司不走绝对额通道
                 o = norm.get((sec, pk, "FIN.OCF.YTD"))
                 ob = norm.get((sec, py, "FIN.OCF.YTD"))
                 if not (usable_raw(o) and usable_raw(ob)):
@@ -240,10 +273,16 @@ def main() -> int:
                              for x in ("M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09"))
 
         if blocked:
-            bucket, subtag = "OBSERVE_QUEUE", "REF_ONLY_" + ov["status"].replace("REFERENCE_ONLY_", "")
+            ref_sub = (ov.get("expected", {}) or {}).get("subtag", "")
+            if not ref_sub.startswith("REF_ONLY_"):
+                verdicts = {spec["verdict"] for spec in ov["metrics"].values()}
+                ref_sub = ("REF_ONLY_STRUCTURAL_BREAK"
+                           if any("STRUCTURAL_BREAK" in v for v in verdicts)
+                           else "REF_ONLY_SCOPE_CHANGE")
+            bucket, subtag = "OBSERVE_QUEUE", ref_sub
             if fired:
                 ref_blocked_fired.append({"security_id": sec, "stock_name": srow.get("stock_name", ""),
-                                          "status": ov["status"], "would_fire": [f["id"] for f in fired]})
+                                          "status": ref_sub, "would_fire": [f["id"] for f in fired]})
         elif l0 in ("W1_NO_DATA", "W2_ALL_HOLD", "W4_EARLY"):
             bucket, subtag = "OBSERVE_QUEUE", "L0_" + l0
         elif clean_f:
@@ -259,24 +298,27 @@ def main() -> int:
         else:
             bucket, subtag = "NO_SIGNAL", "NS_CONFIRMED"
 
-        # 隔离桶：不得对外暴露为「命中」，维度计数清零，优先级单列
-        blocked_would = []
+        # 隔离桶：不得对外暴露为「命中」，维度计数清零，优先级按底稿裁决
+        blocked_would, rh_blocked_would = [], []
         priority_note = ""
         if blocked:
             blocked_would = [f["id"] for f in fired]
+            rh_blocked_would = sorted(set(rh_hits))
             clean_f, lowbase_f, prov_f = [], [], []
             c_ok = t_pot = h_dim = 0
-            prio = "REFERENCE_ONLY_BLOCKED"
-            priority_note = "底稿口径判为不可比，SG 不参与判定"
+            rh_hits = []
+            prio = (ov.get("expected", {}) or {}).get("priority", "REFERENCE_ONLY_BLOCKED")
+            priority_note = ov.get("priority_note") or "底稿口径判为不可比，SG/RH 均不参与判定"
         elif sec in pending and prio == "AUTO_PASS_L2_READY":
             prio = "HIGH_PRIORITY_VERIFY"
             priority_note = "WORKPAPER_GATE：底稿未落定，不得自动放行 L2"
 
+        # NO_SIGNAL 二分：证据完整 vs 关键指标 MISSING/NOT_COMPARABLE/Q06（重述未决）
         if subtag == "NS_CONFIRMED":
             incomplete = any(m.get(x) is not None and m[x]["metric_status"] in ("MISSING", "NOT_COMPARABLE")
                              for x in m) or any("Q06" in flags_of(r) for r in m.values())
             if incomplete:
-                priority_note = "NS_EVIDENCE_INCOMPLETE"
+                subtag = "NS_INCOMPLETE_EVIDENCE"
                 diag["ns_evidence_incomplete"] += 1
 
         if clean_f:
@@ -298,7 +340,9 @@ def main() -> int:
             "anchor_period_type": srow.get("period_type", ""),
             "stale_period": srow.get("stale_period", ""),
             "l0_status": l0,
-            "workpaper_status": ov["status"] if ov else ("PENDING_WORKPAPER" if sec in pending else ""),
+            "workpaper_status": "WORKPAPER_ADOPTED" if ov else "",
+            "workpaper_verdicts": ";".join(f"{mid}:{spec['verdict']}"
+                                           for mid, spec in sorted(ov["metrics"].items())) if ov else "",
             "l1_bucket": bucket,
             "l1_subtag": subtag,
             "sg_hit_clean_list": ";".join(clean_f),
@@ -306,6 +350,7 @@ def main() -> int:
             "sg_hit_lowbase_list": ";".join(lowbase_f),
             "sg_hit_all_list": ";".join(sorted(set(clean_f) | set(prov_f) | set(lowbase_f))),
             "sg_blocked_would_fire": ";".join(blocked_would),
+            "rh_blocked_would_fire": ";".join(rh_blocked_would),
             "sg_hold_list": ";".join(sorted(set(hold_blocked))),
             "rh_hit_list": ";".join(sorted(set(rh_hits))),
             "quality_flags_summary": ";".join(all_flags),
@@ -329,6 +374,7 @@ def main() -> int:
         + subtag_counts.get("OQ_PROVISIONAL_ONLY", 0)
         + subtag_counts.get("RW_CLEAN", 0) + subtag_counts.get("RW_HAS_HOLD", 0)
         + subtag_counts.get("OQ_HOLD_PROTECTED", 0) + subtag_counts.get("NS_CONFIRMED", 0)
+        + subtag_counts.get("NS_INCOMPLETE_EVIDENCE", 0)
         + sum(v for k, v in subtag_counts.items() if k.startswith("REF_ONLY_"))
     ) == total
 
@@ -344,6 +390,25 @@ def main() -> int:
         w = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
         w.writeheader()
         w.writerows(targets)
+
+    # 底稿 10 家裁决对账：实际分流必须与底稿预期一致
+    by_sec = {r["company_id"]: r for r in rows_out}
+    expected_checks = []
+    for sec, ov in override.items():
+        exp = ov.get("expected") or {}
+        if not exp:
+            continue
+        r = by_sec[sec]
+        ok = (r["l1_bucket"] == exp["bucket"] and r["l1_subtag"] == exp["subtag"]
+              and r["s04_review_priority"] == exp["priority"])
+        expected_checks.append({
+            "security_id": sec, "stock_name": r["company_name"],
+            "expected": exp,
+            "actual": {"bucket": r["l1_bucket"], "subtag": r["l1_subtag"],
+                       "priority": r["s04_review_priority"]},
+            "match": ok,
+        })
+    workpaper_ok = all(x["match"] for x in expected_checks)
 
     # ---------------- 自检：P01 规则 / P02 指纹 / 守恒 / 覆盖
     fp = {x["path"]: x["sha256"] for x in rules["input_fingerprint"]["files"]}
@@ -367,6 +432,7 @@ def main() -> int:
         "P03_conservation": {"identity_ok": identity_ok, "total": total},
         "P04_row_coverage": {"rows": total, "unique": len({r["company_id"] for r in rows_out})},
         "P05_review_targets": {"high_priority_verify": len(targets)},
+        "P06_workpaper_outcomes": {"all_match": workpaper_ok, "checks": expected_checks},
     }
 
     manifest = {
@@ -390,9 +456,13 @@ def main() -> int:
                          "sum_of_buckets": sum(bucket_counts.values())},
         "self_check": self_check,
         "s04_priority_counts": dict(prio_counts),
-        "status_overrides_applied": cfg["status_overrides"],
-        "pending_workpaper": cfg["pending_workpaper"],
-        "workpaper_note": cfg["workpaper_note"],
+        "workpaper": cfg.get("workpaper", {}),
+        "company_overrides_applied": [
+            {"security_id": o["security_id"], "stock_name": o["stock_name"],
+             "block_sg": o["block_sg"], "metric_cells": len(o["metrics"]),
+             "expected": o.get("expected", {})}
+            for o in override.values()
+        ],
         "diagnostics": {
             "ref_only_blocked_with_signals": ref_blocked_fired,
             "sg07_q09_downgrade": diag.get("sg07_q09_downgrade", 0),
@@ -403,6 +473,8 @@ def main() -> int:
             "has_provisional_signal": diag.get("has_provisional_signal", 0),
             "prov_also_clean": diag.get("prov_also_clean", 0),
             "ns_evidence_incomplete": diag.get("ns_evidence_incomplete", 0),
+            "sg06_suppressed_scope": diag.get("sg06_suppressed_scope", 0),
+            "sg08_suppressed_ref_only": diag.get("sg08_suppressed_ref_only", 0),
             "note": "含低基数/暂定信号的公司多数同时有干净信号，按 P2>P3>P4 严格优先级归入 OQ_CLEAN_OK；"
                     "指令预估的 ~319 / ~131 是「含该类信号的公司数」，不等于 P3/P4 桶规模。",
         },
@@ -425,10 +497,12 @@ def main() -> int:
         "status": manifest["status"], "universe": total,
         "buckets": dict(bucket_counts), "subtags": dict(subtag_counts),
         "priority": dict(prio_counts), "identity_ok": identity_ok,
+        "workpaper_ok": workpaper_ok,
+        "workpaper_fail": [x["security_id"] for x in expected_checks if not x["match"]],
         "ref_blocked_with_signals": len(ref_blocked_fired),
         "sg07_q09_downgrade": diag.get("sg07_q09_downgrade", 0),
     }, ensure_ascii=False, indent=1))
-    return 0 if identity_ok else 2
+    return 0 if (identity_ok and workpaper_ok) else 2
 
 
 if __name__ == "__main__":

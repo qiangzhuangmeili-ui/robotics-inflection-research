@@ -1,5 +1,5 @@
 {
-  "version": "S03_L1_CONFIG_20261102",
+  "version": "S03_L1_CONFIG_20261102_R2",
   "issue": "S03 #38",
   "as_of": "2026-10-25",
   "inputs": {
@@ -15,66 +15,578 @@
     "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf"
   ],
   "dimensions": {
-    "GROWTH": ["M01", "M02", "M03"],
-    "MARGIN": ["M04"],
-    "PROFIT": ["M05", "M06", "M07"],
-    "CASH": ["M08", "M09"]
+    "GROWTH": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "MARGIN": [
+      "M04"
+    ],
+    "PROFIT": [
+      "M05",
+      "M06",
+      "M07"
+    ],
+    "CASH": [
+      "M08",
+      "M09"
+    ]
   },
-  "admittance_statuses": ["OK", "PROVISIONAL"],
-  "blocked_statuses": ["HOLD", "MISSING", "NOT_COMPARABLE", "UNDEFINED_BASE", "NOT_APPLICABLE"],
+  "admittance_statuses": [
+    "OK",
+    "PROVISIONAL",
+    "PASS_RESTATED_COMPARABLE",
+    "ADJUSTED_DISCLOSED_TARGET_REV_LIMITED",
+    "CURRENT_PERIOD_ONLY",
+    "CURRENT_PERIOD_ONLY_VALIDATED",
+    "CURRENT_PERIOD_ONLY_PROVISIONAL",
+    "CURRENT_PERIOD_ONLY_ONE_OFF_DISTORTION"
+  ],
+  "blocked_statuses": [
+    "HOLD",
+    "MISSING",
+    "NOT_COMPARABLE",
+    "UNDEFINED_BASE",
+    "NOT_APPLICABLE",
+    "REFERENCE_ONLY",
+    "RECONSTRUCTED_CANDIDATE_PENDING_S00"
+  ],
   "policies": {
     "sg06_clean_policy": "INPUT_CLEAN",
     "rh02_skip_if_project_mode": true,
     "hold_never_means_no_signal": true,
     "low_base_before_provisional": true
   },
-  "status_overrides": [
+  "company_overrides": [
+    {
+      "security_id": "SZ:300611",
+      "stock_name": "美力科技",
+      "period": "20260630",
+      "block_sg": false,
+      "nature": "非同一控制并购 ACPS（2026-03-25 并表，购买日至期末收入 1,107,403,921.98 元）；剔除后可比营收 977,264,456.49 元 vs 基期 899,601,171.45 元",
+      "metrics": {
+        "M01": {
+          "verdict": "ADJUSTED_DISCLOSED_TARGET_REV_LIMITED",
+          "value": "0.0863308"
+        },
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY",
+          "value": "-1.4666252105"
+        },
+        "M02": {
+          "verdict": "HOLD_QUARTER_SPLIT_MISSING"
+        },
+        "M03": {
+          "verdict": "DEPENDENCY_HOLD"
+        },
+        "M04": {
+          "verdict": "HOLD_COST_SPLIT_MISSING"
+        },
+        "M05": {
+          "verdict": "HOLD_TARGET_ADJ_PROFIT_MISSING"
+        },
+        "M06": {
+          "verdict": "HOLD_TARGET_ADJ_PROFIT_MISSING"
+        },
+        "M07": {
+          "verdict": "HOLD_QUARTER_SPLIT_MISSING"
+        },
+        "M09": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "NOT_APPLICABLE"
+        }
+      },
+      "expected": {
+        "bucket": "RISK_WATCH",
+        "subtag": "RW_HAS_HOLD",
+        "priority": "HIGH_PRIORITY_VERIFY"
+      }
+    },
+    {
+      "security_id": "SZ:301099",
+      "stock_name": "雅创电子",
+      "period": "20260630",
+      "block_sg": false,
+      "nature": "非同一控制并购深立创（2026-01-28 并表，购买日至期末收入 46,589,088.88 元）；剔除后可比营收 6,179,068,189.22 元 vs 基期 2,846,940,644.52 元",
+      "metrics": {
+        "M01": {
+          "verdict": "ADJUSTED_DISCLOSED_TARGET_REV_LIMITED",
+          "value": "1.17042396"
+        },
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY",
+          "value": "-4.7782434908"
+        },
+        "M02": {
+          "verdict": "HOLD_QUARTER_SPLIT_MISSING"
+        },
+        "M03": {
+          "verdict": "DEPENDENCY_HOLD"
+        },
+        "M04": {
+          "verdict": "HOLD_COST_SPLIT_MISSING"
+        },
+        "M05": {
+          "verdict": "HOLD_TARGET_ADJ_PROFIT_MISSING"
+        },
+        "M06": {
+          "verdict": "HOLD_TARGET_ADJ_PROFIT_MISSING"
+        },
+        "M07": {
+          "verdict": "HOLD_QUARTER_SPLIT_MISSING"
+        },
+        "M09": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "OQ_CLEAN_OK",
+        "priority": "HIGH_PRIORITY_VERIFY"
+      }
+    },
+    {
+      "security_id": "SZ:002180",
+      "stock_name": "奔图科技",
+      "period": "20260630",
+      "block_sg": true,
+      "nature": "终止经营+出表：2025H1 含美国利盟，2026H1 不含；拓佳 2026-05-25 丧失控制权，无利盟收入/成本拆分",
+      "metrics": {
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY",
+          "value": "1.3884789388"
+        },
+        "M01": {
+          "verdict": "HOLD_DISPOSED_TARGET_REVENUE_NOT_DISCLOSED"
+        },
+        "M02": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M03": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M04": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M06": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M09": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M05": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        },
+        "M07": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "NOT_APPLICABLE"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SZ:002083",
+      "stock_name": "孚日股份",
+      "period": "20260930",
+      "block_sg": true,
+      "nature": "新增并表博赛利斯（南京）（2026-08 并表，8-9 月 OCR 近似收入约 1.25 亿元；扣除后参考同比约 +20.56%，未重构内部抵销）",
+      "metrics": {
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY",
+          "value": "0.8714773765"
+        },
+        "M01": {
+          "verdict": "ESTIMATED_REFERENCE_ONLY"
+        },
+        "M02": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M03": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M04": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M05": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M06": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M07": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M09": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "NOT_APPLICABLE"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "HIGH_PRIORITY_VERIFY"
+      },
+      "priority_note": "REF_ONLY_URGENT_FOLLOWUP"
+    },
+    {
+      "security_id": "SZ:301348",
+      "stock_name": "蓝箭电子",
+      "period": "20260930",
+      "block_sg": true,
+      "nature": "2026Q3 非同一控制并购成都芯翼、星通半导体（商誉 1.80 亿元），未披露购买日至期末标的收入与利润",
+      "metrics": {
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY",
+          "value": "4.7372708694"
+        },
+        "M01": {
+          "verdict": "HOLD_SCOPE_CHANGE_TARGET_CONTRIBUTION_NOT_DISCLOSED"
+        },
+        "M02": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M04": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M06": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M09": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M03": {
+          "verdict": "MISSING_DEPENDENCY_HOLD"
+        },
+        "M05": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        },
+        "M07": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "NOT_APPLICABLE"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
     {
       "security_id": "SH:603007",
       "stock_name": "顺景科技",
-      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
-      "evidence": "用户指令 2026-11-02 明确点名：并表/出表范围不可比",
-      "evidence_level": "EXPLICIT_INSTRUCTION",
-      "block_sg": true
-    },
-    {
-      "security_id": "SH:600936",
-      "stock_name": "北投科技",
-      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
-      "evidence": "用户指令 2026-11-02 明确点名；S02 总汇报亦记录 2025-08 同一控制下合并",
-      "evidence_level": "EXPLICIT_INSTRUCTION",
-      "block_sg": true
-    },
-    {
-      "security_id": "SZ:002520",
-      "stock_name": "日发精机",
-      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
-      "evidence": "用户指令 2026-11-02 明确点名：并表/出表范围不可比",
-      "evidence_level": "EXPLICIT_INSTRUCTION",
-      "block_sg": true
+      "period": "20260630",
+      "block_sg": true,
+      "nature": "非同一控制并购尼威动力（单体收入 3.71 亿元；扣除后参考同比 -58.20%）",
+      "metrics": {
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY_ONE_OFF_DISTORTION",
+          "value": "-0.3209649539"
+        },
+        "M01": {
+          "verdict": "REFERENCE_ONLY_SCOPE_CHANGE"
+        },
+        "M04": {
+          "verdict": "REFERENCE_ONLY_SCOPE_CHANGE"
+        },
+        "M06": {
+          "verdict": "REFERENCE_ONLY_SCOPE_CHANGE"
+        },
+        "M02": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M03": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M09": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M05": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        },
+        "M07": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
     },
     {
       "security_id": "SH:600889",
       "stock_name": "*ST京化",
-      "status": "REFERENCE_ONLY_STRUCTURAL_BREAK",
-      "evidence": "用户指令 2026-11-02 明确点名：主业变更",
-      "evidence_level": "EXPLICIT_INSTRUCTION",
-      "block_sg": true
+      "period": "20260630",
+      "block_sg": true,
+      "nature": "同一控制重组+重大资产置换（主业由化纤转为滚动功能部件，经济结构断裂）",
+      "metrics": {
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY_PROVISIONAL",
+          "value": "3.0633631205"
+        },
+        "M01": {
+          "verdict": "REFERENCE_ONLY_STRUCTURAL_BREAK"
+        },
+        "M04": {
+          "verdict": "REFERENCE_ONLY_STRUCTURAL_BREAK"
+        },
+        "M06": {
+          "verdict": "REFERENCE_ONLY_STRUCTURAL_BREAK"
+        },
+        "M02": {
+          "verdict": "HOLD_STRUCTURAL_BREAK"
+        },
+        "M03": {
+          "verdict": "HOLD_STRUCTURAL_BREAK"
+        },
+        "M09": {
+          "verdict": "HOLD_STRUCTURAL_BREAK"
+        },
+        "M10": {
+          "verdict": "HOLD_STRUCTURAL_BREAK"
+        },
+        "M11": {
+          "verdict": "HOLD_STRUCTURAL_BREAK"
+        },
+        "M12": {
+          "verdict": "HOLD_STRUCTURAL_BREAK"
+        },
+        "M05": {
+          "verdict": "UNDEFINED_BASE_STRUCTURAL_BREAK"
+        },
+        "M07": {
+          "verdict": "MISSING"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_STRUCTURAL_BREAK",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SZ:002520",
+      "stock_name": "日发精机",
+      "period": "20260630",
+      "block_sg": true,
+      "nature": "Airwork、MCM 出表（2025H1 单体收入合计约 4.62 亿元；参考同比 +21.68%，未经抵销重构）",
+      "metrics": {
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY",
+          "value": "1.7849236319"
+        },
+        "M01": {
+          "verdict": "REFERENCE_ONLY_SCOPE_CHANGE"
+        },
+        "M02": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M03": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M04": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M06": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M09": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M05": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        },
+        "M07": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SH:600936",
+      "stock_name": "北投科技",
+      "period": "20260630",
+      "block_sg": true,
+      "nature": "置出广电科技 100% + 置入交科集团 51%（2025H1 调整后基数含广电科技，本期不含，范围断裂）",
+      "metrics": {
+        "M08": {
+          "verdict": "CURRENT_PERIOD_ONLY_VALIDATED",
+          "value": "-3.8387788991"
+        },
+        "M01": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M04": {
+          "verdict": "REFERENCE_ONLY_SCOPE_CHANGE"
+        },
+        "M06": {
+          "verdict": "REFERENCE_ONLY_SCOPE_CHANGE"
+        },
+        "M09": {
+          "verdict": "REFERENCE_ONLY_SCOPE_CHANGE"
+        },
+        "M05": {
+          "verdict": "UNDEFINED_BASE_SCOPE_CHANGE"
+        },
+        "M02": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M03": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M07": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
     },
     {
       "security_id": "SH:603298",
       "stock_name": "杭叉集团",
-      "status": "PASS_RESTATED_COMPARABLE",
-      "evidence": "同一控制下合并追溯比较基数已采纳（56 条审计）；2025Q2 三项冲突保留 Q06",
-      "evidence_level": "S02_ADOPTION_RECORD",
-      "block_sg": false
+      "period": "20260630",
+      "block_sg": false,
+      "nature": "同一控制并购国自机器人 99.23%；采用 2026H1 报告直接披露的调整后比较列",
+      "metrics": {
+        "M01": {
+          "verdict": "PASS_RESTATED_COMPARABLE",
+          "value": null
+        },
+        "M04": {
+          "verdict": "PASS_RESTATED_COMPARABLE",
+          "value": null
+        },
+        "M05": {
+          "verdict": "PASS_RESTATED_COMPARABLE",
+          "value": null
+        },
+        "M06": {
+          "verdict": "PASS_RESTATED_COMPARABLE",
+          "value": null
+        },
+        "M09": {
+          "verdict": "PASS_RESTATED_COMPARABLE",
+          "value": null
+        },
+        "M08": {
+          "verdict": "OK",
+          "value": null
+        },
+        "M02": {
+          "verdict": "RECONSTRUCTED_CANDIDATE_PENDING_S00",
+          "value": null
+        },
+        "M03": {
+          "verdict": "RECONSTRUCTED_CANDIDATE_PENDING_S00",
+          "value": null
+        },
+        "M07": {
+          "verdict": "RECONSTRUCTED_CANDIDATE_PENDING_S00",
+          "value": null
+        },
+        "M10": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M11": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        },
+        "M12": {
+          "verdict": "HOLD_SCOPE_CHANGE"
+        }
+      },
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "OQ_CLEAN_OK",
+        "priority": "LOW_PRIORITY_SINGLE_DIM"
+      }
     }
   ],
-  "pending_workpaper": [
-    {"security_id": "SZ:300611", "stock_name": "美力科技"},
-    {"security_id": "SZ:301099", "stock_name": "雅创电子"},
-    {"security_id": "SZ:002180", "stock_name": "奔图科技"},
-    {"security_id": "SZ:002083", "stock_name": "孚日股份"}
-  ],
-  "workpaper_note": "S02_A_B_调整工作底稿_20261030 未在工作区、C盘完整克隆、桌面与文档目录找到；仓库内无 PASS_RESTATED_COMPARABLE / REFERENCE_ONLY_* 字样。本配置只落地用户指令明确点名的 5 家；其余 4 家按原 S02 状态参与并在输出中标注 PENDING_WORKPAPER，不臆造裁决。"
+  "workpaper": {
+    "name": "S02_A_B_调整工作底稿_20261030",
+    "source": "https://docs.google.com/spreadsheets/d/16jCpHoPQIOqhS9Ts3a_021cVa0t_tEtEbO1af_SZbbs/edit",
+    "adopted_at": "2026-11-02",
+    "companies": 10,
+    "cells": 120,
+    "note": "云端底稿裁决已全部写入；PENDING_WORKPAPER 清零。M08 与 S02 一致（仅改状态），M01 在美力/雅创为剔除并表后的重算值。"
+  }
 }
