@@ -1,0 +1,244 @@
+{
+  "issue": "S03 #38",
+  "version": "S03_L1_SCREEN_20261102",
+  "status": "SELF_CHECK_PASS_PENDING_EXTERNAL_REVIEW",
+  "generated_at": "2026-11-02T17:23:40+08:00",
+  "as_of": "2026-10-25",
+  "inputs": {
+    "rules": {
+      "path": "runs/issues/S01/screen_rules_v2.json",
+      "sha256": "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",
+      "accepted": [
+        "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+        "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf"
+      ],
+      "accepted_match": true
+    },
+    "metrics": {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+      "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+      "cells": 12648
+    },
+    "company_summary": {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/company_metric_summary.csv",
+      "sha256": "0a9ad7ae946aea838e586fd4adaac4ee941ce50d92b2d72797d2219a4383f5f6",
+      "companies": 1054
+    },
+    "normalized": {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+    },
+    "company_master": {
+      "path": "data/company_master.csv",
+      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6"
+    }
+  },
+  "universe": 1054,
+  "bucket_counts": {
+    "OBSERVE_QUEUE": 872,
+    "RISK_WATCH": 143,
+    "NO_SIGNAL": 39
+  },
+  "subtag_counts": {
+    "OQ_CLEAN_OK": 781,
+    "RW_CLEAN": 131,
+    "OQ_LOW_BASE_PROVISIONAL": 11,
+    "NS_CONFIRMED": 39,
+    "OQ_PROVISIONAL_ONLY": 70,
+    "RW_HAS_HOLD": 12,
+    "REF_ONLY_STRUCTURAL_BREAK": 1,
+    "REF_ONLY_SCOPE_CHANGE": 3,
+    "OQ_HOLD_PROTECTED": 6
+  },
+  "conservation": {
+    "identity_ok": true,
+    "total": 1054,
+    "sum_of_buckets": 1054
+  },
+  "self_check": {
+    "P01_rules_hash": {
+      "sha256": "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf",
+      "accepted_match": true,
+      "note": "磁盘为 LF 变体 d9a6b3cc…；指令写的 ada501e8… 是同一内容的 CRLF 变体，两者均在接受集内"
+    },
+    "P02_input_fingerprints": {
+      "all_match": true,
+      "checks": [
+        {
+          "path": "data/company_master.csv",
+          "expected": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+          "actual": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+          "match": true
+        },
+        {
+          "path": "runs/issues/S00/normalization_manifest.json",
+          "expected": "4293a95c1382ef6edb171b670f49aaef9b0ba8d54c7dce34189e173505d1ade8",
+          "actual": "4293a95c1382ef6edb171b670f49aaef9b0ba8d54c7dce34189e173505d1ade8",
+          "match": true
+        },
+        {
+          "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+          "expected": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+          "actual": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+          "match": true
+        }
+      ]
+    },
+    "P03_conservation": {
+      "identity_ok": true,
+      "total": 1054
+    },
+    "P04_row_coverage": {
+      "rows": 1054,
+      "unique": 1054
+    },
+    "P05_review_targets": {
+      "high_priority_verify": 100
+    }
+  },
+  "s04_priority_counts": {
+    "LOW_PRIORITY_SINGLE_DIM": 506,
+    "AUTO_PASS_L2_READY": 444,
+    "HIGH_PRIORITY_VERIFY": 100,
+    "REFERENCE_ONLY_BLOCKED": 4
+  },
+  "status_overrides_applied": [
+    {
+      "security_id": "SH:603007",
+      "stock_name": "顺景科技",
+      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+      "evidence": "用户指令 2026-11-02 明确点名：并表/出表范围不可比",
+      "evidence_level": "EXPLICIT_INSTRUCTION",
+      "block_sg": true
+    },
+    {
+      "security_id": "SH:600936",
+      "stock_name": "北投科技",
+      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+      "evidence": "用户指令 2026-11-02 明确点名；S02 总汇报亦记录 2025-08 同一控制下合并",
+      "evidence_level": "EXPLICIT_INSTRUCTION",
+      "block_sg": true
+    },
+    {
+      "security_id": "SZ:002520",
+      "stock_name": "日发精机",
+      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+      "evidence": "用户指令 2026-11-02 明确点名：并表/出表范围不可比",
+      "evidence_level": "EXPLICIT_INSTRUCTION",
+      "block_sg": true
+    },
+    {
+      "security_id": "SH:600889",
+      "stock_name": "*ST京化",
+      "status": "REFERENCE_ONLY_STRUCTURAL_BREAK",
+      "evidence": "用户指令 2026-11-02 明确点名：主业变更",
+      "evidence_level": "EXPLICIT_INSTRUCTION",
+      "block_sg": true
+    },
+    {
+      "security_id": "SH:603298",
+      "stock_name": "杭叉集团",
+      "status": "PASS_RESTATED_COMPARABLE",
+      "evidence": "同一控制下合并追溯比较基数已采纳（56 条审计）；2025Q2 三项冲突保留 Q06",
+      "evidence_level": "S02_ADOPTION_RECORD",
+      "block_sg": false
+    }
+  ],
+  "pending_workpaper": [
+    {
+      "security_id": "SZ:300611",
+      "stock_name": "美力科技"
+    },
+    {
+      "security_id": "SZ:301099",
+      "stock_name": "雅创电子"
+    },
+    {
+      "security_id": "SZ:002180",
+      "stock_name": "奔图科技"
+    },
+    {
+      "security_id": "SZ:002083",
+      "stock_name": "孚日股份"
+    }
+  ],
+  "workpaper_note": "S02_A_B_调整工作底稿_20261030 未在工作区、C盘完整克隆、桌面与文档目录找到；仓库内无 PASS_RESTATED_COMPARABLE / REFERENCE_ONLY_* 字样。本配置只落地用户指令明确点名的 5 家；其余 4 家按原 S02 状态参与并在输出中标注 PENDING_WORKPAPER，不臆造裁决。",
+  "diagnostics": {
+    "ref_only_blocked_with_signals": [
+      {
+        "security_id": "SH:600889",
+        "stock_name": "*ST京化",
+        "status": "REFERENCE_ONLY_STRUCTURAL_BREAK",
+        "would_fire": [
+          "SG01",
+          "SG02",
+          "SG03",
+          "SG05",
+          "SG06",
+          "SG07",
+          "SG08"
+        ]
+      },
+      {
+        "security_id": "SH:600936",
+        "stock_name": "北投科技",
+        "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+        "would_fire": [
+          "SG01",
+          "SG03",
+          "SG05",
+          "SG06"
+        ]
+      },
+      {
+        "security_id": "SH:603007",
+        "stock_name": "顺景科技",
+        "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+        "would_fire": [
+          "SG01",
+          "SG02",
+          "SG03",
+          "SG05"
+        ]
+      },
+      {
+        "security_id": "SZ:002520",
+        "stock_name": "日发精机",
+        "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+        "would_fire": [
+          "SG02",
+          "SG03",
+          "SG05",
+          "SG06"
+        ]
+      }
+    ],
+    "sg07_q09_downgrade": 38,
+    "sg06_evaluated": 242,
+    "has_clean_signal": 781,
+    "has_lowbase_signal": 94,
+    "lowbase_also_clean": 83,
+    "has_provisional_signal": 127,
+    "prov_also_clean": 50,
+    "ns_evidence_incomplete": 20,
+    "note": "含低基数/暂定信号的公司多数同时有干净信号，按 P2>P3>P4 严格优先级归入 OQ_CLEAN_OK；指令预估的 ~319 / ~131 是「含该类信号的公司数」，不等于 P3/P4 桶规模。"
+  },
+  "outputs": {
+    "l1_screen_results": {
+      "path": "runs/issues/S03/l1_screen_results.csv",
+      "sha256": "dc8af1635e6643c48058d59fa76762674e15cd9d675de330f5292c85e64eb97e",
+      "rows": 1054
+    },
+    "s04_review_targets": {
+      "path": "runs/issues/S03/s04_review_targets.csv",
+      "sha256": "f94672ad20e18825f60448c85dde4384996e73bd782a4390e15932ea180e13a6",
+      "rows": 100
+    }
+  },
+  "notes": [
+    "阈值与信号定义全部来自 screen_rules_v2.json，未复制、未修改。",
+    "P1 的 L0_W1/W2/W4 在当前输入下为 0：S02 的 L0 addendum 已把无干净 OK 的公司归入 W5，按 P4 处理。",
+    "REF_ONLY_* 为隔离桶：底稿缺失时按用户指令点名落地，不臆造其余公司。",
+    "本结果为执行方自检，不构成外部验收。"
+  ]
+}

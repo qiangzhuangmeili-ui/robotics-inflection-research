@@ -1,0 +1,80 @@
+{
+  "version": "S03_L1_CONFIG_20261102",
+  "issue": "S03 #38",
+  "as_of": "2026-10-25",
+  "inputs": {
+    "metrics": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+    "company_summary": "runs/issues/S02/hangcha_restated_20261101/s02_v10/company_metric_summary.csv",
+    "normalized": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+    "rules": "runs/issues/S01/screen_rules_v2.json",
+    "company_master": "data/company_master.csv",
+    "s02_snapshot": "runs/issues/S02/S02_final_snapshot.json"
+  },
+  "rules_sha_accepted": [
+    "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+    "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf"
+  ],
+  "dimensions": {
+    "GROWTH": ["M01", "M02", "M03"],
+    "MARGIN": ["M04"],
+    "PROFIT": ["M05", "M06", "M07"],
+    "CASH": ["M08", "M09"]
+  },
+  "admittance_statuses": ["OK", "PROVISIONAL"],
+  "blocked_statuses": ["HOLD", "MISSING", "NOT_COMPARABLE", "UNDEFINED_BASE", "NOT_APPLICABLE"],
+  "policies": {
+    "sg06_clean_policy": "INPUT_CLEAN",
+    "rh02_skip_if_project_mode": true,
+    "hold_never_means_no_signal": true,
+    "low_base_before_provisional": true
+  },
+  "status_overrides": [
+    {
+      "security_id": "SH:603007",
+      "stock_name": "顺景科技",
+      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+      "evidence": "用户指令 2026-11-02 明确点名：并表/出表范围不可比",
+      "evidence_level": "EXPLICIT_INSTRUCTION",
+      "block_sg": true
+    },
+    {
+      "security_id": "SH:600936",
+      "stock_name": "北投科技",
+      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+      "evidence": "用户指令 2026-11-02 明确点名；S02 总汇报亦记录 2025-08 同一控制下合并",
+      "evidence_level": "EXPLICIT_INSTRUCTION",
+      "block_sg": true
+    },
+    {
+      "security_id": "SZ:002520",
+      "stock_name": "日发精机",
+      "status": "REFERENCE_ONLY_SCOPE_CHANGE",
+      "evidence": "用户指令 2026-11-02 明确点名：并表/出表范围不可比",
+      "evidence_level": "EXPLICIT_INSTRUCTION",
+      "block_sg": true
+    },
+    {
+      "security_id": "SH:600889",
+      "stock_name": "*ST京化",
+      "status": "REFERENCE_ONLY_STRUCTURAL_BREAK",
+      "evidence": "用户指令 2026-11-02 明确点名：主业变更",
+      "evidence_level": "EXPLICIT_INSTRUCTION",
+      "block_sg": true
+    },
+    {
+      "security_id": "SH:603298",
+      "stock_name": "杭叉集团",
+      "status": "PASS_RESTATED_COMPARABLE",
+      "evidence": "同一控制下合并追溯比较基数已采纳（56 条审计）；2025Q2 三项冲突保留 Q06",
+      "evidence_level": "S02_ADOPTION_RECORD",
+      "block_sg": false
+    }
+  ],
+  "pending_workpaper": [
+    {"security_id": "SZ:300611", "stock_name": "美力科技"},
+    {"security_id": "SZ:301099", "stock_name": "雅创电子"},
+    {"security_id": "SZ:002180", "stock_name": "奔图科技"},
+    {"security_id": "SZ:002083", "stock_name": "孚日股份"}
+  ],
+  "workpaper_note": "S02_A_B_调整工作底稿_20261030 未在工作区、C盘完整克隆、桌面与文档目录找到；仓库内无 PASS_RESTATED_COMPARABLE / REFERENCE_ONLY_* 字样。本配置只落地用户指令明确点名的 5 家；其余 4 家按原 S02 状态参与并在输出中标注 PENDING_WORKPAPER，不臆造裁决。"
+}
