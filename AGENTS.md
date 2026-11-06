@@ -1,5 +1,10 @@
 # AI接手必读
 
+## 2026-11-07 已确认的方法分工补充
+
+接手 S04 / S06 / 筛后核验前，必须读 [需求先行指标分工](docs/需求先行指标分工_20261107.md) 和 data/methodology_decision_20261107.json：S04 不新增三项硬筛门槛；合同负债、可信在手订单用于 S06 辅助早期观察（采用前登记口径和版本）；在建工程及订单转化留到筛后核验。缺披露不填 0、不淘汰。此补充不改冻结阈值、截止日、既有验收或当前占用。发布不等于 WorkBuddy 已阅读确认。
+
+
 这是研究组织仓库。首读README、docs/Issue执行总计划.md、PROJECT_STATE.json、data/issue_execution_plan.csv和data/active_issue.json。用户已授权全池基础资料批量采集；未被明确要求时，不执行全池企业深度调查、不改历史输入、不做买卖建议。一次只领取一个依赖已验收的执行issue；旧包即使READY也不能绕过新门槛。
 
 data/company_master.csv是调度总表；archive/latest_universe.csv是旧验收快照。分组只是检索线索，不能写成事实。公司商业阶段新流程统一UNKNOWN，阶段只在产品线判。旧主表6处公司阶段值在archive与新主表legacy_company_stage列保留供追溯，不作为新流程认定。
