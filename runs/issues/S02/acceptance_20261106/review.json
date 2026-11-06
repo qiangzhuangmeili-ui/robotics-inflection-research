@@ -1,0 +1,58 @@
+{
+  "issue_key": "S02",
+  "issue_number": 37,
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "reviewer": "Codex",
+  "review_nature": "EXTERNAL_TECHNICAL_RECHECK",
+  "reviewed_at": "2026-11-06T13:05:56+08:00",
+  "scope": "Technical acceptance for S03 rerun/recheck only; not final business evidence adoption or full PDF audit",
+  "snapshot_version": "S02_FINAL_SNAPSHOT_20261102",
+  "counts": {
+    "OK": 9798,
+    "NOT_APPLICABLE": 858,
+    "NOT_COMPARABLE": 288,
+    "UNDEFINED_BASE": 497,
+    "HOLD": 176,
+    "PROVISIONAL": 973,
+    "MISSING": 58
+  },
+  "checks": {
+    "snapshot_hashes": "4/4 match",
+    "online_local_blob_match": true,
+    "full_replay_cells": 12648,
+    "replay_diff": 0,
+    "independent_decimal_formulas": 12,
+    "independent_decimal_values": 10771,
+    "independent_arithmetic_diff": 0,
+    "summary_diff": 0,
+    "unique_keys": 12648,
+    "source_dates_missing_cells": 0
+  },
+  "unconditional_release": false,
+  "release_S03": true,
+  "release_S03_scope": "RERUN_OR_RECHECK_WITH_MANDATORY_INPUT_CONTRACT",
+  "release_S04": false,
+  "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+  "after_cutoff": {
+    "companies": 4,
+    "cells": 48,
+    "disposition": "WATCH_AFTER_CUTOFF mandatory; raw v10 alone is not a cutoff-compliant screening input"
+  },
+  "not_verified": [
+    "No reread of all source PDFs; this is not final independent acceptance of business claims.",
+    "No new external verification of all 42 assumed restatement cases or all scope workpaper judgments.",
+    "Existing S03 draft was inspected for gate compliance only and is not accepted."
+  ],
+  "nonblocking_limits": [
+    "176 HOLD / 58 MISSING may remain; isolate and inspect after narrowing, not full-pool cleanup.",
+    "973 PROVISIONAL are not clean evidence.",
+    "Parser drift and legacy source limits persist; no whole-pool re-extraction."
+  ],
+  "evidence": [
+    "runs/issues/S02/acceptance_20261106/audit_results.json",
+    "runs/issues/S02/acceptance_20261106/audit_gate.py",
+    "runs/issues/S02/acceptance_20261106/after_cutoff_cells.csv",
+    "runs/issues/S02/acceptance_20261106/after_cutoff_company_guard.csv"
+  ]
+}

@@ -4,7 +4,7 @@
   "new_issues_created": 40,
   "primary_batch_count": 11,
   "candidate_count": 1054,
-  "next_recommended_issue": 37,
+  "next_recommended_issue": 38,
   "execution_started": true,
   "tasks": [
     {
@@ -1020,7 +1020,7 @@
       "issue_number": 37,
       "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37",
       "title": "S02｜计算全池指标与口径检查",
-      "status": "SELF_CHECK_PASS_REPAIR_V2",
+      "status": "ACCEPTED_WITH_LIMITS",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S02/",
       "issue_body_sha256": "ea0aa53e74183772a9c3e4b67a3f23f2d22df7d823a9dee0c6e25a77e5c6ce95",
@@ -1067,8 +1067,67 @@
             "W5_PROVISIONAL_ONLY": 387
           },
           "pending_external_recheck": true
+        },
+        "acceptance_20261106": {
+          "issue_key": "S02",
+          "issue_number": 37,
+          "plan_version": "20261026_collection_first_v2",
+          "decision": "ACCEPTED_WITH_LIMITS",
+          "reviewer": "Codex",
+          "review_nature": "EXTERNAL_TECHNICAL_RECHECK",
+          "reviewed_at": "2026-11-06T13:05:56+08:00",
+          "scope": "Technical acceptance for S03 rerun/recheck only; not final business evidence adoption or full PDF audit",
+          "snapshot_version": "S02_FINAL_SNAPSHOT_20261102",
+          "counts": {
+            "OK": 9798,
+            "NOT_APPLICABLE": 858,
+            "NOT_COMPARABLE": 288,
+            "UNDEFINED_BASE": 497,
+            "HOLD": 176,
+            "PROVISIONAL": 973,
+            "MISSING": 58
+          },
+          "checks": {
+            "snapshot_hashes": "4/4 match",
+            "online_local_blob_match": true,
+            "full_replay_cells": 12648,
+            "replay_diff": 0,
+            "independent_decimal_formulas": 12,
+            "independent_decimal_values": 10771,
+            "independent_arithmetic_diff": 0,
+            "summary_diff": 0,
+            "unique_keys": 12648,
+            "source_dates_missing_cells": 0
+          },
+          "unconditional_release": false,
+          "release_S03": true,
+          "release_S03_scope": "RERUN_OR_RECHECK_WITH_MANDATORY_INPUT_CONTRACT",
+          "release_S04": false,
+          "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+          "after_cutoff": {
+            "companies": 4,
+            "cells": 48,
+            "disposition": "WATCH_AFTER_CUTOFF mandatory; raw v10 alone is not a cutoff-compliant screening input"
+          },
+          "not_verified": [
+            "No reread of all source PDFs; this is not final independent acceptance of business claims.",
+            "No new external verification of all 42 assumed restatement cases or all scope workpaper judgments.",
+            "Existing S03 draft was inspected for gate compliance only and is not accepted."
+          ],
+          "nonblocking_limits": [
+            "176 HOLD / 58 MISSING may remain; isolate and inspect after narrowing, not full-pool cleanup.",
+            "973 PROVISIONAL are not clean evidence.",
+            "Parser drift and legacy source limits persist; no whole-pool re-extraction."
+          ],
+          "evidence": [
+            "runs/issues/S02/acceptance_20261106/audit_results.json",
+            "runs/issues/S02/acceptance_20261106/audit_gate.py",
+            "runs/issues/S02/acceptance_20261106/after_cutoff_cells.csv",
+            "runs/issues/S02/acceptance_20261106/after_cutoff_company_guard.csv"
+          ]
         }
-      }
+      },
+      "review_record": "runs/issues/S02/acceptance_20261106/review.json"
     },
     {
       "key": "S03",
@@ -1099,11 +1158,17 @@
       "issue_number": 38,
       "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/38",
       "title": "S03｜第一道宽筛：任一改善信号，保留观察队列",
-      "status": "WAITING_DEPENDENCIES",
+      "status": "READY_WITH_MANDATORY_GUARD",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S03/",
       "issue_body_sha256": "f4cda68c7efb64b7b237bdabae10ef742fad2fe54edc9b34b2ceb6b41aece4d7",
-      "blocked_reason": "等 S02 修复版（v2）外部复核放行；开工须用 remediation_20261029/s00 输入 + L0 addendum，21 家待核须显式保留为观察/待核，PROVISIONAL/HOLD 不计入干净维度"
+      "release": {
+        "from_issue": "S02",
+        "decision": "ACCEPTED_WITH_LIMITS",
+        "release_file": "runs/issues/S02/acceptance_20261106/review.json",
+        "mandatory_input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+        "existing_draft_accepted": false
+      }
     },
     {
       "key": "S04",

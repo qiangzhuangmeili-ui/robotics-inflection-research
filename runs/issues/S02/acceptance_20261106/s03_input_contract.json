@@ -1,0 +1,57 @@
+{
+  "version": "S02_TO_S03_GATE_20261106",
+  "knowledge_as_of": "2026-10-25",
+  "snapshot": "runs/issues/S02/S02_final_snapshot.json",
+  "metrics": {
+    "path": "runs\\issues\\S02\\hangcha_restated_20261101\\s02_v10\\all_pool_metrics.csv",
+    "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+    "cells": 12648,
+    "companies": 1054
+  },
+  "normalized": {
+    "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+    "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+    "payload_sha256": "92143c5accb6de1ca8a020024aaad763963c33e8846fa0085f4a1627f6b48891",
+    "rows": 229667,
+    "companies": 1054
+  },
+  "guard_companies": [
+    {
+      "security_id": "SH:603448",
+      "stock_name": "天博智能",
+      "route": "WATCH_AFTER_CUTOFF",
+      "allow_clean_signal": "NO",
+      "reason": "Source disclosed after frozen 2026-10-25 cutoff; retain for incremental version"
+    },
+    {
+      "security_id": "SH:688836",
+      "stock_name": "宇树科技",
+      "route": "WATCH_AFTER_CUTOFF",
+      "allow_clean_signal": "NO",
+      "reason": "Source disclosed after frozen 2026-10-25 cutoff; retain for incremental version"
+    },
+    {
+      "security_id": "SZ:301348",
+      "stock_name": "蓝箭电子",
+      "route": "WATCH_AFTER_CUTOFF",
+      "allow_clean_signal": "NO",
+      "reason": "Source disclosed after frozen 2026-10-25 cutoff; retain for incremental version"
+    },
+    {
+      "security_id": "SZ:301699",
+      "stock_name": "洛轴股份",
+      "route": "WATCH_AFTER_CUTOFF",
+      "allow_clean_signal": "NO",
+      "reason": "Source disclosed after frozen 2026-10-25 cutoff; retain for incremental version"
+    }
+  ],
+  "mandatory_policies": [
+    "All four guarded companies route to WATCH_AFTER_CUTOFF; no SG/RH, clean dimensions, candidates or NO_SIGNAL conclusions from their post-cutoff metrics. Do not silently fall back to earlier periods.",
+    "Retain every one of the 1054 companies; missing or incomparable evidence is observation, not elimination.",
+    "Only OK may contribute clean dimensions; PROVISIONAL/HOLD and scope/reference-only decisions remain separated. Apply S03 R2 ten-company scope decisions without promoting reference-only values.",
+    "Preserve 42 ASSUMED_NO_PENDING_REVIEW source assumptions; results depending on them require verification before S04 clean adoption.",
+    "Stratify latest periods; keep formulas/thresholds frozen. No company robot-segment profitability inference."
+  ],
+  "existing_S03_draft_accepted": false,
+  "release_S04": false
+}

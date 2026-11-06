@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S02_REPAIR_V2_APPLIED_AWAITING_EXTERNAL_RECHECK",
+  "status": "S02_ACCEPTED_WITH_LIMITS_S03_READY_WITH_CUTOFF_GUARD",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -220,19 +220,16 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/34",
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/38",
     "execution_started": true,
     "last_completed_issue": {
-      "issue_number": 29,
-      "issue_key": "M00_11",
-      "completed_at": "2026-10-27T04:05:02Z",
-      "review_file": "runs/issues/M00_11/review.json",
-      "decision": "SELF_CHECK_PASS",
-      "acceptance": "4/4",
-      "slot_total": 378,
-      "obtained": 339,
-      "companies": 54,
-      "allows_next_stage_scope": "放行 M00_11 之后的下一个采集批次；不放行业务结论/指标筛选/估值"
+      "issue_number": 37,
+      "issue_key": "S02",
+      "completed_at": "2026-11-06T13:05:56+08:00",
+      "decision": "ACCEPTED_WITH_LIMITS",
+      "review_file": "runs/issues/S02/acceptance_20261106/review.json",
+      "review_nature": "EXTERNAL_TECHNICAL_RECHECK",
+      "summary": "v10 accepted technically; S03 must apply four-company cutoff guard; existing S03 draft not accepted"
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -417,17 +414,68 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "A04_RETURN_FOR_REWORK",
+    "current_gate": "S02_ACCEPTED_WITH_LIMITS_MANDATORY_CUTOFF_GUARD",
     "release_S00": false,
     "last_review": {
-      "decision": "RETURN_FOR_REWORK",
-      "review_file": "runs/issues/A04/review.json",
-      "reviewed_at": "2026-10-27 12:33:58 UTC",
-      "release_S00": false,
-      "known_after_cutoff": 0,
-      "unknown_disclosure_dates": 7,
-      "missing_predeadline_quarter_dispositions": 4216
-    }
+      "issue_key": "S02",
+      "issue_number": 37,
+      "plan_version": "20261026_collection_first_v2",
+      "decision": "ACCEPTED_WITH_LIMITS",
+      "reviewer": "Codex",
+      "review_nature": "EXTERNAL_TECHNICAL_RECHECK",
+      "reviewed_at": "2026-11-06T13:05:56+08:00",
+      "scope": "Technical acceptance for S03 rerun/recheck only; not final business evidence adoption or full PDF audit",
+      "snapshot_version": "S02_FINAL_SNAPSHOT_20261102",
+      "counts": {
+        "OK": 9798,
+        "NOT_APPLICABLE": 858,
+        "NOT_COMPARABLE": 288,
+        "UNDEFINED_BASE": 497,
+        "HOLD": 176,
+        "PROVISIONAL": 973,
+        "MISSING": 58
+      },
+      "checks": {
+        "snapshot_hashes": "4/4 match",
+        "online_local_blob_match": true,
+        "full_replay_cells": 12648,
+        "replay_diff": 0,
+        "independent_decimal_formulas": 12,
+        "independent_decimal_values": 10771,
+        "independent_arithmetic_diff": 0,
+        "summary_diff": 0,
+        "unique_keys": 12648,
+        "source_dates_missing_cells": 0
+      },
+      "unconditional_release": false,
+      "release_S03": true,
+      "release_S03_scope": "RERUN_OR_RECHECK_WITH_MANDATORY_INPUT_CONTRACT",
+      "release_S04": false,
+      "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+      "after_cutoff": {
+        "companies": 4,
+        "cells": 48,
+        "disposition": "WATCH_AFTER_CUTOFF mandatory; raw v10 alone is not a cutoff-compliant screening input"
+      },
+      "not_verified": [
+        "No reread of all source PDFs; this is not final independent acceptance of business claims.",
+        "No new external verification of all 42 assumed restatement cases or all scope workpaper judgments.",
+        "Existing S03 draft was inspected for gate compliance only and is not accepted."
+      ],
+      "nonblocking_limits": [
+        "176 HOLD / 58 MISSING may remain; isolate and inspect after narrowing, not full-pool cleanup.",
+        "973 PROVISIONAL are not clean evidence.",
+        "Parser drift and legacy source limits persist; no whole-pool re-extraction."
+      ],
+      "evidence": [
+        "runs/issues/S02/acceptance_20261106/audit_results.json",
+        "runs/issues/S02/acceptance_20261106/audit_gate.py",
+        "runs/issues/S02/acceptance_20261106/after_cutoff_cells.csv",
+        "runs/issues/S02/acceptance_20261106/after_cutoff_company_guard.csv"
+      ]
+    },
+    "release_S03": true,
+    "release_S04": false
   },
   "pre_issue_breakdown_first_actions": [
     "M00：先复用现有Drive和本机资料，按1054家公司批量收集基础财务、定期报告和公告目录；暂不启动新的逐公司深读。",
@@ -1104,9 +1152,9 @@
     }
   },
   "next_issue": {
-    "key": "S02",
-    "number": 37,
-    "reason": "S02 自检完成，等外部复核；复核通过后再评估 S03 前置"
+    "key": "S03",
+    "number": 38,
+    "reason": "先应用 acceptance_20261106/s03_input_contract.json 四家时间隔离，再复验已有 S03 R2；不放行 S04"
   },
   "s01_stage": {
     "issue": "S01 / #36",
@@ -1191,7 +1239,7 @@
   },
   "s02_stage": {
     "issue": "S02 / #37",
-    "status": "SELF_CHECK_PASS_REPAIR_V2",
+    "status": "ACCEPTED_WITH_LIMITS_V10",
     "rules_version_required": "S01_SCREEN_RULES_V2",
     "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
     "scope": "METRIC_CALCULATION_AND_DEFINITION_QC_ONLY",
@@ -1266,8 +1314,8 @@
       }
     ],
     "rule_gap": "L0 未覆盖无 OK 的混合情形；377 家按 W5 单列、17 家记 MIXED，S03 前须补分支",
-    "release_S03": false,
-    "release_note": "自检不等于验收；S03 另需补 L0 分支与上游字段",
+    "release_S03": true,
+    "release_note": "先应用 acceptance_20261106/s03_input_contract.json 四家时间隔离，再复验已有 S03 R2；不放行 S04",
     "repair_applied": true
   },
   "s02_repair_stage": {
@@ -1359,18 +1407,77 @@
       "v1_frozen": "runs/issues/S00/financial_normalized.csv.gz",
       "v2_repair": "runs/issues/S02/remediation_20261029/s00/financial_normalized.csv",
       "v2_sha256": "e08a2731cd6c5c3e31dee0da566fedf132f3f750a7ce4eb3a116edb880b869ab",
-      "use_for_S03": "v2_repair"
+      "use_for_S03": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz"
     },
     "S02_metrics": {
       "v1": "runs/issues/S02/all_pool_metrics.csv",
       "v2_repair": "runs/issues/S02/remediation_20261029/s02/all_pool_metrics.csv",
       "recheck": "runs/issues/S02/remediation_20261029/s02_recheck/all_pool_metrics.csv",
-      "use_for_S03": "v2_repair"
+      "use_for_S03": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv"
     },
     "rules": {
       "base": "S01_SCREEN_RULES_V2",
       "addendum": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
       "note": "只加 L0 分支，未改指标公式与信号阈值"
-    }
+    },
+    "S03_input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
+  },
+  "s02_acceptance_20261106": {
+    "issue_key": "S02",
+    "issue_number": 37,
+    "plan_version": "20261026_collection_first_v2",
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "reviewer": "Codex",
+    "review_nature": "EXTERNAL_TECHNICAL_RECHECK",
+    "reviewed_at": "2026-11-06T13:05:56+08:00",
+    "scope": "Technical acceptance for S03 rerun/recheck only; not final business evidence adoption or full PDF audit",
+    "snapshot_version": "S02_FINAL_SNAPSHOT_20261102",
+    "counts": {
+      "OK": 9798,
+      "NOT_APPLICABLE": 858,
+      "NOT_COMPARABLE": 288,
+      "UNDEFINED_BASE": 497,
+      "HOLD": 176,
+      "PROVISIONAL": 973,
+      "MISSING": 58
+    },
+    "checks": {
+      "snapshot_hashes": "4/4 match",
+      "online_local_blob_match": true,
+      "full_replay_cells": 12648,
+      "replay_diff": 0,
+      "independent_decimal_formulas": 12,
+      "independent_decimal_values": 10771,
+      "independent_arithmetic_diff": 0,
+      "summary_diff": 0,
+      "unique_keys": 12648,
+      "source_dates_missing_cells": 0
+    },
+    "unconditional_release": false,
+    "release_S03": true,
+    "release_S03_scope": "RERUN_OR_RECHECK_WITH_MANDATORY_INPUT_CONTRACT",
+    "release_S04": false,
+    "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+    "after_cutoff": {
+      "companies": 4,
+      "cells": 48,
+      "disposition": "WATCH_AFTER_CUTOFF mandatory; raw v10 alone is not a cutoff-compliant screening input"
+    },
+    "not_verified": [
+      "No reread of all source PDFs; this is not final independent acceptance of business claims.",
+      "No new external verification of all 42 assumed restatement cases or all scope workpaper judgments.",
+      "Existing S03 draft was inspected for gate compliance only and is not accepted."
+    ],
+    "nonblocking_limits": [
+      "176 HOLD / 58 MISSING may remain; isolate and inspect after narrowing, not full-pool cleanup.",
+      "973 PROVISIONAL are not clean evidence.",
+      "Parser drift and legacy source limits persist; no whole-pool re-extraction."
+    ],
+    "evidence": [
+      "runs/issues/S02/acceptance_20261106/audit_results.json",
+      "runs/issues/S02/acceptance_20261106/audit_gate.py",
+      "runs/issues/S02/acceptance_20261106/after_cutoff_cells.csv",
+      "runs/issues/S02/acceptance_20261106/after_cutoff_company_guard.csv"
+    ]
   }
 }
