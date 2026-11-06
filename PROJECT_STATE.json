@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S02_ACCEPTED_WITH_LIMITS_S03_READY_WITH_CUTOFF_GUARD",
+  "status": "S03_SELF_CHECK_PASS_WITH_LIMITS_S04_READY",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -220,16 +220,16 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/38",
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/39",
     "execution_started": true,
     "last_completed_issue": {
-      "issue_number": 37,
-      "issue_key": "S02",
-      "completed_at": "2026-11-06T13:05:56+08:00",
-      "decision": "ACCEPTED_WITH_LIMITS",
-      "review_file": "runs/issues/S02/acceptance_20261106/review.json",
-      "review_nature": "EXTERNAL_TECHNICAL_RECHECK",
-      "summary": "v10 accepted technically; S03 must apply four-company cutoff guard; existing S03 draft not accepted"
+      "issue_key": "S03",
+      "issue_number": 38,
+      "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+      "review_file": "runs/issues/S03/review.json",
+      "review_nature": "SELF_CHECK",
+      "completed_at": "2026-11-06T18:50:54+08:00",
+      "coverage": 1054
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -414,68 +414,110 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "S02_ACCEPTED_WITH_LIMITS_MANDATORY_CUTOFF_GUARD",
+    "current_gate": "S03_SELF_CHECK_PASS_WITH_LIMITS",
     "release_S00": false,
     "last_review": {
-      "issue_key": "S02",
-      "issue_number": 37,
+      "issue_key": "S03",
+      "issue_number": 38,
       "plan_version": "20261026_collection_first_v2",
-      "decision": "ACCEPTED_WITH_LIMITS",
+      "executor": "Codex + luna_worker",
       "reviewer": "Codex",
-      "review_nature": "EXTERNAL_TECHNICAL_RECHECK",
-      "reviewed_at": "2026-11-06T13:05:56+08:00",
-      "scope": "Technical acceptance for S03 rerun/recheck only; not final business evidence adoption or full PDF audit",
-      "snapshot_version": "S02_FINAL_SNAPSHOT_20261102",
+      "review_method": "SELF_CHECK_PARENT_VERIFICATION",
+      "review_nature": "SELF_CHECK",
+      "reviewed_at": "2026-11-06T18:50:54+08:00",
+      "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+      "coverage": {
+        "assigned": 1054,
+        "processed": 1054,
+        "failed": 0,
+        "not_tried": 0
+      },
+      "checks": [
+        {
+          "name": "1054 unique rows and exact master keys",
+          "pass_check": true,
+          "detail": null
+        },
+        {
+          "name": "Cutoff guard has four distinct companies",
+          "pass_check": true,
+          "detail": null
+        },
+        {
+          "name": "Cutoff company routes and zero signal/dimension leakage",
+          "pass_check": true,
+          "detail": []
+        },
+        {
+          "name": "Other 1050 company rows unchanged in every field",
+          "pass_check": true,
+          "detail": {
+            "compared": 1050,
+            "differences": []
+          }
+        },
+        {
+          "name": "Four frozen S02 input/output files unmodified",
+          "pass_check": true,
+          "detail": {
+            "normalized_input": true,
+            "metrics": true,
+            "company_summary": true,
+            "review": true
+          }
+        },
+        {
+          "name": "Three delivery partitions cover 1054 without overlap",
+          "pass_check": true,
+          "detail": null
+        },
+        {
+          "name": "All cutoff companies remain in unknown partition",
+          "pass_check": true,
+          "detail": null
+        },
+        {
+          "name": "Only explicitly confirmed no-signal rows in defer",
+          "pass_check": true,
+          "detail": null
+        },
+        {
+          "name": "Cutoff companies absent from S04 verification targets",
+          "pass_check": true,
+          "detail": null
+        }
+      ],
       "counts": {
-        "OK": 9798,
-        "NOT_APPLICABLE": 858,
-        "NOT_COMPARABLE": 288,
-        "UNDEFINED_BASE": 497,
-        "HOLD": 176,
-        "PROVISIONAL": 973,
-        "MISSING": 58
+        "OBSERVE_QUEUE": 874,
+        "RISK_WATCH": 143,
+        "NO_SIGNAL": 37
       },
-      "checks": {
-        "snapshot_hashes": "4/4 match",
-        "online_local_blob_match": true,
-        "full_replay_cells": 12648,
-        "replay_diff": 0,
-        "independent_decimal_formulas": 12,
-        "independent_decimal_values": 10771,
-        "independent_arithmetic_diff": 0,
-        "summary_diff": 0,
-        "unique_keys": 12648,
-        "source_dates_missing_cells": 0
+      "partitions": {
+        "wide_pass": 777,
+        "wide_defer": 149,
+        "wide_unknown": 128
       },
-      "unconditional_release": false,
-      "release_S03": true,
-      "release_S03_scope": "RERUN_OR_RECHECK_WITH_MANDATORY_INPUT_CONTRACT",
-      "release_S04": false,
-      "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
-      "after_cutoff": {
-        "companies": 4,
-        "cells": 48,
-        "disposition": "WATCH_AFTER_CUTOFF mandatory; raw v10 alone is not a cutoff-compliant screening input"
-      },
-      "not_verified": [
-        "No reread of all source PDFs; this is not final independent acceptance of business claims.",
-        "No new external verification of all 42 assumed restatement cases or all scope workpaper judgments.",
-        "Existing S03 draft was inspected for gate compliance only and is not accepted."
+      "cutoff_guard_companies": 4,
+      "cutoff_guard_leaks": 0,
+      "other_companies_compared": 1050,
+      "other_company_differences": 0,
+      "actual_output_directory": "runs/issues/S03/rerun_20261106",
+      "allows_next_stage": true,
+      "release_S04": true,
+      "release_S04_scope": "TECHNICAL_MULTIMETRIC_SCREEN_AND_TARGETED_QC_ONLY",
+      "next_issue": 39,
+      "limitations": [
+        "SELF_CHECK is not independent business/PDF evidence acceptance.",
+        "42 assumed restatement cases retain their source assumptions; verify dependencies before S04 clean adoption.",
+        "100 high-priority verification targets remain; 443 AUTO_PASS_L2_READY is computational readiness, not final candidate acceptance.",
+        "Cutoff guard, scope isolation, PROVISIONAL/HOLD separation and mixed-period stratification carry into S04.",
+        "No rule thresholds, S02 inputs or historic research acceptance states were changed."
       ],
-      "nonblocking_limits": [
-        "176 HOLD / 58 MISSING may remain; isolate and inspect after narrowing, not full-pool cleanup.",
-        "973 PROVISIONAL are not clean evidence.",
-        "Parser drift and legacy source limits persist; no whole-pool re-extraction."
-      ],
-      "evidence": [
-        "runs/issues/S02/acceptance_20261106/audit_results.json",
-        "runs/issues/S02/acceptance_20261106/audit_gate.py",
-        "runs/issues/S02/acceptance_20261106/after_cutoff_cells.csv",
-        "runs/issues/S02/acceptance_20261106/after_cutoff_company_guard.csv"
-      ]
+      "source_acceptance": "runs/issues/S02/acceptance_20261106/review.json",
+      "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
     },
     "release_S03": true,
-    "release_S04": false
+    "release_S04": true
   },
   "pre_issue_breakdown_first_actions": [
     "M00：先复用现有Drive和本机资料，按1054家公司批量收集基础财务、定期报告和公告目录；暂不启动新的逐公司深读。",
@@ -1152,9 +1194,9 @@
     }
   },
   "next_issue": {
-    "key": "S03",
-    "number": 38,
-    "reason": "先应用 acceptance_20261106/s03_input_contract.json 四家时间隔离，再复验已有 S03 R2；不放行 S04"
+    "key": "S04",
+    "number": 39,
+    "reason": "从 S03/rerun_20261106 进入多指标收紧与100家定向核验；不得把443家预备状态当作已验收候选"
   },
   "s01_stage": {
     "issue": "S01 / #36",
@@ -1420,7 +1462,12 @@
       "addendum": "S01_SCREEN_RULES_V2_L0_ADDENDUM_20261029",
       "note": "只加 L0 分支，未改指标公式与信号阈值"
     },
-    "S03_input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
+    "S03_input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+    "S03_results": {
+      "directory": "runs/issues/S03/rerun_20261106",
+      "review": "runs/issues/S03/review.json",
+      "contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
+    }
   },
   "s02_acceptance_20261106": {
     "issue_key": "S02",
@@ -1479,5 +1526,105 @@
       "runs/issues/S02/acceptance_20261106/after_cutoff_cells.csv",
       "runs/issues/S02/acceptance_20261106/after_cutoff_company_guard.csv"
     ]
+  },
+  "s03_stage": {
+    "issue_key": "S03",
+    "issue_number": 38,
+    "plan_version": "20261026_collection_first_v2",
+    "executor": "Codex + luna_worker",
+    "reviewer": "Codex",
+    "review_method": "SELF_CHECK_PARENT_VERIFICATION",
+    "review_nature": "SELF_CHECK",
+    "reviewed_at": "2026-11-06T18:50:54+08:00",
+    "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+    "coverage": {
+      "assigned": 1054,
+      "processed": 1054,
+      "failed": 0,
+      "not_tried": 0
+    },
+    "checks": [
+      {
+        "name": "1054 unique rows and exact master keys",
+        "pass_check": true,
+        "detail": null
+      },
+      {
+        "name": "Cutoff guard has four distinct companies",
+        "pass_check": true,
+        "detail": null
+      },
+      {
+        "name": "Cutoff company routes and zero signal/dimension leakage",
+        "pass_check": true,
+        "detail": []
+      },
+      {
+        "name": "Other 1050 company rows unchanged in every field",
+        "pass_check": true,
+        "detail": {
+          "compared": 1050,
+          "differences": []
+        }
+      },
+      {
+        "name": "Four frozen S02 input/output files unmodified",
+        "pass_check": true,
+        "detail": {
+          "normalized_input": true,
+          "metrics": true,
+          "company_summary": true,
+          "review": true
+        }
+      },
+      {
+        "name": "Three delivery partitions cover 1054 without overlap",
+        "pass_check": true,
+        "detail": null
+      },
+      {
+        "name": "All cutoff companies remain in unknown partition",
+        "pass_check": true,
+        "detail": null
+      },
+      {
+        "name": "Only explicitly confirmed no-signal rows in defer",
+        "pass_check": true,
+        "detail": null
+      },
+      {
+        "name": "Cutoff companies absent from S04 verification targets",
+        "pass_check": true,
+        "detail": null
+      }
+    ],
+    "counts": {
+      "OBSERVE_QUEUE": 874,
+      "RISK_WATCH": 143,
+      "NO_SIGNAL": 37
+    },
+    "partitions": {
+      "wide_pass": 777,
+      "wide_defer": 149,
+      "wide_unknown": 128
+    },
+    "cutoff_guard_companies": 4,
+    "cutoff_guard_leaks": 0,
+    "other_companies_compared": 1050,
+    "other_company_differences": 0,
+    "actual_output_directory": "runs/issues/S03/rerun_20261106",
+    "allows_next_stage": true,
+    "release_S04": true,
+    "release_S04_scope": "TECHNICAL_MULTIMETRIC_SCREEN_AND_TARGETED_QC_ONLY",
+    "next_issue": 39,
+    "limitations": [
+      "SELF_CHECK is not independent business/PDF evidence acceptance.",
+      "42 assumed restatement cases retain their source assumptions; verify dependencies before S04 clean adoption.",
+      "100 high-priority verification targets remain; 443 AUTO_PASS_L2_READY is computational readiness, not final candidate acceptance.",
+      "Cutoff guard, scope isolation, PROVISIONAL/HOLD separation and mixed-period stratification carry into S04.",
+      "No rule thresholds, S02 inputs or historic research acceptance states were changed."
+    ],
+    "source_acceptance": "runs/issues/S02/acceptance_20261106/review.json",
+    "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
   }
 }

@@ -1,0 +1,1 @@
+S03 已完成截止日隔离与重跑，SELF_CHECK_PASS_WITH_LIMITS。当前结果目录 rerun_20261106/，请读取其 REPORT.md、s03_manifest.json、wide_summary.json 和 s04_review_targets.csv。旧根目录 R2 输出保留历史，不作新输入。S04 技术依赖已放行，仅多指标计算与定向核验，须继承四家时间隔离及全部来源限制。未执行 S04，未新增业务/估值结论。
