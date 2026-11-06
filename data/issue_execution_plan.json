@@ -4,7 +4,7 @@
   "new_issues_created": 40,
   "primary_batch_count": 11,
   "candidate_count": 1054,
-  "next_recommended_issue": 38,
+  "next_recommended_issue": 39,
   "execution_started": true,
   "tasks": [
     {
@@ -1158,7 +1158,7 @@
       "issue_number": 38,
       "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/38",
       "title": "S03｜第一道宽筛：任一改善信号，保留观察队列",
-      "status": "READY_WITH_MANDATORY_GUARD",
+      "status": "SELF_CHECK_PASS_WITH_LIMITS",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S03/",
       "issue_body_sha256": "f4cda68c7efb64b7b237bdabae10ef742fad2fe54edc9b34b2ceb6b41aece4d7",
@@ -1168,7 +1168,109 @@
         "release_file": "runs/issues/S02/acceptance_20261106/review.json",
         "mandatory_input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
         "existing_draft_accepted": false
-      }
+      },
+      "review_record": "runs/issues/S03/review.json",
+      "review": {
+        "issue_key": "S03",
+        "issue_number": 38,
+        "plan_version": "20261026_collection_first_v2",
+        "executor": "Codex + luna_worker",
+        "reviewer": "Codex",
+        "review_method": "SELF_CHECK_PARENT_VERIFICATION",
+        "review_nature": "SELF_CHECK",
+        "reviewed_at": "2026-11-06T18:50:54+08:00",
+        "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+        "coverage": {
+          "assigned": 1054,
+          "processed": 1054,
+          "failed": 0,
+          "not_tried": 0
+        },
+        "checks": [
+          {
+            "name": "1054 unique rows and exact master keys",
+            "pass_check": true,
+            "detail": null
+          },
+          {
+            "name": "Cutoff guard has four distinct companies",
+            "pass_check": true,
+            "detail": null
+          },
+          {
+            "name": "Cutoff company routes and zero signal/dimension leakage",
+            "pass_check": true,
+            "detail": []
+          },
+          {
+            "name": "Other 1050 company rows unchanged in every field",
+            "pass_check": true,
+            "detail": {
+              "compared": 1050,
+              "differences": []
+            }
+          },
+          {
+            "name": "Four frozen S02 input/output files unmodified",
+            "pass_check": true,
+            "detail": {
+              "normalized_input": true,
+              "metrics": true,
+              "company_summary": true,
+              "review": true
+            }
+          },
+          {
+            "name": "Three delivery partitions cover 1054 without overlap",
+            "pass_check": true,
+            "detail": null
+          },
+          {
+            "name": "All cutoff companies remain in unknown partition",
+            "pass_check": true,
+            "detail": null
+          },
+          {
+            "name": "Only explicitly confirmed no-signal rows in defer",
+            "pass_check": true,
+            "detail": null
+          },
+          {
+            "name": "Cutoff companies absent from S04 verification targets",
+            "pass_check": true,
+            "detail": null
+          }
+        ],
+        "counts": {
+          "OBSERVE_QUEUE": 874,
+          "RISK_WATCH": 143,
+          "NO_SIGNAL": 37
+        },
+        "partitions": {
+          "wide_pass": 777,
+          "wide_defer": 149,
+          "wide_unknown": 128
+        },
+        "cutoff_guard_companies": 4,
+        "cutoff_guard_leaks": 0,
+        "other_companies_compared": 1050,
+        "other_company_differences": 0,
+        "actual_output_directory": "runs/issues/S03/rerun_20261106",
+        "allows_next_stage": true,
+        "release_S04": true,
+        "release_S04_scope": "TECHNICAL_MULTIMETRIC_SCREEN_AND_TARGETED_QC_ONLY",
+        "next_issue": 39,
+        "limitations": [
+          "SELF_CHECK is not independent business/PDF evidence acceptance.",
+          "42 assumed restatement cases retain their source assumptions; verify dependencies before S04 clean adoption.",
+          "100 high-priority verification targets remain; 443 AUTO_PASS_L2_READY is computational readiness, not final candidate acceptance.",
+          "Cutoff guard, scope isolation, PROVISIONAL/HOLD separation and mixed-period stratification carry into S04.",
+          "No rule thresholds, S02 inputs or historic research acceptance states were changed."
+        ],
+        "source_acceptance": "runs/issues/S02/acceptance_20261106/review.json",
+        "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
+      },
+      "current_output_directory": "runs/issues/S03/rerun_20261106/"
     },
     {
       "key": "S04",
@@ -1198,10 +1300,16 @@
       "issue_number": 39,
       "issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/39",
       "title": "S04｜第二道收紧：核多指标共同改善",
-      "status": "WAITING_DEPENDENCIES",
+      "status": "READY",
       "plan_version": "20261026_collection_first_v2",
       "output_directory": "runs/issues/S04/",
-      "issue_body_sha256": "35abb0a4c0663cc258cc48a1037fdfeaabf63dccd8d9c3351068d0e91b0fb729"
+      "issue_body_sha256": "35abb0a4c0663cc258cc48a1037fdfeaabf63dccd8d9c3351068d0e91b0fb729",
+      "release": {
+        "from_issue": "S03",
+        "release_file": "runs/issues/S03/review.json",
+        "scope": "TECHNICAL_MULTIMETRIC_SCREEN_AND_TARGETED_QC_ONLY",
+        "actual_input_directory": "runs/issues/S03/rerun_20261106"
+      }
     },
     {
       "key": "S05",

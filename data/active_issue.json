@@ -4,16 +4,16 @@
   "active_issue_key": "S03",
   "executor": "Codex",
   "started_at": "2026-11-06 10:45:54 UTC",
-  "status": "IN_PROGRESS_S03_CUTOFF_GUARD",
-  "claim_note": "用户授权下一步；S02 ACCEPTED_WITH_LIMITS，领取 S03 应用四家 WATCH_AFTER_CUTOFF 规则并重跑/复验，不执行 S04",
+  "status": "SELF_CHECK_PASS_WITH_LIMITS_S04_READY",
+  "claim_note": "S03 cutoff guard rerun complete; all 1054 retained, four guarded, other 1050 unchanged; S04 technical dependency ready",
   "last_completed": {
-    "issue_number": 37,
-    "issue_key": "S02",
-    "completed_at": "2026-11-06T13:05:56+08:00",
-    "decision": "ACCEPTED_WITH_LIMITS",
-    "review_file": "runs/issues/S02/acceptance_20261106/review.json",
-    "review_nature": "EXTERNAL_TECHNICAL_RECHECK",
-    "summary": "v10 accepted technically; S03 must apply four-company cutoff guard; existing S03 draft not accepted"
+    "issue_key": "S03",
+    "issue_number": 38,
+    "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+    "review_file": "runs/issues/S03/review.json",
+    "review_nature": "SELF_CHECK",
+    "completed_at": "2026-11-06T18:50:54+08:00",
+    "coverage": 1054
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 38,
-  "next_recommended_issue_key": "S03",
-  "next_recommended_reason": "先应用 acceptance_20261106/s03_input_contract.json 四家时间隔离，再复验已有 S03 R2；不放行 S04",
+  "next_recommended_issue_number": 39,
+  "next_recommended_issue_key": "S04",
+  "next_recommended_reason": "从 S03/rerun_20261106 进入多指标收紧与100家定向核验；不得把443家预备状态当作已验收候选",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -237,6 +237,12 @@
       },
       "claim_note": "已接手修复包：433/433 文件校验通过，用包内 s00 独立重算 12,648 格与包内 s02 输出 0 差异，状态分布与 L0 分布逐项一致；S03 仍锁，等外部复核。",
       "next_recommended_reason": "等 S02 修复版外部复核；复核通过后 S03 须用 v2 输入 + L0 addendum 开工"
+    },
+    "s03_claim_and_completion_20261106": {
+      "started_at": "2026-11-06 10:45:54 UTC",
+      "completed_at": "2026-11-06T18:50:54+08:00",
+      "executor": "Codex",
+      "note": "Claim was recorded online before execution; see commit ad0634ea"
     }
   },
   "current_acceptance": {
@@ -259,5 +265,5 @@
     "未用最新年报「上年同期」列重算历史期，重述公司跨年口径可能不一致。",
     "2026Q3 仅 190 家已披露，其余 864 家未到披露期（NOT_YET_DISCLOSED），当期截面不完整。"
   ],
-  "completed_at": "2026-11-06T13:05:56+08:00"
+  "completed_at": "2026-11-06T18:50:54+08:00"
 }

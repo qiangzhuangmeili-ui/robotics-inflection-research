@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import csv
+import argparse
 import gzip
 import hashlib
 import json
@@ -27,6 +28,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 S03 = ROOT / "runs/issues/S03"
 CFG_PATH = S03 / "l1_config.json"
+CONTRACT_PATH = ROOT / "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
+ACCEPTED_CFG_SHA256 = "2f6193e6a0cad024a67d0ce0dd806e58db8ebdb44dd92d9ef750cc3fdc3fd541"
 CST = timezone(timedelta(hours=8))
 NOW = datetime.now(CST).isoformat(timespec="seconds")
 
@@ -35,9 +38,6 @@ USABLE = {
     "DERIVED", "DERIVED_CUMULATIVE_DIFF", "DERIVED_Q1_EQUALS_YTD",
     "DERIVED_QUARTERLY_SUM_OVERRIDE", "LEGACY_SNAPSHOT",
 }
-ABS_CONFIRM = 10_000_000.0
-
-
 def sha_file(p: Path) -> str:
     h = hashlib.sha256()
     with p.open("rb") as fh:
@@ -53,8 +53,46 @@ def fnum(s):
         return None
 
 
-def main() -> int:
-    cfg = json.loads(CFG_PATH.read_text(encoding="utf-8"))
+def main(out_dir: Path | str | None = None, contract_path: Path | str | None = None) -> int:
+    try:
+        cfg = json.loads(CFG_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"FAIL C00 S03 config missing or invalid: {exc}", file=sys.stderr)
+        return 2
+    cfg_sha = sha_file(CFG_PATH)
+    if cfg_sha != ACCEPTED_CFG_SHA256:
+        print("FAIL C00 S03 R2 config does not match the accepted configuration hash", file=sys.stderr)
+        return 2
+    output_dir = Path(out_dir).resolve() if out_dir else S03
+    gate_path = Path(contract_path).resolve() if contract_path else CONTRACT_PATH
+    try:
+        gate = json.loads(gate_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"FAIL C00 S02→S03 gate contract missing or invalid: {exc}", file=sys.stderr)
+        return 2
+
+    def gate_fail(message: str) -> int:
+        print(f"FAIL C00 {message}", file=sys.stderr)
+        return 2
+
+    if gate.get("version") != "S02_TO_S03_GATE_20261106" \
+            or gate.get("knowledge_as_of") != cfg.get("as_of") \
+            or gate.get("release_S04") is not False \
+            or gate.get("existing_S03_draft_accepted") is not False:
+        return gate_fail("unexpected contract version, cutoff, or release boundary")
+    guard_rows = gate.get("guard_companies")
+    if not isinstance(guard_rows, list) or len(guard_rows) != 4:
+        return gate_fail("contract must enumerate exactly four cutoff-guard companies")
+    cutoff_guard = {r.get("security_id"): r for r in guard_rows}
+    required_guard_ids = {"SH:603448", "SH:688836", "SZ:301348", "SZ:301699"}
+    if len(cutoff_guard) != 4 or any(
+        r.get("route") != "WATCH_AFTER_CUTOFF" or r.get("allow_clean_signal") != "NO"
+        for r in guard_rows
+    ):
+        return gate_fail("cutoff guard entries are duplicate or do not prohibit clean signals")
+    if set(cutoff_guard) != required_guard_ids:
+        return gate_fail("cutoff guard company identifiers differ from the accepted S02 review")
+
     rules_path = ROOT / cfg["inputs"]["rules"]
     rules = json.loads(rules_path.read_text(encoding="utf-8"))
     rules_sha = sha_file(rules_path)
@@ -62,6 +100,62 @@ def main() -> int:
     met_path = ROOT / cfg["inputs"]["metrics"]
     summ_path = ROOT / cfg["inputs"]["company_summary"]
     norm_path = ROOT / cfg["inputs"]["normalized"]
+
+    # Bind every screening input to the accepted S02 v10 snapshot before reading it.
+    snapshot_path = ROOT / cfg["inputs"]["s02_snapshot"]
+    try:
+        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return gate_fail(f"S02 snapshot missing or invalid: {exc}")
+    contract_metrics = gate["metrics"]
+    contract_normalized = gate["normalized"]
+    summary_sha = snapshot.get("company_summary", {}).get("sha256")
+    if contract_metrics.get("sha256") != snapshot.get("metrics", {}).get("sha256") \
+            or contract_normalized.get("sha256") != snapshot.get("normalized_input", {}).get("sha256") \
+            or contract_normalized.get("payload_sha256") != snapshot.get("normalized_input", {}).get("payload_sha256"):
+        return gate_fail("S02 contract digests disagree with the locked S02 snapshot")
+    fingerprints = [
+        ("rules", rules_path, set(cfg.get("rules_sha_accepted", []))),
+        ("metrics", met_path, {contract_metrics.get("sha256", ""), snapshot.get("metrics", {}).get("sha256", "")}),
+        ("company_summary", summ_path, {summary_sha}),
+        ("normalized", norm_path, {contract_normalized.get("sha256", ""), snapshot.get("normalized_input", {}).get("sha256", "")}),
+    ]
+    if contract_metrics.get("path", "").replace("\\", "/") != cfg["inputs"]["metrics"].replace("\\", "/") \
+            or contract_normalized.get("path", "").replace("\\", "/") != cfg["inputs"]["normalized"].replace("\\", "/"):
+        return gate_fail("contract paths do not match frozen S03 config")
+    fp_results = []
+    for label, path, expected in fingerprints:
+        actual = sha_file(path) if path.is_file() else ""
+        ok = bool(actual) and actual in expected and "" not in expected
+        fp_results.append({"input": label, "path": str(path.relative_to(ROOT)).replace("\\", "/"),
+                           "sha256": actual, "expected": sorted(x for x in expected if x), "match": ok})
+    try:
+        normalized_payload_sha = hashlib.sha256()
+        with gzip.open(norm_path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                normalized_payload_sha.update(chunk)
+        payload_actual = normalized_payload_sha.hexdigest()
+    except (OSError, EOFError) as exc:
+        return gate_fail(f"normalized gzip cannot be read: {exc}")
+    payload_expected = contract_normalized.get("payload_sha256")
+    payload_ok = payload_actual == payload_expected == snapshot.get("normalized_input", {}).get("payload_sha256")
+    if not all(r["match"] for r in fp_results) or not payload_ok:
+        return gate_fail("one or more rules/metrics/summary/normalized hashes do not match frozen inputs")
+    if snapshot.get("status") != "LOCKED_FOR_S03_INPUT" \
+            or snapshot.get("normalized_input", {}).get("companies") != 1054 \
+            or contract_metrics.get("companies") != 1054 or contract_metrics.get("cells") != 12648 \
+            or contract_normalized.get("rows") != 229667:
+        return gate_fail("snapshot coverage or S02 input gate is not the accepted 1054-company v10")
+    snapshot_metric_path = snapshot.get("metrics", {}).get("path", "").replace("\\", "/")
+    snapshot_normalized_path = snapshot.get("normalized_input", {}).get("path", "").replace("\\", "/")
+    if snapshot_metric_path != cfg["inputs"]["metrics"].replace("\\", "/") \
+            or snapshot_normalized_path != cfg["inputs"]["normalized"].replace("\\", "/"):
+        return gate_fail("S02 snapshot paths do not match S03 config")
+    rules_fp = {r.get("path"): r.get("sha256") for r in rules.get("input_fingerprint", {}).get("files", [])}
+    master_path = ROOT / cfg["inputs"]["company_master"]
+    master_sha = sha_file(master_path) if master_path.is_file() else ""
+    if master_sha != rules_fp.get(cfg["inputs"]["company_master"]):
+        return gate_fail("company master fingerprint does not match frozen rules")
 
     # ---------------- 装载
     metrics: dict[str, dict[str, dict]] = defaultdict(dict)
@@ -152,6 +246,31 @@ def main() -> int:
         ov = override.get(sec)
         blocked = bool(ov and ov.get("block_sg"))
 
+        # Post-cutoff sources may not produce either positive or negative L1 conclusions.
+        # Keep the company and its current anchor visible; never fall back to an older period.
+        if sec in cutoff_guard:
+            guard = cutoff_guard[sec]
+            if guard.get("stock_name") != srow.get("stock_name", ""):
+                return gate_fail(f"cutoff guard identity mismatch for {sec}")
+            rows_out.append({
+                "company_id": sec, "company_name": srow.get("stock_name", ""),
+                "anchor_period": pk, "anchor_period_type": m["M01"].get("period_type", ""),
+                "stale_period": srow.get("stale_period", ""),
+                "l0_status": "WATCH_AFTER_CUTOFF",
+                "workpaper_status": "OVERRIDDEN_BY_CUTOFF" if ov else "POST_CUTOFF_INPUT",
+                "workpaper_verdicts": "OVERRIDDEN_BY_CUTOFF" if ov else "",
+                "l1_bucket": "OBSERVE_QUEUE", "l1_subtag": "WATCH_AFTER_CUTOFF",
+                "sg_hit_clean_list": "", "sg_hit_provisional_list": "", "sg_hit_lowbase_list": "",
+                "sg_hit_all_list": "", "sg_blocked_would_fire": "", "rh_blocked_would_fire": "",
+                "sg_hold_list": "", "rh_hit_list": "", "quality_flags_summary": "AFTER_CUTOFF",
+                "clean_ok_dims_count": 0, "total_potential_dims_count": 0, "hold_dims_count": 0,
+                "s04_review_priority": "WATCH_AFTER_CUTOFF",
+                "priority_note": "截止日后披露资料；不作本轮候选、无信号或风险结论；不得静默回退旧期",
+                "project_mode": "UNKNOWN",
+            })
+            diag["cutoff_guarded_companies"] += 1
+            continue
+
         fired: list[dict] = []       # 所有命中
         hold_blocked: list[str] = []
         rh_hits: list[str] = []
@@ -168,7 +287,7 @@ def main() -> int:
                     continue
                 if not (usable_metric(m8) and usable_metric(m9)):
                     continue
-                ok = fnum(m8["value"]) >= 0.8 and fnum(m9["value"]) > 0
+                ok = fnum(m8["value"]) >= s["threshold"] and fnum(m9["value"]) > 0
                 if not ok:
                     continue
                 q = signal_quality(deps, {})
@@ -190,7 +309,7 @@ def main() -> int:
                 base = fnum((norm.get((sec, py, "FIN.NPDEDT.YTD")) or {}).get("value_cny"))
                 if cur is None or base is None:
                     continue
-                if base < 0 and cur > 0 and cur >= ABS_CONFIRM:
+                if base < 0 and cur > 0 and cur >= s["threshold"]:
                     fl = flags_of(r5)
                     if "Q05" in fl:
                         q = "LOW_BASE"
@@ -376,9 +495,22 @@ def main() -> int:
         + subtag_counts.get("OQ_HOLD_PROTECTED", 0) + subtag_counts.get("NS_CONFIRMED", 0)
         + subtag_counts.get("NS_INCOMPLETE_EVIDENCE", 0)
         + sum(v for k, v in subtag_counts.items() if k.startswith("REF_ONLY_"))
+        + subtag_counts.get("WATCH_AFTER_CUTOFF", 0)
     ) == total
+    coverage_ok = total == 1054 and len({r["company_id"] for r in rows_out}) == 1054 \
+        and set(by_id := {r["company_id"] for r in rows_out}) == set(metrics)
+    guard_output = [r for r in rows_out if r["company_id"] in cutoff_guard]
+    guard_ok = len(guard_output) == 4 and all(
+        r["l1_bucket"] == "OBSERVE_QUEUE" and r["l1_subtag"] == "WATCH_AFTER_CUTOFF"
+        and r["s04_review_priority"] == "WATCH_AFTER_CUTOFF"
+        and not any(r[k] for k in ("sg_hit_clean_list", "sg_hit_provisional_list", "sg_hit_lowbase_list",
+                                   "sg_hit_all_list", "sg_blocked_would_fire", "rh_hit_list", "rh_blocked_would_fire"))
+        and (r["clean_ok_dims_count"], r["total_potential_dims_count"], r["hold_dims_count"]) == (0, 0, 0)
+        for r in guard_output
+    )
 
-    out_csv = S03 / "l1_screen_results.csv"
+    out_csv = output_dir / "l1_screen_results.csv"
+    output_dir.mkdir(parents=True, exist_ok=True)
     fields = list(rows_out[0].keys())
     with out_csv.open("w", encoding="utf-8-sig", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
@@ -386,7 +518,8 @@ def main() -> int:
         w.writerows(rows_out)
 
     targets = [r for r in rows_out if r["s04_review_priority"] == "HIGH_PRIORITY_VERIFY"]
-    with (S03 / "s04_review_targets.csv").open("w", encoding="utf-8-sig", newline="") as fh:
+    targets_path = output_dir / "s04_review_targets.csv"
+    with targets_path.open("w", encoding="utf-8-sig", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
         w.writeheader()
         w.writerows(targets)
@@ -399,6 +532,13 @@ def main() -> int:
         if not exp:
             continue
         r = by_sec[sec]
+        if sec in cutoff_guard:
+            expected_checks.append({"security_id": sec, "stock_name": r["company_name"],
+                                    "decision": "OVERRIDDEN_BY_CUTOFF", "match": True,
+                                    "expected": exp,
+                                    "actual": {"bucket": r["l1_bucket"], "subtag": r["l1_subtag"],
+                                               "priority": r["s04_review_priority"]}})
+            continue
         ok = (r["l1_bucket"] == exp["bucket"] and r["l1_subtag"] == exp["subtag"]
               and r["s04_review_priority"] == exp["priority"])
         expected_checks.append({
@@ -411,20 +551,20 @@ def main() -> int:
     workpaper_ok = all(x["match"] for x in expected_checks)
 
     # ---------------- 自检：P01 规则 / P02 指纹 / 守恒 / 覆盖
-    fp = {x["path"]: x["sha256"] for x in rules["input_fingerprint"]["files"]}
-    snap_path = ROOT / cfg["inputs"]["s02_snapshot"]
-    snap = json.loads(snap_path.read_text(encoding="utf-8")) if snap_path.is_file() else {}
-    fp_checks = []
-    for path, expected in (
-        ("data/company_master.csv", fp.get("data/company_master.csv")),
-        ("runs/issues/S00/normalization_manifest.json", fp.get("runs/issues/S00/normalization_manifest.json")),
-    ):
-        actual = sha_file(ROOT / path)
-        fp_checks.append({"path": path, "expected": expected, "actual": actual, "match": actual == expected})
-    met_actual = sha_file(met_path)
-    fp_checks.append({"path": cfg["inputs"]["metrics"],
-                      "expected": snap.get("metrics", {}).get("sha256"),
-                      "actual": met_actual, "match": met_actual == snap.get("metrics", {}).get("sha256")})
+    config_sha = cfg_sha
+    gate_sha = sha_file(gate_path)
+    snapshot_sha = sha_file(snapshot_path)
+    fp_checks = fp_results + [{"input": "normalized_payload", "sha256": payload_actual,
+                               "expected": [payload_expected], "match": payload_ok},
+                              {"input": "company_master", "path": cfg["inputs"]["company_master"],
+                               "sha256": master_sha, "expected": [rules_fp.get(cfg["inputs"]["company_master"])],
+                               "match": master_sha == rules_fp.get(cfg["inputs"]["company_master"])},
+                              {"input": "s03_config", "path": str(CFG_PATH.relative_to(ROOT)).replace("\\", "/"),
+                               "sha256": config_sha, "match": bool(config_sha)},
+                              {"input": "s02_s03_gate_contract", "path": str(gate_path.relative_to(ROOT)).replace("\\", "/"),
+                               "sha256": gate_sha, "match": bool(gate_sha)},
+                              {"input": "s02_snapshot", "path": str(snapshot_path.relative_to(ROOT)).replace("\\", "/"),
+                               "sha256": snapshot_sha, "match": bool(snapshot_sha)}]
     self_check = {
         "P01_rules_hash": {"sha256": rules_sha, "accepted_match": rules_sha in cfg["rules_sha_accepted"],
                            "note": "磁盘为 LF 变体 d9a6b3cc…；指令写的 ada501e8… 是同一内容的 CRLF 变体，两者均在接受集内"},
@@ -433,12 +573,16 @@ def main() -> int:
         "P04_row_coverage": {"rows": total, "unique": len({r["company_id"] for r in rows_out})},
         "P05_review_targets": {"high_priority_verify": len(targets)},
         "P06_workpaper_outcomes": {"all_match": workpaper_ok, "checks": expected_checks},
+        "P07_cutoff_guard": {"all_match": guard_ok, "companies": sorted(cutoff_guard),
+                              "guarded_output": len(guard_output)},
+        "P08_full_input_fingerprints": {"all_match": all(c["match"] for c in fp_checks), "checks": fp_checks},
+        "P09_universe_coverage": {"all_match": coverage_ok, "total": total, "unique": len(by_id)},
     }
 
     manifest = {
         "issue": "S03 #38",
-        "version": "S03_L1_SCREEN_20261102",
-        "status": "SELF_CHECK_PASS_PENDING_EXTERNAL_REVIEW",
+        "version": "S03_L1_SCREEN_20261106_CUTOFF_GUARD",
+        "status": "SELF_CHECK_PASS_PENDING_EXTERNAL_REVIEW" if identity_ok and coverage_ok and workpaper_ok and guard_ok else "SELF_CHECK_FAIL",
         "generated_at": NOW,
         "as_of": cfg["as_of"],
         "inputs": {
@@ -481,17 +625,25 @@ def main() -> int:
         "outputs": {
             "l1_screen_results": {"path": str(out_csv.relative_to(ROOT)).replace("\\", "/"),
                                   "sha256": sha_file(out_csv), "rows": total},
-            "s04_review_targets": {"path": "runs/issues/S03/s04_review_targets.csv",
-                                   "sha256": sha_file(S03 / "s04_review_targets.csv"), "rows": len(targets)},
+            "s04_review_targets": {"path": str(targets_path.relative_to(ROOT)).replace("\\", "/"),
+                                   "sha256": sha_file(targets_path), "rows": len(targets)},
         },
         "notes": [
             "阈值与信号定义全部来自 screen_rules_v2.json，未复制、未修改。",
             "P1 的 L0_W1/W2/W4 在当前输入下为 0：S02 的 L0 addendum 已把无干净 OK 的公司归入 W5，按 P4 处理。",
             "REF_ONLY_* 为隔离桶：底稿缺失时按用户指令点名落地，不臆造其余公司。",
-            "本结果为执行方自检，不构成外部验收。",
+            "四家截止日后披露公司在任何 SG/RH/维度计算前隔离为 WATCH_AFTER_CUTOFF，且保留原 anchor，不回退旧期。",
+            "本结果为执行方自检，不构成外部验收；S04 未放行。",
         ],
     }
-    (S03 / "s03_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    manifest["outputs"]["l1_screen_results"]["path"] = str(out_csv.relative_to(ROOT)).replace("\\", "/")
+    manifest["cutoff_gate"] = {"contract_path": str(gate_path.relative_to(ROOT)).replace("\\", "/"),
+                               "contract_sha256": gate_sha,
+                               "config_sha256": config_sha,
+                               "s02_snapshot_sha256": snapshot_sha,
+                               "contract_version": gate["version"], "knowledge_as_of": gate["knowledge_as_of"],
+                               "guarded_companies": sorted(cutoff_guard), "guard_ok": guard_ok}
+    (output_dir / "s03_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     print(json.dumps({
         "status": manifest["status"], "universe": total,
@@ -499,11 +651,17 @@ def main() -> int:
         "priority": dict(prio_counts), "identity_ok": identity_ok,
         "workpaper_ok": workpaper_ok,
         "workpaper_fail": [x["security_id"] for x in expected_checks if not x["match"]],
+        "cutoff_guard_ok": guard_ok,
+        "cutoff_guarded": len(guard_output),
         "ref_blocked_with_signals": len(ref_blocked_fired),
         "sg07_q09_downgrade": diag.get("sg07_q09_downgrade", 0),
     }, ensure_ascii=False, indent=1))
-    return 0 if (identity_ok and workpaper_ok) else 2
+    return 0 if (identity_ok and workpaper_ok and guard_ok and coverage_ok and all(c["match"] for c in fp_checks)) else 2
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--out-dir", default=None)
+    parser.add_argument("--contract", default=None)
+    args = parser.parse_args()
+    sys.exit(main(out_dir=args.out_dir, contract_path=args.contract))

@@ -1,0 +1,578 @@
+{
+  "issue": "S03 #38",
+  "version": "S03_L1_SCREEN_20261106_CUTOFF_GUARD",
+  "status": "SELF_CHECK_PASS_PENDING_EXTERNAL_REVIEW",
+  "generated_at": "2026-11-06T18:48:46+08:00",
+  "as_of": "2026-10-25",
+  "inputs": {
+    "rules": {
+      "path": "runs/issues/S01/screen_rules_v2.json",
+      "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+      "accepted": [
+        "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+        "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf"
+      ],
+      "accepted_match": true
+    },
+    "metrics": {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+      "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+      "cells": 12648
+    },
+    "company_summary": {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/company_metric_summary.csv",
+      "sha256": "0a9ad7ae946aea838e586fd4adaac4ee941ce50d92b2d72797d2219a4383f5f6",
+      "companies": 1054
+    },
+    "normalized": {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+    },
+    "company_master": {
+      "path": "data/company_master.csv",
+      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6"
+    }
+  },
+  "universe": 1054,
+  "bucket_counts": {
+    "OBSERVE_QUEUE": 874,
+    "RISK_WATCH": 143,
+    "NO_SIGNAL": 37
+  },
+  "subtag_counts": {
+    "OQ_CLEAN_OK": 777,
+    "RW_CLEAN": 130,
+    "OQ_LOW_BASE_PROVISIONAL": 11,
+    "NS_CONFIRMED": 19,
+    "OQ_PROVISIONAL_ONLY": 70,
+    "RW_HAS_HOLD": 13,
+    "REF_ONLY_STRUCTURAL_BREAK": 1,
+    "REF_ONLY_SCOPE_CHANGE": 5,
+    "NS_INCOMPLETE_EVIDENCE": 18,
+    "WATCH_AFTER_CUTOFF": 4,
+    "OQ_HOLD_PROTECTED": 6
+  },
+  "conservation": {
+    "identity_ok": true,
+    "total": 1054,
+    "sum_of_buckets": 1054
+  },
+  "self_check": {
+    "P01_rules_hash": {
+      "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+      "accepted_match": true,
+      "note": "磁盘为 LF 变体 d9a6b3cc…；指令写的 ada501e8… 是同一内容的 CRLF 变体，两者均在接受集内"
+    },
+    "P02_input_fingerprints": {
+      "all_match": true,
+      "checks": [
+        {
+          "input": "rules",
+          "path": "runs/issues/S01/screen_rules_v2.json",
+          "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+          "expected": [
+            "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+            "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf"
+          ],
+          "match": true
+        },
+        {
+          "input": "metrics",
+          "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+          "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+          "expected": [
+            "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953"
+          ],
+          "match": true
+        },
+        {
+          "input": "company_summary",
+          "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/company_metric_summary.csv",
+          "sha256": "0a9ad7ae946aea838e586fd4adaac4ee941ce50d92b2d72797d2219a4383f5f6",
+          "expected": [
+            "0a9ad7ae946aea838e586fd4adaac4ee941ce50d92b2d72797d2219a4383f5f6"
+          ],
+          "match": true
+        },
+        {
+          "input": "normalized",
+          "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+          "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+          "expected": [
+            "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+          ],
+          "match": true
+        },
+        {
+          "input": "normalized_payload",
+          "sha256": "92143c5accb6de1ca8a020024aaad763963c33e8846fa0085f4a1627f6b48891",
+          "expected": [
+            "92143c5accb6de1ca8a020024aaad763963c33e8846fa0085f4a1627f6b48891"
+          ],
+          "match": true
+        },
+        {
+          "input": "company_master",
+          "path": "data/company_master.csv",
+          "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+          "expected": [
+            "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6"
+          ],
+          "match": true
+        },
+        {
+          "input": "s03_config",
+          "path": "runs/issues/S03/l1_config.json",
+          "sha256": "2f6193e6a0cad024a67d0ce0dd806e58db8ebdb44dd92d9ef750cc3fdc3fd541",
+          "match": true
+        },
+        {
+          "input": "s02_s03_gate_contract",
+          "path": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+          "sha256": "edaf2b10c1fc7fee5fb8fb6108439257dfed8be59879165e8d95e4e2a35713f5",
+          "match": true
+        },
+        {
+          "input": "s02_snapshot",
+          "path": "runs/issues/S02/S02_final_snapshot.json",
+          "sha256": "6daa4841bc64e846ca81a09b3bb408943a357927e98939a7f76e90ae0d72332e",
+          "match": true
+        }
+      ]
+    },
+    "P03_conservation": {
+      "identity_ok": true,
+      "total": 1054
+    },
+    "P04_row_coverage": {
+      "rows": 1054,
+      "unique": 1054
+    },
+    "P05_review_targets": {
+      "high_priority_verify": 100
+    },
+    "P06_workpaper_outcomes": {
+      "all_match": true,
+      "checks": [
+        {
+          "security_id": "SZ:300611",
+          "stock_name": "美力科技",
+          "expected": {
+            "bucket": "RISK_WATCH",
+            "subtag": "RW_HAS_HOLD",
+            "priority": "HIGH_PRIORITY_VERIFY"
+          },
+          "actual": {
+            "bucket": "RISK_WATCH",
+            "subtag": "RW_HAS_HOLD",
+            "priority": "HIGH_PRIORITY_VERIFY"
+          },
+          "match": true
+        },
+        {
+          "security_id": "SZ:301099",
+          "stock_name": "雅创电子",
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "OQ_CLEAN_OK",
+            "priority": "HIGH_PRIORITY_VERIFY"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "OQ_CLEAN_OK",
+            "priority": "HIGH_PRIORITY_VERIFY"
+          },
+          "match": true
+        },
+        {
+          "security_id": "SZ:002180",
+          "stock_name": "奔图科技",
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "match": true
+        },
+        {
+          "security_id": "SZ:002083",
+          "stock_name": "孚日股份",
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "HIGH_PRIORITY_VERIFY"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "HIGH_PRIORITY_VERIFY"
+          },
+          "match": true
+        },
+        {
+          "security_id": "SZ:301348",
+          "stock_name": "蓝箭电子",
+          "decision": "OVERRIDDEN_BY_CUTOFF",
+          "match": true,
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "WATCH_AFTER_CUTOFF",
+            "priority": "WATCH_AFTER_CUTOFF"
+          }
+        },
+        {
+          "security_id": "SH:603007",
+          "stock_name": "顺景科技",
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "match": true
+        },
+        {
+          "security_id": "SH:600889",
+          "stock_name": "*ST京化",
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_STRUCTURAL_BREAK",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_STRUCTURAL_BREAK",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "match": true
+        },
+        {
+          "security_id": "SZ:002520",
+          "stock_name": "日发精机",
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "match": true
+        },
+        {
+          "security_id": "SH:600936",
+          "stock_name": "北投科技",
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "REF_ONLY_SCOPE_CHANGE",
+            "priority": "REFERENCE_ONLY_BLOCKED"
+          },
+          "match": true
+        },
+        {
+          "security_id": "SH:603298",
+          "stock_name": "杭叉集团",
+          "expected": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "OQ_CLEAN_OK",
+            "priority": "LOW_PRIORITY_SINGLE_DIM"
+          },
+          "actual": {
+            "bucket": "OBSERVE_QUEUE",
+            "subtag": "OQ_CLEAN_OK",
+            "priority": "LOW_PRIORITY_SINGLE_DIM"
+          },
+          "match": true
+        }
+      ]
+    },
+    "P07_cutoff_guard": {
+      "all_match": true,
+      "companies": [
+        "SH:603448",
+        "SH:688836",
+        "SZ:301348",
+        "SZ:301699"
+      ],
+      "guarded_output": 4
+    },
+    "P08_full_input_fingerprints": {
+      "all_match": true,
+      "checks": [
+        {
+          "input": "rules",
+          "path": "runs/issues/S01/screen_rules_v2.json",
+          "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+          "expected": [
+            "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+            "d9a6b3cc77fcd3afb498673668be2d5c86412b6b83ffe0193e6c78f4979ecabf"
+          ],
+          "match": true
+        },
+        {
+          "input": "metrics",
+          "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+          "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+          "expected": [
+            "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953"
+          ],
+          "match": true
+        },
+        {
+          "input": "company_summary",
+          "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/company_metric_summary.csv",
+          "sha256": "0a9ad7ae946aea838e586fd4adaac4ee941ce50d92b2d72797d2219a4383f5f6",
+          "expected": [
+            "0a9ad7ae946aea838e586fd4adaac4ee941ce50d92b2d72797d2219a4383f5f6"
+          ],
+          "match": true
+        },
+        {
+          "input": "normalized",
+          "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+          "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+          "expected": [
+            "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+          ],
+          "match": true
+        },
+        {
+          "input": "normalized_payload",
+          "sha256": "92143c5accb6de1ca8a020024aaad763963c33e8846fa0085f4a1627f6b48891",
+          "expected": [
+            "92143c5accb6de1ca8a020024aaad763963c33e8846fa0085f4a1627f6b48891"
+          ],
+          "match": true
+        },
+        {
+          "input": "company_master",
+          "path": "data/company_master.csv",
+          "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
+          "expected": [
+            "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6"
+          ],
+          "match": true
+        },
+        {
+          "input": "s03_config",
+          "path": "runs/issues/S03/l1_config.json",
+          "sha256": "2f6193e6a0cad024a67d0ce0dd806e58db8ebdb44dd92d9ef750cc3fdc3fd541",
+          "match": true
+        },
+        {
+          "input": "s02_s03_gate_contract",
+          "path": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+          "sha256": "edaf2b10c1fc7fee5fb8fb6108439257dfed8be59879165e8d95e4e2a35713f5",
+          "match": true
+        },
+        {
+          "input": "s02_snapshot",
+          "path": "runs/issues/S02/S02_final_snapshot.json",
+          "sha256": "6daa4841bc64e846ca81a09b3bb408943a357927e98939a7f76e90ae0d72332e",
+          "match": true
+        }
+      ]
+    },
+    "P09_universe_coverage": {
+      "all_match": true,
+      "total": 1054,
+      "unique": 1054
+    }
+  },
+  "s04_priority_counts": {
+    "LOW_PRIORITY_SINGLE_DIM": 502,
+    "AUTO_PASS_L2_READY": 443,
+    "HIGH_PRIORITY_VERIFY": 100,
+    "REFERENCE_ONLY_BLOCKED": 5,
+    "WATCH_AFTER_CUTOFF": 4
+  },
+  "workpaper": {
+    "name": "S02_A_B_调整工作底稿_20261030",
+    "source": "https://docs.google.com/spreadsheets/d/16jCpHoPQIOqhS9Ts3a_021cVa0t_tEtEbO1af_SZbbs/edit",
+    "adopted_at": "2026-11-02",
+    "companies": 10,
+    "cells": 120,
+    "note": "云端底稿裁决已全部写入；PENDING_WORKPAPER 清零。M08 与 S02 一致（仅改状态），M01 在美力/雅创为剔除并表后的重算值。"
+  },
+  "company_overrides_applied": [
+    {
+      "security_id": "SZ:300611",
+      "stock_name": "美力科技",
+      "block_sg": false,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "RISK_WATCH",
+        "subtag": "RW_HAS_HOLD",
+        "priority": "HIGH_PRIORITY_VERIFY"
+      }
+    },
+    {
+      "security_id": "SZ:301099",
+      "stock_name": "雅创电子",
+      "block_sg": false,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "OQ_CLEAN_OK",
+        "priority": "HIGH_PRIORITY_VERIFY"
+      }
+    },
+    {
+      "security_id": "SZ:002180",
+      "stock_name": "奔图科技",
+      "block_sg": true,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SZ:002083",
+      "stock_name": "孚日股份",
+      "block_sg": true,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "HIGH_PRIORITY_VERIFY"
+      }
+    },
+    {
+      "security_id": "SZ:301348",
+      "stock_name": "蓝箭电子",
+      "block_sg": true,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SH:603007",
+      "stock_name": "顺景科技",
+      "block_sg": true,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SH:600889",
+      "stock_name": "*ST京化",
+      "block_sg": true,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_STRUCTURAL_BREAK",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SZ:002520",
+      "stock_name": "日发精机",
+      "block_sg": true,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SH:600936",
+      "stock_name": "北投科技",
+      "block_sg": true,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "REF_ONLY_SCOPE_CHANGE",
+        "priority": "REFERENCE_ONLY_BLOCKED"
+      }
+    },
+    {
+      "security_id": "SH:603298",
+      "stock_name": "杭叉集团",
+      "block_sg": false,
+      "metric_cells": 12,
+      "expected": {
+        "bucket": "OBSERVE_QUEUE",
+        "subtag": "OQ_CLEAN_OK",
+        "priority": "LOW_PRIORITY_SINGLE_DIM"
+      }
+    }
+  ],
+  "diagnostics": {
+    "ref_only_blocked_with_signals": [],
+    "sg07_q09_downgrade": 37,
+    "sg06_evaluated": 236,
+    "has_clean_signal": 777,
+    "has_lowbase_signal": 94,
+    "lowbase_also_clean": 83,
+    "has_provisional_signal": 126,
+    "prov_also_clean": 49,
+    "ns_evidence_incomplete": 18,
+    "sg06_suppressed_scope": 5,
+    "sg08_suppressed_ref_only": 6,
+    "note": "含低基数/暂定信号的公司多数同时有干净信号，按 P2>P3>P4 严格优先级归入 OQ_CLEAN_OK；指令预估的 ~319 / ~131 是「含该类信号的公司数」，不等于 P3/P4 桶规模。"
+  },
+  "outputs": {
+    "l1_screen_results": {
+      "path": "runs/issues/S03/rerun_20261106/l1_screen_results.csv",
+      "sha256": "a9b0c6edc0ecc1ab549b41ea5bc2c598889c0977380f7f221832b8e4f68b8f77",
+      "rows": 1054
+    },
+    "s04_review_targets": {
+      "path": "runs/issues/S03/rerun_20261106/s04_review_targets.csv",
+      "sha256": "9b9b51b2197499dedc1974cf7a739f20f4c51b1d2e99ed82190ec712a3759478",
+      "rows": 100
+    }
+  },
+  "notes": [
+    "阈值与信号定义全部来自 screen_rules_v2.json，未复制、未修改。",
+    "P1 的 L0_W1/W2/W4 在当前输入下为 0：S02 的 L0 addendum 已把无干净 OK 的公司归入 W5，按 P4 处理。",
+    "REF_ONLY_* 为隔离桶：底稿缺失时按用户指令点名落地，不臆造其余公司。",
+    "四家截止日后披露公司在任何 SG/RH/维度计算前隔离为 WATCH_AFTER_CUTOFF，且保留原 anchor，不回退旧期。",
+    "本结果为执行方自检，不构成外部验收；S04 未放行。"
+  ],
+  "cutoff_gate": {
+    "contract_path": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+    "contract_sha256": "edaf2b10c1fc7fee5fb8fb6108439257dfed8be59879165e8d95e4e2a35713f5",
+    "config_sha256": "2f6193e6a0cad024a67d0ce0dd806e58db8ebdb44dd92d9ef750cc3fdc3fd541",
+    "s02_snapshot_sha256": "6daa4841bc64e846ca81a09b3bb408943a357927e98939a7f76e90ae0d72332e",
+    "contract_version": "S02_TO_S03_GATE_20261106",
+    "knowledge_as_of": "2026-10-25",
+    "guarded_companies": [
+      "SH:603448",
+      "SH:688836",
+      "SZ:301348",
+      "SZ:301699"
+    ],
+    "guard_ok": true
+  }
+}

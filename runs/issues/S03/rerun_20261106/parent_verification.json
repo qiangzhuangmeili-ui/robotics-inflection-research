@@ -1,0 +1,110 @@
+{
+  "review_nature": "SELF_CHECK_PARENT_VERIFICATION_NOT_INDEPENDENT_BUSINESS_AUDIT",
+  "checks": [
+    {
+      "name": "1054 unique rows and exact master keys",
+      "pass_check": true,
+      "detail": null
+    },
+    {
+      "name": "Cutoff guard has four distinct companies",
+      "pass_check": true,
+      "detail": null
+    },
+    {
+      "name": "Cutoff company routes and zero signal/dimension leakage",
+      "pass_check": true,
+      "detail": []
+    },
+    {
+      "name": "Other 1050 company rows unchanged in every field",
+      "pass_check": true,
+      "detail": {
+        "compared": 1050,
+        "differences": []
+      }
+    },
+    {
+      "name": "Four frozen S02 input/output files unmodified",
+      "pass_check": true,
+      "detail": {
+        "normalized_input": true,
+        "metrics": true,
+        "company_summary": true,
+        "review": true
+      }
+    },
+    {
+      "name": "Three delivery partitions cover 1054 without overlap",
+      "pass_check": true,
+      "detail": null
+    },
+    {
+      "name": "All cutoff companies remain in unknown partition",
+      "pass_check": true,
+      "detail": null
+    },
+    {
+      "name": "Only explicitly confirmed no-signal rows in defer",
+      "pass_check": true,
+      "detail": null
+    },
+    {
+      "name": "Cutoff companies absent from S04 verification targets",
+      "pass_check": true,
+      "detail": null
+    }
+  ],
+  "pass_all": true,
+  "universe": 1054,
+  "bucket_counts": {
+    "OBSERVE_QUEUE": 874,
+    "RISK_WATCH": 143,
+    "NO_SIGNAL": 37
+  },
+  "subtag_counts": {
+    "OQ_CLEAN_OK": 777,
+    "RW_CLEAN": 130,
+    "OQ_LOW_BASE_PROVISIONAL": 11,
+    "NS_CONFIRMED": 19,
+    "OQ_PROVISIONAL_ONLY": 70,
+    "RW_HAS_HOLD": 13,
+    "REF_ONLY_STRUCTURAL_BREAK": 1,
+    "REF_ONLY_SCOPE_CHANGE": 5,
+    "NS_INCOMPLETE_EVIDENCE": 18,
+    "WATCH_AFTER_CUTOFF": 4,
+    "OQ_HOLD_PROTECTED": 6
+  },
+  "priority_counts": {
+    "LOW_PRIORITY_SINGLE_DIM": 502,
+    "AUTO_PASS_L2_READY": 443,
+    "HIGH_PRIORITY_VERIFY": 100,
+    "REFERENCE_ONLY_BLOCKED": 5,
+    "WATCH_AFTER_CUTOFF": 4
+  },
+  "partitions": {
+    "wide_pass": 777,
+    "wide_defer": 149,
+    "wide_unknown": 128
+  },
+  "partition_semantics": {
+    "wide_pass": "Clean signal observation; not investment candidate or L2 acceptance",
+    "wide_defer": "Complete no-signal or clean risk-watch; retained, not deleted",
+    "wide_unknown": "Uncertain/provisional/low-base/hold/scope/cutoff observation; no final rejection"
+  },
+  "s04_review_targets": 100,
+  "outputs": {
+    "wide_pass.csv": {
+      "rows": 777,
+      "sha256": "859fbaeddf38655c90c44e6a7151aa0bd7b5cf31749c12be5bd4a7d2f04d63ca"
+    },
+    "wide_defer.csv": {
+      "rows": 149,
+      "sha256": "1c20e6878631fccb62e28b865c9a1fffbc030035e4d7ea5da7428d08e196b6b6"
+    },
+    "wide_unknown.csv": {
+      "rows": 128,
+      "sha256": "e352a8fdad7bf9c569ca9bfce77563f40f937a7d418dd32fb1f3236f7ec9ca58"
+    }
+  }
+}
