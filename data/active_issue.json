@@ -1,18 +1,18 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 38,
-  "active_issue_key": "S03",
-  "executor": "Codex",
-  "started_at": "2026-11-06 10:45:54 UTC",
-  "status": "SELF_CHECK_PASS_WITH_LIMITS_S04_READY",
-  "claim_note": "S03 cutoff guard rerun complete; all 1054 retained, four guarded, other 1050 unchanged; S04 technical dependency ready",
+  "active_issue_number": 39,
+  "active_issue_key": "S04",
+  "executor": "WorkBuddy AI",
+  "started_at": "2026-11-08 17:45:00 +08:00",
+  "status": "SELF_CHECK_PASS_WITH_LIMITS",
+  "claim_note": "S04 L2 收紧完成：443 家干净维度≥2，10 家上游 HOLD 挂起，1054 家全部保留；未改阈值、未新增硬门槛；S05 未放行",
   "last_completed": {
-    "issue_key": "S03",
-    "issue_number": 38,
+    "issue_key": "S04",
+    "issue_number": 39,
     "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-    "review_file": "runs/issues/S03/review.json",
+    "review_file": "runs/issues/S04/review.json",
     "review_nature": "SELF_CHECK",
-    "completed_at": "2026-11-06T18:50:54+08:00",
+    "completed_at": "2026-11-08T17:52:38+08:00",
     "coverage": 1054
   },
   "input_baseline_after_p06": {
@@ -22,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 39,
-  "next_recommended_issue_key": "S04",
-  "next_recommended_reason": "从 S03/rerun_20261106 进入多指标收紧与100家定向核验；不得把443家预备状态当作已验收候选",
+  "next_recommended_issue_number": 40,
+  "next_recommended_issue_key": "S05",
+  "next_recommended_reason": "S04 自检通过但无独立复核记录，S05 仍 WAITING_DEPENDENCIES；须先取得外部复核，再进入现金流/应收存货/低基数第三道质量检查",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -280,5 +280,61 @@
       "summary": "S04保持冻结规则；合同负债/可信在手订单在S06辅助观察；在建工程/订单质量在筛后核验；缺披露不填0不淘汰",
       "workbuddy_receipt": "NOT_CONFIRMED"
     }
-  ]
+  ],
+  "s04_stage": {
+    "issue_key": "S04",
+    "issue_number": 39,
+    "plan_version": "20261026_collection_first_v2",
+    "executor": "WorkBuddy AI",
+    "review_nature": "SELF_CHECK",
+    "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+    "reviewed_at": "2026-11-08T17:52:38+08:00",
+    "rule_layer": "L2",
+    "rules_version": "S01_SCREEN_RULES_V2",
+    "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+    "knowledge_as_of": "2026-10-25",
+    "coverage": 1054,
+    "decisions": {
+      "L2_SHORTLIST_CANDIDATE": 443,
+      "L2_HOLD_FOR_DATA": 10,
+      "L2_NOT_SHORTLISTED": 324,
+      "L2_NOT_IN_SCOPE": 273,
+      "WATCH_AFTER_CUTOFF": 4
+    },
+    "pass_evidence_grade": {
+      "A_ALL_OK": 422,
+      "B_ABS_CHANNEL": 21
+    },
+    "abs_dependency_critical": [
+      "SZ:000948 南天信息"
+    ],
+    "hold_for_data": [
+      "SH:601677",
+      "SH:688085",
+      "SH:688125",
+      "SH:688219",
+      "SH:688360",
+      "SH:688570",
+      "SZ:002008",
+      "SZ:002276",
+      "SZ:300484",
+      "SZ:301099"
+    ],
+    "outputs": [
+      "runs/issues/S04/tight_pass.csv",
+      "runs/issues/S04/tight_observe.csv",
+      "runs/issues/S04/tight_decision_log.csv",
+      "runs/issues/S04/review_100_qc.csv"
+    ],
+    "checks": "10/10 PASS",
+    "release_S05": false,
+    "release_note": "自检不等同独立复核；S05 须先取得外部复核记录",
+    "limits": [
+      "未回读 PDF、未新增业务采用；443 家不等于投资候选",
+      "42 份重述宽容假设、973 格 PROVISIONAL、176 格 HOLD 均未计入 L2",
+      "21 家 B 级证据（含绝对额通道）交 S05 复核",
+      "未改 S02 输入、S03 结果、S01 规则与既有验收状态"
+    ],
+    "report": "runs/issues/S04/REPORT.md"
+  }
 }
