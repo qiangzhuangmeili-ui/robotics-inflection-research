@@ -5,15 +5,16 @@
   "executor": "WorkBuddy AI",
   "started_at": "2026-11-08 17:45:00 +08:00",
   "status": "SELF_CHECK_PASS_WITH_LIMITS",
-  "claim_note": "S04 L2 收紧完成：443 家干净维度≥2，10 家上游 HOLD 挂起，1054 家全部保留；未改阈值、未新增硬门槛；S05 未放行",
+  "claim_note": "S04 返工完成：按 Codex 裁决冻结规则 v3，实现低基数同口径绝对额确认与 L2 双通道资格，通过 445 家（v1 为 443，新增公元股份/同兴达）；9/9 自检 + 16/16 回归测试；未改任何阈值；S05 仍不放行，须外部复核",
   "last_completed": {
     "issue_key": "S04",
     "issue_number": 39,
     "decision": "SELF_CHECK_PASS_WITH_LIMITS",
     "review_file": "runs/issues/S04/review.json",
     "review_nature": "SELF_CHECK",
-    "completed_at": "2026-11-08T17:52:38+08:00",
-    "coverage": 1054
+    "completed_at": "2026-11-10T21:10:00+08:00",
+    "coverage": 1054,
+    "external_review": "RETURN_FOR_REWORK_ADDRESSED_PENDING_RECHECK"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -24,7 +25,7 @@
   },
   "next_recommended_issue_number": 40,
   "next_recommended_issue_key": "S05",
-  "next_recommended_reason": "S04 自检通过但无独立复核记录，S05 仍 WAITING_DEPENDENCIES；须先取得外部复核，再进入现金流/应收存货/低基数第三道质量检查",
+  "next_recommended_reason": "S04 返工自检通过但尚无第二轮独立复核；S05 仍 WAITING_DEPENDENCIES，须先取得外部复核记录再进入现金流/应收存货/低基数第三道质量检查",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -288,52 +289,118 @@
     "executor": "WorkBuddy AI",
     "review_nature": "SELF_CHECK",
     "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-    "reviewed_at": "2026-11-08T17:52:38+08:00",
+    "reviewed_at": "2026-11-10T21:10:00+08:00",
     "rule_layer": "L2",
-    "rules_version": "S01_SCREEN_RULES_V2",
-    "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+    "rules_version": "S01_SCREEN_RULES_V3",
+    "rules_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
+    "rules_supersedes": "S01_SCREEN_RULES_V2",
     "knowledge_as_of": "2026-10-25",
     "coverage": 1054,
     "decisions": {
-      "L2_SHORTLIST_CANDIDATE": 443,
-      "L2_HOLD_FOR_DATA": 10,
-      "L2_NOT_SHORTLISTED": 324,
+      "L2_NOT_SHORTLISTED": 322,
       "L2_NOT_IN_SCOPE": 273,
+      "L2_SHORTLIST_CANDIDATE": 445,
+      "L2_HOLD_FOR_DATA": 10,
       "WATCH_AFTER_CUTOFF": 4
     },
-    "pass_evidence_grade": {
-      "A_ALL_OK": 422,
-      "B_ABS_CHANNEL": 21
+    "evidence_channels": {
+      "A_RATIO_OK": 328,
+      "A_RATIO_OK;C_LOW_BASE_CONFIRMED": 33,
+      "A_RATIO_OK;B_ABS_CHANNEL": 83,
+      "A_RATIO_OK;B_ABS_CHANNEL;C_LOW_BASE_CONFIRMED": 1
     },
     "abs_dependency_critical": [
-      "SZ:000948 南天信息"
+      "SH:600184 光电股份",
+      "SH:603296 华勤技术",
+      "SH:603338 浙江鼎力",
+      "SH:603416 信捷电气",
+      "SH:688711 宏微科技",
+      "SZ:000856 冀东装备",
+      "SZ:000948 南天信息",
+      "SZ:002224 三 力 士",
+      "SZ:002628 成都路桥",
+      "SZ:002960 青鸟智控",
+      "SZ:300213 佳讯飞鸿",
+      "SZ:300632 光莆股份",
+      "SZ:300644 南京聚隆",
+      "SZ:300793 佳禾智能",
+      "SZ:300971 博亚精工",
+      "SZ:301459 丰茂股份"
     ],
-    "hold_for_data": [
-      "SH:601677",
-      "SH:688085",
-      "SH:688125",
-      "SH:688219",
-      "SH:688360",
-      "SH:688570",
-      "SZ:002008",
-      "SZ:002276",
-      "SZ:300484",
-      "SZ:301099"
+    "low_base_confirmed_in_pass": [
+      "BJ:920066",
+      "BJ:920198",
+      "BJ:920249",
+      "BJ:920641",
+      "SH:600288",
+      "SH:600590",
+      "SH:603051",
+      "SH:603135",
+      "SH:603608",
+      "SH:605189",
+      "SH:605208",
+      "SH:688090",
+      "SH:688135",
+      "SH:688255",
+      "SH:688328",
+      "SH:688383",
+      "SH:688518",
+      "SH:688577",
+      "SH:688623",
+      "SH:688655",
+      "SZ:002132",
+      "SZ:002185",
+      "SZ:002265",
+      "SZ:002641",
+      "SZ:002845",
+      "SZ:300179",
+      "SZ:300410",
+      "SZ:300472",
+      "SZ:300527",
+      "SZ:300613",
+      "SZ:300687",
+      "SZ:300823",
+      "SZ:301179",
+      "SZ:301210"
     ],
+    "changed_vs_v1": 2,
+    "authoritative_s00": {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+      "superseded": "runs/issues/S00/financial_normalized.csv",
+      "note": "旧 S00 交付件禁止用于下游复算"
+    },
     "outputs": [
       "runs/issues/S04/tight_pass.csv",
       "runs/issues/S04/tight_observe.csv",
       "runs/issues/S04/tight_decision_log.csv",
-      "runs/issues/S04/review_100_qc.csv"
+      "runs/issues/S04/review_100_qc.csv",
+      "runs/issues/S04/v1_v3_diff.csv"
     ],
-    "checks": "10/10 PASS",
+    "checks": "9/9 PASS",
+    "tests": "16/16 PASS",
+    "rework": {
+      "trigger": "S04 独立复核 RETURN_FOR_REWORK（P1-01 低基数未确认、P1-02 指标资格未落地）",
+      "advisor_ruling": "runs/issues/S04/codex_ruling.md",
+      "fixed": [
+        "P1-01 低基数同口径绝对额确认（SG01/SG04/SG06/SG08/SG09）",
+        "P1-02 L2 双通道资格（比率通道须 OK；SG06/SG08 须输入行可用）",
+        "C05/C07 数量锁移除，改为充要条件与集合不变量",
+        "review.json 与 active_issue 状态统一",
+        "输入指纹改指向权威 s00_v10"
+      ],
+      "not_fixed_by_design": [
+        "SG02/SG03/SG05/SG07 低基数无确认映射，记 NO_CONFIRM_RULE，本版不计入"
+      ]
+    },
     "release_S05": false,
-    "release_note": "自检不等同独立复核；S05 须先取得外部复核记录",
+    "release_note": "自检不等同独立复核；须第二轮外部复核通过后才放行 S05",
     "limits": [
-      "未回读 PDF、未新增业务采用；443 家不等于投资候选",
-      "42 份重述宽容假设、973 格 PROVISIONAL、176 格 HOLD 均未计入 L2",
-      "21 家 B 级证据（含绝对额通道）交 S05 复核",
-      "未改 S02 输入、S03 结果、S01 规则与既有验收状态"
+      "自检不等同独立复核；S05 仍须外部复核通过后才放行",
+      "未回读 PDF、未新增业务采用；入选不等于投资候选",
+      "SG02/SG03/SG05/SG07 低基数无确认映射，记 NO_CONFIRM_RULE，本版不计入",
+      "绝对额通道（SG06/SG08）资格单独登记，未改写 M05 的 UNDEFINED_BASE",
+      "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
     ],
     "report": "runs/issues/S04/REPORT.md"
   }

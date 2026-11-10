@@ -1,213 +1,38 @@
 {
   "issue_key": "S04",
   "issue_number": 39,
-  "plan_version": "20261026_collection_first_v2",
-  "rule_layer": "L2",
-  "executor": "WorkBuddy AI",
-  "review_nature": "SELF_CHECK",
-  "generated_by": "runs/issues/S04/tight_screen.py",
+  "stage": "L2_TIGHTENING_REWORK_V2",
+  "script": "runs/issues/S04/tight_screen_v2.py",
+  "script_sha256": "d33b7fe22e89cfdb0906565c96f107b9df7b6d3516caf1ada5c43a48c28ed5ec",
+  "rules": {
+    "path": "runs/issues/S01/screen_rules_v3.json",
+    "sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45"
+  },
   "inputs": {
-    "s03_wide_pass": {
-      "path": "runs/issues/S03/rerun_20261106/wide_pass.csv",
-      "sha256": "859fbaeddf38655c90c44e6a7151aa0bd7b5cf31749c12be5bd4a7d2f04d63ca",
-      "rows": 777
-    },
-    "s03_wide_defer": {
-      "path": "runs/issues/S03/rerun_20261106/wide_defer.csv",
-      "sha256": "1c20e6878631fccb62e28b865c9a1fffbc030035e4d7ea5da7428d08e196b6b6",
-      "rows": 149
-    },
-    "s03_wide_unknown": {
-      "path": "runs/issues/S03/rerun_20261106/wide_unknown.csv",
-      "sha256": "e352a8fdad7bf9c569ca9bfce77563f40f937a7d418dd32fb1f3236f7ec9ca58",
-      "rows": 128
-    },
-    "s03_review_targets": {
-      "path": "runs/issues/S03/rerun_20261106/s04_review_targets.csv",
-      "sha256": "9b9b51b2197499dedc1974cf7a739f20f4c51b1d2e99ed82190ec712a3759478",
-      "rows": 100
-    },
-    "s03_config": {
-      "path": "runs/issues/S03/l1_config.json",
-      "sha256": "2f6193e6a0cad024a67d0ce0dd806e58db8ebdb44dd92d9ef750cc3fdc3fd541"
-    },
-    "s01_rules": {
-      "path": "runs/issues/S01/screen_rules_v2.json",
-      "sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
-    },
-    "s02_metrics": {
-      "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
-      "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953"
-    },
-    "s02_to_s03_contract": {
-      "path": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
-      "sha256": "edaf2b10c1fc7fee5fb8fb6108439257dfed8be59879165e8d95e4e2a35713f5"
-    },
-    "company_master": {
-      "path": "data/company_master.csv",
-      "sha256": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6",
-      "rows": 1054
-    }
+    "runs/issues/S03/rerun_20261106/wide_pass.csv": "859fbaeddf38655c90c44e6a7151aa0bd7b5cf31749c12be5bd4a7d2f04d63ca",
+    "runs/issues/S03/rerun_20261106/wide_defer.csv": "1c20e6878631fccb62e28b865c9a1fffbc030035e4d7ea5da7428d08e196b6b6",
+    "runs/issues/S03/rerun_20261106/wide_unknown.csv": "e352a8fdad7bf9c569ca9bfce77563f40f937a7d418dd32fb1f3236f7ec9ca58",
+    "runs/issues/S03/rerun_20261106/s04_review_targets.csv": "9b9b51b2197499dedc1974cf7a739f20f4c51b1d2e99ed82190ec712a3759478",
+    "runs/issues/S03/l1_config.json": "2f6193e6a0cad024a67d0ce0dd806e58db8ebdb44dd92d9ef750cc3fdc3fd541",
+    "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+    "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+    "runs/issues/S02/acceptance_20261106/s03_input_contract.json": "edaf2b10c1fc7fee5fb8fb6108439257dfed8be59879165e8d95e4e2a35713f5",
+    "data/company_master.csv": "9d9e83ea3880d18f91c3ccc15ba4c26ef5c569fab3943d0bce4246da428243f6"
   },
   "outputs": {
-    "tight_pass.csv": {
-      "path": "runs/issues/S04/tight_pass.csv",
-      "rows": 443,
-      "sha256": "2b6542842529a220393fe4d95fab16f786785d4e3f9c49f019be94b7ce951df5"
-    },
-    "tight_observe.csv": {
-      "path": "runs/issues/S04/tight_observe.csv",
-      "rows": 611,
-      "sha256": "a3bb77f12b34541084a9ba8848013d52a2426b6a030ddb25609f56b6833d8417"
-    },
-    "tight_decision_log.csv": {
-      "path": "runs/issues/S04/tight_decision_log.csv",
-      "rows": 1054,
-      "sha256": "c387d757fd0c3842765b90cea308efa62183a2ca56d45cd77fdadbc7d7bed20f"
-    },
-    "review_100_qc.csv": {
-      "path": "runs/issues/S04/review_100_qc.csv",
-      "rows": 100,
-      "sha256": "ca57bb422382445f363da0019354f9a62949fda08cb984ec96b20a095e02fdd7"
-    }
+    "tight_pass.csv": "5857e07960e449ed87beae3a327defd8ddda2447f307bc85f9f256118986fbc5",
+    "tight_observe.csv": "9c56e90627d7bfac563bd0b75be6b58ab4d6f3462c6e287b2efe3ac639ead068",
+    "tight_decision_log.csv": "aac3071ffbe4f0de6514578d4b6ace78640b6014c2a88e602e06c7ce70256366",
+    "review_100_qc.csv": "ba253902224906ec43a7a63b6cdc89678128a937d2151ce50d946a365d519032",
+    "v1_v3_diff.csv": "2a6720035e6b0f6eef280fdde2638007c7d9a2d9f2a34d9bdd54d4016476e2a9",
+    "tight_summary.json": "9e943433c4b26fa9dc13230fa0900546f7d516a9f4bc42878c4ce7ddcecfa55b"
   },
-  "checks": [
-    {
-      "id": "C00",
-      "name": "输入版本与哈希闸门（config/rules/metrics/contract）",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "config_sha256": "2f6193e6a0cad024a67d0ce0dd806e58db8ebdb44dd92d9ef750cc3fdc3fd541",
-        "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
-        "metrics_sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
-        "knowledge_as_of": "2026-10-25",
-        "l2_rule_text": "在 GROWTH / MARGIN / PROFIT / CASH 四个维度中，至少 2 个维度各有 1 条 SG 为真，且所用指标均 metric_status=OK、无 Q01 HOLD、无 Q06 未决重述、无 Q05 低基数未确认"
-      }
-    },
-    {
-      "id": "C01",
-      "name": "分区覆盖 1054 家且与调度总表主键完全一致",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "rows": 1054,
-        "master": 1054,
-        "by_partition": {
-          "wide_pass": 777,
-          "wide_defer": 149,
-          "wide_unknown": 128
-        }
-      }
-    },
-    {
-      "id": "C02",
-      "name": "三分区互斥无重复（1054 = 777 + 149 + 128）",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "duplicates": 0,
-        "wide_pass": 777,
-        "wide_defer": 149,
-        "wide_unknown": 128
-      }
-    },
-    {
-      "id": "C03",
-      "name": "L2 干净维度数与 S03 已验收 clean_ok_dims_count 逐家一致",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "mismatches": [],
-        "count": 0
-      }
-    },
-    {
-      "id": "C04",
-      "name": "HOLD 维度数与 S03 hold_dims_count 逐家一致",
-      "pass": true,
-      "level": "WARN",
-      "detail": {
-        "mismatches": [],
-        "count": 0
-      }
-    },
-    {
-      "id": "C05",
-      "name": "L2 通过数等于 S03 AUTO_PASS_L2_READY 的 443 家",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "shortlist": 443
-      }
-    },
-    {
-      "id": "C06",
-      "name": "四家截止日隔离公司保持隔离且零信号、无 L2 结论",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "guards": [
-          "SH:603448",
-          "SH:688836",
-          "SZ:301348",
-          "SZ:301699"
-        ]
-      }
-    },
-    {
-      "id": "C07",
-      "name": "tight_pass 全部来自 wide_pass 且交付合计覆盖 1054、无重叠",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "pass": 443,
-        "pass_from_wide_pass": 443
-      }
-    },
-    {
-      "id": "C08",
-      "name": "九条信号阈值与冻结规则完全一致，本脚本未引入新阈值",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "thresholds": {
-          "SG01": 0.1,
-          "SG02": 5.0,
-          "SG03": 1.0,
-          "SG04": 0.2,
-          "SG05": 1.0,
-          "SG06": 10000000.0,
-          "SG07": 0.8,
-          "SG08": 0.0,
-          "SG09": 0.3
-        },
-        "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
-      }
-    },
-    {
-      "id": "C09",
-      "name": "S03 的 100 家定向核验对象全部在结果中且均有诊断",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "targets": 100,
-        "missing": []
-      }
-    }
-  ],
-  "counts": {
-    "L2_NOT_SHORTLISTED": 324,
-    "L2_NOT_IN_SCOPE": 273,
-    "L2_SHORTLIST_CANDIDATE": 443,
-    "L2_HOLD_FOR_DATA": 10,
-    "WATCH_AFTER_CUTOFF": 4
+  "supersedes": {
+    "path": "runs/issues/S04/superseded_v1/",
+    "reason": "v1 未实现低基数绝对额确认（P1-01）、未落地指标资格（P1-02）、自检硬编码 443（C05/C07）"
   },
-  "no_quota_attestation": "未为达到任何家数目标调整阈值；443 为规则结果而非目标。",
-  "limits": [
-    "L2 只做多指标共同改善判定，不是投资候选、不含业务/估值结论。",
-    "信号来自 S03 已验收交付；本卡未重算信号，只核对所用指标状态与维度归属。",
-    "PROVISIONAL / 低基数 / HOLD 均不得计入 L2 维度，保留重进条件。",
-    "四家截止日后公司保持隔离，未产生正负信号。"
-  ]
+  "self_check": {
+    "total": 9,
+    "pass": 9
+  }
 }

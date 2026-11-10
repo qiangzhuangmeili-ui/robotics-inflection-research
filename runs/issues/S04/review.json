@@ -2,20 +2,43 @@
   "issue_key": "S04",
   "issue_number": 39,
   "review_nature": "SELF_CHECK",
-  "reviewer": "WorkBuddy AI（执行方自检）",
-  "decision": "SELF_CHECK_PASS",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "rules_version": "S01_SCREEN_RULES_V3",
+  "rules_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
+  "coverage": 1054,
+  "counts": {
+    "L2_NOT_SHORTLISTED": 322,
+    "L2_NOT_IN_SCOPE": 273,
+    "L2_SHORTLIST_CANDIDATE": 445,
+    "L2_HOLD_FOR_DATA": 10,
+    "WATCH_AFTER_CUTOFF": 4
+  },
   "checks": [
     {
       "id": "C00",
-      "name": "输入版本与哈希闸门（config/rules/metrics/contract）",
+      "name": "输入版本与哈希闸门（config/rules v3/metrics/s00_v10/contract）",
       "pass": true,
       "level": "FAIL",
       "detail": {
         "config_sha256": "2f6193e6a0cad024a67d0ce0dd806e58db8ebdb44dd92d9ef750cc3fdc3fd541",
-        "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
+        "rules_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
+        "rules_version": "S01_SCREEN_RULES_V3",
         "metrics_sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+        "s00_v10_sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
         "knowledge_as_of": "2026-10-25",
-        "l2_rule_text": "在 GROWTH / MARGIN / PROFIT / CASH 四个维度中，至少 2 个维度各有 1 条 SG 为真，且所用指标均 metric_status=OK、无 Q01 HOLD、无 Q06 未决重述、无 Q05 低基数未确认"
+        "l2_rule_text": "在 GROWTH / MARGIN / PROFIT / CASH 四个维度中，至少 2 个不同维度各有 1 条合格真信号；比率通道所用指标须全部 metric_status=OK；SG06/SG08 绝对额通道须全部实际输入行 status 属 status_semantics.usable 且跨期可比；两类通道均不得含 Q01 HOLD、Q06 未决重述、范围断裂（SCOPE_CHANGE / STRUCTURAL_BREAK）或 Q05 低基数未确认"
+      }
+    },
+    {
+      "id": "C03",
+      "name": "逐行充要条件：入选者必须满足「合格维度≥2」，非入选者必须不满足",
+      "pass": true,
+      "level": "FAIL",
+      "detail": {
+        "false_positive": [],
+        "false_negative": [],
+        "n_false_positive": 0,
+        "n_false_negative": 0
       }
     },
     {
@@ -35,48 +58,34 @@
     },
     {
       "id": "C02",
-      "name": "三分区互斥无重复（1054 = 777 + 149 + 128）",
+      "name": "三分区互斥无重复（777/149/128）",
       "pass": true,
       "level": "FAIL",
       "detail": {
-        "duplicates": 0,
         "wide_pass": 777,
         "wide_defer": 149,
         "wide_unknown": 128
       }
     },
     {
-      "id": "C03",
-      "name": "L2 干净维度数与 S03 已验收 clean_ok_dims_count 逐家一致",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "mismatches": [],
-        "count": 0
-      }
-    },
-    {
-      "id": "C04",
-      "name": "HOLD 维度数与 S03 hold_dims_count 逐家一致",
-      "pass": true,
-      "level": "WARN",
-      "detail": {
-        "mismatches": [],
-        "count": 0
-      }
-    },
-    {
       "id": "C05",
-      "name": "L2 通过数等于 S03 AUTO_PASS_L2_READY 的 443 家",
+      "name": "集合不变量：入选 ⊆ wide_pass，四类决策互斥且合计覆盖 1054",
       "pass": true,
       "level": "FAIL",
       "detail": {
-        "shortlist": 443
+        "by_decision": {
+          "L2_NOT_SHORTLISTED": 322,
+          "L2_NOT_IN_SCOPE": 273,
+          "L2_SHORTLIST_CANDIDATE": 445,
+          "L2_HOLD_FOR_DATA": 10,
+          "WATCH_AFTER_CUTOFF": 4
+        },
+        "pass": 445
       }
     },
     {
       "id": "C06",
-      "name": "四家截止日隔离公司保持隔离且零信号、无 L2 结论",
+      "name": "四家截止日隔离公司保持隔离、零信号、无 L2 结论",
       "pass": true,
       "level": "FAIL",
       "detail": {
@@ -90,17 +99,7 @@
     },
     {
       "id": "C07",
-      "name": "tight_pass 全部来自 wide_pass 且交付合计覆盖 1054、无重叠",
-      "pass": true,
-      "level": "FAIL",
-      "detail": {
-        "pass": 443,
-        "pass_from_wide_pass": 443
-      }
-    },
-    {
-      "id": "C08",
-      "name": "九条信号阈值与冻结规则完全一致，本脚本未引入新阈值",
+      "name": "九条信号阈值与 v2 完全一致（返工未改任何阈值）",
       "pass": true,
       "level": "FAIL",
       "detail": {
@@ -115,38 +114,51 @@
           "SG08": 0.0,
           "SG09": 0.3
         },
-        "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85"
+        "rules_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45"
       }
     },
     {
-      "id": "C09",
-      "name": "S03 的 100 家定向核验对象全部在结果中且均有诊断",
+      "id": "C08",
+      "name": "S03 的 100 家定向核验对象全部在结果中",
       "pass": true,
       "level": "FAIL",
       "detail": {
         "targets": 100,
         "missing": []
       }
+    },
+    {
+      "id": "C09",
+      "name": "证据降级不得增加通过集合：无 A/B 通道证据者不得入选",
+      "pass": true,
+      "level": "FAIL",
+      "detail": {
+        "violations": [],
+        "count": 0
+      }
     }
   ],
-  "checks_passed": "10/10",
-  "warnings": [],
-  "counts": {
-    "L2_NOT_SHORTLISTED": 324,
-    "L2_NOT_IN_SCOPE": 273,
-    "L2_SHORTLIST_CANDIDATE": 443,
-    "L2_HOLD_FOR_DATA": 10,
-    "WATCH_AFTER_CUTOFF": 4
-  },
-  "pass_evidence_grade": {
-    "A_ALL_OK": 422,
-    "B_ABS_CHANNEL": 21
-  },
-  "not_independent": "自检不等同独立复核；未逐份回读 PDF，未新增业务采用。",
   "limits": [
-    "L2 只做多指标共同改善判定，不是投资候选、不含业务/估值结论。",
-    "信号来自 S03 已验收交付；本卡未重算信号，只核对所用指标状态与维度归属。",
-    "PROVISIONAL / 低基数 / HOLD 均不得计入 L2 维度，保留重进条件。",
-    "四家截止日后公司保持隔离，未产生正负信号。"
+    "自检不等同独立复核；S05 仍须外部复核通过后才放行",
+    "未回读 PDF、未新增业务采用；入选不等于投资候选",
+    "SG02/SG03/SG05/SG07 低基数无确认映射，记 NO_CONFIRM_RULE，本版不计入",
+    "绝对额通道（SG06/SG08）资格单独登记，未改写 M05 的 UNDEFINED_BASE",
+    "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
+  ],
+  "changed_vs_v1": [
+    {
+      "company_id": "SZ:002641",
+      "company_name": "公元股份",
+      "v1": "L2_NOT_SHORTLISTED",
+      "v3": "L2_SHORTLIST_CANDIDATE",
+      "reason": "合格维度 MARGIN+PROFIT（2 个）满足 ≥2；MARGIN←SG03；PROFIT←SG04"
+    },
+    {
+      "company_id": "SZ:002845",
+      "company_name": "同兴达",
+      "v1": "L2_NOT_SHORTLISTED",
+      "v3": "L2_SHORTLIST_CANDIDATE",
+      "reason": "合格维度 MARGIN+PROFIT（2 个）满足 ≥2；MARGIN←SG03；PROFIT←SG09"
+    }
   ]
 }

@@ -1,100 +1,93 @@
 {
-  "issue": "S04 / #39",
-  "rule_layer": "L2",
-  "rules_version": "S01_SCREEN_RULES_V2",
-  "rules_sha256": "ada501e8bcd276ce670a4799c730a81cdf2f9dc70c244f9255485b00168c6a85",
-  "knowledge_as_of": "2026-10-25",
-  "universe": 1054,
-  "decisions": {
+  "rules_version": "S01_SCREEN_RULES_V3",
+  "rules_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
+  "s00_v10_sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+  "coverage": 1054,
+  "by_decision": {
+    "L2_NOT_SHORTLISTED": 322,
+    "L2_NOT_IN_SCOPE": 273,
+    "L2_SHORTLIST_CANDIDATE": 445,
+    "L2_HOLD_FOR_DATA": 10,
+    "WATCH_AFTER_CUTOFF": 4
+  },
+  "by_partition_decision": {
+    "wide_defer|L2_NOT_IN_SCOPE": 149,
+    "wide_pass|L2_HOLD_FOR_DATA": 10,
+    "wide_pass|L2_NOT_SHORTLISTED": 322,
+    "wide_pass|L2_SHORTLIST_CANDIDATE": 445,
+    "wide_unknown|L2_NOT_IN_SCOPE": 124,
+    "wide_unknown|WATCH_AFTER_CUTOFF": 4
+  },
+  "evidence_channels": {
+    "A_RATIO_OK": 328,
+    "A_RATIO_OK;C_LOW_BASE_CONFIRMED": 33,
+    "A_RATIO_OK;B_ABS_CHANNEL": 83,
+    "A_RATIO_OK;B_ABS_CHANNEL;C_LOW_BASE_CONFIRMED": 1
+  },
+  "abs_channel_dependency": [
+    "SH:600184 光电股份",
+    "SH:603296 华勤技术",
+    "SH:603338 浙江鼎力",
+    "SH:603416 信捷电气",
+    "SH:688711 宏微科技",
+    "SZ:000856 冀东装备",
+    "SZ:000948 南天信息",
+    "SZ:002224 三 力 士",
+    "SZ:002628 成都路桥",
+    "SZ:002960 青鸟智控",
+    "SZ:300213 佳讯飞鸿",
+    "SZ:300632 光莆股份",
+    "SZ:300644 南京聚隆",
+    "SZ:300793 佳禾智能",
+    "SZ:300971 博亚精工",
+    "SZ:301459 丰茂股份"
+  ],
+  "low_base_confirmed_in_pass": [
+    "BJ:920066",
+    "BJ:920198",
+    "BJ:920249",
+    "BJ:920641",
+    "SH:600288",
+    "SH:600590",
+    "SH:603051",
+    "SH:603135",
+    "SH:603608",
+    "SH:605189",
+    "SH:605208",
+    "SH:688090",
+    "SH:688135",
+    "SH:688255",
+    "SH:688328",
+    "SH:688383",
+    "SH:688518",
+    "SH:688577",
+    "SH:688623",
+    "SH:688655",
+    "SZ:002132",
+    "SZ:002185",
+    "SZ:002265",
+    "SZ:002641",
+    "SZ:002845",
+    "SZ:300179",
+    "SZ:300410",
+    "SZ:300472",
+    "SZ:300527",
+    "SZ:300613",
+    "SZ:300687",
+    "SZ:300823",
+    "SZ:301179",
+    "SZ:301210"
+  ],
+  "changed_vs_v1": 2,
+  "v1_counts": {
     "L2_NOT_SHORTLISTED": 324,
     "L2_NOT_IN_SCOPE": 273,
     "L2_SHORTLIST_CANDIDATE": 443,
     "L2_HOLD_FOR_DATA": 10,
     "WATCH_AFTER_CUTOFF": 4
   },
-  "by_partition": {
-    "wide_defer|L2_NOT_IN_SCOPE": 149,
-    "wide_pass|L2_HOLD_FOR_DATA": 10,
-    "wide_pass|L2_NOT_SHORTLISTED": 324,
-    "wide_pass|L2_SHORTLIST_CANDIDATE": 443,
-    "wide_unknown|L2_NOT_IN_SCOPE": 124,
-    "wide_unknown|WATCH_AFTER_CUTOFF": 4
-  },
-  "pass_evidence_grade": {
-    "A_ALL_OK": 422,
-    "B_ABS_CHANNEL": 21
-  },
-  "pass_grade_b_companies": [
-    "SH:605358",
-    "SH:688003",
-    "SH:688218",
-    "SH:688308",
-    "SH:688320",
-    "SH:688469",
-    "SH:688525",
-    "SH:688609",
-    "SH:688678",
-    "SZ:000901",
-    "SZ:000948",
-    "SZ:002196",
-    "SZ:002460",
-    "SZ:002747",
-    "SZ:002786",
-    "SZ:003032",
-    "SZ:300190",
-    "SZ:300270",
-    "SZ:300466",
-    "SZ:300825",
-    "SZ:300903"
-  ],
-  "pass_abs_dependency_critical": [
-    {
-      "security_id": "SZ:000948",
-      "stock_name": "南天信息",
-      "clean_sg": "SG02;SG06",
-      "non_ok": "SG06:M05=UNDEFINED_BASE"
-    }
-  ],
-  "observe_reasons": {
-    "SINGLE_DIM_ONLY": 299,
-    "RW_CLEAN": 130,
-    "OQ_LOW_BASE_PROVISIONAL": 11,
-    "NS_CONFIRMED": 19,
-    "OQ_PROVISIONAL_ONLY": 70,
-    "RW_HAS_HOLD": 13,
-    "CASH:PROVISIONAL": 6,
-    "REF_ONLY_STRUCTURAL_BREAK": 1,
-    "REF_ONLY_SCOPE_CHANGE": 5,
-    "UPSTREAM_HOLD": 10,
-    "NS_INCOMPLETE_EVIDENCE": 18,
-    "PROFIT:LOW_BASE_UNCONFIRMED": 9,
-    "AFTER_CUTOFF": 4,
-    "GROWTH:PROVISIONAL": 5,
-    "GROWTH:LOW_BASE_UNCONFIRMED": 3,
-    "OQ_HOLD_PROTECTED": 6,
-    "PROFIT:LOW_BASE_UNCONFIRMED;CASH:PROVISIONAL": 2
-  },
-  "review_targets": 100,
-  "outputs": {
-    "tight_pass.csv": {
-      "path": "runs/issues/S04/tight_pass.csv",
-      "rows": 443,
-      "sha256": "2b6542842529a220393fe4d95fab16f786785d4e3f9c49f019be94b7ce951df5"
-    },
-    "tight_observe.csv": {
-      "path": "runs/issues/S04/tight_observe.csv",
-      "rows": 611,
-      "sha256": "a3bb77f12b34541084a9ba8848013d52a2426b6a030ddb25609f56b6833d8417"
-    },
-    "tight_decision_log.csv": {
-      "path": "runs/issues/S04/tight_decision_log.csv",
-      "rows": 1054,
-      "sha256": "c387d757fd0c3842765b90cea308efa62183a2ca56d45cd77fdadbc7d7bed20f"
-    },
-    "review_100_qc.csv": {
-      "path": "runs/issues/S04/review_100_qc.csv",
-      "rows": 100,
-      "sha256": "ca57bb422382445f363da0019354f9a62949fda08cb984ec96b20a095e02fdd7"
-    }
-  }
+  "checks_total": 9,
+  "checks_pass": 9,
+  "checks_fail": [],
+  "checks_warn": []
 }
