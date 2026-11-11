@@ -25,13 +25,18 @@ FILES = [
     "sampling_keys_baseline.csv", "sampling_keys_diff.csv", "replay_polarity_v5.json",
     # 汇总
     "summary.json", "review.json", "REPORT.md", "handoff.md",
+    "acceptance_round16.json",
     # 往来
     "report_to_codex_round11.md", "report_to_codex_round12.md",
-    "report_to_codex_round13.md",
+    "report_to_codex_round13.md", "report_to_codex_round14.md",
+    "report_to_codex_round15.md", "report_to_codex_round16.md",
     "_codex_prompt_round11.txt", "_codex_prompt_round12.txt",
-    "_codex_prompt_round13.txt",
+    "_codex_prompt_round13.txt", "_codex_prompt_round14.txt",
+    "_codex_prompt_round15.txt", "_codex_prompt_round16.txt",
     "codex_ruling_round5.md",
     "_codex_out_round10.txt", "_codex_out_round11.txt", "_codex_out_round12.txt",
+    "_codex_out_round13.txt", "_codex_out_round14.txt", "_codex_out_round15.txt",
+    "_codex_out_round16.txt",
 ]
 
 rev = json.loads((OUT / "review.json").read_text(encoding="utf-8"))
@@ -42,7 +47,7 @@ if missing:
 man = {
     "version": "ERRATA_V5",
     "self_check_version": rev["self_check_version"],
-    "generated_at": "2026-11-13T09:20:00+08:00",
+    "generated_at": "2026-11-12T00:50:00+08:00",
     "issue": "S00",
     "stage": "ERRATA",
     "nature": "SELF_CHECK",
@@ -53,6 +58,8 @@ man = {
         "第十轮 RETURN_FOR_REWORK（_codex_out_round10.txt）",
         "第十一轮 RETURN_FOR_REWORK（_codex_out_round11.txt，H 通过 / A–G 不通过）",
         "第十二轮 RETURN_FOR_REWORK（_codex_out_round12.txt，G 通过 / A、B、C、D、E、F、H 不通过）",
+        "第十三轮 RETURN_FOR_REWORK（_codex_out_round13.txt，D、E、G 通过 / A、B、C、F、H 不通过）",
+        "第十四轮 RETURN_FOR_REWORK（_codex_out_round14.txt，F 通过 / A、B、C、H 不通过）",
     ],
     "files": [],
 }

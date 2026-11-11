@@ -11,7 +11,7 @@
   并按 B 实际父输入逐行重算（含跨文档父输入）。
 
 第三节（极性）
-- C34 极性回归 17 条反例（polarity_cases.py，生产与自检共用）；
+- C34 极性回归 44 条反例（polarity_cases.py，生产与自检共用）；
 - C37 父输入兼容性只认核证登记表并绑定实际父输入；C38 来源维度只认两类登记；
 - C14 确认类不再只看 B=是，须事件层确认 + 来源维度覆盖。
 
@@ -44,7 +44,40 @@ import polarity_cases as pc
 
 ROOT = core.ROOT
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
-SELF_CHECK_VERSION = "V12"
+SELF_CHECK_VERSION = "V14"
+# 待复核轮次：状态串与校验条件共用一处，避免两处字面各写一遍再漂移
+RECHECK_ROUND = 16
+
+
+def _cn_num(n):
+    """阿拉伯数字转中文（只覆盖 1–99，够用到本项目结束）。"""
+    d = "零一二三四五六七八九"
+    if n <= 10:
+        return d[n]
+    if n < 20:
+        return "十" + d[n - 10]
+    return d[n // 10] + "十" + (d[n % 10] if n % 10 else "")
+
+
+# 第十六轮自查：状态文件里 `round` 与 `report_to_codex` 原先各自硬编码
+# （"第十二轮返工"、`report_to_codex_round13.md`），与 RECHECK_ROUND 不同源，
+# 每轮必漂。现在两处都由 RECHECK_ROUND 派生：
+# 本轮改的是「上一轮」的裁决 → 返工轮次 = RECHECK_ROUND − 1；
+# 汇报文件名与本轮待复核轮次同号 → round{RECHECK_ROUND}。
+ROUND_LABEL = "第%s轮返工" % _cn_num(RECHECK_ROUND - 1)
+REPORT_NAME = "report_to_codex_round%d.md" % RECHECK_ROUND
+# 复核结论：`None` = 仍在等第 RECHECK_ROUND 轮复核；给出字符串 = 已收到裁决。
+# 状态串由它派生，C39 的期望串也从同一个函数取，不另写一份字面。
+RECHECK_VERDICT = "ACCEPTED_WITH_LIMITS"
+
+
+def _status_string(ok):
+    """状态串的唯一生成处（写入与校验共用）。"""
+    head = "S00_ERRATA_V5_SELF_CHECK_%s_%s" % (
+        SELF_CHECK_VERSION, "PASS" if ok else "FAIL")
+    if RECHECK_VERDICT:
+        return "%s_ROUND_%d_%s" % (head, RECHECK_ROUND, RECHECK_VERDICT)
+    return "%s_AWAITING_RECHECK_%d" % (head, RECHECK_ROUND)
 STATUS_FILE = ROOT / "data/active_issue.json"
 STATUS_REL = "runs/issues/S00/errata_20261111_v5"
 V4 = ROOT / "runs/issues/S00/errata_20261111_v4"
@@ -1222,7 +1255,16 @@ _LITERAL_LABEL = {
 _QUANT = (r"[−-]?\d[\d,]*(?:\.\d{1,2}\s*(?:元|万元|千元|亿元|%|％)?"
           r"|\s*(?:元|万元|千元|亿元|%|％))")
 # 页码/表号引用：第12页 / 见第3表 / 附表2 / 第 5 行
-_RE_PAGE_REF = re.compile(r"第\s*\d+\s*[页表行节项条附]|见\s*第?\s*\d+\s*[页表]|附表\s*\d*")
+# 页码/表号引用（第十三轮 C 项扩写）：上一版只认「第12页」「见3表」「附表2」，
+# 于是「见表1.2」「参见表3.1」「参见12.1节」里的小数编号被 _QUANT 当成小数金额放行。
+# 现在把「小数形式的表号/章节号」一并纳入：表/图 + 编号、编号 + 节/章/条/项、
+# 以及 见/参见/详见/参阅 后面的编号引用。
+_RE_PAGE_REF = re.compile(
+    r"第\s*\d+(?:[.．]\d+)*\s*[页表行节项条附章]"
+    r"|(?:见|参见|详见|参阅|参考)\s*(?:第\s*)?\d+(?:[.．]\d+)*\s*[页表行节项条附章]"
+    r"|附表\s*\d+(?:[.．]\d+)*"
+    r"|(?:表|图)格?\s*\d+[.．]\d+"
+    r"|\d+[.．]\d+\s*[节章条项]")
 # 币种的中文名 ↔ 代码映射（第十二轮 C 项）：只做字符串比对会把
 # 「记账本位币：人民币」当成不支持 `CNY`，属受控映射缺失造成的误拒。
 CURRENCY_ALIASES = {
@@ -1238,6 +1280,47 @@ RULE_UNDEFINED_FIELDS = sorted({
     "comparability_note", "version_used", "adoption_reason",
     "original_document_id",
 })
+
+
+def _amt_in_text(text, amount):
+    """金额在文本里出现，且左右都不接数字/小数点。
+
+    第十四轮 C 项：`100.00 in "营业收入 1100.00"` 为真——裸子串匹配会把 1,100.00
+    认成 100.00。这里要求两侧边界，`1100.00` 不再命中 `100.00`。
+    """
+    if not text or not amount:
+        return False
+    for m in re.finditer(re.escape(amount), text):
+        i, j = m.start(), m.end()
+        if i > 0 and (text[i - 1].isdigit() or text[i - 1] == "."):
+            continue
+        if j < len(text) and (text[j].isdigit() or text[j] == "."):
+            continue
+        return True
+    return False
+
+
+def self_page_line_ok(page_text, amount, names):
+    """无词坐标时的「目标行」等价物：**同一文本行**内同时出现指标名与该金额。
+
+    第十三轮 C 项：原来只查「该页出现过指标名」+「该页出现过该金额」，两条各自成立
+    即可——页眉写着 100.00、目标行实际是 200.00 的页面照样通过。取词失败不能成为
+    降低定位要求的理由，故改成同行绑定。
+
+    第十四轮 C 项两处：
+    ① 归一化必须在**逐行**做，不能先对整页 `_nz`——那会把换行一并删掉，
+       「页眉合计 100.00 / 营业收入 200.00」两行拼成一行，同行限制失效；
+    ② 金额匹配改边界匹配，见 `_amt_in_text`。
+    """
+    if not page_text or not amount or not names:
+        return False
+    for ln in page_text.splitlines():
+        # 金额匹配用**原始行**（保留空白）：归一化会把 `100.00 100.00` 拼成
+        # `100.00100.00`，边界判据反而把第二个 100.00 当成 100.00100.00 的一部分。
+        # 指标名匹配用归一化行，跨空格/制表符仍能命中。
+        if _amt_in_text(ln, amount) and any(n in _nz(ln) for n in names):
+            return True
+    return False
 
 
 def _field_support(kind, printed, value_b, unit, frag, ent):
@@ -1297,7 +1380,7 @@ def _field_support(kind, printed, value_b, unit, frag, ent):
             m = re.search(re.escape(v) + r"[^\d]{0,20}?(" + _QUANT + ")", frag)
             if not m:
                 return False, "REVIEW_LITERAL_NOT_BOUND_TO_FIELD"
-            seg = frag[max(0, m.start(1) - 6):m.end(1)]
+            seg = frag[max(0, m.start(1) - 6):min(len(frag), m.end(1) + 4)]
             if _RE_PAGE_REF.search(seg):
                 return False, "REVIEW_LITERAL_NUMBER_IS_PAGE_REF"
             return True, None
@@ -1429,10 +1512,17 @@ def review_gap(r):
             if _st == "NO_COLUMN":
                 return "REVIEW_SOURCE_COLUMN_NOT_LOCATED"
         else:
-            _pt = _nz(pages[pg - 1])
-            if amt not in _pt:
-                return "REVIEW_SOURCE_PAGE_NOT_LOCATED"
-            if _names and not any(n in _pt for n in _names):
+            # 第十三轮 C 项：无词坐标时原来只查「该页出现过指标名」+「该页出现过该金额」，
+            # 两条各自成立即可——页眉写着 100.00、目标行实际是 200.00 的页面照样通过。
+            # 取词失败不能成为降低定位要求的理由：改为要求**同一文本行**内同时出现
+            # 指标名与该金额（无坐标时的目标行等价物）。
+            # 第十四轮 C 项：这里**不能**先 _nz 整页——`_nz` 会删掉换行，
+            # 页眉与目标行会被拼成一行，`self_page_line_ok` 的同行限制当场失效。
+            # 归一化下沉到函数内部按行做。
+            _pt = pages[pg - 1]
+            if not _names:
+                return "REVIEW_SOURCE_PAGE_NEEDS_WORDS"
+            if not self_page_line_ok(_pt, amt, _names):
                 return "REVIEW_SOURCE_PAGE_NOT_LOCATED"
     ok, why = _field_support(rule[0], printed, r.get("value_B"),
                              b.get("unit_scale", "1"), frag, ent)
@@ -1667,6 +1757,36 @@ literal_path_ok = (
     and _field_support("LITERAL", "人民币", "CNY", "1",
                        "金额单位：人民币元；记账本位币：人民币",
                        {"meta_field": "currency"})[0]
+    # ④ 第十三轮 C 项：小数形式的表号/章节号不得冒充数量
+    and all(not _field_support("LITERAL", "营业总收入", "营业总收入", "1", t,
+                               {"meta_field": "evidence_label"})[0]
+            for t in ("2025年上半年营业总收入见表1.2",
+                      "2025年上半年营业总收入参见表3.1",
+                      "2025年上半年营业总收入参见12.1节"))
+    # ⑤ 合法数量仍须通过（带单位 / 带单位的中文万元 / 百分比）
+    and all(_field_support("LITERAL", "营业总收入", "营业总收入", "1", t,
+                           {"meta_field": "evidence_label"})[0]
+            for t in ("2025年上半年营业总收入100.00元，较上年同期增长",
+                      "2025年上半年营业总收入100万元",
+                      "2025年上半年营业总收入12.50%"))
+)
+# ⑥ SELF_PAGE 无词坐标时的目标行等价物（第十三轮 C 项）：
+#    页眉有该金额、目标行是别的金额 → 拒；同行同时出现指标名与该金额 → 收。
+self_page_ok = (
+    not self_page_line_ok("某某公司 2025 年半年度报告\n…合计 100.00\n营业收入 200.00",
+                          "100.00", ["营业收入"])
+    and self_page_line_ok("某某公司 2025 年半年度报告\n营业收入 100.00 100.00",
+                          "100.00", ["营业收入"])
+    and not self_page_line_ok("营业收入 200.00", "100.00", ["营业收入"])
+    # 第十四轮 C 项：以下四条按**实际调用形式**（原始页文本，不预先 _nz）测
+    # ① 页眉与目标行分行：两行各自成立不能合计成一行
+    and not self_page_line_ok("页眉合计 100.00\n营业收入 200.00",
+                             "100.00", ["营业收入"])
+    # ② 1100.00 不得命中 100.00（裸子串匹配会认错）
+    and not self_page_line_ok("营业收入 1100.00", "100.00", ["营业收入"])
+    # ③ 制表符 / 多空格同行仍须认可
+    and self_page_line_ok("营业收入	100.00", "100.00", ["营业收入"])
+    and self_page_line_ok("营业收入       100.00", "100.00", ["营业收入"])
 )
 
 inj = {}
@@ -1808,9 +1928,14 @@ add("C24", "补充元数据放行须有外部审查登记表记录：键+终值+
            "审查角色显式标注（自检亦须标注）；无规则字段一律待核",
     not leak and ctrl_ok and unit_path_ok and not reason_mismatch
     and not key_gap and not key_extra and not not_exercised
-    and all(v[0] for v in inj.values() if v[0] is not None) and enum_ok,
+    and all(v[0] for v in inj.values() if v[0] is not None) and enum_ok
+    # 第十三轮 C 项：这两个直测上一轮算了却没进任何 PASS 条件（「算了不用」），
+    # 汇报却拿 literal_path_ok=True 当证据。现在纳入 C24。
+    and literal_path_ok and self_page_ok,
     {"leaked": len(leak), "sample": [str(x) for x in leak[:5]],
      "reason": c24_reason,
+     "literal_path_ok": literal_path_ok,
+     "self_page_ok": self_page_ok,
      "control_key": ("|".join([ctrl_row["security_id"], ctrl_row["field_id"],
                                ctrl_row["period_key"], ctrl_row["meta_field"]])
                      if ctrl_row else ""),
@@ -1982,13 +2107,40 @@ kd_exit = kd.get("exit_code_selfcheck") or {}
 kd_rows = list(csv.DictReader(open(OUT / "sampling_keys_diff.csv",
                                    encoding="utf-8-sig", newline="")))
 kd_removed = [r for r in kd_rows if r["status"] == "REMOVED"]
-kd_bad = ([r["key"] for r in kd_removed
-           if r.get("exit_code") not in ("LEDGER_KEY_GONE", "PREDICATE_FALSE",
-                                         "RANK_CUT", "UNKNOWN")]
-          + [b.get("key", "") for b in (kd_exit.get("bad") or [])]
-          + ([] if kd_exit.get("checked") == len(kd_removed)
-             else ["CHECKED_COUNT_MISMATCH:%s/%s" % (kd_exit.get("checked"),
-                                                     len(kd_removed))]))
+# 第十三轮 F 项：上一版 C31 只读 sampling_v5.json 里存好的 exit_code_selfcheck，
+# 把 CSV 的 exit_code 改坏、保留 JSON 摘要，整链仍然 PASS。现在**从 CSV 独立重算**：
+# exit_code 必须等于 (ledger_present, predicate_true) 这张映射的唯一结果，
+# 映射表写在自检这一侧，不 import sampling_v5（那会再跑一遍生产）。
+_EXIT_MAP = {("False", ""): "LEDGER_KEY_GONE",
+             ("True", "True"): "RANK_CUT",
+             ("True", "False"): "PREDICATE_FALSE"}
+
+
+def _implied_exit(r):
+    _k = ((r.get("ledger_present") or "").strip(),
+          (r.get("predicate_true") or "").strip())
+    return _EXIT_MAP.get(_k, "UNMAPPED:%s" % (_k,))
+
+
+kd_bad = []
+for r in kd_removed:
+    _imp = _implied_exit(r)
+    if r.get("exit_code") != _imp:
+        kd_bad.append("%s exit_code=%s 但事实应为 %s"
+                      % (r["key"], r.get("exit_code"), _imp))
+    if r.get("exit_code") not in ("LEDGER_KEY_GONE", "PREDICATE_FALSE",
+                                  "RANK_CUT", "UNKNOWN"):
+        kd_bad.append("%s exit_code 不在枚举内：%s" % (r["key"], r.get("exit_code")))
+    if not r.get("reason"):
+        kd_bad.append("%s 缺 reason" % r["key"])
+# 摘要与 CSV 必须一致（不是替代关系：CSV 是事实来源，摘要只是副本）
+if kd.get("removed_exit_code") != {r["key"]: r["exit_code"] for r in kd_removed}:
+    kd_bad.append("JSON removed_exit_code 与 CSV 不一致")
+if kd_exit.get("checked") != len(kd_removed):
+    kd_bad.append("CHECKED_COUNT_MISMATCH:%s/%s" % (kd_exit.get("checked"),
+                                                    len(kd_removed)))
+if kd_exit.get("bad"):
+    kd_bad.append("生成期自证报错:%s" % kd_exit.get("bad"))
 add("C31", "分层抽验覆盖 12 类必需风险 + 补充字段；原文定位须区分已核与未定位；"
     "键集变更的退出归因须机器自证",
     REQUIRED_RISK <= samp_risk and has_extra and not reread_bad and bool(r7)
@@ -2510,11 +2662,34 @@ if _real_k is not None:
         _s_lb == "OK" and pv.cols_equivalent(_c_lb, "本期数"))
     if not chain["duplicate_amount_row_bound"]:
         c37.append("DUPLICATE_AMOUNT_ROW_NOT_BOUND:%s/%s" % (_s_lb, _c_lb))
-    # 期间列头语义类：同义须通、异义须拒
-    chain["column_synonym_ok"] = pv.cols_equivalent("本期发生额", "本期数")
-    chain["column_antonym_rejected"] = not pv.cols_equivalent("本期", "上年同期")
+    # 期间列头语义类：同义须通、异义须拒（第十三轮 B 项扩到 4 组同义 + 4 组异义）
+    # 第十四轮 B 项：「本报告期 / 本期金额」从同义表里**撤掉**——没有区间时把它当同义
+    # 是惯例，不是可证事实（中报里两者可能分别是 6 个月与 3 个月）。它改到异义表，
+    # 由「区间不同即不同列」来判。
+    _SYN = [("本期发生额", "本期数"), ("期末", "年末"), ("期初", "年初数"),
+            # 第十五轮 B 项：不同写法先归一到同一坐标系再比，同段必须仍判等价——
+            # 否则「一律判不等价」也能通过，那就成了退化判据。
+            ("本期金额（2026年1-6月）", "本期金额（2026年上半年）")]
+    _ANT = [("本期", "上年同期"), ("上年同期", "上期"),
+            ("本年累计", "本期数"), ("年初至报告期末", "本期数"),
+            # 第十四轮 B 项：列头自己写明区间时，区间不同就不是同一列（Codex 实测四组）
+            ("本期金额（2026年1—6月）", "本报告期金额（2026年4—6月）"),
+            ("本期金额（2026年1-6月）", "本期金额（2026年4-6月）"),
+            ("期末余额（2026年6月30日）", "年末余额（2025年12月31日）"),
+            ("上年同期（2025年1—6月）", "上年同期（2025年4—6月）"),
+            # 第十五轮 B 项：两侧都写着期间、只是写法不同（上半年 / Q2 / 不带年的月区间）。
+            # 不许把「解析不出」翻译成「可按语义类证明等价」——无法确认时保留待核。
+            ("本期金额（2026年上半年）", "本期金额（2026Q2）"),
+            ("本期金额（1-6月）", "本期金额（4-6月）"),
+            ("本期金额（2026年上半年）", "本期金额（2026年4-6月）")]
+    chain["column_synonym_ok"] = all(pv.cols_equivalent(x, y) for x, y in _SYN)
+    chain["column_antonym_rejected"] = not any(pv.cols_equivalent(x, y) for x, y in _ANT)
+    chain["column_synonym_pairs"] = _SYN
+    chain["column_antonym_pairs"] = _ANT
     if not (chain["column_synonym_ok"] and chain["column_antonym_rejected"]):
-        c37.append("COLUMN_CLASS_MAPPING_BROKEN")
+        c37.append("COLUMN_CLASS_MAPPING_BROKEN:%s/%s" % (
+            [p for p in _SYN if not pv.cols_equivalent(*p)],
+            [p for p in _ANT if pv.cols_equivalent(*p)]))
 else:
     c37.append("NO_REAL_ORIGINAL_CASE")
 if not unit_paths_ok:
@@ -2792,7 +2967,9 @@ add("C38", "来源维度只接受比较范围/季度表来源两类登记，且�
 _SAMP_SUM = json.loads((OUT / "sampling_v5.json").read_text(encoding="utf-8"))
 _LEGACY_SAMPLING_KEYS = ("samples", "risk_types", "unique_keys", "unique_keys_note",
                          "page_reread", "r7_locate_status", "parent_orig_verified",
-                         "new_in_round7", "new_in_round8", "new_in_round10")
+                         "new_in_round7", "new_in_round8", "new_in_round10",
+                         # 第十四轮 H 项：业务结论字段也不许回到状态文件
+                         "finding")
 # 旧版 checks 字段是一句话，里面写着「C34 30 条反例；C37 27 环；C14 9 种」。
 # 判据不看版本号字面（新版 note 里会提到历史），只看有没有这类计数口径。
 _RE_LEGACY_COUNT = re.compile(r"条反例|环 =|种伪造|种绕过|环，|PASS（V")
@@ -2803,20 +2980,21 @@ def write_status(passed_n, total_n, decision):
     st = json.loads(STATUS_FILE.read_text(encoding="utf-8"))
     e = st.setdefault("s00_errata", {})
     ok = decision.endswith("PASS_WITH_UNRESOLVED_ITEMS")
-    st["status"] = "S00_ERRATA_V5_SELF_CHECK_%s_%s_AWAITING_RECHECK_13" % (
-        SELF_CHECK_VERSION, "PASS" if ok else "FAIL")
+    st["status"] = _status_string(ok)
     st["self_check_version"] = SELF_CHECK_VERSION
-    _sc = {"version": SELF_CHECK_VERSION, "checks": total_n, "pass": passed_n,
+    # 第十四轮 H 项：状态块**只留指针与版本号**。
+    # 旧版还写了 checks=41 / pass=41，这两个数字和 review.json 的
+    # checks_total / checks_pass 是同一件事，两处存储就是两份可以漂移的数字。
+    _sc = {"version": SELF_CHECK_VERSION,
            "canonical": "%s/review.json#checks" % STATUS_REL,
            "detail": "%s/review.json" % STATUS_REL,
-           "note": "计数由 verify_v5.py 写出；逐项结果与注入明细只在 review.json。"}
+           "note": "状态文件不复述任何计数；条数、逐项结果与注入明细只在 review.json。"}
     st["self_check"] = dict(_sc, note="顶层与 s00_errata 两处同源，均由 verify_v5.py 写出，"
                                       "不手工维护。")
     e["self_check_version"] = SELF_CHECK_VERSION
     e["self_check"] = _sc
     e["checks"] = {"canonical": "%s/review.json#checks" % STATUS_REL,
-                   "count": total_n,
-                   "note": "检查项名称/结果/明细一律不在状态文件复述；旧版曾在此写死反例数、"
+                   "note": "检查项名称/结果/明细/条数一律不在状态文件复述；旧版曾在此写死反例数、"
                            "注入链环数与注入种数，与 review.json 漂移，被复核抓到。"}
     e["sampling"] = {
         "canonical": "%s/sampling_v5.json" % STATUS_REL,
@@ -2824,21 +3002,27 @@ def write_status(passed_n, total_n, decision):
         "keys_diff": "%s/sampling_keys_diff.csv" % STATUS_REL,
         "locator_version": _SAMP_SUM.get("locator_version"),
         "note": "行数/风险类型数/键数/page_reread 分布/逐键增删一律不复述，见 canonical 与 "
-                "keys_diff；状态文件只留定位器版本与指针，杜绝第二份数字漂移。",
-        "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据未定位到，"
-                   "属上游核验记录异常，未放行",
+                "keys_diff；状态文件只留定位器版本与指针，杜绝第二份数字漂移。"
+        # 第十四轮 H 项：去掉业务结论字段（finding）。
+        # 状态文件不是报告，它只该告诉读者「去哪里看」；
+        # 把具体样本结论写在这里，下一轮又会变成一处需要手改的字。
     }
-    e["round"] = "第十二轮返工"
+    e["round"] = ROUND_LABEL          # 由 RECHECK_ROUND 派生，不再手写
     e["decision"] = decision
     # claim_note 原先是一段写死了条数与环数的长文（V10 的 40/40、30 条、27 环），
     # 每次返工都要手改，必然漂移。改成短句 + 指针，数字只在 review.json。
-    e["claim_note"] = (
-        "S00 勘误 V5 自检 %s（%d/%d PASS）。逐项结果、注入明细与限制见 "
-        "%s/review.json 与 REPORT.md；此处不复述条数/环数/种数，避免与 review.json 漂移。"
-        "第 4 步批量核证与第 5 步重算分层未做；44/231/378 未冻结；"
+    # 第十五轮 H 项：顶层 claim_note 也是状态文件的一部分。
+    # 上一版只写 e["claim_note"]，顶层留着 V10 的长文（「40/40 PASS」「30 条反例」），
+    # 于是「状态文件不复述计数」只做到一半。现在只生成一次，两处共用同一字符串。
+    _claim = (
+        "S00 勘误 V5 自检 %s 通过；条数与逐项结果只在 "
+        "%s/review.json，此处不复述。"
+        "第 4 步批量核证与第 5 步重算分层未做；锚定期回退与上游准入未冻结；"
         "S04 第二轮与 S05 不放行。"
-        % (SELF_CHECK_VERSION, passed_n, total_n, STATUS_REL))
-    e["report_to_codex"] = "%s/report_to_codex_round13.md" % STATUS_REL
+        % (SELF_CHECK_VERSION, STATUS_REL))
+    e["claim_note"] = _claim
+    st["claim_note"] = _claim
+    e["report_to_codex"] = "%s/%s" % (STATUS_REL, REPORT_NAME)
     st["report_to_codex"] = e["report_to_codex"]
     st["updated_at"] = "2026-11-13T09:20:00+08:00"
     # EOL 与缩进必须与 HEAD 一致（CRLF + indent=1）：否则每次自检都把整个
@@ -2858,13 +3042,23 @@ def status_problems(st):
         bad.append("ERRATA_VERSION_STALE:%s" % e.get("self_check_version"))
     if not isinstance(e.get("checks"), dict):
         bad.append("CHECKS_NOT_POINTER")
+    elif "count" in e["checks"]:
+        # 第十四轮 H 项：状态块只留指针与版本号，条数写在这里就是第二份数字
+        bad.append("CHECKS_KEEPS_COUNT")
     elif _RE_LEGACY_COUNT.search(json.dumps(e["checks"], ensure_ascii=False)):
         bad.append("CHECKS_STILL_QUOTES_LEGACY_COUNTS")
     if not isinstance(e.get("self_check"), dict):
         bad.append("SELF_CHECK_NOT_POINTER")
-    elif (e["self_check"].get("version") != SELF_CHECK_VERSION
-          or not e["self_check"].get("canonical")):
+    elif [k for k in ("checks", "pass") if k in e["self_check"]]:
+        # 第十四轮 H 项：条数与通过数只在 review.json
+        bad.append("SELF_CHECK_KEEPS_COUNT:%s" %
+                   [k for k in ("checks", "pass") if k in e["self_check"]])
+    elif not e["self_check"].get("canonical"):
+        # 结构性问题：指针没有落点
         bad.append("SELF_CHECK_POINTER_INCOMPLETE")
+    elif e["self_check"].get("version") != SELF_CHECK_VERSION:
+        # 版本陈旧是写者**应该**修掉的状态，不属于回退（第十三轮 H 项）
+        bad.append("SELF_CHECK_POINTER_STALE:%s" % e["self_check"].get("version"))
     _s = e.get("sampling")
     if not isinstance(_s, dict):
         bad.append("SAMPLING_NOT_POINTER")
@@ -2879,21 +3073,78 @@ def status_problems(st):
                        % (_s.get("locator_version"), _SAMP_SUM.get("locator_version")))
         if not _s.get("canonical") or not _s.get("keys_diff"):
             bad.append("SAMPLING_POINTER_INCOMPLETE")
-    if "AWAITING_RECHECK_13" not in (st.get("status") or ""):
+    # 第十五轮 H 项：顶层 claim_note 单独受检——它是上一版漏掉的那一处。
+    _cn = st.get("claim_note") or ""
+    if not _cn:
+        bad.append("TOP_CLAIM_NOTE_MISSING")
+    elif re.search(r"\d+\s*/\s*\d+\s*PASS", _cn) or _RE_LEGACY_COUNT.search(_cn):
+        bad.append("TOP_CLAIM_NOTE_KEEPS_COUNT")
+    elif _cn != (e.get("claim_note") or ""):
+        bad.append("TOP_CLAIM_NOTE_DIVERGES")
+    _want = _status_string((st.get("s00_errata") or {}).get("decision", "")
+                           .endswith("PASS_WITH_UNRESOLVED_ITEMS"))
+    if _want != (st.get("status") or ""):
         bad.append("STATUS_NOT_CURRENT:%s" % st.get("status"))
     return bad
 
 
-# 先按「截至 C38 全过」乐观写一次（C39 自己是否过要读回文件才知道），
-# 最终计数在 review 定稿后再写一次；两次都是同一个写者。
+# 第十三轮 H 项：上一版 C39 在 write_status() **之后**才读文件，于是「文件被手改成
+# 旧计数」这种回退会被自己的写入掩盖——复核注入旧 checks 字符串后整链仍然 PASS。
+# 现在分三步：① 写前先读，结构性回退（旧计数/非指针）必须被报出来；
+# ② 写后读回，确认写者本身产出合规；③ 注入自证，证明检查函数确实有牙。
+# 「版本不一致」这类问题属于该被写者覆盖的正常状态，不算回退。
+_VERSION_ONLY = ("TOP_VERSION_STALE", "ERRATA_VERSION_STALE",
+                 "STATUS_NOT_CURRENT", "LOCATOR_VERSION_MISMATCH",
+                 "SELF_CHECK_POINTER_STALE")
+_pre_state = json.loads(STATUS_FILE.read_text(encoding="utf-8"))
+_pre_problems = status_problems(_pre_state)
+_pre_regressions = [x for x in _pre_problems
+                    if x.split(":")[0] not in _VERSION_ONLY]
 _pre_pass = sum(1 for c in checks if c["result"] == "PASS")
 write_status(_pre_pass + (1 if _pre_pass == len(checks) else 0), len(checks) + 1,
              "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS"
              if _pre_pass == len(checks) else "SELF_CHECK_FAIL")
-_c39 = status_problems(json.loads(STATUS_FILE.read_text(encoding="utf-8")))
-add("C39", "状态文件派生字段由自检单一写出：旧计数必须消失、版本与定位器版本必须本次一致",
-    not _c39,
-    {"violations": _c39, "file": "data/active_issue.json",
+_post_state = json.loads(STATUS_FILE.read_text(encoding="utf-8"))
+_post_problems = status_problems(_post_state)
+
+# 注入自证（不落盘，只在内存里改副本）：
+_inj = json.loads(json.dumps(_post_state))
+_inj["s00_errata"]["checks"] = "40/40 PASS（V10：C34 30 条反例；C37 27 环；C14 9 种）"
+_inj_checks = status_problems(_inj)
+_inj2 = json.loads(json.dumps(_post_state))
+_inj2["s00_errata"]["sampling"]["samples"] = 37
+_inj2["s00_errata"]["sampling"]["unique_keys_note"] = "新增该键，无删除"
+_inj_sampling = status_problems(_inj2)
+_inj3 = json.loads(json.dumps(_post_state))
+_inj3["s00_errata"]["self_check"]["version"] = "V11"
+_inj_version = status_problems(_inj3)
+# 第十四轮 H 项：把「条数写回状态文件」也做成注入——否则新加的
+# CHECKS_KEEPS_COUNT / SELF_CHECK_KEEPS_COUNT 两条判据没人证明它有牙。
+_inj4 = json.loads(json.dumps(_post_state))
+_inj4["s00_errata"]["checks"]["count"] = len(checks)
+_inj_count_checks = status_problems(_inj4)
+_inj5 = json.loads(json.dumps(_post_state))
+_inj5["s00_errata"]["self_check"]["checks"] = len(checks)
+_inj5["s00_errata"]["self_check"]["pass"] = len(checks)
+_inj_count_self = status_problems(_inj5)
+_inj6 = json.loads(json.dumps(_post_state))
+_inj6["claim_note"] = ("S00 勘误 V5（自检 V10，40/40 PASS）：C34 增至 30 条反例…")
+_inj_claim_note = status_problems(_inj6)
+_inj_ok = (bool(_inj_checks) and bool(_inj_sampling) and bool(_inj_version)
+           and bool(_inj_count_checks) and bool(_inj_count_self)
+           and bool(_inj_claim_note))
+add("C39", "状态文件派生字段由自检单一写出：写前回退必须被报出、写后产出必须合规、"
+    "检查函数须能拦住旧计数/旧 sampling 字段/旧版本",
+    (not _pre_regressions) and (not _post_problems) and _inj_ok,
+    {"pre_regressions": _pre_regressions, "pre_all": _pre_problems,
+     "post_violations": _post_problems, "file": "data/active_issue.json",
+     "injection": {"checks_legacy": _inj_checks,
+                   "sampling_derived": _inj_sampling,
+                   "self_check_version": _inj_version,
+                   "checks_count": _inj_count_checks,
+                   "self_check_count": _inj_count_self,
+                   "top_claim_note": _inj_claim_note,
+                   "all_caught": _inj_ok},
      "legacy_sampling_keys": list(_LEGACY_SAMPLING_KEYS),
      "locator_version": _SAMP_SUM.get("locator_version")})
 
@@ -2904,7 +3155,7 @@ review = {
     "review_nature": "SELF_CHECK",
     "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS" if passed == len(checks)
                 else "SELF_CHECK_FAIL",
-    "reviewed_at": "2026-11-13T09:20:00+08:00",
+    "reviewed_at": "2026-11-12T00:50:00+08:00",
     "checks_pass": passed, "checks_total": len(checks),
     "checks": checks,
     "fault_injection": {
@@ -3020,6 +3271,45 @@ review = {
         "不再复述条数、环数、键数与增删结论（旧版残留 V10 的 30 条/27 环/9 项与"
         "「新增该键、无删除」）；新增 C39 检查旧字段必须消失、版本与定位器版本必须本次一致",
     ],
+    "round13_fixes": [
+        "A｜影响动词改**唯一词表**：第十二轮把它写成两份（剥词表里有「净增加」、"
+        "判据表里没有），于是「影响净增加100.00元」被剥成「影响净」判成新主语。"
+        "现在 `_EFFECT_WORDS` 一处定义，`_TAIL_STRIP` 与 `_RE_EFFECT_VERB` 都从它派生；"
+        "影响动词改在**未剥离窗口** `_seg()` 上判（`_head_noun` 的职责就是把动词剥掉，"
+        "在剥完的中心语上找动词是死代码）；`tgt` 分支撤回「同分句金额无论属哪个项目都"
+        "证明事件发生」的错误理由，改为「中心语为空/权益项目/原因短语/窗口内带影响动词」"
+        "才绑定 → C34 增至 44 条反例（㉔非指标项目带动词、㉕净增同源、㉖tgt 不得为裸项目背书）",
+        "B｜父输入栏目语义类由 4 类拆 7 类（CURRENT_YTD / PRIOR_YEAR_YTD / PRIOR_YEAR_SAME / "
+        "PRIOR_PERIOD / YEAR_OPEN / PERIOD_END / CURRENT）：两侧都能归类时**必须同类**，"
+        "不再退回子串比较；「上年同期 vs 上期」「本年累计 vs 本期数」不再判等价",
+        "C｜页码/表号正则扩写：补小数形式（表1.2 / 表格1.2 / 参见表3.1 / 参见12.1节），"
+        "且判定窗口尾部多留 4 字（原来窗口截到金额为止，`参见12.1节` 的「节」被截掉，"
+        "章节号因此冒充数量）；SELF_PAGE 无词坐标路径改为「同一文本行内同时出现指标名与"
+        "该金额」（self_page_line_ok），页眉金额不再冒充目标行；`literal_path_ok` 与 "
+        "`self_page_ok` 从「算了不消费」改为 C24 的 PASS 条件",
+        "D｜裁决清单自证：scope_row_ok() 校验清单自身文件+哈希+与登记条目一致；"
+        "新增 scope_allowed_key_narrowed 注入（改清单 allowed_key 而非 section）→ C14 13 种",
+        "E｜dim_window_ok() 下沉到 parent_verify 并加跨度上限；新增 2 种注入 → C38 14 种",
+        "F｜抽样退出归因改从 CSV 独立重算：CSV 增 ledger_present / predicate_true 两列事实，"
+        "C31 不再读 JSON 摘要（改 CSV 的 exit_code 而保留摘要时必须 FAIL）；"
+        "parent_compat_conclusion 按 BOTH/ONE/NONE 条件化（920289=ONE、600143=ONE、600008=NONE）",
+        "H｜C39 三步自证：写前先检查回退（旧 checks 字符串/旧 sampling 派生字段/旧版本），"
+        "再 write_status()，写后读回校验，并在内存副本上注入自证——第十二轮把读取放在写入"
+        "之后，回退被自己的写入掩盖",
+    ],
+    "round14_fixes": [
+        "A｜影响动词改**分句级窗口** `_effect_win()`：它不再套 `span=24`。第十三轮虽已把动词从剥完的中心语挪到未剥离窗口，但窗口仍限 24 字——「调减与以前年度销售折让及客户往来余额差异相关的应收账款100.00元」动词距金额 27 字，被截掉后判成新主语，非零调整直接丢掉。影响动词是分句属性，不是金额的局部修饰语；中心语仍用 24 字窗口（那里要的正是紧邻名词）→ C34 增至 45 条反例（㉗）",
+        "B｜栏目改「区间优先」：新增 `_date_span()`，列头自己写明期间（1—6月 / 4—6月 / 6月30日 / 12月31日）时**先比区间**，区间不同即不同列，语义类相同也不认。语义类只能说明「本期 / 上年同期」，说明不了「哪一段」。「本报告期 / 本期金额」从同义断言里撤掉（没有区间时那是惯例不是事实），改为异义表里的区间用例 → C37 断言 3 同义 + 8 异义",
+        "C｜SELF_PAGE 同行判据的两处失效：① 调用点先对整页 `_nz`，换行被删光，「页眉合计 100.00 / 营业收入 200.00」两行拼成一行，同行限制当场失效——改为传原始页文本，归一化下沉到函数内逐行做；② 金额用裸子串匹配，`100.00 in 「营业收入 1100.00」` 为真——新增 `_amt_in_text()` 边界判据。直测从 3 条扩到 7 条，全部按实际调用形式（原始页文本）跑",
+        "H｜状态块**只留指针与版本号**：去掉 `checks.count` / `self_check.checks` / `self_check.pass` / `sampling.finding` / claim_note 里的 `%d/%d`。新增 `CHECKS_KEEPS_COUNT` / `SELF_CHECK_KEEPS_COUNT` 两条判据，并把「把条数写回状态文件」做成注入（`checks_count` / `self_check_count`），C39 注入由 3 条增至 5 条，`all_caught: true`",
+    ],
+    "round15_fixes": [
+        "B｜`_date_span()` 由 3 种写法扩到 7 种（年+月区间 / 不带年的月区间 / 上半年·H1 / 下半年·H2 / Qn / 第n季度 / 年月日·年月）+ `_loose_year()`（列头没「年」字时抓 4 位年份）。上一轮实测的三组（`2026年上半年`/`2026Q2`、`1-6月`/`4-6月`、`2026年上半年`/`2026年4-6月`）全被判等价，根因是解析不出就退回语义类",
+        "B｜新增「**无法解析不得放行**」分支：一侧解析出区间、另一侧写着期间线索（`_RE_PERIOD_HINT`：年/月/季度/Qn/上半年/下半年/半年度/年初/年末/期末/期初/本期/上期/同期/累计）却解不出 → **直接判不等价**，不再退语义类。这是裁决那句「不能让『无法解析已明确写出的期间』转化为『可以按语义类证明等价』；无法确认时应保留待核」的落地",
+        "B｜**先归一再比**：第一版扩写后 `2026年上半年` 与 `2026年1-6月` 变假阴性（同段不同标签被判不等价），故上半年→1–6 月、下半年→7–12 月、`Qn`/第 n 季度→3n-2..3n 月；无年份用 `R0` 与带年份 `R` 区分（年份不确定就不认同一列）→ C37 断言 3 同义 + 8 异义 → **4 同义 + 11 异义**，新增的那组同义是**防退化**用的（只加异义时「一律判不等价」也能全过）",
+        "H｜顶层 `claim_note` 与 `s00_errata.claim_note` **同源**：上一轮把四处指定字段清了却漏了顶层那一份，根因是同一句话生成了两遍。现在 `_claim` 只生成一次、两处赋同一字符串对象；新增 `TOP_CLAIM_NOTE_MISSING` / `TOP_CLAIM_NOTE_KEEPS_COUNT` / `TOP_CLAIM_NOTE_DIVERGES`（第三条是**同源判据**：两处逐字相等），C39 注入 5 → 6 条（新增 `top_claim_note`），`all_caught: true`",
+        "汇报一致性｜上一轮声称「窗口不限字数的残余风险已写进 `review.json:open_findings`」**不属实**——文件里仍写「span=24、本轮未改」。已改生成脚本（不是手改 JSON）：新文字承认残余风险方向反转（会多认不会漏认）、仍受上一笔金额结束位置约束、无真实语料检验；另新增一条 `_date_span()` 覆盖范围说明（两侧都解析不出时仍退语义类，只堵住一侧解析出的情形）",
+    ],
     "open_findings": [
         "NOTE_TRACE_NA 总量 9,954 条 / 631 份文档；其中已解除 8,655 条 / 630 份，剩余 1,299 条 / 1 份仍待核。第 4 步须按「文档版本+具体栏目+实际选项组+覆盖期间」核共同事实再映射成员键，已解除的 8,655 条同样复审",
         "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
@@ -3027,6 +3317,9 @@ review = {
         "第 4 步批量核证（文档级事件确认 / 字段级影响确认 / 采用链确认）未开始",
         "第 5 步重算分层与受限表未开始；44/231/378 未锁定",
         "锚定期回退与上游准入的间接依赖未覆盖",
+        "`_RE_POLICY` 是裸「会计政策」，正文里的「公司会计政策」也会被认成 POLICY_CHANGE 原因；本轮未改——收紧它会让 1,007 份存量证据的极性发生变化，需单独一轮并重做回放口径",
+        "影响动词窗口已在第十四轮改为 `_effect_win()`（分句级、不设字数上限），本条原先写的「span=24、本轮未改」已失效，此处更正：残余风险方向反转——同一分句内「动词在前、金额在后很远」会**多认**（不是漏认）；窗口仍受「上一笔金额结束位置」约束，不会跨金额传播；上述两点均尚无真实语料检验",
+        "`_date_span()` 只能解析「年+月区间 / 上半年 / H1H2 / Qn / 第n季度 / 年月日 / 年月」这些写法；两侧都写了期间但都解析不出时仍会退到语义类（如「年初至报告期末」对「本期数」），第十五轮只堵住「一侧解析出、另一侧写着期间线索却解不出」这一种，不是全量覆盖",
     ],
     "not_independent": "执行方自检，不构成独立验收；仅抽验 %d 行 / %d 类 / %d 键回读原件物理页"
                        "（计数取自 sampling_v5.json，不在此处另写一份）。"

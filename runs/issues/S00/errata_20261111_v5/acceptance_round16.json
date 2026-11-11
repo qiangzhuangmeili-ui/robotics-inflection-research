@@ -1,0 +1,77 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V14",
+  "round": 16,
+  "review_nature": "INDEPENDENT_RECHECK",
+  "reviewer": "Codex CLI（gpt-6.1-sol, model_reasoning_effort=high, sandbox=read-only）",
+  "reviewed_at": "2026-11-12T00:50:00+08:00",
+  "review_output": "runs/issues/S00/errata_20261111_v5/_codex_out_round16.txt",
+  "review_prompt": "runs/issues/S00/errata_20261111_v5/_codex_prompt_round16.txt",
+  "verdict": "ACCEPTED_WITH_LIMITS",
+  "verdict_quote": "裁决：ACCEPTED_WITH_LIMITS。B、H 通过；汇报一致性通过。",
+  "scope_of_this_verdict": [
+    "本轮指定修复（B 父输入栏目、H 状态文件、汇报一致性）",
+    "A / C / F 维持第十五轮结论，未重验"
+  ],
+  "not_covered_by_this_verdict": [
+    "第 4 步批量核证（文档级事件确认 / 字段级影响确认 / 采用链确认）未开始",
+    "第 5 步重算分层与受限表未开始",
+    "44 / 231 / 378 未冻结",
+    "S04 第二轮与 S05 不放行",
+    "语言维度未修（F32）",
+    "_RE_POLICY 仍是裸「会计政策」",
+    "抽验仍是 37 行 / 20 类 / 27 键，未回读全部 PDF"
+  ],
+  "items": {
+    "B_column_period": {
+      "result": "PASS",
+      "evidence": [
+        "指定三组（2026年上半年/2026Q2、1-6月/4-6月、2026年上半年/2026年4-6月）双向均 False",
+        "自行构造的单侧解析失败三组（年初至本报告期末、本期数、上年同期金额）均 False，且与解析侧同语义类，能区分「新分支拒绝」与「退回语义类放行」",
+        "反向三组（2026年1-6月/2026年上半年、本期发生额/本期数、期末/年末）均 True，未退化成一律拒绝",
+        "C37 确为 4 同义 + 11 异义，两条布尔量进入 PASS 条件"
+      ],
+      "reviewer_rulings": {
+        "归一（上半年→1-6月）": "在本项目 A 股财务报告语境下成立（公历会计年度），不可推广到非日历财年",
+        "R0 / R 保守区分": "接受；未证明年份相同，保留待核合理"
+      },
+      "limits": "两侧均无法解析时仍可能回退语义类，本轮未宣称为全面解决"
+    },
+    "H_status_file": {
+      "result": "PASS",
+      "evidence": [
+        "顶层与 s00_errata.claim_note 逐字相等，两处均无 N/M PASS 计数",
+        "_claim 只生成一次，两处赋同一变量",
+        "三条 TOP_CLAIM_NOTE_* 判据均在 status_problems() 实际执行路径中",
+        "六条注入全部命中预期原因，all_caught: true；另独立命中 TOP_CLAIM_NOTE_MISSING",
+        "无数字异文注入 → C39 FAIL、pre_regressions=[TOP_CLAIM_NOTE_DIVERGES]、40/41，写入未掩盖"
+      ],
+      "reviewer_ruling": "同一变量赋值 + 逐字相等检查足以解决漂移，无须禁止所有数字"
+    },
+    "report_consistency": {
+      "result": "PASS",
+      "evidence": [
+        "open_findings 旧说法不再作为现状陈述，保留的 span=24 字样均用于引用并否定旧说法",
+        "生成脚本确已修改：重跑后 open_findings 与更正文本一致，非手改 JSON",
+        "REPORT 第十三节第 9 条、handoff 均同步",
+        "基线完整重跑 41/41 PASS，指定范围内未发现新的「声称已改、文件未改」"
+      ]
+    }
+  },
+  "post_acceptance_corrections": {
+    "nature": "元数据派生修正，不涉及任何判据或检查项；review.json 内容变化仅限 reviewed_at 与新增 round15_fixes 记录",
+    "items": [
+      "verify_v5.py 里 e[\"round\"] 原硬编码 \"第十二轮返工\"、e[\"report_to_codex\"] 原硬编码 round13 → 改为由 RECHECK_ROUND 派生（ROUND_LABEL / REPORT_NAME）",
+      "状态串改为单一生成函数 _status_string()，写入与 C39 校验共用，并新增 RECHECK_VERDICT 表达「已收到裁决」",
+      "review.json 补 round15_fixes（此前结构化变更记录止于 round14）",
+      "reviewed_at / manifest.generated_at 由未来的 2026-11-13 改为实际的 2026-11-12"
+    ],
+    "verification": "修正后自检仍 41/41 PASS；review.json 连续两次运行 md5 相同"
+  },
+  "release": {
+    "release_S04_round2": false,
+    "release_S05": false
+  }
+}

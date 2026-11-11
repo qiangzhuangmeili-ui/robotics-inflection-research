@@ -4,8 +4,8 @@
  "active_issue_key": "S00_ERRATA_REVIEW",
  "executor": "WorkBuddy AI",
  "started_at": "2026-11-11 22:10:00 +08:00",
- "status": "S00_ERRATA_V5_SELF_CHECK_V12_PASS_AWAITING_RECHECK_13",
- "claim_note": "S00 勘误 V5（自检 V10，40/40 PASS）：按 Codex 第十轮裁决修 10 处——①极性五条新绕过全修（单符号跨行合并、含符号原因标签仍作主语行、「适用」与「某原因未勾」并存判歧义、无关报表项目金额不再承接为主语肯定、单原因分句金额直绑），C34 增至 30 条反例，回放 1,007 份证据分句/极性变化均为 0；②父输入单位折算键名修正（gap 原读 expect['unit']，实际键为 unit_scale，折算恒为 1 倍）；③父输入栏目须为期间列头且出现在引文中，调整版本须等于该父实际 version_used 的归类；④父输入引文源改为回读原件登记页，不再用 results.csv.evidence；C37 注入 27 环（1 正例 + 26 反例）+ 真实原件阳性 + 单位三档 + 错误栏目 + 同数异义负例，逐项断言拒绝原因；⑤C24 数值先去千分位再比较，同页上年数冒充本期终值不再过关，并新增 REVIEW_KEY_MISMATCH；⑥C24 改为字段规则表（NUM/UNIT/DATE/LITERAL/SELF_PAGE），11 个无规则字段一律留待核；⑦C24 注入改以完整正例为基线、每次只改一个条件并断言拒绝原因；⑧C14 须绑定正式裁决表条目（引文行必须是 | Qn … | 行、裁决项标题点名该键、ruled_key 须与待判键完全一致、结论须前缀匹配且不得是否定表述，注入 9 种）；⑨C38 核对 source_page 并绑定维度证据载体（封面片段不再同时取得两个维度）；⑩R6 按词坐标确认目标行与目标列，单位绑定该表表头，调整前后取原件列头标记。自动 YES 仍为 0，PENDING_PARENT_COMPATIBILITY 1,277；重述差异待处置 8,309；全表核心未闭合 9,113、含补充 10,618；全池 44 HOLD / 231 待核证 / 378 无关联；受限表 407 行。第 4–5 步未做，S04 第二轮与 S05 不放行",
+ "status": "S00_ERRATA_V5_SELF_CHECK_V14_PASS_ROUND_16_ACCEPTED_WITH_LIMITS",
+ "claim_note": "S00 勘误 V5 自检 V14 通过；条数与逐项结果只在 runs/issues/S00/errata_20261111_v5/review.json，此处不复述。第 4 步批量核证与第 5 步重算分层未做；锚定期回退与上游准入未冻结；S04 第二轮与 S05 不放行。",
  "last_completed": {
   "issue_key": "S04",
   "issue_number": 39,
@@ -417,7 +417,7 @@
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
   "reviewed_at": "2026-11-12T23:40:00+08:00",
-  "trigger": "第十一轮复核 RETURN_FOR_REWORK：H 项通过，A–G 七项不通过（每处都能被一句合成语料或一条真实原件绕过）；本轮七项全部改判据本身",
+  "trigger": "第十五轮复核 RETURN_FOR_REWORK：A、C 通过，F 维持通过；B、H 不通过（B 未识别的明确期间仍被语义类覆盖；H 顶层 claim_note 仍留旧计数）；另指出 open_findings 的「span=24、本轮未改」与文件不一致。本轮 B 项 _date_span 扩到 7 种写法并归一 + 无法解析不得放行；H 项 claim_note 单一生成、顶层与 s00_errata 同源；open_findings 文字已更正。",
   "authoritative_input": {
    "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
    "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
@@ -482,8 +482,7 @@
   },
   "checks": {
    "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
-   "count": 41,
-   "note": "检查项名称/结果/明细一律不在状态文件复述；旧版曾在此写死反例数、注入链环数与注入种数，与 review.json 漂移，被复核抓到。"
+   "note": "检查项名称/结果/明细/条数一律不在状态文件复述；旧版曾在此写死反例数、注入链环数与注入种数，与 review.json 漂移，被复核抓到。"
   },
   "reproducible": true,
   "limits": [
@@ -525,17 +524,14 @@
    "canonical": "runs/issues/S00/errata_20261111_v5/sampling_v5.json",
    "rows": "runs/issues/S00/errata_20261111_v5/sampling_v5.csv",
    "keys_diff": "runs/issues/S00/errata_20261111_v5/sampling_keys_diff.csv",
-   "locator_version": "V12",
-   "note": "行数/风险类型数/键数/page_reread 分布/逐键增删一律不复述，见 canonical 与 keys_diff；状态文件只留定位器版本与指针，杜绝第二份数字漂移。",
-   "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据未定位到，属上游核验记录异常，未放行"
+   "locator_version": "V14",
+   "note": "行数/风险类型数/键数/page_reread 分布/逐键增删一律不复述，见 canonical 与 keys_diff；状态文件只留定位器版本与指针，杜绝第二份数字漂移。"
   },
   "self_check": {
-   "version": "V12",
-   "checks": 41,
-   "pass": 41,
+   "version": "V14",
    "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
    "detail": "runs/issues/S00/errata_20261111_v5/review.json",
-   "note": "计数由 verify_v5.py 写出；逐项结果与注入明细只在 review.json。"
+   "note": "状态文件不复述任何计数；条数、逐项结果与注入明细只在 review.json。"
   },
   "not_done": [
    "第 4 步按已验证方法批量核证",
@@ -548,8 +544,8 @@
    "第 4 步：文档级核证能否作为组内字段级解除的必要条件（非充分条件）",
    "是否放行 S04 第二轮与 S05"
   ],
-  "self_check_version": "V12",
-  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round13.md",
+  "self_check_version": "V14",
+  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round16.md",
   "fault_injection_v4_mapped": {
    "C26": 7729,
    "C14": 6617
@@ -557,16 +553,14 @@
   "stats": {
    "dispute_unique_ids": 10618
   },
-  "round": "第十二轮返工",
-  "claim_note": "S00 勘误 V5 自检 V12（41/41 PASS）。逐项结果、注入明细与限制见 runs/issues/S00/errata_20261111_v5/review.json 与 REPORT.md；此处不复述条数/环数/种数，避免与 review.json 漂移。第 4 步批量核证与第 5 步重算分层未做；44/231/378 未冻结；S04 第二轮与 S05 不放行。"
+  "round": "第十五轮返工",
+  "claim_note": "S00 勘误 V5 自检 V14 通过；条数与逐项结果只在 runs/issues/S00/errata_20261111_v5/review.json，此处不复述。第 4 步批量核证与第 5 步重算分层未做；锚定期回退与上游准入未冻结；S04 第二轮与 S05 不放行。"
  },
- "self_check_version": "V12",
- "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round13.md",
+ "self_check_version": "V14",
+ "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round16.md",
  "updated_at": "2026-11-13T09:20:00+08:00",
  "self_check": {
-  "version": "V12",
-  "checks": 41,
-  "pass": 41,
+  "version": "V14",
   "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
   "detail": "runs/issues/S00/errata_20261111_v5/review.json",
   "note": "顶层与 s00_errata 两处同源，均由 verify_v5.py 写出，不手工维护。"

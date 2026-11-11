@@ -96,8 +96,16 @@ _RE_OTHER_ITEM = re.compile(
 #     · 空 / 只剩功能词                        → 续写；
 #   其余（出现了一个新的名词中心语）→ 新主语，不承接上一分句的原因。
 # 这是**闭集功能词表 + 名词中心语**，不是开放的项目词表：新增报表项目不需要改这里。
+# 影响动词：**唯一词表**。中心语剥离与「这笔金额是不是该原因造成的」判据都从这里派生。
+# 第十二轮把它写成两份（剥词表里有「净增加」、判据表里没有），于是「影响净增加100.00元」
+# 被剥成「影响净」→ 判成新主语。词表只能有一处，这是结构问题，不是补词问题。
+_EFFECT_WORDS = ("净增加", "净减少", "净增", "净减",
+                 "冲减", "冲回", "调减", "调增", "增加", "减少", "调整", "重述",
+                 "计入", "转入", "转出", "计提", "转回", "影响", "核减", "补提", "摊销")
+_RE_EFFECT_VERB = re.compile("|".join(_EFFECT_WORDS))
 _TAIL_STRIP = re.compile(
-    r"(?:金额|差额|净额|合计|总额|小计|影响|增加|减少|调整|重述|确认|核算|审核|评估|"
+    r"(?:" + "|".join(_EFFECT_WORDS) + r"|"
+    r"净额|净|金额|差额|合计|总额|小计|确认|核算|审核|评估|"
     r"复核|批准|审议|核准|备案|审计|经|为|是|达|计|约|共|有|发生|存在|采用|"
     r"的|后|元|万元|千元|及|和|与|或|之|其|该|上述|前述|本期|本年|年初|期末|期初|"
     r"累计|其中|对|将|把|按|以|所|者|数|值|上|下|内|中|"
@@ -112,9 +120,38 @@ _CAUSE_ANY = re.compile(r"前期差错更正|会计差错更正|差错更正|追
                         r"合并范围变更|会计政策变更")
 
 
-def _head_noun(clause, st, span=24):
-    """金额左侧的中心语（剥掉闭集功能词/动词/量词后的名词片段）。"""
-    tail = clause[max(0, st - span):st]
+
+
+def _seg(clause, st, span=24, start=None):
+    """金额左侧的判定窗口：本分句内、上一笔金额结束之后、至多 span 字。
+
+    窗口单独抽出来，是因为「影响动词」必须在**未剥离**的文本上看：
+    `_head_noun` 的职责恰恰是把影响动词剥掉，在剥完的中心语上找动词永远找不到。
+    """
+    _lo = max(0, st - span) if start is None else max(start, st - span)
+    return clause[_lo:st]
+
+
+def _effect_win(clause, st, start=None):
+    """影响动词的判定窗口：本分句内、上一笔金额之后，**不设字数上限**。
+
+    影响动词是**分句级属性**（这一句在说「调减某项目」），不是金额的局部修饰语，
+    所以不能套 `span=24`：`调减与以前年度销售折让及客户往来余额差异相关的应收账款100.00元`
+    的动词距金额 27 字，被窗口截掉后就判成新主语，非零调整直接丢掉（第十四轮裁决 A 项）。
+    中心语仍用 `_seg` 的 24 字窗口——那里要的是「紧邻的名词」，远了就不该算。
+    """
+    return clause[(start or 0):st]
+
+
+def _head_noun(clause, st, span=24, start=None):
+    """金额左侧的中心语（剥掉闭集功能词/动词/量词后的名词片段）。
+
+    `start` 是本分句内**上一笔金额的结束位置**：中心语只在「上一笔金额之后到本笔金额」
+    这段里找。否则前一笔记账数字会把本笔的主语带歪——
+    `…影响0.00元其中营业总收入100.00元` 的中心语曾是「…影响0.00元其中营业总收入」，
+    因为含「期初未分配利润」而被判成续写。
+    """
+    tail = _seg(clause, st, span, start)
     prev = None
     while tail and prev != tail:
         prev = tail
@@ -122,9 +159,9 @@ def _head_noun(clause, st, span=24):
     return tail
 
 
-def _new_subject(clause, st, span=24):
+def _new_subject(clause, st, span=24, start=None):
     """该金额是否换了主语（第十二轮 A 项：按**中心语**判，不看词尾）。"""
-    head = _head_noun(clause, st, span)
+    head = _head_noun(clause, st, span, start)
     if not head:
         return False
     if _RE_SCOPED_ITEM.search(head):
@@ -132,6 +169,11 @@ def _new_subject(clause, st, span=24):
     if _CAUSE_ANY.search(head):
         return False
     if _RE_PROCEDURE.search(head):
+        return False
+    # 第十三轮 A 项：中心语带影响动词（调减/冲减/影响…）说明这笔金额是「原因造成的结果」，
+    # 即便点了别的报表项目也仍是续写。⑯⑰⑱ 那种「其中某某项目100.00元」没有影响动词，
+    # 因此仍判新主语——两者靠这一点区分。
+    if _RE_EFFECT_VERB.search(_effect_win(clause, st, start)):
         return False
     return len(head) >= 2
 # 肯定：确认发生 / 已采用 / 已调整
@@ -482,24 +524,37 @@ def _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c, singl
        里的「营业总收入」不在词表内，于是 100.00 元被承接成 ERRATA 肯定。
        现改为结构判据 `_new_subject()`：取金额左侧的**中心语**，中心语是新的名词
        即判新主语（第十二轮把「词尾」改成「中心语」，见 `_head_noun`）。
-    6. **`tgt` 分支不加 `new_subj`，这是有意的**（第十二轮说明）。`tgt` 表示
-       **本分句内**有原因词就近命中，此时金额无论挂在哪个项目上，都证明该原因
-       确实发生；`new_subj` 只约束两条**跨分句继承**分支（`single` / `prev_causes`），
-       防止把别的主语的金额算到上一分句的原因头上。两者语义不同，不能一并套用。
+    6. **`tgt` 分支不加 `new_subj`，但仍要看金额挂在哪个项目上**（第十三轮更正）。
+       第十二轮写的「同分句里金额无论挂在哪个项目上都能证明事件发生」这个理由不成立，
+       已撤回。现在的判法：中心语为空 / 是受影响权益项目 / 是原因短语 /
+       含影响动词（冲减·调增·影响…）→ 绑定该原因；只剩一个裸项目名
+       （`影响0.00元其中营业总收入100.00元`）→ 换项目了，不绑定。
+       中心语只在「上一笔金额结束位置」之后找，否则前一笔记账数字会把主语带歪。
     """
     amounts = _amounts(c)
     if not amounts:
         return
     has_item = bool(_RE_SCOPED_ITEM.search(c))
     other_item = bool(_RE_OTHER_ITEM.search(c))
-    continue_ok = bool(_RE_CONTINUE.match(c)) or has_item or ("影响" in c)
+    # 第十三轮 A 项：以影响动词开头的分句（「调减营业总收入100.00元」）也是续写形态，
+    # 否则第二分句进不了 prev_causes 分支，非零金额被丢掉。
+    continue_ok = (bool(_RE_CONTINUE.match(c)) or has_item or ("影响" in c)
+                   or bool(_RE_EFFECT_VERB.search(c)))
+    prev_end = 0
     for st, _en, v in amounts:
         tgt = _nearest(spans, st, limit=_AMOUNT_RADIUS) if spans else None
-        new_subj = _new_subject(c, st)
+        seg = _seg(c, st, start=prev_end)
+        head = _head_noun(c, st, start=prev_end)
+        new_subj = _new_subject(c, st, start=prev_end)
+        prev_end = _en
         targets = set()
         if tgt:
-            # 本分句原因就近命中：不再判 new_subj（见 docstring 第 6 条）
-            targets = {tgt}
+            # 本分句原因就近命中：仍要看金额挂在哪个项目上（第十三轮 A 项）。
+            # 中心语是空 / 受影响权益项目 / 原因短语 / 带影响动词 → 是这条原因的结果；
+            # 只剩一个「其中某某项目」的裸项目名 → 换项目了，不能当该原因的证据。
+            if (not head or _RE_SCOPED_ITEM.search(head) or _CAUSE_ANY.search(head)
+                    or _RE_EFFECT_VERB.search(_effect_win(c, st, prev_end))):
+                targets = {tgt}
         elif single and not other_item and not new_subj:
             targets = {single}
         elif prev_causes and continue_ok and not other_item and not new_subj:

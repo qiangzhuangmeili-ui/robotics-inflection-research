@@ -2,10 +2,10 @@
   "issue_key": "S00",
   "stage": "ERRATA",
   "version": "ERRATA_V5",
-  "self_check_version": "V12",
+  "self_check_version": "V14",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-13T09:20:00+08:00",
+  "reviewed_at": "2026-11-12T00:50:00+08:00",
   "checks_pass": 41,
   "checks_total": 41,
   "checks": [
@@ -403,6 +403,8 @@
         "leaked": 0,
         "sample": [],
         "reason": "",
+        "literal_path_ok": true,
+        "self_page_ok": true,
         "control_key": "SH:600100|FIN.REV.YTD|20250630|value_raw",
         "control_accepted": true,
         "unit_path_ok": true,
@@ -616,11 +618,11 @@
     },
     {
       "id": "C34",
-      "name": "极性回归：38 条反例（含第八轮裁决表五条原文用例 + 三协电机真实版面）；1,007 份存量证据 A/B 回放须分句与极性均零变化",
+      "name": "极性回归：45 条反例（含第八轮裁决表五条原文用例 + 三协电机真实版面）；1,007 份存量证据 A/B 回放须分句与极性均零变化",
       "result": "PASS",
       "detail": {
         "violations": [],
-        "case_count": 38,
+        "case_count": 45,
         "case_failures": [],
         "replay_ab": {
           "documents": 1007,
@@ -634,7 +636,7 @@
             "附注：由于重大会计差错更正影响期初未分配利润": 44,
             "同一控制合并范围变更": 44
           },
-          "note": "A/B 对照：old = 关闭新主语判据（_new_subject 恒 False），new = 当前中心语判据。clause_changed 统计分句归属是否变化，polarity_changed 统计 excluded/affirmed/scoped/mentioned/conflict 是否变化。判据确实被调用（new_subject_calls）也确实判真（new_subject_true），其中判真且该位置金额非零的有 new_subject_true_nonzero 条。结论只能说「对存量证据的极性结果无影响」，不能说「判据从未触发」；判据是否承重由 C34 的 38 条反例证明，不由本回放证明。",
+          "note": "A/B 对照：old = 关闭新主语判据（_new_subject 恒 False），new = 当前中心语判据。clause_changed 统计分句归属是否变化，polarity_changed 统计 excluded/affirmed/scoped/mentioned/conflict 是否变化。判据确实被调用（new_subject_calls）也确实判真（new_subject_true），其中判真且该位置金额非零的有 new_subject_true_nonzero 条。结论只能说「对存量证据的极性结果无影响」，不能说「判据从未触发」；判据是否承重由 C34 的反例集（polarity_cases.py）证明，不由本回放证明；此处不复述条数，避免与 case_count 漂移。",
           "changed_samples": []
         },
         "cases": {
@@ -708,7 +710,71 @@
           "duplicate_amount_ambiguous": true,
           "duplicate_amount_row_bound": true,
           "column_synonym_ok": true,
-          "column_antonym_rejected": true
+          "column_antonym_rejected": true,
+          "column_synonym_pairs": [
+            [
+              "本期发生额",
+              "本期数"
+            ],
+            [
+              "期末",
+              "年末"
+            ],
+            [
+              "期初",
+              "年初数"
+            ],
+            [
+              "本期金额（2026年1-6月）",
+              "本期金额（2026年上半年）"
+            ]
+          ],
+          "column_antonym_pairs": [
+            [
+              "本期",
+              "上年同期"
+            ],
+            [
+              "上年同期",
+              "上期"
+            ],
+            [
+              "本年累计",
+              "本期数"
+            ],
+            [
+              "年初至报告期末",
+              "本期数"
+            ],
+            [
+              "本期金额（2026年1—6月）",
+              "本报告期金额（2026年4—6月）"
+            ],
+            [
+              "本期金额（2026年1-6月）",
+              "本期金额（2026年4-6月）"
+            ],
+            [
+              "期末余额（2026年6月30日）",
+              "年末余额（2025年12月31日）"
+            ],
+            [
+              "上年同期（2025年1—6月）",
+              "上年同期（2025年4—6月）"
+            ],
+            [
+              "本期金额（2026年上半年）",
+              "本期金额（2026Q2）"
+            ],
+            [
+              "本期金额（1-6月）",
+              "本期金额（4-6月）"
+            ],
+            [
+              "本期金额（2026年上半年）",
+              "本期金额（2026年4-6月）"
+            ]
+          ]
         },
         "reject_reasons": {
           "quote_other_metric": "PARENT_QUOTE_WITHOUT_TARGET_METRIC",
@@ -795,11 +861,34 @@
     },
     {
       "id": "C39",
-      "name": "状态文件派生字段由自检单一写出：旧计数必须消失、版本与定位器版本必须本次一致",
+      "name": "状态文件派生字段由自检单一写出：写前回退必须被报出、写后产出必须合规、检查函数须能拦住旧计数/旧 sampling 字段/旧版本",
       "result": "PASS",
       "detail": {
-        "violations": [],
+        "pre_regressions": [],
+        "pre_all": [],
+        "post_violations": [],
         "file": "data/active_issue.json",
+        "injection": {
+          "checks_legacy": [
+            "CHECKS_NOT_POINTER"
+          ],
+          "sampling_derived": [
+            "SAMPLING_KEEPS_DERIVED:['samples', 'unique_keys_note']"
+          ],
+          "self_check_version": [
+            "SELF_CHECK_POINTER_STALE:V11"
+          ],
+          "checks_count": [
+            "CHECKS_KEEPS_COUNT"
+          ],
+          "self_check_count": [
+            "SELF_CHECK_KEEPS_COUNT:['checks', 'pass']"
+          ],
+          "top_claim_note": [
+            "TOP_CLAIM_NOTE_KEEPS_COUNT"
+          ],
+          "all_caught": true
+        },
         "legacy_sampling_keys": [
           "samples",
           "risk_types",
@@ -810,9 +899,10 @@
           "parent_orig_verified",
           "new_in_round7",
           "new_in_round8",
-          "new_in_round10"
+          "new_in_round10",
+          "finding"
         ],
-        "locator_version": "V12"
+        "locator_version": "V14"
       }
     }
   ],
@@ -881,13 +971,38 @@
     "F｜抽样键集变更的退出归因：入选判据从匿名 lambda 提为具名谓词（_pred_r1…_pred_r10、_r6_pred），抽样与 diff 共用同一份；REMOVED 必须归到四类之一（LEDGER_KEY_GONE / PREDICATE_FALSE / RANK_CUT / UNKNOWN），SH:600060@20260630 改记「判据仍成立、被名额规则截掉」，不再笼统写「不再命中判据」；R6 样本说明按 parent_amount_located 的 BOTH/ONE/NONE 逐字对应，SH:600143@20260630 实为 ONE，不再写「两父均已定位」",
     "H｜状态文件单一写者：data/active_issue.json 的派生字段（status / self_check / checks / sampling）改由 verify_v5.write_status() 唯一写出，且只写指针与版本号，不再复述条数、环数、键数与增删结论（旧版残留 V10 的 30 条/27 环/9 项与「新增该键、无删除」）；新增 C39 检查旧字段必须消失、版本与定位器版本必须本次一致"
   ],
+  "round13_fixes": [
+    "A｜影响动词改**唯一词表**：第十二轮把它写成两份（剥词表里有「净增加」、判据表里没有），于是「影响净增加100.00元」被剥成「影响净」判成新主语。现在 `_EFFECT_WORDS` 一处定义，`_TAIL_STRIP` 与 `_RE_EFFECT_VERB` 都从它派生；影响动词改在**未剥离窗口** `_seg()` 上判（`_head_noun` 的职责就是把动词剥掉，在剥完的中心语上找动词是死代码）；`tgt` 分支撤回「同分句金额无论属哪个项目都证明事件发生」的错误理由，改为「中心语为空/权益项目/原因短语/窗口内带影响动词」才绑定 → C34 增至 44 条反例（㉔非指标项目带动词、㉕净增同源、㉖tgt 不得为裸项目背书）",
+    "B｜父输入栏目语义类由 4 类拆 7 类（CURRENT_YTD / PRIOR_YEAR_YTD / PRIOR_YEAR_SAME / PRIOR_PERIOD / YEAR_OPEN / PERIOD_END / CURRENT）：两侧都能归类时**必须同类**，不再退回子串比较；「上年同期 vs 上期」「本年累计 vs 本期数」不再判等价",
+    "C｜页码/表号正则扩写：补小数形式（表1.2 / 表格1.2 / 参见表3.1 / 参见12.1节），且判定窗口尾部多留 4 字（原来窗口截到金额为止，`参见12.1节` 的「节」被截掉，章节号因此冒充数量）；SELF_PAGE 无词坐标路径改为「同一文本行内同时出现指标名与该金额」（self_page_line_ok），页眉金额不再冒充目标行；`literal_path_ok` 与 `self_page_ok` 从「算了不消费」改为 C24 的 PASS 条件",
+    "D｜裁决清单自证：scope_row_ok() 校验清单自身文件+哈希+与登记条目一致；新增 scope_allowed_key_narrowed 注入（改清单 allowed_key 而非 section）→ C14 13 种",
+    "E｜dim_window_ok() 下沉到 parent_verify 并加跨度上限；新增 2 种注入 → C38 14 种",
+    "F｜抽样退出归因改从 CSV 独立重算：CSV 增 ledger_present / predicate_true 两列事实，C31 不再读 JSON 摘要（改 CSV 的 exit_code 而保留摘要时必须 FAIL）；parent_compat_conclusion 按 BOTH/ONE/NONE 条件化（920289=ONE、600143=ONE、600008=NONE）",
+    "H｜C39 三步自证：写前先检查回退（旧 checks 字符串/旧 sampling 派生字段/旧版本），再 write_status()，写后读回校验，并在内存副本上注入自证——第十二轮把读取放在写入之后，回退被自己的写入掩盖"
+  ],
+  "round14_fixes": [
+    "A｜影响动词改**分句级窗口** `_effect_win()`：它不再套 `span=24`。第十三轮虽已把动词从剥完的中心语挪到未剥离窗口，但窗口仍限 24 字——「调减与以前年度销售折让及客户往来余额差异相关的应收账款100.00元」动词距金额 27 字，被截掉后判成新主语，非零调整直接丢掉。影响动词是分句属性，不是金额的局部修饰语；中心语仍用 24 字窗口（那里要的正是紧邻名词）→ C34 增至 45 条反例（㉗）",
+    "B｜栏目改「区间优先」：新增 `_date_span()`，列头自己写明期间（1—6月 / 4—6月 / 6月30日 / 12月31日）时**先比区间**，区间不同即不同列，语义类相同也不认。语义类只能说明「本期 / 上年同期」，说明不了「哪一段」。「本报告期 / 本期金额」从同义断言里撤掉（没有区间时那是惯例不是事实），改为异义表里的区间用例 → C37 断言 3 同义 + 8 异义",
+    "C｜SELF_PAGE 同行判据的两处失效：① 调用点先对整页 `_nz`，换行被删光，「页眉合计 100.00 / 营业收入 200.00」两行拼成一行，同行限制当场失效——改为传原始页文本，归一化下沉到函数内逐行做；② 金额用裸子串匹配，`100.00 in 「营业收入 1100.00」` 为真——新增 `_amt_in_text()` 边界判据。直测从 3 条扩到 7 条，全部按实际调用形式（原始页文本）跑",
+    "H｜状态块**只留指针与版本号**：去掉 `checks.count` / `self_check.checks` / `self_check.pass` / `sampling.finding` / claim_note 里的 `%d/%d`。新增 `CHECKS_KEEPS_COUNT` / `SELF_CHECK_KEEPS_COUNT` 两条判据，并把「把条数写回状态文件」做成注入（`checks_count` / `self_check_count`），C39 注入由 3 条增至 5 条，`all_caught: true`"
+  ],
+  "round15_fixes": [
+    "B｜`_date_span()` 由 3 种写法扩到 7 种（年+月区间 / 不带年的月区间 / 上半年·H1 / 下半年·H2 / Qn / 第n季度 / 年月日·年月）+ `_loose_year()`（列头没「年」字时抓 4 位年份）。上一轮实测的三组（`2026年上半年`/`2026Q2`、`1-6月`/`4-6月`、`2026年上半年`/`2026年4-6月`）全被判等价，根因是解析不出就退回语义类",
+    "B｜新增「**无法解析不得放行**」分支：一侧解析出区间、另一侧写着期间线索（`_RE_PERIOD_HINT`：年/月/季度/Qn/上半年/下半年/半年度/年初/年末/期末/期初/本期/上期/同期/累计）却解不出 → **直接判不等价**，不再退语义类。这是裁决那句「不能让『无法解析已明确写出的期间』转化为『可以按语义类证明等价』；无法确认时应保留待核」的落地",
+    "B｜**先归一再比**：第一版扩写后 `2026年上半年` 与 `2026年1-6月` 变假阴性（同段不同标签被判不等价），故上半年→1–6 月、下半年→7–12 月、`Qn`/第 n 季度→3n-2..3n 月；无年份用 `R0` 与带年份 `R` 区分（年份不确定就不认同一列）→ C37 断言 3 同义 + 8 异义 → **4 同义 + 11 异义**，新增的那组同义是**防退化**用的（只加异义时「一律判不等价」也能全过）",
+    "H｜顶层 `claim_note` 与 `s00_errata.claim_note` **同源**：上一轮把四处指定字段清了却漏了顶层那一份，根因是同一句话生成了两遍。现在 `_claim` 只生成一次、两处赋同一字符串对象；新增 `TOP_CLAIM_NOTE_MISSING` / `TOP_CLAIM_NOTE_KEEPS_COUNT` / `TOP_CLAIM_NOTE_DIVERGES`（第三条是**同源判据**：两处逐字相等），C39 注入 5 → 6 条（新增 `top_claim_note`），`all_caught: true`",
+    "汇报一致性｜上一轮声称「窗口不限字数的残余风险已写进 `review.json:open_findings`」**不属实**——文件里仍写「span=24、本轮未改」。已改生成脚本（不是手改 JSON）：新文字承认残余风险方向反转（会多认不会漏认）、仍受上一笔金额结束位置约束、无真实语料检验；另新增一条 `_date_span()` 覆盖范围说明（两侧都解析不出时仍退语义类，只堵住一侧解析出的情形）"
+  ],
   "open_findings": [
     "NOTE_TRACE_NA 总量 9,954 条 / 631 份文档；其中已解除 8,655 条 / 630 份，剩余 1,299 条 / 1 份仍待核。第 4 步须按「文档版本+具体栏目+实际选项组+覆盖期间」核共同事实再映射成员键，已解除的 8,655 条同样复审",
     "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
     "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位，属上游核验记录问题",
     "第 4 步批量核证（文档级事件确认 / 字段级影响确认 / 采用链确认）未开始",
     "第 5 步重算分层与受限表未开始；44/231/378 未锁定",
-    "锚定期回退与上游准入的间接依赖未覆盖"
+    "锚定期回退与上游准入的间接依赖未覆盖",
+    "`_RE_POLICY` 是裸「会计政策」，正文里的「公司会计政策」也会被认成 POLICY_CHANGE 原因；本轮未改——收紧它会让 1,007 份存量证据的极性发生变化，需单独一轮并重做回放口径",
+    "影响动词窗口已在第十四轮改为 `_effect_win()`（分句级、不设字数上限），本条原先写的「span=24、本轮未改」已失效，此处更正：残余风险方向反转——同一分句内「动词在前、金额在后很远」会**多认**（不是漏认）；窗口仍受「上一笔金额结束位置」约束，不会跨金额传播；上述两点均尚无真实语料检验",
+    "`_date_span()` 只能解析「年+月区间 / 上半年 / H1H2 / Qn / 第n季度 / 年月日 / 年月」这些写法；两侧都写了期间但都解析不出时仍会退到语义类（如「年初至报告期末」对「本期数」），第十五轮只堵住「一侧解析出、另一侧写着期间线索却解不出」这一种，不是全量覆盖"
   ],
   "not_independent": "执行方自检，不构成独立验收；仅抽验 37 行 / 20 类 / 27 键回读原件物理页（计数取自 sampling_v5.json，不在此处另写一份）。",
   "release_S05": false

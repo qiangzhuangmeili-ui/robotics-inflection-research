@@ -313,11 +313,20 @@ def _col_norm(s):
 # 期间列头的**语义类**（第十二轮 B 项）：只做子串比对时，「登记：本期发生额」
 # 与「实际：本期数」会被判不一致（正确登记被拒），而「登记：本期」与
 # 「实际：上年同期」反而可能靠子串蒙过。改为先归到期间类，再比类。
+# 第十三轮 B 项：语义类过宽会把不同列互认——
+# 「上年同期」（去年同期）与「上期」（紧邻上一期间）不是同一列；
+# 「本年累计」（年初至报告期末）与「本期数」（单季/本报告期）也不是同一列。
+# 故拆成 6 类，跨类一律不互认；同类内仍靠归一化子串兜住措辞差异。
+# 顺序有意义：先匹配更具体的（累计/年初至期末），再匹配宽的「本期」。
 _COL_CLASSES = [
-    ("PRIOR_YEAR_SAME", r"上年同期|上年同期数|上期|上期数|上期发生额|上期金额|同期数|比较期"),
+    ("CURRENT_YTD", r"年初至报告期末|年初至本报告期末|本年累计|本期累计|本年数|"
+                    r"本报告期末累计|累计数"),
+    ("PRIOR_YEAR_YTD", r"上年年初至报告期末|上年同期累计|上年累计"),
+    ("PRIOR_YEAR_SAME", r"上年同期|上年同期数|上年同期金额|同期数|比较期|上年同期发生额"),
+    ("PRIOR_PERIOD", r"上期|上期数|上期发生额|上期金额|上一期"),
     ("YEAR_OPEN", r"年初|期初|上年年末|上年度末|年初数"),
     ("PERIOD_END", r"期末|期末数|年末|年末数"),
-    ("CURRENT", r"本期|本期数|本期发生额|本期金额|本报告期|报告期|本年累计|本期累计|本年数"),
+    ("CURRENT", r"本期|本期数|本期发生额|本期金额|本报告期|报告期"),
 ]
 
 
@@ -329,8 +338,93 @@ def _col_class(s):
     return None
 
 
+# 第十五轮 B 项：`_date_span` 原来只认「年+月区间」「年+月+日」「年+月」，于是
+# `2026年上半年`、`2026Q2`、`1-6月`（不带年）全部解析成 None，退回语义类被判等价。
+# 解析不出来**不等于可以按语义类证明等价**——那正是 Codex 指出的漏网路径。
+_RE_SPAN_RANGE = re.compile(r"(\d{4})\s*年\s*(\d{1,2})\s*[—\-~～至]\s*(\d{1,2})\s*月")
+_RE_SPAN_RANGE_NY = re.compile(r"(?<!\d)(\d{1,2})\s*[—\-~～至]\s*(\d{1,2})\s*月")
+_RE_SPAN_HALF = re.compile(r"(?:(\d{4})\s*年)?\s*(?:上半年|半年度|H1)")
+_RE_SPAN_HALF2 = re.compile(r"(?:(\d{4})\s*年)?\s*(?:下半年|H2)")
+_RE_SPAN_QUARTER = re.compile(r"(?:(\d{4})\s*年)?\s*(?:第)?\s*[Qq]([1-4])")
+_RE_SPAN_QCN = re.compile(r"(?:(\d{4})\s*年)?\s*第?([一二三四1-4])\s*季度")
+_RE_SPAN_POINT = re.compile(r"(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日")
+_RE_SPAN_MONTH = re.compile(r"(\d{4})\s*年\s*(\d{1,2})\s*月")
+# 「写着期间但解析不了」的线索词：出现这些词却解不出区间 → 不得按语义类放行
+_RE_PERIOD_HINT = re.compile(r"\d{4}\s*年|\d{1,2}\s*月|季度|[Qq][1-4]|上半年|下半年|半年度|"r"年初|年末|期末|期初|本期|上期|同期|累计")
+
+
+def _loose_year(t):
+    """列头里没有「年」字时，退一步找 4 位年份（`2026Q2` 这种写法）。"""
+    m = re.search(r"(?<!\d)(20\d{2})(?!\d)", t)
+    return int(m.group(1)) if m else None
+
+
+def _date_span(label):
+    """列头里写明的期间区间；没写就返回 None。
+
+    第十四轮 B 项：语义类只能说明「这是本期 / 上年同期」，说明不了「哪一段」。
+    列头自己写着 `本期金额（2026年1—6月）` 与 `本报告期金额（2026年4—6月）`，
+    归到同一类就互认，是把 6 个月与 3 个月当成同一列。区间写得出来就必须比区间。
+
+    第十五轮 B 项：各种写法**先归一到同一个坐标系**再比，否则
+    `2026年上半年` 与 `2026年1-6月` 明明同段却因为标签不同被判不等价（假阴性）。
+    归一规则：上半年→1–6 月、下半年→7–12 月、Qn→3n-2..3n 月；
+    没有年份的写法用 `R0` 与带年份的 `R` 区分（年份不确定就不能认同一列）。
+    """
+    t = _col_norm(label)
+    m = _RE_SPAN_RANGE.search(t)
+    if m:
+        return ("R", int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    m = _RE_SPAN_HALF.search(t)
+    if m:
+        y = int(m.group(1)) if m.group(1) else _loose_year(t)
+        return ("R", y, 1, 6) if y else ("R0", 1, 6)
+    m = _RE_SPAN_HALF2.search(t)
+    if m:
+        y = int(m.group(1)) if m.group(1) else _loose_year(t)
+        return ("R", y, 7, 12) if y else ("R0", 7, 12)
+    m = _RE_SPAN_QUARTER.search(t)
+    if m:
+        y = int(m.group(1)) if m.group(1) else _loose_year(t)
+        q = int(m.group(2))
+        return ("R", y, 3 * q - 2, 3 * q) if y else ("R0", 3 * q - 2, 3 * q)
+    m = _RE_SPAN_QCN.search(t)
+    if m:
+        y = int(m.group(1)) if m.group(1) else _loose_year(t)
+        q = "一二三四".find(m.group(2))
+        q = (q + 1) if q >= 0 else int(m.group(2))
+        return ("R", y, 3 * q - 2, 3 * q) if y else ("R0", 3 * q - 2, 3 * q)
+    m = _RE_SPAN_POINT.search(t)
+    if m:
+        return ("P", int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    m = _RE_SPAN_MONTH.search(t)
+    if m:
+        return ("M", int(m.group(1)), int(m.group(2)))
+    m = _RE_SPAN_RANGE_NY.search(t)
+    if m:
+        return ("R0", int(m.group(1)), int(m.group(2)))
+    return None
+
+
 def cols_equivalent(registered, actual):
-    """登记列头与实际列头是否指同一列。"""
+    """登记列头与实际列头是否指同一列。
+
+    判定顺序（第十四轮 B 项把「区间」提到「语义类」之前）：
+    ① 两侧都写明了期间区间 → **区间必须相同**（`本期金额（1—6月）` 与
+       `本报告期金额（4—6月）` 不是同一列，语义类相同也不认）；
+    ② 否则两侧都能归到期间类 → **必须同类**（跨类一律不认，不再退回子串，
+       否则「上年同期」与「上期」会靠共同后缀蒙过）；
+    ③ 只有至少一侧归不到类时，才退回归一化子串比对。
+    """
+    sa, sb = _date_span(registered), _date_span(actual)
+    if sa and sb:
+        return sa == sb
+    if sa or sb:
+        # 一侧解出了区间，另一侧写着期间线索却解不出：**无法确认，按不等价处理**。
+        # 不能把「我解析不了」翻译成「可以按语义类证明等价」——那是把未知当已知。
+        other = actual if sa else registered
+        if _RE_PERIOD_HINT.search(_col_norm(other)):
+            return False
     a, b = _col_class(registered), _col_class(actual)
     if a and b:
         return a == b

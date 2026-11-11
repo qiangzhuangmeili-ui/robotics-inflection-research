@@ -601,6 +601,16 @@ def _adjust_version(r, kp, doc, loc=None):
 
 
 
+# 第十三轮 F 项：定位结论必须逐字对应，不能一律写「两父均已定位」。
+# 上一轮只改了抽样说明，`parent_compat_conclusion` 这一列仍是写死的一句话，
+# 复核把 920289/600143/600008 三行拉出来就看出对不上。
+_LOCATED_TXT_BRIEF = {
+    "BOTH": "两父实际累计父数均已在原件按金额定位并确认目标行列",
+    "ONE": "仅一父实际累计父数在原件按金额定位并确认目标行列，另一父未定位",
+    "NONE": "两父实际累计父数均未在原件按金额定位",
+}
+
+
 def parent_detail(sec, fld, pk):
     """交付两个父输入各自的核证结论，而不只是「存在跨文档」这一事实。
 
@@ -698,9 +708,11 @@ def parent_detail(sec, fld, pk):
             (vrec.get(d1) or {}).get("verdict", "NA"), (vrec.get(d2) or {}).get("verdict", "NA")),
         "parent_compatible": {True: "YES", False: "NO", None: "NA"}[_pc((sec, fld, pk))],
         "parent_compat_conclusion": (
-            "两父实际累计父数已在原件按金额定位并确认目标行列（p.%s / p.%s）；"
-            "定位与行列确认都不构成兼容已证，兼容性仍须由 parent_verifications.csv "
-            "逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）" % (p1 or "?", p2 or "?")),
+            "%s（p.%s / p.%s）；定位与行列确认都不构成兼容已证，兼容性仍须由 "
+            "parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）"
+            % (_LOCATED_TXT_BRIEF[("BOTH" if ok1 and ok2 else
+                                   "ONE" if ok1 or ok2 else "NONE")],
+               p1 or "?", p2 or "?")),
         "parent_p1_locate": s1, "parent_p2_locate": s2,
         "parent_p1_fragment": f1, "parent_p2_fragment": f2,
         "parent_amount_located": ("BOTH" if ok1 and ok2 else
@@ -910,7 +922,7 @@ with open(OUT / "sampling_v5.csv", "w", encoding="utf-8-sig", newline="") as f:
 # 对照基线 `sampling_keys_baseline.csv`（上一交付版的样本键集，含来源哈希），
 # 逐键记录 增加/删除/保留，并把「为什么变」写清楚——不能只在报告里口头解释。
 # ---------------------------------------------------------------
-LOCATOR_VERSION = "V12"      # 定位器改版即改此值，diff 里逐行带上
+LOCATOR_VERSION = "V14"      # 定位器改版即改此值，diff 里逐行带上
 _SHA_SAMPLING = hashlib.sha256((OUT / "sampling_v5.csv").read_bytes()).hexdigest()
 
 
@@ -961,16 +973,17 @@ _PRED_OF_RISK = {
 }
 
 
-def _exit_reason(key, base_rows):
-    """REMOVED 的退出归因。四类互斥，不允许写成含糊的「不再命中判据」。
+def _exit_facts(key, base_rows):
+    """退出归因的**事实**：台账里还在不在、按当前定位器谓词重算是否仍命中。
 
-    LEDGER_KEY_GONE  台账已无该键（键集本身变化）
-    PREDICATE_FALSE  键仍在台账，但按当前定位器重算不再命中该风险类型的入选判据
-    RANK_CUT         判据仍成立，被同公司去重 / 候选池上限 / 评分排序截掉
-    UNKNOWN          判据未登记，无法重算——须人工看，不得默认成上面任一类
+    第十三轮 F 项：上一版只把归因写进 CSV/JSON，自检却读 JSON 里存好的结论，
+    把 CSV 的 exit_code 改坏也照样 PASS。现在把两个**可独立核对的事实**也写进 CSV
+    （ledger_present / predicate_true），exit_code 由这两列唯一决定，
+    C31 从 CSV 重算归因，不再依赖任何先前保存的摘要。
     """
-    if key not in _ledger_keys:
-        return "LEDGER_KEY_GONE", "台账已无该键（键集本身变化）"
+    ledger_present = key in _ledger_keys
+    if not ledger_present:
+        return False, "", "LEDGER_KEY_GONE", "台账已无该键（键集本身变化）"
     risks = sorted({x["risk_type"] for x in base_rows})
     for _rk in risks:
         _ent = _PRED_OF_RISK.get(_rk)
@@ -989,17 +1002,30 @@ def _exit_reason(key, base_rows):
             _msg = "判据仍成立（%s 谓词为真），但被名额规则截掉：%s" % (_rk, _quota)
             if _rk.startswith("R6"):
                 _msg += "；本轮实际入选的同类样本见 sampling_v5.csv 的 R6_* 行"
-            return "RANK_CUT", _msg
-        return ("PREDICATE_FALSE",
+            return True, True, "RANK_CUT", _msg
+        return (True, False, "PREDICATE_FALSE",
                 "键仍在台账，但按 %s 定位器重算已不满足 %s 的入选判据"
                 % (LOCATOR_VERSION, _rk))
-    return ("UNKNOWN", "判据未登记（%s），无法自动归因，须人工判定" % "/".join(risks))
+    return (True, "", "UNKNOWN",
+            "判据未登记（%s），无法自动归因，须人工判定" % "/".join(risks))
+
+
+def exit_code_of(ledger_present, predicate_true):
+    """exit_code 的唯一定义（sampling 与自检共用同一张映射）。"""
+    if ledger_present is False or str(ledger_present) == "False":
+        return "LEDGER_KEY_GONE"
+    if str(predicate_true) == "True":
+        return "RANK_CUT"
+    if str(predicate_true) == "False":
+        return "PREDICATE_FALSE"
+    return "UNKNOWN"
+
 
 _diff_rows = []
 for _k in sorted(set(_cur) | set(_base)):
     _c = _cur.get(_k) or []
     _b = _base.get(_k) or []
-    _exit_code = ""
+    _exit_code, _lp, _pt = "", "", ""
     if _c and _b:
         _status = "KEPT"
         _reason = "键集未变（当前风险类型 %s）" % "/".join(sorted({x["risk_type"] for x in _c}))
@@ -1008,7 +1034,7 @@ for _k in sorted(set(_cur) | set(_base)):
         _reason = "；".join(sorted({x.get("why_selected") or "" for x in _c}))[:400]
     else:
         _status = "REMOVED"
-        _exit_code, _reason = _exit_reason(_k, _b)
+        _lp, _pt, _exit_code, _reason = _exit_facts(_k, _b)
     _diff_rows.append({
         "status": _status,
         "key": _k,
@@ -1020,6 +1046,8 @@ for _k in sorted(set(_cur) | set(_base)):
         "baseline_risk_type": "/".join(sorted({x["risk_type"] for x in _b})),
         "current_sample_id": "/".join(sorted({x["sample_id"] for x in _c})),
         "current_risk_type": "/".join(sorted({x["risk_type"] for x in _c})),
+        "ledger_present": "" if _lp == "" else str(_lp),
+        "predicate_true": "" if _pt == "" else str(_pt),
         "exit_code": _exit_code,
         "reason": _reason,
         "locator_version": LOCATOR_VERSION,
@@ -1032,23 +1060,14 @@ with open(OUT / "sampling_keys_diff.csv", "w", encoding="utf-8-sig", newline="")
     w.writerows(_diff_rows)
 _diff_cnt = Counter(r["status"] for r in _diff_rows)
 
-# 退出归因自证（第十二轮 F 项）：RANK_CUT 必须谓词为真、PREDICATE_FALSE 必须谓词为假、
-# LEDGER_KEY_GONE 必须台账无该键。归因表与判据来自同一份谓词，这里只是防归因表写错。
+# 退出归因自证：exit_code 必须等于 (ledger_present, predicate_true) 的唯一映射结果。
+# 这一份是**生成期**自证；C31 会在自检里从 CSV 独立重算一遍，两者都不能省。
 _exit_bad, _exit_checked = [], 0
 for _r in _diff_rows:
     if _r["status"] != "REMOVED":
         continue
     _exit_checked += 1
-    if _r["key"] not in _ledger_keys:
-        _expect = "LEDGER_KEY_GONE"
-    else:
-        _ent = _PRED_OF_RISK.get(_r["baseline_risk_type"])
-        if _ent is None:
-            _expect = "UNKNOWN"
-        else:
-            _expect = ("RANK_CUT"
-                       if any(_ent[0](_row) for _row in _ledger_by_key.get(_r["key"], []))
-                       else "PREDICATE_FALSE")
+    _expect = exit_code_of(_r["ledger_present"], _r["predicate_true"])
     if _r["exit_code"] != _expect:
         _exit_bad.append({"key": _r["key"], "got": _r["exit_code"], "expect": _expect})
 _exit_ok = not _exit_bad

@@ -25,7 +25,7 @@ P_VERIFY = ROOT / "runs/issues/S02/remediation_20261029/restatement_verify/resul
 rows = list(csv.DictReader(P_VERIFY.open(encoding="utf-8-sig", newline="")))
 
 _orig = es._new_subject
-_old = lambda clause, st, window=10: False  # noqa: E731  ＝「关闭新主语判据」
+_old = lambda clause, st, window=10, start=None: False  # noqa: E731  ＝「关闭新主语判据」
 
 # 第十二轮 A 项：复核指出上一轮汇报「新判据在真实证据上从未触发」与插桩不符
 # （调用 88 次、判真 44 次）。这句话当时没有计数支撑，属无据断言。
@@ -53,10 +53,10 @@ def run(new_subject):
 
 def run_counted():
     """与 run(_orig) 等价，只是给当前判据挂计数器。"""
-    def _wrapped(clause, st, window=10):
-        v = _orig(clause, st, window)
+    def _wrapped(clause, st, window=10, start=None):
+        v = _orig(clause, st, window, start)
         _STAT["calls"] += 1
-        _h = es._head_noun(clause, st)
+        _h = es._head_noun(clause, st, start=start)
         _HEADS[_h] = _HEADS.get(_h, 0) + 1
         if v:
             _STAT["true"] += 1
@@ -106,7 +106,8 @@ summary = {
              "判据确实被调用（new_subject_calls）也确实判真（new_subject_true），"
              "其中判真且该位置金额非零的有 new_subject_true_nonzero 条。"
              "结论只能说「对存量证据的极性结果无影响」，不能说「判据从未触发」；"
-             "判据是否承重由 C34 的 38 条反例证明，不由本回放证明。"),
+             "判据是否承重由 C34 的反例集（polarity_cases.py）证明，不由本回放证明；"
+             "此处不复述条数，避免与 case_count 漂移。"),
     "changed_samples": samples,
 }
 (OUT / "replay_polarity_v5.json").write_text(
