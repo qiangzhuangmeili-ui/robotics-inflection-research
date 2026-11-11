@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 39,
-  "active_issue_key": "S04",
+  "active_issue_number": 53,
+  "active_issue_key": "S00_ERRATA_REVIEW",
   "executor": "WorkBuddy AI",
-  "started_at": "2026-11-08 17:45:00 +08:00",
-  "status": "S00_ERRATA_SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "claim_note": "S00 勘误 V2：20,024 条差异逐条定性，13,647 有依据、6,377 未闭合；全池 1054 家中 17 家名单内须 HOLD、179 家名单外有争议依赖需核漏筛。S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
+  "started_at": "2026-11-11 22:10:00 +08:00",
+  "status": "S00_ERRATA_V3_SELF_CHECK_PASS_AWAITING_RECHECK",
+  "claim_note": "已按 Codex 第三轮裁决返工出 S00 勘误 V3：重述核验改按 document_id 匹配（回填脚本只按文档应用，1,007 文档 1:1），元数据判据改为字段精确+操作语义+终值相等（changed_columns 有 1,425/2,022 为全列清单，旧子串判据恒真），登记 19 列/1,505 格补充元数据。核心未闭合 1,349、含补充列 1,719；全池 14 家须 HOLD、33 家须核证重算、5 家待定。自检 22/22 PASS，V1 台账代入 C13/C14/C17 分别检出 6/437/140 条违例。S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
   "last_completed": {
     "issue_key": "S04",
     "issue_number": 39,
@@ -23,9 +23,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 53,
-  "next_recommended_issue_key": "S00_ERRATA_REVIEW",
-  "next_recommended_reason": "按 Codex 裁决顺序：先完成 S00 勘误的独立补充验收（重点 2 家 HOLD、475 行弱依据、5,073 行未覆盖重述），再完成 S04 第二轮外部复核；S05 保持 WAITING_DEPENDENCIES",
+  "next_recommended_issue_number": 39,
+  "next_recommended_issue_key": "S04",
+  "next_recommended_reason": "S00 勘误 V3 已交付、等独立复核；复核通过后回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -403,19 +403,21 @@
       "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
     ],
     "report": "runs/issues/S04/REPORT.md",
-    "waiting_reason": "S00 勘误 V2 识别 17 家名单内公司的 L2 通过依赖未闭合差异（14 家重述/告警解除，3 家补行缺口），须待证据闭合；另有 179 家名单外公司有争议依赖，需核是否漏筛",
-    "s00_errata_ref": "runs/issues/S00/errata_20261111/"
+    "waiting_reason": "S00 勘误 V3 识别 14 家名单内公司的 L2 通过依赖未闭合差异（重述 WEAK 8、无依据补行 2、告警解除无证 2、键记录不符 1、重述判定相反 1），须待证据闭合；另有 33 家名单外公司争议键落在候选信号依赖内，须核证重算判是否漏筛",
+    "s00_errata_ref": "runs/issues/S00/errata_20261111_v3/"
   },
   "s00_errata": {
     "stage": "ERRATA",
     "issue_key": "S00",
-    "directory": "runs/issues/S00/errata_20261111/",
+    "directory": "runs/issues/S00/errata_20261111_v3/",
+    "v2_directory_preserved": "runs/issues/S00/errata_20261111/",
+    "v1_directory_preserved": "runs/issues/S00/errata_20261111/superseded_v1/",
     "supersession": "runs/issues/S00/supersession.json",
     "executor": "WorkBuddy AI",
     "review_nature": "SELF_CHECK",
     "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-    "reviewed_at": "2026-11-11T19:00:00+08:00",
-    "trigger": "发现 A(S00 交付件) 与 B(s00_v10) 并存且数值冲突；Codex 裁决要求补做限定范围的 S00 勘误验收",
+    "reviewed_at": "2026-11-11T21:30:00+08:00",
+    "trigger": "Codex 第三轮复核 RETURN_FOR_REWORK：元数据子串判据恒真、C14 对 V1 空转、单季派生未展开累计父输入、19 列 1,505 格未登记、报告分项写错",
     "authoritative_input": {
       "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
       "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
@@ -429,63 +431,72 @@
     "diff_totals": {
       "value": 240,
       "key": 2056,
-      "meta": 17728,
-      "resolved": 13647,
-      "unresolved": 6377,
+      "meta_core": 17728,
+      "meta_extra_columns": 1505,
+      "meta_extra_cells": 1505,
+      "resolved": 19810,
+      "unresolved_core": 1349,
+      "unresolved_with_extra": 1719,
       "value_unresolved": 34,
       "key_unresolved": 405,
-      "meta_unresolved": 5938,
-      "weak": 555,
+      "meta_unresolved": 910,
+      "extra_unresolved": 370,
+      "weak": 515,
       "unbacked_addition": 364,
-      "ambiguous_multi_record": 53,
+      "doc_never_verified": 26,
+      "field_not_in_record": 116,
+      "record_is_remove": 8,
       "sign_flip": 89
     },
+    "key_change_vs_v2": "重述核验改按 document_id 匹配（tools/s00_restatement_apply.py 第36/46行只按文档应用，1,007 文档 1:1）；元数据判据改为字段精确+操作语义+终值相等",
     "downstream": {
       "universe": 1054,
-      "not_affected": 427,
+      "not_affected": 430,
       "still_passes_without": 1,
-      "hold_pending_errata": 17,
-      "potential_miss_risk": 179,
-      "out_of_list_clean": 430,
+      "hold_pending_errata": 14,
+      "r2_may_change": 33,
+      "r3_pending": 5,
+      "r1_no_link": 571,
+      "restricted_claims": 74,
       "hold_list": [
         "BJ:920022 世昌股份",
         "BJ:920198 微创光电",
         "BJ:920220 朗信电气",
         "BJ:920289 华汇智能",
-        "SH:600215 派斯林",
-        "SH:603194 中力股份",
         "SH:688320 禾川科技",
         "SH:688328 深科达",
         "SH:688518 联赢激光",
         "SZ:000591 太阳能",
         "SZ:002010 传化智联",
         "SZ:002261 拓维信息",
-        "SZ:002284 亚太股份",
         "SZ:002594 比亚迪",
         "SZ:002833 弘亚数控",
         "SZ:002933 新兴装备",
         "SZ:300193 佳士科技"
       ]
     },
-    "checks": "16/16 PASS",
+    "checks": "22/22 PASS（含 V1 故障注入：C13/C14/C17 分别检出 6/437/140 条违例）",
     "reproducible": true,
     "limits": [
       "未回读 PDF、未修改任何数据文件",
-      "6,377 条未闭合未做原文核验",
+      "1,349 条核心未闭合未做原文核验",
       "未覆盖锚定期回退路径的间接依赖",
+      "370 格补充元数据未判定是否影响入选",
       "自检不等同独立验收",
-      "只能称「已识别 17 家须 HOLD」，不能称「只有 17 家」"
+      "只能称「已识别 14 家须 HOLD」，不能称「只有 14 家」"
     ],
-    "report": "runs/issues/S00/errata_20261111/REPORT.md",
-    "handoff": "runs/issues/S00/errata_20261111/handoff.md",
+    "report": "runs/issues/S00/errata_20261111_v3/REPORT.md",
+    "handoff": "runs/issues/S00/errata_20261111_v3/handoff.md",
     "issue_number": 53,
     "github_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/53",
-    "version": "ERRATA_V2",
-    "v1_defects_fixed": [
-      "UPDATE 记录未校验值（6 格）",
-      "元数据同键兜底（19 条）",
-      "重述多记录取首条（47 条不一致）",
-      "SG02(M03) 依赖期间漏前季（大豪科技）"
+    "version": "ERRATA_V3",
+    "v2_defects_fixed": [
+      "元数据子串判据（changed_columns 1,425/2,022 为全列清单）",
+      "C13 未要求记录存在与 UPDATE",
+      "C14 只检查 evidence 文字、对 V1 空转",
+      "单季派生未展开累计父输入",
+      "19 列 1,505 格未登记",
+      "重述按 (公司,期间) 匹配导致 5,073 条误判未覆盖"
     ]
   }
 }

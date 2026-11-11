@@ -1,0 +1,145 @@
+{
+  "generated_at": "2026-11-11T21:10:00+08:00",
+  "version": "ERRATA_V3",
+  "scope": "A vs B 全量差异（含 24 个元数据列），判据按 Codex 第三轮裁决收紧",
+  "nature": "SELF_CHECK",
+  "changes_from_v2": [
+    "元数据判据改为「字段精确成员 + 操作语义适用 + 记录终值等于 B」；changed_columns 有 1,425/2,022 条为全列清单，V2 子串判据等于恒真",
+    "非 status 字段不能由 delta 解释，document_id/pit_status/consolidation_scope 全部重开",
+    "重述核验改按 document_id 匹配（apply 脚本按文档应用，1,007 文档 1:1 记录）",
+    "新增 19 列 / 1,505 格元数据差异登记与分类",
+    "WEAK 一律计未闭合；REMOVE 记录不得解释 B 中保留行"
+  ],
+  "versions": {
+    "A": {
+      "rows": 228155,
+      "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6"
+    },
+    "v7": {
+      "rows": 229393,
+      "sha256": "c5ef89d1f58fd714165952ddc2bfb4c9d590730e9336c8388cab88b86583c479"
+    },
+    "v9": {
+      "rows": 229666,
+      "sha256": "8c27f5fbcd9be1ba85bbb94f5face713540b127bb7b95f511b276f937e6f9a73"
+    },
+    "B": {
+      "rows": 229667,
+      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+    }
+  },
+  "value_diff": {
+    "total": 240,
+    "by_step": {
+      "A_to_v7": 217,
+      "v9_to_v10": 21,
+      "cross_step": 2
+    },
+    "by_bucket": {
+      "量级差异": 154,
+      "小幅差异": 53,
+      "中间倍数": 33
+    },
+    "sign_flip": 89,
+    "by_resolution": {
+      "RESOLVED_NORMALIZED_DELTA": 185,
+      "UNRESOLVED_NO_EVIDENCE": 28,
+      "RESOLVED_RESTATED_ADOPTION": 21,
+      "UNRESOLVED_EVIDENCE_MISMATCH": 6
+    },
+    "open": 34,
+    "companies": 37
+  },
+  "key_diff": {
+    "total": 2056,
+    "by_step": {
+      "A_to_v7": 1786,
+      "v7_to_v9": 269,
+      "v9_to_v10": 1
+    },
+    "by_side": {
+      "ONLY_B": 1784,
+      "ONLY_A": 272
+    },
+    "by_resolution": {
+      "RESOLVED_NORMALIZED_DELTA": 1381,
+      "UNRESOLVED_UNBACKED_ADDITION": 364,
+      "RESOLVED_M07_NPDEDT_OVERRIDE": 228,
+      "RESOLVED_M07_REPAIR": 41,
+      "UNRESOLVED_EVIDENCE_MISMATCH": 31,
+      "UNRESOLVED_NO_EVIDENCE": 10,
+      "RESOLVED_RESTATED_ADOPTION": 1
+    },
+    "open": 405,
+    "companies": 141
+  },
+  "meta_diff": {
+    "total": 17728,
+    "by_field": {
+      "restatement_flag": 17009,
+      "status": 555,
+      "document_id": 83,
+      "pit_status": 48,
+      "consolidation_scope": 33
+    },
+    "by_resolution": {
+      "RESOLVED_RESTATEMENT_VERIFY_DOC": 16464,
+      "UNRESOLVED_WEAK_ASSUMPTION": 515,
+      "RESOLVED_NORMALIZED_DELTA": 354,
+      "UNRESOLVED_NO_EVIDENCE": 225,
+      "UNRESOLVED_FIELD_NOT_IN_RECORD": 116,
+      "UNRESOLVED_DOC_NEVER_VERIFIED": 26,
+      "UNRESOLVED_EVIDENCE_MISMATCH": 20,
+      "UNRESOLVED_RECORD_IS_REMOVE": 8
+    },
+    "open": 910,
+    "companies": 392
+  },
+  "extra_meta_diff": {
+    "total": 1505,
+    "by_class": {
+      "AFFECTS_QUALIFICATION": 674,
+      "TRACE_OR_DISPLAY": 421,
+      "AFFECTS_VALUE": 410
+    },
+    "by_field": {
+      "comparability_note": 361,
+      "upstream_hold_fields": 304,
+      "value_raw": 170,
+      "period_source": 101,
+      "evidence_label": 85,
+      "published_on": 83,
+      "source_page": 78,
+      "adoption_reason": 54,
+      "source_kind": 52,
+      "slot_id": 43,
+      "version_used": 27,
+      "status_reason": 26,
+      "value_before_adoption": 26,
+      "unit_raw": 25,
+      "unit_scale": 25,
+      "original_document_id": 24,
+      "currency": 12,
+      "quarterly_inputs": 6,
+      "low_base_flag": 3
+    },
+    "by_resolution": {
+      "REGISTERED_WITH_RECORD": 714,
+      "REGISTERED_DISPLAY_ONLY": 421,
+      "UNRESOLVED_NO_EVIDENCE": 370
+    },
+    "open": 370,
+    "companies": 54
+  },
+  "open_total_core": 1349,
+  "open_total_all": 1719,
+  "restatement_apply_summary": {
+    "NEEDS_REVIEW->否": 17266,
+    "NEEDS_REVIEW->是": 9
+  },
+  "known_limits": [
+    "未回读 PDF；所有依据来自既有记录",
+    "锚定期回退路径的间接依赖仍未覆盖",
+    "19 列中 AFFECTS_QUALIFICATION 类未判定是否影响本次资格，仅登记"
+  ]
+}
