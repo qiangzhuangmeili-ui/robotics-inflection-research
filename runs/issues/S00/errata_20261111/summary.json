@@ -1,25 +1,29 @@
 {
-  "generated_at": "2026-11-11T15:40:00+08:00",
-  "scope": "A(runs/issues/S00/financial_normalized.csv) vs B(s00_v10)",
+  "generated_at": "2026-11-11T18:30:00+08:00",
+  "version": "ERRATA_V2",
+  "scope": "A vs B 全量差异（含元数据与键集），依据校验加强",
   "nature": "SELF_CHECK",
+  "fixes_from_v1": [
+    "UPDATE 记录校验 new_value 与实际值一致（v1 仅按键匹配）",
+    "元数据不得按同键有记录兜底，须 changed_columns 含该字段",
+    "重述多记录须全部一致且等于 B，互斥标 AMBIGUOUS",
+    "ONLY_B 无记录计入验收缺口",
+    "ASSUMED_NO_PENDING_REVIEW 不计入已解决"
+  ],
   "versions": {
     "A": {
-      "path": "runs\\issues\\S00\\financial_normalized.csv",
       "rows": 228155,
       "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6"
     },
     "v7": {
-      "path": "runs\\issues\\S02\\remediation_20261029\\collect_q3_2026\\s00_v7.csv",
       "rows": 229393,
       "sha256": "c5ef89d1f58fd714165952ddc2bfb4c9d590730e9336c8388cab88b86583c479"
     },
     "v9": {
-      "path": "runs\\issues\\S02\\m07_repair_20261030\\s00_v9.csv.gz",
       "rows": 229666,
       "sha256": "8c27f5fbcd9be1ba85bbb94f5face713540b127bb7b95f511b276f937e6f9a73"
     },
     "B": {
-      "path": "runs\\issues\\S02\\hangcha_restated_20261101\\s00_v10\\s00_v10.csv.gz",
       "rows": 229667,
       "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
     }
@@ -29,7 +33,7 @@
     "by_step": {
       "A_to_v7": 217,
       "v9_to_v10": 21,
-      "unknown": 2
+      "cross_step": 2
     },
     "by_bucket": {
       "量级差异": 154,
@@ -38,10 +42,12 @@
     },
     "sign_flip": 89,
     "by_resolution": {
-      "RESOLVED_NORMALIZED_DELTA": 191,
+      "RESOLVED_NORMALIZED_DELTA": 185,
       "UNRESOLVED_NO_EVIDENCE": 28,
-      "RESOLVED_RESTATED_ADOPTION": 21
+      "RESOLVED_RESTATED_ADOPTION": 21,
+      "UNRESOLVED_EVIDENCE_MISMATCH": 6
     },
+    "open": 34,
     "companies": 37
   },
   "key_diff": {
@@ -56,12 +62,15 @@
       "ONLY_A": 272
     },
     "by_resolution": {
-      "RESOLVED_NORMALIZED_DELTA": 1412,
-      "UNRESOLVED_NO_EVIDENCE": 374,
+      "RESOLVED_NORMALIZED_DELTA": 1381,
+      "UNRESOLVED_UNBACKED_ADDITION": 364,
       "RESOLVED_M07_NPDEDT_OVERRIDE": 228,
       "RESOLVED_M07_REPAIR": 41,
+      "UNRESOLVED_EVIDENCE_MISMATCH": 31,
+      "UNRESOLVED_NO_EVIDENCE": 10,
       "RESOLVED_RESTATED_ADOPTION": 1
     },
+    "open": 405,
     "companies": 141
   },
   "meta_diff": {
@@ -74,32 +83,24 @@
       "consolidation_scope": 33
     },
     "by_resolution": {
-      "RESOLVED_RESTATEMENT_VERIFY": 11461,
-      "UNRESOLVED_NO_EVIDENCE": 5298,
-      "RESOLVED_NORMALIZED_DELTA": 494,
-      "RESOLVED_RESTATEMENT_VERIFY_WEAK": 475
+      "RESOLVED_RESTATEMENT_VERIFY": 11315,
+      "UNRESOLVED_NO_EVIDENCE": 5317,
+      "RESOLVED_RESTATEMENT_VERIFY_WEAK": 555,
+      "RESOLVED_NORMALIZED_DELTA": 475,
+      "UNRESOLVED_AMBIGUOUS_MULTI_RECORD": 53,
+      "UNRESOLVED_EVIDENCE_MISMATCH": 13
     },
+    "open": 5938,
     "companies": 392
   },
-  "downstream": {
-    "companies_with_diff": 419,
-    "by_s04_status": {
-      "IN_TIGHT_OBSERVE": 244,
-      "IN_TIGHT_PASS": 175
-    },
-    "by_verdict": {
-      "OBSERVE_WITH_UNRESOLVED_DEPS": 165,
-      "IN_LIST_WITH_UNRESOLVED_DEPS": 131,
-      "CLEAN_ALL_RESOLVED": 123
-    }
-  },
+  "open_total": 6377,
   "restatement_apply_summary": {
     "NEEDS_REVIEW->否": 17266,
     "NEEDS_REVIEW->是": 9
   },
-  "known_gaps": [
-    "26 格值差异与 374 个键增删在 normalized_delta 中无记录，标 UNRESOLVED",
-    "5,073 行重述标记变化不在 results.csv 覆盖范围内，标 UNRESOLVED",
-    "ASSUMED_NO_PENDING_REVIEW 方法属假设非实证，单列 WEAK"
+  "known_limits": [
+    "未回读 PDF；所有依据来自既有记录",
+    "B 补行是否应有依据，取决于补采流程是否留痕；本台账只标缺口",
+    "未覆盖「最新可用期选择」的间接依赖"
   ]
 }

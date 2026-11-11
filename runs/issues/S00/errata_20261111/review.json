@@ -1,11 +1,12 @@
 {
   "issue_key": "S00",
   "stage": "ERRATA",
+  "version": "ERRATA_V2",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-11T16:20:00+08:00",
-  "checks_pass": 12,
-  "checks_total": 12,
+  "reviewed_at": "2026-11-11T19:00:00+08:00",
+  "checks_pass": 16,
+  "checks_total": 16,
   "checks": [
     {
       "id": "C01",
@@ -21,7 +22,6 @@
       "name": "行数与登记表一致",
       "result": "PASS",
       "detail": {
-        "A_rows": 228155,
         "B_rows": 229667
       }
     },
@@ -40,15 +40,15 @@
       "name": "每条差异均有处置结论",
       "result": "PASS",
       "detail": {
-        "missing_resolution": 0
+        "rows": 20024
       }
     },
     {
       "id": "C05",
-      "name": "未解决项均写明原因",
+      "name": "未闭合项均写明原因",
       "result": "PASS",
       "detail": {
-        "unresolved_without_evidence": 0
+        "missing": 0
       }
     },
     {
@@ -69,13 +69,16 @@
     },
     {
       "id": "C08",
-      "name": "445 家判定守恒",
+      "name": "全池 1054 家判定守恒",
       "result": "PASS",
       "detail": {
-        "total": 445,
+        "total": 1054,
         "by_verdict": {
-          "NOT_AFFECTED": 443,
-          "HOLD_PENDING_ERRATA": 2
+          "OUT_OF_LIST_CLEAN": 430,
+          "HOLD_PENDING_ERRATA": 17,
+          "NOT_AFFECTED": 427,
+          "POTENTIAL_MISS_RISK": 179,
+          "STILL_PASSES_WITHOUT": 1
         }
       }
     },
@@ -84,20 +87,16 @@
       "name": "HOLD 家争议可追溯到具体字段与期间",
       "result": "PASS",
       "detail": {
-        "hold_count": 2,
-        "ids": [
-          "SH:688320",
-          "SH:688518"
-        ]
+        "hold_count": 17
       }
     },
     {
       "id": "C10",
-      "name": "未解决总数与登记表一致",
+      "name": "未闭合总数与 summary 一致",
       "result": "PASS",
       "detail": {
-        "computed": 5700,
-        "declared": 5700
+        "computed": 6377,
+        "declared": 6377
       }
     },
     {
@@ -114,12 +113,54 @@
       "name": "输入文件未被本次工作修改",
       "result": "PASS",
       "detail": {
-        "A_mtime": "2026-10-29T09:49:48.000675",
-        "B_mtime": "2026-11-02T22:31:45.981410"
+        "mtimes": [
+          "2026-10-29T09:49:48.000675",
+          "2026-11-02T22:31:45.981410"
+        ]
+      }
+    },
+    {
+      "id": "C13",
+      "name": "标为已解决的值差异，其记录值与实际值一致",
+      "result": "PASS",
+      "detail": {
+        "inconsistent": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "C14",
+      "name": "重述多记录互斥者未被标为已解决",
+      "result": "PASS",
+      "detail": {
+        "ambiguous_marked": 53,
+        "leaked": 0
+      }
+    },
+    {
+      "id": "C15",
+      "name": "SG02(M03) 覆盖前季与上年同期",
+      "result": "PASS",
+      "detail": {
+        "SH:603025_verdict": "STILL_PASSES_WITHOUT",
+        "detail": "SG02=FIN.REV.SQ@20250331[RESTATEMENT]"
+      }
+    },
+    {
+      "id": "C16",
+      "name": "大豪科技不再被误判为未受影响",
+      "result": "PASS",
+      "detail": {
+        "verdict": "STILL_PASSES_WITHOUT"
       }
     }
   ],
-  "not_independent": "本记录由执行方自检产生，不构成独立验收；5,700 条未解决项未做原文核验。",
-  "release_S05": false,
-  "release_note": "S04 第二轮复核与 S00 补充验收均未完成，S05 不得放行"
+  "v1_defects_fixed": [
+    "UPDATE new_value 未校验（6 格）→ C13",
+    "元数据同键兜底（19 条）→ 改为 changed_columns 必须含该字段",
+    "重述多记录取首条（47 条不一致）→ C14 + AMBIGUOUS 标记",
+    "SG02 依赖期间漏前季（大豪科技）→ C15/C16"
+  ],
+  "not_independent": "执行方自检，不构成独立验收；未回读 PDF。",
+  "release_S05": false
 }

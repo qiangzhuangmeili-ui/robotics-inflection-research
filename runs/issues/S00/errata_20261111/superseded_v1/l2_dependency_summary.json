@@ -1,0 +1,31 @@
+{
+  "scope": "S04 tight_pass 445 家 vs S00 真争议差异",
+  "generated_at": "2026-11-11T16:05:00+08:00",
+  "nature": "SELF_CHECK",
+  "logic": {
+    "DISPUTED_VALUE": "值差异无依据",
+    "DISPUTED_RELEASE": "A 为告警态、B 解除告警，无依据",
+    "DISPUTED_DROP": "A 有行、B 删除，无依据",
+    "DISPUTED_RESTATEMENT": "重述标记变化不在核验范围",
+    "B_ONLY_FILL": "B 补行，不计争议"
+  },
+  "verdicts": {
+    "NOT_AFFECTED": 443,
+    "HOLD_PENDING_ERRATA": 2
+  },
+  "hold_list": [
+    {
+      "security_id": "SH:688320",
+      "stock_name": "禾川科技",
+      "disputed_dims": "GROWTH;MARGIN;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20260630[DISPUTED_RELEASE];SG02=FIN.REV.SQ@20260630[DISPUTED_RELEASE];SG03=FIN.GROSSMARGIN.PCT@20260630[DISPUTED_RELEASE]|FIN.REV.YTD@20260630[DISPUTED_RELEASE];SG05=FIN.REV.YTD@20260630[DISPUTED_RELEASE]"
+    },
+    {
+      "security_id": "SH:688518",
+      "stock_name": "联赢激光",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20260630[DISPUTED_RELEASE];SG02=FIN.REV.SQ@20260630[DISPUTED_RELEASE];SG05=FIN.REV.YTD@20260630[DISPUTED_RELEASE]"
+    }
+  ],
+  "note": "仅检查当期与上年同期的直接依赖；未覆盖最新可用期选择等间接依赖，未回读原文。SELF_CHECK，不替代独立复核。"
+}

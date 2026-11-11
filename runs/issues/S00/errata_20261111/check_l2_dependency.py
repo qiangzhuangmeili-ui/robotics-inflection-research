@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""S00 勘误 → S04 名单依赖判定（v2，区分「B 补行」与「真争议」）
+"""S00 勘误 → 影响判定 v2（全池 1054 家）
 
-修正 v1 的逻辑错误：把 ONLY_B 键差异一律当争议，导致 2 家假警报。
-A 里没有该行、B 补上，不构成「两版冲突」；真正需要解释的是：
-  1. 值差异（A 有值、B 有值、两者不同）
-  2. 状态解除（A 为 HOLD / 勾稽不符 / PROVISIONAL，B 变为正常）
-  3. A 有行、B 删除（B 少了数据）
-  4. 重述标记变化且无核验依据
+修正 Codex 第二轮指出的依赖期间缺陷：
+- SG02 使用 M03（单季营收加速度）= M02(t) − M02(t−1q)，
+  依赖 {t, t−1q, t−1y, t−1y−1q} 四个季度，v1 只查了两个。
+- WEAK 依据（ASSUMED_NO_PENDING_REVIEW）与 UNBACKED_ADDITION 均计入争议。
+
+判定分级（445 家名单内）：
+- NOT_AFFECTED            所有依赖信号未触及争议
+- STILL_PASSES_WITHOUT    部分信号争议，但剔除后仍 ≥2 维度成立
+- HOLD_PENDING_ERRATA     剩余可支撑维度 <2
+
+名单外公司另标 POTENTIAL_MISS_RISK（有争议但未入选，供后续核原文）。
 """
 import csv
 import json
@@ -26,11 +31,38 @@ METRIC_FIELDS = {
     "M11": ["FIN.INV.INSTANT", "FIN.COST.YTD"],
     "M12": ["FIN.CONTRACTASSET.INSTANT", "FIN.REV.YTD"],
 }
+# 需要前季的指标（加速度类）
+NEEDS_PREV_Q = {"M03"}
 ALARM = ("HOLD", "MISMATCH", "PROVISIONAL", "CONFLICT", "MISSING", "ABSENT", "UNDEFINED")
 
 rules = json.loads((ROOT / "runs/issues/S01/screen_rules_v2.json").read_text(encoding="utf-8"))
 SG_METRIC = {s["id"]: s["metric"] for s in rules["signals"]}
 SG_DIM = {s["id"]: s["dimension"] for s in rules["signals"]}
+
+
+def prev_year(pk):
+    return str(int(pk[:4]) - 1) + pk[4:]
+
+
+QMAP = {"0331": "1231", "0630": "0331", "0930": "0630", "1231": "0930"}
+
+
+def prev_quarter(pk):
+    tail = pk[4:]
+    if tail == "0331":
+        return str(int(pk[:4]) - 1) + "1231"
+    return pk[:4] + QMAP[tail]
+
+
+def periods_for(mid, anchor):
+    if mid in NEEDS_PREV_Q:
+        q = prev_quarter(anchor)
+        return {anchor, q, prev_year(anchor), prev_year(q)}
+    return {anchor, prev_year(anchor)}
+
+
+def is_open(res):
+    return res.startswith("UNRESOLVED") or res.endswith("_WEAK")
 
 
 def is_alarm(v):
@@ -42,54 +74,64 @@ fills = defaultdict(int)
 
 with open(OUT / "cell_diff.csv", encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
-        if r["resolution"].startswith("UNRESOLVED"):
+        if is_open(r["resolution"]):
             disputes[(r["security_id"], r["field_id"], r["period_key"])].append(
-                ("DISPUTED_VALUE", "A=%s B=%s 符号翻=%s" % (
-                    r["value_A"][:16], r["value_B"][:16], r["sign_flip"])))
+                "VALUE:%s" % r["resolution"])
 
 with open(OUT / "key_diff.csv", encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
         k = (r["security_id"], r["field_id"], r["period_key"])
-        if r["side"] == "ONLY_B":
-            fills[k] += 1
-        elif r["resolution"].startswith("UNRESOLVED"):
-            disputes[k].append(("DISPUTED_DROP", "A 有行、B 无"))
+        if r["resolution"] == "UNRESOLVED_UNBACKED_ADDITION":
+            disputes[k].append("ADD_UNBACKED")
+        elif is_open(r["resolution"]):
+            disputes[k].append("KEY:%s" % r["resolution"])
 
 with open(OUT / "meta_diff.csv", encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
-        if not r["resolution"].startswith("UNRESOLVED"):
+        if not is_open(r["resolution"]):
             continue
         k = (r["security_id"], r["field_id"], r["period_key"])
         if r["meta_field"] == "restatement_flag":
-            disputes[k].append(("DISPUTED_RESTATEMENT",
-                                "A=%s B=%s" % (r["value_A"][:20], r["value_B"][:8])))
+            disputes[k].append("RESTATEMENT")
         elif is_alarm(r["value_A"]) and not is_alarm(r["value_B"]):
-            disputes[k].append(("DISPUTED_RELEASE",
-                                "A=%s B=%s" % (r["value_A"][:24], r["value_B"][:16])))
+            disputes[k].append("RELEASE")
+        else:
+            disputes[k].append("META:%s" % r["meta_field"])
 
-print("争议键:", len(disputes), " B 补行键:", len(fills))
+print("争议键:", len(disputes))
 
+# 全池：从 S03 三分区取公司与锚定期
+universe = {}
+for part in ("wide_pass", "wide_defer", "wide_unknown"):
+    with open(ROOT / f"runs/issues/S03/rerun_20261106/{part}.csv",
+              encoding="utf-8-sig", newline="") as f:
+        for r in csv.DictReader(f):
+            universe[r["company_id"]] = {
+                "name": r.get("company_name", ""),
+                "anchor": r.get("anchor_period", ""),
+                "partition": part,
+            }
 
-def prev_year(pk):
-    return str(int(pk[:4]) - 1) + pk[4:]
-
-
-rows = []
+pass_rows = {}
 with open(ROOT / "runs/issues/S04/tight_pass.csv", encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
-        sec = r["company_id"]
-        anchor = r.get("anchor_period", "")
-        sgs = [x for x in (r.get("qualified_sg") or "").split(";") if x]
-        periods = {anchor, prev_year(anchor)} if anchor else set()
-        ok_dims, hit_dims = set(), set()
-        detail = []
+        pass_rows[r["company_id"]] = r
+
+rows = []
+for sec in sorted(universe):
+    anchor = universe[sec]["anchor"]
+    p = pass_rows.get(sec)
+    if p:
+        sgs = [x for x in (p.get("qualified_sg") or "").split(";") if x]
+        ok_dims, hit_dims, detail = set(), set(), []
         for sg in sgs:
             mid = SG_METRIC.get(sg, "")
             hits = []
             for fld in METRIC_FIELDS.get(mid, []):
-                for pk in periods:
-                    for kind, d in disputes.get((sec, fld, pk), []):
-                        hits.append("%s@%s[%s]" % (fld, pk, kind))
+                for pk in sorted(periods_for(mid, anchor)):
+                    if (sec, fld, pk) in disputes:
+                        hits.append("%s@%s[%s]" % (
+                            fld, pk, "/".join(sorted(set(disputes[(sec, fld, pk)])))))
             if hits:
                 hit_dims.add(SG_DIM.get(sg, ""))
                 detail.append("%s=%s" % (sg, "|".join(hits)))
@@ -102,14 +144,25 @@ with open(ROOT / "runs/issues/S04/tight_pass.csv", encoding="utf-8-sig", newline
         else:
             verdict = "HOLD_PENDING_ERRATA"
         rows.append({
-            "security_id": sec, "stock_name": r.get("company_name", ""),
-            "anchor_period": anchor, "qualified_sg": r.get("qualified_sg", ""),
-            "qualified_dims": r.get("qualified_dims", ""),
-            "n_dims_total": len({SG_DIM.get(s, "") for s in sgs}),
+            "security_id": sec, "stock_name": universe[sec]["name"],
+            "in_s04_pass": "YES", "anchor_period": anchor,
+            "qualified_sg": p.get("qualified_sg", ""),
+            "qualified_dims": p.get("qualified_dims", ""),
             "n_dims_undisputed": len(ok_dims),
             "disputed_dims": ";".join(sorted(x for x in hit_dims if x)),
             "dispute_detail": ";".join(detail),
             "verdict": verdict,
+        })
+    else:
+        # 名单外：只要有争议依赖就标潜在漏筛风险
+        n = sum(1 for k in disputes if k[0] == sec)
+        rows.append({
+            "security_id": sec, "stock_name": universe[sec]["name"],
+            "in_s04_pass": "NO", "anchor_period": anchor,
+            "qualified_sg": "", "qualified_dims": "",
+            "n_dims_undisputed": 0, "disputed_dims": "",
+            "dispute_detail": "%d 个争议键" % n if n else "",
+            "verdict": "POTENTIAL_MISS_RISK" if n else "OUT_OF_LIST_CLEAN",
         })
 
 with open(OUT / "l2_dependency_check.csv", "w", encoding="utf-8-sig", newline="") as f:
@@ -118,32 +171,31 @@ with open(OUT / "l2_dependency_check.csv", "w", encoding="utf-8-sig", newline=""
     w.writerows(rows)
 
 c = Counter(r["verdict"] for r in rows)
-print("445 家判定:", dict(c))
+print("全池 %d 家判定:" % len(rows), dict(c))
+print("\nHOLD 明细:")
 for r in rows:
-    if r["verdict"] != "NOT_AFFECTED":
-        print("  %-11s %-8s %-20s 争议维度=%-22s %s" % (
-            r["security_id"], r["stock_name"], r["verdict"],
-            r["disputed_dims"], r["dispute_detail"][:110]))
+    if r["verdict"] == "HOLD_PENDING_ERRATA":
+        print("  %-11s %-8s dims=%-8s 争议维度=%-20s %s" % (
+            r["security_id"], r["stock_name"], r["qualified_dims"],
+            r["disputed_dims"], r["dispute_detail"][:120]))
 
 summary = {
-    "scope": "S04 tight_pass 445 家 vs S00 真争议差异",
-    "generated_at": "2026-11-11T16:05:00+08:00",
+    "scope": "全池 1054 家 vs S00 未闭合差异（含 WEAK 与无依据新增）",
+    "generated_at": "2026-11-11T18:40:00+08:00",
     "nature": "SELF_CHECK",
-    "logic": {
-        "DISPUTED_VALUE": "值差异无依据",
-        "DISPUTED_RELEASE": "A 为告警态、B 解除告警，无依据",
-        "DISPUTED_DROP": "A 有行、B 删除，无依据",
-        "DISPUTED_RESTATEMENT": "重述标记变化不在核验范围",
-        "B_ONLY_FILL": "B 补行，不计争议",
+    "period_rule": {
+        "M03": "t, t-1q, t-1y, t-1y-1q（加速度需四季）",
+        "others": "t, t-1y",
     },
     "verdicts": dict(c),
     "hold_list": [{"security_id": r["security_id"], "stock_name": r["stock_name"],
-                   "disputed_dims": r["disputed_dims"],
-                   "detail": r["dispute_detail"]}
+                   "disputed_dims": r["disputed_dims"], "detail": r["dispute_detail"]}
                   for r in rows if r["verdict"] == "HOLD_PENDING_ERRATA"],
-    "note": ("仅检查当期与上年同期的直接依赖；未覆盖最新可用期选择等间接依赖，"
-             "未回读原文。SELF_CHECK，不替代独立复核。"),
+    "still_passes_count": c.get("STILL_PASSES_WITHOUT", 0),
+    "potential_miss_count": c.get("POTENTIAL_MISS_RISK", 0),
+    "note": ("争议判定含 UNRESOLVED_* 与 WEAK、UNBACKED_ADDITION；"
+             "未回读原文，未覆盖锚定期回退路径的间接依赖。SELF_CHECK。"),
 }
 (OUT / "l2_dependency_summary.json").write_text(
     json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-print("\n已更新 l2_dependency_check.csv / l2_dependency_summary.json")
+print("\n已写 l2_dependency_check.csv / l2_dependency_summary.json")

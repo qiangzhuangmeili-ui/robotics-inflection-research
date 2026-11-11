@@ -5,7 +5,7 @@
   "executor": "WorkBuddy AI",
   "started_at": "2026-11-08 17:45:00 +08:00",
   "status": "S00_ERRATA_SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "claim_note": "S00 勘误台账完成：20,024 条差异逐条定性，14,324 有依据、5,700 未解决；445 家中 443 家 L2 结论不受影响，禾川科技/联赢激光待勘误闭合。S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
+  "claim_note": "S00 勘误 V2：20,024 条差异逐条定性，13,647 有依据、6,377 未闭合；全池 1054 家中 17 家名单内须 HOLD、179 家名单外有争议依赖需核漏筛。S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
   "last_completed": {
     "issue_key": "S04",
     "issue_number": 39,
@@ -403,7 +403,7 @@
       "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
     ],
     "report": "runs/issues/S04/REPORT.md",
-    "waiting_reason": "S00 勘误发现 2 家名单内公司（禾川科技 SH:688320、联赢激光 SH:688518）的 L2 通过依赖无依据的告警解除，须待勘误闭合后重新确认；其余 443 家结论不受未解决差异影响",
+    "waiting_reason": "S00 勘误 V2 识别 17 家名单内公司的 L2 通过依赖未闭合差异（14 家重述/告警解除，3 家补行缺口），须待证据闭合；另有 179 家名单外公司有争议依赖，需核是否漏筛",
     "s00_errata_ref": "runs/issues/S00/errata_20261111/"
   },
   "s00_errata": {
@@ -414,7 +414,7 @@
     "executor": "WorkBuddy AI",
     "review_nature": "SELF_CHECK",
     "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-    "reviewed_at": "2026-11-11T16:20:00+08:00",
+    "reviewed_at": "2026-11-11T19:00:00+08:00",
     "trigger": "发现 A(S00 交付件) 与 B(s00_v10) 并存且数值冲突；Codex 裁决要求补做限定范围的 S00 勘误验收",
     "authoritative_input": {
       "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
@@ -430,34 +430,62 @@
       "value": 240,
       "key": 2056,
       "meta": 17728,
-      "resolved": 14324,
-      "unresolved": 5700,
-      "value_unresolved": 28,
-      "key_unresolved": 374,
-      "meta_unresolved": 5298,
+      "resolved": 13647,
+      "unresolved": 6377,
+      "value_unresolved": 34,
+      "key_unresolved": 405,
+      "meta_unresolved": 5938,
+      "weak": 555,
+      "unbacked_addition": 364,
+      "ambiguous_multi_record": 53,
       "sign_flip": 89
     },
     "downstream": {
-      "companies_with_diff": 419,
-      "in_s04_list_with_diff": 175,
-      "l2_not_affected": 443,
-      "l2_hold_pending_errata": 2,
+      "universe": 1054,
+      "not_affected": 427,
+      "still_passes_without": 1,
+      "hold_pending_errata": 17,
+      "potential_miss_risk": 179,
+      "out_of_list_clean": 430,
       "hold_list": [
+        "BJ:920022 世昌股份",
+        "BJ:920198 微创光电",
+        "BJ:920220 朗信电气",
+        "BJ:920289 华汇智能",
+        "SH:600215 派斯林",
+        "SH:603194 中力股份",
         "SH:688320 禾川科技",
-        "SH:688518 联赢激光"
+        "SH:688328 深科达",
+        "SH:688518 联赢激光",
+        "SZ:000591 太阳能",
+        "SZ:002010 传化智联",
+        "SZ:002261 拓维信息",
+        "SZ:002284 亚太股份",
+        "SZ:002594 比亚迪",
+        "SZ:002833 弘亚数控",
+        "SZ:002933 新兴装备",
+        "SZ:300193 佳士科技"
       ]
     },
-    "checks": "12/12 PASS",
+    "checks": "16/16 PASS",
     "reproducible": true,
     "limits": [
       "未回读 PDF、未修改任何数据文件",
-      "5,700 条未解决项未做原文核验",
-      "未覆盖最新可用期选择等间接依赖",
-      "自检不等同独立验收"
+      "6,377 条未闭合未做原文核验",
+      "未覆盖锚定期回退路径的间接依赖",
+      "自检不等同独立验收",
+      "只能称「已识别 17 家须 HOLD」，不能称「只有 17 家」"
     ],
     "report": "runs/issues/S00/errata_20261111/REPORT.md",
     "handoff": "runs/issues/S00/errata_20261111/handoff.md",
     "issue_number": 53,
-    "github_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/53"
+    "github_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/53",
+    "version": "ERRATA_V2",
+    "v1_defects_fixed": [
+      "UPDATE 记录未校验值（6 格）",
+      "元数据同键兜底（19 条）",
+      "重述多记录取首条（47 条不一致）",
+      "SG02(M03) 依赖期间漏前季（大豪科技）"
+    ]
   }
 }

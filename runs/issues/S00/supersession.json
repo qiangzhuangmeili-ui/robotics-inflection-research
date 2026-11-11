@@ -9,7 +9,11 @@
     "rows": 229667,
     "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
     "status": "CURRENT_COMPUTE_INPUT_PENDING_S00_SUPPLEMENTARY_ACCEPTANCE",
-    "consumed_by": ["S02", "S03", "S04"],
+    "consumed_by": [
+      "S02",
+      "S03",
+      "S04"
+    ],
     "acceptance_refs": [
       {
         "record": "runs/issues/S02/acceptance_20261106/review.json",
@@ -69,12 +73,15 @@
     "directory": "runs/issues/S00/errata_20261111/",
     "summary": "runs/issues/S00/errata_20261111/summary.json",
     "scope": "A 与 B 的全部差异：值 240 格、键 2,056、元数据 17,728 行，逐条给出依据与处置",
-    "unresolved_total": 5700,
+    "unresolved_total": 6377,
     "unresolved_breakdown": {
-      "value": 28,
-      "key": 374,
-      "meta": 5298
-    }
+      "value": 34,
+      "key": 405,
+      "meta": 5938
+    },
+    "version": "ERRATA_V2",
+    "open_definition": "UNRESOLVED_* 全部计入；RESOLVED_RESTATEMENT_VERIFY_WEAK（ASSUMED_NO_PENDING_REVIEW）亦计入未闭合",
+    "v1_superseded": "runs/issues/S00/errata_20261111/superseded_v1/（v1 判 5,700 未闭合，因 6 格记录值不符、19 条元数据兜底、47 条重述取首条、SG02 漏前季而被 Codex 退回）"
   },
   "consumption_rule": {
     "text": "消费者启动时必须核对「实际输入哈希 = 输入契约哈希 = 上游有效验收记录绑定的交付哈希」，并检查验收范围允许本次用途；任一不符立即失败，不回退读取其他版本。",
@@ -83,8 +90,8 @@
     "current_gap": "S04 脚本仅校验前两项，尚未追到验收范围"
   },
   "pending": [
-    "S00 限定范围勘误验收（覆盖 5,700 条未解决差异）",
-    "规则 v3 universe.source 仍指向 A，须以有记录的元数据勘误修正",
-    "S04 第二轮外部复核"
+    "S00 限定范围勘误验收：6,377 条未闭合（含 555 条 WEAK、364 条无依据新增）",
+    "规则 v3 universe.source 仍指向 A，须新建 v4 登记元数据勘误",
+    "S04 第二轮外部复核（待 17 家 HOLD 与 179 家潜在漏筛核完）"
   ]
 }

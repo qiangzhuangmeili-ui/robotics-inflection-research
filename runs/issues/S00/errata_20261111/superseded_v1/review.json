@@ -1,0 +1,125 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+  "reviewed_at": "2026-11-11T16:20:00+08:00",
+  "checks_pass": 12,
+  "checks_total": 12,
+  "checks": [
+    {
+      "id": "C01",
+      "name": "输入哈希与 supersession.json 一致",
+      "result": "PASS",
+      "detail": {
+        "A": "a1f27f1ceacfba10",
+        "B": "fc312c52ace51feb"
+      }
+    },
+    {
+      "id": "C02",
+      "name": "行数与登记表一致",
+      "result": "PASS",
+      "detail": {
+        "A_rows": 228155,
+        "B_rows": 229667
+      }
+    },
+    {
+      "id": "C03",
+      "name": "台账行数与 summary 一致",
+      "result": "PASS",
+      "detail": {
+        "cell": 240,
+        "key": 2056,
+        "meta": 17728
+      }
+    },
+    {
+      "id": "C04",
+      "name": "每条差异均有处置结论",
+      "result": "PASS",
+      "detail": {
+        "missing_resolution": 0
+      }
+    },
+    {
+      "id": "C05",
+      "name": "未解决项均写明原因",
+      "result": "PASS",
+      "detail": {
+        "unresolved_without_evidence": 0
+      }
+    },
+    {
+      "id": "C06",
+      "name": "重述差异 17,009 与独立统计一致",
+      "result": "PASS",
+      "detail": {
+        "count": 17009
+      }
+    },
+    {
+      "id": "C07",
+      "name": "符号翻转 89 格与独立统计一致",
+      "result": "PASS",
+      "detail": {
+        "sign_flip": 89
+      }
+    },
+    {
+      "id": "C08",
+      "name": "445 家判定守恒",
+      "result": "PASS",
+      "detail": {
+        "total": 445,
+        "by_verdict": {
+          "NOT_AFFECTED": 443,
+          "HOLD_PENDING_ERRATA": 2
+        }
+      }
+    },
+    {
+      "id": "C09",
+      "name": "HOLD 家争议可追溯到具体字段与期间",
+      "result": "PASS",
+      "detail": {
+        "hold_count": 2,
+        "ids": [
+          "SH:688320",
+          "SH:688518"
+        ]
+      }
+    },
+    {
+      "id": "C10",
+      "name": "未解决总数与登记表一致",
+      "result": "PASS",
+      "detail": {
+        "computed": 5700,
+        "declared": 5700
+      }
+    },
+    {
+      "id": "C11",
+      "name": "键差异方向统计",
+      "result": "PASS",
+      "detail": {
+        "ONLY_B": 1784,
+        "ONLY_A": 272
+      }
+    },
+    {
+      "id": "C12",
+      "name": "输入文件未被本次工作修改",
+      "result": "PASS",
+      "detail": {
+        "A_mtime": "2026-10-29T09:49:48.000675",
+        "B_mtime": "2026-11-02T22:31:45.981410"
+      }
+    }
+  ],
+  "not_independent": "本记录由执行方自检产生，不构成独立验收；5,700 条未解决项未做原文核验。",
+  "release_S05": false,
+  "release_note": "S04 第二轮复核与 S00 补充验收均未完成，S05 不得放行"
+}
