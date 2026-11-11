@@ -160,6 +160,10 @@ def check_c14(meta):
             continue
         if res == "RESOLVED_NORMALIZED_DELTA":
             continue  # 由 C17 校验
+        if res == "RESOLVED_RESTATEMENT_CONFIRMED":
+            if rec is None or rec["verdict"] != r["value_B"] or r["value_B"] != "是":
+                bad.append((k, "CONFIRMED_BUT_VERDICT_NE"))
+            continue
         if res != "RESOLVED_SCOPE_COVERED":
             bad.append((k, "UNKNOWN_RESOLVED_LABEL:%s" % res))
             continue
@@ -207,7 +211,8 @@ def check_c17(meta):
             bad.append((k, "LEDGER_B_NE_B:%s" % r["meta_field"]))
             continue
         if r["meta_field"] == "restatement_flag":
-            if res not in ("RESOLVED_SCOPE_COVERED", "RESOLVED_BY_RULING"):
+            if res not in ("RESOLVED_SCOPE_COVERED", "RESOLVED_BY_RULING",
+                           "RESOLVED_RESTATEMENT_CONFIRMED"):
                 bad.append((k, "RESTATEMENT_BAD_LABEL:%s" % res))
             continue
         if res != "RESOLVED_NORMALIZED_DELTA":
@@ -393,7 +398,7 @@ for r in meta:
     req = es.required_scope(status, own)
     cov = es.coverage_of(rec) if rec else set()
     res = r["resolution"]
-    if res == "RESOLVED_BY_RULING":
+    if res in ("RESOLVED_BY_RULING", "RESOLVED_RESTATEMENT_CONFIRMED"):
         continue
     covered_enough = (req - cov) == set() and rec is not None \
         and rec["verdict"] == r["value_B"] \

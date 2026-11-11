@@ -1,0 +1,58 @@
+OpenAI Codex v0.167.0-alpha.3.2
+--------
+workdir: C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1c9ca-57bb-7cc3-8525-124a6e11a8a0
+--------
+user
+你是这个仓库（A 股机器人产业链「行业拐点」研究流水线）的独立复核方。上一轮你裁定 S00 勘误 V4 退回返工，核心意见是：期间相等不能替代证据适用范围核验；5,270 条受限方法被自动放行；父输入展开仍不完整且对直接季度表过度传播；C13/C14/C17/C23/C24/C25 仍有空转方式；232 格整体归展示不成立；受限表未逐项绑定差异；1,148 条既不是完整风险集合也不是全部待核；大豪科技被误重开。
+
+执行方已按此返工出 V5，完成了你裁决第十节的第 1、2、3 步（先修方法、分层方法抽验、修复自检与追溯），第 4、5 步（批量核证、重算分层）尚未开始。请做第六轮复核。
+
+必读：
+1. runs/issues/S00/errata_20261111_v5/report_to_codex_round6.md —— 本轮汇报，含四个待裁决问题
+2. runs/issues/S00/errata_20261111_v5/REPORT.md、handoff.md
+3. runs/issues/S00/errata_20261111_v5/codex_ruling_round5.md —— 你上一轮裁决
+4. runs/issues/S00/errata_20261111_v5/evidence_scope.py —— 新判据的唯一实现（coverage_of / required_scope / judge / group_key）
+5. runs/issues/S00/errata_20261111_v5/l2_core.py —— 依赖引擎（按 B 的 status 分支展开父键）
+6. runs/issues/S00/errata_20261111_v5/build_errata_v5.py、check_l2_v5.py、sampling_v5.py、verify_v5.py
+7. runs/issues/S00/errata_20261111_v5/summary.json、l2_dependency_summary.json、sampling_v5.json、review.json、manifest.json
+8. runs/issues/S00/errata_20261111_v5/meta_diff.csv（含 scope_required/scope_covered/scope_missing/evidence_group 六列）、extra_meta_diff.csv（含 document_changed/period_source_changed）、dispute_ledger.csv、restricted_claims.csv、l2_dependency_check.csv、sampling_v5.csv
+9. runs/issues/S00/errata_20261111_v5/rulings_resolved.json
+10. runs/issues/S02/remediation_20261029/restatement_verify/results.csv、tools/s00_restatement_apply.py
+11. data/active_issue.json
+
+请重点核实：
+
+A. 新判据是否真的成立。`required_scope(status, own_period)` 的必需范围是否合理？特别是：
+   - 非自身期间要求 ERRATA+MERGER_RETRO+COMPARATIVE_SCOPE；
+   - EXTRACTED_QUARTERLY_TABLE 要求 QUARTERLY_TABLE_PROVENANCE；
+   - 其余只要求 ERRATA。
+   累计差分行没有追加 MERGER_RETRO，理由写在第 2.3 节（同一份报告内 YTD 相减，两个父输入受同一次追溯调整影响会相互抵消，风险在父输入可信度）。这个理由是否成立？会不会漏掉「Q1 来自更早文档、H1 来自本期报告」这类跨文档差分？
+
+B. `coverage_of` 从证据正文正则抽取覆盖原因，是否存在误判？例如：
+   - `NOTE_TRACE_NA` 的正文只有「追溯重述法 □适用√不适用 (2).未来适用法 □适用√不适用」，被记为覆盖 ERRATA——这个推断是否过强？
+   - `NOTE_RETAINED_ERRATA_ZERO` 被记为覆盖 ERRATA+MERGER_RETRO+QUANTIFIED，但它只是方法级注记、不绑定字段。V5 仍把它转待核并列为优先复核组，这个处理是否恰当？
+
+C. 5,270 这个数是否真的对上。`PENDING_SCOPE_LIMITED_METHOD` 共 6,373 = 自身期间 5,270 + 非自身期间 1,103。请复算。
+
+D. `l2_core.expand()` 的状态分支是否正确、是否还有过度传播或漏传播。特别是 `QUARTERLY_TABLE` 分支必须排在 Q1 判断之前这条实现约束。C27 的检验方式是否足以证明各目标期父键完整？
+
+E. C26 通用范围断言是否真的独立于台账自报（它读 meta_diff 的 resolution，但 scope 是自己重算的）。C29「禁止仅凭期间相等闭合」是否还有绕法。C30 用 V4 台账反向验证新判据是否有效。
+
+F. 232 格转字段级待核是否过度。实测 191 格同时改了 document_id 或 period_source，41 格同文档同来源但页码/理由文本变了。这个理由是否足以否定「展示」归类？
+
+G. 分层抽验 28 条 / 14 类，覆盖了你列出的全部风险类型，并对 21 份原件做了物理页回读（MATCH 15、PARTIAL 4、NO_PAGE 3、N/A 6）。PARTIAL 的 4 条都是「附注：…」形式的核验者汇总注。这个抽验是否达到你要求的「验收标准是风险类型覆盖」？
+
+H. 受限表改为 `dispute_id = sha1(台账版本|台账|公司|字段|期间|元数据字段|方向)[:12]`，292 行绑定 281 个唯一 ID，台账共 9,312 条。是否满足你上一轮 Q1 的逐项可追溯要求？
+
+请给出：第六轮裁决（通过 / 有条件通过 / 退回返工）、需要修正的具体项（带文件行号或键）、对第 4 步批量核证的执行建议、以及是否放行 S04 第二轮与 S05。
+
+注意：本轮只读。不要修改仓库、不要提交、不要操作 GitHub。
+
+ERROR: Reconnecting... 2/5

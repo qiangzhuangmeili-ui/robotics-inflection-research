@@ -103,7 +103,7 @@ def required_scope(status, own_period):
     return {ERRATA}
 
 
-def judge(rec, doc, status, own_period, row_period, ruled=None):
+def judge(rec, doc, status, own_period, row_period, ruled=None, bval=""):
     """返回 (resolution, scope_required, scope_covered, scope_missing, evidence_note)。"""
     if ruled:
         return ("RESOLVED_BY_RULING", "", "", "",
@@ -129,10 +129,13 @@ def judge(rec, doc, status, own_period, row_period, ruled=None):
                 "方法为假设（未查原文）p.%s" % rec.get("page"))
 
     if method == "NOTE_RETAINED_ERRATA_NONZERO":
-        # 明确披露非零差错更正，与「未被重述」直接冲突，不是证据不足
+        # 明确披露非零差错更正。B 说「是」则证据支持 B；B 说「否」才构成冲突。
+        if bval == "是":
+            return ("RESOLVED_RESTATEMENT_CONFIRMED", req_s, cov_s, mis_s,
+                    "证据披露非零前期差错更正且 B=是，判定一致（p.%s）" % rec.get("page"))
         return ("UNRESOLVED_EVIDENCE_CONTRADICTS", req_s, cov_s, mis_s,
-                "证据披露存在非零前期差错更正（p.%s），与「未被重述」冲突，须回读定性"
-                % rec.get("page"))
+                "证据披露存在非零前期差错更正（p.%s），与 B=%s 冲突，须回读定性"
+                % (rec.get("page"), bval or "空"))
 
     if method in SCOPE_LIMITED_METHODS and not binds_field(rec):
         return ("PENDING_SCOPE_LIMITED_METHOD", req_s, cov_s, mis_s,

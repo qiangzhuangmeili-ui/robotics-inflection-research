@@ -306,7 +306,7 @@ for fld in META_FIELDS:
             # 判据：证据实际覆盖该行断言，而非「行期间 == 文档自身期间」
             if rk in RULED:
                 resolution, scope_req, scope_cov, scope_mis, evidence = es.judge(
-                    rec, doc, status_b, own, k[2], ruled=RULED[rk])
+                    rec, doc, status_b, own, k[2], ruled=RULED[rk], bval=bval)
             elif rec is not None and rec["verdict"] != bval and \
                     (rec.get("method") or "") != "NOTE_RETAINED_ERRATA_NONZERO":
                 resolution = "UNRESOLVED_EVIDENCE_MISMATCH"
@@ -314,7 +314,7 @@ for fld in META_FIELDS:
                             "不能直接认定 B 错" % (rec["verdict"], bval, doc[:20]))
             else:
                 resolution, scope_req, scope_cov, scope_mis, evidence = es.judge(
-                    rec, doc, status_b, own, k[2])
+                    rec, doc, status_b, own, k[2], bval=bval)
             if rec is not None:
                 grp = es.group_key(rec.get("method"), es.coverage_of(rec),
                                    status_b, own)
