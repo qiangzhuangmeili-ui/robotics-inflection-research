@@ -25,6 +25,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 import evidence_scope as es
+import meta_classes as mc
 
 ROOT = Path(__file__).resolve().parents[4]
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
@@ -52,20 +53,14 @@ P_ADOPT = ROOT / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10_adop
 
 META_FIELDS = ["restatement_flag", "status", "document_id",
                "consolidation_scope", "pit_status"]
-# 影响取值的列：变更即改变「代表什么数/哪一期/哪份文档」
-AFFECTS_VALUE = {"value_raw", "value_before_adoption", "unit_raw", "unit_scale",
-                 "currency", "period_source", "version_used", "original_document_id"}
-# 影响资格的列：变更即改变可用性/低基数/可比性判断
-AFFECTS_QUALIFICATION = {"upstream_hold_fields", "low_base_flag",
-                         "comparability_note", "quarterly_inputs"}
-# 影响时点/来源性质/版本采用：Codex 第四轮指出不能一律归为展示
-AFFECTS_TIMING_OR_PROVENANCE = {"published_on", "source_kind", "adoption_reason"}
-# Codex 第五轮：232 格整体归展示不成立。四类字段各有明确作用，必须逐项核。
-AFFECTS_TRACE_LOCATION = {"source_page"}          # 证据定位（同方股份 61→137）
-AFFECTS_ADOPTION_EXPLANATION = {"evidence_label"}  # 采用解释（国机通用新增仲裁标签）
-AFFECTS_PROVENANCE = {"slot_id"}                   # 供给槽位（q1_2025→annual_2025）
-AFFECTS_QUALIFICATION_REASON = {"status_reason"}   # 资格理由
-# 其余为溯源或展示（V5 起该桶为空，保留以便回归）
+# 字段影响分类唯一来源：meta_classes.py（第七轮 E 项——分类不能由台账自报决定）
+AFFECTS_VALUE = mc.AFFECTS_VALUE
+AFFECTS_QUALIFICATION = mc.AFFECTS_QUALIFICATION
+AFFECTS_TIMING_OR_PROVENANCE = mc.AFFECTS_TIMING_OR_PROVENANCE
+AFFECTS_TRACE_LOCATION = mc.AFFECTS_TRACE_LOCATION
+AFFECTS_ADOPTION_EXPLANATION = mc.AFFECTS_ADOPTION_EXPLANATION
+AFFECTS_PROVENANCE = mc.AFFECTS_PROVENANCE
+AFFECTS_QUALIFICATION_REASON = mc.AFFECTS_QUALIFICATION_REASON
 DERIVED_PARENT = {
     "FIN.GROSSPROFIT.YTD": ["FIN.REV.YTD", "FIN.COST.YTD"],
     "FIN.GROSSPROFIT.SQ": ["FIN.REV.SQ", "FIN.COST.SQ"],
@@ -167,28 +162,63 @@ def prev_quarter(pk):
     return pk[:4] + QMAP[tail]
 
 
-def parent_compatible(k):
-    """累计差分行的两个累计父输入是否兼容（文档/版本/合并范围/单位）。
+def _parent_basis(kp):
+    """父输入的「口径」：文档 + 合并范围 + 单位 + 币种 + 版本。"""
+    r = D10.get(kp)
+    if not r:
+        return None
+    return {"doc": (r.get("document_id") or "").strip(),
+            "scope": (r.get("consolidation_scope") or "").strip(),
+            "unit": (r.get("unit_scale") or "").strip(),
+            "cur": (r.get("currency") or "").strip(),
+            "ver": (r.get("version_used") or "").strip()}
 
-    第六轮裁决：不能以「同一报告内相减自动抵消」豁免。只有两期调整额相等才抵消，
-    而相等无法由同一报告推出；跨文档情形（本期 H1 与上期 Q1 来自不同公告）更须核。
+
+def _doc_verdict(doc):
+    return ((vrec.get(doc) or {}).get("verdict") or "").strip()
+
+
+def parent_compatible(k):
+    """累计差分行的两个累计父输入是否同一调整口径。
+
+    第七轮 C 项：V6 的四条捷径全部撤销——
+      · 文档相同 不证明调整额相同（保留：同文档至少证明同一口径，见下）；
+      · `version_used` 同为 ORIGINAL 不证明同一调整版本（撤销该分支）；
+      · 任一父键在采用审计中 不证明另一父键兼容（撤销该分支）；
+      · 空的范围/币种/单位字段相等 不作为「已确认一致」（改为必须非空）。
+
+    保留并新增的判据：
+      · 合并范围/单位/币种三者必须**非空且一致**；
+      · 同文档 → 同一报告口径，兼容；
+      · 跨文档 → 只有「两份文档都判定未被重述」或「两个父键都已采用同一修订文档」才兼容；
+      · 其余一律不兼容（停待核，不豁免）。
     """
     sec, fld, pk = k
     if fld not in es.SIMPLE_SQ:
         return None
+    if es.is_q1(pk):
+        return None          # Q1 单季 = Q1 累计，单父输入，无相减
     ytd = fld[:-3] + ".YTD"
-    p1 = D10.get((sec, ytd, pk))
-    p2 = D10.get((sec, ytd, prev_quarter(pk)))
-    if not p1 or not p2:
+    k1, k2 = (sec, ytd, pk), (sec, ytd, prev_quarter(pk))
+    b1, b2 = _parent_basis(k1), _parent_basis(k2)
+    if not b1 or not b2:
         return False
-    for x in ("consolidation_scope", "unit_scale", "currency"):
-        if (p1.get(x) or "") != (p2.get(x) or ""):
+    for f in ("scope", "unit", "cur"):
+        if not b1[f] or b1[f] != b2[f]:
             return False
-    if (p1.get("document_id") or "") == (p2.get("document_id") or ""):
+    if b1["doc"] and b1["doc"] == b2["doc"]:
         return True
-    if (p1.get("version_used") or "") and p1.get("version_used") == p2.get("version_used"):
+    # 跨文档：两份文档都未被重述 → 同为原始口径，差分有效
+    if _doc_verdict(b1["doc"]) == "否" and _doc_verdict(b2["doc"]) == "否":
         return True
-    return ((sec, ytd, pk) in adopt) or ((sec, ytd, prev_quarter(pk)) in adopt)
+    # 或两个父键都已采用同一份修订后文档
+    a1, a2 = adopt.get(k1), adopt.get(k2)
+    if a1 and a2:
+        d1 = (a1.get("document_id_after") or "").strip()
+        d2 = (a2.get("document_id_after") or "").strip()
+        if d1 and d1 == d2:
+            return True
+    return False
 
 
 # ---------- 1. 值差异 ----------
@@ -360,7 +390,8 @@ for fld in META_FIELDS:
             scope_mis, evidence = r["scope_missing"], r["evidence_note"]
             polarity = r["polarity"]
             if rec is not None:
-                _ex, _af, _sc, _me = es.analyse(rec)
+                _pol = es.analyse(rec)
+                _ex, _af = _pol.excluded, _pol.affirmed
                 grp = es.group_key(rec.get("method"), _ex, _af, status_b,
                                    es.is_own_period(own, k[2]))
         else:
@@ -417,24 +448,9 @@ for fld in [c for c in all_cols if c not in covered]:
     for k in sorted(common):
         if (DA[k].get(fld) or "") == (D10[k].get(fld) or ""):
             continue
-        if fld in AFFECTS_VALUE:
-            cls = "AFFECTS_VALUE"
-        elif fld in AFFECTS_QUALIFICATION:
-            cls = "AFFECTS_QUALIFICATION"
-        elif fld in AFFECTS_TIMING_OR_PROVENANCE:
-            cls = "AFFECTS_TIMING_OR_PROVENANCE"
-        elif fld in AFFECTS_TRACE_LOCATION:
-            cls = "AFFECTS_TRACE_LOCATION"
-        elif fld in AFFECTS_ADOPTION_EXPLANATION:
-            cls = "AFFECTS_ADOPTION_EXPLANATION"
-        elif fld in AFFECTS_PROVENANCE:
-            cls = "AFFECTS_PROVENANCE"
-        elif fld in AFFECTS_QUALIFICATION_REASON:
-            cls = "AFFECTS_QUALIFICATION_REASON"
-        else:
-            cls = "TRACE_OR_DISPLAY"
+        cls = mc.expected_class(fld)
         d = delta.get(k)
-        if cls == "TRACE_OR_DISPLAY":
+        if cls == "DISPLAY_ONLY":
             resolution = "REGISTERED_DISPLAY_ONLY"
             evidence = "溯源/展示字段，不改变数值、资格、时点或版本采用"
         else:
@@ -455,6 +471,7 @@ for fld in [c for c in all_cols if c not in covered]:
             "document_changed": ("YES" if (DA[k].get("document_id") or "") != (D10[k].get("document_id") or "") else "NO"),
             "period_source_changed": ("YES" if (DA[k].get("period_source") or "") != (D10[k].get("period_source") or "") else "NO"),
             "resolution": resolution, "evidence": evidence,
+            "content_review": "", "content_review_ref": "",
         })
 
 with open(OUT / "extra_meta_diff.csv", "w", encoding="utf-8-sig", newline="") as f:
@@ -505,7 +522,7 @@ summary = {
         "与按取值来源确定的必需范围求差集，差集写入 scope_missing",
         "IMPORTANT_MATTER_NA、NOTE_RETAINED_ERRATA_ZERO 两类结构性受限方法"
         "不再自动闭合，5,270 条转入 PENDING_SCOPE_LIMITED_METHOD",
-        "累计差分/DERIVED_Q1_EQUALS_YTD 行须覆盖 MERGER_RETRO（比较期调整会传播进本期单季），"
+        "累计差分（非 Q1）行须证父输入兼容（PARENT_COMPATIBILITY）；Q1 单季=Q1 累计，单父输入不套相减，"
         "分季度表行须覆盖 QUARTERLY_TABLE_PROVENANCE，比较列行须覆盖 COMPARATIVE_SCOPE",
         "232 格原「溯源/展示」桶清零：source_page→AFFECTS_TRACE_LOCATION、"
         "evidence_label→AFFECTS_ADOPTION_EXPLANATION、slot_id→AFFECTS_PROVENANCE、"

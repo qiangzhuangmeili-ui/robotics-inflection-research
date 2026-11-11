@@ -6,7 +6,7 @@
   "changes_from_v4": [
     "取消「行期间 == 文档自身期间即闭合」：新增 evidence_scope.py，按证据正文实际排除的调整原因（ERRATA / MERGER_RETRO / POLICY_CHANGE）与按取值来源确定的必需范围求差集，差集写入 scope_missing",
     "IMPORTANT_MATTER_NA、NOTE_RETAINED_ERRATA_ZERO 两类结构性受限方法不再自动闭合，5,270 条转入 PENDING_SCOPE_LIMITED_METHOD",
-    "累计差分/DERIVED_Q1_EQUALS_YTD 行须覆盖 MERGER_RETRO（比较期调整会传播进本期单季），分季度表行须覆盖 QUARTERLY_TABLE_PROVENANCE，比较列行须覆盖 COMPARATIVE_SCOPE",
+    "累计差分（非 Q1）行须证父输入兼容（PARENT_COMPATIBILITY）；Q1 单季=Q1 累计，单父输入不套相减，分季度表行须覆盖 QUARTERLY_TABLE_PROVENANCE，比较列行须覆盖 COMPARATIVE_SCOPE",
     "232 格原「溯源/展示」桶清零：source_page→AFFECTS_TRACE_LOCATION、evidence_label→AFFECTS_ADOPTION_EXPLANATION、slot_id→AFFECTS_PROVENANCE、status_reason→AFFECTS_QUALIFICATION_REASON，全部转字段级待核",
     "meta_diff 增列 status_B / own_period / evidence_group / scope_required / scope_covered / scope_missing，供逐项追溯与同质分组",
     "保留 rulings_resolved.json：已裁决解除项恢复 RESOLVED_BY_RULING，不因新判据重开"
@@ -84,32 +84,32 @@
       "consolidation_scope": 33
     },
     "by_resolution": {
-      "RESOLVED_SCOPE_COVERED": 9971,
+      "RESOLVED_SCOPE_COVERED": 8714,
       "PENDING_SCOPE_LIMITED_METHOD": 6373,
+      "PENDING_PARENT_COMPATIBILITY": 1277,
       "PENDING_WEAK_ASSUMPTION": 515,
       "RESOLVED_NORMALIZED_DELTA": 354,
       "UNRESOLVED_NO_EVIDENCE": 225,
       "UNRESOLVED_FIELD_NOT_IN_RECORD": 116,
-      "PENDING_CAUSE_UNCOVERED": 58,
       "PENDING_SOURCE_PROVENANCE": 47,
+      "PENDING_CAUSE_UNCOVERED": 43,
       "UNRESOLVED_DOC_NEVER_VERIFIED": 26,
       "UNRESOLVED_EVIDENCE_MISMATCH": 20,
       "PENDING_CONFIRMED_EVENT_FIELD_OPEN": 8,
       "UNRESOLVED_RECORD_IS_REMOVE": 8,
-      "PENDING_PARENT_COMPATIBILITY": 5,
       "PENDING_CONFIRMED_UNSUPPORTED": 1,
       "RESOLVED_BY_RULING": 1
     },
-    "open": 7402,
+    "open": 8659,
     "companies": 392,
     "restatement_groups": [
       {
         "group": "NOTE_TRACE_NA|ERRATA|NOAFF|EXTRACTED|OWN",
-        "rows": 3406,
-        "documents": 365,
-        "companies": 263,
+        "rows": 3376,
+        "documents": 362,
+        "companies": 262,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 3406
+          "RESOLVED_SCOPE_COVERED": 3376
         }
       },
       {
@@ -123,20 +123,20 @@
       },
       {
         "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|EXTRACTED|OWN",
-        "rows": 2319,
-        "documents": 249,
-        "companies": 197,
+        "rows": 1627,
+        "documents": 175,
+        "companies": 139,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 2319
+          "RESOLVED_SCOPE_COVERED": 1627
         }
       },
       {
         "group": "NOTE_TRACE_NA|ERRATA|NOAFF|DERIVED|OWN",
-        "rows": 1335,
-        "documents": 355,
-        "companies": 257,
+        "rows": 1324,
+        "documents": 352,
+        "companies": 256,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 1335
+          "RESOLVED_SCOPE_COVERED": 1324
         }
       },
       {
@@ -168,41 +168,48 @@
         }
       },
       {
-        "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|DERIVED|OWN",
-        "rows": 914,
-        "documents": 245,
-        "companies": 195,
+        "group": "NOTE_TRACE_NA|ERRATA|NOAFF|DERIVED_CUMULATIVE_DIFF|OWN",
+        "rows": 754,
+        "documents": 226,
+        "companies": 199,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 914
+          "PENDING_PARENT_COMPATIBILITY": 754
         }
       },
       {
-        "group": "NOTE_TRACE_NA|ERRATA|NOAFF|DERIVED_CUMULATIVE_DIFF|OWN",
-        "rows": 763,
-        "documents": 230,
-        "companies": 202,
+        "group": "NOTE_TRACE_NA|ERRATA|AFF:POLICY_CHANGE|EXTRACTED|OWN",
+        "rows": 722,
+        "documents": 77,
+        "companies": 62,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 761,
-          "PENDING_PARENT_COMPATIBILITY": 2
+          "RESOLVED_SCOPE_COVERED": 722
+        }
+      },
+      {
+        "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|DERIVED|OWN",
+        "rows": 642,
+        "documents": 172,
+        "companies": 137,
+        "by_resolution": {
+          "RESOLVED_SCOPE_COVERED": 642
         }
       },
       {
         "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|DERIVED_CUMULATIVE_DIFF|OWN",
-        "rows": 514,
-        "documents": 151,
-        "companies": 143,
+        "rows": 374,
+        "documents": 108,
+        "companies": 101,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 511,
-          "PENDING_PARENT_COMPATIBILITY": 3
+          "PENDING_PARENT_COMPATIBILITY": 374
         }
       },
       {
         "group": "NOTE_TRACE_NA|ERRATA|NOAFF|EXTRACTED_KEY_TABLE|OWN",
-        "rows": 354,
-        "documents": 354,
-        "companies": 260,
+        "rows": 349,
+        "documents": 349,
+        "companies": 258,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 354
+          "RESOLVED_SCOPE_COVERED": 349
         }
       },
       {
@@ -215,6 +222,15 @@
         }
       },
       {
+        "group": "NOTE_TRACE_NA|ERRATA|AFF:POLICY_CHANGE|DERIVED|OWN",
+        "rows": 283,
+        "documents": 76,
+        "companies": 62,
+        "by_resolution": {
+          "RESOLVED_SCOPE_COVERED": 283
+        }
+      },
+      {
         "group": "ASSUMED_NO_PENDING_REVIEW|NONE|NOAFF|EXTRACTED|OWN",
         "rows": 255,
         "documents": 28,
@@ -224,21 +240,30 @@
         }
       },
       {
-        "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|EXTRACTED_KEY_TABLE|OWN",
-        "rows": 232,
-        "documents": 232,
-        "companies": 185,
-        "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 232
-        }
-      },
-      {
         "group": "IMPORTANT_MATTER_NA|ERRATA|NOAFF|EXTRACTED_KEY_TABLE|OWN",
         "rows": 222,
         "documents": 222,
         "companies": 222,
         "by_resolution": {
           "PENDING_SCOPE_LIMITED_METHOD": 222
+        }
+      },
+      {
+        "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|EXTRACTED_KEY_TABLE|OWN",
+        "rows": 160,
+        "documents": 160,
+        "companies": 128,
+        "by_resolution": {
+          "RESOLVED_SCOPE_COVERED": 160
+        }
+      },
+      {
+        "group": "NOTE_TRACE_NA|ERRATA|AFF:POLICY_CHANGE|DERIVED_CUMULATIVE_DIFF|OWN",
+        "rows": 149,
+        "documents": 47,
+        "companies": 46,
+        "by_resolution": {
+          "PENDING_PARENT_COMPATIBILITY": 149
         }
       },
       {
@@ -260,12 +285,12 @@
         }
       },
       {
-        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|EXTRACTED|OWN",
-        "rows": 85,
-        "documents": 9,
-        "companies": 9,
+        "group": "NOTE_TRACE_NA|ERRATA|AFF:POLICY_CHANGE|EXTRACTED_KEY_TABLE|OWN",
+        "rows": 77,
+        "documents": 77,
+        "companies": 63,
         "by_resolution": {
-          "PENDING_SCOPE_LIMITED_METHOD": 85
+          "RESOLVED_SCOPE_COVERED": 77
         }
       },
       {
@@ -296,12 +321,12 @@
         }
       },
       {
-        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
-        "rows": 47,
-        "documents": 10,
-        "companies": 10,
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|AFF:POLICY_CHANGE|EXTRACTED|OWN",
+        "rows": 48,
+        "documents": 5,
+        "companies": 5,
         "by_resolution": {
-          "PENDING_SCOPE_LIMITED_METHOD": 47
+          "PENDING_SCOPE_LIMITED_METHOD": 48
         }
       },
       {
@@ -341,21 +366,12 @@
         }
       },
       {
-        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|EXTRACTED_QUARTERLY_TABLE|OWN",
-        "rows": 36,
-        "documents": 9,
-        "companies": 9,
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|EXTRACTED|OWN",
+        "rows": 37,
+        "documents": 4,
+        "companies": 4,
         "by_resolution": {
-          "PENDING_SCOPE_LIMITED_METHOD": 36
-        }
-      },
-      {
-        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|DERIVED|OWN",
-        "rows": 34,
-        "documents": 9,
-        "companies": 9,
-        "by_resolution": {
-          "PENDING_SCOPE_LIMITED_METHOD": 34
+          "PENDING_SCOPE_LIMITED_METHOD": 37
         }
       },
       {
@@ -386,6 +402,15 @@
         }
       },
       {
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|AFF:POLICY_CHANGE|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
+        "rows": 28,
+        "documents": 5,
+        "companies": 5,
+        "by_resolution": {
+          "PENDING_SCOPE_LIMITED_METHOD": 28
+        }
+      },
+      {
         "group": "",
         "rows": 26,
         "documents": 3,
@@ -413,12 +438,21 @@
         }
       },
       {
-        "group": "SUPP_NEG|NONE|NOAFF|EXTRACTED|OWN",
+        "group": "SUPP_NEG|ERRATA|NOAFF|EXTRACTED|OWN",
         "rows": 20,
         "documents": 2,
         "companies": 2,
         "by_resolution": {
-          "PENDING_CAUSE_UNCOVERED": 20
+          "RESOLVED_SCOPE_COVERED": 20
+        }
+      },
+      {
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|AFF:POLICY_CHANGE|EXTRACTED_QUARTERLY_TABLE|OWN",
+        "rows": 20,
+        "documents": 5,
+        "companies": 5,
+        "by_resolution": {
+          "PENDING_SCOPE_LIMITED_METHOD": 20
         }
       },
       {
@@ -431,6 +465,15 @@
         }
       },
       {
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|AFF:POLICY_CHANGE|DERIVED|OWN",
+        "rows": 19,
+        "documents": 5,
+        "companies": 5,
+        "by_resolution": {
+          "PENDING_SCOPE_LIMITED_METHOD": 19
+        }
+      },
+      {
         "group": "ASSUMED_NO_PENDING_REVIEW|NONE|NOAFF|EXTRACTED_QUARTERLY_TABLE|OWN",
         "rows": 18,
         "documents": 5,
@@ -440,12 +483,30 @@
         }
       },
       {
-        "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|DERIVED_HOLD_UPSTREAM|OWN",
-        "rows": 17,
-        "documents": 5,
-        "companies": 5,
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
+        "rows": 16,
+        "documents": 4,
+        "companies": 4,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 17
+          "PENDING_SCOPE_LIMITED_METHOD": 16
+        }
+      },
+      {
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|EXTRACTED_QUARTERLY_TABLE|OWN",
+        "rows": 16,
+        "documents": 4,
+        "companies": 4,
+        "by_resolution": {
+          "PENDING_SCOPE_LIMITED_METHOD": 16
+        }
+      },
+      {
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|DERIVED|OWN",
+        "rows": 15,
+        "documents": 4,
+        "companies": 4,
+        "by_resolution": {
+          "PENDING_SCOPE_LIMITED_METHOD": 15
         }
       },
       {
@@ -458,21 +519,21 @@
         }
       },
       {
-        "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|EXTRACTED_XCHECK_MISMATCH|OWN",
-        "rows": 12,
-        "documents": 4,
-        "companies": 4,
+        "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|DERIVED_HOLD_UPSTREAM|OWN",
+        "rows": 11,
+        "documents": 3,
+        "companies": 3,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 12
+          "RESOLVED_SCOPE_COVERED": 11
         }
       },
       {
-        "group": "SUPP_NEG|ERRATA+POLICY_CHANGE|NOAFF|EXTRACTED|OWN",
+        "group": "SUPP_NEG|NONE|NOAFF|EXTRACTED|OWN",
         "rows": 10,
         "documents": 1,
         "companies": 1,
         "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 10
+          "PENDING_CAUSE_UNCOVERED": 10
         }
       },
       {
@@ -503,6 +564,15 @@
         }
       },
       {
+        "group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|EXTRACTED_XCHECK_MISMATCH|OWN",
+        "rows": 9,
+        "documents": 3,
+        "companies": 3,
+        "by_resolution": {
+          "RESOLVED_SCOPE_COVERED": 9
+        }
+      },
+      {
         "group": "NOTE_TRACE_NOT_OCCURRED|ERRATA|NOAFF|DERIVED|OWN",
         "rows": 8,
         "documents": 2,
@@ -512,7 +582,16 @@
         }
       },
       {
-        "group": "NOTE_RETAINED_ERRATA_NONZERO|NONE|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
+        "group": "SUPP_NEG|ERRATA|NOAFF|DERIVED|OWN",
+        "rows": 8,
+        "documents": 2,
+        "companies": 2,
+        "by_resolution": {
+          "RESOLVED_SCOPE_COVERED": 8
+        }
+      },
+      {
+        "group": "NOTE_RETAINED_ERRATA_NONZERO|NONE|AFF:ERRATA|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
         "rows": 8,
         "documents": 2,
         "companies": 2,
@@ -521,48 +600,21 @@
         }
       },
       {
-        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|EXTRACTED_KEY_TABLE|OWN",
-        "rows": 8,
-        "documents": 8,
-        "companies": 8,
-        "by_resolution": {
-          "PENDING_SCOPE_LIMITED_METHOD": 8
-        }
-      },
-      {
-        "group": "SUPP_NEG|NONE|NOAFF|DERIVED|OWN",
-        "rows": 8,
+        "group": "NOTE_TRACE_NA|ERRATA|AFF:POLICY_CHANGE|DERIVED_HOLD_UPSTREAM|OWN",
+        "rows": 6,
         "documents": 2,
         "companies": 2,
         "by_resolution": {
-          "PENDING_CAUSE_UNCOVERED": 8
+          "RESOLVED_SCOPE_COVERED": 6
         }
       },
       {
-        "group": "SUPP_NEG|NONE|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
-        "rows": 8,
-        "documents": 2,
-        "companies": 2,
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|AFF:POLICY_CHANGE|EXTRACTED_KEY_TABLE|OWN",
+        "rows": 5,
+        "documents": 5,
+        "companies": 5,
         "by_resolution": {
-          "PENDING_SOURCE_PROVENANCE": 8
-        }
-      },
-      {
-        "group": "SUPP_NEG|NONE|NOAFF|EXTRACTED_QUARTERLY_TABLE|OWN",
-        "rows": 8,
-        "documents": 2,
-        "companies": 2,
-        "by_resolution": {
-          "PENDING_SOURCE_PROVENANCE": 8
-        }
-      },
-      {
-        "group": "SUPP_NEG|ERRATA+POLICY_CHANGE|NOAFF|DERIVED|OWN",
-        "rows": 4,
-        "documents": 1,
-        "companies": 1,
-        "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 4
+          "PENDING_SCOPE_LIMITED_METHOD": 5
         }
       },
       {
@@ -638,6 +690,51 @@
         }
       },
       {
+        "group": "SUPP_NEG|NONE|NOAFF|DERIVED|OWN",
+        "rows": 4,
+        "documents": 1,
+        "companies": 1,
+        "by_resolution": {
+          "PENDING_CAUSE_UNCOVERED": 4
+        }
+      },
+      {
+        "group": "SUPP_NEG|NONE|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
+        "rows": 4,
+        "documents": 1,
+        "companies": 1,
+        "by_resolution": {
+          "PENDING_SOURCE_PROVENANCE": 4
+        }
+      },
+      {
+        "group": "SUPP_NEG|NONE|NOAFF|EXTRACTED_QUARTERLY_TABLE|OWN",
+        "rows": 4,
+        "documents": 1,
+        "companies": 1,
+        "by_resolution": {
+          "PENDING_SOURCE_PROVENANCE": 4
+        }
+      },
+      {
+        "group": "SUPP_NEG|ERRATA|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
+        "rows": 4,
+        "documents": 1,
+        "companies": 1,
+        "by_resolution": {
+          "PENDING_SOURCE_PROVENANCE": 4
+        }
+      },
+      {
+        "group": "SUPP_NEG|ERRATA|NOAFF|EXTRACTED_QUARTERLY_TABLE|OWN",
+        "rows": 4,
+        "documents": 1,
+        "companies": 1,
+        "by_resolution": {
+          "PENDING_SOURCE_PROVENANCE": 4
+        }
+      },
+      {
         "group": "CHECKBOX_NO|NONE|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
         "rows": 4,
         "documents": 1,
@@ -653,6 +750,33 @@
         "companies": 1,
         "by_resolution": {
           "PENDING_SOURCE_PROVENANCE": 3
+        }
+      },
+      {
+        "group": "IMPORTANT_MATTER_NA|NONE|AFF:POLICY_CHANGE|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
+        "rows": 3,
+        "documents": 1,
+        "companies": 1,
+        "by_resolution": {
+          "PENDING_SCOPE_LIMITED_METHOD": 3
+        }
+      },
+      {
+        "group": "IMPORTANT_MATTER_NA|POLICY_CHANGE|NOAFF|EXTRACTED_KEY_TABLE|OWN",
+        "rows": 3,
+        "documents": 3,
+        "companies": 3,
+        "by_resolution": {
+          "PENDING_SCOPE_LIMITED_METHOD": 3
+        }
+      },
+      {
+        "group": "NOTE_TRACE_NA|ERRATA|AFF:POLICY_CHANGE|EXTRACTED_XCHECK_MISMATCH|OWN",
+        "rows": 3,
+        "documents": 1,
+        "companies": 1,
+        "by_resolution": {
+          "RESOLVED_SCOPE_COVERED": 3
         }
       },
       {
@@ -674,21 +798,12 @@
         }
       },
       {
-        "group": "SUPP_NEG|NONE|NOAFF|EXTRACTED_KEY_TABLE|OWN",
+        "group": "SUPP_NEG|ERRATA|NOAFF|EXTRACTED_KEY_TABLE|OWN",
         "rows": 2,
         "documents": 2,
         "companies": 2,
         "by_resolution": {
-          "PENDING_CAUSE_UNCOVERED": 2
-        }
-      },
-      {
-        "group": "SUPP_NEG|ERRATA+POLICY_CHANGE|NOAFF|EXTRACTED_KEY_TABLE|OWN",
-        "rows": 1,
-        "documents": 1,
-        "companies": 1,
-        "by_resolution": {
-          "RESOLVED_SCOPE_COVERED": 1
+          "RESOLVED_SCOPE_COVERED": 2
         }
       },
       {
@@ -737,7 +852,7 @@
         }
       },
       {
-        "group": "MANUAL_EVIDENCE|NONE|AFF:MERGER_RETRO|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
+        "group": "MANUAL_EVIDENCE|NONE|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE",
         "rows": 1,
         "documents": 1,
         "companies": 1,
@@ -762,9 +877,18 @@
         "by_resolution": {
           "PENDING_CAUSE_UNCOVERED": 1
         }
+      },
+      {
+        "group": "SUPP_NEG|NONE|NOAFF|EXTRACTED_KEY_TABLE|OWN",
+        "rows": 1,
+        "documents": 1,
+        "companies": 1,
+        "by_resolution": {
+          "PENDING_CAUSE_UNCOVERED": 1
+        }
       }
     ],
-    "restatement_group_count": 73
+    "restatement_group_count": 87
   },
   "extra_meta_diff": {
     "total": 1505,
@@ -812,8 +936,8 @@
       "NO": 1186
     }
   },
-  "open_total_core": 7841,
-  "open_total_all": 9346,
+  "open_total_core": 9098,
+  "open_total_all": 10603,
   "restatement_apply_summary": {
     "NEEDS_REVIEW->否": 17266,
     "NEEDS_REVIEW->是": 9

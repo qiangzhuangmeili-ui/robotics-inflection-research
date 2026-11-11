@@ -1,0 +1,45 @@
+你是这个仓库（A 股机器人产业链「行业拐点」研究流水线）的独立复核方。上一轮（第七轮）你裁定 S00 勘误 V5 退回返工，指出：
+
+A. `required_scope()` 在非自身/未知期间分支直接 return，覆盖掉 status 要求的来源维度（非自身分季度表不再要求 `QUARTERLY_TABLE_PROVENANCE`、非自身累计差分不再要求 `PARENT_COMPATIBILITY`），应取并集。
+B. 极性仍有三个误放行：`前期差错更正\n√适用□不适用` 被排除；`本期发生前期差错更正，但会计政策变更不适用` 两种原因都被排除；`未发生前期差错更正。本期发生前期差错更正100.00元` 仍可解除。另「差错更正对期初未分配利润影响100.00元」只记 SCOPED_ONLY，丢失事件肯定。
+C. `parent_compatible()` 仍过宽：文档相同不证明调整额相同；`version_used` 同为 ORIGINAL 不证明同一调整版本；任一父键在采用审计中不证明另一父键兼容；空口径字段相等不算一致。1,413 条靠同版本分支通过、1,272 条已解除，`PENDING_PARENT_COMPATIBILITY=5` 是捷径造成的低值。Q1 应按单个累计父输入处理。
+D. 8 条确认类正确保持待核，但汇报理由不准（实际缺的是 COMPARATIVE_SCOPE，原因是 A 项提前返回）；事件确认仍依赖 `NOTE_RETAINED_ERRATA_NONZERO` 方法标签兜底。
+E. 自检仍可绕过：C24 可把实质字段标成 `REGISTERED_DISPLAY_ONLY`；C28 两处同时删 ID 并同步减 count 仍通过；C14 只查裁决 JSON 含 "verdict" 字样；C26/C29 与生产同源，不能称独立方法验证。
+F. 抽验：37 条去重仅 27 个样本键；R6 未交付两父输入核证结论；S20/S21 一边写父兼容缺失一边保留 RESOLVED；R7 三条为弱定位/未找到，不能算「已完成原文定位」。
+G/H. 故障注入数字一致；文本仍有旧表述。
+
+执行方已按此返工。请做第八轮复核。
+
+必读：
+1. `runs/issues/S00/errata_20261111_v5/report_to_codex_round8.md` —— 本轮汇报，含六个待裁定问题
+2. `runs/issues/S00/errata_20261111_v5/REPORT.md`、`handoff.md`
+3. `runs/issues/S00/errata_20261111_v5/evidence_scope.py` —— 判据唯一实现（`analyse` / `period_scope` / `source_scope` / `required_scope` / `judge`）
+4. `runs/issues/S00/errata_20261111_v5/meta_classes.py` —— 字段影响分类唯一来源
+5. `runs/issues/S00/errata_20261111_v5/build_errata_v5.py` —— 含重写后的 `parent_compatible()`
+6. `runs/issues/S00/errata_20261111_v5/check_l2_v5.py`、`sampling_v5.py`、`verify_v5.py`（39 项自检）
+7. `runs/issues/S00/errata_20261111_v5/summary.json`、`l2_dependency_summary.json`、`sampling_v5.json`、`review.json`、`manifest.json`
+8. `runs/issues/S00/errata_20261111_v5/meta_diff.csv`、`extra_meta_diff.csv`、`dispute_ledger.csv`、`restricted_claims.csv`、`l2_dependency_check.csv`、`sampling_v5.csv`
+9. `runs/issues/S00/errata_20261111_v5/rulings_resolved.json`
+10. `runs/issues/S00/errata_20261111_v5/_codex_out_round7.txt`（你上一轮的裁决原文）
+
+请重点核实：
+
+A. **并集是否真的生效**。`required_scope` 现在返回 `period_scope | source_scope`。请复算：非自身期间 + 分季度表是否同时含 `COMPARATIVE_SCOPE` 与 `QUARTERLY_TABLE_PROVENANCE`？非自身期间 + 累计差分是否同时含 `COMPARATIVE_SCOPE` 与 `PARENT_COMPATIBILITY`？8 条确认类的 `scope_missing` 是否已变成两维？
+
+B. **极性九反例是否都能拦住**。C34 现覆盖：勾选实际取值（√适用 vs √不适用）、否定就近绑定、肯定否定冲突、事件与影响分离、纯标签行、零值专有项目、100.00 元不误命中、政策变更冲突不阻断 ERRATA 断言。请用你自己的反例再打一遍，特别关注：多原因分句的绑定、勾选符号与文字顺序不一致、`0.00元` 与 `100.00元` 混排。
+
+C. **父输入兼容性是否还有捷径**。现在的判据：口径三元组必须非空且一致；同文档 → 兼容；跨文档 → 两份文档都判定「否」或两父键采用同一 `document_id_after`；其余不兼容；Q1 与 `0331` 行返回 None。请复算：是否还有「跨文档 + 同 version_used」通过的实例？`PENDING_PARENT_COMPATIBILITY=1,277` 与你的 1,272 是否一致？「同文档 → 兼容」与「双否 → 兼容」这两条是否仍属捷径（我已在汇报第四节问题 2、3 中提出）？
+
+D. **事件确认是否还有方法名兜底**。`bval=="是"` 分支现只认 `ERRATA in affirmed`。8 条确认类是否都有原文肯定表述？`PENDING_CONFIRMED_UNSUPPORTED` 1 条是否合理？
+
+E. **自检是否还有绕过路径**。C24 分类已由 `meta_classes.py` 锁定、放行须绑定 `content_review_ref`；C28 从源表重建预期集合做集合相等；C14 须绑定裁决文件 sha + 键 + 冲突解释。请再试：改台账自报 class、改 content_review_ref、在受限表增删 ID、给裁决条目写占位文字。
+
+F. **抽验是否达标**。37 条 / 20 类 / 去重 27 键；R6 带两父输入结论；R7 为 2 VERIFIED + 1 WEAK。R7 的定位判据已改为「最长连续原文片段 ≥20 字」，这是否足以称为「已定位」？`SH:600936` 现在表述为「未定位到」，处置是否恰当？
+
+G. **故障注入**。V1：C13 6 / C14 11,936 / C17 12,076；V4 映射后：C26 7,714 / C14 6,602 / 受限方法自身期间 5,270；V5 自身四项 0。是否与你的复算一致？
+
+H. **文本是否彻底同步**。`handoff.md`、`REPORT.md`、`report_to_codex_round8.md`、`data/active_issue.json`、`manifest.json` 是否还有旧数或旧表述残留？
+
+请给出：第八轮裁决（通过 / 有条件通过 / 退回返工）、需要修正的具体项（带文件行号或键）、对第 4 步批量核证粒度的裁定（9,927 条 `NOTE_TRACE_NA` / 642 条零值注记 / 87 组）、以及是否放行 S04 第二轮与 S05。
+
+注意：本轮只读。不要修改仓库、不要提交、不要操作 GitHub。

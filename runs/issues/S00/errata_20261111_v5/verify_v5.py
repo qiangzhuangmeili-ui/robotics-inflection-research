@@ -37,6 +37,7 @@ from pathlib import Path
 
 import evidence_scope as es
 import l2_core as core
+import meta_classes as mc
 
 ROOT = core.ROOT
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
@@ -114,24 +115,67 @@ if P_RULED.exists():
     RULED = {e["key"]: e for e in _d.get("entries", [])}
 
 
+def ruling_file_ok(ent):
+    """裁决必须绑定真实裁决文件：路径存在、sha256 与登记一致。
+
+    第七轮 E 项：原先只检查裁决 JSON 里出现过 "verdict" 字样，写任何占位文字都能过。
+    """
+    rf = (ent.get("ruling_file") or "").strip()
+    want = (ent.get("ruling_file_sha256") or "").strip()
+    if not rf or not want:
+        return False
+    p = (ROOT / rf) if not Path(rf).is_absolute() else Path(rf)
+    if not p.exists():
+        return False
+    return hashlib.sha256(p.read_bytes()).hexdigest() == want
+
+
+def _parent_basis(kp):
+    r = D10.get(kp)
+    if not r:
+        return None
+    return {"doc": (r.get("document_id") or "").strip(),
+            "scope": (r.get("consolidation_scope") or "").strip(),
+            "unit": (r.get("unit_scale") or "").strip(),
+            "cur": (r.get("currency") or "").strip(),
+            "ver": (r.get("version_used") or "").strip()}
+
+
+def _doc_verdict(doc):
+    return ((vrec.get(doc) or {}).get("verdict") or "").strip()
+
+
 def parent_compatible(k):
-    """与 build_errata_v5.py 同口径：两期累计父输入的文档/版本/合并范围/单位兼容性。"""
+    """与 build_errata_v5.py 同口径（第七轮 C 项）。
+
+    撤销 version_used 相同与「任一父键在采用审计」两条捷径；
+    口径字段必须非空且一致；同文档才算同口径；跨文档须两份都未被重述
+    或两父键采用同一修订文档。Q1 单季=累计，返回 None（不要求相减）。
+    """
     sec, fld, pk = k
     if fld not in es.SIMPLE_SQ:
         return None
+    if es.is_q1(pk):
+        return None
     ytd = fld[:-3] + ".YTD"
-    p1 = D10.get((sec, ytd, pk))
-    p2 = D10.get((sec, ytd, prev_quarter(pk)))
-    if not p1 or not p2:
+    k1, k2 = (sec, ytd, pk), (sec, ytd, prev_quarter(pk))
+    b1, b2 = _parent_basis(k1), _parent_basis(k2)
+    if not b1 or not b2:
         return False
-    for x in ("consolidation_scope", "unit_scale", "currency"):
-        if (p1.get(x) or "") != (p2.get(x) or ""):
+    for f in ("scope", "unit", "cur"):
+        if not b1[f] or b1[f] != b2[f]:
             return False
-    if (p1.get("document_id") or "") == (p2.get("document_id") or ""):
+    if b1["doc"] and b1["doc"] == b2["doc"]:
         return True
-    if (p1.get("version_used") or "") and p1.get("version_used") == p2.get("version_used"):
+    if _doc_verdict(b1["doc"]) == "否" and _doc_verdict(b2["doc"]) == "否":
         return True
-    return ((sec, ytd, pk) in adopt) or ((sec, ytd, prev_quarter(pk)) in adopt)
+    a1, a2 = adopt.get(k1), adopt.get(k2)
+    if a1 and a2:
+        d1 = (a1.get("document_id_after") or "").strip()
+        d2 = (a2.get("document_id_after") or "").strip()
+        if d1 and d1 == d2:
+            return True
+    return False
 
 
 def read_dir(d):
@@ -164,7 +208,8 @@ def facts(r):
     own = doc_period.get(doc, "")
     req = es.required_scope(status, own, k[2])
     if rec:
-        ex, af, sc, me = es.analyse(rec)
+        _p = es.analyse(rec)
+        ex, af, sc, me = _p.excluded, _p.affirmed, _p.scoped, _p.mentioned
     else:
         ex, af, sc, me = set(), set(), set(), set()
     cov = set(ex)
@@ -177,30 +222,37 @@ def facts(r):
 
 
 def allowed_label(f, rec=None, pok=None, bval=None):
-    """按重算事实给出唯一允许的处置标签。rec/pok/bval 可注入，供故障注入使用。"""
+    """按重算事实给出唯一允许的处置标签。rec/pok/bval 可注入，供故障注入使用。
+
+    分支顺序与 `build_errata_v5.py` 的「裁决 → 判定相反 → judge」严格一致，
+    否则重算与生产会因顺序差异产生假违例。
+    """
     rec = f["rec"] if rec is None else rec
     pok = f["pok"] if pok is None else pok
     bval = f["bval"] if bval is None else bval
-    if str(f["k"][0]) + "|" + "|".join(f["k"]) in RULED or ("|".join(f["k"])) in RULED:
+    if ("|".join(f["k"])) in RULED:
         return "RESOLVED_BY_RULING"
     if not f["doc"]:
         return "UNRESOLVED_NO_DOCUMENT"
     if rec is None:
         return "UNRESOLVED_DOC_NEVER_VERIFIED"
     m = rec.get("method") or ""
+    if rec.get("verdict") != bval and m != "NOTE_RETAINED_ERRATA_NONZERO":
+        return "UNRESOLVED_EVIDENCE_MISMATCH"
     req = es.required_scope(f["status"], f["own"], f["k"][2])
-    ex, af, sc, me = es.analyse(rec)
+    _p = es.analyse(rec)
+    ex, af, sc, me = _p.excluded, _p.affirmed, _p.scoped, _p.mentioned
     cov = set(ex)
     if es.PARENT_COMPATIBILITY in req and pok is True:
         cov.add(es.PARENT_COMPATIBILITY)
     missing = req - cov
+    if _p.conflict & (req & set(es.CAUSES)):
+        return "UNRESOLVED_POLARITY_CONFLICT"
     if m == "ASSUMED_NO_PENDING_REVIEW":
         return "PENDING_WEAK_ASSUMPTION"
-    if rec.get("verdict") != bval and m != "NOTE_RETAINED_ERRATA_NONZERO":
-        return "UNRESOLVED_EVIDENCE_MISMATCH"
     if bval == "是":
-        event_ok = (es.ERRATA in af) or m == "NOTE_RETAINED_ERRATA_NONZERO"
-        if not event_ok:
+        # 第七轮 D 项：事件确认只认原文极性，不用方法名兜底
+        if es.ERRATA not in af:
             return "PENDING_CONFIRMED_UNSUPPORTED"
         src_gap = es.source_dims_for(f["status"], f["own"], f["k"][2]) - cov
         if src_gap:
@@ -208,7 +260,9 @@ def allowed_label(f, rec=None, pok=None, bval=None):
         return "RESOLVED_RESTATEMENT_CONFIRMED"
     if m in es.SCOPE_LIMITED_METHODS and not es.binds_field(rec):
         return "PENDING_SCOPE_LIMITED_METHOD"
-    if es.ERRATA in af and es.ERRATA not in ex:
+    if es.ERRATA in af and es.ERRATA in sc:
+        return "PENDING_EVENT_CONFIRMED_SCOPE_LIMITED"
+    if es.ERRATA in af:
         return "UNRESOLVED_EVIDENCE_CONTRADICTS"
     if not missing:
         return "RESOLVED_SCOPE_COVERED"
@@ -296,14 +350,18 @@ def check_c14(meta, label_map=None):
         f = facts(r)
         key = "|".join(f["k"])
         if res == "RESOLVED_BY_RULING":
-            if key not in RULED:
+            ent = RULED.get(key)
+            if ent is None:
                 bad.append((f["k"], "RULING_NOT_IN_RULINGS_FILE"))
-            elif not (RULED[key].get("basis") or "").strip():
+            elif (ent.get("ruled_key") or "") != key:
+                bad.append((f["k"], "RULING_KEY_MISMATCH"))
+            elif not (ent.get("basis") or "").strip():
                 bad.append((f["k"], "RULING_WITHOUT_BASIS"))
-            elif f["rec"] is not None and f["rec"].get("verdict") != f["bval"]:
-                # 裁决必须正面解释「判定与 B 相反」这件事
-                if "verdict" not in json.dumps(RULED[key], ensure_ascii=False):
-                    bad.append((f["k"], "RULING_IGNORES_VERDICT_CONFLICT"))
+            elif not ruling_file_ok(ent):
+                bad.append((f["k"], "RULING_FILE_UNBOUND_OR_SHA_DRIFT"))
+            elif not (ent.get("conflict_explanation") or "").strip():
+                # 第七轮 E 项：不能只查裁决 JSON 里出现过 "verdict" 字样
+                bad.append((f["k"], "RULING_WITHOUT_CONFLICT_EXPLANATION"))
             continue
         if res == "RESOLVED_NORMALIZED_DELTA":
             continue  # 由 C17 校验
@@ -311,9 +369,8 @@ def check_c14(meta, label_map=None):
             if f["bval"] != "是":
                 bad.append((f["k"], "CONFIRMED_BUT_B_IS_NOT_YES"))
                 continue
-            m = (f["rec"] or {}).get("method") or ""
-            event_ok = (es.ERRATA in f["af"]) or m == "NOTE_RETAINED_ERRATA_NONZERO"
-            if not event_ok:
+            # 第七轮 D 项：事件确认只认原文极性，方法名不能当原文证明
+            if es.ERRATA not in f["af"]:
                 bad.append((f["k"], "CONFIRMED_EVENT_NOT_SUPPORTED"))
                 continue
             gap = es.source_dims_for(f["status"], f["own"], f["k"][2]) - f["cov"]
@@ -580,9 +637,11 @@ def _find(pred):
 
 # (1) 范围不足：证据排除了差错更正，但取值来自分季度表，来源维度仍缺
 probe_q = _find(lambda r: r["status_B"] == "EXTRACTED_QUARTERLY_TABLE")
-# (2) 父输入不兼容：累计差分已解决行，两个父输入文档/范围/单位不兼容
+# (2) 父输入不兼容：累计差分自身期间行（req 只含 ERRATA+PARENT_COMPATIBILITY，
+#     否则比较范围会抢先命中 PENDING_SOURCE_PROVENANCE）。第七轮 C 项后跨文档
+#     行已全部重开，不能再要求「已解决行」作探针。
 probe_c = _find(lambda r: r["status_B"] == "DERIVED_CUMULATIVE_DIFF"
-                and r["resolution"] == "RESOLVED_SCOPE_COVERED")
+                and r["is_own_period"] == "YES")
 # (3) 肯定发生：任一条已解决行，证据改为确认发生差错更正
 probe_a = _find(lambda r: r["resolution"] == "RESOLVED_SCOPE_COVERED")
 REC_EXCL = {"evidence": "本报告期前期差错更正不适用", "method": "CHECKBOX_NA",
@@ -618,39 +677,74 @@ add("C23", "山东钢铁四条待核 + 非自身期间一律不得判已解决",
      "comparative_resolved": len(mis)})
 
 
+def review_ref(sec, fld, mf, val):
+    """内容审查记录的绑定键：同键 + 同字段 + 同终值。"""
+    raw = "|".join([sec, fld, mf, val or ""])
+    return "CR-" + hashlib.sha1(raw.encode("utf-8")).hexdigest()[:12]
+
+
 def extra_leaks(rows):
-    """放行必须有 content_review=CONFIRMED 记录；来源变更不得算纯展示。"""
+    """放行必须有与「同键同字段同终值」绑定的内容审查记录。
+
+    第七轮 E 项：原先只读台账自报的 class 列，把 value_raw / source_page 标成
+    REGISTERED_DISPLAY_ONLY 就能免审查。现在分类由字段名锁定，自报 class 只能被核对。
+    """
     out = []
     for r in rows:
-        res = r["resolution"]
-        if not is_resolved(res) and not res.startswith("REGISTERED_"):
+        mf = r["meta_field"]
+        exp = mc.expected_class(mf)
+        got = r.get("class") or ""
+        if got != exp:
+            out.append((r["security_id"], mf, "MISCLASSIFIED:%s!=%s" % (got, exp)))
             continue
+        res = r["resolution"]
         if res == "REGISTERED_DISPLAY_ONLY":
-            if r.get("document_changed") == "YES" or r.get("period_source_changed") == "YES":
-                out.append((r["security_id"], r["meta_field"], "DISPLAY_BUT_PROVENANCE_CHANGED"))
+            if exp != "DISPLAY_ONLY":
+                out.append((r["security_id"], mf, "DISPLAY_ONLY_FOR_SUBSTANTIVE_FIELD"))
+            elif r.get("document_changed") == "YES" or r.get("period_source_changed") == "YES":
+                out.append((r["security_id"], mf, "DISPLAY_BUT_PROVENANCE_CHANGED"))
             continue
         if res != "RESOLVED_FIELD_LEVEL_CHECK":
-            out.append((r["security_id"], r["meta_field"], "UNKNOWN_RELEASE:%s" % res))
+            if is_resolved(res) or res.startswith("REGISTERED_"):
+                out.append((r["security_id"], mf, "UNKNOWN_RELEASE:%s" % res))
             continue
         if (r.get("content_review") or "") != "CONFIRMED":
-            out.append((r["security_id"], r["meta_field"], "RELEASE_WITHOUT_CONTENT_REVIEW"))
+            out.append((r["security_id"], mf, "RELEASE_WITHOUT_CONTENT_REVIEW"))
+        elif (r.get("content_review_ref") or "") != review_ref(
+                r["security_id"], r["field_id"], mf, r.get("value_B")):
+            out.append((r["security_id"], mf, "RELEASE_WITHOUT_BOUND_REVIEW"))
     return out
 
 
 leak = extra_leaks(extra)
-# 反例：补一条「已放行但没有内容审查记录」的合成行，检查必须能拦住
+# 反例一：补一条「已放行但没有内容审查记录」的合成行
 fake = dict(extra[0])
 fake["resolution"] = "RESOLVED_FIELD_LEVEL_CHECK"
 fake["content_review"] = ""
+fake["content_review_ref"] = ""
 fake_caught = len(extra_leaks([fake])) == 1
-add("C24", "补充元数据放行须有 content_review 记录（来源变更不得算展示）",
-    not leak and fake_caught,
+# 反例二（第七轮 Codex 实际用过的绕过路径）：把实质字段改标成展示字段
+fake2 = dict(next(r for r in extra if mc.is_substantive(r["meta_field"])))
+fake2["class"] = "DISPLAY_ONLY"
+fake2["resolution"] = "REGISTERED_DISPLAY_ONLY"
+fake2["document_changed"] = "NO"
+fake2["period_source_changed"] = "NO"
+fake2_caught = len(extra_leaks([fake2])) == 1
+# 反例三：审查记录存在但没绑定到该键该终值
+fake3 = dict(fake)
+fake3["content_review"] = "CONFIRMED"
+fake3["content_review_ref"] = "CR-000000000000"
+fake3_caught = len(extra_leaks([fake3])) == 1
+add("C24", "补充元数据放行须有绑定同键同字段同终值的审查记录（分类由字段锁定）",
+    not leak and fake_caught and fake2_caught and fake3_caught,
     {"leaked": len(leak), "sample": [str(x) for x in leak[:5]],
-     "injection_caught": fake_caught,
+     "injection_no_review": fake_caught,
+     "injection_misclassified_as_display": fake2_caught,
+     "injection_unbound_review": fake3_caught,
      "pending": sum(1 for r in extra if r["resolution"] == "PENDING_FIELD_LEVEL_CHECK")})
 
 b26 = check_c26(meta)
-add("C26", "全类别双向重算（17,009 条，含裁决类与确认类）", not b26,
+add("C26", "全类别双向重算（17,009 条，含裁决类与确认类）；独立于台账自报字段，但与生产同源", not b26,
     {"violations": len(b26), "sample": [str(x) for x in b26[:5]],
      "labels": dict(Counter(r["resolution"] for r in meta
                             if r["meta_field"] == "restatement_flag"))})
@@ -734,11 +828,30 @@ for r in restr:
             elif (lr["security_id"], lr["field_id"], lr["period_key"]) != \
                     (r["security_id"], r["field_id"], r["period_key"]):
                 per_table_bad.append((d, "WRONG_KEY"))
-add("C28", "差异 ID 稳定、逐表引用同键、受限行逐项可回溯",
-    not dup and not unmapped and not cnt_bad and not id_bad and not per_table_bad,
+# 第七轮 E 项：不能只查「引用存在且同键」，必须从源差异表独立重建预期引用集合做集合相等。
+# 否则删掉一条受限声明的逐表 ID 和总列表同一 ID、再同步减小 dispute_count，仍能通过。
+exp_tbl = defaultdict(set)
+for r in dledger:
+    exp_tbl[(r["security_id"], r["field_id"], r["period_key"], r["ledger"])].add(r["dispute_id"])
+seteq_bad = []
+for r in restr:
+    k = (r["security_id"], r["field_id"], r["period_key"])
+    total = {x for x in (r["dispute_ids"] or "").split(";") if x}
+    union = set()
+    for short, full in TBL_OF.items():
+        act = {x for x in (r.get("dispute_ids_" + short) or "").split(";") if x}
+        union |= act
+        exp = exp_tbl.get(k + (full,), set())
+        if act != exp:
+            seteq_bad.append((k, short, "act=%d exp=%d" % (len(act), len(exp))))
+    if total != union:
+        seteq_bad.append((k, "TOTAL_NE_UNION", "%d!=%d" % (len(total), len(union))))
+add("C28", "差异 ID 稳定、逐表引用同键、受限行引用集合与源差异表重建结果相等",
+    not dup and not unmapped and not cnt_bad and not id_bad and not per_table_bad and not seteq_bad,
     {"ledger_ids": len(led_ids), "unique": len(set(led_ids)), "dups": len(dup),
      "used_ids": len(used), "unmapped": len(unmapped), "count_mismatch": len(cnt_bad),
-     "id_unstable": len(id_bad), "per_table_bad": len(per_table_bad)})
+     "id_unstable": len(id_bad), "per_table_bad": len(per_table_bad),
+     "set_equality_bad": len(seteq_bad), "set_equality_sample": [str(x) for x in seteq_bad[:5]]})
 
 eq_only = []
 for r in meta:
@@ -751,7 +864,7 @@ for r in meta:
         eq_only.append((f["k"], ";".join(sorted(f["missing"]))))
     if not (r.get("scope_required") or ""):
         eq_only.append((f["k"], "NO_SCOPE_DECLARED"))
-add("C29", "不得存在「仅凭期间相等」的闭合（按重算覆盖判定，不看台账自报）",
+add("C29", "不得存在「仅凭期间相等」的闭合（按重算覆盖判定，不看台账自报；与 C26 同源）",
     not eq_only, {"violations": len(eq_only), "sample": [str(x) for x in eq_only[:5]]})
 
 # ---------------- C31/C32 分层抽验 ----------------
@@ -769,12 +882,21 @@ reread_bad = [s for s in non_r7 if s["page_reread"] in ("NOT_FOUND", "PDF_MISSIN
                                                         "READ_ERROR")
               or s["page_reread"].startswith("PAGE_OUT")]
 r7 = [s for s in samp if s["risk_type"].startswith("R7_")]
-r7_bad = [s for s in r7 if not s["located_conclusion"]]
-add("C31", "分层抽验覆盖 12 类必需风险 + 补充字段，原件回读无失配",
-    REQUIRED_RISK <= samp_risk and has_extra and not reread_bad and bool(r7) and not r7_bad,
+# 第七轮 F 项：原先只要求 located_conclusion 非空，写「NOT_FOUND」也算通过。
+# 现在必须声明 locate_status，且「风险已发现」与「核证通过」分开计数。
+r7_bad = [s for s in r7
+          if (s.get("locate_status") or "") not in ("VERIFIED", "WEAK", "NOT_LOCATED")]
+r7_verified = [s for s in r7 if s.get("locate_status") == "VERIFIED"]
+r7_status = Counter(s.get("locate_status") for s in r7)
+add("C31", "分层抽验覆盖 12 类必需风险 + 补充字段；原文定位须区分已核与未定位",
+    REQUIRED_RISK <= samp_risk and has_extra and not reread_bad and bool(r7)
+    and not r7_bad and len(r7_verified) >= 1,
     {"samples": len(samp), "risk_types": len(samp_risk),
+     "unique_keys": len({(s["security_id"], s["field_id"], s["period_key"],
+                          s["meta_field"]) for s in samp}),
      "missing": sorted(REQUIRED_RISK - samp_risk), "extra_covered": has_extra,
-     "reread_bad": len(reread_bad), "r7_bad": len(r7_bad),
+     "reread_bad": len(reread_bad), "r7_undeclared": len(r7_bad),
+     "r7_verified": len(r7_verified), "r7_status": dict(r7_status),
      "reread": dict(Counter(s["page_reread"] for s in samp)),
      "r7_conclusion": dict(Counter(s["located_conclusion"].split("：")[0] for s in r7))})
 
@@ -840,13 +962,129 @@ if es.ERRATA in _z[0]:
     c34.append("SCOPED_ZERO_TREATED_AS_EXCLUDED")
 if es.ERRATA not in _z[2]:
     c34.append("SCOPED_ZERO_NOT_RECORDED")
-add("C34", "极性四反例：肯定发生/政策变更/100.00元 不误命中/勾选式不适用",
+
+# 第七轮 B 项：Codex 在内存复现的三个误放行，必须逐个被拦住
+_cb_aff = _pol("前期差错更正\n√适用□不适用")
+if es.ERRATA not in _cb_aff[1] or es.ERRATA in _cb_aff[0]:
+    c34.append("CHECKBOX_CHECKED_APPLICABLE_MISREAD")
+_cb_neg = _pol("前期差错更正\n□适用√不适用")
+if es.ERRATA not in _cb_neg[0] or es.ERRATA in _cb_neg[1]:
+    c34.append("CHECKBOX_CHECKED_NA_MISREAD")
+_bind = _pol("本期发生前期差错更正，但会计政策变更不适用")
+if es.ERRATA not in _bind[1] or es.POLICY_CHANGE not in _bind[0]:
+    c34.append("NEGATION_BROADCAST_TO_ALL_CAUSES")
+if es.ERRATA in _bind[0]:
+    c34.append("ERRATA_EXCLUDED_BY_POLICY_NEGATION")
+_confl = _pol("未发生前期差错更正。本期发生前期差错更正100.00元")
+if es.ERRATA not in _confl[4]:
+    c34.append("CONFLICT_NOT_DETECTED")
+# 事件与影响分离：非零权益影响必须同时记「事件已确认」与「仅限该项目」
+_scoped_pos = _pol("差错更正对期初未分配利润影响100.00元")
+if es.ERRATA not in _scoped_pos[1] or es.ERRATA not in _scoped_pos[2]:
+    c34.append("EVENT_AND_SCOPE_NOT_SEPARATED")
+# 标签行不得被当成肯定
+_lbl = _pol("追溯重述法\n本期未发生采用追溯重述法的前期会计差错更正事项。")
+if es.ERRATA in _lbl[1] or es.ERRATA not in _lbl[0]:
+    c34.append("LABEL_LINE_TREATED_AS_AFFIRM")
+# 冲突只在该原因属于本行必需维度时才阻断
+_judge_pol = es.judge({"evidence": "本期发生前期差错更正，但会计政策变更不适用。"
+                                   "本报告期无会计政策变更。", "method": "T", "verdict": "否",
+                       "page": "1"}, "DOC-X", "EXTRACTED", "20250630", "20250630", bval="否")
+if _judge_pol["resolution"] == "UNRESOLVED_POLARITY_CONFLICT":
+    c34.append("POLICY_CONFLICT_BLOCKS_ERRATA_ASSERTION")
+
+add("C34", "极性九反例：勾选实际取值/否定就近绑定/肯定否定冲突/事件与影响分离/标签行",
     not c34, {"violations": c34,
               "cases": {"neg": "本公司未发生前期差错更正",
                         "pos": "本期发生前期差错更正",
                         "hundred": "前期差错更正调整 100.00 元",
-                        "checkbox": "追溯重述法；□适用 √不适用",
+                        "checkbox_na": "追溯重述法；□适用 √不适用",
+                        "checkbox_applicable": "前期差错更正\\n√适用□不适用",
+                        "negation_binding": "本期发生前期差错更正，但会计政策变更不适用",
+                        "conflict": "未发生前期差错更正。本期发生前期差错更正100.00元",
+                        "event_vs_scope": "差错更正对期初未分配利润影响100.00元",
+                        "label_line": "追溯重述法（小标题）",
                         "scoped_zero": "…影响期初未分配利润0.00元"}})
+
+# ---------------- C36 必需范围 = 期间要求 ∪ 来源要求 ----------------
+c36 = []
+if es.QUARTERLY_TABLE_PROVENANCE not in es.required_scope(
+        "EXTRACTED_QUARTERLY_TABLE", "20251231", "20250630"):
+    c36.append("NON_OWN_QUARTERLY_TABLE_LOST_PROVENANCE")
+if es.COMPARATIVE_SCOPE not in es.required_scope(
+        "EXTRACTED_QUARTERLY_TABLE", "20251231", "20250630"):
+    c36.append("NON_OWN_LOST_COMPARATIVE_SCOPE")
+if es.PARENT_COMPATIBILITY not in es.required_scope(
+        "DERIVED_CUMULATIVE_DIFF", "20251231", "20250630"):
+    c36.append("NON_OWN_CUMULATIVE_LOST_PARENT_COMPAT")
+if es.PARENT_COMPATIBILITY in es.required_scope(
+        "DERIVED_CUMULATIVE_DIFF", "20250630", "20250331"):
+    c36.append("Q1_STILL_REQUIRES_TWO_PARENT_DIFF")
+miss36 = []
+for r in meta:
+    if r["meta_field"] != "restatement_flag" or r["is_own_period"] != "NO":
+        continue
+    k = (r["security_id"], r["field_id"], r["period_key"])
+    st = D10.get(k, {}).get("status", "")
+    if st != "EXTRACTED_QUARTERLY_TABLE":
+        continue
+    req = es.required_scope(st, r["own_period"], r["period_key"])
+    if not {es.COMPARATIVE_SCOPE, es.QUARTERLY_TABLE_PROVENANCE} <= req:
+        miss36.append(str(k))
+add("C36", "必需范围取并集：非自身期间的分季度表/累计差分不得丢失来源维度",
+    not c36 and not miss36,
+    {"violations": c36, "row_violations": len(miss36), "sample": miss36[:5],
+     "comparative_quarterly_table_rows": sum(
+         1 for r in meta if r["meta_field"] == "restatement_flag"
+         and r["is_own_period"] == "NO"
+         and D10.get((r["security_id"], r["field_id"], r["period_key"]), {}).get("status") == "EXTRACTED_QUARTERLY_TABLE")})
+
+# ---------------- C37 父输入兼容性：撤销捷径、重开已解除 ----------------
+c37 = []
+shortcut_pass = []
+diff_keys = [(r["security_id"], r["field_id"], r["period_key"]) for r in meta
+             if r["meta_field"] == "restatement_flag"
+             and D10.get((r["security_id"], r["field_id"], r["period_key"]), {}).get("status")
+             == "DERIVED_CUMULATIVE_DIFF"]
+for k in diff_keys:
+    if not es.SIMPLE_SQ.__contains__(k[1]) or es.is_q1(k[2]):
+        continue
+    ytd = k[1][:-3] + ".YTD"
+    b1 = _parent_basis((k[0], ytd, k[2]))
+    b2 = _parent_basis((k[0], ytd, prev_quarter(k[2])))
+    if not b1 or not b2:
+        continue
+    same_ver = bool(b1["ver"]) and b1["ver"] == b2["ver"]
+    cross_doc = b1["doc"] != b2["doc"]
+    # 旧捷径：跨文档 + 同 version_used 即放行
+    if same_ver and cross_doc and parent_compatible(k) is not False:
+        shortcut_pass.append(str(k))
+if shortcut_pass:
+    c37.append("SAME_VERSION_USED_SHORTCUT_STILL_PASSES")
+# 口径字段为空不得当作「已确认一致」
+empty_scope_pass = []
+for k in diff_keys:
+    if not es.SIMPLE_SQ.__contains__(k[1]) or es.is_q1(k[2]):
+        continue
+    ytd = k[1][:-3] + ".YTD"
+    b1 = _parent_basis((k[0], ytd, k[2]))
+    b2 = _parent_basis((k[0], ytd, prev_quarter(k[2])))
+    if not b1 or not b2:
+        continue
+    if (not b1["scope"] or not b1["unit"] or not b1["cur"]) and parent_compatible(k) is True:
+        empty_scope_pass.append(str(k))
+if empty_scope_pass:
+    c37.append("EMPTY_SCOPE_FIELD_TREATED_AS_EQUAL")
+reopened = sum(1 for r in meta if r["meta_field"] == "restatement_flag"
+               and r["resolution"] == "PENDING_PARENT_COMPATIBILITY")
+if reopened < 1000:
+    c37.append("REOPENED_PARENT_COMPAT_TOO_FEW:%d" % reopened)
+add("C37", "父输入兼容性：撤销同版本捷径与空值相等，跨文档已解除项重开",
+    not c37,
+    {"violations": c37, "shortcut_passes": len(shortcut_pass),
+     "empty_scope_passes": len(empty_scope_pass),
+     "reopened_pending": reopened,
+     "cumulative_diff_rows": len(diff_keys)})
 
 passed = sum(1 for c in checks if c["result"] == "PASS")
 review = {

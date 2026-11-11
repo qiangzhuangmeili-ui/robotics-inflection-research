@@ -42,6 +42,14 @@ vrec = {}
 with open(P_VERIFY, encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
         vrec[r["document_id"]] = r
+
+# 采用审计：父输入是否采用同一修订文档（第七轮 C 项：不能只凭 version_used 相同）
+adopt = {}
+_p_adopt = ROOT / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10_adoption_audit.csv"
+if _p_adopt.exists():
+    with open(_p_adopt, encoding="utf-8-sig", newline="") as f:
+        for r in csv.DictReader(f):
+            adopt[(r["security_id"], r["field_id"], r["period_key"])] = r
 doc_period = {}
 with open(P_REGISTRY, encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
@@ -92,26 +100,41 @@ def locate_in_doc(sec, doc, evidence, near=None):
         import pymupdf
         d = pymupdf.open(str(pdf))
         ev = norm(evidence)
-        # 取证据中最长的一段连续片段作为定位锚（每 12 字一窗，取命中率最高页）
-        wins = [ev[i:i + 12] for i in range(0, max(1, len(ev) - 11), 6)]
-        best, best_n, best_txt = 0, -1, ""
-        for i in range(d.page_count):
-            t = norm(d[i].get_text())
-            if not t:
-                continue
-            n = sum(1 for w in wins if w in t)
-            if n > best_n:
-                best, best_n, best_txt = i + 1, n, t[:120]
-            if n == len(wins) and wins:
-                break
+        pages = [norm(d[i].get_text()) for i in range(d.page_count)]
         d.close()
     except Exception as e:
         return "READ_ERROR:%s" % e, 0, ""
+    if not ev:
+        return "NO_EVIDENCE_TEXT", 0, ""
+    # 判据改为「最长连续原文片段」：证据常是多页文字拼接，按整段命中率算会把
+    # 真实逐字命中误判成弱定位。任一片段 ≥20 字逐字出现在某页即视为已定位。
+    best_page, best_len, best_txt = 0, 0, ""
+    for w in (60, 40, 30, 20):
+        if len(ev) < w:
+            continue
+        step = 4 if w >= 30 else 2
+        for i in range(0, len(ev) - w + 1, step):
+            frag = ev[i:i + w]
+            for pi, t in enumerate(pages):
+                if t and frag in t:
+                    if w > best_len:
+                        best_page, best_len, best_txt = pi + 1, w, t[:120]
+        if best_len >= 20:
+            break
+    if best_len >= 20:
+        return ("LOCATED(p.%d)" % best_page), round(min(1.0, best_len / max(20, len(ev))), 3), best_txt
+    # 退而求其次：12 字窗命中率
+    wins = [ev[i:i + 12] for i in range(0, max(1, len(ev) - 11), 6)]
+    best, best_n = 0, 0
+    for pi, t in enumerate(pages):
+        if not t:
+            continue
+        n = sum(1 for w2 in wins if w2 in t)
+        if n > best_n:
+            best, best_n = pi + 1, n
     if best_n <= 0:
         return "NOT_FOUND_IN_DOC", 0, ""
-    ratio = best_n / max(1, len(wins))
-    tag = "LOCATED" if ratio >= 0.5 else "WEAK_LOCATE"
-    return ("%s(p.%d)" % (tag, best)), round(ratio, 3), best_txt
+    return ("WEAK_LOCATE(p.%d)" % best), round(best_n / max(1, len(wins)), 3), pages[best - 1][:120]
 
 
 
@@ -209,8 +232,18 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
     status = D10.get(k, {}).get("status", "")
     own = doc_period.get(doc, "")
     # 第六轮裁决：期间参数必须显式三态传入，不能传文档期间字符串当布尔用
-    req = es.required_scope(status, own, r["period_key"])
-    cov = es.coverage_of(rec) if rec else set()
+    if (r.get("scope_required") or ""):
+        # 第七轮 F 项：采样表原先用 coverage_of 重算，丢掉 parent_ok 这一维，
+        # 出现「S20/S21 一边写父兼容缺失、一边保留 RESOLVED」的自相矛盾。
+        # 采样表展示台账声明值；覆盖是否正确由 C29 独立重算另判。
+        req_s, cov_s = r["scope_required"], r.get("scope_covered") or ""
+        mis_s = r.get("scope_missing") or ""
+    else:
+        req = es.required_scope(status, own, r["period_key"])
+        cov = es.coverage_of(rec) if rec else set()
+        req_s = ";".join(sorted(req))
+        cov_s = ";".join(sorted(cov))
+        mis_s = ";".join(sorted(req - cov))
     row = {
         "sample_id": "S%02d" % (len(samples) + 1),
         "risk_type": risk,
@@ -227,13 +260,20 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
         "method": (rec or {}).get("method", ""),
         "verdict": (rec or {}).get("verdict", ""),
         "page": (rec or {}).get("page", ""),
-        "scope_required": ";".join(sorted(req)),
-        "scope_covered": ";".join(sorted(cov)),
-        "scope_missing": ";".join(sorted(req - cov)),
+        "scope_required": req_s,
+        "scope_covered": cov_s,
+        "scope_missing": mis_s,
         "resolution": (meta_row or r)["resolution"],
         "evidence_head": norm((rec or {}).get("evidence", ""))[:100],
         "located_conclusion": "",
+        "locate_status": "",
+        "parent_p1": "", "parent_p2": "",
+        "parent_p1_doc": "", "parent_p2_doc": "",
+        "parent_scope_unit_cur": "", "parent_doc_verdict": "",
+        "parent_compatible": "",
     }
+    if extra_cols:
+        row.update(extra_cols)
     if risk.startswith("R11"):
         row["page_reread"] = "NOT_APPLICABLE_EXTRA_FIELD"
         row["page_match_ratio"] = ""
@@ -259,8 +299,7 @@ for r in pick(lambda x: x["status_B"] == "EXTRACTED_QUARTERLY_TABLE"
     add_sample("R1_QUARTERLY_TABLE_OWN", "分季度表直接取值且为文档自身期间，NA 证据不涉该表", r)
 
 # R2 累计差分
-for r in pick(lambda x: x["status_B"] == "DERIVED_CUMULATIVE_DIFF"
-              and x["resolution"] == "RESOLVED_SCOPE_COVERED", 3):
+for r in pick(lambda x: x["status_B"] == "DERIVED_CUMULATIVE_DIFF", 3):
     add_sample("R2_CUMULATIVE_DIFF", "单季由累计差分得到，须核 YTD(t)/YTD(t−1q) 父输入", r)
 
 # R3 Q1
@@ -298,7 +337,56 @@ for r in pick(lambda x: x["resolution"] == "PENDING_CONFIRMED_EVENT_FIELD_OPEN",
     add_sample("R5_CAUSE_AFFIRMED",
                "B=是 且事件已由证据确认，但来源维度（分季度表/比较列/父输入）尚未核", r)
 
-# R6 跨文档父输入（第六轮裁决第二节：同报告相减抵消不成立）
+def parent_detail(sec, fld, pk):
+    """交付两个父输入各自的核证结论，而不只是「存在跨文档」这一事实。"""
+    if fld not in es.SIMPLE_SQ or es.is_q1(pk):
+        return {}
+    ytd = fld[:-3] + ".YTD"
+    k1, k2 = (sec, ytd, pk), (sec, ytd, prev_quarter(pk))
+    r1, r2 = D10.get(k1, {}), D10.get(k2, {})
+    d1, d2 = r1.get("document_id", ""), r2.get("document_id", "")
+    return {
+        "parent_p1": "%s@%s" % (ytd, pk),
+        "parent_p2": "%s@%s" % (ytd, prev_quarter(pk)),
+        "parent_p1_doc": d1, "parent_p2_doc": d2,
+        "parent_scope_unit_cur": "%s/%s/%s | %s/%s/%s" % (
+            r1.get("consolidation_scope", ""), r1.get("unit_scale", ""), r1.get("currency", ""),
+            r2.get("consolidation_scope", ""), r2.get("unit_scale", ""), r2.get("currency", "")),
+        "parent_doc_verdict": "%s/%s" % (
+            (vrec.get(d1) or {}).get("verdict", "NA"), (vrec.get(d2) or {}).get("verdict", "NA")),
+        "parent_compatible": {True: "YES", False: "NO", None: "NA"}[
+            _pc((sec, fld, pk))],
+    }
+
+
+def _pc(k):
+    sec, fld, pk = k
+    if fld not in es.SIMPLE_SQ or es.is_q1(pk):
+        return None
+    ytd = fld[:-3] + ".YTD"
+    k1, k2 = (sec, ytd, pk), (sec, ytd, prev_quarter(pk))
+    r1, r2 = D10.get(k1), D10.get(k2)
+    if not r1 or not r2:
+        return False
+    for f in ("consolidation_scope", "unit_scale", "currency"):
+        v1, v2 = (r1.get(f) or "").strip(), (r2.get(f) or "").strip()
+        if not v1 or v1 != v2:
+            return False
+    d1, d2 = r1.get("document_id", ""), r2.get("document_id", "")
+    if d1 and d1 == d2:
+        return True
+    if ((vrec.get(d1) or {}).get("verdict") or "") == "否" and             ((vrec.get(d2) or {}).get("verdict") or "") == "否":
+        return True
+    a1, a2 = adopt.get(k1), adopt.get(k2)
+    if a1 and a2:
+        x1 = (a1.get("document_id_after") or "").strip()
+        x2 = (a2.get("document_id_after") or "").strip()
+        if x1 and x1 == x2:
+            return True
+    return False
+
+
+# R6 跨文档父输入（第七轮 C 项：必须交付两父输入各自的核证结论）
 for r in pick(lambda x: x["status_B"] in ("DERIVED_CUMULATIVE_DIFF",
                                           "DERIVED_QUARTERLY_SUM_OVERRIDE")
               and cross_doc_parent(x["security_id"], x["field_id"], x["period_key"]) is not None
@@ -306,7 +394,8 @@ for r in pick(lambda x: x["status_B"] in ("DERIVED_CUMULATIVE_DIFF",
     x = cross_doc_parent(r["security_id"], r["field_id"], r["period_key"])
     add_sample("R6_CROSS_DOC_PARENT",
                "单季由两期累计相减得到，两父输入来自不同文档（%s / %s），"
-               "必须核文档/版本/合并范围/单位兼容" % (x[1][:16], x[2][:16]), r)
+               "须核文档/版本/合并范围/单位兼容" % (x[1][:16], x[2][:16]), r,
+               extra_cols=parent_detail(r["security_id"], r["field_id"], r["period_key"]))
 
 # R6 假设方法
 for r in pick(lambda x: x["resolution"] == "PENDING_WEAK_ASSUMPTION", 2):
@@ -357,13 +446,26 @@ for s in samples:
         continue
     _seen7.add(kk)
     _partial.append(s)
-    if len(_partial) >= 3:
-        break
-for s in _partial:
+# 第七轮 F 项：不能把「弱定位/未找到」也算作「已完成原文定位」。
+# 先把候选池跑完，优先收 VERIFIED，凑满 3 条且至少 1 条 VERIFIED。
+_r7_cand = []
+for s in _partial[:10]:
     k = (s["security_id"], s["field_id"], s["period_key"])
     doc = D10.get(k, {}).get("document_id", "")
     rec = vrec.get(doc) or {}
     st, ratio, excerpt = locate_in_doc(s["security_id"], doc, rec.get("evidence", ""))
+    if st.startswith("LOCATED"):
+        concl, ls = "VERBATIM_ORIGINAL", "VERIFIED"
+    elif st.startswith("WEAK_LOCATE"):
+        concl, ls = ("SUMMARY_NOTE_NOT_VERBATIM：证据为核验者汇总注，全文最佳匹配页仅部分命中，"
+                     "不能作为字段级原文证据"), "WEAK"
+    elif st.startswith("NOT_FOUND"):
+        concl, ls = "NOT_FOUND：原件全文未检索到证据文本（不等于原件中不存在）", "NOT_LOCATED"
+    else:
+        concl, ls = "LOCATE_ERROR：%s" % st, "NOT_LOCATED"
+    _r7_cand.append((ls, s, st, ratio, excerpt, concl))
+_r7_cand.sort(key=lambda x: {"VERIFIED": 0, "WEAK": 1, "NOT_LOCATED": 2}[x[0]])
+for ls, s, st, ratio, excerpt, concl in _r7_cand[:3]:
     row = dict(s)
     row["sample_id"] = "S%02d" % (len(samples) + 1)
     row["risk_type"] = "R7_PARTIAL_LOCATED"
@@ -372,14 +474,8 @@ for s in _partial:
     row["page_reread"] = st
     row["page_match_ratio"] = ratio
     row["page_excerpt"] = excerpt
-    if st.startswith("LOCATED"):
-        concl = "VERBATIM_ORIGINAL"
-    elif st.startswith("WEAK_LOCATE"):
-        concl = ("SUMMARY_NOTE_NOT_VERBATIM：证据为核验者汇总注，全文最佳匹配页仅部分命中，"
-                 "不能作为字段级原文证据")
-    else:
-        concl = "NOT_FOUND：原件全文未找到证据文本"
     row["located_conclusion"] = concl
+    row["locate_status"] = ls
     samples.append(row)
 
 
@@ -405,6 +501,9 @@ summary = {
         "肯定发生（极性非「提及即排除」）": any(k == "R5_CAUSE_AFFIRMED" for k in risk_cnt),
         "跨文档父输入": any(k.startswith("R6_CROSS_DOC") for k in risk_cnt),
         "PARTIAL 原文定位": any(k.startswith("R7_PARTIAL") for k in risk_cnt),
+        "原文定位已核（VERIFIED）": sum(1 for x in samples
+                                       if x["risk_type"].startswith("R7_")
+                                       and x["locate_status"] == "VERIFIED") > 0,
         "补充字段": any(k.startswith("R11") for k in risk_cnt),
         "山东钢铁正例": any(k.startswith("R8") for k in risk_cnt),
         "大豪科技已解除": any(k.startswith("R9") for k in risk_cnt),

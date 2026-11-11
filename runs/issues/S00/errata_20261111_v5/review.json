@@ -6,8 +6,8 @@
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
   "reviewed_at": "2026-11-12T03:20:00+08:00",
-  "checks_pass": 37,
-  "checks_total": 37,
+  "checks_pass": 39,
+  "checks_total": 39,
   "checks": [
     {
       "id": "C01",
@@ -76,11 +76,11 @@
       "detail": {
         "total": 1054,
         "by_verdict": {
-          "R1_NO_LINK": 402,
-          "HOLD_PENDING_ERRATA": 43,
-          "R2_MAY_CHANGE": 207,
-          "NOT_AFFECTED": 329,
-          "STILL_PASSES_WITHOUT": 73
+          "R1_NO_LINK": 378,
+          "HOLD_PENDING_ERRATA": 44,
+          "R2_MAY_CHANGE": 231,
+          "NOT_AFFECTED": 320,
+          "STILL_PASSES_WITHOUT": 81
         }
       }
     },
@@ -89,7 +89,7 @@
       "name": "HOLD 争议可追溯到字段与期间",
       "result": "PASS",
       "detail": {
-        "hold_count": 43
+        "hold_count": 44
       }
     },
     {
@@ -97,8 +97,8 @@
       "name": "核心未闭合+待核与 summary 一致",
       "result": "PASS",
       "detail": {
-        "computed": 7841,
-        "declared": 7841
+        "computed": 9098,
+        "declared": 9098
       }
     },
     {
@@ -196,7 +196,7 @@
       "name": "受限表字段完整（含逐表差异 ID 与逐表哈希）",
       "result": "PASS",
       "detail": {
-        "rows": 294,
+        "rows": 407,
         "cols": 27,
         "missing": []
       }
@@ -207,7 +207,7 @@
       "result": "PASS",
       "detail": {
         "snapshot_sha": "5857e07960e449ed",
-        "rows_checked": 294
+        "rows_checked": 407
       }
     },
     {
@@ -217,8 +217,8 @@
       "detail": {
         "restricted_bad": 0,
         "ledger_bad": 0,
-        "bundle": "240446982897d800",
-        "ledger_rows": 9346
+        "bundle": "17a743e6b4ac0945",
+        "ledger_rows": 10603
       }
     },
     {
@@ -261,15 +261,15 @@
       "name": "V4 旧标签映射后仍必须 FAIL，且三种实质反例各自命中特定标签",
       "result": "PASS",
       "detail": {
-        "v4_c26_violations": 6457,
-        "v4_c14_violations": 5345,
+        "v4_c26_violations": 7714,
+        "v4_c14_violations": 6602,
         "v4_limited_own_period": 5270,
         "inject_scope_insufficient": "PENDING_SOURCE_PROVENANCE",
         "inject_parent_incompatible": "PENDING_PARENT_COMPATIBILITY",
         "inject_cause_affirmed": "UNRESOLVED_EVIDENCE_CONTRADICTS",
         "probes": [
           "BJ:920022|FIN.NPDEDT.SQ|20250630",
-          "SH:600008|FIN.NPDEDT.SQ|20260630",
+          "BJ:920289|FIN.NPDEDT.SQ|20260630",
           "BJ:920011|FIN.AR.INSTANT|20250630"
         ]
       }
@@ -288,30 +288,32 @@
     },
     {
       "id": "C24",
-      "name": "补充元数据放行须有 content_review 记录（来源变更不得算展示）",
+      "name": "补充元数据放行须有绑定同键同字段同终值的审查记录（分类由字段锁定）",
       "result": "PASS",
       "detail": {
         "leaked": 0,
         "sample": [],
-        "injection_caught": true,
+        "injection_no_review": true,
+        "injection_misclassified_as_display": true,
+        "injection_unbound_review": true,
         "pending": 1505
       }
     },
     {
       "id": "C26",
-      "name": "全类别双向重算（17,009 条，含裁决类与确认类）",
+      "name": "全类别双向重算（17,009 条，含裁决类与确认类）；独立于台账自报字段，但与生产同源",
       "result": "PASS",
       "detail": {
         "violations": 0,
         "sample": [],
         "labels": {
-          "RESOLVED_SCOPE_COVERED": 9971,
+          "RESOLVED_SCOPE_COVERED": 8714,
           "PENDING_WEAK_ASSUMPTION": 515,
           "PENDING_SOURCE_PROVENANCE": 47,
           "PENDING_SCOPE_LIMITED_METHOD": 6373,
-          "PENDING_CAUSE_UNCOVERED": 58,
+          "PENDING_CAUSE_UNCOVERED": 43,
+          "PENDING_PARENT_COMPATIBILITY": 1277,
           "PENDING_CONFIRMED_EVENT_FIELD_OPEN": 8,
-          "PENDING_PARENT_COMPATIBILITY": 5,
           "PENDING_CONFIRMED_UNSUPPORTED": 1,
           "RESOLVED_BY_RULING": 1,
           "UNRESOLVED_DOC_NEVER_VERIFIED": 26,
@@ -331,22 +333,24 @@
     },
     {
       "id": "C28",
-      "name": "差异 ID 稳定、逐表引用同键、受限行逐项可回溯",
+      "name": "差异 ID 稳定、逐表引用同键、受限行引用集合与源差异表重建结果相等",
       "result": "PASS",
       "detail": {
-        "ledger_ids": 9346,
-        "unique": 9346,
+        "ledger_ids": 10603,
+        "unique": 10603,
         "dups": 0,
-        "used_ids": 283,
+        "used_ids": 401,
         "unmapped": 0,
         "count_mismatch": 0,
         "id_unstable": 0,
-        "per_table_bad": 0
+        "per_table_bad": 0,
+        "set_equality_bad": 0,
+        "set_equality_sample": []
       }
     },
     {
       "id": "C29",
-      "name": "不得存在「仅凭期间相等」的闭合（按重算覆盖判定，不看台账自报）",
+      "name": "不得存在「仅凭期间相等」的闭合（按重算覆盖判定，不看台账自报；与 C26 同源）",
       "result": "PASS",
       "detail": {
         "violations": 0,
@@ -355,27 +359,33 @@
     },
     {
       "id": "C31",
-      "name": "分层抽验覆盖 12 类必需风险 + 补充字段，原件回读无失配",
+      "name": "分层抽验覆盖 12 类必需风险 + 补充字段；原文定位须区分已核与未定位",
       "result": "PASS",
       "detail": {
         "samples": 37,
         "risk_types": 20,
+        "unique_keys": 25,
         "missing": [],
         "extra_covered": true,
         "reread_bad": 0,
-        "r7_bad": 0,
+        "r7_undeclared": 0,
+        "r7_verified": 2,
+        "r7_status": {
+          "VERIFIED": 2,
+          "WEAK": 1
+        },
         "reread": {
           "MATCH": 17,
-          "NO_PAGE_RECORDED": 4,
-          "PARTIAL": 7,
+          "NO_PAGE_RECORDED": 5,
+          "PARTIAL": 6,
           "NOT_APPLICABLE_EXTRA_FIELD": 6,
-          "WEAK_LOCATE(p.60)": 1,
-          "WEAK_LOCATE(p.159)": 1,
-          "NOT_FOUND_IN_DOC": 1
+          "LOCATED(p.168)": 1,
+          "LOCATED(p.159)": 1,
+          "WEAK_LOCATE(p.168)": 1
         },
         "r7_conclusion": {
-          "SUMMARY_NOTE_NOT_VERBATIM": 2,
-          "NOT_FOUND": 1
+          "VERBATIM_ORIGINAL": 2,
+          "SUMMARY_NOTE_NOT_VERBATIM": 1
         }
       }
     },
@@ -405,7 +415,7 @@
     },
     {
       "id": "C34",
-      "name": "极性四反例：肯定发生/政策变更/100.00元 不误命中/勾选式不适用",
+      "name": "极性九反例：勾选实际取值/否定就近绑定/肯定否定冲突/事件与影响分离/标签行",
       "result": "PASS",
       "detail": {
         "violations": [],
@@ -413,9 +423,37 @@
           "neg": "本公司未发生前期差错更正",
           "pos": "本期发生前期差错更正",
           "hundred": "前期差错更正调整 100.00 元",
-          "checkbox": "追溯重述法；□适用 √不适用",
+          "checkbox_na": "追溯重述法；□适用 √不适用",
+          "checkbox_applicable": "前期差错更正\\n√适用□不适用",
+          "negation_binding": "本期发生前期差错更正，但会计政策变更不适用",
+          "conflict": "未发生前期差错更正。本期发生前期差错更正100.00元",
+          "event_vs_scope": "差错更正对期初未分配利润影响100.00元",
+          "label_line": "追溯重述法（小标题）",
           "scoped_zero": "…影响期初未分配利润0.00元"
         }
+      }
+    },
+    {
+      "id": "C36",
+      "name": "必需范围取并集：非自身期间的分季度表/累计差分不得丢失来源维度",
+      "result": "PASS",
+      "detail": {
+        "violations": [],
+        "row_violations": 0,
+        "sample": [],
+        "comparative_quarterly_table_rows": 1217
+      }
+    },
+    {
+      "id": "C37",
+      "name": "父输入兼容性：撤销同版本捷径与空值相等，跨文档已解除项重开",
+      "result": "PASS",
+      "detail": {
+        "violations": [],
+        "shortcut_passes": 0,
+        "empty_scope_passes": 0,
+        "reopened_pending": 1277,
+        "cumulative_diff_rows": 1419
       }
     }
   ],
@@ -431,8 +469,8 @@
       "pass": false
     },
     "V4_mapped": {
-      "C14": 5345,
-      "C26": 6457,
+      "C14": 6602,
+      "C26": 7714,
       "limited_method_own_period": 5270
     },
     "V5_self": {

@@ -1,79 +1,92 @@
-# S00 勘误 V5 交接说明（第六轮返工后，2026-11-12）
+# S00 勘误 V5 交接说明（自检 V7，第七轮返工后）
 
-## 一句话
+> 版本：`ERRATA_V5`，自检 `V7`，39/39 PASS。
+> 性质：**SELF_CHECK**。自检通过 ≠ 独立验收通过。
+> 上一版 V4 保留在 `runs/issues/S00/errata_20261111_v4/`，未删除。
 
-V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖范围 ⊇ 该行断言必需范围」；第六轮返工把期间参数改成显式三态、极性改成三分、累计差分的父输入兼容性单列成证据维度。核心待处置 2,496 → **7,841**，含补充列 **9,346**。
+## 1. 这一版是什么
 
-## 复现
+V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖范围 ⊇ 该行断言必需范围」。
+第六轮返工把期间参数改成显式三态、极性改成三分；第七轮返工进一步修掉三处实现缺陷：
 
-```bash
-cd runs/issues/S00/errata_20261111_v5
-python build_errata_v5.py     # 四份台账 + summary.json
-python check_l2_v5.py         # 全池 1054 家影响判定 + 受限表 + 差异台账
-python sampling_v5.py         # 分层抽验 37 条 + 原件物理页回读 + PARTIAL 全文定位
-python verify_v5.py           # 37 项自检
-```
+- **必需范围改为并集**：期间要求 ∪ 取值来源要求。V6 在非自身期间分支直接返回，把
+  `QUARTERLY_TABLE_PROVENANCE` / `PARENT_COMPATIBILITY` 覆盖掉了。
+- **极性重写**：识别勾选符号的实际取值、否定只绑定最近的原因、肯定与否定冲突单列、
+  「事件已确认」与「影响仅限特定项目」分开记录、纯标签行不判极性。
+- **父输入兼容性重做**：撤销「同 version_used 即兼容」「任一父键在采用审计即兼容」
+  「空值相等即一致」三条捷径；Q1 按单个累计父输入处理，不套两期相减。
 
-依赖顺序：`build` → `check_l2` → `sampling` → `verify`。`verify` 读前两步产物，并对台账做独立重算。
+核心待处置 **8,294**（重述差异）/ 全表核心未闭合 **9,098**、含补充列 **10,603**。
 
-## 关键数
+## 2. 数字（均与台账一致，可复算）
 
-| 项 | 数 |
+| 项 | 值 |
 |---|---|
-| 重述差异 | 17,009（`RESOLVED_SCOPE_COVERED` 9,971 / 待核未闭合 7,037 / 裁决解除 1） |
-| 值差异 | 240（已解决 206，未闭合 34） |
-| 键差异 | 2,056（已解决 1,651，未闭合 405） |
-| 核心元数据差异 | 17,728 |
-| 补充元数据差异 | 1,505（19 列，全部字段级待核） |
-| 唯一差异 ID | 9,346 |
-| 受限声明 | 294 行 / 283 个唯一差异 ID |
-| 全池 1054 家 | NOT_AFFECTED 329 / STILL_PASSES_WITHOUT 73 / HOLD_PENDING_ERRATA 43 / R2_MAY_CHANGE 207 / R1_NO_LINK 402 |
-| 非自身期间行 | 1,240（一律要求 `COMPARATIVE_SCOPE`，当前全部未闭合） |
-| 自检 | 37/37 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS` |
-| 故障注入 | V1：C13 6 / C14 11,936 / C17 12,076；V4 映射后：C26 6,457 / C14 5,345 / 受限方法自身期间 5,270 |
+| 重述差异总数 | 17,009 |
+| 自身期间 / 非自身期间 | 15,769 / 1,240 |
+| 非自身期间处置 | **1,239 待核 + 1 条裁决解除**（大豪科技） |
+| 已解除（`RESOLVED_SCOPE_COVERED`） | 8,714 |
+| 待核 `PENDING_SCOPE_LIMITED_METHOD` | 6,373 |
+| 待核 `PENDING_PARENT_COMPATIBILITY` | **1,277**（跨文档累计差分重开） |
+| 待核 `PENDING_WEAK_ASSUMPTION` | 515 |
+| 待核 `PENDING_SOURCE_PROVENANCE` | 47 |
+| 待核 `PENDING_CAUSE_UNCOVERED` | 43 |
+| 未核文档 `UNRESOLVED_DOC_NEVER_VERIFIED` | 26 |
+| 事件已确认、来源未核 | 8 |
+| 证据与 B 相反 `UNRESOLVED_EVIDENCE_MISMATCH` | 4 |
+| 确认无据 `PENDING_CONFIRMED_UNSUPPORTED` | 1 |
+| 裁决解除 | 1 |
+| 父输入兼容性 | YES **4** / NO **3,675** / NA 13,330 |
 
-## 文件
+全池（1,054 家）：`HOLD_PENDING_ERRATA` **44**、`R2_MAY_CHANGE` **231**、`R1_NO_LINK` **378**、
+`NOT_AFFECTED` **320**、`STILL_PASSES_WITHOUT` **81**。
+受限表 **407 行 / 401 个唯一差异 ID**；重述差异按「方法 × 覆盖签名 × 极性 × 来源 × 自身期间」分 **87 组**。
 
-| 文件 | 作用 |
+**43 / 207 / 445 均未冻结**，本版不锁定任何名单数字。
+
+## 3. 文件
+
+| 文件 | 说明 |
 |---|---|
-| `evidence_scope.py` | 证据覆盖模型（判据唯一实现：期间三态 / 极性三分 / 父输入兼容） |
-| `l2_core.py` | 依赖引擎（按 status 展开父键，生产与自检共用） |
-| `build_errata_v5.py` | 四份差异台账 |
-| `check_l2_v5.py` | 全池影响判定、受限表、差异 ID 台账 |
-| `sampling_v5.py` | 分层抽验 + 原件回读 + PARTIAL 全文定位 |
-| `verify_v5.py` | 37 项自检（C01–C35，含 C21a/b/c） |
-| `cell_diff.csv` | 值差异 240 |
-| `key_diff.csv` | 键差异 2,056 |
-| `meta_diff.csv` | 核心元数据 17,728（含 status_B / is_own_period / parent_compatible / polarity / scope 六列） |
-| `extra_meta_diff.csv` | 补充元数据 1,505（含 document_changed / period_source_changed） |
-| `dispute_ledger.csv` | 9,346 条唯一差异 ID（含逐条源表哈希） |
-| `restricted_claims.csv` | 294 行受限声明（逐表差异 ID + 逐表哈希） |
-| `l2_dependency_check.csv` | 1054 家分层 |
-| `sampling_v5.csv` | 37 条抽验样本 / 20 类风险 |
-| `rulings_resolved.json` | 已裁决解除项（防止被新判据重开） |
-| `summary.json` / `review.json` | 汇总与自检结果 |
+| `evidence_scope.py` | 判据唯一实现（`analyse` / `period_scope` / `source_scope` / `required_scope` / `judge`） |
+| `meta_classes.py` | 元数据字段影响分类唯一来源（自检与生产共用，防止台账自报分类绕过） |
+| `l2_core.py` | 依赖引擎（按 B 实际 `status` 分支展开父键） |
+| `build_errata_v5.py` | 台账构建，含 `parent_compatible()` |
+| `check_l2_v5.py` | 全池影响判定，含稳定 `dispute_id` 与逐表哈希 |
+| `sampling_v5.py` | 分层抽验（37 条 / 20 类，原件物理页回读） |
+| `verify_v5.py` | 39 项自检 |
+| `meta_diff.csv` | 17,728 行；重述差异含 `is_own_period` / `parent_compatible` / `polarity` / `scope_*` |
+| `extra_meta_diff.csv` | 1,505 格补充元数据（19 列），含 `content_review` / `content_review_ref` |
+| `dispute_ledger.csv` | 10,603 条唯一差异 ID（含逐条源表哈希） |
+| `restricted_claims.csv` | 407 行受限声明，逐表差异 ID + 逐表哈希 |
+| `l2_dependency_check.csv` | 1,054 家全池判定 |
+| `sampling_v5.csv` / `.json` | 抽验明细与汇总（含 `locate_status`、两父输入核证结论） |
+| `summary.json` / `review.json` / `manifest.json` | 汇总、自检结论、文件清单 |
+| `rulings_resolved.json` | 裁决解除清单（含裁决文件路径 + sha256 + 冲突解释） |
+| `report_to_codex_round8.md` | 本轮汇报（含 6 个待裁定问题） |
 
-## 下一步（按第六轮裁决第十节顺序）
+## 4. 能复现的故障注入
 
-第 1、2、3 步已完成。剩：
+| 对象 | 结果 |
+|---|---|
+| V1 台账 | C13 **6** / C14 **11,936** / C17 **12,076**（必须 FAIL） |
+| V4 台账（旧标签映射后） | C26 **7,714** / C14 **6,602** / 受限方法自身期间 **5,270** |
+| V5 自身 | C13 / C14 / C17 / C26 均 **0** |
 
-**第 4 步 按已验证方法批量核证**，优先级：
+5,270 与 Codex 复算一致。
 
-1. `PENDING_SCOPE_LIMITED_METHOD` 6,373 条。先做 `NOTE_RETAINED_ERRATA_ZERO`：自身期间 563 条、非自身期间 79 条，共 642 条——证据已量化 0.00 元，但只对权益项目给零，**不能凭注记批量放行**，须逐条回读原注确认口径。
-2. `PENDING_WEAK_ASSUMPTION` 515 条——从未查过原文，须回读。
-3. `PENDING_SOURCE_PROVENANCE` 47 条——分季度表来源与采用链。
-4. `PENDING_CONFIRMED_EVENT_FIELD_OPEN` 8 条（`*ST九鼎`、`派斯林` 等）——事件已确认、来源维度未核，须定性。
-5. 补充元数据 1,505 格，按 `FIELD_REQ` 的分类要求逐项核，放行必须有 `content_review` 记录。
+## 5. 边界与未做
 
-**第 5 步 重算分层与受限表再报**。不固定维持 43 / 207 / 445。
+- **未回读全部 PDF**：抽验 37 条，覆盖 1,007 份核验文档中的 20 份。
+- **9,927 条 `NOTE_TRACE_NA` 已解决项未做方法适用性复审**（涉及 630 份文档，第 4 步处理）。
+- **`NOTE_RETAINED_ERRATA_ZERO` 642 条**（自身 563 / 非自身 79，涉及 42 份文档）未逐条回读原注。
+- **1,505 格补充元数据**仅登记字段级核验要求，未逐项核完。
+- **未覆盖**锚定期回退与上游准入的间接依赖。
+- **第 4 步批量核证、第 5 步重算分层未做**。
+- **不给出最终未闭合数**；本文件不构成验收结论。
 
-## 坑（别踩）
+## 6. 表述纪律（第七轮已撤回的三句）
 
-- `meta_diff.csv` 的 `scope_required`/`scope_covered`/`scope_missing` 是台账自报，`C14`/`C26`/`C29` 会独立重算并比对；改台账不改代码会被抓。
-- `required_scope(status, document_period, row_period)` 必须传三个参数。传两个或把文档期间字符串当布尔用，会让非自身期间行悄悄丢掉 `COMPARATIVE_SCOPE`——这正是第六轮退回来的原因。
-- 极性不能「出现即排除」：`同一控制合并范围变更0.00元` 只对权益项目给零，不算排除本字段；`0.00元` 正则必须带负向后视，否则命中 `100.00元`。
-- `l2_core.expand()` 里 `QUARTERLY_TABLE` 分支必须排在 Q1 判断之前：分季度表直接取值连 YTD 父键都没有；若顺序反了，Q1 行会多出 YTD(t)。
-- `dependency_keys` 不传 `status_of` 时走并集保守口径，只能用于自检；生产必须传。
-- `rulings_resolved.json` 里的大豪科技条目不要删。删了 C32 会 FAIL。
-- `dispute_id` 不含 `resolution`：处置标签一改 ID 就漂移，无法作为持久引用。
-- 原件在 `D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals/<code>/<slot>/<document_id>.pdf`。
+1. ~~「第六轮裁决第 1–3 步已完成」~~ → 第 1 步（修方法）在本轮按第七轮裁决继续返工；第 2 步抽验已补三类样本；第 3 步自检已加牙但仍有同源局限。
+2. ~~「原件中不存在该证据」~~ → 改为「**未定位到**」：全文检索未命中不等于原件中没有。
+3. ~~「改台账不改代码必被抓住」~~ → 改为「C26/C29 的重算独立于台账自报字段，但与生产共用同一套判据函数，属同源重算，不能替代独立方法验证」。

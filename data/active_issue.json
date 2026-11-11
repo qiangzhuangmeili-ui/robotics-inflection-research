@@ -4,8 +4,8 @@
  "active_issue_key": "S00_ERRATA_REVIEW",
  "executor": "WorkBuddy AI",
  "started_at": "2026-11-11 22:10:00 +08:00",
- "status": "S00_ERRATA_V5_SELF_CHECK_V6_PASS_AWAITING_RECHECK_7",
- "claim_note": "S00 勘误 V5（自检 V6，37/37 PASS）：按 Codex 第六轮裁决修四处实现错误——期间参数改显式三态（非自身期间 1,240 条强制要求 COMPARATIVE_SCOPE）、极性改分句三分（EXCLUDED/AFFIRMED/SCOPED_ONLY，0.00元 加负向后视、勾选式向下配对）、累计差分改父输入兼容性（撤销「同报告相减自动抵消」）、自检 C14/C24/C26/C28/C29/C30/C35 全部改为重算或精确核对。核心未闭合/待核 7,841、含补充列 9,346；全池 43 家临时 HOLD、207 家须核证重算、402 家无关联；受限表 294 行 / 283 个唯一差异 ID。第 4–5 步未做，S04 第二轮与 S00 补充验收未完成，S05 不放行",
+ "status": "S00_ERRATA_V5_SELF_CHECK_V7_PASS_AWAITING_RECHECK_8",
+ "claim_note": "S00 勘误 V5（自检 V7，39/39 PASS）：按 Codex 第七轮裁决修三处实现缺陷——必需范围改期间∪来源并集（非自身期间 1,240 行不再丢来源维度）、极性重写（勾选符号识别/否定就近绑定/冲突单列/事件与影响分离/标签行不判极性）、父输入兼容性撤销四条捷径并让 Q1 按单父输入处理（PENDING_PARENT_COMPATIBILITY 5→1,277）。自检 C24 分类锁定+审查绑定、C28 集合相等、C14 裁决文件 sha 绑定。重述差异待处置 8,294；全表核心未闭合 9,098、含补充 10,603；全池 44 HOLD / 231 待核证 / 378 无关联；受限表 407 行 / 401 个唯一 ID。第 4–5 步未做，S04 第二轮与 S05 不放行",
  "last_completed": {
   "issue_key": "S04",
   "issue_number": 39,
@@ -25,7 +25,7 @@
  },
  "next_recommended_issue_number": 39,
  "next_recommended_issue_key": "S04",
- "next_recommended_reason": "S00 勘误 V5 自检 V6 已交付、等第七轮独立复核；复核通过后按第六轮裁决第 4 步批量核证、第 5 步重算分层，再回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
+ "next_recommended_reason": "S00 勘误 V5 自检 V7 已交付、等第八轮独立复核；复核通过后按第七轮口径做第 4 步批量核证（按文档核一次再映射到字段）、第 5 步重算分层，再回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
  "open_followups_from_p06": [
   "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
   "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -403,7 +403,7 @@
    "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
   ],
   "report": "runs/issues/S04/REPORT.md",
-  "waiting_reason": "S00 勘误 V5 识别 43 家名单内公司的 L2 通过依赖未闭合或待核差异，须待证据闭合；另有 207 家名单外公司争议键落在候选依赖内，须核证重算判是否漏筛",
+  "waiting_reason": "S00 勘误 V5 识别 44 家名单内公司的 L2 通过依赖未闭合或待核差异，须待证据闭合；另有 231 家名单外公司争议键落在候选依赖内，须核证重算判是否漏筛",
   "s00_errata_ref": "runs/issues/S00/errata_20261111_v5/"
  },
  "s00_errata": {
@@ -416,8 +416,8 @@
   "executor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-12T03:20:00+08:00",
-  "trigger": "Codex 第六轮复核 RETURN_FOR_REWORK：required_scope 期间参数误用（非自身期间 1,240 条从未要求 COMPARATIVE_SCOPE）；极性把「提到」当「排除」（0.00元 命中 100.00元、「本期发生前期差错更正」被记排除）；「同报告内 YTD 相减自动抵消」不成立，须核父输入文档/版本/范围/单位兼容；C14 裁决类只查非空、C26 跳过裁决与确认类、C29 只查列非空、C30 只证明旧标签不被接受、受限表 ledger_sha256 全填 meta_diff",
+  "reviewed_at": "2026-11-12T04:40:00+08:00",
+  "trigger": "Codex 第七轮复核 RETURN_FOR_REWORK：required_scope 非自身期间分支直接 return，覆盖掉来源维度；极性三个反例仍误放行（勾选未识别实际取值、否定广播到全句、肯定否定冲突未判）；parent_compatible 四条捷径（同文档、同 version_used、任一父键在采用审计、空口径相等）；C24 可改标展示绕过、C28 两处同删仍通过、C14 只查字符串 verdict；R6 未交付两父输入结论、R7 弱定位算通过",
   "authoritative_input": {
    "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
    "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
@@ -433,18 +433,18 @@
    "key": 2056,
    "meta_core": 17728,
    "meta_extra_cells": 1505,
-   "resolved": 12183,
-   "unresolved_core": 7841,
-   "unresolved_with_extra": 9346,
+   "resolved": 10926,
+   "unresolved_core": 9098,
+   "unresolved_with_extra": 10603,
    "value_unresolved": 34,
    "key_unresolved": 405,
-   "meta_unresolved": 7402,
+   "meta_unresolved": 8659,
    "extra_unresolved": 1505,
    "pending_scope_limited_method": 6373,
    "pending_scope_limited_own_period": 5270,
    "pending_weak": 515,
    "pending_source_provenance": 47,
-   "pending_cause_uncovered": 58,
+   "pending_cause_uncovered": 43,
    "doc_not_in_list": 26,
    "field_not_in_record": 116,
    "record_is_remove": 8,
@@ -452,38 +452,44 @@
    "resolved_by_ruling": 1,
    "sign_flip": 89,
    "resolved_restatement_confirmed": 0,
-   "pending_parent_compatibility": 5,
+   "pending_parent_compatibility": 1277,
    "pending_confirmed_event_field_open": 8,
    "pending_confirmed_unsupported": 1,
    "evidence_mismatch": 4,
-   "resolved_scope_covered": 9971,
+   "resolved_scope_covered": 8714,
    "comparative_period_rows": 1240,
-   "parent_compatible_yes": 3566,
-   "parent_compatible_no": 133,
-   "dispute_unique_ids": 9346
+   "parent_compatible_yes": 4,
+   "parent_compatible_no": 3675,
+   "dispute_unique_ids": 10603,
+   "restatement_pending": 8294,
+   "pending_weak_assumption": 515,
+   "comparative_pending": 1239,
+   "comparative_ruled": 1,
+   "parent_compatible_na": 13330
   },
   "key_change_vs_v2": "重述核验改按 document_id 匹配（tools/s00_restatement_apply.py 第36/46行只按文档应用，1,007 文档 1:1）；元数据判据改为字段精确+操作语义+终值相等",
   "downstream": {
    "universe": 1054,
-   "not_affected": 329,
-   "still_passes_without": 73,
-   "hold_pending_errata": 43,
-   "r2_may_change": 207,
-   "r1_no_link": 402,
-   "restricted_claim_rows": 294,
-   "restricted_unique_disputes": 283,
-   "dispute_ledger": 9346,
-   "restatement_groups": 73
+   "not_affected": 320,
+   "still_passes_without": 81,
+   "hold_pending_errata": 44,
+   "r2_may_change": 231,
+   "r1_no_link": 378,
+   "restricted_claim_rows": 407,
+   "restricted_unique_disputes": 401,
+   "dispute_ledger": 10603,
+   "restatement_groups": 87
   },
-  "checks": "37/37 PASS（C33 期间三态+非自身期间须比较范围；C34 极性四反例；C35 逐表哈希；C14 裁决须命中 rulings 清单、确认类须事件+来源双证；C24 放行须 content_review；C26 全类别双向重算；C28 稳定 ID+逐表同键；C29 按重算判覆盖；C30 映射后注入三反例）",
+  "checks": "39/39 PASS（新增 C36 必需范围并集、C37 父输入兼容性撤销捷径；C34 扩为九反例；C24 分类由 meta_classes.py 锁定并绑定 content_review_ref；C28 从源表重建预期引用集合做集合相等；C14 须绑定裁决文件 sha+键+冲突解释；C31 要求 R7 至少 1 条 VERIFIED）",
   "reproducible": true,
   "limits": [
    "未回读全部 PDF（抽验 37 条，覆盖 1,007 份核验文档中的 20 份）",
-   "9,927 条 NOTE_TRACE_NA 已解决项未做方法适用性复审",
-   "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）未逐条回读原注",
+   "9,927 条 NOTE_TRACE_NA 已解决项未做方法适用性复审（630 份文档）",
+   "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79，42 份文档）未逐条回读原注",
    "1,505 格补充元数据仅登记字段级核验要求，未逐项核完",
    "未覆盖锚定期回退与上游准入的间接依赖",
-   "第 4 步批量核证、第 5 步重算分层未做；43/207/445 均未锁定",
+   "第 4 步批量核证、第 5 步重算分层未做；43/231/378 均未锁定",
+   "C26/C29 与生产同源，属同源重算，不能替代独立方法验证",
    "不给出最终未闭合数；自检不等同独立验收"
   ],
   "report": "runs/issues/S00/errata_20261111_v5/REPORT.md",
@@ -513,39 +519,49 @@
   "sampling": {
    "samples": 37,
    "risk_types": 20,
+   "unique_keys": 27,
    "page_reread": {
     "MATCH": 17,
-    "PARTIAL": 7,
-    "NO_PAGE_RECORDED": 4,
-    "NOT_APPLICABLE_EXTRA_FIELD": 6,
-    "WEAK_LOCATE": 2,
-    "NOT_FOUND_IN_DOC": 1
+    "PARTIAL": 6,
+    "LOCATED": 2,
+    "WEAK_LOCATE": 1,
+    "NO_PAGE_RECORDED": 5,
+    "NOT_APPLICABLE_EXTRA_FIELD": 6
    },
-   "new_in_round6": [
-    "R6_CROSS_DOC_PARENT",
-    "R5_CAUSE_AFFIRMED",
-    "R7_PARTIAL_LOCATED"
+   "r7_locate_status": {
+    "VERIFIED": 2,
+    "WEAK": 1
+   },
+   "new_in_round7": [
+    "R6 两父输入核证结论",
+    "R7 locate_status",
+    "R2 含待核实例"
    ],
-   "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位"
+   "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据未定位到，属上游核验记录异常，未放行"
   },
   "self_check": {
-   "checks": 37,
-   "pass": 37,
-   "version": "V6",
+   "checks": 39,
+   "pass": 39,
+   "version": "V7",
    "fault_injection_v1": {
     "C13": 6,
     "C14": 11936,
     "C17": 12076
    },
    "fault_injection_v4_mapped": {
-    "C26": 6457,
-    "C14": 5345,
+    "C26": 7714,
+    "C14": 6602,
     "limited_method_own_period": 5270
    },
    "targeted_injections": {
     "scope_insufficient": "PENDING_SOURCE_PROVENANCE",
     "cause_affirmed": "UNRESOLVED_EVIDENCE_CONTRADICTS",
     "parent_incompatible": "PENDING_PARENT_COMPATIBILITY"
+   },
+   "c24_injections": {
+    "no_review": true,
+    "misclassified_as_display": true,
+    "unbound_review": true
    }
   },
   "not_done": [
@@ -553,11 +569,14 @@
    "第 5 步重算风险分层及受限表再报"
   ],
   "open_questions_for_codex": [
-   "MERGER_RETRO 已无「明确排除」实例，1,240 条非自身期间行是否接受长期停在待核",
-   "RESOLVED_RESTATEMENT_CONFIRMED 归零（8 条转 PENDING_CONFIRMED_EVENT_FIELD_OPEN）是否正确",
-   "SH:600936 证据文本在原件全文找不到，该走何种处置",
-   "第 4 步粒度：73 个同质分组能否按组裁定",
+   "Q1/0331 行豁免 PARENT_COMPATIBILITY 是否正确",
+   "同文档是否足以证明两期口径一致（若否，全部累计差分将停待核）",
+   "跨文档「双否即兼容」依赖上游 verdict，是否构成循环",
+   "PENDING_EVENT_CONFIRMED_SCOPE_LIMITED 这个中间态是否必要",
+   "第 4 步：文档级核证能否作为组内字段级解除的必要条件（非充分条件）",
    "是否放行 S04 第二轮与 S05"
-  ]
+  ],
+  "self_check_version": "V7",
+  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round8.md"
  }
 }
