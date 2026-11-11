@@ -1,0 +1,42 @@
+{
+  "scope": "分层方法抽验（按风险类型确定性抽样 + 原件物理页回读）",
+  "samples": 28,
+  "risk_types": 17,
+  "by_risk": {
+    "R1_QUARTERLY_TABLE_OWN": 3,
+    "R2_CUMULATIVE_DIFF": 3,
+    "R4_COMPARATIVE_COLUMN": 3,
+    "R5_CAUSE_MERGER_RETRO": 2,
+    "R5_CAUSE_POLICY_CHANGE": 2,
+    "R6_WEAK_ASSUMPTION": 2,
+    "R7_EVIDENCE_CONTRADICTS": 2,
+    "R10_HANGCHA_CROSS_SOURCE": 2,
+    "R3_Q1_EQUALS_YTD": 1,
+    "R8_SHANDONG_POSITIVE": 1,
+    "R9_DAHAO_RULED": 1,
+    "R11_EXTRA_SOURCE_PAGE": 1,
+    "R11_EXTRA_EVIDENCE_LABEL": 1,
+    "R11_EXTRA_SLOT_ID": 1,
+    "R11_EXTRA_STATUS_REASON": 1,
+    "R11_EXTRA_VALUE_RAW": 1,
+    "R11_EXTRA_UNIT_SCALE": 1
+  },
+  "page_reread": {
+    "MATCH": 15,
+    "NOT_APPLICABLE_EXTRA_FIELD": 6,
+    "PARTIAL": 4,
+    "NO_PAGE_RECORDED": 3
+  },
+  "covered_requirements": {
+    "直接季度表": true,
+    "累计差分": true,
+    "Q1": true,
+    "比较列": true,
+    "不同重述原因": true,
+    "补充字段": true,
+    "山东钢铁正例": true,
+    "大豪科技已解除": true,
+    "杭叉跨来源限制": true
+  },
+  "note": "抽验是方法覆盖性检验，不构成全量核证；page_reread=MATCH 表示证据文本确实出现在该物理页。"
+}

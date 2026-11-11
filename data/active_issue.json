@@ -4,8 +4,8 @@
   "active_issue_key": "S00_ERRATA_REVIEW",
   "executor": "WorkBuddy AI",
   "started_at": "2026-11-11 22:10:00 +08:00",
-  "status": "S00_ERRATA_V4_SELF_CHECK_PASS_AWAITING_RECHECK",
-  "claim_note": "S00 勘误 V4：按 Codex 第四轮裁决把「文档定位」与「证据适用范围」分离，重述三态化（行期间=文档自身期间才判已解决 15,316；取自比较列/分季度表 1,148 转待范围对账）；新建 l2_core.py 真正递归展开累计父键；补充元数据 1,273 格取消同键免责。核心未闭合/待核 2,497、含 19 列 3,770；全池 37 家临时 HOLD、203 家须核证重算、406 家无关联。自检 27/27 PASS。S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
+  "status": "S00_ERRATA_V5_SELF_CHECK_PASS_AWAITING_RECHECK",
+  "claim_note": "S00 勘误 V5：按 Codex 第五轮裁决取消「期间相等即闭合」，改为「证据覆盖范围 ⊇ 该行断言必需范围」（evidence_scope.py，从证据正文抽 ERRATA/MERGER_RETRO/POLICY_CHANGE）；IMPORTANT_MATTER_NA、NOTE_RETAINED_ERRATA_ZERO 两类受限方法自身期间 5,270 条全部转待核；依赖引擎改读 B 实际 status（分季度表不加累计父键、Q1 不减上年年末、累计差分展开 YTD(t)/YTD(t−1q)）；232 格「溯源/展示」桶清零转字段级待核；受限表改为逐条绑定稳定差异 ID 并绑定台账版本。核心未闭合/待核 7,807、含补充列 9,312；分层抽验 28 条/14 类含原件物理页回读；自检 34/34 PASS。全池 43 家临时 HOLD、207 家须核证重算、402 家无关联。第 4–5 步（批量核证、重算分层）未做，S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
   "last_completed": {
     "issue_key": "S04",
     "issue_number": 39,
@@ -25,7 +25,7 @@
   },
   "next_recommended_issue_number": 39,
   "next_recommended_issue_key": "S04",
-  "next_recommended_reason": "S00 勘误 V3 已交付、等独立复核；复核通过后回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
+  "next_recommended_reason": "S00 勘误 V5 已交付、等第六轮独立复核；复核通过后按裁决第 4 步批量核证、第 5 步重算分层，再回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -409,15 +409,15 @@
   "s00_errata": {
     "stage": "ERRATA",
     "issue_key": "S00",
-    "directory": "runs/issues/S00/errata_20261111_v4/",
+    "directory": "runs/issues/S00/errata_20261111_v5/",
     "v2_directory_preserved": "runs/issues/S00/errata_20261111/",
     "v1_directory_preserved": "runs/issues/S00/errata_20261111/superseded_v1/",
     "supersession": "runs/issues/S00/supersession.json",
     "executor": "WorkBuddy AI",
     "review_nature": "SELF_CHECK",
     "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-    "reviewed_at": "2026-11-12T00:05:00+08:00",
-    "trigger": "Codex 第四轮复核 RETURN_FOR_REWORK：document_id 只能定位文档不能广播解除；累计父输入展开未实现；C21 未拆分；补充元数据仍同键兜底；山东钢铁 4 条误判已解决；杭叉归因写错",
+    "reviewed_at": "2026-11-12T02:00:00+08:00",
+    "trigger": "Codex 第五轮复核 RETURN_FOR_REWORK：期间相等不能替代证据适用范围核验；5,270 条受限方法被自动放行；父输入展开仍不完整且对直接季度表过度传播；C13/C14/C17/C23/C24/C25 仍有空转方式；232 格整体归展示不成立；受限表未逐项绑定差异",
     "authoritative_input": {
       "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
       "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
@@ -433,29 +433,37 @@
       "key": 2056,
       "meta_core": 17728,
       "meta_extra_cells": 1505,
-      "resolved": 17759,
-      "unresolved_core": 2497,
-      "unresolved_with_extra": 3770,
+      "resolved": 12217,
+      "unresolved_core": 7807,
+      "unresolved_with_extra": 9312,
       "value_unresolved": 34,
       "key_unresolved": 405,
-      "meta_unresolved": 2058,
-      "extra_unresolved": 1273,
-      "pending_scope_audit": 1148,
+      "meta_unresolved": 7368,
+      "extra_unresolved": 1505,
+      "pending_scope_limited_method": 6373,
+      "pending_scope_limited_own_period": 5270,
       "pending_weak": 515,
+      "pending_source_provenance": 48,
+      "pending_cause_uncovered": 29,
       "doc_not_in_list": 26,
       "field_not_in_record": 116,
       "record_is_remove": 8,
+      "evidence_contradicts": 8,
+      "resolved_by_ruling": 1,
       "sign_flip": 89
     },
     "key_change_vs_v2": "重述核验改按 document_id 匹配（tools/s00_restatement_apply.py 第36/46行只按文档应用，1,007 文档 1:1）；元数据判据改为字段精确+操作语义+终值相等",
     "downstream": {
       "universe": 1054,
-      "not_affected": 331,
-      "still_passes_without": 77,
-      "hold_pending_errata": 37,
-      "r2_may_change": 203,
-      "r1_no_link": 406,
-      "restricted_claims": 253
+      "not_affected": 330,
+      "still_passes_without": 72,
+      "hold_pending_errata": 43,
+      "r2_may_change": 207,
+      "r1_no_link": 402,
+      "restricted_claim_rows": 292,
+      "restricted_unique_disputes": 281,
+      "dispute_ledger": 9312,
+      "restatement_groups": 62
     },
     "checks": "27/27 PASS（C21a/b/c 分别检验 C13/C14/C17 拦住 V1；C18 合成父键争议；C23 山东钢铁）",
     "reproducible": true,
@@ -472,7 +480,7 @@
     "handoff": "runs/issues/S00/errata_20261111_v4/handoff.md",
     "issue_number": 53,
     "github_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/53",
-    "version": "ERRATA_V4",
+    "version": "ERRATA_V5",
     "v2_defects_fixed": [
       "元数据子串判据（changed_columns 1,425/2,022 为全列清单）",
       "C13 未要求记录存在与 UPDATE",
@@ -489,6 +497,36 @@
       "补充元数据同键免责→PENDING_FIELD_LEVEL_CHECK",
       "山东钢铁 4 条误判→PENDING_SCOPE_AUDIT",
       "杭叉 4 条归因→SH:603298"
+    ],
+    "v4_directory_preserved": "runs/issues/S00/errata_20261111_v4/",
+    "key_change_vs_v4": "闭合判据从「行期间==文档自身期间」改为「证据覆盖范围 ⊇ 必需范围」；受限方法强制待核；依赖引擎按 B 的 status 展开父键；补充元数据四类实质字段全部字段级待核",
+    "sampling": {
+      "samples": 28,
+      "risk_types": 14,
+      "page_reread_match": 15,
+      "page_reread_partial": 4,
+      "page_reread_no_page": 3,
+      "page_reread_not_applicable": 6
+    },
+    "self_check": {
+      "checks": 34,
+      "pass": 34,
+      "fault_injection_v1": [
+        6,
+        437,
+        140
+      ],
+      "fault_injection_v4_c14": ">5270"
+    },
+    "not_done": [
+      "第4步 按已验证方法批量核证",
+      "第5步 重算风险分层及受限表"
+    ],
+    "open_questions_for_codex": [
+      "累计差分行是否要在证据侧追加 MERGER_RETRO 必需项",
+      "NOTE_RETAINED_ERRATA_ZERO 的 563 条能否批量放行",
+      "62 个同质分组能否按组裁定",
+      "PENDING_WEAK_ASSUMPTION 515 条全量回读还是抽样"
     ]
   }
 }

@@ -1,0 +1,371 @@
+{
+  "scope": "全池 1054 家 vs S00 V5 未闭合/待核差异（含 24 列元数据）",
+  "generated_at": "2026-11-12T01:10:00+08:00",
+  "nature": "SELF_CHECK",
+  "ledger_version": "ERRATA_V5",
+  "ledger_sha256": {
+    "cell_diff.csv": "946b1df9fc32803f11be4e8bd9d70e74f7cdc7a82398b5e2b81a2a8935ac19d5",
+    "key_diff.csv": "69d55d369ad0a16c0e0e971934cc360e765a7f9b564237f69064a97347d5d0a2",
+    "meta_diff.csv": "b1830f371b0ae2ef47aee4e3f6b1381196d3a46b1090731bac1cd57d4715a46a",
+    "extra_meta_diff.csv": "b1af3730f8f390d102ca2b67fe75c680533875baa59283338ef8ecd5ef508e01"
+  },
+  "snapshot": {
+    "path": "runs/issues/S04/tight_pass.csv",
+    "sha256": "5857e07960e449ed87beae3a327defd8ddda2447f307bc85f9f256118986fbc5",
+    "companies": 445
+  },
+  "dependency": {
+    "engine": "runs/issues/S00/errata_20261111_v5/l2_core.py:dependency_keys",
+    "period_rule": {
+      "M03": "t, t-1q, t-1y, t-1y-1q",
+      "others": "t, t-1y"
+    },
+    "parent_rule": "按 B 实际 status：EXTRACTED_QUARTERLY_TABLE 不加累计父键；DERIVED_Q1_EQUALS_YTD 或 Q1 只加本期累计；DERIVED_CUMULATIVE_DIFF 加 YTD(t) 与 YTD(t-1q)",
+    "status_injected": true,
+    "extra_meta_included": true
+  },
+  "verdicts": {
+    "R1_NO_LINK": 402,
+    "HOLD_PENDING_ERRATA": 43,
+    "R2_MAY_CHANGE": 207,
+    "NOT_AFFECTED": 330,
+    "STILL_PASSES_WITHOUT": 72
+  },
+  "hold_list": [
+    {
+      "security_id": "BJ:920022",
+      "stock_name": "世昌股份",
+      "disputed_dims": "CASH;GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1];SG07=FIN.NPP.YTD@20250630|FIN.OCF.YTD@20250630[2]"
+    },
+    {
+      "security_id": "BJ:920198",
+      "stock_name": "微创光电",
+      "disputed_dims": "GROWTH;MARGIN;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20250630|FIN.REV.YTD@20260630[2];SG03=FIN.COST.YTD@20250630|FIN.COST.YTD@20260630|FIN.GROSSMARGIN.PCT@20250630|FIN.GROSSMARGIN.PCT@20260630|FIN.REV.YTD@20250630|FIN.REV.YTD@20260630[6];SG05=FIN.NPDEDT.YTD@20250630|FIN.NPDEDT.YTD@20260630|FIN.REV.YTD@20250630|FIN.REV.YTD@20260630[6]"
+    },
+    {
+      "security_id": "BJ:920220",
+      "stock_name": "朗信电气",
+      "disputed_dims": "CASH;GROWTH",
+      "detail": "SG01=FIN.REV.YTD@20250630[1];SG07=FIN.NPP.YTD@20250630|FIN.OCF.YTD@20250630[2]"
+    },
+    {
+      "security_id": "BJ:920289",
+      "stock_name": "华汇智能",
+      "disputed_dims": "CASH;MARGIN;PROFIT",
+      "detail": "SG03=FIN.COST.YTD@20250630|FIN.COST.YTD@20260630|FIN.GROSSMARGIN.PCT@20250630|FIN.GROSSMARGIN.PCT@20260630|FIN.REV.YTD@20250630|FIN.REV.YTD@20260630[6];SG05=FIN.NPDEDT.YTD@20250630|FIN.NPDEDT.YTD@20260630|FIN.REV.YTD@20250630|FIN.REV.YTD@20260630[4];SG08=FIN.OCF.YTD@20250630|FIN.OCF.YTD@20260630[2]"
+    },
+    {
+      "security_id": "SH:600320",
+      "stock_name": "振华重工",
+      "disputed_dims": "PROFIT",
+      "detail": "SG04=FIN.NPDEDT.YTD@20250630|FIN.NPDEDT.YTD@20260630[2];SG05=FIN.NPDEDT.YTD@20250630|FIN.NPDEDT.YTD@20260630[2]"
+    },
+    {
+      "security_id": "SH:600587",
+      "stock_name": "新华医疗",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:600590",
+      "stock_name": "泰豪科技",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG02=FIN.REV.SQ@20250630[1];SG09=FIN.NPDEDT.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:600862",
+      "stock_name": "中航高科",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:600960",
+      "stock_name": "渤海汽车",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:601138",
+      "stock_name": "工业富联",
+      "disputed_dims": "PROFIT",
+      "detail": "SG04=FIN.NPDEDT.YTD@20250630|FIN.NPDEDT.YTD@20260630[2];SG09=FIN.NPDEDT.YTD@20250331|FIN.NPDEDT.YTD@20250630|FIN.NPDEDT.YTD@20260331|FIN.NPDEDT.YTD@20260630[4]"
+    },
+    {
+      "security_id": "SH:603082",
+      "stock_name": "北自科技",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:603119",
+      "stock_name": "浙江荣泰",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG02=FIN.REV.SQ@20250630[1];SG09=FIN.NPDEDT.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:603158",
+      "stock_name": "腾龙股份",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG02=FIN.REV.SQ@20250630[1];SG09=FIN.NPDEDT.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:603273",
+      "stock_name": "天元智能",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:603350",
+      "stock_name": "安乃达",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:603380",
+      "stock_name": "易德龙",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:603611",
+      "stock_name": "诺力股份",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:605365",
+      "stock_name": "立达信",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:688067",
+      "stock_name": "爱威科技",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:688092",
+      "stock_name": "爱科科技",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:688248",
+      "stock_name": "南网科技",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:688320",
+      "stock_name": "禾川科技",
+      "disputed_dims": "GROWTH;MARGIN;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20260630[1];SG02=FIN.REV.SQ@20250630|FIN.REV.SQ@20260331|FIN.REV.SQ@20260630|FIN.REV.YTD@20260331|FIN.REV.YTD@20260630[9];SG03=FIN.GROSSMARGIN.PCT@20250630|FIN.GROSSMARGIN.PCT@20260630|FIN.REV.YTD@20260630[6];SG05=FIN.REV.YTD@20260630[1]"
+    },
+    {
+      "security_id": "SH:688328",
+      "stock_name": "深科达",
+      "disputed_dims": "CASH;GROWTH;MARGIN;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20250930[1];SG03=FIN.COST.YTD@20250930|FIN.GROSSMARGIN.PCT@20250930|FIN.REV.YTD@20250930[3];SG04=FIN.NPDEDT.YTD@20250930[1];SG05=FIN.NPDEDT.YTD@20250930|FIN.REV.YTD@20250930[2];SG09=FIN.NPDEDT.SQ@20250930[1];SG07=FIN.NPP.YTD@20250930|FIN.OCF.YTD@20250930[2]"
+    },
+    {
+      "security_id": "SH:688400",
+      "stock_name": "凌云光",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:688518",
+      "stock_name": "联赢激光",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20260630[1];SG02=FIN.REV.SQ@20250630|FIN.REV.SQ@20260630|FIN.REV.YTD@20260630[5];SG05=FIN.REV.YTD@20260630[1];SG09=FIN.NPDEDT.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:688711",
+      "stock_name": "宏微科技",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SH:688800",
+      "stock_name": "瑞可达",
+      "disputed_dims": "GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SZ:000591",
+      "stock_name": "太阳能",
+      "disputed_dims": "CASH;GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630|FIN.REV.SQ@20260630|FIN.REV.YTD@20260630[3];SG07=FIN.NPP.YTD@20250630|FIN.NPP.YTD@20260630|FIN.OCF.YTD@20250630|FIN.OCF.YTD@20260630[4]"
+    },
+    {
+      "security_id": "SZ:000967",
+      "stock_name": "盈峰环境",
+      "disputed_dims": "CASH;GROWTH;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20250630[1];SG04=FIN.NPDEDT.YTD@20250630[1];SG09=FIN.NPDEDT.SQ@20250630|FIN.NPDEDT.YTD@20250630[2];SG07=FIN.NPP.YTD@20250630|FIN.OCF.YTD@20250630[2];SG08=FIN.OCF.YTD@20250630[1]"
+    },
+    {
+      "security_id": "SZ:001311",
+      "stock_name": "多利科技",
+      "disputed_dims": "CASH;GROWTH;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20250630|FIN.REV.YTD@20260630[2];SG02=FIN.REV.SQ@20250630|FIN.REV.SQ@20260630|FIN.REV.YTD@20260630[3];SG09=FIN.NPDEDT.SQ@20250630|FIN.NPDEDT.SQ@20260630|FIN.NPDEDT.YTD@20260630[3];SG07=FIN.NPP.YTD@20250630|FIN.NPP.YTD@20260630|FIN.OCF.YTD@20250630|FIN.OCF.YTD@20260630[4]"
+    },
+    {
+      "security_id": "SZ:002010",
+      "stock_name": "传化智联",
+      "disputed_dims": "MARGIN;PROFIT",
+      "detail": "SG03=FIN.COST.YTD@20260630|FIN.GROSSMARGIN.PCT@20260630|FIN.REV.YTD@20260630[3];SG04=FIN.NPDEDT.YTD@20260630[1];SG05=FIN.NPDEDT.YTD@20260630|FIN.REV.YTD@20260630[2];SG09=FIN.NPDEDT.SQ@20260630|FIN.NPDEDT.YTD@20260630[2]"
+    },
+    {
+      "security_id": "SZ:002132",
+      "stock_name": "恒星科技",
+      "disputed_dims": "MARGIN;PROFIT",
+      "detail": "SG03=FIN.GROSSMARGIN.PCT@20260930[2];SG06=FIN.NPDEDT.YTD@20260930[1]"
+    },
+    {
+      "security_id": "SZ:002171",
+      "stock_name": "楚江新材",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20250630[1];SG02=FIN.REV.SQ@20250630[1];SG04=FIN.NPDEDT.YTD@20250630[1];SG09=FIN.NPDEDT.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SZ:002245",
+      "stock_name": "蔚蓝锂芯",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20250630[1];SG02=FIN.REV.SQ@20250630[1];SG04=FIN.NPDEDT.YTD@20250630[1];SG09=FIN.NPDEDT.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SZ:002261",
+      "stock_name": "拓维信息",
+      "disputed_dims": "GROWTH;MARGIN",
+      "detail": "SG02=FIN.REV.SQ@20250630[1];SG03=FIN.COST.YTD@20250630|FIN.GROSSMARGIN.PCT@20250630|FIN.REV.YTD@20250630[3]"
+    },
+    {
+      "security_id": "SZ:002284",
+      "stock_name": "亚太股份",
+      "disputed_dims": "MARGIN;PROFIT",
+      "detail": "SG03=FIN.COST.YTD@20250630|FIN.GROSSMARGIN.PCT@20250630|FIN.REV.YTD@20250630[3];SG04=FIN.NPDEDT.YTD@20250630[1];SG05=FIN.NPDEDT.YTD@20250630|FIN.REV.YTD@20250630[2];SG09=FIN.NPDEDT.SQ@20250630[1]"
+    },
+    {
+      "security_id": "SZ:002530",
+      "stock_name": "金财互联",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG01=FIN.REV.YTD@20250630|FIN.REV.YTD@20260630[2];SG02=FIN.REV.SQ@20250630|FIN.REV.SQ@20260630|FIN.REV.YTD@20260630[3];SG04=FIN.NPDEDT.YTD@20250630|FIN.NPDEDT.YTD@20260630[2]"
+    },
+    {
+      "security_id": "SZ:002594",
+      "stock_name": "比亚迪",
+      "disputed_dims": "CASH;GROWTH;PROFIT",
+      "detail": "SG02=FIN.REV.SQ@20260630|FIN.REV.YTD@20260630[2];SG09=FIN.NPDEDT.YTD@20250331|FIN.NPDEDT.YTD@20250630|FIN.NPDEDT.YTD@20260331|FIN.NPDEDT.YTD@20260630[8];SG07=FIN.NPP.YTD@20250630|FIN.NPP.YTD@20260630|FIN.OCF.YTD@20250630|FIN.OCF.YTD@20260630[4]"
+    },
+    {
+      "security_id": "SZ:002705",
+      "stock_name": "新宝股份",
+      "disputed_dims": "CASH;GROWTH",
+      "detail": "SG02=FIN.REV.SQ@20250630|FIN.REV.SQ@20260630|FIN.REV.YTD@20260630[3];SG07=FIN.NPP.YTD@20250630|FIN.NPP.YTD@20260630|FIN.OCF.YTD@20250630|FIN.OCF.YTD@20260630[4]"
+    },
+    {
+      "security_id": "SZ:002833",
+      "stock_name": "弘亚数控",
+      "disputed_dims": "CASH;GROWTH;MARGIN",
+      "detail": "SG01=FIN.REV.YTD@20250630[1];SG03=FIN.COST.YTD@20250630|FIN.GROSSMARGIN.PCT@20250630|FIN.REV.YTD@20250630[3];SG07=FIN.NPP.YTD@20250630|FIN.OCF.YTD@20250630[2]"
+    },
+    {
+      "security_id": "SZ:002933",
+      "stock_name": "新兴装备",
+      "disputed_dims": "GROWTH;PROFIT",
+      "detail": "SG02=FIN.REV.SQ@20250630[1];SG05=FIN.NPDEDT.YTD@20250630|FIN.REV.YTD@20250630[2]"
+    },
+    {
+      "security_id": "SZ:300193",
+      "stock_name": "佳士科技",
+      "disputed_dims": "CASH",
+      "detail": "SG07=FIN.NPP.YTD@20250930|FIN.NPP.YTD@20260930[2]"
+    },
+    {
+      "security_id": "SZ:300687",
+      "stock_name": "赛意信息",
+      "disputed_dims": "PROFIT",
+      "detail": "SG04=FIN.NPDEDT.YTD@20260930[1];SG05=FIN.NPDEDT.YTD@20260930[1];SG09=FIN.NPDEDT.YTD@20260930[1]"
+    }
+  ],
+  "still_passes": [
+    "SH:600141",
+    "SH:600268",
+    "SH:600288",
+    "SH:600366",
+    "SH:600487",
+    "SH:600499",
+    "SH:600520",
+    "SH:600523",
+    "SH:600592",
+    "SH:600609",
+    "SH:600973",
+    "SH:601226",
+    "SH:603025",
+    "SH:603032",
+    "SH:603051",
+    "SH:603072",
+    "SH:603088",
+    "SH:603118",
+    "SH:603135",
+    "SH:603197",
+    "SH:603337",
+    "SH:603416",
+    "SH:603528",
+    "SH:603596",
+    "SH:603608",
+    "SH:603610",
+    "SH:603662",
+    "SH:603738",
+    "SH:603776",
+    "SH:603893",
+    "SH:603901",
+    "SH:603915",
+    "SH:603926",
+    "SH:603933",
+    "SH:603986",
+    "SH:603992",
+    "SH:603997",
+    "SH:605100",
+    "SH:605111",
+    "SH:605133",
+    "SH:605189",
+    "SH:605208",
+    "SH:605358",
+    "SH:605488",
+    "SH:605555",
+    "SH:688002",
+    "SH:688017",
+    "SH:688028",
+    "SH:688052",
+    "SH:688090",
+    "SH:688107",
+    "SH:688116",
+    "SH:688160",
+    "SH:688165",
+    "SH:688169",
+    "SH:688255",
+    "SH:688329",
+    "SH:688379",
+    "SH:688383",
+    "SH:688392",
+    "SH:688396",
+    "SH:688577",
+    "SH:688595",
+    "SH:688623",
+    "SH:688655",
+    "SH:688678",
+    "SH:688707",
+    "SZ:002420",
+    "SZ:002460",
+    "SZ:003032",
+    "SZ:300964",
+    "SZ:301041"
+  ],
+  "restricted_claim_rows": 292,
+  "restricted_unique_disputes": 281,
+  "note": "未闭合含 PENDING_*（待核不计已闭合）；未回读原文；未覆盖锚定期回退与上游准入的间接依赖。SELF_CHECK。"
+}
