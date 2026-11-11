@@ -21,6 +21,7 @@ import csv
 import gzip
 import hashlib
 import json
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -31,6 +32,32 @@ import meta_classes as mc
 ROOT = Path(__file__).resolve().parents[4]
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
 OUT.mkdir(parents=True, exist_ok=True)
+
+ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
+_PDF_TXT = {}
+
+
+def _pdf_text(sec, doc):
+    """原件全文（按 document_id 缓存）；不可用时返回空串。
+
+    第九轮 E 项：来源维度核证不能拿 `results.csv.evidence` 自证——那是上游摘录。
+    这里只在登记表确实有该键记录时才会被调用（无登记则零成本）。
+    """
+    if doc in _PDF_TXT:
+        return _PDF_TXT[doc]
+    txt = ""
+    code = (sec or "").split(":")[-1]
+    pdf = next((p for p in (ORIG / code).rglob(doc + ".pdf")), None) if doc else None
+    if pdf is not None:
+        try:
+            import pymupdf
+            d = pymupdf.open(str(pdf))
+            txt = "".join(re.sub(r"\s+", "", d[i].get_text()) for i in range(d.page_count))
+            d.close()
+        except Exception:
+            txt = ""
+    _PDF_TXT[doc] = txt
+    return txt
 
 P_REGISTRY = ROOT / "runs/collection/collection_index.csv"
 PERIOD_LABEL_TO_KEY = {
@@ -181,16 +208,27 @@ def prev_quarter(pk):
 
 
 def _parent_basis(kp):
-    """父输入的「口径」：文档 + 合并范围 + 单位 + 币种 + 版本。"""
+    """父输入的「口径」：文档 + 期间 + 合并范围 + 单位 + 币种 + 版本 + 终值。"""
     r = D10.get(kp)
     if not r:
         return None
     return {"doc": (r.get("document_id") or "").strip(),
+            "period": kp[2],
             "scope": (r.get("consolidation_scope") or "").strip(),
             "unit": (r.get("unit_scale") or "").strip(),
             "cur": (r.get("currency") or "").strip(),
             "ver": (r.get("version_used") or "").strip(),
             "val": (r.get("value_cny") or "").strip()}
+
+
+def _expect(k1, k2, b1, b2):
+    """核证登记必须逐项对应的实际父输入（第九轮 C 项）。"""
+    return {"p1": {"doc": b1["doc"], "period": k1[2], "value": b1["val"],
+                   "consolidation_scope": b1["scope"], "unit_scale": b1["unit"],
+                   "currency": b1["cur"]},
+            "p2": {"doc": b2["doc"], "period": k2[2], "value": b2["val"],
+                   "consolidation_scope": b2["scope"], "unit_scale": b2["unit"],
+                   "currency": b2["cur"]}}
 
 
 def _doc_verdict(doc):
@@ -220,7 +258,7 @@ def parent_compatible(k):
     for f in ("scope", "unit", "cur"):
         if not b1[f] or b1[f] != b2[f]:
             return False
-    return pv.gap(PARENT_VERIFS.get(k), b1["val"], b2["val"],
+    return pv.gap(PARENT_VERIFS.get(k), _expect(k1, k2, b1, b2),
                   lambda d: (vrec.get(d) or {}).get("evidence", "")) is None
 
 
@@ -237,7 +275,7 @@ def parent_gap(k):
     for f in ("scope", "unit", "cur"):
         if not b1[f] or b1[f] != b2[f]:
             return "SCOPE_UNIT_CURRENCY_MISMATCH"
-    g = pv.gap(PARENT_VERIFS.get(k), b1["val"], b2["val"],
+    g = pv.gap(PARENT_VERIFS.get(k), _expect(k1, k2, b1, b2),
                lambda d: (vrec.get(d) or {}).get("evidence", ""))
     return "VERIFIED" if g is None else g
 
@@ -390,7 +428,8 @@ for fld in META_FIELDS:
             status_b = b.get("status", "")
             pok = parent_compatible(k)
             _sok = pv.scope_dims(SCOPE_VERIFS, k,
-                                 lambda d: (vrec.get(d) or {}).get("evidence", ""))
+                                 lambda d, _s=k[0]: _pdf_text(_s, d),
+                                 expect_doc=doc)
             # 判据：证据实际覆盖该行断言。document_period 与 row_period 分开传，
             # 由 evidence_scope 内部判定 is_own，不再用字符串真值。
             if rk in RULED:

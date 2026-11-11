@@ -4,8 +4,8 @@
  "active_issue_key": "S00_ERRATA_REVIEW",
  "executor": "WorkBuddy AI",
  "started_at": "2026-11-11 22:10:00 +08:00",
- "status": "S00_ERRATA_V5_SELF_CHECK_V8_PASS_AWAITING_RECHECK_9",
- "claim_note": "S00 勘误 V5（自检 V8，40/40 PASS）：按 Codex 第八轮裁决修 8 处——①极性按版面整体求解（三协电机 DOC-E2BDEAB4F6274B6E p.135 的「□会计政策变更 √会计差错更正 □其他原因 □不适用」此前被判 excluded=ERRATA，该文档 15 条重述差异全部误解除，现全部转 UNRESOLVED_EVIDENCE_CONTRADICTS 并登记 evidence_conflicts.csv）；②千分位逗号不再切断分句（此前 -160,517.06元 被切成两段，*ST九鼎/派斯林 8 条事件确认丢失）；③勾选组主语跨标题不再误绑；④父输入兼容性只认 parent_verifications.csv，同文档与上游「双否」两条自动判据全部撤销（YES 4→0，PENDING_PARENT_COMPATIBILITY 1,277 全部待核）；⑤C24 改绑外部审查登记表 content_reviews.csv（完整键含 period_key+终值+引文可定位）；⑥C14 须回读裁决文件核对原文片段与行号（写 x 不再通过）；⑦R6 交付两父输入各自的取值/状态/原件定位/命中片段（3 条样本两父均可定位）；⑧R7 措辞改「原文片段已定位」并保存命中片段。另新增 C38：比较范围/季度表来源只能由 scope_verifications.csv 覆盖，撤去后退回待核。重述差异待处置 8,309；全表核心未闭合 9,113、含补充 10,618；全池 44 HOLD / 231 待核证 / 378 无关联；受限表 407 行。第 4–5 步未做，S04 第二轮与 S05 不放行",
+ "status": "S00_ERRATA_V5_SELF_CHECK_V9_PASS_AWAITING_RECHECK_10",
+ "claim_note": "S00 勘误 V5（自检 V9，40/40 PASS）：按 Codex 第九轮裁决修 10 处——①选项组不再被换行切碎（连续碎片在含 ≥2 个符号时先拼回一组，纯原因标签留在组外），「每个□后插换行」两种变体由反向解改为与单行一致；②金额逐个判定，零值不再压掉同句非零值的事件肯定；③撤销「已有 excluded 就压掉后续非零金额肯定」，勾选√不适用与非零金额并存时保留 conflict；④父输入核证登记绑定实际父输入（文档/期间/终值/取值栏目/调整前后版本/口径三元组逐项一致，引文须含父数，reviewer/日期/审查角色不得占位）；⑤C24 补真实日期、审查角色标注、原件该页逐字命中、原文印刷值、字段级判断依据，并给出正例对照；⑥C14 绑定「该段确实裁决该键」（引文所在行须同时命中裁决条目、本键识别信息、裁决结论）；⑦C38 来源维度限定为 COMPARATIVE_SCOPE / QUARTERLY_TABLE_PROVENANCE，须绑定目标键、期间与实际供给文档，父输入兼容不得被顶替；⑧R6 两个实际累计父数各自按金额定位，交付期间列、表头单位字面、调整前后版本与兼容缺口，结论明确写「定位不构成兼容已证」；⑨抽验表 _pc 与生产统一为核证登记表唯一来源；⑩上游 verdict 与原文极性相反的行登记 evidence_conflicts.csv 并给出传播范围。极性修复对存量 1,007 份核验证据的传播范围为 0 份（分句结果无变化），meta_diff.csv 与 summary.json 逐字节未变。重述差异待处置 8,309；全表核心未闭合 9,113、含补充 10,618；全池 44 HOLD / 231 待核证 / 378 无关联；受限表 407 行。第 4–5 步未做，S04 第二轮与 S05 不放行",
  "last_completed": {
   "issue_key": "S04",
   "issue_number": 39,
@@ -25,7 +25,7 @@
  },
  "next_recommended_issue_number": 39,
  "next_recommended_issue_key": "S04",
- "next_recommended_reason": "S00 勘误 V5 自检 V7 已交付、等第八轮独立复核；复核通过后按第七轮口径做第 4 步批量核证（按文档核一次再映射到字段）、第 5 步重算分层，再回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
+ "next_recommended_reason": "S00 勘误 V5 自检 V9 已交付、等第十轮独立复核；复核通过后按第九轮裁定口径做第 4 步批量核证（按「文档版本＋具体栏目＋实际选项组＋覆盖期间」核一次再显式映射成员键，不得按文档或方法名广播）、第 5 步重算分层，再回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
  "open_followups_from_p06": [
   "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
   "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -477,14 +477,14 @@
    "r1_no_link": 378,
    "restricted_claim_rows": 407,
    "restricted_unique_disputes": 401,
-   "dispute_ledger": 17728,
+   "dispute_ledger": 10618,
    "restatement_groups": 89
   },
-  "checks": "40/40 PASS（新增 C38 来源维度结构化核证；C37 改为「撤去真实兼容依据后必须变 NO」的注入链；C34 扩为 17 条反例，含第八轮裁决表五条原文用例与三协电机真实版面；C24 改绑外部审查登记表；C14 须回读裁决原文行）",
+  "checks": "40/40 PASS（C34 扩为 22 条反例，含第九轮四条独立反例；C37 注入链 20 环；C24 十一种伪造 + 正例对照；C14 五种伪造；C38 九种绕过）",
   "reproducible": true,
   "limits": [
    "未回读全部 PDF（抽验 37 行 / 27 个键，覆盖 1,007 份核验文档中的 20 份）",
-   "9,954 条 NOTE_TRACE_NA 已解决项未做方法适用性复审（631 份文档，已解除 8,655 条 / 630 份）",
+   "NOTE_TRACE_NA 合计 9,954 条 / 631 份文档，其中已解除 8,655 条 / 630 份，均未做方法适用性复审；已解除部分同样须复审",
    "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79，42 份文档）未逐条回读原注",
    "1,505 格补充元数据仅登记字段级核验要求，未逐项核完",
    "未覆盖锚定期回退与上游准入的间接依赖",
@@ -608,7 +608,18 @@
    "第 4 步：文档级核证能否作为组内字段级解除的必要条件（非充分条件）",
    "是否放行 S04 第二轮与 S05"
   ],
-  "self_check_version": "V8",
-  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round9.md"
- }
+  "self_check_version": "V9",
+  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round9.md",
+  "fault_injection_v4_mapped": {
+   "C26": 7729,
+   "C14": 6617
+  },
+  "stats": {
+   "dispute_unique_ids": 10618
+  },
+  "round": "第九轮返工"
+ },
+ "self_check_version": "V9",
+ "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round10.md",
+ "updated_at": "2026-11-12"
 }

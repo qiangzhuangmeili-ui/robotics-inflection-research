@@ -2,10 +2,10 @@
   "issue_key": "S00",
   "stage": "ERRATA",
   "version": "ERRATA_V5",
-  "self_check_version": "V8",
+  "self_check_version": "V9",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-12T03:20:00+08:00",
+  "reviewed_at": "2026-11-12T09:40:00+08:00",
   "checks_pass": 40,
   "checks_total": 40,
   "checks": [
@@ -138,14 +138,17 @@
     },
     {
       "id": "C14",
-      "name": "已解决重述：裁决类命中裁决清单且依据落到裁决原文行、确认类事件+来源双证、覆盖类独立重算无缺口",
+      "name": "已解决重述：裁决类须绑定裁决条目+适用键+裁决结论（引文所在行同时命中三者），确认类事件+来源双证，覆盖类独立重算无缺口",
       "result": "PASS",
       "detail": {
         "violations": 0,
         "sample": [],
         "rulings": 1,
         "injection_placeholder_basis": true,
-        "injection_wrong_ruling_line": true
+        "injection_wrong_ruling_line": true,
+        "injection_unrelated_quote_correct_line": true,
+        "injection_key_pattern_other_company": true,
+        "injection_section_not_on_line": true
       }
     },
     {
@@ -290,17 +293,25 @@
     },
     {
       "id": "C24",
-      "name": "补充元数据放行须有外部审查登记表记录：完整键（含期间）+终值+原文引文可定位",
+      "name": "补充元数据放行须有外部审查登记表记录：键+终值+原件页定位+印刷值+字段级判断依据；审查角色显式标注（自检亦须标注）",
       "result": "PASS",
       "detail": {
         "leaked": 0,
         "sample": [],
+        "reason": "",
+        "control_key": "SH:600100|FIN.REV.YTD|20250630|value_raw",
+        "control_accepted": true,
         "injection_no_review": true,
         "injection_misclassified_as_display": true,
         "injection_unbound_digest": true,
         "injection_digest_only_no_register": true,
         "injection_wrong_period_key": true,
-        "injection_quote_not_located": true,
+        "injection_placeholder_reviewer_no_date": true,
+        "injection_role_unmarked": true,
+        "injection_fragment_wrong_page": true,
+        "injection_fragment_boilerplate": true,
+        "injection_value_not_declared": true,
+        "injection_basis_placeholder": true,
         "review_register_rows": 0,
         "pending": 1505
       }
@@ -371,7 +382,7 @@
       "detail": {
         "samples": 37,
         "risk_types": 20,
-        "unique_keys": 27,
+        "unique_keys": 26,
         "missing": [],
         "extra_covered": true,
         "reread_bad": 0,
@@ -382,8 +393,8 @@
           "WEAK": 1
         },
         "reread": {
-          "MATCH": 19,
-          "NO_PAGE_RECORDED": 4,
+          "MATCH": 18,
+          "NO_PAGE_RECORDED": 5,
           "PARTIAL": 5,
           "NOT_APPLICABLE_EXTRA_FIELD": 6,
           "LOCATED(p.168)": 1,
@@ -422,11 +433,11 @@
     },
     {
       "id": "C34",
-      "name": "极性回归：17 条反例（含第八轮裁决表五条原文用例 + 三协电机真实版面）",
+      "name": "极性回归：22 条反例（含第八轮裁决表五条原文用例 + 三协电机真实版面）",
       "result": "PASS",
       "detail": {
         "violations": [],
-        "case_count": 17,
+        "case_count": 22,
         "case_failures": [],
         "cases": {
           "neg": "本公司未发生前期差错更正",
@@ -472,7 +483,19 @@
           "quote_not_located": true,
           "empty_scope": true,
           "no_reviewer": true,
-          "p2_quote_missing": true
+          "p2_quote_missing": true,
+          "doc_mismatch": true,
+          "p2_doc_mismatch": true,
+          "period_mismatch": true,
+          "column_empty": true,
+          "adjust_version_invalid": true,
+          "adjust_version_inconsistent": true,
+          "scope_mismatch": true,
+          "scope_basis_missing": true,
+          "reviewer_placeholder": true,
+          "no_date": true,
+          "role_unmarked": true,
+          "quote_without_parent_value": true
         },
         "register_rows": 0,
         "reopened_pending": 1277,
@@ -481,7 +504,7 @@
     },
     {
       "id": "C38",
-      "name": "来源维度（比较范围/季度表来源）只能由核证登记表覆盖，撤去后必须退回待核",
+      "name": "来源维度只接受比较范围/季度表来源两类登记，且须绑定目标键、期间与实际供给文档；父输入兼容不得由来源登记顶替",
       "result": "PASS",
       "detail": {
         "violations": [],
@@ -489,6 +512,7 @@
           "key": "BJ:920022|FIN.NPDEDT.SQ|20250630",
           "without_record": "PENDING_SOURCE_PROVENANCE",
           "with_record": "PENDING_CAUSE_UNCOVERED",
+          "with_parent_dim_only": "PENDING_SOURCE_PROVENANCE",
           "dims_from_record": [
             "COMPARATIVE_SCOPE",
             "QUARTERLY_TABLE_PROVENANCE"
@@ -499,7 +523,13 @@
           ],
           "rejected_wrong_conclusion": true,
           "rejected_unlocatable_quote": true,
-          "rejected_no_reviewer": true
+          "rejected_no_reviewer": true,
+          "rejected_role_unmarked": true,
+          "rejected_no_date": true,
+          "rejected_other_document": true,
+          "rejected_parent_dimension": true,
+          "rejected_wrong_target": true,
+          "rejected_quote_without_year": true
         },
         "register_rows": 0,
         "pending_source_provenance": 47
@@ -535,16 +565,16 @@
       "parent_incompatible": "PENDING_PARENT_COMPATIBILITY"
     }
   },
-  "round8_fixes": [
-    "极性按版面整体求解：两种版面（符号在前/符号在后）各自解一遍，取能自洽（标签不重复）者；三协电机 p.135 的四选项行由「判 conflict 并放行」改为 affirmed=ERRATA / excluded=POLICY_CHANGE → C34",
-    "分句不再按半角逗号无条件切分（-160,517.06元 曾被切成两段，丢失 8 条事件确认）",
-    "勾选组主语遇标题换题即断开，不再跨「（四）审批程序及其他说明」误绑上一节的差错更正",
-    "「采用」作为肯定谓词时须检查是否被前面的否定词管辖（本期未发生采用追溯重述法的前期差错更正事项）",
-    "父输入兼容性只认 parent_verifications.csv：撤销「同文档」与「上游双否」两条自动判据，YES 4→0；C37 改为「撤去真实兼容依据后必须变 NO」的注入链",
-    "C24 改绑 content_reviews.csv（完整键含 period_key + 终值 + 引文可在原文定位），并注入六种绕过：无记录 / 改标展示 / 仅填可算摘要 / 换期间 / 引文不可定位 / 终值不符",
-    "C14 须回读裁决文件核对 ruling_quote 与 ruling_line，且 basis 与 conflict_explanation 各自 ≥40 字并含识别信息（写 x 不再通过）",
-    "R6 交付两父输入各自的取值/状态/原件定位/命中片段；R7 措辞改「原文片段已定位」并保存 located_fragment",
-    "新增 C38：比较范围 / 季度表来源只能由 scope_verifications.csv 覆盖，撤去后退回待核",
+  "round9_fixes": [
+    "选项组不再被换行切碎：连续碎片在含 ≥2 个符号时先拼回一组，纯原因标签（前期差错更正）留在组外；「每个□后插换行」的两种变体由反向解（excluded=ERRATA/affirmed=POLICY_CHANGE）改为与单行一致 → C34 增至 22 条反例",
+    "金额改为逐个判定：零值与非零值分别绑定，「影响0.00元及对净资产影响100.00元」恢复事件肯定",
+    "撤销「已有 excluded 就压掉后续非零金额肯定」：勾选√不适用与非零金额并存时保留 conflict，不再按勾选静默放行",
+    "父输入核证登记绑定实际父输入：p1/p2 的文档、期间、终值、取值栏目、调整前后版本、口径三元组必须逐项一致，引文须含该父数，reviewer/日期/审查角色不得占位 → C37 注入链 20 环",
+    "C24 补五道：真实日期、审查角色显式标注、原件该页逐字命中（不再用 results.csv.evidence 自证）、原文印刷值、字段级判断依据；并给出正例对照证明门槛可满足 → 注入 11 种绕过",
+    "C14 绑定「该段确实裁决该键」：引文所在行须同时命中裁决条目、本键识别信息、裁决结论；「无关引文＋其正确行号」不再通过 → 注入 5 种绕过",
+    "C38 来源维度限定为 COMPARATIVE_SCOPE / QUARTERLY_TABLE_PROVENANCE，且须绑定 target_field/target_period/实际供给文档/期间年份；judge(scope_ok) 同步只接受这两类，父输入兼容不得被顶替",
+    "R6 改为两个实际累计父数各自按金额定位，并交付期间列、表头单位字面、调整前后版本、同版本/同采用文档判定与兼容缺口；结论明确写「定位不构成兼容已证」",
+    "抽验表 _pc 与生产统一为核证登记表唯一来源（撤销同文档/上游双否/采用同文档三条捷径）",
     "上游 verdict 与原文极性相反的行逐条登记 evidence_conflicts.csv，并给出该文档在 B 中的传播范围"
   ],
   "open_findings": [

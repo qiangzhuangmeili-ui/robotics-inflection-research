@@ -12,7 +12,7 @@
 
 第三节（极性）
 - C34 极性回归 17 条反例（polarity_cases.py，生产与自检共用）；
-- C37 父输入兼容性只认核证登记表；C38 来源维度只认核证登记表；
+- C37 父输入兼容性只认核证登记表并绑定实际父输入；C38 来源维度只认两类登记；
 - C14 确认类不再只看 B=是，须事件层确认 + 来源维度覆盖。
 
 第五、八节（自检与追溯）
@@ -152,13 +152,17 @@ def _ruling_text(ent):
 
 
 def ruling_content_ok(ent):
-    """第八轮 E 项：裁决依据不能是占位文字，必须落到裁决文件的具体段落。
+    """裁决依据不能是占位文字，且必须**确实裁决该键**。
 
-    三条同时成立才算通过：
-    1. `ruling_quote` 非空且 ≥20 字，并**逐字出现在裁决文件中**；
-    2. `ruling_line` 指向的行确实包含该片段（行号不能编）；
-    3. `basis` 与 `conflict_explanation` 各自 ≥40 字，且至少包含一个识别信息
-       （证券代码 / 文档 ID / 公司简称），把「x」「见裁决」挡掉。
+    第九轮裁决 D 项：V8 只核对了「文字与行号」，于是把引文换成裁决文件第 3 行
+    `建议存档名：codex_ruling_round4.md`（确实逐字存在、行号也对）即可通过。
+    现在要求引文所在的那一行同时给出三样东西：
+
+    1. `ruling_section`：裁决条目名（如 `Q2 大豪科技改判`）；
+    2. `ruling_key_pattern`：该键的识别信息，且必须真是本键（证券代码/简称/DOC ID）；
+    3. `ruling_verdict`：裁决结论用语（如 `接受该具体争议解除`）。
+
+    三者与引文必须落在同一行——「无关引文＋其正确行号」因此不再成立。
     """
     lines = _ruling_text(ent)
     if lines is None:
@@ -174,6 +178,24 @@ def ruling_content_ok(ent):
         return False
     if quote not in "\n".join(lines):
         return False
+
+    line = lines[ln - 1]
+    section = (ent.get("ruling_section") or "").strip()
+    verdict = (ent.get("ruling_verdict") or "").strip()
+    pat = (ent.get("ruling_key_pattern") or "").strip()
+    if len(section) < 4 or len(verdict) < 4 or len(pat) < 4:
+        return False
+    if section not in line or verdict not in line or pat not in line:
+        return False
+
+    # 识别信息必须真是本键：证券代码 / 简称 / 该键文档 ID，不能是通用词
+    sec = (ent.get("key") or "").split("|")[0]
+    code = sec.split(":")[-1]
+    idents = {sec, code, (ent.get("stock_name") or "").strip()}
+    idents = {x for x in idents if x}
+    if pat not in idents and not re.match(r"^DOC-[0-9A-F]{16}$", pat):
+        return False
+
     idents = [t for t in (ent.get("stock_name"), ent.get("key", "").split("|")[0]) if t]
     for m in re.finditer(r"DOC-[0-9A-F]{16}", " ".join(
             str(ent.get(k) or "") for k in ("basis", "conflict_explanation"))):
@@ -192,11 +214,22 @@ def _parent_basis(kp):
     if not r:
         return None
     return {"doc": (r.get("document_id") or "").strip(),
+            "period": kp[2],
             "scope": (r.get("consolidation_scope") or "").strip(),
             "unit": (r.get("unit_scale") or "").strip(),
             "cur": (r.get("currency") or "").strip(),
             "ver": (r.get("version_used") or "").strip(),
             "val": (r.get("value_cny") or "").strip()}
+
+
+def _expect(k1, k2, b1, b2):
+    """核证登记必须逐项对应的实际父输入（第九轮 C 项）。"""
+    return {"p1": {"doc": b1["doc"], "period": k1[2], "value": b1["val"],
+                   "consolidation_scope": b1["scope"], "unit_scale": b1["unit"],
+                   "currency": b1["cur"]},
+            "p2": {"doc": b2["doc"], "period": k2[2], "value": b2["val"],
+                   "consolidation_scope": b2["scope"], "unit_scale": b2["unit"],
+                   "currency": b2["cur"]}}
 
 
 def _doc_verdict(doc):
@@ -229,7 +262,7 @@ def parent_compatible(k, entries=None, ev_of=None):
     if isinstance(src, dict):
         _m = src
         src = lambda d: _m.get(d, "")
-    return pv.gap(reg.get(k), b1["val"], b2["val"], src) is None
+    return pv.gap(reg.get(k), _expect(k1, k2, b1, b2), src) is None
 
 
 def parent_gap(k, entries=None):
@@ -246,7 +279,7 @@ def parent_gap(k, entries=None):
         if not b1[f] or b1[f] != b2[f]:
             return "SCOPE_UNIT_CURRENCY_MISMATCH"
     reg = PARENT_VERIFS if entries is None else entries
-    g = pv.gap(reg.get(k), b1["val"], b2["val"],
+    g = pv.gap(reg.get(k), _expect(k1, k2, b1, b2),
                lambda d: (vrec.get(d) or {}).get("evidence", ""))
     return "VERIFIED" if g is None else g
 
@@ -640,15 +673,42 @@ def _wl(e):
     e["ruling_line"] = int(e.get("ruling_line") or 1) - 1
 
 
+def _unrelated(e):
+    """第九轮 D 项实测绕过：引文换成裁决文件第 3 行「建议存档名…」，行号也改成 3。
+
+    该行确实逐字存在、行号也正确，但完全没有裁决这个键。
+    """
+    e["ruling_line"] = 3
+    e["ruling_quote"] = "建议存档名：`codex_ruling_round4.md`"
+
+
+def _wrong_key(e):
+    """引文与行号都对，但识别信息指向别的公司（不是本键）。"""
+    e["ruling_key_pattern"] = "SH:600022"
+
+
+def _no_section(e):
+    """引文与行号都对，但裁决条目名不在该行（无法证明该段裁决的就是本键）。"""
+    e["ruling_section"] = "Q9 杭叉跨来源限制"
+
+
 c14_placeholder_caught = _with_ruling(_ph)
 c14_wrongline_caught = _with_ruling(_wl)
+c14_unrelated_caught = _with_ruling(_unrelated)
+c14_wrongkey_caught = _with_ruling(_wrong_key)
+c14_nosection_caught = _with_ruling(_no_section)
 
-add("C14", "已解决重述：裁决类命中裁决清单且依据落到裁决原文行、确认类事件+来源双证、覆盖类独立重算无缺口",
-    not b14 and c14_placeholder_caught and c14_wrongline_caught,
+add("C14", "已解决重述：裁决类须绑定裁决条目+适用键+裁决结论（引文所在行同时命中三者），"
+           "确认类事件+来源双证，覆盖类独立重算无缺口",
+    not b14 and c14_placeholder_caught and c14_wrongline_caught
+    and c14_unrelated_caught and c14_wrongkey_caught and c14_nosection_caught,
     {"violations": len(b14), "sample": [str(x) for x in b14[:5]],
      "rulings": len(RULED),
      "injection_placeholder_basis": c14_placeholder_caught,
-     "injection_wrong_ruling_line": c14_wrongline_caught})
+     "injection_wrong_ruling_line": c14_wrongline_caught,
+     "injection_unrelated_quote_correct_line": c14_unrelated_caught,
+     "injection_key_pattern_other_company": c14_wrongkey_caught,
+     "injection_section_not_on_line": c14_nosection_caught})
 b17 = check_c17(meta)
 add("C17", "已解决元数据：全部标签均有终值或字段级依据", not b17,
     {"violations": len(b17), "sample": [str(x) for x in b17[:3]]})
@@ -815,8 +875,70 @@ def review_key(r):
     return "|".join([r["security_id"], r["field_id"], r["period_key"], r["meta_field"]])
 
 
+ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
+_PDF_CACHE = {}
+
+
+def pdf_pages(sec, doc):
+    """回读原件物理页文本（按 document_id 缓存）。不可用时返回 None。
+
+    第九轮 D 项：C24 原来的定位源是 `results.csv.evidence`——那是上游核验记录里
+    的摘录，不是原件；拿它自证「引文可定位」等于用同一来源自证。改为回读 PDF。
+    """
+    key = (sec, doc)
+    if key in _PDF_CACHE:
+        return _PDF_CACHE[key]
+    pages = None
+    code = (sec or "").split(":")[-1]
+    pdf = None
+    for p in (ORIG / code).rglob(doc + ".pdf"):
+        pdf = p
+        break
+    if pdf is not None:
+        try:
+            import pymupdf
+            d = pymupdf.open(str(pdf))
+            pages = [_nz(d[i].get_text()) for i in range(d.page_count)]
+            d.close()
+        except Exception:
+            pages = None
+    _PDF_CACHE[key] = pages
+    return pages
+
+
+def _supports(printed, value, unit="1", basis=""):
+    """原文印刷值是否支持该字段终值。
+
+    数值型：按单位折算比对；文本型：逐字包含。
+    内部枚举名（如 `LEGACY_SNAPSHOT`）不会出现在 PDF 里，此时必须由
+    `judgement_basis` 同时写出「原文印刷值」与「内部终值」，把映射讲清楚——
+    这正是第九轮 D 项要求的「针对该字段的判断依据」。
+    """
+    v = (value or "").strip()
+    p = (printed or "").strip()
+    if not v or not p:
+        return False
+    try:
+        float(v)
+        return pv._num_in_quote(p, v, unit)
+    except (TypeError, ValueError):
+        pass
+    if _nz(v) in _nz(p) or _nz(p) in _nz(v):
+        return True
+    return _nz(p) in _nz(basis) and _nz(v) in _nz(basis)
+
+
 def review_gap(r):
-    """放行一条补充元数据差异所缺的东西；None 表示审查记录齐备。"""
+    """放行一条补充元数据差异所缺的东西；None 表示审查记录齐备。
+
+    第九轮 D 项在第八轮基础上再补五道：
+    - `reviewed_at` 必须是真实日期，`review_role` 必须显式标注（自检也要标）；
+    - `reviewer` 不得是 `x` 之类占位；
+    - `original_page` + `original_fragment` 必须能在**原件该页**逐字命中
+      （不再接受 `results.csv.evidence` 自证）；
+    - `original_value_text` 必须是该字段在原文里印出来的字面值，且出现在片段中；
+    - `judgement_basis` ≥40 字、点名该字段与终值，并给出「印刷值 → 终值」的映射依据。
+    """
     ent = REVIEWS.get((r["security_id"], r["field_id"], r["period_key"], r["meta_field"]))
     if ent is None:
         return "RELEASE_WITHOUT_CONTENT_REVIEW"
@@ -826,18 +948,59 @@ def review_gap(r):
         return "REVIEW_VALUE_MISMATCH"
     if (ent.get("conclusion") or "").strip() not in ALLOWED_CONCLUSIONS:
         return "REVIEW_WITHOUT_CONCLUSION"
-    if not (ent.get("reviewer") or "").strip():
+    if not pv._reviewer_ok(ent):
         return "REVIEW_WITHOUT_REVIEWER"
+    if (ent.get("review_role") or "").strip() not in pv.REVIEW_ROLES:
+        return "REVIEW_ROLE_UNMARKED"
+    if not pv._date_ok(ent.get("reviewed_at")):
+        return "REVIEW_WITHOUT_DATE"
     b = D10.get((r["security_id"], r["field_id"], r["period_key"])) or {}
     doc = (b.get("document_id") or "").strip()
     if not doc or (ent.get("document_id") or "").strip() != doc:
         return "REVIEW_DOCUMENT_MISMATCH"
+
+    # 针对该字段的判断依据
+    basis = _nz(ent.get("judgement_basis"))
+    if len(basis) < 40:
+        return "REVIEW_BASIS_TOO_SHORT"
+    if _nz(r["meta_field"]) not in basis or _nz(r.get("value_B")) not in basis:
+        return "REVIEW_BASIS_NOT_FIELD_SPECIFIC"
+
+    printed = (ent.get("original_value_text") or "").strip()
+    if not printed:
+        return "REVIEW_WITHOUT_ORIGINAL_VALUE"
+
+    # 原件定位：必须在 PDF 该页逐字命中
+    try:
+        pg = int(ent.get("original_page") or 0)
+    except (TypeError, ValueError):
+        pg = 0
+    if pg <= 0:
+        return "REVIEW_WITHOUT_ORIGINAL_PAGE"
+    frag = _nz(ent.get("original_fragment"))
+    if len(frag) < 20:
+        return "REVIEW_FRAGMENT_TOO_SHORT"
+    pages = pdf_pages(r["security_id"], doc)
+    if pages is None:
+        return "REVIEW_ORIGINAL_UNAVAILABLE"
+    if pg > len(pages):
+        return "REVIEW_ORIGINAL_PAGE_OUT_OF_RANGE"
+    if frag not in pages[pg - 1]:
+        return "REVIEW_FRAGMENT_NOT_IN_ORIGINAL_PAGE"
+    if _nz(printed) not in frag:
+        return "REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT"
+
+    # 终值支持：印刷值必须支撑该字段终值
+    if (ent.get("value_in_quote") or "").strip() != (r.get("value_B") or "").strip():
+        return "REVIEW_VALUE_NOT_DECLARED"
+    if not _supports(printed, r.get("value_B"), b.get("unit_scale", "1"),
+                     ent.get("judgement_basis")):
+        return "REVIEW_PRINTED_VALUE_NOT_SUPPORT_VALUE"
+
+    # 引文仍保留（用于台账展示），但已不再作为唯一依据
     q = _nz(ent.get("evidence_quote"))
     if len(q) < 12:
         return "REVIEW_QUOTE_TOO_SHORT"
-    src = _nz((vrec.get(doc) or {}).get("evidence"))
-    if not src or q not in src:
-        return "REVIEW_QUOTE_NOT_LOCATED"
     return None
 
 
@@ -902,7 +1065,8 @@ def _with_review(row, **over):
            "period_key": row["period_key"], "meta_field": row["meta_field"],
            "value_B": row.get("value_B", ""), "document_id": "",
            "evidence_quote": "", "conclusion": "CONFIRMED_EXPLAINED",
-           "reviewer": "injection", "reviewed_at": "2026-11-11"}
+           "review_role": "SELF_CHECK", "reviewer": "injection",
+           "reviewed_at": "2026-11-11"}
     ent.update(over)
     REVIEWS[k] = ent
     try:
@@ -915,26 +1079,133 @@ def _with_review(row, **over):
     return got
 
 
-_rel = dict(fake)
-_rel["content_review_ref"] = review_key(_rel)
-# 反例四：摘要式伪造（只填一个可算出来的 ref，没有真实登记）→ 必须拦住
-fake4_caught = len(_with_review(_rel, document_id="", evidence_quote="")) == 1
-# 反例五：登记表里把 period_key 换成别的期间（第七轮摘要遗漏 period_key 的绕过）
-_pk = _rel["period_key"]
-_alt = "20250930" if _pk != "20250930" else "20251231"
-fake5_caught = len(_with_review(_rel, period_key=_alt, evidence_quote="x" * 20)) == 1
-# 反例六：引文在原文里找不到
-fake6_caught = len(_with_review(_rel, evidence_quote="此处原文并不存在的一段话用以测试定位失败")) == 1
-add("C24", "补充元数据放行须有外部审查登记表记录：完整键（含期间）+终值+原文引文可定位",
-    not leak and fake_caught and fake2_caught and fake3_caught
-    and fake4_caught and fake5_caught and fake6_caught,
+def _genuine_review(row):
+    """按第九轮 D 项口径构造一条**真实可核**的审查记录（正例对照用）。
+
+    只取「数值型终值 + 单位=1 + 原件里确实印着该数」的行：回读 PDF 找到该数所在页，
+    截取含该数的 40 字片段作为 `original_fragment`，印刷值即该数本身。
+    """
+    k = (row["security_id"], row["field_id"], row["period_key"])
+    b = D10.get(k) or {}
+    doc = (b.get("document_id") or "").strip()
+    v = (row.get("value_B") or "").strip()
+    if not doc or not re.fullmatch(r"-?\d[\d,]*\.\d{2}", v):
+        return None
+    if (b.get("unit_scale") or "1").strip() != "1":
+        return None
+    pages = pdf_pages(row["security_id"], doc)
+    if not pages:
+        return None
+    for pi, t in enumerate(pages):
+        if v and v in t:
+            i = t.index(v)
+            frag = t[max(0, i - 22):i + len(v) + 18]
+            if len(frag) < 20:
+                continue
+            return {"security_id": row["security_id"], "field_id": row["field_id"],
+                    "period_key": row["period_key"], "meta_field": row["meta_field"],
+                    "value_B": v, "document_id": doc, "source_page": str(pi + 1),
+                    "evidence_quote": frag[:20], "original_page": str(pi + 1),
+                    "original_fragment": frag, "original_value_text": v,
+                    "value_in_quote": v,
+                    "judgement_basis": ("核对 %s 字段终值 %s：原件 p.%d 明确印出该数，"
+                                        "与 B 的 %s 一致，故判为同一取值，不构成实质差异"
+                                        % (row["meta_field"], v, pi + 1, v)),
+                    "conclusion": "CONFIRMED_EXPLAINED",
+                    "review_role": "SELF_CHECK", "reviewer": "self-check-agent",
+                    "reviewed_at": "2026-11-12"}
+    return None
+
+
+_CTRL = None
+for _r in extra:
+    if _r["meta_field"] not in ("value_raw", "value_before_adoption", "published_on",
+                                "source_page", "unit_raw"):
+        continue
+    _g = _genuine_review(_r)
+    if _g is not None:
+        _CTRL = (_r, _g)
+        break
+
+if _CTRL is None:
+    ctrl_row, ctrl_ent, ctrl_ok = None, None, None
+    fake4_caught = fake5_caught = fake6_caught = True
+    fake7_caught = fake8_caught = fake9_caught = True
+    fake10_caught = fake11_caught = True
+    c24_reason = "NO_GENUINE_CONTROL_ROW"
+else:
+    ctrl_row, ctrl_ent = _CTRL
+    _rel = dict(ctrl_row)
+    _rel["resolution"] = "RESOLVED_FIELD_LEVEL_CHECK"
+    _rel["content_review_ref"] = review_key(_rel)
+    # 正例：完全合规的记录必须被接受（证明门槛可满足，不是不可通过的死门）
+    k = (ctrl_row["security_id"], ctrl_row["field_id"],
+         ctrl_row["period_key"], ctrl_row["meta_field"])
+    _saved = REVIEWS.get(k)
+    REVIEWS[k] = ctrl_ent
+    try:
+        ctrl_ok = review_gap(_rel) is None
+    finally:
+        if _saved is None:
+            REVIEWS.pop(k, None)
+        else:
+            REVIEWS[k] = _saved
+
+    # 反例四：摘要式伪造（只填一个可算出来的 ref，没有真实登记）→ 必须拦住
+    fake4_caught = len(_with_review(_rel, document_id="", evidence_quote="")) == 1
+    # 反例五：登记表里把 period_key 换成别的期间
+    _pk = _rel["period_key"]
+    _alt = "20250930" if _pk != "20250930" else "20251231"
+    fake5_caught = len(_with_review(_rel, period_key=_alt)) == 1
+    # 反例六（第九轮 D 项实测绕过）：reviewer=x + 日期留空 + 摘录前缀照抄
+    fake6_caught = len(_with_review(
+        _rel, reviewer="x", reviewed_at="", evidence_quote=ctrl_ent["evidence_quote"])) == 1
+    # 反例七：审查角色未标注
+    fake7_caught = len(_with_review(_rel, review_role="")) == 1
+    # 反例八：片段取自别的页（页码与片段不匹配）
+    _other = 1 if int(ctrl_ent["original_page"]) != 1 else 2
+    fake8_caught = len(_with_review(_rel, original_page=str(_other))) == 1
+    # 反例九：页码对但片段是通用样板，不含该字段印刷值
+    _pages = pdf_pages(ctrl_row["security_id"], ctrl_ent["document_id"]) or []
+    _pg = int(ctrl_ent["original_page"]) - 1
+    _ptxt = _pages[_pg] if 0 <= _pg < len(_pages) else ""
+    _boiler = ""
+    _pv = ctrl_ent["original_value_text"]
+    for _i in range(0, max(1, len(_ptxt) - 40), 8):
+        _w = _ptxt[_i:_i + 40]
+        if len(_w) >= 20 and _pv not in _w:
+            _boiler = _w
+            break
+    fake9_caught = (len(_with_review(_rel, original_fragment=_boiler)) == 1
+                    if _boiler else True)
+    # 反例十：声明终值与实际终值不符
+    fake10_caught = len(_with_review(_rel, value_in_quote="0.00")) == 1
+    # 反例十一：判断依据是占位文字（不含字段与终值）
+    fake11_caught = len(_with_review(_rel, judgement_basis="已核对，无问题，可以放行，不必再查")) == 1
+    c24_reason = ""
+
+add("C24", "补充元数据放行须有外部审查登记表记录：键+终值+原件页定位+印刷值+字段级判断依据；"
+           "审查角色显式标注（自检亦须标注）",
+    not leak and ctrl_ok and fake_caught and fake2_caught and fake3_caught
+    and fake4_caught and fake5_caught and fake6_caught and fake7_caught
+    and fake8_caught and fake9_caught and fake10_caught and fake11_caught,
     {"leaked": len(leak), "sample": [str(x) for x in leak[:5]],
+     "reason": c24_reason,
+     "control_key": ("|".join([ctrl_row["security_id"], ctrl_row["field_id"],
+                               ctrl_row["period_key"], ctrl_row["meta_field"]])
+                     if ctrl_row else ""),
+     "control_accepted": ctrl_ok,
      "injection_no_review": fake_caught,
      "injection_misclassified_as_display": fake2_caught,
      "injection_unbound_digest": fake3_caught,
      "injection_digest_only_no_register": fake4_caught,
      "injection_wrong_period_key": fake5_caught,
-     "injection_quote_not_located": fake6_caught,
+     "injection_placeholder_reviewer_no_date": fake6_caught,
+     "injection_role_unmarked": fake7_caught,
+     "injection_fragment_wrong_page": fake8_caught,
+     "injection_fragment_boilerplate": fake9_caught,
+     "injection_value_not_declared": fake10_caught,
+     "injection_basis_placeholder": fake11_caught,
      "review_register_rows": len(REVIEWS),
      "pending": sum(1 for r in extra if r["resolution"] == "PENDING_FIELD_LEVEL_CHECK")})
 
@@ -1273,11 +1544,25 @@ if empty_scope_pass:
 #    不能把所有「跨文档、同版本且兼容」都判成捷径——那样将来会误拦合法核证。
 #    做法：找一条口径一致、可登记的真实累计差分键，先造一条满足 gap() 的登记
 #    记录（引文取自该文档原文），确认判 YES；再逐项撤去依据，确认逐项变 NO。
+def _fmt_parent(v, unit):
+    """按 unit_scale 还原「原文印刷值」：value_cny / 单位倍数。"""
+    try:
+        mult = float(unit or "1") or 1.0
+        return "{:,.2f}".format(float(v) / mult)
+    except (TypeError, ValueError):
+        return str(v)
+
+
+_GENERIC_QUOTE = "本报告期与上期数据均按同一合并范围列示口径一致可比无需调整"
+
+
 def _inject_parent_chain():
     """挑一条口径一致的真实累计差分键，用合成原文源验证判定链。
 
     生产路径仍读 vrec 原文；这里只替换「原文源」以便把判定链逐环拆开验证，
-    不改变任何判定规则。
+    不改变任何判定规则。第九轮 C 项后，登记记录必须逐项绑定实际父输入
+    （文档 / 期间 / 终值 / 栏目 / 调整版本 / 口径依据 / 角色 / 日期），
+    且引文里必须真的出现该父数。
     """
     for k in diff_keys:
         if not es.SIMPLE_SQ.__contains__(k[1]) or es.is_q1(k[2]):
@@ -1291,16 +1576,26 @@ def _inject_parent_chain():
             continue
         if (b1["scope"], b1["unit"], b1["cur"]) != (b2["scope"], b2["unit"], b2["cur"]):
             continue
-        q1 = "母公司本期累计数已在报表主表逐行列出"
-        q2 = "上期累计数已在可比期间报表中逐行列示"
+        q1 = "本报告期累计数%s元，%s口径，单位元，取自合并利润表本期累计列" % (
+            _fmt_parent(b1["val"], b1["unit"]), b1["scope"])
+        q2 = "上期累计数%s元，%s口径，单位元，取自合并利润表上期累计列" % (
+            _fmt_parent(b2["val"], b2["unit"]), b2["scope"])
         ent = {"security_id": k[0], "field_id": k[1], "period_key": k[2],
-               "ytd_field": ytd, "p1_doc": b1["doc"], "p2_doc": b2["doc"],
+               "ytd_field": ytd,
+               "p1_doc": b1["doc"], "p2_doc": b2["doc"],
+               "p1_period": k[2], "p2_period": prev_quarter(k[2]),
                "p1_value": b1["val"], "p2_value": b2["val"],
+               "p1_page": "1", "p2_page": "1",
                "p1_quote": q1, "p2_quote": q2,
+               "p1_column": "本期累计数", "p2_column": "上期累计数",
+               "p1_adjust_version": "SAME_VERSION", "p2_adjust_version": "SAME_VERSION",
                "consolidation_scope": b1["scope"], "unit_scale": b1["unit"],
-               "currency": b1["cur"], "conclusion": "COMPATIBLE",
+               "currency": b1["cur"],
+               "scope_basis": "两期均取合并利润表同一合并范围、同一币种、同一单位列示的累计数",
+               "conclusion": "COMPATIBLE", "review_role": "SELF_CHECK",
                "reviewer": "injection", "reviewed_at": "2026-11-11"}
-        src = {b1["doc"]: q1 + "…" + q2, b2["doc"]: q2}
+        src = {b1["doc"]: q1 + "…" + _GENERIC_QUOTE,
+               b2["doc"]: q2 + "…" + _GENERIC_QUOTE}
         return k, ent, src
     return None, None, None
 
@@ -1325,6 +1620,32 @@ else:
     chain["no_reviewer"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
     e = dict(_pent); e["p2_quote"] = ""
     chain["p2_quote_missing"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    # ---- 第九轮 C 项：绑定实际父输入（文档 / 期间 / 栏目 / 调整版本 / 口径 / 引文含父数）----
+    e = dict(_pent); e["p1_doc"] = "DOC-01140151955D939E"
+    chain["doc_mismatch"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["p2_doc"] = "DOC-01140151955D939E"
+    chain["p2_doc_mismatch"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["p1_period"] = "20250331"
+    chain["period_mismatch"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["p1_column"] = ""
+    chain["column_empty"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["p1_adjust_version"] = "MIXED"
+    chain["adjust_version_invalid"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["p2_adjust_version"] = "ORIGINAL"
+    chain["adjust_version_inconsistent"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["consolidation_scope"] = "PARENT_ONLY"
+    chain["scope_mismatch"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["scope_basis"] = "一致"
+    chain["scope_basis_missing"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["reviewer"] = "x"
+    chain["reviewer_placeholder"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["reviewed_at"] = ""
+    chain["no_date"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    e = dict(_pent); e["review_role"] = ""
+    chain["role_unmarked"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
+    # 引文真实存在、但来自无关内容（不含该父数）→ 必须 NO
+    e = dict(_pent); e["p1_quote"] = _GENERIC_QUOTE
+    chain["quote_without_parent_value"] = parent_compatible(_pk, {_pk: e}, _psrc) is False
     if not all(chain.values()):
         c37.append("VERIFICATION_CHAIN_BROKEN:%s" % chain)
 
@@ -1365,37 +1686,86 @@ if _cand is None:
     c38_detail = {}
 else:
     r, k, doc = _cand
-    quote = _nz((vrec.get(doc) or {}).get("evidence", ""))[:20]
-    _need = [d for d in (r["scope_missing"] or "").split(";") if d in es.SOURCE_DIMS]
-    recs = [{"security_id": k[0], "field_id": k[1], "period_key": k[2],
-             "dimension": d, "document_id": doc,
-             "source_page": (vrec.get(doc) or {}).get("page", ""),
-             "evidence_quote": quote, "conclusion": "CONFIRMED",
-             "reviewer": "injection", "reviewed_at": "2026-11-11"} for d in _need]
+    _need = [d for d in (r["scope_missing"] or "").split(";") if d in es.SCOPE_REGISTRABLE]
+    # 证据源改为**原件**：第九轮 E 项要求核对证据与目标键、期间、表格来源的关系，
+    # 拿 results.csv.evidence 自证等于用同一来源自证。
+    _pages = pdf_pages(k[0], doc) or []
+    _ptxt = "".join(_pages)
+    _yr = k[2][:4]
+    _i = _ptxt.find(_yr)
+    quote = (_ptxt[max(0, _i - 20):_i + 40] if _i >= 0 else "")
+    if len(_nz(quote)) < 12:
+        quote = _nz(_ptxt)[:40]
+    ev = lambda d: "".join(pdf_pages(k[0], d) or [])
+
+    def _rec(dim, **over):
+        e = {"security_id": k[0], "field_id": k[1], "period_key": k[2],
+             "dimension": dim, "target_field": k[1], "target_period": k[2],
+             "document_id": doc, "source_page": "1", "evidence_quote": quote,
+             "conclusion": "CONFIRMED", "review_role": "SELF_CHECK",
+             "reviewer": "injection", "reviewed_at": "2026-11-12"}
+        e.update(over)
+        return e
+
+    recs = [_rec(d) for d in _need]
     base = recs[0]
-    ev = lambda d: (vrec.get(d) or {}).get("evidence", "")
-    good = pv.scope_dims({k: recs}, k, ev)
-    bad_concl = pv.scope_dims({k: [dict(base, conclusion="PENDING")]}, k, ev)
-    bad_quote = pv.scope_dims({k: [dict(base, evidence_quote="不存在的引文用于测试")]}, k, ev)
-    bad_reviewer = pv.scope_dims({k: [dict(base, reviewer="")]}, k, ev)
+    good = pv.scope_dims({k: recs}, k, ev, expect_doc=doc)
+    bad_concl = pv.scope_dims({k: [_rec(base["dimension"], conclusion="PENDING")]}, k, ev,
+                              expect_doc=doc)
+    bad_quote = pv.scope_dims(
+        {k: [_rec(base["dimension"], evidence_quote="不存在的引文用于测试")]}, k, ev,
+        expect_doc=doc)
+    bad_reviewer = pv.scope_dims({k: [_rec(base["dimension"], reviewer="")]}, k, ev,
+                                 expect_doc=doc)
+    bad_role = pv.scope_dims({k: [_rec(base["dimension"], review_role="")]}, k, ev,
+                             expect_doc=doc)
+    bad_date = pv.scope_dims({k: [_rec(base["dimension"], reviewed_at="")]}, k, ev,
+                             expect_doc=doc)
+    # 绕过①：用无关文档的通用引文登记季度表来源
+    bad_other_doc = pv.scope_dims(
+        {k: [_rec(base["dimension"], document_id="DOC-01140151955D939E")]}, k, ev,
+        expect_doc=doc)
+    # 绕过②：维度写成 PARENT_COMPATIBILITY，试图顶替父输入核证
+    bad_dim = pv.scope_dims(
+        {k: [_rec(es.PARENT_COMPATIBILITY)]}, k, ev, expect_doc=doc)
+    # 绕过③：目标字段/期间不是本键
+    bad_target = pv.scope_dims(
+        {k: [_rec(base["dimension"], target_period="19991231")]}, k, ev, expect_doc=doc)
+    # 绕过④：引文虽长但通篇不含该行期间年份
+    bad_year = pv.scope_dims(
+        {k: [_rec(base["dimension"], evidence_quote="季度表格数据来源已在附注中列示")]},
+        k, ev, expect_doc=doc)
 
     st = D10.get(k, {}).get("status", "")
     own = doc_period.get(doc, "")
-    j_no = es.judge(vrec.get(doc), doc, st, own, k[2], bval="否", scope_ok=set())
-    j_yes = es.judge(vrec.get(doc), doc, st, own, k[2], bval="否", scope_ok=good)
+    j_no = es.judge(vrec.get(doc), doc, st, own, k[2], bval="否", scope_ok=set(),
+                    parent_ok=False)
+    j_yes = es.judge(vrec.get(doc), doc, st, own, k[2], bval="否", scope_ok=good,
+                     parent_ok=False)
+    # 绕过②的直接检验：父输入未核时，来源登记不得把它补上
+    j_dim = es.judge(vrec.get(doc), doc, st, own, k[2], bval="否",
+                     scope_ok={es.PARENT_COMPATIBILITY}, parent_ok=False)
     c38_detail = {
         "key": "|".join(k),
         "without_record": j_no["resolution"],
         "with_record": j_yes["resolution"],
+        "with_parent_dim_only": j_dim["resolution"],
         "dims_from_record": sorted(good),
         "dims_required": _need,
         "rejected_wrong_conclusion": not bad_concl,
         "rejected_unlocatable_quote": not bad_quote,
         "rejected_no_reviewer": not bad_reviewer,
+        "rejected_role_unmarked": not bad_role,
+        "rejected_no_date": not bad_date,
+        "rejected_other_document": not bad_other_doc,
+        "rejected_parent_dimension": not bad_dim,
+        "rejected_wrong_target": not bad_target,
+        "rejected_quote_without_year": not bad_year,
     }
     if not set(_need) <= good:
-        c38.append("VALID_RECORD_NOT_ACCEPTED")
-    if bad_concl or bad_quote or bad_reviewer:
+        c38.append("VALID_RECORD_NOT_ACCEPTED:%s" % sorted(_need))
+    if (bad_concl or bad_quote or bad_reviewer or bad_role or bad_date
+            or bad_other_doc or bad_dim or bad_target or bad_year):
         c38.append("INVALID_RECORD_ACCEPTED")
     if j_no["resolution"] != "PENDING_SOURCE_PROVENANCE":
         c38.append("PENDING_NOT_RESTORED_WITHOUT_RECORD:%s" % j_no["resolution"])
@@ -1403,7 +1773,10 @@ else:
         c38.append("RECORD_DID_NOT_COVER_DIMENSION")
     if set(_need) & set((j_yes["scope_missing"] or "").split(";")):
         c38.append("DIMENSION_STILL_MISSING_WITH_RECORD")
-add("C38", "来源维度（比较范围/季度表来源）只能由核证登记表覆盖，撤去后必须退回待核",
+    if not j_dim["resolution"].startswith("PENDING"):
+        c38.append("PARENT_DIM_BYPASSED:%s" % j_dim["resolution"])
+add("C38", "来源维度只接受比较范围/季度表来源两类登记，且须绑定目标键、期间与实际供给文档；"
+           "父输入兼容不得由来源登记顶替",
     not c38,
     {"violations": c38, "detail": c38_detail,
      "register_rows": len(_sv),
@@ -1414,11 +1787,11 @@ add("C38", "来源维度（比较范围/季度表来源）只能由核证登记�
 passed = sum(1 for c in checks if c["result"] == "PASS")
 review = {
     "issue_key": "S00", "stage": "ERRATA", "version": "ERRATA_V5",
-    "self_check_version": "V8",
+    "self_check_version": "V9",
     "review_nature": "SELF_CHECK",
     "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS" if passed == len(checks)
                 else "SELF_CHECK_FAIL",
-    "reviewed_at": "2026-11-12T03:20:00+08:00",
+    "reviewed_at": "2026-11-12T09:40:00+08:00",
     "checks_pass": passed, "checks_total": len(checks),
     "checks": checks,
     "fault_injection": {
@@ -1432,20 +1805,22 @@ review = {
                      "cause_affirmed": inj_affirm,
                      "parent_incompatible": inj_parent},
     },
-    "round8_fixes": [
-        "极性按版面整体求解：两种版面（符号在前/符号在后）各自解一遍，取能自洽（标签不重复）者；"
-        "三协电机 p.135 的四选项行由「判 conflict 并放行」改为 affirmed=ERRATA / excluded=POLICY_CHANGE → C34",
-        "分句不再按半角逗号无条件切分（-160,517.06元 曾被切成两段，丢失 8 条事件确认）",
-        "勾选组主语遇标题换题即断开，不再跨「（四）审批程序及其他说明」误绑上一节的差错更正",
-        "「采用」作为肯定谓词时须检查是否被前面的否定词管辖（本期未发生采用追溯重述法的前期差错更正事项）",
-        "父输入兼容性只认 parent_verifications.csv：撤销「同文档」与「上游双否」两条自动判据，"
-        "YES 4→0；C37 改为「撤去真实兼容依据后必须变 NO」的注入链",
-        "C24 改绑 content_reviews.csv（完整键含 period_key + 终值 + 引文可在原文定位），"
-        "并注入六种绕过：无记录 / 改标展示 / 仅填可算摘要 / 换期间 / 引文不可定位 / 终值不符",
-        "C14 须回读裁决文件核对 ruling_quote 与 ruling_line，且 basis 与 conflict_explanation "
-        "各自 ≥40 字并含识别信息（写 x 不再通过）",
-        "R6 交付两父输入各自的取值/状态/原件定位/命中片段；R7 措辞改「原文片段已定位」并保存 located_fragment",
-        "新增 C38：比较范围 / 季度表来源只能由 scope_verifications.csv 覆盖，撤去后退回待核",
+    "round9_fixes": [
+        "选项组不再被换行切碎：连续碎片在含 ≥2 个符号时先拼回一组，纯原因标签（前期差错更正）留在组外；"
+        "「每个□后插换行」的两种变体由反向解（excluded=ERRATA/affirmed=POLICY_CHANGE）改为与单行一致 → C34 增至 22 条反例",
+        "金额改为逐个判定：零值与非零值分别绑定，「影响0.00元及对净资产影响100.00元」恢复事件肯定",
+        "撤销「已有 excluded 就压掉后续非零金额肯定」：勾选√不适用与非零金额并存时保留 conflict，不再按勾选静默放行",
+        "父输入核证登记绑定实际父输入：p1/p2 的文档、期间、终值、取值栏目、调整前后版本、口径三元组必须逐项一致，"
+        "引文须含该父数，reviewer/日期/审查角色不得占位 → C37 注入链 20 环",
+        "C24 补五道：真实日期、审查角色显式标注、原件该页逐字命中（不再用 results.csv.evidence 自证）、"
+        "原文印刷值、字段级判断依据；并给出正例对照证明门槛可满足 → 注入 11 种绕过",
+        "C14 绑定「该段确实裁决该键」：引文所在行须同时命中裁决条目、本键识别信息、裁决结论；"
+        "「无关引文＋其正确行号」不再通过 → 注入 5 种绕过",
+        "C38 来源维度限定为 COMPARATIVE_SCOPE / QUARTERLY_TABLE_PROVENANCE，且须绑定 target_field/"
+        "target_period/实际供给文档/期间年份；judge(scope_ok) 同步只接受这两类，父输入兼容不得被顶替",
+        "R6 改为两个实际累计父数各自按金额定位，并交付期间列、表头单位字面、调整前后版本、"
+        "同版本/同采用文档判定与兼容缺口；结论明确写「定位不构成兼容已证」",
+        "抽验表 _pc 与生产统一为核证登记表唯一来源（撤销同文档/上游双否/采用同文档三条捷径）",
         "上游 verdict 与原文极性相反的行逐条登记 evidence_conflicts.csv，并给出该文档在 B 中的传播范围",
     ],
     "open_findings": [

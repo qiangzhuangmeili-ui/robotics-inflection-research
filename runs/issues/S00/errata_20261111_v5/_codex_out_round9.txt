@@ -1,0 +1,141 @@
+**第九轮裁决：退回返工（RETURN_FOR_REWORK）。不放行 S04 第二轮正式验收，不放行 S05。**
+
+本轮完成只读代码检查、台账复算及内存故障注入；未修改仓库、未提交、未操作 GitHub。本轮没有重新逐份核读 PDF，原文核证的判断以交付的定位记录及其实现为限。
+
+三协电机整改有效，但极性仍有误放行反例；父输入、来源维度、C24/C14 的新入口仍可接受伪造依据；R6 尚未交付两个实际累计父数的完整核证。
+
+**A．三协电机：本次指定整改通过。**
+
+复算 `DOC-E2BDEAB4F6274B6E`：
+
+- 指定四选项行输出 `excluded=POLICY_CHANGE|affirmed=ERRATA`，正确。
+- B 中直接供给 **15 行**，15 条重述差异全部为 `UNRESOLVED_EVIDENCE_CONTRADICTS`。
+- `evidence_conflicts.csv` 为对应的15条，登记了上游 `verdict=否` 冲突。
+- `cell_diff`、`key_diff`、`extra_meta_diff`、`restricted_claims` 对该文档的直接引用均为 **0**。
+- 未发现这15条在当前勘误台账中继续按旧结果解除。
+
+“传播到此为止”应限定为**本次核对的直接引用与已实现依赖范围**，不能覆盖尚未检查的锚定期回退、上游准入等间接路径。上游错误判定仍须修正，当前重开不能替代来源修正。
+
+**B．极性：17条既定反例通过，独立反例仍不通过。**
+
+`polarity_cases.py` 的17条全部通过。单行四选项使用 `√`、`☑`、`■`、`●` 的测试也通过，但新增测试出现以下结果：
+
+| 独立测试 | 实际结果 | 裁定 |
+|---|---|---|
+| 原四选项行中，每个 `□` 后插入换行 | `excluded=ERRATA`、`affirmed=POLICY_CHANGE`，最终 `RESOLVED_SCOPE_COVERED` | **误放行** |
+| `前期差错更正对期初未分配利润影响0.00元及对净资产影响100.00元` | 只有 `scoped=ERRATA`，丢失事件肯定 | 不通过 |
+| `前期差错更正\n□适用√不适用，对期初未分配利润影响0.00元，对净资产影响100.00元` | 排除 ERRATA、无冲突，最终 `RESOLVED_SCOPE_COVERED` | **误放行** |
+
+相关位置为 [evidence_scope.py:94](C:/Users/zhangjianmei/Documents/ChatGPT/机器人企业行业拐点研究/robotics-inflection-research/runs/issues/S00/errata_20261111_v5/evidence_scope.py:94)、第220–270、273–291、315–345行。
+
+主要问题：
+
+- 换行先被切成分句，选项组失去完整布局；回退到另一侧标签可能产生自洽但反向的解。
+- `nonzero = … and not zero` 仍让同一分句的零值压掉非零值。
+- 已有 `excluded` 会阻止后续非零金额形成肯定，导致勾选与金额冲突未被保留。
+
+这些是**内存反例**，不等于已证明另有存量台账误放行；修复后须重算传播范围。
+
+**C．父输入兼容性：当前无自动 YES，但核证登记仍不足以构成充分依据。**
+
+当前实算：
+
+| 统计范围 | YES | NO | NA |
+|---|---:|---:|---:|
+| 17,009条重述差异 | 0 | 3,679 | 13,330 |
+| 全部17,728条核心元数据差异 | 0 | 3,768 | 13,960 |
+
+重述差异的 NO 均有解释：
+
+- `NO_VERIFICATION_RECORD`：3,552
+- `PARENT_MISSING`：110
+- `SCOPE_UNIT_CURRENCY_MISMATCH`：17
+
+`PENDING_PARENT_COMPATIBILITY=1,277` 正确；其中新增重开量仍为 `1,277−5=1,272`，与前轮一致。
+
+但 [parent_verify.py:83](C:/Users/zhangjianmei/Documents/ChatGPT/机器人企业行业拐点研究/robotics-inflection-research/runs/issues/S00/errata_20261111_v5/parent_verify.py:83) 未核对登记中的父文档、父期间和口径三元组是否对应实际父输入。我对真实键：
+
+`SH:600008|FIN.NPDEDT.SQ|20260630`
+
+注入了以下登记：两父文档均改成无关的 `DOC-01140151955D939E`，引用其通用标题片段；登记期间及口径写错，审查人和日期填 `x`，仅保留正确父终值。结果仍为 **True／VERIFIED**。
+
+C37八环确实运行，但使用了**合成原文源**，没有覆盖“引文真实存在，却来自错误文档、错误期间或无关内容”。须补这些注入，并绑定实际父键、取值栏目、调整版本和口径依据。
+
+**D．C24、C14：仍可伪造。**
+
+**C24：已实测绕过。** 对：
+
+`SH:600444|FIN.COST.YTD|20251231|period_source`
+
+登记匹配终值及文档，复制现有摘录前20字，填写 `reviewer=x`、空 `reviewed_at`、允许结论，`review_gap()` 返回 **None**。
+
+[verify_v5.py:818](C:/Users/zhangjianmei/Documents/ChatGPT/机器人企业行业拐点研究/robotics-inflection-research/runs/issues/S00/errata_20261111_v5/verify_v5.py:818) 没有检查日期，也没有证明引文支持该字段终值。定位源实际是 `results.csv.evidence`，不能称为完整原文核读。须关联可追溯的实际审查记录、原件定位和针对该字段的判断依据；审查角色如属自检，应明确标记。
+
+**C14：已实测绕过。** 保留既有长解释，仅把引文和行号替换为裁决文件第3行：
+
+> 建议存档名：`codex_ruling_round4.md`
+
+`ruling_file_ok()`、`ruling_content_ok()` 均返回 **True**。
+
+[verify_v5.py:154](C:/Users/zhangjianmei/Documents/ChatGPT/机器人企业行业拐点研究/robotics-inflection-research/runs/issues/S00/errata_20261111_v5/verify_v5.py:154) 核对了文字与行号，却没有绑定“该段确实裁决该键”。须绑定明确裁决条目、适用键和裁决结论。任意错误行号可以被挡住，但“无关引文＋其正确行号”仍能绕过。
+
+**大豪科技既有裁决继续保留，不重开。**
+
+**E．C38：撤去登记的测试通过，来源维度门槛整体不通过。**
+
+当前47条 `PENDING_SOURCE_PROVENANCE` 未动；撤去登记后回到待核的测试成立。但存在两条实测绕过：
+
+1. `SH:688623|FIN.NPDEDT.SQ|20251231` 使用上述无关文档的通用引文登记季度表来源，即转为 `RESOLVED_SCOPE_COVERED`。
+2. `scope_dims()` 接受 `PARENT_COMPATIBILITY`，而 `judge(scope_ok=…)` 接受全部 `SOURCE_DIMS`。因此对首创环保上述键，即使 `parent_ok=False`，通过来源登记提供该维度仍可解除。
+
+位置：[parent_verify.py:62](C:/Users/zhangjianmei/Documents/ChatGPT/机器人企业行业拐点研究/robotics-inflection-research/runs/issues/S00/errata_20261111_v5/parent_verify.py:62)、[evidence_scope.py:499](C:/Users/zhangjianmei/Documents/ChatGPT/机器人企业行业拐点研究/robotics-inflection-research/runs/issues/S00/errata_20261111_v5/evidence_scope.py:499)。
+
+须将来源登记维度限定为 `COMPARATIVE_SCOPE`／`QUARTERLY_TABLE_PROVENANCE`，禁止替代父输入核证；同时核对证据与目标键、期间、表格来源的关系。通用摘录命中不是来源核证。
+
+**F．抽验：数量正确，R6仍不达标，R7措辞通过。**
+
+实算 **37行／20类／27键**。换样可以接受为补充方法覆盖，但应保留旧样本追溯，不能把挑选“更易定位”的样本视为原样本已补齐。
+
+R6的问题比“父2仅按金额定位”更直接：
+
+- S19–S21父1片段均为“追溯重述法□适用√不适用……”模板，**没有定位实际累计父数**。
+- 父2片段包含字段名称和金额，但未完整交付期间列、单位、调整前后版本等核对依据。
+
+原因见 [sampling_v5.py:395](C:/Users/zhangjianmei/Documents/ChatGPT/机器人企业行业拐点研究/robotics-inflection-research/runs/issues/S00/errata_20261111_v5/sampling_v5.py:395)：有上游证据时直接定位该证据，再以 `LOCATED` 判父输入已核，未要求定位父数。因此三条 `parent_orig_verified=BOTH` **不能作为两父核证完成的结论**。三条继续兼容 NO 的处置正确。
+
+R7改为 `ORIGINAL_FRAGMENT_LOCATED` 并保存命中片段，已如实限定证明范围；2条定位、1条 WEAK 的区分可以保留。
+
+**G．故障注入：自检40/40可复现，V4汇报数字有误。**
+
+| 对象 | 本轮复算 |
+|---|---|
+| V1 | C13 **6**／C14 **11,936**／C17 **12,076** |
+| V4映射后 | C26 **7,729**／C14 **6,617**／受限方法自身期间 **5,270** |
+| V5自身 | C13／C14／C17／C26均 **0** |
+
+V4前两项分别比汇报的7,714／6,602多15，`review.json`已记录新数。C37八环、C38及现有C24/C14注入运行通过，但未覆盖本轮上述绕过。自检通过不能据此宣称入口不可伪造。
+
+**H．文本：仍须同步。**
+
+具体修正：
+
+- `REPORT.md:179、270`，`handoff.md:85`，`data/active_issue.json:561–562`：V4数字改为 **7,729／6,617**。
+- `data/active_issue.json:28`：仍写“V7已交付、等第八轮复核”，应更新。
+- `REPORT.md:96–97`、本轮汇报第85–86行：混用了全元数据的 NO=3,768与重述差异的NA=13,330，须统一统计范围。
+- `handoff.md:74`、`active_issue.json:463、480`：`dispute_ledger.csv`实际为 **10,618行／10,618个唯一ID**，不是17,728。
+- `REPORT.md:313`、`handoff.md:95`及对应状态描述：“9,954条已解决项”仍不准确，应为**总计9,954条／631份，其中已解除8,655条／630份**。
+- “C24/C14不再可伪造”“R6两父核证完成”等结论须随本轮结果撤回。
+
+27键、44／231／378、V8、`round8_fixes`主体已同步；`manifest.json`的 **32项文件哈希与字节数全部匹配**。
+
+**第4步批量核证粒度及五个问题的裁定：**
+
+1. **9,954条 `NOTE_TRACE_NA`／631份文档**：允许按“文档版本＋具体栏目＋实际选项组＋覆盖期间”核一次共同事实，再显式映射成员键。不能按文档或方法名广播解除；已解除8,655条也应纳入适用性复审。
+2. **642条零值注记／42份文档**：允许集中回读，逐项区分原因、金额、项目和期间；自身563条、非自身79条分别保留来源要求。零值不能排除其他项目非零或其他调整。
+3. **89组**：只作调度和方法分类单位。共同裁定须列成员及证据边界，不满足边界者拆出。
+4. **文档级核证可作为字段解除的必要条件之一，不能作为充分条件。** 先修好本轮发现的核证入口，再开展解除操作。
+5. **三协电机来源修正由S00勘误闭环负责协调，修正产物落在S02来源核验层**：保留历史输入，新增更正版本及传播对账，不能因归属待定长期保留错误来源判定。
+6. **正常同口径相减可接受其他等效证据形式**，例如权威表格同时明确列出两期实际累计数及其期间、单位、合并范围、调整版本；不要求必须来自两份不同PDF，也不要求调整额相等。
+7. `PENDING_EVENT_CONFIRMED_SCOPE_LIMITED` **可以保留，不是阻塞项**；它有助于区分事件确认与字段影响未证。
+
+完成方法修复、有效的两父抽验、第4步核证及第5步重算后，再复核放行。当前 **44／231／378继续未冻结，S04第二轮正式验收与S05均保持等待**。

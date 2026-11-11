@@ -21,6 +21,7 @@ from collections import Counter
 from pathlib import Path
 
 import evidence_scope as es
+import parent_verify as pv
 
 ROOT = Path(__file__).resolve().parents[4]
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
@@ -58,6 +59,8 @@ with open(P_REGISTRY, encoding="utf-8-sig", newline="") as f:
 meta = [r for r in csv.DictReader(open(OUT / "meta_diff.csv", encoding="utf-8-sig", newline=""))
         if r["meta_field"] == "restatement_flag"]
 extra = list(csv.DictReader(open(OUT / "extra_meta_diff.csv", encoding="utf-8-sig", newline="")))
+# 父输入核证登记表（唯一的 YES 来源，与生产同一口径）
+PARENT_VERIFS = pv.load(OUT / "parent_verifications.csv")
 
 
 def norm(s):
@@ -280,6 +283,12 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
         "parent_compatible": "",
         "parent_p1_locate": "", "parent_p2_locate": "",
         "parent_p1_fragment": "", "parent_p2_fragment": "",
+        "parent_p1_column": "", "parent_p2_column": "",
+        "parent_p1_unit": "", "parent_p2_unit": "",
+        "parent_p1_version": "", "parent_p2_version": "",
+        "parent_same_version_used": "", "parent_same_adopted_doc": "",
+        "parent_compat_gap": "", "parent_compat_conclusion": "", "parent_scope_fields": "",
+        "parent_amount_located": "",
         "parent_orig_verified": "",
     }
     if extra_cols:
@@ -347,43 +356,76 @@ for r in pick(lambda x: x["resolution"] == "PENDING_CONFIRMED_EVENT_FIELD_OPEN",
     add_sample("R5_CAUSE_AFFIRMED",
                "B=是 且事件已由证据确认，但来源维度（分季度表/比较列/父输入）尚未核", r)
 
+_UNIT_HINT = ("单位：万元", "单位:万元", "单位：元", "单位:元", "单位：千元", "单位:千元",
+              "人民币万元", "人民币元", "金额单位：元", "金额单位：万元")
+
+
 def locate_amount_in_doc(sec, doc, value):
     """按金额在原件中定位父数所在物理页（父输入文档常不在 1,007 份核验清单内）。
 
-    返回 (status, page, fragment)。只认千分位格式化后的完整金额串，
-    避免把 1,234.56 命中 11,234.56 这类子串误判。
+    返回 (status, page, fragment, unit_hint)。只认千分位格式化后的完整金额串，
+    避免把 1,234.56 命中 11,234.56 这类子串误判。`unit_hint` 取该页表头声明的
+    计量单位字面——第九轮 F 项要求父数须交付单位依据，不能只写 unit_scale。
     """
     try:
         amt = "{:,.2f}".format(float(value))
     except (TypeError, ValueError):
-        return "NO_AMOUNT", 0, ""
+        return "NO_AMOUNT", 0, "", ""
     code = sec.split(":")[1]
     pdf = None
     for p in (ORIG / code).rglob(doc + ".pdf"):
         pdf = p
         break
     if pdf is None:
-        return "PDF_MISSING", 0, ""
+        return "PDF_MISSING", 0, "", ""
     try:
         import pymupdf
         d = pymupdf.open(str(pdf))
         pages = [norm(d[i].get_text()) for i in range(d.page_count)]
         d.close()
     except Exception as e:
-        return "READ_ERROR:%s" % e, 0, ""
+        return "READ_ERROR:%s" % e, 0, "", ""
     for pi, t in enumerate(pages):
         if t and amt in t:
             i = t.index(amt)
-            return "LOCATED_AMOUNT(p.%d)" % (pi + 1), pi + 1, t[max(0, i - 30):i + len(amt) + 10]
-    return "AMOUNT_NOT_FOUND", 0, ""
+            hint = next((h for h in _UNIT_HINT if h in t), "")
+            return ("LOCATED_AMOUNT(p.%d)" % (pi + 1), pi + 1,
+                    t[max(0, i - 30):i + len(amt) + 10], hint)
+    return "AMOUNT_NOT_FOUND", 0, "", ""
+
+
+_UNIT_LABEL = {"1": "元", "1000": "千元", "10000": "万元", "100000000": "亿元"}
+
+
+def _period_column(kp, doc):
+    """该父数落在哪一列：文档自身期间 → 本期累计列；否则比较列。"""
+    own = doc_period.get(doc, "")
+    if not own:
+        return "UNKNOWN_DOC_PERIOD"
+    return "本期累计列" if own == kp[2] else "比较列(文档自身期间=%s)" % own
+
+
+def _adjust_version(r, kp, doc):
+    """调整前后版本：取 version_used + 文档期间 + 是否采用修订文档。"""
+    ver = (r.get("version_used") or "").strip() or "UNKNOWN"
+    own = doc_period.get(doc, "") or "UNKNOWN"
+    a = adopt.get(kp) or {}
+    after = (a.get("document_id_after") or "").strip()
+    tag = "修订后" if (after and after == doc) else ("原文" if after else "未登记采用")
+    return "%s|文档期间=%s|%s" % (ver, own, tag)
 
 
 def parent_detail(sec, fld, pk):
     """交付两个父输入各自的核证结论，而不只是「存在跨文档」这一事实。
 
-    第八轮 C 项：同文档/双否都不能自动证明兼容，必须定位两个实际累计父数，
-    并证明它们采用一致的调整、期间和报表口径。故逐个父输入给出
-    取值、取值状态、原件定位结论与命中片段。
+    第九轮 F 项：V8 的父 1 定位拿的是上游证据片段（`追溯重述法□适用√不适用…`），
+    根本没有定位到实际累计父数；父 2 也没给期间列、单位、调整前后版本。
+    现改为：
+
+    - **两个父数都按金额本身定位**（`locate_amount_in_doc`），片段取该金额左右窗口；
+    - 逐父交付：取值、取值状态、所在期间列、单位（含原文单位字面）、调整前后版本；
+    - 额外交付两父是否同一调整版本、是否同一合并范围/单位/币种；
+    - `parent_compat_conclusion` 明确写「仍需核证登记表」，不把定位当作兼容已证。
     """
     if fld not in es.SIMPLE_SQ or es.is_q1(pk):
         return {}
@@ -392,21 +434,43 @@ def parent_detail(sec, fld, pk):
     r1, r2 = D10.get(k1, {}), D10.get(k2, {})
     d1, d2 = r1.get("document_id", ""), r2.get("document_id", "")
 
-    def _loc(doc, val):
+    def _amt_loc(doc, val):
         if not doc:
-            return "NO_DOCUMENT", ""
-        ev = (vrec.get(doc) or {}).get("evidence", "")
-        if ev:
-            st, _ratio, _ex, frag, _pno = locate_in_doc(sec, doc, ev)
-            return st, frag
-        # 该文档不在核验清单内：退到「按金额定位父数所在页」
-        st, _pno, frag = locate_amount_in_doc(sec, doc, val)
-        return st, frag
+            return "NO_DOCUMENT", 0, "", ""
+        return locate_amount_in_doc(sec, doc, val)
 
-    s1, f1 = _loc(d1, r1.get("value_cny", ""))
-    s2, f2 = _loc(d2, r2.get("value_cny", ""))
+    s1, p1, f1, h1 = _amt_loc(d1, r1.get("value_cny", ""))
+    s2, p2, f2, h2 = _amt_loc(d2, r2.get("value_cny", ""))
     ok1 = s1.startswith("LOCATED")
     ok2 = s2.startswith("LOCATED")
+
+    def _unit(r, frag, hint):
+        u = (r.get("unit_scale") or "").strip()
+        lab = _UNIT_LABEL.get(u, "倍数=%s" % (u or "?"))
+        return "%s(unit_scale=%s)|表头单位字面=%s" % (lab, u or "?", hint or "未检出")
+
+    gap = pv.gap(PARENT_VERIFS.get((sec, fld, pk)),
+                 {"p1": {"doc": d1, "period": k1[2],
+                         "value": (r1.get("value_cny") or "").strip(),
+                         "consolidation_scope": (r1.get("consolidation_scope") or "").strip(),
+                         "unit_scale": (r1.get("unit_scale") or "").strip(),
+                         "currency": (r1.get("currency") or "").strip()},
+                  "p2": {"doc": d2, "period": k2[2],
+                         "value": (r2.get("value_cny") or "").strip(),
+                         "consolidation_scope": (r2.get("consolidation_scope") or "").strip(),
+                         "unit_scale": (r2.get("unit_scale") or "").strip(),
+                         "currency": (r2.get("currency") or "").strip()}},
+                 lambda d: (vrec.get(d) or {}).get("evidence", ""))
+
+    gap1 = _pc_gap(k1)
+    gap2 = _pc_gap(k2)
+    same_ver = "YES" if (r1.get("version_used") or "") and \
+        (r1.get("version_used") or "") == (r2.get("version_used") or "") else "NO"
+    a1, a2 = adopt.get(k1) or {}, adopt.get(k2) or {}
+    after1 = (a1.get("document_id_after") or "").strip()
+    after2 = (a2.get("document_id_after") or "").strip()
+    same_adopt = ("YES" if after1 and after1 == after2 else
+                  "NO" if after1 or after2 else "NO_RECORD")
     return {
         "parent_p1": "%s@%s" % (ytd, pk),
         "parent_p2": "%s@%s" % (ytd, prev_quarter(pk)),
@@ -415,21 +479,51 @@ def parent_detail(sec, fld, pk):
         "parent_p2_value": r2.get("value_cny", ""),
         "parent_p1_status": r1.get("status", ""),
         "parent_p2_status": r2.get("status", ""),
+        "parent_p1_column": _period_column(k1, d1),
+        "parent_p2_column": _period_column(k2, d2),
+        "parent_p1_unit": _unit(r1, f1, h1),
+        "parent_p2_unit": _unit(r2, f2, h2),
+        "parent_p1_version": _adjust_version(r1, k1, d1),
+        "parent_p2_version": _adjust_version(r2, k2, d2),
+        "parent_same_version_used": same_ver,
+        "parent_same_adopted_doc": same_adopt,
         "parent_scope_unit_cur": "%s/%s/%s | %s/%s/%s" % (
             r1.get("consolidation_scope", ""), r1.get("unit_scale", ""), r1.get("currency", ""),
             r2.get("consolidation_scope", ""), r2.get("unit_scale", ""), r2.get("currency", "")),
         "parent_doc_verdict": "%s/%s" % (
             (vrec.get(d1) or {}).get("verdict", "NA"), (vrec.get(d2) or {}).get("verdict", "NA")),
-        "parent_compatible": {True: "YES", False: "NO", None: "NA"}[
-            _pc((sec, fld, pk))],
+        "parent_compatible": {True: "YES", False: "NO", None: "NA"}[_pc((sec, fld, pk))],
+        "parent_compat_conclusion": (
+            "两父实际累计父数已在原件按金额定位（p.%s / p.%s），但兼容性仍须由 "
+            "parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）；"
+            "定位本身不构成兼容已证" % (p1 or "?", p2 or "?")),
         "parent_p1_locate": s1, "parent_p2_locate": s2,
         "parent_p1_fragment": f1, "parent_p2_fragment": f2,
+        "parent_amount_located": ("BOTH" if ok1 and ok2 else
+                                  "ONE" if ok1 or ok2 else "NONE"),
         "parent_orig_verified": ("BOTH" if ok1 and ok2 else
                                  "ONE" if ok1 or ok2 else "NONE"),
+        "parent_compat_gap": "VERIFIED" if gap is None else gap,
+        "parent_scope_fields": "%s / %s" % (gap1, gap2),
     }
 
 
+def _pc_gap(kp):
+    """父输入自身的兼容性缺口（按核证登记表，登记为空即 NO_VERIFICATION_RECORD）。"""
+    r = D10.get(kp)
+    if not r:
+        return "PARENT_MISSING"
+    return "PARENT_OK" if (r.get("consolidation_scope") and r.get("unit_scale")
+                           and r.get("currency")) else "SCOPE_FIELD_EMPTY"
+
+
 def _pc(k):
+    """父输入兼容性：与生产同一口径——只认 parent_verifications.csv。
+
+    第九轮 F 项：V8 这里还留着「同文档 → True」「上游双否 → True」「采用审计同文档
+    → True」三条捷径，与 build_errata_v5.py 已改过的规则不一致；抽验表因此可能
+    给出比生产更宽的结论。现统一为核证登记表唯一来源。
+    """
     sec, fld, pk = k
     if fld not in es.SIMPLE_SQ or es.is_q1(pk):
         return None
@@ -442,18 +536,17 @@ def _pc(k):
         v1, v2 = (r1.get(f) or "").strip(), (r2.get(f) or "").strip()
         if not v1 or v1 != v2:
             return False
-    d1, d2 = r1.get("document_id", ""), r2.get("document_id", "")
-    if d1 and d1 == d2:
-        return True
-    if ((vrec.get(d1) or {}).get("verdict") or "") == "否" and             ((vrec.get(d2) or {}).get("verdict") or "") == "否":
-        return True
-    a1, a2 = adopt.get(k1), adopt.get(k2)
-    if a1 and a2:
-        x1 = (a1.get("document_id_after") or "").strip()
-        x2 = (a2.get("document_id_after") or "").strip()
-        if x1 and x1 == x2:
-            return True
-    return False
+
+    def _side(r, kp):
+        return {"doc": (r.get("document_id") or "").strip(), "period": kp[2],
+                "value": (r.get("value_cny") or "").strip(),
+                "consolidation_scope": (r.get("consolidation_scope") or "").strip(),
+                "unit_scale": (r.get("unit_scale") or "").strip(),
+                "currency": (r.get("currency") or "").strip()}
+
+    expect = {"p1": _side(r1, k1), "p2": _side(r2, k2)}
+    return pv.gap(PARENT_VERIFS.get(k), expect,
+                  lambda d: (vrec.get(d) or {}).get("evidence", "")) is None
 
 
 # R6 跨文档父输入（第七轮 C 项：必须交付两父输入各自的核证结论）
@@ -486,8 +579,11 @@ for _rank, r, d in _r6_scored[:3]:
     x = cross_doc_parent(r["security_id"], r["field_id"], r["period_key"])
     add_sample("R6_CROSS_DOC_PARENT",
                "单季由两期累计相减得到，两父输入来自不同文档（%s / %s）；"
-               "须逐个定位实际累计父数并核文档/版本/合并范围/单位兼容（原件定位=%s）"
-               % (x[1][:16], x[2][:16], d.get("parent_orig_verified", "NA")), r,
+               "两个实际累计父数已按金额在原件定位（%s，p.%s / p.%s），并交付期间列、"
+               "表头单位与调整前后版本；但兼容性仍为 %s（%s），不得据此认定两父核证完成"
+               % (x[1][:16], x[2][:16], d.get("parent_amount_located", "NA"),
+                  d.get("parent_p1_locate", ""), d.get("parent_p2_locate", ""),
+                  d.get("parent_compatible", "NA"), d.get("parent_compat_gap", "")), r,
                extra_cols=d)
 
 # R6 假设方法

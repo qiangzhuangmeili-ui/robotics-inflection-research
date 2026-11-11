@@ -31,6 +31,8 @@ DOC_PERIOD_UNKNOWN = "DOC_PERIOD_UNKNOWN"
 
 CAUSES = [ERRATA, MERGER_RETRO, POLICY_CHANGE]
 SOURCE_DIMS = [QUARTERLY_TABLE_PROVENANCE, COMPARATIVE_SCOPE, PARENT_COMPATIBILITY]
+# 允许由 scope_verifications.csv 结构化供给的来源维度（不含父输入核证）
+SCOPE_REGISTRABLE = {QUARTERLY_TABLE_PROVENANCE, COMPARATIVE_SCOPE}
 
 _RE_ERRATA = re.compile(r"追溯重述|差错更正|前期差错")
 _RE_MERGER = re.compile(r"同一控制|合并范围")
@@ -104,8 +106,61 @@ Polarity = namedtuple("Polarity",
                       "excluded affirmed scoped mentioned conflict")
 
 
+def _is_option_fragment(seg):
+    """该片段是否只由勾选符号 + 选项标签 + 空白组成（选项组的碎片）。
+
+    第九轮裁决 B 项：原 PDF 里每个 `□` 后插入换行时，选项组被 `_CLAUSE_SPLIT`
+    切碎成 `□` / `会计政策变更 √` / `会计差错更正 □` …，每片各自还能解出一个
+    自洽但**反向**的取值（√ 绑到前一片的标签上）。必须先把碎片拼回完整选项组。
+    """
+    s = _RE_MARK.sub("", seg or "")
+    for lab, _c in _OPT_LABELS:
+        s = s.replace(lab, "")
+    return re.sub(r"[\s\u3000]", "", s) == ""
+
+
+def _is_cause_label(seg):
+    """纯原因标签（`前期差错更正` / `会计政策变更` …）：勾选组的主语行，不属于组内选项。"""
+    return bool(_cause_spans(seg or "")) and not _RE_MARK.search(seg or "")
+
+
 def _clauses(txt):
-    return [c for c in _CLAUSE_SPLIT.split(txt or "") if c.strip()]
+    """分句，但**不切开选项组**：连续碎片在含 ≥2 个符号时先拼回一组。
+
+    只合并「含 ≥2 个符号」的连续碎片——单符号碎片合并会改变纯标签行的语义
+    （`会计政策变更` / `会计差错更正` 两行本应各自成立）。
+
+    主语行必须留在组外：`前期差错更正\\n√适用□不适用` 若把标题并进组，符号左侧
+    也能解出一套自洽取值（√ 认领「前期差错更正」），会与右侧解冲突而假判歧义。
+    """
+    raw = [c for c in _CLAUSE_SPLIT.split(txt or "") if c.strip()]
+    out, buf = [], []
+
+    def flush():
+        if not buf:
+            return
+        head = buf[0]
+        if len(buf) > 1 and _is_cause_label(head):
+            out.append(head.strip())
+            buf[:] = buf[1:]
+        marks = sum(len(_RE_MARK.findall(x)) for x in buf)
+        if len(buf) > 1 and marks >= 2:
+            out.append(" ".join(x.strip() for x in buf))
+        else:
+            out.extend(buf)
+        buf[:] = []
+
+    for c in raw:
+        if not _is_option_fragment(c):
+            flush()
+            out.append(c)
+            continue
+        # 组内已出现符号后又来一个纯原因标签：这是下一组的主语，必须先断开
+        if _is_cause_label(c) and any(_RE_MARK.search(x) for x in buf):
+            flush()
+        buf.append(c)
+    flush()
+    return out
 
 
 def checkbox_value(txt):
@@ -270,25 +325,45 @@ def option_group(clause):
     return checked, unchecked, False
 
 
+def _amounts(c):
+    """分句内全部金额（按出现位置）。零值与非零值必须分开记，不能整句归一。"""
+    out = []
+    for m in _RE_AMOUNT.finditer(c):
+        try:
+            v = float(re.sub(r"[,\s元]", "", m.group(0)))
+        except ValueError:
+            continue
+        out.append((m.start(), m.end(), v))
+    return out
+
+
 def _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c):
-    """金额句绑定：优先本句原因，其次承接上一分句的原因（主语延续）。"""
-    zero = bool(_RE_ZERO.search(c))
-    nonzero = bool(_RE_AMOUNT.search(c)) and not zero
-    if not (zero or nonzero):
-        return
-    pos = c.find("元")
-    tgt = _nearest(spans, pos, limit=_AMOUNT_RADIUS) if spans else None
-    targets = {tgt} if tgt else (set(prev_causes) if prev_causes else set())
-    if not targets:
+    """金额句绑定：优先本句原因，其次承接上一分句的原因（主语延续）。
+
+    第九轮裁决 B 项两处修正：
+
+    1. **逐个金额判定**。原 `nonzero = bool(_RE_AMOUNT.search(c)) and not zero`
+       让同一分句里的零值把非零值一起压掉——`对期初未分配利润影响0.00元及对
+       净资产影响100.00元` 因此只剩 scoped、丢失事件肯定。
+    2. **已有 excluded 不得压掉后续非零金额的肯定**。勾选「√不适用」与金额
+       「净资产影响100.00元」并存时，必须留下 `conflict` 交回原页待核，
+       而不是静默按勾选放行（原 `t not in excluded` 条件即此绕过）。
+    """
+    amounts = _amounts(c)
+    if not amounts:
         return
     has_item = bool(_RE_SCOPED_ITEM.search(c))
-    for t in targets:
-        if has_item:
-            scoped.add(t)
-            if nonzero and t not in neg_c and t not in excluded:
+    for st, _en, v in amounts:
+        tgt = _nearest(spans, st, limit=_AMOUNT_RADIUS) if spans else None
+        targets = {tgt} if tgt else (set(prev_causes) if prev_causes else set())
+        if not targets:
+            continue
+        nonzero = abs(v) > 0
+        for t in targets:
+            if has_item:
+                scoped.add(t)
+            if nonzero and t not in neg_c:
                 affirmed.add(t)
-        elif nonzero and t not in neg_c and t not in excluded:
-            affirmed.add(t)
 
 
 def analyse(rec):
@@ -497,7 +572,10 @@ def judge(rec, doc, status, document_period, row_period, ruled=None, bval="",
     if PARENT_COMPATIBILITY in req and parent_ok is True:
         covered.add(PARENT_COMPATIBILITY)
     if scope_ok:
-        covered |= (set(scope_ok) & set(SOURCE_DIMS)) & req
+        # 第九轮裁决 E 项：结构化核证只能供给「比较范围 / 分季度表来源」两类来源
+        # 维度；PARENT_COMPATIBILITY 必须走 parent_verifications.csv，不能被来源
+        # 登记顶替（否则 parent_ok=False 的行仍可解除）。
+        covered |= (set(scope_ok) & SCOPE_REGISTRABLE) & req
     missing = req - covered
     level = "FIELD" if binds_field(rec) else "SECTION"
     pol = polarity_str(p)
