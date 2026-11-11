@@ -34,17 +34,27 @@ OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
 OUT.mkdir(parents=True, exist_ok=True)
 
 ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
-_PDF_TXT = {}
 
 
-def _pdf_text(sec, doc):
-    """原件全文（按 document_id 缓存）；不可用时返回空串。
+_PDF_PAGES = {}
 
-    第九轮 E 项：来源维度核证不能拿 `results.csv.evidence` 自证——那是上游摘录。
-    这里只在登记表确实有该键记录时才会被调用（无登记则零成本）。
+
+def _pdf_page(sec, doc, page):
+    """原件**指定物理页**的文本（去空白）；页号非法或不可用返回空串。
+
+    第十轮裁决 B3 / E：登记给了 `p1_page` / `source_page`，但生产侧仍拿
+    `results.csv.evidence`（上游摘录）当引文源，页号从未被核对。这里改为按
+    登记页回读原件——引文必须落在该页，否则一律 `PARENT_QUOTE_NOT_LOCATED`。
     """
-    if doc in _PDF_TXT:
-        return _PDF_TXT[doc]
+    try:
+        n = int(str(page).strip())
+    except (TypeError, ValueError):
+        return ""
+    if n < 1:
+        return ""
+    key = (doc, n)
+    if key in _PDF_PAGES:
+        return _PDF_PAGES[key]
     txt = ""
     code = (sec or "").split(":")[-1]
     pdf = next((p for p in (ORIG / code).rglob(doc + ".pdf")), None) if doc else None
@@ -52,12 +62,43 @@ def _pdf_text(sec, doc):
         try:
             import pymupdf
             d = pymupdf.open(str(pdf))
-            txt = "".join(re.sub(r"\s+", "", d[i].get_text()) for i in range(d.page_count))
+            if n <= d.page_count:
+                txt = re.sub(r"\s+", "", d[n - 1].get_text())
             d.close()
         except Exception:
             txt = ""
-    _PDF_TXT[doc] = txt
+    _PDF_PAGES[key] = txt
     return txt
+
+_PDF_PATHS = {}
+
+
+def _pdf_path(sec, doc):
+    """原件路径（按证券代码目录 + 文档 ID 查找），找不到返回 None。"""
+    if not doc:
+        return None
+    key = (sec, doc)
+    if key in _PDF_PATHS:
+        return _PDF_PATHS[key]
+    code = (sec or "").split(":")[-1]
+    pdf = next((p for p in (ORIG / code).rglob(doc + ".pdf")), None)
+    _PDF_PATHS[key] = pdf
+    return pdf
+
+
+def _col_of(sec):
+    """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项）。"""
+    def f(doc, page, value):
+        pdf = _pdf_path(sec, doc)
+        if pdf is None:
+            return None
+        words = pv.page_words(pdf, page)
+        if not words:
+            return None
+        col, _amt = pv.column_of_amount(words, value)
+        return col
+    return f
+
 
 P_REGISTRY = ROOT / "runs/collection/collection_index.csv"
 PERIOD_LABEL_TO_KEY = {
@@ -222,13 +263,18 @@ def _parent_basis(kp):
 
 
 def _expect(k1, k2, b1, b2):
-    """核证登记必须逐项对应的实际父输入（第九轮 C 项）。"""
-    return {"p1": {"doc": b1["doc"], "period": k1[2], "value": b1["val"],
+    """核证登记必须逐项对应的实际父输入（第九轮 C 项 / 第十轮 B 项）。
+
+    第十轮 B2：新增 `adjust_version`——登记声明的调整前后版本必须等于该父
+    实际采用的 `version_used` 归类，不能只验枚举与两父相等。
+    """
+    return {"field": k1[1],
+            "p1": {"doc": b1["doc"], "period": k1[2], "value": b1["val"],
                    "consolidation_scope": b1["scope"], "unit_scale": b1["unit"],
-                   "currency": b1["cur"]},
+                   "currency": b1["cur"], "adjust_version": b1["ver"]},
             "p2": {"doc": b2["doc"], "period": k2[2], "value": b2["val"],
                    "consolidation_scope": b2["scope"], "unit_scale": b2["unit"],
-                   "currency": b2["cur"]}}
+                   "currency": b2["cur"], "adjust_version": b2["ver"]}}
 
 
 def _doc_verdict(doc):
@@ -259,7 +305,8 @@ def parent_compatible(k):
         if not b1[f] or b1[f] != b2[f]:
             return False
     return pv.gap(PARENT_VERIFS.get(k), _expect(k1, k2, b1, b2),
-                  lambda d: (vrec.get(d) or {}).get("evidence", "")) is None
+                  lambda d, p, _s=sec: _pdf_page(_s, d, p),
+                  col_of=_col_of(sec)) is None
 
 
 def parent_gap(k):
@@ -276,7 +323,8 @@ def parent_gap(k):
         if not b1[f] or b1[f] != b2[f]:
             return "SCOPE_UNIT_CURRENCY_MISMATCH"
     g = pv.gap(PARENT_VERIFS.get(k), _expect(k1, k2, b1, b2),
-               lambda d: (vrec.get(d) or {}).get("evidence", ""))
+               lambda d, p, _s=sec: _pdf_page(_s, d, p),
+               col_of=_col_of(sec))
     return "VERIFIED" if g is None else g
 
 
@@ -428,7 +476,7 @@ for fld in META_FIELDS:
             status_b = b.get("status", "")
             pok = parent_compatible(k)
             _sok = pv.scope_dims(SCOPE_VERIFS, k,
-                                 lambda d, _s=k[0]: _pdf_text(_s, d),
+                                 lambda d, p, _s=k[0]: _pdf_page(_s, d, p),
                                  expect_doc=doc)
             # 判据：证据实际覆盖该行断言。document_period 与 row_period 分开传，
             # 由 evidence_scope 内部判定 is_own，不再用字符串真值。

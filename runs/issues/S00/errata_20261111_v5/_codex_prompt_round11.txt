@@ -1,0 +1,101 @@
+你是这个仓库（A 股机器人产业链「行业拐点」研究流水线）的独立复核方。上一轮（第十轮）你裁定 S00 勘误 V5 退回返工，指出：
+
+A. 极性上一轮指定整改通过（22 条全过、回放 1,007 份证据分句变化 0 / 极性变化 0、`meta_diff.csv` 与 `summary.json` 逐字节一致），但五条新边界反例不通过：①`前期差错更正\n√\n不适用`；②`前期差错更正\n√\n适用`（单符号跨行未合并，假 conflict）；③`前期差错更正□\n√适用□不适用`（含符号的原因标签被并入组选项，歧义未保留，最终 `RESOLVED_SCOPE_COVERED`）；④`未发生前期差错更正，营业收入100.00元`（无关收入金额被承接为事件肯定）；⑤`前期差错更正对期初未分配利润影响经重新核算并经董事会和监事会审核后确认为100.00元`（超 24 字半径，明确影响金额丢失）。
+
+B. 父输入自动 YES=0、`PENDING_PARENT_COMPATIBILITY=1,277` 可保留，但三处实现错误：①`_expect()` 给 `unit_scale`，`gap()` 却读 `expect[side]["unit"]`，折算恒回退 1 倍（`DOC-BA230C5D6B13A29F` 的 187,875.40 万元 = 1,878,754,000 元 会被正确引文拒绝）；②`p1_column`/`p2_column` 任意非空即可，调整版本只验枚举与两父相等，未核实际原文栏目与调整基础；③生产引文源仍是 `results.csv.evidence` 上游摘要，未按登记父页码回读原件。C37 20 环可复现但阳性仍用合成源，须加真实原件阳性、各单位路径、错误栏目、同数异义负例，并断言具体拒绝原因。
+
+C. C24 仍可伪造且数值字段也能绕过：正例 `SH:600100|FIN.REV.YTD|20250630|value_raw`（`DOC-F9454692F6BBE32A` p.7，本期 5,667,075,612.52）可复现；但保留真实页码与片段、把 `original_value_text` 换成同页上年数 6,303,196,235.21 并在 `judgement_basis` 自述映射到本期终值，仍返回 `None`（根因 `float(v)` 无法解析带千分位逗号，落入文本分支）。枚举绕过：`SH:600444|FIN.COST.YTD|20251231|period_source`，引文用真实年报封面、`original_value_text=2025`、自述映射为 `LEGACY_SNAPSHOT`，`review_gap()` 返回 `None`。不能让自述承担全部举证责任。
+
+D. C14 仍可绕过：沿用大豪科技记录，把 `ruling_section`/`ruling_key_pattern`/`ruling_verdict` 三项都填「大豪科技」，引用裁决文件第 88 行的文档登记说明（`runs/collection/collection_index.csv:8428` 将该文档登记为大豪科技 2025 年年度报告），`ruling_content_ok()` 返回 True。该行没有裁决任何争议。须绑定已核定的裁决条目及其明确适用键；不撤销大豪科技原裁决。
+
+E. C38 白名单已生效（`parent_ok=False` 且只给 `{PARENT_COMPATIBILITY}` 仍停在 `PENDING_PARENT_COMPATIBILITY`，47 条来源待核未动），但证据关系不通过：`BJ:920022|FIN.NPDEDT.SQ|20250630`（供给文档 `DOC-EFCBFB68E83B84D0`）用真实标题片段 `Ltd.年度报告——2025——` 即可取得 `COMPARATIVE_SCOPE` 与 `QUARTERLY_TABLE_PROVENANCE` 两个维度；`source_page` 未被核对。
+
+F. R6 金额定位整改通过，但不构成完整核证：`locate_amount_in_doc()` 按首次命中取窗口未确认目标行与目标列、`_period_column()` 由文档期间推导、单位取页内提示未绑定具体表格、调整版本依赖现有元数据未核原件调整前后列。
+
+G. 自检 40/40 可复现（V1：C13 6 / C14 11,936 / C17 12,076；V4 映射后：C26 7,729 / C14 6,617 / 受限方法自身期间 5,270；V5 自身全 0），但 **C24 存在前置失败导致测试未到目标判据**：`_with_review()` 默认造出缺文档/缺原件的不完整记录，错页、样板片段、终值未声明等用例先被 `REVIEW_DOCUMENT_MISMATCH` 拦下。须以完整阳性记录为基线、每次只改一个条件，并断言预期拒绝原因。
+
+H. 文本未彻底同步：①抽验实为 37 行/20 类/**26 键**，`REPORT.md:344、441`、`handoff.md:99`、`active_issue.json:523` 仍写 27；②`active_issue.json:554` 嵌套对象仍写 V8，561、562 行仍是 7,714/6,602；③`review.json:581`、`verify_v5.py:1827` 仍写「9,954 条 NOTE_TRACE_NA 已解决项」，须总量与解除量分列；④`REPORT.md` 混合当前内容与 V8 叙述，须标注历史段落。
+
+执行方已按此返工。请做第十一轮复核。
+
+必读：
+1. `runs/issues/S00/errata_20261111_v5/report_to_codex_round11.md` —— 本轮汇报，含第 9 节「与裁决数字不一致之处」与四个待裁定问题
+2. `runs/issues/S00/errata_20261111_v5/REPORT.md`（第一节为第十轮落实，第二、三节标注为历史段落）、`handoff.md`
+3. `runs/issues/S00/errata_20261111_v5/evidence_scope.py` —— 判据唯一实现（`_clauses` / `_is_pure_mark` / `_is_cause_label` / `option_group` / `_amounts` / `_bind_amount` / `analyse` / `judge(scope_ok=…)`）
+4. `runs/issues/S00/errata_20261111_v5/polarity_cases.py` —— **30 条**极性反例的唯一来源
+5. `runs/issues/S00/errata_20261111_v5/parent_verify.py` —— `COLS`（27 列）、`gap(ent, expect, evidence_of)`、`scope_dims(entries, key, evidence_of, expect_doc=…)`、`ver_class`、`_PERIOD_COL`、`DIM_MARKERS`
+6. `runs/issues/S00/errata_20261111_v5/build_errata_v5.py`（`_pdf_page` 按登记页回读）、`check_l2_v5.py`、`sampling_v5.py`（`locate_amount_in_doc` / `_page_lines` / `_period_column` / `_adjust_version`）、`verify_v5.py`（40 项自检，`FIELD_RULES` / `EXPECT_REASON` / `ruling_gap` / `_inject_parent_chain`）
+7. 四张登记表：`content_reviews.csv`、`parent_verifications.csv`（表头 27 列）、`scope_verifications.csv`、`evidence_conflicts.csv`（前三张当前为空）
+8. `summary.json`、`l2_dependency_summary.json`、`sampling_v5.json`（含 `unique_keys = 27`）、`review.json`、`manifest.json`、`rulings_resolved.json`
+9. `meta_diff.csv`、`extra_meta_diff.csv`、`dispute_ledger.csv`、`restricted_claims.csv`、`l2_dependency_check.csv`、`sampling_v5.csv`
+10. `runs/issues/S00/errata_20261111_v5/_codex_out_round10.txt`（你上一轮的裁决原文）
+
+读取纪律（上一轮复核因上下文超限中断，本轮必须遵守）：
+
+- `verify_v5.py`（约 2,400 行 / 113 KB）、`build_errata_v5.py`（33 KB）、`sampling_v5.py`（40 KB）、`evidence_scope.py`（37 KB）**不要整文件读取**。先用 `grep -n` 定位，再只读片段，单次 ≤120 行。
+- 大表（`meta_diff.csv` 7.7 MB、`dispute_ledger.csv` 2.9 MB、`restricted_claims.csv` 297 KB）不要直接读入上下文，用 python 聚合后只打印计数与少量样本行。
+- 总读取量控制在 60 KB 以内。
+- 回答控制在 300 行以内：先给裁决 + A–H 结论表，再给证据；不要粘贴大段代码或大段表格。
+- 如需跑脚本复算，请用 `python -B`（避免写 `__pycache__`），并在内存执行、跳过末尾写文件语句。
+
+请重点核实：
+
+A. **极性五条新反例是否真的过了，且没有引入新回归**。请用你自己的反例再打一遍，特别关注：
+   - `_is_pure_mark` 的「纯符号碎片」判据：`√ 不适用`（符号后带文字）会不会不被认作碎片而仍漏合并；
+   - `_is_cause_label` 改用整串 `_RE_CAUSE_ONLY` 后，`前期差错更正（会计差错更正）` 这类复合标签会不会认不出；
+   - 「勾了适用又排除某原因」判歧义：会不会把「√适用□其他原因（未勾）」这种正常单勾误判成歧义；
+   - `_RE_OTHER_ITEM` 的报表项目词表是否够全（如「营业总收入」「归属于母公司股东的净利润」）；
+   - 单原因直绑取消半径后，长句里第二个金额（如「…影响100.00元，其中对净资产影响50.00元」）会不会被错绑。
+   并复算传播范围：分句变化数、极性结论变化数是否仍为 0 / 0，`meta_diff.csv`、`summary.json` 是否与 HEAD 逐字节一致。
+
+B. **父输入是否真的绑定实际父输入**。请再试：
+   - 用真实父文档 + 真实父期间 + 真实父数，但 `p1_column` 填一个该文档里真实存在、却不是该金额所在列的期间列头（例如金额在「本期」列，`p1_column` 填「上期」）——`PARENT_COLUMN_NOT_IN_QUOTE` 是否会漏；
+   - `adjust_version` 填 `RESTATED` 而引文只含「调整前」；
+   - `unit_scale` 填 10000 但引文金额本身已是元（同数不同量纲）；
+   - 引文取自**另一个文档**的同一页同一数字（文档身份是否被 `PARENT_SOURCE_UNAVAILABLE` 拦住）；
+   - 27 环里有没有哪一环其实是因别的原因才变 NO（假阳性通过），特别是 `adjust_version_other_side` 与 `original_quote_with_restated_mark`。
+   并复算 `parent_compatible` 是否仍无 `True`、`PENDING_PARENT_COMPATIBILITY` 是否仍为 1,277。
+
+C. **C24 是否仍可伪造**。请再试：
+   - 你上一轮的两个键（`SH:600100|…|value_raw` 同页上年数、`SH:600444|…|period_source` 封面年份）现在应分别返回 `REVIEW_PRINTED_VALUE_NOT_SUPPORT_VALUE` 与 `REVIEW_FIELD_RULE_UNDEFINED`，请复现确认；
+   - 数值字段：把 `original_value_text` 填成与终值等值但**不同印刷形式**（如 `5,667,075.61` 万元 vs `5,667,075,612.52` 元，同时 `unit_scale` 填 10000）——`_as_num` + `unit_scale` 折算路径是否会误判为支持；
+   - 文本字段（`unit_raw`/`currency`/`evidence_label`）：填一个片段里作为**其他单元格**出现的词；
+   - `SELF_PAGE`：`source_page` 填记录自身页、但引文实际在下一页；
+   - 13 种注入是否真的都断言了原因（`reason_mismatch` 是否可能因为键名拼错而静默跳过）。
+   并确认 `leak = 0`、1,505 格仍全部待核、`rule_undefined_fields` 确为 11 个。
+
+D. **C14 是否仍可绕过**。现在要求引文所在行匹配裁决表行正则。请再试：
+   - 找一个**格式像裁决表行但结论不是裁决**的行（例如裁决文件里的对比表、统计表）；
+   - `ruling_verdict` 填该行结论单元格里确实出现的**否定词**（如「不成立」「不予采纳」），使「结论包含该串」成立但语义相反；
+   - `ruling_key_pattern` 填该行标题里出现的**通用词**（如「营业收入」「单季」）而非公司名或文档 ID；
+   - 第 88 行登记说明与第 235 行 Q1 通用条目现在应分别返回 `RULING_LINE_NOT_A_RULING_ROW` 与 `RULING_ITEM_DOES_NOT_NAME_KEY`，请复现确认。
+
+E. **C38 是否真的核对了页码与维度载体**。请再试：
+   - 用供给文档真实标题片段（`Ltd.年度报告——2025——`）应被拒，请复现；
+   - 用真实页上**同时出现「比较」和「分季度」两词**的过渡段落，一次登记两个维度；
+   - 用「单位：元」+ 表号 + 页码但无维度词；
+   - 引文在登记页，但该页是**上一年度**的比较表（年份不同）。
+
+F. **R6 是否真的确认了目标行与目标列**。请复算三条样本（S19 `BJ:920289`、S20 `SH:600008`、S21 `SH:600060`）的 `parent_p1_row`/`parent_p2_row`/`parent_p1_unit`/`parent_p2_unit`/`parent_p1_version`/`parent_p2_version` 是否与原件一致；并核 `SH:600053|FIN.NPDEDT.SQ|20260630` 判 `LOCATED_ROW_MISMATCH` 是否属实（这关系到抽验键数 26→27 的解释，见汇报第 9.1 节）。
+
+G. **自检前置失败是否已消除**。请确认 C24 的 13 种注入与 C14 的 7 种注入都是从完整正例基线出发、每次只改一个条件，且 `reason_mismatch` 为空是 PASS 的必要条件；并挑 2–3 个注入，验证它们**确实拦在声称的那一道**（而不是被更早的检查顺手拦下）。
+
+H. **文本是否彻底同步**。请核：
+   - 抽验键数：`sampling_v5.json:unique_keys`、`review.json:not_independent`、`REPORT.md`、`handoff.md`、`data/active_issue.json` 是否一律 27，且与 `sampling_v5.csv` 实算一致；
+   - `data/active_issue.json` 的 `self_check_version`（顶层与 `s00_errata`）、`s00_errata.self_check.version`、`fault_injection_v4_mapped` 是否一律 V10 / 7,729 / 6,617，是否还有第二份明细会漂移；
+   - `NOTE_TRACE_NA` 是否已总量与解除量分列（`review.json`、`verify_v5.py`、`REPORT.md`、`handoff.md`、`active_issue.json` 五处）；
+   - `REPORT.md` 历史段落标注是否清楚，当前统计是否只来自第十轮；
+   - `parent_verifications.csv` 表头是否为 27 列且与 `parent_verify.COLS` 完全一致。
+
+另请就汇报第 12 节的四个待裁定问题给出意见：
+1. 11 个内部枚举字段的放行路径（原文事实 + 采用日志 + 映射规则三件套是否可作依据，日志最小字段集）；
+2. C37 真实原件阳性的覆盖要求（「跨文档 + 调整前后版本 + 万元折算」须同时成立，还是分项即可）；
+3. `LOCATED_ROW_MISMATCH` 的处置归属（定位失败回读 vs 改判父数归属）；
+4. 抽样键集合差集是否须固定成 `sampling_keys_diff.csv`。
+
+约束：
+- 只读，不改仓库、不提交、不操作 GitHub。
+- 可以运行 `python verify_v5.py` 等脚本复算（建议在内存执行、跳过末尾写文件，避免覆盖 `review.json`）。
+- 请给出**明确裁决**：`ACCEPTED` / `ACCEPTED_WITH_LIMITS` / `RETURN_FOR_REWORK`，并逐项说明 A–H 是否通过。
+- 若仍不通过，请给出**可复现的最小反例**（输入、实测输出、期望输出），不要只给结论。
+- 不要因为「自检 40/40 通过」而放行；自检 ≠ 独立验收。

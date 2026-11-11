@@ -1,0 +1,81 @@
+你是这个仓库（A 股机器人产业链「行业拐点」研究流水线）的独立复核方。上一轮（第十一轮）你裁定 S00 勘误 V5 退回返工：**H 项通过，A–G 七项不通过**，每处都能被一句合成语料或一条真实原件绕过：
+
+A. 极性：`前期差错更正对期初未分配利润影响0.00元，其中营业总收入100.00元` → `100.00` 被承接成 ERRATA 肯定（扩充项目词表是打补丁，换词表外的项目仍漏）。
+B. 父输入栏目：真实阳性 `BJ:920289` 的 `p1_column` 登记为「上年同期」而金额实际在「本期」列，仍判 True——`p1_column` 只被当作「必须出现在引文里的字符串」。
+C. C24 文本字段：`unit_raw` / `currency` / `evidence_label` 只要片段里有 `2025` 就过；`SELF_PAGE` 只比两个**自报**页码。
+D. C14：同时改写 `key` 与 `ruled_key`，两者相等，仍借用原裁决。
+E. C38：`_find_dim` 找到的 COMPARATIVE_SCOPE 阳性是「经营计划2025年……报告期初比较」经营叙述。
+F. R6：S21 的「调整前」来自页内别列；600053 是断行误判。
+G. C24 注入断言：`no_review` / `unbound_digest` 原因写死；`fragment_wrong_page` 未进 `EXPECT_REASON`；`if k in EXPECT_REASON` 会静默跳过；枚举用例只要求拒绝布尔值。
+H. 通过（附维护意见：`active_issue.json` 仍有两份摘要，建议同源生成）。
+
+执行方已按此返工，自检 **V11，40/40 PASS**。汇报在
+`runs/issues/S00/errata_20261111_v5/report_to_codex_round12.md`（约 18 KB，请先读它）。
+
+读取纪律（前两轮复核都因上下文超限中断过一次，必须遵守）：
+
+- `verify_v5.py`（约 2,600 行 / 118 KB）、`build_errata_v5.py`（33 KB）、`sampling_v5.py`（41 KB）、`evidence_scope.py`（37 KB）、`parent_verify.py`（15 KB）**不要整文件读取**。先用 `grep -n` 定位，再只读片段，单次 ≤120 行。
+- 大表（`meta_diff.csv` 7.7 MB、`dispute_ledger.csv` 2.9 MB、`restricted_claims.csv` 297 KB）不要读入上下文，用 python 聚合后只打印计数与少量样本。
+- 总读取量控制在 60 KB 以内；回答控制在 300 行以内：先给裁决 + A–H 结论表，再给证据；不要粘贴大段代码或表格。
+- 跑脚本请用 `python -B`，并在内存执行、跳过末尾写文件语句（避免覆盖 `review.json`）。
+
+请重点核实：
+
+A. **极性「结构性新主语」是否真的修好、且没有改过头**。新增 `evidence_scope._new_subject()`（金额左侧 10 字以名词收尾即判新主语）。请用你自己的反例再打一遍，特别关注：
+   - `…影响0.00元，其中营业总收入100.00元`（词表外项目）与 `…其中营业收入100.00元`（词表内）是否都不再承接；
+   - `…影响0.00元，未分配利润影响100.00元` 这类**权益项目续写**是否仍 `scoped=ERRATA`（改过头就会丢）；
+   - 反方向：`…影响100.00元，其中10.00元为…` 这种「其中」引导的**金额拆分**会不会被误判成新主语而丢事件；
+   - `_RE_VERB_TAIL` 的收尾词表是否还会漏（例如 `…影响金额为100.00元`、`…确认的金额100.00元`）。
+   并复核 `replay_polarity_v5.py` 的 A/B 回放（1,007 份证据、`clause_changed=0` / `polarity_changed=0`）方法是否成立——**零变化是否说明「新判据从未触发」**，执行方在汇报第 1.3 节主动承认了这一点，请判断这种「只防合成绕过」的修法是否可接受。
+
+B. **父输入栏目是否真的按词坐标核实**。新增 `parent_verify.page_words()` / `column_of_amount()`。请再试：
+   - 登记列头与真实列头**同义不同字**（「本期」vs「本期数」vs「本期发生额」）——`_col_norm` 只去空格/`*`/`_`，是否过严导致真实正确登记被拒；
+   - 金额上方是**表头两行**（如第一行「2025年1-6月」、第二行「本期数」），取最近一行是否取对；
+   - 同页有**两个相同金额**（合计行与明细行），`column_of_amount` 取第一个命中会不会取错列；
+   - 该页是扫描件（无文本层）时 `page_words` 返回空 → `PARENT_COLUMN_UNRESOLVED`，这属「不可解」还是「应回读」。
+   并复现 C37 的两条新负例（`real_wrong_column` / `real_column_unresolved`）。
+
+C. **C24 文本字段是否真的按标签绑定**。请再试：
+   - `unit_raw="元"` 但 `evidence_label` 是页面上别处的「单位：万元」；
+   - `currency="CNY"` 用「记账本位币：人民币」而登记值是 `CNY`（符号 vs 中文名）；
+   - `evidence_label` 后面 20 字内出现的是**页码数字**（如「…见第 12 页」），不是金额；
+   - `SELF_PAGE`：该行金额在**上一页页眉**也出现过（重复表头），「最早出现页」会不会判错。
+   并确认 1,505 格仍全部待核、`rule_undefined_fields` 仍为 11 个。
+
+D. **C14 适用范围是否真的独立**。请再试：
+   - 同时改写 `key` + `ruled_key` + `ruling_section`（改成清单里**另一个**已登记 section），是否被 `RULING_KEY_NOT_IN_SCOPE` 拦住；
+   - `ruling_scope.csv` 里的 `ruling_file_sha256` 是否被任何代码校验（若没有，说明清单本身可被改写）；
+   - `generic_ruling_item` 现在预期原因是 `RULING_SCOPE_NOT_LISTED`（不是 `RULING_ITEM_DOES_NOT_NAME_KEY`），执行方称这是上一轮的归因错误，请确认这个改正是否成立、以及 `RULING_ITEM_DOES_NOT_NAME_KEY` 是否仍被 `key_pattern_other_company` 覆盖。
+
+E. **C38 维度证据是否真的三重绑定**。请再试：
+   - 同页有指标名、有期间表述、有「比较」一词，但三者相隔 500 字以上（窗口外）；
+   - 期间表述用「本报告期」这类**无具体月份**的写法；
+   - 引文含指标名与期间，但「分季度」来自页脚注释而非该表。
+   并复核正例键从 `BJ:920022` 换成 `BJ:920100` 后，`dims_from_record == dims_required` 是否真的两个维度都成立。
+
+F. **R6 词坐标是否真的绑定到金额所在行与列**。请复算 `SH:600053|FIN.NPDEDT.SQ|20260630`（现判 `LOCATED(p.168)`）与 `SH:603298`（现判 `WEAK_LOCATE(p.168)`）；并核 `sampling_keys_diff.csv` 里 `SH:600060|FIN.NPDEDT.SQ|20260630` 被 REMOVED 的原因是否只能是机器推导（执行方在汇报第 12 节第 4 问承认没有把握说清是哪处改动导致的）。
+
+G. **C24 注入断言是否已严格**。请确认：
+   - `set(inj) == set(EXPECT_REASON)` 严格相等、`key_gap` / `key_extra` 均为空；
+   - `no_review` / `unbound_digest` 的原因确实来自 `extra_leaks` 返回（而不是写死）；
+   - 条件型注入构造不出对照物时记 `caught=None` 并进 `not_exercised`，且 `not_exercised` 非空即 FAIL；
+   - 枚举注入的 PASS 条件含 `REVIEW_FIELD_RULE_UNDEFINED`。
+   并挑 2–3 个注入，验证它们**确实拦在声称的那一道**，而不是被更早的检查顺手拦下。
+
+H. **文本与状态是否同源**。请核：
+   - `data/active_issue.json` 顶层 `self_check` 是否只是指针（`canonical` 指向 `s00_errata.self_check`），且顶层与 `s00_errata` 的版本号、40/40 是否一致；
+   - `REPORT.md` / `handoff.md` / `review.json` / `active_issue.json` 四处关于「C37 环数（29）/ C14 注入（10）/ C24 注入（13 键 + 枚举 1）/ 极性反例（33）/ 抽验（37 行 20 类 27 键）」是否一致；
+   - `parent_verifications.csv` 表头是否 27 列且与 `parent_verify.COLS` 一致；
+   - 复现顺序（`build → check_l2 → sampling → replay_polarity → verify`）在 `REPORT.md`、`handoff.md`、`manifest.json` 是否一致。
+
+另请就汇报第 12 节的四个待裁定问题给出意见：
+1. 「只在合成语料里成立的绕过」要不要继续修（本轮修了，但回放证明真实数据一次都不触发）；
+2. C37 / C38 的正例键一换再换，是否应固定一份「正例键白名单」；
+3. `ruling_scope.csv` 由谁维护，`ruling_file_sha256` 是否必须由脚本校验；
+4. `sampling_keys_diff.csv` 的 REMOVED 原因是否必须人工填写。
+
+约束：
+- 只读，不改仓库、不提交、不操作 GitHub。
+- 请给出**明确裁决**：`ACCEPTED` / `ACCEPTED_WITH_LIMITS` / `RETURN_FOR_REWORK`，并逐项说明 A–H 是否通过。
+- 若仍不通过，请给出**可复现的最小反例**（输入、实测输出、期望输出），不要只给结论。
+- 不要因为「自检 40/40 通过」而放行；自检 ≠ 独立验收。

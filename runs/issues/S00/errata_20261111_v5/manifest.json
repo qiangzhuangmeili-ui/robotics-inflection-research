@@ -1,19 +1,27 @@
 {
  "version": "ERRATA_V5",
- "self_check_version": "V9",
- "generated_at": "2026-11-12T09:45:00+08:00",
+ "self_check_version": "V11",
+ "generated_at": "2026-11-12T23:40:00+08:00",
  "issue": "S00",
  "stage": "ERRATA",
  "nature": "SELF_CHECK",
+ "reproduce": [
+  "build_errata_v5.py",
+  "check_l2_v5.py",
+  "sampling_v5.py",
+  "replay_polarity_v5.py",
+  "verify_v5.py"
+ ],
  "upstream_ruling": [
   "codex_ruling_round5.md",
-  "第九轮 RETURN_FOR_REWORK（_codex_out_round9.txt）"
+  "第十轮 RETURN_FOR_REWORK（_codex_out_round10.txt）",
+  "第十一轮 RETURN_FOR_REWORK（_codex_out_round11.txt，H 通过 / A–G 不通过）"
  ],
  "files": [
   {
    "path": "evidence_scope.py",
-   "bytes": 30820,
-   "sha256": "ed4e2980d9d4ab8797cc05df6bf5f83ece23cfe09a52f36f4d9c584603c0d0ee"
+   "bytes": 38890,
+   "sha256": "416384eb9ece6bba77cd70b6c5a307b9e40ae6fb53d38ecb7203a3ba3dd28cba"
   },
   {
    "path": "meta_classes.py",
@@ -27,18 +35,18 @@
   },
   {
    "path": "parent_verify.py",
-   "bytes": 9411,
-   "sha256": "2a19964f8e98fefa48af88815a7c24951de4c8955a560044b612276253f9dae7"
+   "bytes": 19258,
+   "sha256": "e4b9b97329b84b5355c0ff99a8f61dc708d47a965d004c3a646844a6746ceba3"
   },
   {
    "path": "polarity_cases.py",
-   "bytes": 5852,
-   "sha256": "b8d18c0acde7be2cf3d30574397ae1a3f005c2e2e7bb235dda8d59b74e8aa77b"
+   "bytes": 8420,
+   "sha256": "8c75febf80743e868dc730cd3c667d277fead8880552def90a7d1127fcbb3f58"
   },
   {
    "path": "build_errata_v5.py",
-   "bytes": 33071,
-   "sha256": "82ad42b6e0f3616bb077e37410fea5d446168df63ae5510edaf3781c00d91b11"
+   "bytes": 34548,
+   "sha256": "c9edae0e0046663b3cee456308b7bdaa3e9060444e43884621dedda10c8327a1"
   },
   {
    "path": "check_l2_v5.py",
@@ -47,13 +55,18 @@
   },
   {
    "path": "sampling_v5.py",
-   "bytes": 34779,
-   "sha256": "fa9586ce7d704d98602f09ccbdacfd574ca3677cd0fd8b99dc5112c254c76f0d"
+   "bytes": 46127,
+   "sha256": "16ec219ecb2a85572aa2be00afcfb9159f6cc0e1c1a12adfe471676aee27e320"
+  },
+  {
+   "path": "replay_polarity_v5.py",
+   "bytes": 3008,
+   "sha256": "aa390f85d9dfb758eb55507164fe72a3887ffc525a137d8954478a4317021474"
   },
   {
    "path": "verify_v5.py",
-   "bytes": 89355,
-   "sha256": "51efc9184096f08e365f5be0ae7d15a521037d7a2118b6190a9bd2f5cff6ffc9"
+   "bytes": 132740,
+   "sha256": "856e26c56f6631ca4ae857c08262fcb55278dc01a683333a15241fa7dc56cffd"
   },
   {
    "path": "rulings_resolved.json",
@@ -92,13 +105,18 @@
   },
   {
    "path": "parent_verifications.csv",
-   "bytes": 283,
-   "sha256": "a884cb1945e38ef68364103d4c14c3f8a78f7d0a4a871aeedb2ab21f0c7fdf2e"
+   "bytes": 297,
+   "sha256": "782a2c30424667d788e838aeb08d64c4ef7174a58950a55b35321580c98fec6a"
   },
   {
    "path": "scope_verifications.csv",
    "bytes": 155,
    "sha256": "632129fb8034f61dd7be753561b8bdcffa7eecccb712a03b3ca2c60c6e6ee3db"
+  },
+  {
+   "path": "ruling_scope.csv",
+   "bytes": 311,
+   "sha256": "d7af87f758ad3c40ec381d9df2783d0f08939ae9162be2051b2fba051ea7b12d"
   },
   {
    "path": "dispute_ledger.csv",
@@ -117,8 +135,8 @@
   },
   {
    "path": "sampling_v5.csv",
-   "bytes": 34566,
-   "sha256": "d2ba21627d4edfb199ac348f8fa2ddf65c2b8dfef8e3d49d3ab7a8ca4a3dc8c6"
+   "bytes": 34492,
+   "sha256": "7261322a968eb995806383daa709484df9b7195f7789b00b6a53403c8c6ce504"
   },
   {
    "path": "l2_dependency_summary.json",
@@ -127,8 +145,23 @@
   },
   {
    "path": "sampling_v5.json",
-   "bytes": 1663,
-   "sha256": "d3e6f5c79f5332e3887fd61b7b7dd6e5c9f6a7636409d19544ac5bd1b6f2259d"
+   "bytes": 2209,
+   "sha256": "f08c8cde2ef9287cf9344039f9a41324898f945227fc320e3a4327607be288ca"
+  },
+  {
+   "path": "sampling_keys_baseline.csv",
+   "bytes": 5987,
+   "sha256": "24a8c051e41241426db2b7115ae95d5980f6f0f7f6f1308ca6bed582608ee615"
+  },
+  {
+   "path": "sampling_keys_diff.csv",
+   "bytes": 10030,
+   "sha256": "08c33d09dcd1cabf266d6feedf3bcc0b534e15491b36de00afab1f0101ee313f"
+  },
+  {
+   "path": "replay_polarity_v5.json",
+   "bytes": 286,
+   "sha256": "363031598f13838e31631cc6a823f6d5e71c5de3d228c5161bbdd87201d848f3"
   },
   {
    "path": "summary.json",
@@ -137,28 +170,38 @@
   },
   {
    "path": "review.json",
-   "bytes": 19247,
-   "sha256": "22dc3557fc3055c2e08ddd1a23229a3dcafeabfa2ac2228d2e02d2238babfb15"
+   "bytes": 31477,
+   "sha256": "f58ca925244a3159dc6e8012b65c8b9a3d60b9f2529d8cdd5838218b0b734500"
   },
   {
    "path": "REPORT.md",
-   "bytes": 27487,
-   "sha256": "81398cc3d8b3cabf5d7836c36613f341edbb2e0ae4fba68f52b9bf14702e4257"
+   "bytes": 46827,
+   "sha256": "49f6cc98729c65164785a7f20091f6ee5985f3283e7320e1139519a8a70619ff"
   },
   {
    "path": "handoff.md",
-   "bytes": 8992,
-   "sha256": "9e8a1ca61e33025582880dad362f1cef4f035501790bb53541b647196f9bab2c"
+   "bytes": 16165,
+   "sha256": "d3f76f4589ab815160dd6376c410a353fc606f2586d1a6512d4653113a934c8b"
   },
   {
-   "path": "report_to_codex_round10.md",
-   "bytes": 14593,
-   "sha256": "73640f2b903bce7cf134d48e0f53fc1ebdacd82ba1f6b7dc5f779a5411470c81"
+   "path": "report_to_codex_round11.md",
+   "bytes": 22372,
+   "sha256": "7ed5fa7723224afa38e8e06cbe9c236bb9e82e9173c01c3b023c85c2234eefaa"
   },
   {
-   "path": "_codex_prompt_round10.txt",
-   "bytes": 9501,
-   "sha256": "ae56e552dc22d251dd389cb8d339d454edda372322348e0fc203245b7df29857"
+   "path": "report_to_codex_round12.md",
+   "bytes": 16984,
+   "sha256": "df3460f347d89f3c4d3ad65ffdfdf18f7a104d6c6fed0b9fc3a5975f9f53449e"
+  },
+  {
+   "path": "_codex_prompt_round11.txt",
+   "bytes": 13578,
+   "sha256": "42eae2a5269ff29c842fb727ce2ed17c27e8a8b36f10f6e0e519ffe4decda0b5"
+  },
+  {
+   "path": "_codex_prompt_round12.txt",
+   "bytes": 8571,
+   "sha256": "9dd0f0954b0e0a061c7fa702aee3184b73ba5868c8e78e9a00cb791b4ef356f0"
   },
   {
    "path": "codex_ruling_round5.md",
@@ -166,9 +209,14 @@
    "sha256": "303f3d8a599832aa366e1d38c8af951af0efe368cc89bac151262625e4d6e280"
   },
   {
-   "path": "_codex_out_round9.txt",
-   "bytes": 10832,
-   "sha256": "fdd517d4bb996372df578062493909daf5b7fdfc59708206e8c899ef8e3cd439"
+   "path": "_codex_out_round10.txt",
+   "bytes": 12207,
+   "sha256": "6377d44654fa8180430cfb48c89c5e3eed9452c99d4326f44b54d21d30a8b44b"
+  },
+  {
+   "path": "_codex_out_round11.txt",
+   "bytes": 11587,
+   "sha256": "eabfda0e4c29f7fe4b1fcb3bea95176d8f995f8dbc03afb66470823951fb0d55"
   }
  ]
 }

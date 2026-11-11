@@ -1,6 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""证据覆盖模型 V7（生产与自检共用）
+"""证据覆盖模型 V8（生产与自检共用）
+
+第十轮裁决 A 项的四处修正（V8）：
+
+1. **单符号跨行必须合并**（`_clauses`）：`前期差错更正\\n√\\n不适用` 里 `√` 独占
+   一行，原阈值 `marks >= 2` 不合并，`√` 单独解不出选项 → 判歧义 → 同时肯定与
+   排除。V8 追加「组内存在纯符号碎片即合并」，但**仍不合并含标签的碎片**
+   （`会计政策变更` / `会计差错更正` 两行本应各自成立）。
+
+2. **主语行可带符号**（`_is_cause_label`）：`前期差错更正□` 的符号是下一行选项组
+   被换行挤过来的，原实现因「含符号」拒绝认作主语行，导致主语被并进组内选项、
+   `√` 认领主语、解出「排除 ERRATA」并静默放行。V8 改为「剥掉符号与编号后
+   恰好等于一个原因词」即为主语行。
+
+3. **「适用」与「某原因未勾」并存即歧义**（`option_group`）：同一组里勾了「适用」
+   又排除了具体原因，两种读法互斥，不能按任一读法放行。
+
+4. **金额绑定不得跨主题承接**（`_bind_amount`）：`未发生前期差错更正，营业收入
+   100.00元` 曾把无关收入金额承接为事件肯定；`_AMOUNT_RADIUS` 也不足以覆盖
+   `……经董事会和监事会审核后确认为100.00元` 这类长句。V8 改为：本分句只有一个
+   原因且未出现其他报表项目词时，金额直接绑该原因（不受半径限制）；无原因词的
+   分句仅在「续写/权益项目/金额起句」且未出现其他报表项目词时才承接上一主语。
 
 第七轮裁决的三处修正：
 
@@ -48,8 +69,47 @@ _RE_MATERIALITY = re.compile(r"^(重大影响|实质性影响|影响|重大)")
 _NEG_SHORT = {"未", "无"}
 _NEG_RADIUS = 14
 _NEG_RADIUS_SHORT = 8
-# 金额绑定半径：金额常在「对期初未分配利润影响 X 元」之后，离原因词较远
+# 金额绑定半径：金额常在「对期初未分配利润影响 X 元」之后，离原因词较远。
+# 第十轮裁决 A 项：半径只是「跨主题」的粗略近似，不能单独承担语义绑定——
+# 长句（`……经重新核算并经董事会和监事会审核后确认为100.00元`）会超出半径而
+# 丢失明确影响金额。V8 增加「单原因分句直接绑定」与「报表项目词切换即断开」。
 _AMOUNT_RADIUS = 24
+# 续写标志：无原因词的分句以这些词起句，视为上一分句主语的延续
+_RE_CONTINUE = re.compile(
+    r"^\s*(?:[-−]?\d|对|其中|该|上述|前述|其|本期|本年|调整|影响|累计|经|确认|"
+    r"金额|差额|净额|合计|期初未分配利润|未分配利润|所有者权益|盈余公积|净资产)")
+# 报表项目切换：出现与本原因无关的项目词，不得再承接上一分句的原因
+# 注意：`所有者权益合计` 属受影响的权益项目（`_RE_SCOPED_ITEM`），不是「另一个项目」，
+# 放在这里会让「对所有者权益合计影响100.00元」丢失 scoped，故已剔除。
+_RE_OTHER_ITEM = re.compile(
+    r"营业收入|营业成本|营业利润|利润总额|净利润|总资产|负债|研发投入|"
+    r"现金流量净额|每股收益|毛利率")
+
+# 第十一轮 A 项：**不得靠扩充项目词表**判断「这句换了主语」。
+# 判据改为看金额左侧紧跟的片段：
+#   - 片段里有权益项目（期初未分配利润/净资产…）→ 该金额是原因的宾语，属续写；
+#   - 片段以动词/功能词收尾（为/是/达/影响/确认/金额/元…）→ 属续写；
+#   - 否则片段里的名词性成分就是**新主语**，不得承接上一分句的原因。
+# 反例：`前期差错更正对期初未分配利润影响0.00元，其中营业总收入100.00元`
+#   第二分句金额左侧是「其中营业总收入」，以名词收尾 → 新主语 → 不肯定 ERRATA。
+_RE_VERB_TAIL = re.compile(
+    r"(?:为|是|达|计|影响|确认|调整|重述|发生|存在|采用|金额|差额|净额|合计|"
+    r"元|及|和|与|的|，|,|：|:|\d)$")
+_RE_TAIL_FILLER = re.compile(
+    r"其中|该|上述|前述|其|本期|本年|年初|累计|经|对|的|元|"
+    r"[\s，,。；;：:\d\-−+.]")
+
+
+def _new_subject(clause, st, window=10):
+    """金额左侧紧跟片段是否构成**新主语**（第十一轮 A 项）。"""
+    tail = clause[max(0, st - window):st]
+    if not tail:
+        return False
+    if _RE_SCOPED_ITEM.search(tail):
+        return False
+    if _RE_VERB_TAIL.search(tail):
+        return False
+    return len(_RE_TAIL_FILLER.sub("", tail)) >= 2
 # 肯定：确认发生 / 已采用 / 已调整
 # 肯定词：必须是谓词，不能是原因短语本身。
 # 「追溯重述」「追溯调整」多为小节标题（「追溯重述法的前期会计差错更正事项。」），
@@ -119,16 +179,46 @@ def _is_option_fragment(seg):
     return re.sub(r"[\s\u3000]", "", s) == ""
 
 
+def _is_pure_mark(seg):
+    """该片段是否只有一个勾选符号（`√` / `□`），不含任何标签文字。"""
+    return bool(_RE_MARK.search(seg or "")) and \
+        re.sub(r"[\s\u3000]", "", _RE_MARK.sub("", seg or "")) == ""
+
+
+_RE_HEADING_PREFIX = re.compile(
+    r"^(?:[（(][一二三四五六七八九十]+[）)]|[一二三四五六七八九十]+、|"
+    r"\d+\s*[、.．]|注\s*\d+\s*[、.：:]?)")
+# 纯原因标签的全集（整串匹配）。不能用 _cause_spans 的区间覆盖来判：
+# `前期差错更正` 里 `前期差错`(0-4) 与 `差错更正`(2-6) 是重叠的，finditer 只取
+# 前者，区间并集覆盖不到整串。
+_RE_CAUSE_ONLY = re.compile(
+    r"^(?:追溯重述法?|未来适用法|追溯调整法|会计政策变更|会计估计变更|"
+    r"前期差错更正|前期差错|会计差错更正|差错更正|"
+    r"同一控制下企业合并|合并范围变更)$")
+
+
 def _is_cause_label(seg):
-    """纯原因标签（`前期差错更正` / `会计政策变更` …）：勾选组的主语行，不属于组内选项。"""
-    return bool(_cause_spans(seg or "")) and not _RE_MARK.search(seg or "")
+    """纯原因标签（`前期差错更正` / `会计政策变更` …）：勾选组的主语行，不属于组内选项。
+
+    第十轮裁决 A 项：`前期差错更正□` 这类「原因词 + 符号」同样是主语行——那个符号
+    是下一行选项组被换行挤过来的。原实现要求「不含任何符号」，于是把主语并进了
+    组内选项，`√` 反过来认领主语、解出「排除 ERRATA」并静默放行。
+    V8 改为：剥掉勾选符号、空白、小节编号后，恰好是一个原因词即为主语行。
+    """
+    s = re.sub(r"[\s\u3000]", "", _RE_MARK.sub("", seg or ""))
+    m = _RE_HEADING_PREFIX.match(s)
+    if m:
+        s = s[m.end():]
+    return bool(s) and bool(_RE_CAUSE_ONLY.match(s))
 
 
 def _clauses(txt):
-    """分句，但**不切开选项组**：连续碎片在含 ≥2 个符号时先拼回一组。
+    """分句，但**不切开选项组**：连续碎片在含 ≥2 个符号、或含纯符号碎片时先拼回一组。
 
-    只合并「含 ≥2 个符号」的连续碎片——单符号碎片合并会改变纯标签行的语义
-    （`会计政策变更` / `会计差错更正` 两行本应各自成立）。
+    第十轮裁决 A 项：`前期差错更正\\n√\\n不适用` 的 `√` 独占一行，原阈值
+    `marks >= 2` 不合并，`√` 单独解不出选项 → 判歧义 → 同时肯定与排除（假冲突）。
+    V8 追加「组内有纯符号碎片即合并」。仍**不**合并「符号 + 标签」的碎片：
+    `会计政策变更` / `会计差错更正` 两行本应各自成立。
 
     主语行必须留在组外：`前期差错更正\\n√适用□不适用` 若把标题并进组，符号左侧
     也能解出一套自洽取值（√ 认领「前期差错更正」），会与右侧解冲突而假判歧义。
@@ -144,7 +234,7 @@ def _clauses(txt):
             out.append(head.strip())
             buf[:] = buf[1:]
         marks = sum(len(_RE_MARK.findall(x)) for x in buf)
-        if len(buf) > 1 and marks >= 2:
+        if len(buf) > 1 and (marks >= 2 or any(_is_pure_mark(x) for x in buf)):
             out.append(" ".join(x.strip() for x in buf))
         else:
             out.extend(buf)
@@ -155,8 +245,11 @@ def _clauses(txt):
             flush()
             out.append(c)
             continue
-        # 组内已出现符号后又来一个纯原因标签：这是下一组的主语，必须先断开
-        if _is_cause_label(c) and any(_RE_MARK.search(x) for x in buf):
+        # 组内已出现符号后又来一个纯原因标签：这是下一组的主语，必须先断开。
+        # 只认「不带符号」的纯标签——`会计差错更正 □` 属于符号与标签交替的选项链
+        # （`□ 会计政策变更 √ 会计差错更正 □ …`），必须留在组内。
+        if _is_cause_label(c) and not _RE_MARK.search(c) and \
+                any(_RE_MARK.search(x) for x in buf):
             flush()
         buf.append(c)
     flush()
@@ -322,6 +415,10 @@ def option_group(clause):
         return set(), set(), True
     checked = {lab for chk, lab in chosen if chk}
     unchecked = {lab for chk, lab in chosen if not chk}
+    # 第十轮裁决 A 项：同一组里勾了「适用」又排除了某个具体原因，两种读法互斥
+    # （「本节适用」 vs 「不是这个原因」），不能按任一读法放行，须回原页。
+    if "YES" in checked and (unchecked & {CANON[c] for c in CAUSES}):
+        return set(), set(), True
     return checked, unchecked, False
 
 
@@ -337,8 +434,8 @@ def _amounts(c):
     return out
 
 
-def _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c):
-    """金额句绑定：优先本句原因，其次承接上一分句的原因（主语延续）。
+def _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c, single=None):
+    """金额句绑定：本句原因 → 单原因直绑 → 承接上一分句的原因（主语延续）。
 
     第九轮裁决 B 项两处修正：
 
@@ -348,14 +445,35 @@ def _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c):
     2. **已有 excluded 不得压掉后续非零金额的肯定**。勾选「√不适用」与金额
        「净资产影响100.00元」并存时，必须留下 `conflict` 交回原页待核，
        而不是静默按勾选放行（原 `t not in excluded` 条件即此绕过）。
+
+    第十轮裁决 A 项两处修正：
+
+    3. **单原因分句不再受字符半径限制**。`前期差错更正对期初未分配利润影响经
+       重新核算并经董事会和监事会审核后确认为100.00元` 的金额距原因词 40 余字，
+       半径 24 直接丢弃，导致「明确影响金额」既无 affirmed 也无 scoped。
+    4. **不得跨主题承接主语**。`未发生前期差错更正，营业收入100.00元` 曾把无关
+       收入金额承接为 ERRATA 的事件肯定，造出假冲突。V8 要求：本分句出现其他
+       报表项目词即断开；无原因词的分句还须以续写词/权益项目/金额起句。
+    5. **不得只靠项目词表**（第十一轮 A 项）。`…影响0.00元，其中营业总收入100.00元`
+       里的「营业总收入」不在词表内，于是 100.00 元被承接成 ERRATA 肯定。
+       现改为结构判据 `_new_subject()`：金额左侧紧跟片段以名词收尾即为新主语。
     """
     amounts = _amounts(c)
     if not amounts:
         return
     has_item = bool(_RE_SCOPED_ITEM.search(c))
+    other_item = bool(_RE_OTHER_ITEM.search(c))
+    continue_ok = bool(_RE_CONTINUE.match(c)) or has_item or ("影响" in c)
     for st, _en, v in amounts:
         tgt = _nearest(spans, st, limit=_AMOUNT_RADIUS) if spans else None
-        targets = {tgt} if tgt else (set(prev_causes) if prev_causes else set())
+        new_subj = _new_subject(c, st)
+        targets = set()
+        if tgt:
+            targets = {tgt}
+        elif single and not other_item and not new_subj:
+            targets = {single}
+        elif prev_causes and continue_ok and not other_item and not new_subj:
+            targets = set(prev_causes)
         if not targets:
             continue
         nonzero = abs(v) > 0
@@ -415,7 +533,8 @@ def analyse(rec):
                         if CANON[cs] not in chk:
                             excluded.add(cs)
             if causes:
-                _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, set())
+                _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, set(),
+                             single=next(iter(causes)) if len(causes) == 1 else None)
                 prev_causes = causes
             continue
 
@@ -464,7 +583,8 @@ def analyse(rec):
             excluded |= neg_c
             affirmed |= pos_c
 
-        _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c)
+        _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c,
+                     single=only if single else None)
         prev_causes = causes
 
     conflict = excluded & affirmed

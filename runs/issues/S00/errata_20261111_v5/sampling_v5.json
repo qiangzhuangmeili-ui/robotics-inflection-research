@@ -2,6 +2,7 @@
   "scope": "分层方法抽验（按风险类型确定性抽样 + 原件物理页回读）",
   "samples": 37,
   "risk_types": 20,
+  "unique_keys": 27,
   "by_risk": {
     "R5_CAUSE_AFFIRMED": 4,
     "R1_QUARTERLY_TABLE_OWN": 3,
@@ -41,7 +42,7 @@
     "不同重述原因": true,
     "肯定发生（极性非「提及即排除」）": true,
     "跨文档父输入": true,
-    "两父输入原件均已定位": true,
+    "两父输入原件均已定位": false,
     "PARTIAL 原文定位": true,
     "原文定位已核（VERIFIED）": true,
     "补充字段": true,
@@ -49,5 +50,23 @@
     "大豪科技已解除": true,
     "杭叉跨来源限制": true
   },
-  "note": "抽验是方法覆盖性检验，不构成全量核证；page_reread=MATCH 表示证据文本确实出现在该物理页。"
+  "note": "抽验是方法覆盖性检验，不构成全量核证；page_reread=MATCH 表示证据文本确实出现在该物理页。",
+  "locator_version": "V11",
+  "keys_diff": {
+    "baseline_version": "V10",
+    "baseline_sha256": "0d0940cc200f5490afedab736ccd99ade787e38f8acf68e0c39587dcbe03eb9d",
+    "current_sha256": "7261322a968eb995806383daa709484df9b7195f7789b00b6a53403c8c6ce504",
+    "by_status": {
+      "KEPT": 26,
+      "REMOVED": 1,
+      "ADDED": 1
+    },
+    "added": [
+      "SH:600143|FIN.NPP.SQ|20260630"
+    ],
+    "removed": [
+      "SH:600060|FIN.NPDEDT.SQ|20260630"
+    ],
+    "file": "sampling_keys_diff.csv"
+  }
 }

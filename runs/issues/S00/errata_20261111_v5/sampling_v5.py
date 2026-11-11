@@ -15,6 +15,7 @@ Codex 第五轮裁决第十节第 2 步：
 """
 import csv
 import gzip
+import hashlib
 import json
 import re
 from collections import Counter
@@ -284,6 +285,7 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
         "parent_p1_locate": "", "parent_p2_locate": "",
         "parent_p1_fragment": "", "parent_p2_fragment": "",
         "parent_p1_column": "", "parent_p2_column": "",
+        "parent_p1_row": "", "parent_p2_row": "",
         "parent_p1_unit": "", "parent_p2_unit": "",
         "parent_p1_version": "", "parent_p2_version": "",
         "parent_same_version_used": "", "parent_same_adopted_doc": "",
@@ -356,63 +358,187 @@ for r in pick(lambda x: x["resolution"] == "PENDING_CONFIRMED_EVENT_FIELD_OPEN",
     add_sample("R5_CAUSE_AFFIRMED",
                "B=是 且事件已由证据确认，但来源维度（分季度表/比较列/父输入）尚未核", r)
 
-_UNIT_HINT = ("单位：万元", "单位:万元", "单位：元", "单位:元", "单位：千元", "单位:千元",
-              "人民币万元", "人民币元", "金额单位：元", "金额单位：万元")
+_RE_PERIOD_HDR = re.compile(
+    r"(\d{4}\s*年\s*\d{1,2}\s*月\s*\d{1,2}\s*日|\d{4}\s*年\s*\d{1,2}\s*月|\d{4}\s*年度|"
+    r"\d{4}-\d{2}-\d{2}|\d{4}年|本期|上期|本年|上年|期末|期初|年初|年末|"
+    r"本报告期|上年同期|第一季度|第二季度|第三季度|第四季度)")
+_RE_UNIT_LINE = re.compile(r"单位\s*[:：]\s*(?:人民币)?\s*(元|千元|万元|百万元|亿元)")
+_RE_VER_LINE = re.compile(r"(调整前|调整后|重述前|重述后|更正前|更正后)")
+
+_PAGE_CACHE = {}
 
 
-def locate_amount_in_doc(sec, doc, value):
-    """按金额在原件中定位父数所在物理页（父输入文档常不在 1,007 份核验清单内）。
+def _page_lines(page):
+    """按 y 坐标把词聚成行：[(y, [(x0, x1, text, y0), ...]), ...]，按 y 升序。"""
+    rows = {}
+    for w in page.get_text("words"):
+        x0, y0, x1, t = w[0], w[1], w[2], w[4]
+        rows.setdefault(round(y0 / 4.0), []).append((x0, x1, t, y0))
+    out = []
+    for k in sorted(rows):
+        ws = sorted(rows[k], key=lambda z: z[0])
+        out.append((ws[0][3], ws))
+    return out
 
-    返回 (status, page, fragment, unit_hint)。只认千分位格式化后的完整金额串，
-    避免把 1,234.56 命中 11,234.56 这类子串误判。`unit_hint` 取该页表头声明的
-    计量单位字面——第九轮 F 项要求父数须交付单位依据，不能只写 unit_scale。
+
+def _open_pages(sec, doc):
+    """返回 [(page_obj, lines)]；不可用时返回 None。按 document_id 缓存行结构。"""
+    if doc in _PAGE_CACHE:
+        return _PAGE_CACHE[doc]
+    code = (sec or "").split(":")[1] if ":" in (sec or "") else sec
+    pdf = None
+    for p in (ORIG / str(code)).rglob(doc + ".pdf"):
+        pdf = p
+        break
+    data = None
+    if pdf is not None:
+        try:
+            import pymupdf
+            d = pymupdf.open(str(pdf))
+            data = [_page_lines(d[i]) for i in range(d.page_count)]
+            d.close()
+        except Exception:
+            data = None
+    _PAGE_CACHE[doc] = data
+    return data
+
+
+def locate_amount_in_doc(sec, doc, value, metric=None):
+    """按金额在原件中定位父数，并**确认目标行与目标列**。
+
+    第十轮 F 项：原实现「按金额首次命中取窗口」，既没有确认该金额所在行是不是
+    目标指标，也没有确认它落在哪一列，单位取的是整页任一表头提示，调整版本完全
+    依赖元数据。现改为按 pymupdf 的**词坐标**判定：
+
+    - 行：同一 y 上、金额左侧的全部词 → `row_label`，须含目标指标名；
+    - 列：金额 x 区间正上方最近一行中、x 区间重叠且含期间标记的词 → `column_label`；
+    - 单位：金额行及其上方最近的「单位：X」行 → `unit_text`（绑定到该表，不是整页）；
+    - 调整前后：列头附近 ±18 行内的「调整前/调整后/重述前/重述后」→ `version_mark`。
+
+    返回 dict，`status` ∈ {LOCATED_OK, LOCATED_ROW_MISMATCH, LOCATED_NO_COLUMN,
+    LOCATED_NO_UNIT, AMOUNT_NOT_FOUND, PDF_MISSING, READ_ERROR}。
     """
+    out = {"status": "AMOUNT_NOT_FOUND", "page": 0, "fragment": "",
+           "row_label": "", "column_label": "", "unit_text": "", "version_mark": ""}
     try:
         amt = "{:,.2f}".format(float(value))
     except (TypeError, ValueError):
-        return "NO_AMOUNT", 0, "", ""
-    code = sec.split(":")[1]
-    pdf = None
-    for p in (ORIG / code).rglob(doc + ".pdf"):
-        pdf = p
-        break
-    if pdf is None:
-        return "PDF_MISSING", 0, "", ""
-    try:
-        import pymupdf
-        d = pymupdf.open(str(pdf))
-        pages = [norm(d[i].get_text()) for i in range(d.page_count)]
-        d.close()
-    except Exception as e:
-        return "READ_ERROR:%s" % e, 0, "", ""
-    for pi, t in enumerate(pages):
-        if t and amt in t:
-            i = t.index(amt)
-            hint = next((h for h in _UNIT_HINT if h in t), "")
-            return ("LOCATED_AMOUNT(p.%d)" % (pi + 1), pi + 1,
-                    t[max(0, i - 30):i + len(amt) + 10], hint)
-    return "AMOUNT_NOT_FOUND", 0, "", ""
+        out["status"] = "NO_AMOUNT"
+        return out
+    pages = _open_pages(sec, doc)
+    if pages is None:
+        out["status"] = "PDF_MISSING"
+        return out
+    for pi, lines in enumerate(pages, 1):
+        for li, (_y, ws) in enumerate(lines):
+            joined = "".join(t for _a, _b, t, _yy in ws)
+            pos = joined.find(amt)
+            if pos < 0:
+                continue
+            acc, hit = 0, None
+            for (x0, x1, t, _yy) in ws:
+                if acc <= pos < acc + len(t):
+                    hit = (x0, x1)
+                    break
+                acc += len(t)
+            if hit is None:
+                continue
+            ax0, ax1 = hit
+            row_label = "".join(t for (x0, _x1, t, _yy) in ws if x0 < ax0 - 0.5)
+            if not row_label:
+                # 指标名换行时，标签可能落在上下相邻行（金额行本身只有数字）。
+                # 第十一轮 F 项：原实现只看紧邻一行，`归属于上市公司股东的扣除非经常性`
+                # / `损益的净利润` / 金额 这种三行版面只拿到「损益的净利润」，
+                # 于是把断行误判成 LOCATED_ROW_MISMATCH（600053 即此）。
+                # 现向上最多回看 3 行并逐行拼接，直到出现目标指标名。
+                _acc = ""
+                for lj in range(li - 1, max(-1, li - 4), -1):
+                    _seg = "".join(t for (x0, _x1, t, _yy) in lines[lj][1]
+                                   if x0 < ax0 - 0.5)
+                    if not _seg:
+                        break
+                    _acc = _seg + _acc
+                    if metric and metric in _acc:
+                        break
+                if not _acc and li + 1 < len(lines):
+                    _acc = "".join(t for (x0, _x1, t, _yy) in lines[li + 1][1]
+                                   if x0 < ax0 - 0.5)
+                row_label = _acc.strip()
+            # 金额行有部分标签时，也可能被断行截断：把上一行补进来再判
+            if metric and metric not in row_label and li >= 1:
+                _seg = "".join(t for (x0, _x1, t, _yy) in lines[li - 1][1]
+                               if x0 < ax0 - 0.5)
+                if _seg and metric in (_seg + row_label):
+                    row_label = (_seg + row_label).strip()
+            col_label = ""
+            for lj in range(li - 1, max(-1, li - 18), -1):
+                cand = [t for (x0, x1, t, _yy) in lines[lj][1]
+                        if x1 > ax0 - 2 and x0 < ax1 + 2 and _RE_PERIOD_HDR.search(t)]
+                if cand:
+                    col_label = "".join(cand)
+                    break
+            unit_text = ""
+            for lj in range(li, max(-1, li - 40), -1):
+                j2 = "".join(t for _a, _b, t, _yy in lines[lj][1])
+                m = _RE_UNIT_LINE.search(j2)
+                if m:
+                    unit_text = m.group(0)
+                    break
+            version_mark = ""
+            # 第十一轮 F 项：原实现整行拼接，「调整前」出现在同一页**别的列**也会被认领。
+            # 现在只取与金额 x 区间重叠的词——调整前后是**列**的属性，不是页的属性。
+            for lj in range(max(0, li - 20), li):
+                cand = [t for (x0, x1, t, _yy) in lines[lj][1]
+                        if x1 > ax0 - 2 and x0 < ax1 + 2]
+                m = _RE_VER_LINE.search("".join(cand))
+                if m:
+                    version_mark = m.group(1)
+                    break
+            out.update({"page": pi,
+                        "fragment": joined[max(0, pos - 30):pos + len(amt) + 12],
+                        "row_label": row_label, "column_label": col_label,
+                        "unit_text": unit_text, "version_mark": version_mark})
+            if metric and metric not in row_label:
+                out["status"] = "LOCATED_ROW_MISMATCH"
+            elif not col_label:
+                out["status"] = "LOCATED_NO_COLUMN"
+            elif not unit_text:
+                out["status"] = "LOCATED_NO_UNIT"
+            else:
+                out["status"] = "LOCATED_OK"
+            return out
+    return out
 
 
 _UNIT_LABEL = {"1": "元", "1000": "千元", "10000": "万元", "100000000": "亿元"}
+_UNIT_TO_SCALE = {"元": "1", "千元": "1000", "万元": "10000", "百万元": "1000000",
+                  "亿元": "100000000"}
 
 
-def _period_column(kp, doc):
-    """该父数落在哪一列：文档自身期间 → 本期累计列；否则比较列。"""
+def _period_column(kp, doc, loc=None):
+    """该父数落在哪一列：**以原件列头为准**，元数据推导仅作对照。
+
+    第十轮 F 项：原实现只用「文档自身期间 == 父期间」推「本期累计列」，属元数据
+    推导，不是原件事实。现在返回原件列头；取不到才退回推导值并显式标注。
+    """
+    col = ((loc or {}).get("column_label") or "").strip()
+    if col:
+        return col
     own = doc_period.get(doc, "")
     if not own:
         return "UNKNOWN_DOC_PERIOD"
-    return "本期累计列" if own == kp[2] else "比较列(文档自身期间=%s)" % own
+    return "元数据推导:本期累计列" if own == kp[2] else \
+        "元数据推导:比较列(文档自身期间=%s)" % own
 
 
-def _adjust_version(r, kp, doc):
-    """调整前后版本：取 version_used + 文档期间 + 是否采用修订文档。"""
+def _adjust_version(r, kp, doc, loc=None):
+    """调整前后版本：**以原件调整前后列标记为准**，元数据仅作对照。"""
+    mark = ((loc or {}).get("version_mark") or "").strip()
     ver = (r.get("version_used") or "").strip() or "UNKNOWN"
-    own = doc_period.get(doc, "") or "UNKNOWN"
-    a = adopt.get(kp) or {}
-    after = (a.get("document_id_after") or "").strip()
-    tag = "修订后" if (after and after == doc) else ("原文" if after else "未登记采用")
-    return "%s|文档期间=%s|%s" % (ver, own, tag)
+    if mark:
+        return "%s(原件标记=%s)" % (ver, mark)
+    return "%s(原件未见调整前后列标记)" % ver
+
 
 
 def parent_detail(sec, fld, pk):
@@ -434,33 +560,49 @@ def parent_detail(sec, fld, pk):
     r1, r2 = D10.get(k1, {}), D10.get(k2, {})
     d1, d2 = r1.get("document_id", ""), r2.get("document_id", "")
 
+    _metric = (pv.METRIC_ALIASES.get(ytd) or (None,))[0]
+
     def _amt_loc(doc, val):
         if not doc:
-            return "NO_DOCUMENT", 0, "", ""
-        return locate_amount_in_doc(sec, doc, val)
+            return {"status": "NO_DOCUMENT", "page": 0, "fragment": "",
+                    "row_label": "", "column_label": "", "unit_text": "",
+                    "version_mark": ""}
+        return locate_amount_in_doc(sec, doc, val, metric=_metric)
 
-    s1, p1, f1, h1 = _amt_loc(d1, r1.get("value_cny", ""))
-    s2, p2, f2, h2 = _amt_loc(d2, r2.get("value_cny", ""))
-    ok1 = s1.startswith("LOCATED")
-    ok2 = s2.startswith("LOCATED")
+    l1 = _amt_loc(d1, r1.get("value_cny", ""))
+    l2 = _amt_loc(d2, r2.get("value_cny", ""))
+    s1, s2 = l1["status"], l2["status"]
+    p1, p2 = l1["page"], l2["page"]
+    f1, f2 = l1["fragment"], l2["fragment"]
+    ok1 = s1 == "LOCATED_OK"
+    ok2 = s2 == "LOCATED_OK"
 
-    def _unit(r, frag, hint):
+    def _unit(r, loc):
+        """单位：原件表头字面 → 固定映射，并与 unit_scale 对照。"""
         u = (r.get("unit_scale") or "").strip()
         lab = _UNIT_LABEL.get(u, "倍数=%s" % (u or "?"))
-        return "%s(unit_scale=%s)|表头单位字面=%s" % (lab, u or "?", hint or "未检出")
+        txt = (loc.get("unit_text") or "").strip()
+        mapped = _UNIT_TO_SCALE.get(_RE_UNIT_LINE.search(txt).group(1), "") \
+            if txt and _RE_UNIT_LINE.search(txt) else ""
+        agree = ("AGREE" if mapped and mapped == u else
+                 "MISMATCH" if mapped else "NO_ORIGINAL_UNIT")
+        return "%s(unit_scale=%s)|原件表头=%s|%s" % (lab, u or "?", txt or "未检出", agree)
 
-    gap = pv.gap(PARENT_VERIFS.get((sec, fld, pk)),
-                 {"p1": {"doc": d1, "period": k1[2],
-                         "value": (r1.get("value_cny") or "").strip(),
-                         "consolidation_scope": (r1.get("consolidation_scope") or "").strip(),
-                         "unit_scale": (r1.get("unit_scale") or "").strip(),
-                         "currency": (r1.get("currency") or "").strip()},
-                  "p2": {"doc": d2, "period": k2[2],
-                         "value": (r2.get("value_cny") or "").strip(),
-                         "consolidation_scope": (r2.get("consolidation_scope") or "").strip(),
-                         "unit_scale": (r2.get("unit_scale") or "").strip(),
-                         "currency": (r2.get("currency") or "").strip()}},
-                 lambda d: (vrec.get(d) or {}).get("evidence", ""))
+    _exp = {"field": ytd,
+            "p1": {"doc": d1, "period": k1[2],
+                   "value": (r1.get("value_cny") or "").strip(),
+                   "consolidation_scope": (r1.get("consolidation_scope") or "").strip(),
+                   "unit_scale": (r1.get("unit_scale") or "").strip(),
+                   "currency": (r1.get("currency") or "").strip(),
+                   "adjust_version": (r1.get("version_used") or "").strip()},
+            "p2": {"doc": d2, "period": k2[2],
+                   "value": (r2.get("value_cny") or "").strip(),
+                   "consolidation_scope": (r2.get("consolidation_scope") or "").strip(),
+                   "unit_scale": (r2.get("unit_scale") or "").strip(),
+                   "currency": (r2.get("currency") or "").strip(),
+                   "adjust_version": (r2.get("version_used") or "").strip()}}
+    gap = pv.gap(PARENT_VERIFS.get((sec, fld, pk)), _exp,
+                 lambda d, p: _page_text(sec, d, p))
 
     gap1 = _pc_gap(k1)
     gap2 = _pc_gap(k2)
@@ -479,12 +621,14 @@ def parent_detail(sec, fld, pk):
         "parent_p2_value": r2.get("value_cny", ""),
         "parent_p1_status": r1.get("status", ""),
         "parent_p2_status": r2.get("status", ""),
-        "parent_p1_column": _period_column(k1, d1),
-        "parent_p2_column": _period_column(k2, d2),
-        "parent_p1_unit": _unit(r1, f1, h1),
-        "parent_p2_unit": _unit(r2, f2, h2),
-        "parent_p1_version": _adjust_version(r1, k1, d1),
-        "parent_p2_version": _adjust_version(r2, k2, d2),
+        "parent_p1_column": _period_column(k1, d1, l1),
+        "parent_p2_column": _period_column(k2, d2, l2),
+        "parent_p1_row": l1["row_label"] or "未检出",
+        "parent_p2_row": l2["row_label"] or "未检出",
+        "parent_p1_unit": _unit(r1, l1),
+        "parent_p2_unit": _unit(r2, l2),
+        "parent_p1_version": _adjust_version(r1, k1, d1, l1),
+        "parent_p2_version": _adjust_version(r2, k2, d2, l2),
         "parent_same_version_used": same_ver,
         "parent_same_adopted_doc": same_adopt,
         "parent_scope_unit_cur": "%s/%s/%s | %s/%s/%s" % (
@@ -494,9 +638,9 @@ def parent_detail(sec, fld, pk):
             (vrec.get(d1) or {}).get("verdict", "NA"), (vrec.get(d2) or {}).get("verdict", "NA")),
         "parent_compatible": {True: "YES", False: "NO", None: "NA"}[_pc((sec, fld, pk))],
         "parent_compat_conclusion": (
-            "两父实际累计父数已在原件按金额定位（p.%s / p.%s），但兼容性仍须由 "
-            "parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）；"
-            "定位本身不构成兼容已证" % (p1 or "?", p2 or "?")),
+            "两父实际累计父数已在原件按金额定位并确认目标行列（p.%s / p.%s）；"
+            "定位与行列确认都不构成兼容已证，兼容性仍须由 parent_verifications.csv "
+            "逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）" % (p1 or "?", p2 or "?")),
         "parent_p1_locate": s1, "parent_p2_locate": s2,
         "parent_p1_fragment": f1, "parent_p2_fragment": f2,
         "parent_amount_located": ("BOTH" if ok1 and ok2 else
@@ -506,6 +650,19 @@ def parent_detail(sec, fld, pk):
         "parent_compat_gap": "VERIFIED" if gap is None else gap,
         "parent_scope_fields": "%s / %s" % (gap1, gap2),
     }
+
+
+def _page_text(sec, doc, page):
+    """原件指定物理页的纯文本（供父输入引文定位）。"""
+    try:
+        n = int(str(page).strip())
+    except (TypeError, ValueError):
+        return ""
+    pages = _open_pages(sec, doc)
+    if not pages or not (1 <= n <= len(pages)):
+        return ""
+    return re.sub(r"\s+", "", "".join(t for _y, ws in pages[n - 1] for _a, _b, t, _yy in ws))
+
 
 
 def _pc_gap(kp):
@@ -678,12 +835,84 @@ with open(OUT / "sampling_v5.csv", "w", encoding="utf-8-sig", newline="") as f:
     w.writeheader()
     w.writerows(samples)
 
+# ---------------------------------------------------------------
+# sampling_keys_diff.csv（第十一轮 G 项：样本键集变更必须留痕、可复现）
+# 对照基线 `sampling_keys_baseline.csv`（上一交付版的样本键集，含来源哈希），
+# 逐键记录 增加/删除/保留，并把「为什么变」写清楚——不能只在报告里口头解释。
+# ---------------------------------------------------------------
+LOCATOR_VERSION = "V11"      # 定位器改版即改此值，diff 里逐行带上
+_SHA_SAMPLING = hashlib.sha256((OUT / "sampling_v5.csv").read_bytes()).hexdigest()
+
+
+def _key_of(s):
+    return "|".join([s["security_id"], s["field_id"], s["period_key"]])
+
+
+_cur = {}
+for _s in samples:
+    _cur.setdefault(_key_of(_s), []).append(_s)
+
+_base, _base_ver, _base_sha = {}, "", ""
+_p_base = OUT / "sampling_keys_baseline.csv"
+if _p_base.exists():
+    with _p_base.open(encoding="utf-8-sig", newline="") as _f:
+        for _r in csv.DictReader(_f):
+            _base_ver = _r.get("baseline_version") or _base_ver
+            _base_sha = _r.get("source_sha256") or _base_sha
+            _base.setdefault(_r["key"], []).append(_r)
+
+# 台账里还存不存在这个键——用来区分「键被删」和「键还在但不再命中判据」
+_ledger_keys = set()
+for _r in meta:
+    _ledger_keys.add("|".join([_r["security_id"], _r["field_id"], _r["period_key"]]))
+for _r in extra:
+    _ledger_keys.add("|".join([_r["security_id"], _r["field_id"], _r["period_key"]]))
+
+_diff_rows = []
+for _k in sorted(set(_cur) | set(_base)):
+    _c = _cur.get(_k) or []
+    _b = _base.get(_k) or []
+    if _c and _b:
+        _status = "KEPT"
+        _reason = "键集未变（当前风险类型 %s）" % "/".join(sorted({x["risk_type"] for x in _c}))
+    elif _c:
+        _status = "ADDED"
+        _reason = "；".join(sorted({x.get("why_selected") or "" for x in _c}))[:400]
+    else:
+        _status = "REMOVED"
+        _reason = ("台账已无该键（键集本身变化）" if _k not in _ledger_keys
+                   else "键仍在台账，但 %s 定位器下不再命中原风险类型 %s 的入选判据"
+                        % (LOCATOR_VERSION, "/".join(sorted({x["risk_type"] for x in _b}))))
+    _diff_rows.append({
+        "status": _status,
+        "key": _k,
+        "security_id": _k.split("|")[0],
+        "field_id": _k.split("|")[1],
+        "period_key": _k.split("|")[2],
+        "baseline_version": _base_ver,
+        "baseline_sample_id": "/".join(sorted({x["sample_id"] for x in _b})),
+        "baseline_risk_type": "/".join(sorted({x["risk_type"] for x in _b})),
+        "current_sample_id": "/".join(sorted({x["sample_id"] for x in _c})),
+        "current_risk_type": "/".join(sorted({x["risk_type"] for x in _c})),
+        "reason": _reason,
+        "locator_version": LOCATOR_VERSION,
+        "baseline_sha256": _base_sha,
+        "current_sha256": _SHA_SAMPLING,
+    })
+with open(OUT / "sampling_keys_diff.csv", "w", encoding="utf-8-sig", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=list(_diff_rows[0].keys()), lineterminator="\n")
+    w.writeheader()
+    w.writerows(_diff_rows)
+_diff_cnt = Counter(r["status"] for r in _diff_rows)
+
 risk_cnt = Counter(s["risk_type"] for s in samples)
 reread = Counter(s["page_reread"] for s in samples)
 summary = {
     "scope": "分层方法抽验（按风险类型确定性抽样 + 原件物理页回读）",
     "samples": len(samples),
     "risk_types": len(risk_cnt),
+    "unique_keys": len({(s["security_id"], s["field_id"], s["period_key"])
+                        for s in samples}),
     "by_risk": dict(risk_cnt.most_common()),
     "page_reread": dict(reread.most_common()),
     "covered_requirements": {
@@ -707,6 +936,16 @@ summary = {
         "杭叉跨来源限制": any(k.startswith("R10") for k in risk_cnt),
     },
     "note": "抽验是方法覆盖性检验，不构成全量核证；page_reread=MATCH 表示证据文本确实出现在该物理页。",
+    "locator_version": LOCATOR_VERSION,
+    "keys_diff": {
+        "baseline_version": _base_ver,
+        "baseline_sha256": _base_sha,
+        "current_sha256": _SHA_SAMPLING,
+        "by_status": dict(_diff_cnt),
+        "added": [r["key"] for r in _diff_rows if r["status"] == "ADDED"],
+        "removed": [r["key"] for r in _diff_rows if r["status"] == "REMOVED"],
+        "file": "sampling_keys_diff.csv",
+    },
 }
 (OUT / "sampling_v5.json").write_text(
     json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

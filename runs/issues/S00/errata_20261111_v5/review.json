@@ -2,10 +2,10 @@
   "issue_key": "S00",
   "stage": "ERRATA",
   "version": "ERRATA_V5",
-  "self_check_version": "V9",
+  "self_check_version": "V11",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-12T09:40:00+08:00",
+  "reviewed_at": "2026-11-12T23:40:00+08:00",
   "checks_pass": 40,
   "checks_total": 40,
   "checks": [
@@ -138,17 +138,99 @@
     },
     {
       "id": "C14",
-      "name": "已解决重述：裁决类须绑定裁决条目+适用键+裁决结论（引文所在行同时命中三者），确认类事件+来源双证，覆盖类独立重算无缺口",
+      "name": "已解决重述：裁决类须绑定**正式裁决表条目**+适用键+裁决结论（引文所在行必须是裁决表行，裁决项标题须点名该键，`ruled_key` 须与待判键完全一致，且该键须在独立维护的 `ruling_scope.csv` 适用范围内，结论单元格须以裁决结论开头且不得是否定表述），确认类事件+来源双证，覆盖类独立重算无缺口",
       "result": "PASS",
       "detail": {
         "violations": 0,
         "sample": [],
         "rulings": 1,
-        "injection_placeholder_basis": true,
-        "injection_wrong_ruling_line": true,
-        "injection_unrelated_quote_correct_line": true,
-        "injection_key_pattern_other_company": true,
-        "injection_section_not_on_line": true
+        "control_accepted": true,
+        "injections": {
+          "placeholder_basis": {
+            "caught": true,
+            "reason": "RULING_BASIS_TOO_SHORT",
+            "expect": "RULING_BASIS_TOO_SHORT",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "wrong_line": {
+            "caught": true,
+            "reason": "RULING_QUOTE_NOT_AT_LINE",
+            "expect": "RULING_QUOTE_NOT_AT_LINE",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "unrelated_quote": {
+            "caught": true,
+            "reason": "RULING_LINE_NOT_A_RULING_ROW",
+            "expect": "RULING_LINE_NOT_A_RULING_ROW",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "registry_note": {
+            "caught": true,
+            "reason": "RULING_LINE_NOT_A_RULING_ROW",
+            "expect": "RULING_LINE_NOT_A_RULING_ROW",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "key_pattern_other_company": {
+            "caught": true,
+            "reason": "RULING_ITEM_DOES_NOT_NAME_KEY",
+            "expect": "RULING_ITEM_DOES_NOT_NAME_KEY",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "section_not_on_line": {
+            "caught": true,
+            "reason": "RULING_SECTION_MISMATCH",
+            "expect": "RULING_SECTION_MISMATCH",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "generic_ruling_item": {
+            "caught": true,
+            "reason": "RULING_SCOPE_NOT_LISTED",
+            "expect": "RULING_SCOPE_NOT_LISTED",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "field_other_same_company": {
+            "caught": true,
+            "reason": "RULING_KEY_MISMATCH",
+            "expect": "RULING_KEY_MISMATCH",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "both_key_and_ruled_rewritten": {
+            "caught": true,
+            "reason": "RULING_KEY_NOT_IN_SCOPE",
+            "expect": "RULING_KEY_NOT_IN_SCOPE",
+            "ledger_reasons": [
+              "RULING_KEY_MISMATCH"
+            ]
+          },
+          "negative_verdict_substring": {
+            "caught": true,
+            "reason": "RULING_VERDICT_NEGATED",
+            "expect": "RULING_VERDICT_NEGATED",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          }
+        },
+        "injection_count": 10,
+        "not_caught": [],
+        "reason_mismatch": {},
+        "ruling_scope_rows": 1
       }
     },
     {
@@ -293,7 +375,7 @@
     },
     {
       "id": "C24",
-      "name": "补充元数据放行须有外部审查登记表记录：键+终值+原件页定位+印刷值+字段级判断依据；审查角色显式标注（自检亦须标注）",
+      "name": "补充元数据放行须有外部审查登记表记录：键+终值+原件页定位+印刷值+字段级映射规则；审查角色显式标注（自检亦须标注）；无规则字段一律待核",
       "result": "PASS",
       "detail": {
         "leaked": 0,
@@ -301,18 +383,83 @@
         "reason": "",
         "control_key": "SH:600100|FIN.REV.YTD|20250630|value_raw",
         "control_accepted": true,
-        "injection_no_review": true,
-        "injection_misclassified_as_display": true,
-        "injection_unbound_digest": true,
-        "injection_digest_only_no_register": true,
-        "injection_wrong_period_key": true,
-        "injection_placeholder_reviewer_no_date": true,
-        "injection_role_unmarked": true,
-        "injection_fragment_wrong_page": true,
-        "injection_fragment_boilerplate": true,
-        "injection_value_not_declared": true,
-        "injection_basis_placeholder": true,
+        "unit_path_ok": true,
+        "injections": {
+          "no_review": {
+            "caught": true,
+            "reason": "RELEASE_WITHOUT_CONTENT_REVIEW"
+          },
+          "unbound_digest": {
+            "caught": true,
+            "reason": "LEDGER_NOT_LINKED_TO_REVIEW"
+          },
+          "wrong_period_key": {
+            "caught": true,
+            "reason": "REVIEW_KEY_MISMATCH"
+          },
+          "document_mismatch": {
+            "caught": true,
+            "reason": "REVIEW_DOCUMENT_MISMATCH"
+          },
+          "placeholder_reviewer": {
+            "caught": true,
+            "reason": "REVIEW_WITHOUT_REVIEWER"
+          },
+          "no_date": {
+            "caught": true,
+            "reason": "REVIEW_WITHOUT_DATE"
+          },
+          "role_unmarked": {
+            "caught": true,
+            "reason": "REVIEW_ROLE_UNMARKED"
+          },
+          "conclusion_invalid": {
+            "caught": true,
+            "reason": "REVIEW_WITHOUT_CONCLUSION"
+          },
+          "fragment_wrong_page": {
+            "caught": true,
+            "reason": "REVIEW_FRAGMENT_NOT_IN_ORIGINAL_PAGE"
+          },
+          "fragment_boilerplate": {
+            "caught": true,
+            "reason": "REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT"
+          },
+          "value_not_declared": {
+            "caught": true,
+            "reason": "REVIEW_VALUE_NOT_DECLARED"
+          },
+          "basis_placeholder": {
+            "caught": true,
+            "reason": "REVIEW_BASIS_TOO_SHORT"
+          },
+          "same_page_other_amount": {
+            "caught": true,
+            "reason": "REVIEW_PRINTED_VALUE_NOT_SUPPORT_VALUE"
+          }
+        },
+        "injection_keys_equal_expect": true,
+        "expect_reason_keys": 13,
+        "key_gap": [],
+        "key_extra": [],
+        "reason_mismatch": {},
+        "not_exercised": {},
+        "injection_enum_rule_undefined": "REVIEW_FIELD_RULE_UNDEFINED",
+        "injection_enum_ok": true,
         "review_register_rows": 0,
+        "rule_undefined_fields": [
+          "adoption_reason",
+          "comparability_note",
+          "low_base_flag",
+          "original_document_id",
+          "period_source",
+          "quarterly_inputs",
+          "slot_id",
+          "source_kind",
+          "status_reason",
+          "upstream_hold_fields",
+          "version_used"
+        ],
         "pending": 1505
       }
     },
@@ -382,7 +529,7 @@
       "detail": {
         "samples": 37,
         "risk_types": 20,
-        "unique_keys": 26,
+        "unique_keys": 27,
         "missing": [],
         "extra_covered": true,
         "reread_bad": 0,
@@ -433,12 +580,19 @@
     },
     {
       "id": "C34",
-      "name": "极性回归：22 条反例（含第八轮裁决表五条原文用例 + 三协电机真实版面）",
+      "name": "极性回归：33 条反例（含第八轮裁决表五条原文用例 + 三协电机真实版面）；1,007 份存量证据 A/B 回放须分句与极性均零变化",
       "result": "PASS",
       "detail": {
         "violations": [],
-        "case_count": 22,
+        "case_count": 33,
         "case_failures": [],
+        "replay_ab": {
+          "documents": 1007,
+          "clause_changed": 0,
+          "polarity_changed": 0,
+          "note": "A/B 对照：old = 第十轮判据（_new_subject 恒 False），new = 第十一轮判据（结构性新主语）。分句逻辑本轮未改，故 clause_changed 应为 0。",
+          "changed_samples": []
+        },
         "cases": {
           "neg": "本公司未发生前期差错更正",
           "pos": "本期发生前期差错更正",
@@ -469,7 +623,7 @@
     },
     {
       "id": "C37",
-      "name": "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开",
+      "name": "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开；栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类",
       "result": "PASS",
       "detail": {
         "violations": [],
@@ -478,6 +632,7 @@
         "verification_chain": {
           "with_record": true,
           "no_record": true,
+          "quote_other_metric": true,
           "wrong_conclusion": true,
           "value_mismatch": true,
           "quote_not_located": true,
@@ -488,15 +643,59 @@
           "p2_doc_mismatch": true,
           "period_mismatch": true,
           "column_empty": true,
+          "column_not_period": true,
+          "column_not_in_quote": true,
+          "page_invalid": true,
+          "quote_on_wrong_page": true,
           "adjust_version_invalid": true,
-          "adjust_version_inconsistent": true,
+          "adjust_version_mismatch": true,
+          "adjust_version_other_side": true,
           "scope_mismatch": true,
           "scope_basis_missing": true,
           "reviewer_placeholder": true,
           "no_date": true,
           "role_unmarked": true,
-          "quote_without_parent_value": true
+          "quote_without_parent_value": true,
+          "original_quote_with_restated_mark": true,
+          "real_wrong_column": true,
+          "real_column_unresolved": true
         },
+        "reject_reasons": {
+          "quote_other_metric": "PARENT_QUOTE_WITHOUT_TARGET_METRIC",
+          "wrong_conclusion": "VERIFICATION_NOT_COMPATIBLE",
+          "value_mismatch": "PARENT_VALUE_MISMATCH",
+          "quote_not_located": "PARENT_QUOTE_NOT_LOCATED",
+          "empty_scope": "SCOPE_FIELD_EMPTY",
+          "no_reviewer": "VERIFICATION_WITHOUT_REVIEWER",
+          "p2_quote_missing": "PARENT_QUOTE_TOO_SHORT",
+          "doc_mismatch": "PARENT_DOC_MISMATCH",
+          "p2_doc_mismatch": "PARENT_DOC_MISMATCH",
+          "period_mismatch": "PARENT_PERIOD_MISMATCH",
+          "column_empty": "PARENT_COLUMN_EMPTY",
+          "column_not_period": "PARENT_COLUMN_NOT_PERIOD",
+          "column_not_in_quote": "PARENT_COLUMN_NOT_IN_QUOTE",
+          "page_invalid": "PARENT_PAGE_INVALID",
+          "quote_on_wrong_page": "PARENT_SOURCE_UNAVAILABLE",
+          "adjust_version_invalid": "PARENT_ADJUST_VERSION_INVALID",
+          "adjust_version_mismatch": "PARENT_ADJUST_VERSION_MISMATCH",
+          "adjust_version_other_side": "PARENT_ADJUST_VERSION_MISMATCH",
+          "scope_mismatch": "SCOPE_MISMATCH_WITH_PARENT",
+          "scope_basis_missing": "SCOPE_BASIS_MISSING",
+          "reviewer_placeholder": "VERIFICATION_WITHOUT_REVIEWER",
+          "no_date": "VERIFICATION_WITHOUT_DATE",
+          "role_unmarked": "VERIFICATION_WITHOUT_ROLE",
+          "quote_without_parent_value": "PARENT_QUOTE_WITHOUT_TARGET_METRIC",
+          "original_quote_with_restated_mark": "PARENT_QUOTE_NOT_LOCATED"
+        },
+        "unit_paths_ok": true,
+        "real_original_positive": true,
+        "real_original_key": "SH:600008|FIN.OCF.SQ|20260630",
+        "real_original_columns": {
+          "p1": "本期数",
+          "p2": "本报告期"
+        },
+        "real_wrong_column_reason": "PARENT_COLUMN_MISMATCH",
+        "real_column_unresolved_reason": "PARENT_COLUMN_UNRESOLVED",
         "register_rows": 0,
         "reopened_pending": 1277,
         "cumulative_diff_rows": 1419
@@ -509,7 +708,7 @@
       "detail": {
         "violations": [],
         "detail": {
-          "key": "BJ:920022|FIN.NPDEDT.SQ|20250630",
+          "key": "BJ:920100|FIN.REV.SQ|20250630",
           "without_record": "PENDING_SOURCE_PROVENANCE",
           "with_record": "PENDING_CAUSE_UNCOVERED",
           "with_parent_dim_only": "PENDING_SOURCE_PROVENANCE",
@@ -521,6 +720,10 @@
             "COMPARATIVE_SCOPE",
             "QUARTERLY_TABLE_PROVENANCE"
           ],
+          "evidence_pages": {
+            "COMPARATIVE_SCOPE": "149",
+            "QUARTERLY_TABLE_PROVENANCE": "10"
+          },
           "rejected_wrong_conclusion": true,
           "rejected_unlocatable_quote": true,
           "rejected_no_reviewer": true,
@@ -529,7 +732,10 @@
           "rejected_other_document": true,
           "rejected_parent_dimension": true,
           "rejected_wrong_target": true,
-          "rejected_quote_without_year": true
+          "rejected_quote_without_year": true,
+          "rejected_quote_on_wrong_page": true,
+          "rejected_quote_without_dim_marker": true,
+          "rejected_page_invalid": true
         },
         "register_rows": 0,
         "pending_source_provenance": 47
@@ -565,26 +771,41 @@
       "parent_incompatible": "PENDING_PARENT_COMPATIBILITY"
     }
   },
-  "round9_fixes": [
-    "选项组不再被换行切碎：连续碎片在含 ≥2 个符号时先拼回一组，纯原因标签（前期差错更正）留在组外；「每个□后插换行」的两种变体由反向解（excluded=ERRATA/affirmed=POLICY_CHANGE）改为与单行一致 → C34 增至 22 条反例",
-    "金额改为逐个判定：零值与非零值分别绑定，「影响0.00元及对净资产影响100.00元」恢复事件肯定",
-    "撤销「已有 excluded 就压掉后续非零金额肯定」：勾选√不适用与非零金额并存时保留 conflict，不再按勾选静默放行",
-    "父输入核证登记绑定实际父输入：p1/p2 的文档、期间、终值、取值栏目、调整前后版本、口径三元组必须逐项一致，引文须含该父数，reviewer/日期/审查角色不得占位 → C37 注入链 20 环",
-    "C24 补五道：真实日期、审查角色显式标注、原件该页逐字命中（不再用 results.csv.evidence 自证）、原文印刷值、字段级判断依据；并给出正例对照证明门槛可满足 → 注入 11 种绕过",
-    "C14 绑定「该段确实裁决该键」：引文所在行须同时命中裁决条目、本键识别信息、裁决结论；「无关引文＋其正确行号」不再通过 → 注入 5 种绕过",
-    "C38 来源维度限定为 COMPARATIVE_SCOPE / QUARTERLY_TABLE_PROVENANCE，且须绑定 target_field/target_period/实际供给文档/期间年份；judge(scope_ok) 同步只接受这两类，父输入兼容不得被顶替",
-    "R6 改为两个实际累计父数各自按金额定位，并交付期间列、表头单位字面、调整前后版本、同版本/同采用文档判定与兼容缺口；结论明确写「定位不构成兼容已证」",
-    "抽验表 _pc 与生产统一为核证登记表唯一来源（撤销同文档/上游双否/采用同文档三条捷径）",
-    "上游 verdict 与原文极性相反的行逐条登记 evidence_conflicts.csv，并给出该文档在 B 中的传播范围"
+  "round10_fixes": [
+    "极性 A 项五条新绕过全修：单符号跨行（√ 独占一行）合并、含符号的原因标签仍作主语行、「适用」与「某原因未勾」并存判歧义、无关报表项目金额不再承接为主语肯定、单原因分句金额直绑（不再受 24 字半径限制）→ C34 增至 30 条反例；回放 1,007 份证据分句变化 0 / 极性变化 0",
+    "父输入单位折算键名修正：gap() 原读 expect[side]['unit']，_expect() 给的是 unit_scale，折算恒为 1 倍（187,875.40 万元 = 1,878,754,000 元 会被拒）→ 统一改读 unit_scale，并限定金额字段只接受 1/1000/10000 三档",
+    "父输入栏目与版本改为可核：栏目须为期间列头且出现在引文中；调整版本须等于该父实际 version_used 的归类（ORIGINAL / RESTATED），且引文须有对应标记（重述后 / 无调整后列）",
+    "父输入引文源改为回读原件登记页（_pdf_page），不再用 results.csv.evidence 上游摘录；C37 注入链（第十一轮扩到 29 环）+ 真实原件阳性 + 单位三档 + 错误栏目 + 同数异义负例，并逐项断言拒绝原因",
+    "C24 数值解析修正：先去掉千分位逗号再比较；同页上年数冒充本期终值不再过关；并新增登记记录必须属于该键（REVIEW_KEY_MISMATCH）",
+    "C24 枚举字段不再由自述承担举证：改为字段规则表 FIELD_RULES（NUM/UNIT/DATE/LITERAL/SELF_PAGE），11 个无规则字段一律 REVIEW_FIELD_RULE_UNDEFINED 留待核",
+    "C24 故障注入改为以完整正例为基线、每次只改一个条件，并断言具体拒绝原因（13 种 + 枚举 1 种）",
+    "C14 绑定正式裁决表条目：引文所在行必须是裁决表行（| Qn … |），裁决项标题必须点名该键，结论须来自该行结论单元格 → 「三项都填大豪科技 + 引第 88 行登记说明」不再通过",
+    "C38 来源维度核对 source_page 并绑定维度证据载体：引文须落在登记页，且须含分季度/比较/上年同期等该维度自己的关键词；封面片段「Ltd.年度报告——2025——」不再同时取得两个维度",
+    "R6 改为按词坐标确认目标行与目标列：金额所在行的左侧标签须含目标指标（支持换行标签回退），列头取金额 x 区间正上方最近的期间列头，单位绑定该表表头并做固定映射对照，调整前后取原件列头附近标记；三条样本 p1/p2 均 LOCATED_OK"
+  ],
+  "interrupt_fixes_round11": [
+    "C14 裁决只解除它裁定的那一个键：`ruling_gap()` 新增 `ruled_key` 必须与待判键三元组完全相等（`RULING_RULED_KEY_MISSING` / `RULING_KEY_MISMATCH`）。此前只在 `check_c14` 里比对，单独调判据时同一公司的其他字段也能过——判据必须自带绑定，不能靠调用方代劳",
+    "C14 结论不得用否定表述：`ruling_verdict` 须与结论单元格去掉强调符后**前缀匹配**（`RULING_VERDICT_NOT_IN_ROW`），且不得含否定词（`RULING_VERDICT_NEGATED`）。此前只查子串，从同一格末尾截出「不代表全公司验收」即可通过"
+  ],
+  "round11_fixes": [
+    "A｜极性「结构性新主语」：金额左侧紧跟片段以名词收尾（且不含受影响权益项目、不是动词/量词/标点收尾）即判为新主语，不再承接前一分句的原因。「前期差错更正对期初未分配利润影响0.00元，其中营业总收入100.00元」不再把 100.00 判成 ERRATA 肯定 → C34 增至 33 条反例（新增 ⑭ 词表外/词表内项目切换、⑮ 权益项目续写守护）",
+    "B｜父输入栏目改按**词坐标**核实：金额词 → x 中心 → 同 x 区间上方最近的非数值词 = 实际列头，与登记的 p1_column/p2_column 归一化后比对；取不到列头记 PARENT_COLUMN_UNRESOLVED。BJ:920289 的「上年同期」冒充「本期」不再过关；C37 新增 2 条真实负例（错列 / 列头不可解）",
+    "C｜C24 文本字段改按**标签**绑定：unit_raw 须见「单位：」、currency 须见「币种/货币/记账本位币」，且 evidence_label 须与紧随其后的金额相邻（20 字内出现数字），不再拿片段里的「2025」蒙过；SELF_PAGE 改为**独立定位**——该行金额在原件里最早出现的页，而不是比对两个自报页码",
+    "D｜C14 裁决适用范围独立维护：新增 ruling_scope.csv（section → allowed_key），裁决必须同时满足「ruled_key 精确等于待判键」与「该键在登记范围内」（RULING_KEY_NOT_IN_SCOPE）；`key` 与 `ruled_key` 一起改写不再能借用原裁决",
+    "E｜C38 维度证据要求「目标指标名 + 该行具体期间表述 + 维度载体」同页同窗口，窗口须含该行年份；经营计划叙述「报告期初比较」不再算 COMPARATIVE_SCOPE 覆盖",
+    "F｜R6 词坐标：断行标签向上回看 3 行逐行拼接，直到出现目标指标名；调整前后标记只取与金额 x 区间重叠的词，页内别列的「调整前」不再串味；600053 断行误判改判为已定位",
+    "G｜C24 注入键集合与预期原因集合**严格相等**（key_gap / key_extra 均为 0 才算过）；no_review / unbound_digest 改为从 extra_leaks 捕获实际拒绝原因，不再写死字符串；fragment_wrong_page 纳入预期原因表；条件型注入构造不出对照物时记 not_exercised 并判失败，不再用「(True, 占位原因)」蒙混；枚举注入把 REVIEW_FIELD_RULE_UNDEFINED 纳入 PASS 条件；C14 注入同样改为一张表管住「注入名→改法→预期原因」，10 种逐项比对",
+    "H（维护意见）｜同一份自检摘要不再维护两处：active_issue.json 顶层 self_check 降为指针，canonical 指向 s00_errata.self_check，避免明细两处漂移",
+    "新增 sampling_keys_diff.csv：抽样键集相对上一交付版（V10）的增加/删除/保留逐键留痕，带样本 ID、原因、定位器版本与前后来源哈希；基线冻结在 sampling_keys_baseline.csv"
   ],
   "open_findings": [
-    "9,954 条 NOTE_TRACE_NA 已解决项尚未做方法适用性复审（631 份文档，已解除 8,655 条 / 630 份；不等于全部错误）",
+    "NOTE_TRACE_NA 总量 9,954 条 / 631 份文档；其中已解除 8,655 条 / 630 份，剩余 1,299 条 / 1 份仍待核。第 4 步须按「文档版本+具体栏目+实际选项组+覆盖期间」核共同事实再映射成员键，已解除的 8,655 条同样复审",
     "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
     "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位，属上游核验记录问题",
     "第 4 步批量核证（文档级事件确认 / 字段级影响确认 / 采用链确认）未开始",
     "第 5 步重算分层与受限表未开始；44/231/378 未锁定",
     "锚定期回退与上游准入的间接依赖未覆盖"
   ],
-  "not_independent": "执行方自检，不构成独立验收；仅抽验 37 条回读原件物理页。",
+  "not_independent": "执行方自检，不构成独立验收；仅抽验 37 行 / 20 类 / 27 键回读原件物理页（见 sampling_v5.json 的 samples / risk_types / unique_keys）。",
   "release_S05": false
 }
