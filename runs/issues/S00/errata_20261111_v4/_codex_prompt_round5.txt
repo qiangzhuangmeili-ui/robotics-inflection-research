@@ -1,0 +1,28 @@
+你是这个仓库（A 股机器人产业链「行业拐点」研究流水线）的独立复核方。上一轮你裁定 S00 勘误 V3 退回返工，核心意见是「应用脚本的广播范围不是核验证据的适用范围」，并指出：山东钢铁 4 条误判已解决、累计父输入展开未实现、C21 未拆分、补充元数据仍同键兜底、published_on/source_kind/adoption_reason 不能算展示、台账截断、杭叉归因写错、26 条表述过度。
+
+执行方已按此返工出 V4。请做第五轮复核。
+
+必读：
+1. runs/issues/S00/errata_20261111_v4/report_to_codex_round5.md —— 本轮汇报，含五个待裁决问题
+2. runs/issues/S00/errata_20261111_v4/REPORT.md、handoff.md
+3. runs/issues/S00/errata_20261111_v3/codex_ruling_round4.md —— 你上一轮裁决
+4. runs/issues/S00/errata_20261111_v4/l2_core.py —— 期间与父键依赖的唯一实现
+5. runs/issues/S00/errata_20261111_v4/build_errata_v4.py、check_l2_v4.py、verify_v4.py
+6. runs/issues/S00/errata_20261111_v4/summary.json、l2_dependency_summary.json、review.json、manifest.json
+7. runs/issues/S00/errata_20261111_v4/cell_diff.csv、key_diff.csv、meta_diff.csv、extra_meta_diff.csv、l2_dependency_check.csv、restricted_claims.csv
+8. tools/s00_restatement_apply.py、runs/issues/S02/remediation_20261029/restatement_verify/results.csv
+9. runs/collection/collection_index.csv
+10. data/active_issue.json
+
+请重点核实：
+A. 重述三态化是否真的落实了「文档定位与证据适用范围分离」。判据是「行期间是否等于文档自身期间」——这个判据本身是否成立？有没有比它更合适的判据？1,148 条是否既没有多判也没有少判？
+B. l2_core.py 的 field_keys 递归是否正确、是否有环或重复、是否真的接入了生产判定与自检（不是自检另写一套）。V4 开发中 C18 曾抓到「把字段名当指标名查」的实现错误，请确认现在没有同类残留。
+C. C21a/C21b/C21c 是否真的各自独立；C13/C14/C17 是否仍存在其他空转方式。
+D. 1,273 格补充元数据全部转待核，是否过度？232 格判为展示是否仍偏松？完整值是否真的不截断？
+E. 下游 HOLD 从 14 涨到 37，是判据变严的正确结果，还是待核过度传播导致的失真？R2 203 家是否仍只是待排查集合？
+F. 受限名单 253 行是否满足上一轮 Q1 的字段与可追溯要求。
+G. 核实 2,497 / 3,770 是否仍偏小，是否还有未登记差异；以及「不给出最终未闭合数」这一表述是否恰当。
+
+裁决五个问题：1,148 条待范围对账的核验粒度；待核是否应阻断信号；1,273 格字段级核验标准；26 条（3 文档）能否复用采用链证据；下一步顺序与是否需要先做方法抽验。
+
+要求：只读检查，不修改仓库、不提交、不改 GitHub。给出可复现依据（文件、行号、复算数字）。发现执行方数字或结论有错，直接说错在哪、正确是多少。最后用中文给出可存档为 codex_ruling_round5.md 的书面裁决。

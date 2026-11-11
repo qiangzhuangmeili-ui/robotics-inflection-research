@@ -127,6 +127,14 @@ with open(P_REGISTRY, encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
         doc_period[r["document_id"]] = PERIOD_LABEL_TO_KEY.get(r.get("period_label", ""), "")
 
+# 已由独立复核裁决解除的具体争议：不得按新判据重新挂起
+P_RULED = OUT / "rulings_resolved.json"
+RULED = {}
+if P_RULED.exists():
+    _d = json.loads(P_RULED.read_text(encoding="utf-8"))
+    RULED = {e["key"]: e for e in _d.get("entries", [])}
+    print("已裁决解除项:", len(RULED))
+
 v9sum = json.loads(P_V9SUM.read_text(encoding="utf-8"))
 v9_added = {(x["security_id"], x["field_id"], x["period_key"])
             for x in v9sum.get("detail_added", [])}
@@ -285,7 +293,11 @@ for fld in META_FIELDS:
             doc = b.get("document_id", "")
             rec = vrec.get(doc) if doc else None
             own = doc_period.get(doc, "") if doc else ""
-            if not doc:
+            rk = "%s|%s|%s" % (k[0], k[1], k[2])
+            if rk in RULED:
+                resolution = "RESOLVED_BY_RULING"
+                evidence = "独立复核已裁决解除：%s" % RULED[rk]["basis"][:90]
+            elif not doc:
                 resolution = "UNRESOLVED_NO_DOCUMENT"
                 evidence = "B 该行无 document_id，无法定位供给文档"
             elif rec is None:

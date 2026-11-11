@@ -2,11 +2,12 @@
   "issue_key": "S00",
   "stage": "ERRATA",
   "version": "ERRATA_V5",
+  "self_check_version": "V6",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-12T01:30:00+08:00",
-  "checks_pass": 34,
-  "checks_total": 34,
+  "reviewed_at": "2026-11-12T03:20:00+08:00",
+  "checks_pass": 37,
+  "checks_total": 37,
   "checks": [
     {
       "id": "C01",
@@ -75,11 +76,11 @@
       "detail": {
         "total": 1054,
         "by_verdict": {
-          "R1_NO_LINK": 403,
+          "R1_NO_LINK": 402,
           "HOLD_PENDING_ERRATA": 43,
-          "R2_MAY_CHANGE": 206,
-          "NOT_AFFECTED": 330,
-          "STILL_PASSES_WITHOUT": 72
+          "R2_MAY_CHANGE": 207,
+          "NOT_AFFECTED": 329,
+          "STILL_PASSES_WITHOUT": 73
         }
       }
     },
@@ -96,8 +97,8 @@
       "name": "核心未闭合+待核与 summary 一致",
       "result": "PASS",
       "detail": {
-        "computed": 7799,
-        "declared": 7799
+        "computed": 7841,
+        "declared": 7841
       }
     },
     {
@@ -137,11 +138,12 @@
     },
     {
       "id": "C14",
-      "name": "已解决重述：证据覆盖范围 ⊇ 必需范围（独立重算）",
+      "name": "已解决重述：裁决类命中裁决清单、确认类事件+来源双证、覆盖类独立重算无缺口",
       "result": "PASS",
       "detail": {
         "violations": 0,
-        "sample": []
+        "sample": [],
+        "rulings": 1
       }
     },
     {
@@ -191,11 +193,32 @@
     },
     {
       "id": "C20",
-      "name": "受限表字段完整（含快照哈希、台账版本与差异 ID 列）",
+      "name": "受限表字段完整（含逐表差异 ID 与逐表哈希）",
       "result": "PASS",
       "detail": {
-        "rows": 292,
-        "cols": 19
+        "rows": 294,
+        "cols": 27,
+        "missing": []
+      }
+    },
+    {
+      "id": "C25",
+      "name": "受限表全部行 snapshot_hash 与实际快照一致",
+      "result": "PASS",
+      "detail": {
+        "snapshot_sha": "5857e07960e449ed",
+        "rows_checked": 294
+      }
+    },
+    {
+      "id": "C35",
+      "name": "受限表逐表哈希 + 差异台账逐条源表哈希均与文件实算一致",
+      "result": "PASS",
+      "detail": {
+        "restricted_bad": 0,
+        "ledger_bad": 0,
+        "bundle": "240446982897d800",
+        "ledger_rows": 9346
       }
     },
     {
@@ -226,11 +249,34 @@
       "id": "C22",
       "name": "V5 台账代入同一套检查必须全 PASS",
       "result": "PASS",
-      "detail": {}
+      "detail": {
+        "C13": 0,
+        "C14": 0,
+        "C17": 0,
+        "C26": 0
+      }
+    },
+    {
+      "id": "C30",
+      "name": "V4 旧标签映射后仍必须 FAIL，且三种实质反例各自命中特定标签",
+      "result": "PASS",
+      "detail": {
+        "v4_c26_violations": 6457,
+        "v4_c14_violations": 5345,
+        "v4_limited_own_period": 5270,
+        "inject_scope_insufficient": "PENDING_SOURCE_PROVENANCE",
+        "inject_parent_incompatible": "PENDING_PARENT_COMPATIBILITY",
+        "inject_cause_affirmed": "UNRESOLVED_EVIDENCE_CONTRADICTS",
+        "probes": [
+          "BJ:920022|FIN.NPDEDT.SQ|20250630",
+          "SH:600008|FIN.NPDEDT.SQ|20260630",
+          "BJ:920011|FIN.AR.INSTANT|20250630"
+        ]
+      }
     },
     {
       "id": "C23",
-      "name": "山东钢铁四条待核 + 全量比较列/分季度表取值不得判已解决",
+      "name": "山东钢铁四条待核 + 非自身期间一律不得判已解决",
       "result": "PASS",
       "detail": {
         "sd_found": 4,
@@ -242,30 +288,35 @@
     },
     {
       "id": "C24",
-      "name": "补充元数据放行须满足证据条件（来源变更不得算展示）",
+      "name": "补充元数据放行须有 content_review 记录（来源变更不得算展示）",
       "result": "PASS",
       "detail": {
         "leaked": 0,
         "sample": [],
+        "injection_caught": true,
         "pending": 1505
       }
     },
     {
-      "id": "C25",
-      "name": "受限表全部行 snapshot_hash 与实际快照一致",
-      "result": "PASS",
-      "detail": {
-        "snapshot_sha": "5857e07960e449ed",
-        "rows_checked": 292
-      }
-    },
-    {
       "id": "C26",
-      "name": "通用范围断言：已解决↔覆盖充分双向一致（全量 17,009 条重算）",
+      "name": "全类别双向重算（17,009 条，含裁决类与确认类）",
       "result": "PASS",
       "detail": {
         "violations": 0,
-        "sample": []
+        "sample": [],
+        "labels": {
+          "RESOLVED_SCOPE_COVERED": 9971,
+          "PENDING_WEAK_ASSUMPTION": 515,
+          "PENDING_SOURCE_PROVENANCE": 47,
+          "PENDING_SCOPE_LIMITED_METHOD": 6373,
+          "PENDING_CAUSE_UNCOVERED": 58,
+          "PENDING_CONFIRMED_EVENT_FIELD_OPEN": 8,
+          "PENDING_PARENT_COMPATIBILITY": 5,
+          "PENDING_CONFIRMED_UNSUPPORTED": 1,
+          "RESOLVED_BY_RULING": 1,
+          "UNRESOLVED_DOC_NEVER_VERIFIED": 26,
+          "UNRESOLVED_EVIDENCE_MISMATCH": 4
+        }
       }
     },
     {
@@ -280,20 +331,22 @@
     },
     {
       "id": "C28",
-      "name": "差异 ID 唯一、稳定且受限行逐项可回溯",
+      "name": "差异 ID 稳定、逐表引用同键、受限行逐项可回溯",
       "result": "PASS",
       "detail": {
-        "ledger_ids": 9304,
-        "unique": 9304,
+        "ledger_ids": 9346,
+        "unique": 9346,
         "dups": 0,
-        "used_ids": 281,
+        "used_ids": 283,
         "unmapped": 0,
-        "count_mismatch": 0
+        "count_mismatch": 0,
+        "id_unstable": 0,
+        "per_table_bad": 0
       }
     },
     {
       "id": "C29",
-      "name": "不得存在「仅凭期间相等」的闭合（已解决项必须写明覆盖范围）",
+      "name": "不得存在「仅凭期间相等」的闭合（按重算覆盖判定，不看台账自报）",
       "result": "PASS",
       "detail": {
         "violations": 0,
@@ -301,29 +354,28 @@
       }
     },
     {
-      "id": "C30",
-      "name": "V4 台账代入新判据必须 FAIL（受限方法自动闭合被拦住）",
-      "result": "PASS",
-      "detail": {
-        "v4_C14_violations": 15316,
-        "v4_limited_own_period": 5270
-      }
-    },
-    {
       "id": "C31",
-      "name": "分层抽验覆盖全部必需风险类型且原件回读无失配",
+      "name": "分层抽验覆盖 12 类必需风险 + 补充字段，原件回读无失配",
       "result": "PASS",
       "detail": {
-        "samples": 26,
-        "risk_types": 16,
+        "samples": 37,
+        "risk_types": 20,
         "missing": [],
         "extra_covered": true,
         "reread_bad": 0,
+        "r7_bad": 0,
         "reread": {
-          "MATCH": 15,
-          "NO_PAGE_RECORDED": 3,
-          "PARTIAL": 2,
-          "NOT_APPLICABLE_EXTRA_FIELD": 6
+          "MATCH": 17,
+          "NO_PAGE_RECORDED": 4,
+          "PARTIAL": 7,
+          "NOT_APPLICABLE_EXTRA_FIELD": 6,
+          "WEAK_LOCATE(p.60)": 1,
+          "WEAK_LOCATE(p.159)": 1,
+          "NOT_FOUND_IN_DOC": 1
+        },
+        "r7_conclusion": {
+          "SUMMARY_NOTE_NOT_VERBATIM": 2,
+          "NOT_FOUND": 1
         }
       }
     },
@@ -340,6 +392,31 @@
         ],
         "hangcha": 2
       }
+    },
+    {
+      "id": "C33",
+      "name": "期间参数三态与「非自身期间必须要求比较范围」",
+      "result": "PASS",
+      "detail": {
+        "violations": 0,
+        "sample": [],
+        "comparative_rows": 1240
+      }
+    },
+    {
+      "id": "C34",
+      "name": "极性四反例：肯定发生/政策变更/100.00元 不误命中/勾选式不适用",
+      "result": "PASS",
+      "detail": {
+        "violations": [],
+        "cases": {
+          "neg": "本公司未发生前期差错更正",
+          "pos": "本期发生前期差错更正",
+          "hundred": "前期差错更正调整 100.00 元",
+          "checkbox": "追溯重述法；□适用 √不适用",
+          "scoped_zero": "…影响期初未分配利润0.00元"
+        }
+      }
     }
   ],
   "fault_injection": {
@@ -350,27 +427,47 @@
       "C13_bad": 6,
       "C14_bad": 11936,
       "C17_bad": 12076,
+      "C26_bad": 17009,
       "pass": false
     },
-    "V4": {
-      "cell_rows": 240,
-      "key_rows": 2056,
-      "meta_rows": 17728,
-      "C13_bad": 0,
-      "C14_bad": 15316,
-      "C17_bad": 15316,
-      "pass": false
+    "V4_mapped": {
+      "C14": 5345,
+      "C26": 6457,
+      "limited_method_own_period": 5270
     },
-    "V5_pass": true
+    "V5_self": {
+      "C13": 0,
+      "C14": 0,
+      "C17": 0,
+      "C26": 0,
+      "pass": true
+    },
+    "targeted": {
+      "scope_insufficient": "PENDING_SOURCE_PROVENANCE",
+      "cause_affirmed": "UNRESOLVED_EVIDENCE_CONTRADICTS",
+      "parent_incompatible": "PENDING_PARENT_COMPATIBILITY"
+    }
   },
-  "v4_defects_fixed": [
-    "取消「行期间==文档自身期间即闭合」→ evidence_scope.required_scope/coverage_of + C14/C26",
-    "5,270 条受限方法自动闭合转入待核 → C30 用 V4 台账反向验证",
-    "依赖引擎读实际行状态，取消直接分季度表的累计依赖与 Q1 减上年年末 → C27",
-    "补充元数据 232 格取消整体展示归类 → C24（来源变更不得算展示）",
-    "受限表改为逐条绑定唯一差异 ID 并绑定台账版本 → C20/C28",
-    "C13/C17 从单一标签扩到全部已解决标签 → C13/C17"
+  "round6_fixes": [
+    "期间参数改为显式三态 is_own_period(document_period,row_period)，非自身期间强制要求 COMPARATIVE_SCOPE，未知期间单列 DOC_PERIOD_UNKNOWN → C33",
+    "撤销「同报告内 YTD 相减自动抵消」，改为 PARENT_COMPATIBILITY 并逐行核父输入文档/版本/合并范围/单位 → C26/C27/C30",
+    "极性改按分句三分（EXCLUDED/AFFIRMED/SCOPED_ONLY），0.00元 用负向后视，勾选式向下配对 → C34",
+    "C14 裁决类必须命中 rulings_resolved.json 且键一致；确认类须事件+来源双证",
+    "C24 放行须有 content_review 记录，并注入「无审查记录放行」反例",
+    "C26 全类别双向重算，裁决类与确认类不再跳过",
+    "C28 差异 ID 去掉处置状态 + 逐表引用同键校验",
+    "C29 按重算覆盖判定，不看台账自报列",
+    "C30 先把 V4 旧标签映射为当前类别，再注入范围不足/肯定发生/父输入不兼容三反例",
+    "C35 受限表逐表哈希 + 差异台账逐条源表哈希（原基础列全填 meta_diff）"
   ],
-  "not_independent": "执行方自检，不构成独立验收；未回读 PDF。",
+  "open_findings": [
+    "9,927 条 NOTE_TRACE_NA 已解决项尚未做方法适用性复审（不等于全部错误）",
+    "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
+    "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位，属上游核验记录问题",
+    "第 4 步批量核证（文档级事件确认 / 字段级影响确认 / 采用链确认）未开始",
+    "第 5 步重算分层与受限表未开始；43/207/445 未锁定",
+    "锚定期回退与上游准入的间接依赖未覆盖"
+  ],
+  "not_independent": "执行方自检，不构成独立验收；仅抽验 37 条回读原件物理页。",
   "release_S05": false
 }

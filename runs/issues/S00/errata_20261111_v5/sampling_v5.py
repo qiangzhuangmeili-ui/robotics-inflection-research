@@ -56,6 +56,65 @@ def norm(s):
     return re.sub(r"\s+", "", s or "")
 
 
+QMAP = {"0331": "1231", "0630": "0331", "0930": "0630", "1231": "0930"}
+
+
+def prev_quarter(pk):
+    tail = pk[4:]
+    if tail == "0331":
+        return str(int(pk[:4]) - 1) + "1231"
+    return pk[:4] + QMAP[tail]
+
+
+def cross_doc_parent(sec, fld, pk):
+    """累计差分行的两个父输入是否来自不同文档（第六轮裁决要求单独抽验的情形）。"""
+    if fld not in es.SIMPLE_SQ:
+        return None
+    ytd = fld[:-3] + ".YTD"
+    p1 = D10.get((sec, ytd, pk))
+    p2 = D10.get((sec, ytd, prev_quarter(pk)))
+    if not p1 or not p2:
+        return None
+    d1, d2 = p1.get("document_id", ""), p2.get("document_id", "")
+    return (d1 != d2, d1, d2)
+
+
+def locate_in_doc(sec, doc, evidence, near=None):
+    """全文定位：PARTIAL 样本必须在原件里找到原文所在物理页，而不是停在「部分命中」。"""
+    code = sec.split(":")[1]
+    pdf = None
+    for p in (ORIG / code).rglob(doc + ".pdf"):
+        pdf = p
+        break
+    if pdf is None:
+        return "PDF_MISSING", 0, ""
+    try:
+        import pymupdf
+        d = pymupdf.open(str(pdf))
+        ev = norm(evidence)
+        # 取证据中最长的一段连续片段作为定位锚（每 12 字一窗，取命中率最高页）
+        wins = [ev[i:i + 12] for i in range(0, max(1, len(ev) - 11), 6)]
+        best, best_n, best_txt = 0, -1, ""
+        for i in range(d.page_count):
+            t = norm(d[i].get_text())
+            if not t:
+                continue
+            n = sum(1 for w in wins if w in t)
+            if n > best_n:
+                best, best_n, best_txt = i + 1, n, t[:120]
+            if n == len(wins) and wins:
+                break
+        d.close()
+    except Exception as e:
+        return "READ_ERROR:%s" % e, 0, ""
+    if best_n <= 0:
+        return "NOT_FOUND_IN_DOC", 0, ""
+    ratio = best_n / max(1, len(wins))
+    tag = "LOCATED" if ratio >= 0.5 else "WEAK_LOCATE"
+    return ("%s(p.%d)" % (tag, best)), round(ratio, 3), best_txt
+
+
+
 def page_match(sec, doc, page, evidence):
     """回读原件物理页，检验证据文本是否真的出现在该页。"""
     code = sec.split(":")[1]
@@ -109,6 +168,16 @@ def pick(pred, n=1, need_rec=True, distinct_company=True):
     return got
 
 
+def rec_of(r):
+    k = (r["security_id"], r["field_id"], r["period_key"])
+    return vrec.get(D10.get(k, {}).get("document_id", ""))
+
+
+def mentioned(r):
+    rec = rec_of(r)
+    return es.analyse(rec)[3] if rec else set()
+
+
 FIELD_REQ = {
     "source_page": "核物理页定位：同文档内页码变化须回读新页确认取数位置",
     "evidence_label": "核采用解释：新增/变更标签须对应真实采用理由",
@@ -139,7 +208,8 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
     rec = vrec.get(doc)
     status = D10.get(k, {}).get("status", "")
     own = doc_period.get(doc, "")
-    req = es.required_scope(status, own)
+    # 第六轮裁决：期间参数必须显式三态传入，不能传文档期间字符串当布尔用
+    req = es.required_scope(status, own, r["period_key"])
     cov = es.coverage_of(rec) if rec else set()
     row = {
         "sample_id": "S%02d" % (len(samples) + 1),
@@ -149,6 +219,11 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
         "field_id": r["field_id"], "period_key": r["period_key"],
         "meta_field": (meta_row or {}).get("meta_field", "restatement_flag"),
         "status_B": status, "own_period": own,
+        "is_own_period": {True: "YES", False: "NO", None: "UNKNOWN"}[
+            es.is_own_period(own, r["period_key"])],
+        "parent_cross_doc": (
+            lambda x: "NA" if x is None else ("YES" if x[0] else "NO")
+        )(cross_doc_parent(r["security_id"], r["field_id"], r["period_key"])),
         "method": (rec or {}).get("method", ""),
         "verdict": (rec or {}).get("verdict", ""),
         "page": (rec or {}).get("page", ""),
@@ -157,6 +232,7 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
         "scope_missing": ";".join(sorted(req - cov)),
         "resolution": (meta_row or r)["resolution"],
         "evidence_head": norm((rec or {}).get("evidence", ""))[:100],
+        "located_conclusion": "",
     }
     if risk.startswith("R11"):
         row["page_reread"] = "NOT_APPLICABLE_EXTRA_FIELD"
@@ -198,21 +274,48 @@ for r in pick(lambda x: x["own_period"] and x["own_period"] != x["period_key"]
               and x["resolution"].startswith("PENDING"), 3):
     add_sample("R4_COMPARATIVE_COLUMN", "行期间≠文档自身期间，取值来自比较列/分季度表", r)
 
-# R5 不同重述原因：证据含 MERGER_RETRO
-for r in pick(lambda x: "MERGER_RETRO" in (x["scope_covered"] or ""), 2):
-    add_sample("R5_CAUSE_MERGER_RETRO", "证据正文明确排除同一控制下合并追溯", r)
+# R5 不同重述原因
+# 第六轮裁决第三节的后果：极性改为三分后，「同一控制合并范围变更0.00元」只对期初
+# 未分配利润给出零值，不再算作对本字段的排除。因此 MERGER_RETRO 在全量中已无
+# 「明确排除」实例，样本改为抽「提到但未排除」——正是旧判据误当排除的那一类。
+for r in pick(lambda x: "MERGER_RETRO" in mentioned(x), 2):
+    add_sample("R5_CAUSE_MERGER_RETRO",
+               "证据提到同一控制/合并范围，但只对特定权益项目给零值，未排除对本字段的影响"
+               "（旧判据在此误判为排除）", r)
 # R5b 证据含 POLICY_CHANGE
 for r in pick(lambda x: "POLICY_CHANGE" in (x["scope_covered"] or "")
               and "MERGER_RETRO" not in (x["scope_covered"] or ""), 2):
     add_sample("R5_CAUSE_POLICY_CHANGE", "证据正文含会计政策变更，但未排除同一控制下合并", r)
 
+# R5c 肯定发生（第六轮裁决第三节：极性不能把「提到」当「排除」）
+# 两类样本：B=否 但证据确认发生（冲突，须停在未闭合）；B=是 且事件已确认
+# 但来源维度未核（事件层已确认、字段层仍开）。
+for r in pick(lambda x: "affirmed=-" not in (x["polarity"] or "")
+              and x["resolution"].startswith(("UNRESOLVED", "PENDING")), 2):
+    add_sample("R5_CAUSE_AFFIRMED",
+               "证据确认发生调整（肯定极性），不得按「未提及」或「零值」闭合", r)
+for r in pick(lambda x: x["resolution"] == "PENDING_CONFIRMED_EVENT_FIELD_OPEN", 2):
+    add_sample("R5_CAUSE_AFFIRMED",
+               "B=是 且事件已由证据确认，但来源维度（分季度表/比较列/父输入）尚未核", r)
+
+# R6 跨文档父输入（第六轮裁决第二节：同报告相减抵消不成立）
+for r in pick(lambda x: x["status_B"] in ("DERIVED_CUMULATIVE_DIFF",
+                                          "DERIVED_QUARTERLY_SUM_OVERRIDE")
+              and cross_doc_parent(x["security_id"], x["field_id"], x["period_key"]) is not None
+              and cross_doc_parent(x["security_id"], x["field_id"], x["period_key"])[0], 3):
+    x = cross_doc_parent(r["security_id"], r["field_id"], r["period_key"])
+    add_sample("R6_CROSS_DOC_PARENT",
+               "单季由两期累计相减得到，两父输入来自不同文档（%s / %s），"
+               "必须核文档/版本/合并范围/单位兼容" % (x[1][:16], x[2][:16]), r)
+
 # R6 假设方法
 for r in pick(lambda x: x["resolution"] == "PENDING_WEAK_ASSUMPTION", 2):
-    add_sample("R6_WEAK_ASSUMPTION", "方法为假设，未查原文", r)
+    add_sample("R14_WEAK_ASSUMPTION", "方法为假设，未查原文（不得计入已闭合）", r)
 
 # R7 证据与断言冲突
-for r in pick(lambda x: x["resolution"] == "UNRESOLVED_EVIDENCE_CONTRADICTS", 2):
-    add_sample("R7_EVIDENCE_CONTRADICTS", "证据披露非零差错更正，与「未被重述」冲突", r)
+for r in pick(lambda x: x["resolution"] == "UNRESOLVED_EVIDENCE_MISMATCH", 2):
+    add_sample("R15_EVIDENCE_MISMATCH",
+               "旧核验判定与 B 相反，须先判旧判据范围是否不足，不能直接认定 B 错", r)
 
 # R8 山东钢铁正例（Codex 点名）
 sd = [r for r in meta if r["security_id"] == "SH:600022" and r["period_key"] == "20250630"
@@ -242,6 +345,44 @@ for fld in ("source_page", "evidence_label", "slot_id", "status_reason", "value_
                     "resolution": e["resolution"]},
                    meta_row=e)
 
+# R7 PARTIAL 原文定位（第六轮裁决第十节第 2 步：2 条 PARTIAL 必须给出原文位置）
+# 做法：把已出现的 PARTIAL 样本复制一份，改标 R7_PARTIAL_LOCATED，
+# 并在原件全文里定位证据实际所在页，不满足于「该页只命中一部分」。
+_partial, _seen7 = [], set()
+for s in samples:
+    if s["page_reread"] != "PARTIAL":
+        continue
+    kk = (s["security_id"], s["field_id"], s["period_key"])
+    if kk in _seen7:
+        continue
+    _seen7.add(kk)
+    _partial.append(s)
+    if len(_partial) >= 3:
+        break
+for s in _partial:
+    k = (s["security_id"], s["field_id"], s["period_key"])
+    doc = D10.get(k, {}).get("document_id", "")
+    rec = vrec.get(doc) or {}
+    st, ratio, excerpt = locate_in_doc(s["security_id"], doc, rec.get("evidence", ""))
+    row = dict(s)
+    row["sample_id"] = "S%02d" % (len(samples) + 1)
+    row["risk_type"] = "R7_PARTIAL_LOCATED"
+    row["why_selected"] = ("原样本 %s 在记录页仅部分命中，须在全文定位证据实际所在页"
+                           % s["sample_id"])
+    row["page_reread"] = st
+    row["page_match_ratio"] = ratio
+    row["page_excerpt"] = excerpt
+    if st.startswith("LOCATED"):
+        concl = "VERBATIM_ORIGINAL"
+    elif st.startswith("WEAK_LOCATE"):
+        concl = ("SUMMARY_NOTE_NOT_VERBATIM：证据为核验者汇总注，全文最佳匹配页仅部分命中，"
+                 "不能作为字段级原文证据")
+    else:
+        concl = "NOT_FOUND：原件全文未找到证据文本"
+    row["located_conclusion"] = concl
+    samples.append(row)
+
+
 with open(OUT / "sampling_v5.csv", "w", encoding="utf-8-sig", newline="") as f:
     w = csv.DictWriter(f, fieldnames=list(samples[0].keys()), lineterminator="\n")
     w.writeheader()
@@ -261,6 +402,9 @@ summary = {
         "Q1": any(k.startswith("R3") for k in risk_cnt),
         "比较列": any(k.startswith("R4") for k in risk_cnt),
         "不同重述原因": any(k.startswith("R5") for k in risk_cnt),
+        "肯定发生（极性非「提及即排除」）": any(k == "R5_CAUSE_AFFIRMED" for k in risk_cnt),
+        "跨文档父输入": any(k.startswith("R6_CROSS_DOC") for k in risk_cnt),
+        "PARTIAL 原文定位": any(k.startswith("R7_PARTIAL") for k in risk_cnt),
         "补充字段": any(k.startswith("R11") for k in risk_cnt),
         "山东钢铁正例": any(k.startswith("R8") for k in risk_cnt),
         "大豪科技已解除": any(k.startswith("R9") for k in risk_cnt),

@@ -1,0 +1,38 @@
+你是这个仓库（A 股机器人产业链「行业拐点」研究流水线）的独立复核方。上一轮你裁定 S00 勘误 V2 退回返工，指出：元数据子串判据、11 条 status 误放行、C13 不完整、C14 对 V1 空转、单季派生未展开累计父输入、19 列 1,505 格未登记、报告分项写错。
+
+执行方已按你的意见返工出 V3。请做第四轮复核。
+
+必读：
+1. runs/issues/S00/errata_20261111_v3/report_to_codex_round4.md —— 本轮汇报，含五个待裁决问题
+2. runs/issues/S00/errata_20261111_v3/REPORT.md、handoff.md
+3. runs/issues/S00/errata_20261111/codex_ruling_round3.md —— 你上一轮裁决
+4. runs/issues/S00/errata_20261111_v3/build_errata_v3.py、check_l2_v3.py、verify_v3.py
+5. runs/issues/S00/errata_20261111_v3/summary.json、l2_dependency_summary.json、review.json、manifest.json
+6. runs/issues/S00/errata_20261111_v3/cell_diff.csv、key_diff.csv、meta_diff.csv、extra_meta_diff.csv、l2_dependency_check.csv、restricted_claims.csv
+7. tools/s00_restatement_apply.py —— 本轮结论的关键依据
+8. runs/issues/S02/remediation_20261029/restatement_verify/results.csv
+9. runs/issues/S01/screen_rules_v4.json、runs/issues/S01/rules_v4_diff.json
+10. data/active_issue.json
+
+本轮最关键的争点（请重点核）：
+执行方主张「重述核验必须按 document_id 匹配，而不是 (公司,期间)」。理由是：
+(a) tools/s00_restatement_apply.py 第 36 行 verdict[document_id]=verdict、第 46 行 v=verdict.get(document_id)，只按文档应用；
+(b) results.csv 是 1,007 文档 / 1,007 记录，1:1；
+(c) 一份年报可以合法供给多个期间（分季度主要财务数据、比较列）。
+据此它把原 5,694 条未闭合重述重分类为：5,149 已解决 / 515 WEAK / 26 真未覆盖 / 4 真冲突，未闭合总数从 6,388 降到 1,349，HOLD 从 17 家降到 14 家。
+
+请独立判断这条推理是否成立。特别注意：
+- 文档级 verdict 是否足以支撑「该文档供给的每一行都未被重述」；
+- 是否存在同一文档在不同期间被重述、但 verdict 只有一个的情况；
+- 大豪科技 REV.SQ@20250331 的供给文档是否真的是 2025 年报、核验判定是否真是「否」；
+- 执行方推翻自己上一轮「大豪科技 STILL_PASSES_WITHOUT」的结论，是否成立。
+
+任务：
+A. 核实 V3 是否真的修掉了你上一轮的六项意见（读代码与台账复算，不只看自述）。特别检验 C13/C14/C17/C21 是否真能拦住 V1 的旧错误，以及是否有新的空转方式。
+B. 独立判断上述 document_id 争点。若成立，请说明它改变了哪些结论；若不成立，请指出哪一环不能推、正确数字是多少。
+C. 核实 1,349 / 1,719 是否仍偏小，是否还有未登记的差异范围。
+D. 核实 14 家 HOLD、33 家 R2、5 家 R3 的分层是否站得住，受限名单字段是否满足你 Q1 的要求。
+E. 裁决五个问题：document_id 匹配、大豪科技改判、370 格补充元数据定性、26 条从未核验、规则 v4 是否合格。
+F. 明确结论：V3 是否闭合上一轮意见？S00 状态是什么？S04 第二轮复核能否启动？S05 能否放行？
+
+要求：只读检查，不修改仓库、不提交、不改 GitHub。给出可复现依据（文件、行号、复算数字）。发现执行方数字或结论有错，直接说错在哪、正确是多少。最后用中文给出可存档为 codex_ruling_round4.md 的书面裁决。

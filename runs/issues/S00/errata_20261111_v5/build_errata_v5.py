@@ -157,6 +157,40 @@ except Exception as e:
 print("依据源: delta=%d verify_docs=%d adopt=%d v9_added=%d npdedt=%d"
       % (len(delta), len(vrec), len(adopt), len(v9_added), len(npdedt)))
 
+QMAP = {"0331": "1231", "0630": "0331", "0930": "0630", "1231": "0930"}
+
+
+def prev_quarter(pk):
+    tail = pk[4:]
+    if tail == "0331":
+        return str(int(pk[:4]) - 1) + "1231"
+    return pk[:4] + QMAP[tail]
+
+
+def parent_compatible(k):
+    """累计差分行的两个累计父输入是否兼容（文档/版本/合并范围/单位）。
+
+    第六轮裁决：不能以「同一报告内相减自动抵消」豁免。只有两期调整额相等才抵消，
+    而相等无法由同一报告推出；跨文档情形（本期 H1 与上期 Q1 来自不同公告）更须核。
+    """
+    sec, fld, pk = k
+    if fld not in es.SIMPLE_SQ:
+        return None
+    ytd = fld[:-3] + ".YTD"
+    p1 = D10.get((sec, ytd, pk))
+    p2 = D10.get((sec, ytd, prev_quarter(pk)))
+    if not p1 or not p2:
+        return False
+    for x in ("consolidation_scope", "unit_scale", "currency"):
+        if (p1.get(x) or "") != (p2.get(x) or ""):
+            return False
+    if (p1.get("document_id") or "") == (p2.get("document_id") or ""):
+        return True
+    if (p1.get("version_used") or "") and p1.get("version_used") == p2.get("version_used"):
+        return True
+    return ((sec, ytd, pk) in adopt) or ((sec, ytd, prev_quarter(pk)) in adopt)
+
+
 # ---------- 1. 值差异 ----------
 rows_value = []
 v_a7 = {k for k in set(DA) & set(D7) if DA[k]["value_cny"] != D7[k]["value_cny"]}
@@ -296,28 +330,39 @@ for fld in META_FIELDS:
             continue
         a, b = DA[k], D10[k]
         bval = b.get(fld, "")
-        scope_req = scope_cov = scope_mis = grp = ""
+        scope_req = scope_cov = scope_mis = grp = polarity = ""
         if fld == "restatement_flag":
             doc = b.get("document_id", "")
             rec = vrec.get(doc) if doc else None
             own = doc_period.get(doc, "") if doc else ""
             rk = "%s|%s|%s" % (k[0], k[1], k[2])
             status_b = b.get("status", "")
-            # 判据：证据实际覆盖该行断言，而非「行期间 == 文档自身期间」
+            pok = parent_compatible(k)
+            # 判据：证据实际覆盖该行断言。document_period 与 row_period 分开传，
+            # 由 evidence_scope 内部判定 is_own，不再用字符串真值。
             if rk in RULED:
-                resolution, scope_req, scope_cov, scope_mis, evidence = es.judge(
-                    rec, doc, status_b, own, k[2], ruled=RULED[rk], bval=bval)
-            elif rec is not None and rec["verdict"] != bval and \
-                    (rec.get("method") or "") != "NOTE_RETAINED_ERRATA_NONZERO":
-                resolution = "UNRESOLVED_EVIDENCE_MISMATCH"
-                evidence = ("文档判定=%s 但 B=%s（doc=%s）；须先判旧判据范围是否不足，"
-                            "不能直接认定 B 错" % (rec["verdict"], bval, doc[:20]))
+                r = es.judge(rec, doc, status_b, own, k[2], ruled=RULED[rk],
+                             bval=bval, parent_ok=pok)
+            elif rec is not None and rec["verdict"] != bval and (rec.get("method") or "") != "NOTE_RETAINED_ERRATA_NONZERO":
+                # 判定与 B 相反：先登记该行按来源应有的必需范围，处置停在未闭合。
+                _req = es.required_scope(status_b, own, k[2])
+                r = {"resolution": "UNRESOLVED_EVIDENCE_MISMATCH",
+                     "scope_level": "CONFLICT",
+                     "scope_required": ";".join(sorted(_req)),
+                     "scope_covered": "", "scope_missing": ";".join(sorted(_req)),
+                     "polarity": "",
+                     "evidence_note": ("文档判定=%s 但 B=%s（doc=%s）；须先判旧判据范围是否不足，"
+                                       "不能直接认定 B 错" % (rec["verdict"], bval, doc[:20]))}
             else:
-                resolution, scope_req, scope_cov, scope_mis, evidence = es.judge(
-                    rec, doc, status_b, own, k[2], bval=bval)
+                r = es.judge(rec, doc, status_b, own, k[2], bval=bval, parent_ok=pok)
+            resolution = r["resolution"]
+            scope_req, scope_cov = r["scope_required"], r["scope_covered"]
+            scope_mis, evidence = r["scope_missing"], r["evidence_note"]
+            polarity = r["polarity"]
             if rec is not None:
-                grp = es.group_key(rec.get("method"), es.coverage_of(rec),
-                                   status_b, own)
+                _ex, _af, _sc, _me = es.analyse(rec)
+                grp = es.group_key(rec.get("method"), _ex, _af, status_b,
+                                   es.is_own_period(own, k[2]))
         else:
             d = delta.get(k)
             if d is None:
@@ -345,7 +390,12 @@ for fld in META_FIELDS:
             "field_id": k[1], "period_key": k[2], "meta_field": fld,
             "status_B": D10[k].get("status", ""),
             "document_id": D10[k].get("document_id", ""),
+            "document_period": doc_period.get(D10[k].get("document_id", ""), ""),
             "own_period": doc_period.get(D10[k].get("document_id", ""), ""),
+            "is_own_period": {True: "YES", False: "NO", None: "UNKNOWN"}[
+                es.is_own_period(doc_period.get(D10[k].get("document_id", ""), ""), k[2])],
+            "parent_compatible": {True: "YES", False: "NO", None: "NA"}[parent_compatible(k)],
+            "polarity": polarity,
             "evidence_group": grp,
             "scope_required": scope_req, "scope_covered": scope_cov,
             "scope_missing": scope_mis,

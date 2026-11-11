@@ -28,6 +28,10 @@ P_B = ROOT / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz"
 LEDGER_VERSION = "ERRATA_V5"
 LEDGER_FILES = ["cell_diff.csv", "key_diff.csv", "meta_diff.csv", "extra_meta_diff.csv"]
 LEDGER_SHA = {f: hashlib.sha256((OUT / f).read_bytes()).hexdigest() for f in LEDGER_FILES}
+# 第六轮裁决第八节：ledger_sha256 之前全填 meta_diff.csv，引用键差异/补充元数据的行
+# 绑到了不相干的表。改为四表联合摘要，另设逐表列，任何一行都能定位到实际来源表。
+LEDGER_BUNDLE_SHA = hashlib.sha256(
+    "".join("%s:%s" % (f, LEDGER_SHA[f]) for f in LEDGER_FILES).encode("utf-8")).hexdigest()
 
 SG_METRIC, SG_DIM = core.load_rules(ROOT / "runs/issues/S01/screen_rules_v2.json")
 ALARM = ("HOLD", "MISMATCH", "PROVISIONAL", "CONFLICT", "MISSING", "ABSENT", "UNDEFINED")
@@ -44,58 +48,82 @@ def is_alarm(v):
     return any(a in (v or "").upper() for a in ALARM)
 
 
-def dispute_id(ledger, sec, fld, pk, meta_field, direction):
-    raw = "|".join([LEDGER_VERSION, ledger, sec, fld, pk, meta_field or "", direction])
+def dispute_id(ledger, sec, fld, pk, meta_field="", direction=""):
+    """稳定差异身份：不含 resolution / 处置状态，分类变化不会换 ID。
+
+    第六轮裁决第八节：旧实现把 resolution 当作方向的一部分，
+    处置标签一改 ID 就变，无法作为持久引用。
+    """
+    raw = "|".join([ledger, sec, fld, pk, meta_field or "", direction])
     return "D-" + hashlib.sha1(raw.encode("utf-8")).hexdigest()[:12]
 
 
 # ---------- 争议台账：每条差异一个稳定 id ----------
 ledger = {}                 # dispute_id -> 描述
+ledger_rows = {}            # dispute_id -> 结构化字段（供自检重算）
 by_key = defaultdict(list)  # (sec, fld, pk) -> [dispute_id]
+by_ledger = defaultdict(list)  # (sec, fld, pk) -> [(ledger, dispute_id)]
 
 with open(OUT / "cell_diff.csv", encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
         if not is_open(r["resolution"]):
             continue
-        d = dispute_id("cell", r["security_id"], r["field_id"], r["period_key"], "", r["resolution"])
+        d = dispute_id("cell", r["security_id"], r["field_id"], r["period_key"])
         ledger[d] = "cell_diff:%s:%s@%s:%s" % (r["stock_name"], r["field_id"], r["period_key"], r["resolution"])
+        ledger_rows[d] = {"ledger": "cell_diff", "security_id": r["security_id"],
+                          "field_id": r["field_id"], "period_key": r["period_key"],
+                          "meta_field": "", "direction": "", "disposition": r["resolution"]}
         by_key[(r["security_id"], r["field_id"], r["period_key"])].append(d)
+        by_ledger[(r["security_id"], r["field_id"], r["period_key"])].append(("cell_diff", d))
 
 with open(OUT / "key_diff.csv", encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
         if not is_open(r["resolution"]):
             continue
-        d = dispute_id("key", r["security_id"], r["field_id"], r["period_key"], "", r["side"] + ":" + r["resolution"])
+        d = dispute_id("key", r["security_id"], r["field_id"], r["period_key"], "", r["side"])
         ledger[d] = "key_diff:%s:%s@%s:%s:%s" % (r["stock_name"], r["field_id"], r["period_key"], r["side"], r["resolution"])
+        ledger_rows[d] = {"ledger": "key_diff", "security_id": r["security_id"],
+                          "field_id": r["field_id"], "period_key": r["period_key"],
+                          "meta_field": "", "direction": r["side"], "disposition": r["resolution"]}
         by_key[(r["security_id"], r["field_id"], r["period_key"])].append(d)
+        by_ledger[(r["security_id"], r["field_id"], r["period_key"])].append(("key_diff", d))
 
 with open(OUT / "meta_diff.csv", encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
         if not is_open(r["resolution"]):
             continue
-        direction = r["resolution"]
-        if r["meta_field"] != "restatement_flag":
-            direction = ("RELEASE" if is_alarm(r["value_A"]) and not is_alarm(r["value_B"])
-                         else "META")
-        d = dispute_id("meta", r["security_id"], r["field_id"], r["period_key"], r["meta_field"], direction)
-        ledger[d] = "meta_diff:%s:%s@%s:%s:%s" % (r["stock_name"], r["field_id"], r["period_key"], r["meta_field"], direction)
+        d = dispute_id("meta", r["security_id"], r["field_id"], r["period_key"], r["meta_field"])
+        ledger[d] = "meta_diff:%s:%s@%s:%s:%s" % (r["stock_name"], r["field_id"], r["period_key"], r["meta_field"], r["resolution"])
+        ledger_rows[d] = {"ledger": "meta_diff", "security_id": r["security_id"],
+                          "field_id": r["field_id"], "period_key": r["period_key"],
+                          "meta_field": r["meta_field"], "direction": "", "disposition": r["resolution"]}
         by_key[(r["security_id"], r["field_id"], r["period_key"])].append(d)
+        by_ledger[(r["security_id"], r["field_id"], r["period_key"])].append(("meta_diff", d))
 
 with open(OUT / "extra_meta_diff.csv", encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
         if r["class"] not in EXTRA_CLASSES or not is_open(r["resolution"]):
             continue
-        d = dispute_id("extra", r["security_id"], r["field_id"], r["period_key"], r["meta_field"], r["class"])
+        d = dispute_id("extra", r["security_id"], r["field_id"], r["period_key"], r["meta_field"])
         ledger[d] = "extra_meta_diff:%s:%s@%s:%s:%s" % (r["stock_name"], r["field_id"], r["period_key"], r["meta_field"], r["class"])
+        ledger_rows[d] = {"ledger": "extra_meta_diff", "security_id": r["security_id"],
+                          "field_id": r["field_id"], "period_key": r["period_key"],
+                          "meta_field": r["meta_field"], "direction": "", "disposition": r["resolution"]}
         by_key[(r["security_id"], r["field_id"], r["period_key"])].append(d)
+        by_ledger[(r["security_id"], r["field_id"], r["period_key"])].append(("extra_meta_diff", d))
 
 print("争议键:", len(by_key), "唯一差异 ID:", len(ledger))
 
 with open(OUT / "dispute_ledger.csv", "w", encoding="utf-8-sig", newline="") as f:
     w = csv.writer(f, lineterminator="\n")
-    w.writerow(["dispute_id", "ledger_version", "ledger", "description"])
+    w.writerow(["dispute_id", "ledger_version", "ledger", "source_ledger_sha256",
+                "security_id", "field_id", "period_key", "meta_field",
+                "direction", "disposition", "description"])
     for d in sorted(ledger):
-        w.writerow([d, LEDGER_VERSION, ledger[d].split(":")[0], ledger[d]])
+        rr = ledger_rows[d]
+        w.writerow([d, LEDGER_VERSION, rr["ledger"], LEDGER_SHA[rr["ledger"] + ".csv"],
+                    rr["security_id"], rr["field_id"], rr["period_key"],
+                    rr["meta_field"], rr["direction"], rr["disposition"], ledger[d]])
 
 # ---------- B 的实际行状态（按公司注入依赖引擎） ----------
 STATUS = {}
@@ -134,12 +162,15 @@ for sec in sorted(universe):
                     ids = sorted(set(by_key[(sec, fld, pk)]))
                     hits.append("%s@%s" % (fld, pk))
                     dids.extend(ids)
+                    grp = defaultdict(list)
+                    for lg, dd in by_ledger[(sec, fld, pk)]:
+                        grp[lg].append(dd)
                     restricted.append({
                         "security_id": sec, "stock_name": universe[sec]["name"],
                         "snapshot": "runs/issues/S04/tight_pass.csv",
                         "snapshot_hash": SNAPSHOT_SHA,
                         "ledger_version": LEDGER_VERSION,
-                        "ledger_sha256": LEDGER_SHA["meta_diff.csv"],
+                        "ledger_sha256": LEDGER_BUNDLE_SHA,
                         "anchor_period": anchor,
                         "signal_id": sg, "dimension": SG_DIM.get(sg, ""),
                         "metric_id": mid,
@@ -147,6 +178,14 @@ for sec in sorted(universe):
                         "status_B": STATUS.get((sec, fld, pk), ""),
                         "dispute_count": len(ids),
                         "dispute_ids": ";".join(ids),
+                        "dispute_ids_cell": ";".join(sorted(set(grp.get("cell_diff", [])))),
+                        "dispute_ids_key": ";".join(sorted(set(grp.get("key_diff", [])))),
+                        "dispute_ids_meta": ";".join(sorted(set(grp.get("meta_diff", [])))),
+                        "dispute_ids_extra": ";".join(sorted(set(grp.get("extra_meta_diff", [])))),
+                        "ledger_sha256_cell": LEDGER_SHA["cell_diff.csv"],
+                        "ledger_sha256_key": LEDGER_SHA["key_diff.csv"],
+                        "ledger_sha256_meta": LEDGER_SHA["meta_diff.csv"],
+                        "ledger_sha256_extra": LEDGER_SHA["extra_meta_diff.csv"],
                         "restriction": "该结论不得作为 S05 有效输入或名单验收依据",
                         "allowed_use": "历史复现；不作为入选/漏筛判定依据",
                         "release_condition": "争议字段取得可复核依据并经独立验收",
@@ -225,6 +264,7 @@ summary = {
     "nature": "SELF_CHECK",
     "ledger_version": LEDGER_VERSION,
     "ledger_sha256": LEDGER_SHA,
+    "ledger_bundle_sha256": LEDGER_BUNDLE_SHA,
     "snapshot": {"path": "runs/issues/S04/tight_pass.csv", "sha256": SNAPSHOT_SHA,
                  "companies": len(pass_rows)},
     "dependency": {

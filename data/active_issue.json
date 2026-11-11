@@ -1,533 +1,563 @@
 {
-  "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 53,
-  "active_issue_key": "S00_ERRATA_REVIEW",
-  "executor": "WorkBuddy AI",
-  "started_at": "2026-11-11 22:10:00 +08:00",
-  "status": "S00_ERRATA_V5_SELF_CHECK_PASS_AWAITING_RECHECK",
-  "claim_note": "S00 勘误 V5：按 Codex 第五轮裁决取消「期间相等即闭合」，改为「证据覆盖范围 ⊇ 该行断言必需范围」（evidence_scope.py，从证据正文抽 ERRATA/MERGER_RETRO/POLICY_CHANGE）；IMPORTANT_MATTER_NA、NOTE_RETAINED_ERRATA_ZERO 两类受限方法自身期间 5,270 条全部转待核；依赖引擎改读 B 实际 status（分季度表不加累计父键、Q1 不减上年年末、累计差分展开 YTD(t)/YTD(t−1q)）；232 格「溯源/展示」桶清零转字段级待核；受限表改为逐条绑定稳定差异 ID 并绑定台账版本。核心未闭合/待核 7,799、含补充列 9,304；分层抽验 26 条/16 类含原件物理页回读；自检 34/34 PASS。全池 43 家临时 HOLD、206 家须核证重算、403 家无关联。第 4–5 步（批量核证、重算分层）未做，S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
-  "last_completed": {
-    "issue_key": "S04",
-    "issue_number": 39,
-    "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-    "review_file": "runs/issues/S04/review.json",
-    "review_nature": "SELF_CHECK",
-    "completed_at": "2026-11-10T21:10:00+08:00",
-    "coverage": 1054,
-    "external_review": "RETURN_FOR_REWORK_ADDRESSED_PENDING_RECHECK"
-  },
-  "input_baseline_after_p06": {
-    "PROJECT_STATE.json": "updated_by_p06",
-    "data/issue_execution_plan.csv": "updated_by_p06(P06=SELF_CHECK_PASS,P07=READY)",
-    "runs/issues/P06/storage_plan.json": "4abc6c929d05363c7f50a64e744bf265944ecfb88da163a46816e1228b21e7d1",
-    "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
-    "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
-  },
-  "next_recommended_issue_number": 39,
-  "next_recommended_issue_key": "S04",
-  "next_recommended_reason": "S00 勘误 V5 已交付、等第六轮独立复核；复核通过后按裁决第 4 步批量核证、第 5 步重算分层，再回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
-  "open_followups_from_p06": [
-    "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
-    "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
-    "容量为 PRE_CALIBRATION_ESTIMATE_NOT_FACT，须 P07 用 10 家校准重算中位数。",
-    "listing_date 1054/1054 UNKNOWN，11594 只是尝试上界。",
-    "登记表 6 类非枚举历史状态值（16 行）只给映射未执行，待 P01 迁移落地。"
+ "plan_version": "20261026_collection_first_v2",
+ "active_issue_number": 53,
+ "active_issue_key": "S00_ERRATA_REVIEW",
+ "executor": "WorkBuddy AI",
+ "started_at": "2026-11-11 22:10:00 +08:00",
+ "status": "S00_ERRATA_V5_SELF_CHECK_V6_PASS_AWAITING_RECHECK_7",
+ "claim_note": "S00 勘误 V5（自检 V6，37/37 PASS）：按 Codex 第六轮裁决修四处实现错误——期间参数改显式三态（非自身期间 1,240 条强制要求 COMPARATIVE_SCOPE）、极性改分句三分（EXCLUDED/AFFIRMED/SCOPED_ONLY，0.00元 加负向后视、勾选式向下配对）、累计差分改父输入兼容性（撤销「同报告相减自动抵消」）、自检 C14/C24/C26/C28/C29/C30/C35 全部改为重算或精确核对。核心未闭合/待核 7,841、含补充列 9,346；全池 43 家临时 HOLD、207 家须核证重算、402 家无关联；受限表 294 行 / 283 个唯一差异 ID。第 4–5 步未做，S04 第二轮与 S00 补充验收未完成，S05 不放行",
+ "last_completed": {
+  "issue_key": "S04",
+  "issue_number": 39,
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "review_file": "runs/issues/S04/review.json",
+  "review_nature": "SELF_CHECK",
+  "completed_at": "2026-11-10T21:10:00+08:00",
+  "coverage": 1054,
+  "external_review": "RETURN_FOR_REWORK_ADDRESSED_PENDING_RECHECK"
+ },
+ "input_baseline_after_p06": {
+  "PROJECT_STATE.json": "updated_by_p06",
+  "data/issue_execution_plan.csv": "updated_by_p06(P06=SELF_CHECK_PASS,P07=READY)",
+  "runs/issues/P06/storage_plan.json": "4abc6c929d05363c7f50a64e744bf265944ecfb88da163a46816e1228b21e7d1",
+  "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
+  "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
+ },
+ "next_recommended_issue_number": 39,
+ "next_recommended_issue_key": "S04",
+ "next_recommended_reason": "S00 勘误 V5 自检 V6 已交付、等第七轮独立复核；复核通过后按第六轮裁决第 4 步批量核证、第 5 步重算分层，再回到 #39 做 S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
+ "open_followups_from_p06": [
+  "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
+  "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
+  "容量为 PRE_CALIBRATION_ESTIMATE_NOT_FACT，须 P07 用 10 家校准重算中位数。",
+  "listing_date 1054/1054 UNKNOWN，11594 只是尝试上界。",
+  "登记表 6 类非枚举历史状态值（16 行）只给映射未执行，待 P01 迁移落地。"
+ ],
+ "note": "P06 未改动任何原始输入（document_registry/company_master/intake 队列 diff 为空）；本次未下载、未上传任何文件。",
+ "p07_drive_archive_followup": {
+  "issue_key": "P07",
+  "scope": "DRIVE_ARCHIVE_FOLLOWUP_ONLY",
+  "executor": "Codex",
+  "review_nature": "SELF_CHECK_FILE_ARCHIVE_ONLY",
+  "completed_at": "2026-10-26T12:26:47Z",
+  "files": 65,
+  "uploaded_new": 58,
+  "reused": 7,
+  "binary_sha256_matches": 65,
+  "listed_parent_matches": 65,
+  "bytes": 211077595,
+  "receipts_schema_pass": 65,
+  "registry_rows_before": 100,
+  "registry_rows_after": 158,
+  "registry_rows_added": 58,
+  "not_tried_slots_unchanged": 5,
+  "full_universe_started": false,
+  "business_adoption_added": 0,
+  "ai_read_confirmed_added": 0,
+  "cache_deleted": 0,
+  "receipt_file": "runs/issues/P07/drive_archive/receipts.json",
+  "limitations": [
+   "仅完成Drive归档，不重新认定P07财务字段校准或采集器修复。",
+   "不声明全池采集已启动或所有M00技术问题已解决；登记表级幂等仍待采集器实现。",
+   "正文主体/报告期身份结论沿用WorkBuddy；本次未逐份精读报告，未新增业务独立验收。",
+   "旧原文来源/版本限制保留；云端二进制一致不等于官方来源链独立核验。"
   ],
-  "note": "P06 未改动任何原始输入（document_registry/company_master/intake 队列 diff 为空）；本次未下载、未上传任何文件。",
-  "p07_drive_archive_followup": {
-    "issue_key": "P07",
-    "scope": "DRIVE_ARCHIVE_FOLLOWUP_ONLY",
-    "executor": "Codex",
-    "review_nature": "SELF_CHECK_FILE_ARCHIVE_ONLY",
-    "completed_at": "2026-10-26T12:26:47Z",
-    "files": 65,
-    "uploaded_new": 58,
-    "reused": 7,
-    "binary_sha256_matches": 65,
-    "listed_parent_matches": 65,
-    "bytes": 211077595,
-    "receipts_schema_pass": 65,
-    "registry_rows_before": 100,
-    "registry_rows_after": 158,
-    "registry_rows_added": 58,
-    "not_tried_slots_unchanged": 5,
-    "full_universe_started": false,
-    "business_adoption_added": 0,
-    "ai_read_confirmed_added": 0,
-    "cache_deleted": 0,
-    "receipt_file": "runs/issues/P07/drive_archive/receipts.json",
-    "limitations": [
-      "仅完成Drive归档，不重新认定P07财务字段校准或采集器修复。",
-      "不声明全池采集已启动或所有M00技术问题已解决；登记表级幂等仍待采集器实现。",
-      "正文主体/报告期身份结论沿用WorkBuddy；本次未逐份精读报告，未新增业务独立验收。",
-      "旧原文来源/版本限制保留；云端二进制一致不等于官方来源链独立核验。"
-    ],
-    "handoff_package": {
-      "scope": "P07_ARCHIVE_HANDOFF_PACKAGE",
-      "archive_status": "VERIFIED",
-      "folder": {
-        "success": true,
-        "id": "1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
-        "url": "https://drive.google.com/drive/folders/1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
-        "title": "P07_采集校准与Drive归档_20261026",
-        "parent_id": "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5"
-      },
-      "file": {
-        "id": "1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP",
-        "url": "https://drive.google.com/file/d/1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP/view?usp=drivesdk"
-      },
-      "bytes": 122860,
-      "sha256": "54d2e48330ef6e53cf37ff60b73b5108b727a900af4f32ecc60673adbf0dbbbc",
-      "listed": true,
-      "binary_sha256_matches": true,
-      "readback_at": "2026-10-26T12:28:36.140Z",
-      "contains": "P07校准文本、65份回执、归档索引及更新后的文档登记表；不重复打包PDF"
-    }
-  },
-  "current_drive_archive_status": "VERIFIED_65_FILES_BY_CODEX",
-  "a02_blocked_by": null,
-  "p03_neeq_recheck": {
-    "issue": "P03",
-    "scope": "NEEQ_RECHECK_20261027",
-    "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
-    "completed_at": "2026-10-27T07:04:41.079355+00:00",
-    "official_index_route": "AVAILABLE_POSITIVE_CONTROL_VERIFIED",
-    "issuer_mappings": 15,
-    "target_slots": 65,
-    "slots_with_current_official_links": 50,
-    "unresolved_applicability": 15,
-    "pre_current_listing_periods": 11,
-    "quarterly_slots": 4,
-    "sample_pdf_identity_verified": 5,
-    "sample_pdf_download_errors": 10,
-    "shared_ledger_modified": false,
-    "a02_ready": false,
-    "next_action": "A01 automatic recovery using validated old codes and parameter encoding; applicability checks and file transport diagnostics first. Do not dispatch 65 manual requests.",
-    "limits": [
-      "50 is candidate-link coverage, not 50 downloaded PDFs.",
-      "5 PDF samples are issuer identity checks, not 5 newly recovered target slots.",
-      "11 pre-listing periods are review candidates, not final NA decisions.",
-      "Quarter-specific positive controls failed; their zeros cannot prove absence.",
-      "No Drive upload, financial adoption or independent acceptance in this follow-up."
-    ],
-    "review_file": "runs/issues/P03/neeq_recheck_20261027/review.json"
-  },
-  "a03_open_items": [
-    "Drive 无凭据：7158 份已核文档只有本机副本，archive_status 未写 VERIFIED。",
-    "document_registry 未回写：7162 份已核文档仍只在 collection_index。",
-    "字段仅覆盖年报（3082 份）；半年报 3162 份、季报 1054 份未跑。",
-    "重述字段 960 条标为需复核，未硬判是/否。",
-    "56 份三表定位失败、1 份图片版需 OCR，登记为字段缺口。"
-  ],
-  "a03_key_findings": {
-    "same_file_two_ids": 71,
-    "registry_rows_not_in_ledger": 97,
-    "ledger_rows_not_in_registry": 7162,
-    "field_extracted_rate": 0.8697,
-    "crosscheck_match": 2813,
-    "crosscheck_mismatch": 119
-  },
-  "claim_basis": {
-    "issue_state": "OPEN",
-    "github_checked_at": "2026-10-27T20:54:25+08:00",
-    "released_issue": {
-      "issue_number": 34,
-      "issue_key": "A04",
-      "released_at": "2026-10-27T20:54:25+08:00",
-      "reason": "A04 复验需先完成 A04R 采集；执行期间不双占卡",
-      "work_done_under_a04": [
-        "runs/issues/A04/rework/cutoff_hold_resolved.csv",
-        "runs/issues/A04/rework/audit_rework.py"
-      ]
-    },
-    "inputs_sha256": {
-      "data/issue_execution_plan.csv": "d4accf18538033b4b9b4aa7a32d3161b893729d60ee23161364c45deda2e4f9c",
-      "data/issue_execution_plan.json": "ed1994753025837f9546ed988c82026a93ea9584dd23aa611050d0b3bd48089d",
-      "PROJECT_STATE.json": "fd06fd265dc722c91f80b666a3a053cc087f325c7d7bc12baa67d8c81d0a6cc0",
-      "runs/issues/P00/collection_scope.json": "f5e31dc053b9d7a020ffd0db15fb8d7cad44e2c04f6baa76d396c41a519a4e3b",
-      "runs/issues/P00/coverage_acceptance_rules.json": "7b8fadc770b09cae094bdc67abd584f310db17a14cac2347d25bc803e070c196",
-      "runs/issues/A04/review.json": "6ca8ded33ea810ddac701c77ebe978c409f60ae4dba2cada2ba9d3667d07385d",
-      "runs/issues/A03/review.json": "5c142176aaf5d77aa47b18b5420f321fe840494fb1277083144ab9bb3bdcc63b",
-      "runs/collection/collection_index.csv": "31aea6f06e62ae1c8b88a8253e854223adf3eea8faa471324f492324f15fd4fe"
-    },
-    "config": "runs/issues/A01/collection_config_v2.json",
-    "config_sha256": "ba2c81d5502ff593176f70fea24b5d2bc9f15ccc12e6452c50ec85a5d9b5e5e2"
-  },
-  "paused_at": "2026-10-27T23:58:55+08:00",
-  "checkpoint_sha256": {
-    "runs/collection/collection_index.csv": "dbfbdd1106e45deae79de459dd9c54a7a20b73a7b874b1ad588ea304bd28ae31",
-    "runs/issues/A04R/progress.json": "7623e53ab56a88b061f16e586147b0ee126ff7d12297d49fafa7f0fc74bf35cf",
-    "runs/issues/A04R/progress_pass1.json": "ca37f8375c2e3756aca1b29dac0633b30e581f55750e3ef29baf69f1e671df99"
-  },
-  "resumed_at": "2026-10-28T12:27:24+08:00",
-  "resume_note": "按 PAUSE_STATE.md 续跑：先补 116 家 565 槽，再做北交所挂牌期判定与两年公告/IR 目录。",
-  "a04r_result": {
-    "issue_number": 50,
-    "decision": "SELF_CHECK_PASS",
-    "review_file": "runs/issues/A04R/review.json",
-    "slot_pairs": 12648,
-    "verified": 11468,
-    "not_tried": 0,
-    "announcement_companies": 1054,
-    "keyword_originals": 264,
-    "revision_rows": 11183,
-    "financial_corrections": 192,
-    "correction_chain_pairs": 127,
-    "correction_chain_gaps": 0,
-    "neeq_listing_dates_from_local_annuals": 15,
-    "correction_chain_verified_ok": 127,
-    "correction_notice_originals": 55,
-    "correction_notice_only_chains": 4,
-    "correction_files_checked": 305,
-    "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除预案/股东大会/说明会/审计报告/提示性公告/摘要",
-    "correction_discovery_rows": 223,
-    "correction_discovery_dispositions": {
-      "IN_SCOPE": 180,
-      "EXCLUDED_SUMMARY": 28,
-      "EXCLUDED_NON_FINANCIAL": 3,
-      "EXCLUDED_OUT_OF_FROZEN_SCOPE": 12
-    }
-  },
-  "history": {
-    "a04_first_review": {
-      "decision": "RETURN_FOR_REWORK",
-      "review_file": "runs/issues/A04/review.json",
-      "reviewed_at": "2026-10-27 12:33:58 UTC",
-      "release_S00": false,
-      "known_after_cutoff": 0,
-      "unknown_disclosure_dates": 7,
-      "missing_predeadline_quarter_dispositions": 4216,
-      "superseded": true,
-      "note": "首次验收 RETURN_FOR_REWORK 已作废，当前验收以 current_acceptance 为准"
-    },
-    "a04r_day_end_pause_20261027": {
-      "issue_key": "A04R",
-      "issue_number": 50,
-      "state_file": "runs/issues/A04R/PAUSE_STATE.md",
-      "commands": [
-        "python tools/a04r_scope_backfill.py",
-        "python tools/a04r_bj_applicability.py --probe",
-        "python tools/a04r_bj_applicability.py --decide",
-        "python tools/a04r_announcement_index.py --resume",
-        "python tools/a04r_announcement_index.py --download-hits",
-        "python tools/a04r_finalize.py",
-        "python runs/issues/A04/rework/audit_rework.py",
-        "python runs/issues/A04/rework/finalize_rework.py"
-      ],
-      "pending": {
-        "not_tried_slots": 565,
-        "companies_with_pending": 116,
-        "announcement_index_companies": 1,
-        "announcement_index_target": 1054
-      },
-      "then": "A04R 通过后回 A04 #34 复验；未通过前 S00 保持 WAITING_DEPENDENCIES",
-      "resolved": true,
-      "note": "2026-10-27 停机断点已于 2026-10-28 跑完，不再需要按此续跑"
-    },
-    "s02_pre_acceptance_20261106": {
-      "status": "REPAIR_V2_APPLIED_AWAITING_EXTERNAL_RECHECK",
-      "last_completed": {
-        "issue_number": 37,
-        "issue_key": "S02",
-        "completed_at": "2026-10-29T20:45:55+08:00",
-        "review_file": "runs/issues/S02/remediation_20261029/review_workbuddy.md",
-        "decision": "REPAIR_APPLIED_PENDING_EXTERNAL_RECHECK",
-        "review_nature": "REPAIR_ACCEPTANCE_REVIEW",
-        "acceptance": "433/433 包校验 + 12,648 格独立重算 0 差异 + L0 664/387/3 一致",
-        "summary": "修复版接管为 S02 v2；21 家待核保留；S03 未放行"
-      },
-      "claim_note": "已接手修复包：433/433 文件校验通过，用包内 s00 独立重算 12,648 格与包内 s02 输出 0 差异，状态分布与 L0 分布逐项一致；S03 仍锁，等外部复核。",
-      "next_recommended_reason": "等 S02 修复版外部复核；复核通过后 S03 须用 v2 输入 + L0 addendum 开工"
-    },
-    "s03_claim_and_completion_20261106": {
-      "started_at": "2026-11-06 10:45:54 UTC",
-      "completed_at": "2026-11-06T18:50:54+08:00",
-      "executor": "Codex",
-      "note": "Claim was recorded online before execution; see commit ad0634ea"
-    }
-  },
-  "current_acceptance": {
-    "issue_key": "A04",
-    "issue_number": 34,
-    "decision": "ACCEPTED_WITH_LIMITS",
-    "release_S00": true,
-    "review_file": "runs/issues/A04/rework/review.json",
-    "reviewed_at": "2026-10-28T20:38:48+08:00",
-    "review_round": "REWORK_20261028_AFTER_CODEX_REVIEW",
-    "checks": "12/12 PASS（AC12：发现 127 组、逐项核 305 份文件、违规 0）",
-    "prior_review_preserved": "runs/issues/A04/review.json",
-    "gate": "全部 12 项必需检查 PASS 才放行（任一 FAIL/HOLD 不放行）"
-  },
-  "open_followups_from_s00": [
-    "62 个整槽无值：英文版 26（F32 采集器未校验语言）、无文本层 14、抽取盲区 20、混排 2。",
-    "453 份文档三表与摘要表不一致（1,326 格标 EXTRACTED_XCHECK_MISMATCH），S02 用前须核或排除。",
-    "2,157 份重述标记为 NEEDS_REVIEW（关键词判据，未逐份确认勾选项）。",
-    "旧快照 2021/2022 为单一来源，无官方 PDF 交叉校验。",
-    "未用最新年报「上年同期」列重算历史期，重述公司跨年口径可能不一致。",
-    "2026Q3 仅 190 家已披露，其余 864 家未到披露期（NOT_YET_DISCLOSED），当期截面不完整。"
-  ],
-  "completed_at": "2026-11-06T18:50:54+08:00",
-  "methodology_handoffs": [
-    {
-      "decision_id": "METHOD_20261107_LEADING_INDICATORS",
-      "note_path": "docs/需求先行指标分工_20261107.md",
-      "decision_file": "data/methodology_decision_20261107.json",
-      "applies_to": [
-        "S04",
-        "S06",
-        "R00",
-        "R01"
-      ],
-      "summary": "S04保持冻结规则；合同负债/可信在手订单在S06辅助观察；在建工程/订单质量在筛后核验；缺披露不填0不淘汰",
-      "workbuddy_receipt": "NOT_CONFIRMED"
-    }
-  ],
-  "s04_stage": {
-    "issue_key": "S04",
-    "issue_number": 39,
-    "plan_version": "20261026_collection_first_v2",
-    "executor": "WorkBuddy AI",
-    "review_nature": "SELF_CHECK",
-    "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-    "reviewed_at": "2026-11-10T21:10:00+08:00",
-    "rule_layer": "L2",
-    "rules_version": "S01_SCREEN_RULES_V3",
-    "rules_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
-    "rules_supersedes": "S01_SCREEN_RULES_V2",
-    "knowledge_as_of": "2026-10-25",
-    "coverage": 1054,
-    "decisions": {
-      "L2_NOT_SHORTLISTED": 322,
-      "L2_NOT_IN_SCOPE": 273,
-      "L2_SHORTLIST_CANDIDATE": 445,
-      "L2_HOLD_FOR_DATA": 10,
-      "WATCH_AFTER_CUTOFF": 4
-    },
-    "evidence_channels": {
-      "A_RATIO_OK": 328,
-      "A_RATIO_OK;C_LOW_BASE_CONFIRMED": 33,
-      "A_RATIO_OK;B_ABS_CHANNEL": 83,
-      "A_RATIO_OK;B_ABS_CHANNEL;C_LOW_BASE_CONFIRMED": 1
-    },
-    "abs_dependency_critical": [
-      "SH:600184 光电股份",
-      "SH:603296 华勤技术",
-      "SH:603338 浙江鼎力",
-      "SH:603416 信捷电气",
-      "SH:688711 宏微科技",
-      "SZ:000856 冀东装备",
-      "SZ:000948 南天信息",
-      "SZ:002224 三 力 士",
-      "SZ:002628 成都路桥",
-      "SZ:002960 青鸟智控",
-      "SZ:300213 佳讯飞鸿",
-      "SZ:300632 光莆股份",
-      "SZ:300644 南京聚隆",
-      "SZ:300793 佳禾智能",
-      "SZ:300971 博亚精工",
-      "SZ:301459 丰茂股份"
-    ],
-    "low_base_confirmed_in_pass": [
-      "BJ:920066",
-      "BJ:920198",
-      "BJ:920249",
-      "BJ:920641",
-      "SH:600288",
-      "SH:600590",
-      "SH:603051",
-      "SH:603135",
-      "SH:603608",
-      "SH:605189",
-      "SH:605208",
-      "SH:688090",
-      "SH:688135",
-      "SH:688255",
-      "SH:688328",
-      "SH:688383",
-      "SH:688518",
-      "SH:688577",
-      "SH:688623",
-      "SH:688655",
-      "SZ:002132",
-      "SZ:002185",
-      "SZ:002265",
-      "SZ:002641",
-      "SZ:002845",
-      "SZ:300179",
-      "SZ:300410",
-      "SZ:300472",
-      "SZ:300527",
-      "SZ:300613",
-      "SZ:300687",
-      "SZ:300823",
-      "SZ:301179",
-      "SZ:301210"
-    ],
-    "changed_vs_v1": 2,
-    "authoritative_s00": {
-      "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
-      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
-      "superseded": "runs/issues/S00/financial_normalized.csv",
-      "note": "旧 S00 交付件禁止用于下游复算"
-    },
-    "outputs": [
-      "runs/issues/S04/tight_pass.csv",
-      "runs/issues/S04/tight_observe.csv",
-      "runs/issues/S04/tight_decision_log.csv",
-      "runs/issues/S04/review_100_qc.csv",
-      "runs/issues/S04/v1_v3_diff.csv"
-    ],
-    "checks": "9/9 PASS",
-    "tests": "16/16 PASS",
-    "rework": {
-      "trigger": "S04 独立复核 RETURN_FOR_REWORK（P1-01 低基数未确认、P1-02 指标资格未落地）",
-      "advisor_ruling": "runs/issues/S04/codex_ruling.md",
-      "fixed": [
-        "P1-01 低基数同口径绝对额确认（SG01/SG04/SG06/SG08/SG09）",
-        "P1-02 L2 双通道资格（比率通道须 OK；SG06/SG08 须输入行可用）",
-        "C05/C07 数量锁移除，改为充要条件与集合不变量",
-        "review.json 与 active_issue 状态统一",
-        "输入指纹改指向权威 s00_v10"
-      ],
-      "not_fixed_by_design": [
-        "SG02/SG03/SG05/SG07 低基数无确认映射，记 NO_CONFIRM_RULE，本版不计入"
-      ]
-    },
-    "release_S05": false,
-    "release_note": "自检不等同独立复核；须第二轮外部复核通过后才放行 S05",
-    "limits": [
-      "自检不等同独立复核；S05 仍须外部复核通过后才放行",
-      "未回读 PDF、未新增业务采用；入选不等于投资候选",
-      "SG02/SG03/SG05/SG07 低基数无确认映射，记 NO_CONFIRM_RULE，本版不计入",
-      "绝对额通道（SG06/SG08）资格单独登记，未改写 M05 的 UNDEFINED_BASE",
-      "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
-    ],
-    "report": "runs/issues/S04/REPORT.md",
-    "waiting_reason": "S00 勘误 V4 识别 37 家名单内公司的 L2 通过依赖未闭合或待核差异，须待证据闭合；另有 203 家名单外公司争议键落在候选依赖内，须核证重算判是否漏筛",
-    "s00_errata_ref": "runs/issues/S00/errata_20261111_v4/"
-  },
-  "s00_errata": {
-    "stage": "ERRATA",
-    "issue_key": "S00",
-    "directory": "runs/issues/S00/errata_20261111_v5/",
-    "v2_directory_preserved": "runs/issues/S00/errata_20261111/",
-    "v1_directory_preserved": "runs/issues/S00/errata_20261111/superseded_v1/",
-    "supersession": "runs/issues/S00/supersession.json",
-    "executor": "WorkBuddy AI",
-    "review_nature": "SELF_CHECK",
-    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-    "reviewed_at": "2026-11-12T02:00:00+08:00",
-    "trigger": "Codex 第五轮复核 RETURN_FOR_REWORK：期间相等不能替代证据适用范围核验；5,270 条受限方法被自动放行；父输入展开仍不完整且对直接季度表过度传播；C13/C14/C17/C23/C24/C25 仍有空转方式；232 格整体归展示不成立；受限表未逐项绑定差异",
-    "authoritative_input": {
-      "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
-      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
-    },
-    "superseded_input": {
-      "path": "runs/issues/S00/financial_normalized.csv",
-      "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6",
-      "status": "SUPERSEDED_DO_NOT_CONSUME"
-    },
-    "lineage": "A(228,155) → v7(229,393) → v9(229,666) → B(229,667)",
-    "diff_totals": {
-      "value": 240,
-      "key": 2056,
-      "meta_core": 17728,
-      "meta_extra_cells": 1505,
-      "resolved": 12225,
-      "unresolved_core": 7799,
-      "unresolved_with_extra": 9304,
-      "value_unresolved": 34,
-      "key_unresolved": 405,
-      "meta_unresolved": 7360,
-      "extra_unresolved": 1505,
-      "pending_scope_limited_method": 6373,
-      "pending_scope_limited_own_period": 5270,
-      "pending_weak": 515,
-      "pending_source_provenance": 48,
-      "pending_cause_uncovered": 29,
-      "doc_not_in_list": 26,
-      "field_not_in_record": 116,
-      "record_is_remove": 8,
-      "evidence_contradicts": 0,
-      "resolved_by_ruling": 1,
-      "sign_flip": 89,
-      "resolved_restatement_confirmed": 8
-    },
-    "key_change_vs_v2": "重述核验改按 document_id 匹配（tools/s00_restatement_apply.py 第36/46行只按文档应用，1,007 文档 1:1）；元数据判据改为字段精确+操作语义+终值相等",
-    "downstream": {
-      "universe": 1054,
-      "not_affected": 330,
-      "still_passes_without": 72,
-      "hold_pending_errata": 43,
-      "r2_may_change": 206,
-      "r1_no_link": 403,
-      "restricted_claim_rows": 292,
-      "restricted_unique_disputes": 281,
-      "dispute_ledger": 9304,
-      "restatement_groups": 62
-    },
-    "checks": "27/27 PASS（C21a/b/c 分别检验 C13/C14/C17 拦住 V1；C18 合成父键争议；C23 山东钢铁）",
-    "reproducible": true,
-    "limits": [
-      "未回读 PDF、未修改任何数据文件",
-      "2,497 条核心未闭合/待核未做原文核验",
-      "1,148 条待范围对账未核比较列追溯调整",
-      "1,273 格补充元数据未做字段级核验",
-      "未覆盖锚定期回退与上游准入的间接依赖",
-      "不给出最终未闭合数；自检不等同独立验收",
-      "只能称「已识别 37 家须临时 HOLD」，不能称「只有 37 家」"
-    ],
-    "report": "runs/issues/S00/errata_20261111_v4/REPORT.md",
-    "handoff": "runs/issues/S00/errata_20261111_v4/handoff.md",
-    "issue_number": 53,
-    "github_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/53",
-    "version": "ERRATA_V5",
-    "v2_defects_fixed": [
-      "元数据子串判据（changed_columns 1,425/2,022 为全列清单）",
-      "C13 未要求记录存在与 UPDATE",
-      "C14 只检查 evidence 文字、对 V1 空转",
-      "单季派生未展开累计父输入",
-      "19 列 1,505 格未登记",
-      "重述按 (公司,期间) 匹配导致 5,073 条误判未覆盖"
-    ],
-    "v3_directory_preserved": "runs/issues/S00/errata_20261111_v3/",
-    "v3_defects_fixed": [
-      "document_id 广播解除→三态化并待范围对账",
-      "父键展开未实现→l2_core 递归",
-      "C21 未拆分→C21a/b/c",
-      "补充元数据同键免责→PENDING_FIELD_LEVEL_CHECK",
-      "山东钢铁 4 条误判→PENDING_SCOPE_AUDIT",
-      "杭叉 4 条归因→SH:603298"
-    ],
-    "v4_directory_preserved": "runs/issues/S00/errata_20261111_v4/",
-    "key_change_vs_v4": "闭合判据从「行期间==文档自身期间」改为「证据覆盖范围 ⊇ 必需范围」；受限方法强制待核；依赖引擎按 B 的 status 展开父键；补充元数据四类实质字段全部字段级待核",
-    "sampling": {
-      "samples": 26,
-      "risk_types": 16,
-      "page_reread_match": 15,
-      "page_reread_partial": 2,
-      "page_reread_no_page": 3,
-      "page_reread_not_applicable": 6
-    },
-    "self_check": {
-      "checks": 34,
-      "pass": 34,
-      "fault_injection_v1": [
-        6,
-        437,
-        140
-      ],
-      "fault_injection_v4_c14": ">5270"
-    },
-    "not_done": [
-      "第4步 按已验证方法批量核证",
-      "第5步 重算风险分层及受限表"
-    ],
-    "open_questions_for_codex": [
-      "累计差分行是否要在证据侧追加 MERGER_RETRO 必需项",
-      "NOTE_RETAINED_ERRATA_ZERO 的 563 条能否批量放行",
-      "62 个同质分组能否按组裁定",
-      "PENDING_WEAK_ASSUMPTION 515 条全量回读还是抽样"
-    ]
+  "handoff_package": {
+   "scope": "P07_ARCHIVE_HANDOFF_PACKAGE",
+   "archive_status": "VERIFIED",
+   "folder": {
+    "success": true,
+    "id": "1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
+    "url": "https://drive.google.com/drive/folders/1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
+    "title": "P07_采集校准与Drive归档_20261026",
+    "parent_id": "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5"
+   },
+   "file": {
+    "id": "1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP",
+    "url": "https://drive.google.com/file/d/1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP/view?usp=drivesdk"
+   },
+   "bytes": 122860,
+   "sha256": "54d2e48330ef6e53cf37ff60b73b5108b727a900af4f32ecc60673adbf0dbbbc",
+   "listed": true,
+   "binary_sha256_matches": true,
+   "readback_at": "2026-10-26T12:28:36.140Z",
+   "contains": "P07校准文本、65份回执、归档索引及更新后的文档登记表；不重复打包PDF"
   }
+ },
+ "current_drive_archive_status": "VERIFIED_65_FILES_BY_CODEX",
+ "a02_blocked_by": null,
+ "p03_neeq_recheck": {
+  "issue": "P03",
+  "scope": "NEEQ_RECHECK_20261027",
+  "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
+  "completed_at": "2026-10-27T07:04:41.079355+00:00",
+  "official_index_route": "AVAILABLE_POSITIVE_CONTROL_VERIFIED",
+  "issuer_mappings": 15,
+  "target_slots": 65,
+  "slots_with_current_official_links": 50,
+  "unresolved_applicability": 15,
+  "pre_current_listing_periods": 11,
+  "quarterly_slots": 4,
+  "sample_pdf_identity_verified": 5,
+  "sample_pdf_download_errors": 10,
+  "shared_ledger_modified": false,
+  "a02_ready": false,
+  "next_action": "A01 automatic recovery using validated old codes and parameter encoding; applicability checks and file transport diagnostics first. Do not dispatch 65 manual requests.",
+  "limits": [
+   "50 is candidate-link coverage, not 50 downloaded PDFs.",
+   "5 PDF samples are issuer identity checks, not 5 newly recovered target slots.",
+   "11 pre-listing periods are review candidates, not final NA decisions.",
+   "Quarter-specific positive controls failed; their zeros cannot prove absence.",
+   "No Drive upload, financial adoption or independent acceptance in this follow-up."
+  ],
+  "review_file": "runs/issues/P03/neeq_recheck_20261027/review.json"
+ },
+ "a03_open_items": [
+  "Drive 无凭据：7158 份已核文档只有本机副本，archive_status 未写 VERIFIED。",
+  "document_registry 未回写：7162 份已核文档仍只在 collection_index。",
+  "字段仅覆盖年报（3082 份）；半年报 3162 份、季报 1054 份未跑。",
+  "重述字段 960 条标为需复核，未硬判是/否。",
+  "56 份三表定位失败、1 份图片版需 OCR，登记为字段缺口。"
+ ],
+ "a03_key_findings": {
+  "same_file_two_ids": 71,
+  "registry_rows_not_in_ledger": 97,
+  "ledger_rows_not_in_registry": 7162,
+  "field_extracted_rate": 0.8697,
+  "crosscheck_match": 2813,
+  "crosscheck_mismatch": 119
+ },
+ "claim_basis": {
+  "issue_state": "OPEN",
+  "github_checked_at": "2026-10-27T20:54:25+08:00",
+  "released_issue": {
+   "issue_number": 34,
+   "issue_key": "A04",
+   "released_at": "2026-10-27T20:54:25+08:00",
+   "reason": "A04 复验需先完成 A04R 采集；执行期间不双占卡",
+   "work_done_under_a04": [
+    "runs/issues/A04/rework/cutoff_hold_resolved.csv",
+    "runs/issues/A04/rework/audit_rework.py"
+   ]
+  },
+  "inputs_sha256": {
+   "data/issue_execution_plan.csv": "d4accf18538033b4b9b4aa7a32d3161b893729d60ee23161364c45deda2e4f9c",
+   "data/issue_execution_plan.json": "ed1994753025837f9546ed988c82026a93ea9584dd23aa611050d0b3bd48089d",
+   "PROJECT_STATE.json": "fd06fd265dc722c91f80b666a3a053cc087f325c7d7bc12baa67d8c81d0a6cc0",
+   "runs/issues/P00/collection_scope.json": "f5e31dc053b9d7a020ffd0db15fb8d7cad44e2c04f6baa76d396c41a519a4e3b",
+   "runs/issues/P00/coverage_acceptance_rules.json": "7b8fadc770b09cae094bdc67abd584f310db17a14cac2347d25bc803e070c196",
+   "runs/issues/A04/review.json": "6ca8ded33ea810ddac701c77ebe978c409f60ae4dba2cada2ba9d3667d07385d",
+   "runs/issues/A03/review.json": "5c142176aaf5d77aa47b18b5420f321fe840494fb1277083144ab9bb3bdcc63b",
+   "runs/collection/collection_index.csv": "31aea6f06e62ae1c8b88a8253e854223adf3eea8faa471324f492324f15fd4fe"
+  },
+  "config": "runs/issues/A01/collection_config_v2.json",
+  "config_sha256": "ba2c81d5502ff593176f70fea24b5d2bc9f15ccc12e6452c50ec85a5d9b5e5e2"
+ },
+ "paused_at": "2026-10-27T23:58:55+08:00",
+ "checkpoint_sha256": {
+  "runs/collection/collection_index.csv": "dbfbdd1106e45deae79de459dd9c54a7a20b73a7b874b1ad588ea304bd28ae31",
+  "runs/issues/A04R/progress.json": "7623e53ab56a88b061f16e586147b0ee126ff7d12297d49fafa7f0fc74bf35cf",
+  "runs/issues/A04R/progress_pass1.json": "ca37f8375c2e3756aca1b29dac0633b30e581f55750e3ef29baf69f1e671df99"
+ },
+ "resumed_at": "2026-10-28T12:27:24+08:00",
+ "resume_note": "按 PAUSE_STATE.md 续跑：先补 116 家 565 槽，再做北交所挂牌期判定与两年公告/IR 目录。",
+ "a04r_result": {
+  "issue_number": 50,
+  "decision": "SELF_CHECK_PASS",
+  "review_file": "runs/issues/A04R/review.json",
+  "slot_pairs": 12648,
+  "verified": 11468,
+  "not_tried": 0,
+  "announcement_companies": 1054,
+  "keyword_originals": 264,
+  "revision_rows": 11183,
+  "financial_corrections": 192,
+  "correction_chain_pairs": 127,
+  "correction_chain_gaps": 0,
+  "neeq_listing_dates_from_local_annuals": 15,
+  "correction_chain_verified_ok": 127,
+  "correction_notice_originals": 55,
+  "correction_notice_only_chains": 4,
+  "correction_files_checked": 305,
+  "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除预案/股东大会/说明会/审计报告/提示性公告/摘要",
+  "correction_discovery_rows": 223,
+  "correction_discovery_dispositions": {
+   "IN_SCOPE": 180,
+   "EXCLUDED_SUMMARY": 28,
+   "EXCLUDED_NON_FINANCIAL": 3,
+   "EXCLUDED_OUT_OF_FROZEN_SCOPE": 12
+  }
+ },
+ "history": {
+  "a04_first_review": {
+   "decision": "RETURN_FOR_REWORK",
+   "review_file": "runs/issues/A04/review.json",
+   "reviewed_at": "2026-10-27 12:33:58 UTC",
+   "release_S00": false,
+   "known_after_cutoff": 0,
+   "unknown_disclosure_dates": 7,
+   "missing_predeadline_quarter_dispositions": 4216,
+   "superseded": true,
+   "note": "首次验收 RETURN_FOR_REWORK 已作废，当前验收以 current_acceptance 为准"
+  },
+  "a04r_day_end_pause_20261027": {
+   "issue_key": "A04R",
+   "issue_number": 50,
+   "state_file": "runs/issues/A04R/PAUSE_STATE.md",
+   "commands": [
+    "python tools/a04r_scope_backfill.py",
+    "python tools/a04r_bj_applicability.py --probe",
+    "python tools/a04r_bj_applicability.py --decide",
+    "python tools/a04r_announcement_index.py --resume",
+    "python tools/a04r_announcement_index.py --download-hits",
+    "python tools/a04r_finalize.py",
+    "python runs/issues/A04/rework/audit_rework.py",
+    "python runs/issues/A04/rework/finalize_rework.py"
+   ],
+   "pending": {
+    "not_tried_slots": 565,
+    "companies_with_pending": 116,
+    "announcement_index_companies": 1,
+    "announcement_index_target": 1054
+   },
+   "then": "A04R 通过后回 A04 #34 复验；未通过前 S00 保持 WAITING_DEPENDENCIES",
+   "resolved": true,
+   "note": "2026-10-27 停机断点已于 2026-10-28 跑完，不再需要按此续跑"
+  },
+  "s02_pre_acceptance_20261106": {
+   "status": "REPAIR_V2_APPLIED_AWAITING_EXTERNAL_RECHECK",
+   "last_completed": {
+    "issue_number": 37,
+    "issue_key": "S02",
+    "completed_at": "2026-10-29T20:45:55+08:00",
+    "review_file": "runs/issues/S02/remediation_20261029/review_workbuddy.md",
+    "decision": "REPAIR_APPLIED_PENDING_EXTERNAL_RECHECK",
+    "review_nature": "REPAIR_ACCEPTANCE_REVIEW",
+    "acceptance": "433/433 包校验 + 12,648 格独立重算 0 差异 + L0 664/387/3 一致",
+    "summary": "修复版接管为 S02 v2；21 家待核保留；S03 未放行"
+   },
+   "claim_note": "已接手修复包：433/433 文件校验通过，用包内 s00 独立重算 12,648 格与包内 s02 输出 0 差异，状态分布与 L0 分布逐项一致；S03 仍锁，等外部复核。",
+   "next_recommended_reason": "等 S02 修复版外部复核；复核通过后 S03 须用 v2 输入 + L0 addendum 开工"
+  },
+  "s03_claim_and_completion_20261106": {
+   "started_at": "2026-11-06 10:45:54 UTC",
+   "completed_at": "2026-11-06T18:50:54+08:00",
+   "executor": "Codex",
+   "note": "Claim was recorded online before execution; see commit ad0634ea"
+  }
+ },
+ "current_acceptance": {
+  "issue_key": "A04",
+  "issue_number": 34,
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "release_S00": true,
+  "review_file": "runs/issues/A04/rework/review.json",
+  "reviewed_at": "2026-10-28T20:38:48+08:00",
+  "review_round": "REWORK_20261028_AFTER_CODEX_REVIEW",
+  "checks": "12/12 PASS（AC12：发现 127 组、逐项核 305 份文件、违规 0）",
+  "prior_review_preserved": "runs/issues/A04/review.json",
+  "gate": "全部 12 项必需检查 PASS 才放行（任一 FAIL/HOLD 不放行）"
+ },
+ "open_followups_from_s00": [
+  "62 个整槽无值：英文版 26（F32 采集器未校验语言）、无文本层 14、抽取盲区 20、混排 2。",
+  "453 份文档三表与摘要表不一致（1,326 格标 EXTRACTED_XCHECK_MISMATCH），S02 用前须核或排除。",
+  "2,157 份重述标记为 NEEDS_REVIEW（关键词判据，未逐份确认勾选项）。",
+  "旧快照 2021/2022 为单一来源，无官方 PDF 交叉校验。",
+  "未用最新年报「上年同期」列重算历史期，重述公司跨年口径可能不一致。",
+  "2026Q3 仅 190 家已披露，其余 864 家未到披露期（NOT_YET_DISCLOSED），当期截面不完整。"
+ ],
+ "completed_at": "2026-11-06T18:50:54+08:00",
+ "methodology_handoffs": [
+  {
+   "decision_id": "METHOD_20261107_LEADING_INDICATORS",
+   "note_path": "docs/需求先行指标分工_20261107.md",
+   "decision_file": "data/methodology_decision_20261107.json",
+   "applies_to": [
+    "S04",
+    "S06",
+    "R00",
+    "R01"
+   ],
+   "summary": "S04保持冻结规则；合同负债/可信在手订单在S06辅助观察；在建工程/订单质量在筛后核验；缺披露不填0不淘汰",
+   "workbuddy_receipt": "NOT_CONFIRMED"
+  }
+ ],
+ "s04_stage": {
+  "issue_key": "S04",
+  "issue_number": 39,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "reviewed_at": "2026-11-10T21:10:00+08:00",
+  "rule_layer": "L2",
+  "rules_version": "S01_SCREEN_RULES_V3",
+  "rules_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
+  "rules_supersedes": "S01_SCREEN_RULES_V2",
+  "knowledge_as_of": "2026-10-25",
+  "coverage": 1054,
+  "decisions": {
+   "L2_NOT_SHORTLISTED": 322,
+   "L2_NOT_IN_SCOPE": 273,
+   "L2_SHORTLIST_CANDIDATE": 445,
+   "L2_HOLD_FOR_DATA": 10,
+   "WATCH_AFTER_CUTOFF": 4
+  },
+  "evidence_channels": {
+   "A_RATIO_OK": 328,
+   "A_RATIO_OK;C_LOW_BASE_CONFIRMED": 33,
+   "A_RATIO_OK;B_ABS_CHANNEL": 83,
+   "A_RATIO_OK;B_ABS_CHANNEL;C_LOW_BASE_CONFIRMED": 1
+  },
+  "abs_dependency_critical": [
+   "SH:600184 光电股份",
+   "SH:603296 华勤技术",
+   "SH:603338 浙江鼎力",
+   "SH:603416 信捷电气",
+   "SH:688711 宏微科技",
+   "SZ:000856 冀东装备",
+   "SZ:000948 南天信息",
+   "SZ:002224 三 力 士",
+   "SZ:002628 成都路桥",
+   "SZ:002960 青鸟智控",
+   "SZ:300213 佳讯飞鸿",
+   "SZ:300632 光莆股份",
+   "SZ:300644 南京聚隆",
+   "SZ:300793 佳禾智能",
+   "SZ:300971 博亚精工",
+   "SZ:301459 丰茂股份"
+  ],
+  "low_base_confirmed_in_pass": [
+   "BJ:920066",
+   "BJ:920198",
+   "BJ:920249",
+   "BJ:920641",
+   "SH:600288",
+   "SH:600590",
+   "SH:603051",
+   "SH:603135",
+   "SH:603608",
+   "SH:605189",
+   "SH:605208",
+   "SH:688090",
+   "SH:688135",
+   "SH:688255",
+   "SH:688328",
+   "SH:688383",
+   "SH:688518",
+   "SH:688577",
+   "SH:688623",
+   "SH:688655",
+   "SZ:002132",
+   "SZ:002185",
+   "SZ:002265",
+   "SZ:002641",
+   "SZ:002845",
+   "SZ:300179",
+   "SZ:300410",
+   "SZ:300472",
+   "SZ:300527",
+   "SZ:300613",
+   "SZ:300687",
+   "SZ:300823",
+   "SZ:301179",
+   "SZ:301210"
+  ],
+  "changed_vs_v1": 2,
+  "authoritative_s00": {
+   "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+   "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+   "superseded": "runs/issues/S00/financial_normalized.csv",
+   "note": "旧 S00 交付件禁止用于下游复算"
+  },
+  "outputs": [
+   "runs/issues/S04/tight_pass.csv",
+   "runs/issues/S04/tight_observe.csv",
+   "runs/issues/S04/tight_decision_log.csv",
+   "runs/issues/S04/review_100_qc.csv",
+   "runs/issues/S04/v1_v3_diff.csv"
+  ],
+  "checks": "9/9 PASS",
+  "tests": "16/16 PASS",
+  "rework": {
+   "trigger": "S04 独立复核 RETURN_FOR_REWORK（P1-01 低基数未确认、P1-02 指标资格未落地）",
+   "advisor_ruling": "runs/issues/S04/codex_ruling.md",
+   "fixed": [
+    "P1-01 低基数同口径绝对额确认（SG01/SG04/SG06/SG08/SG09）",
+    "P1-02 L2 双通道资格（比率通道须 OK；SG06/SG08 须输入行可用）",
+    "C05/C07 数量锁移除，改为充要条件与集合不变量",
+    "review.json 与 active_issue 状态统一",
+    "输入指纹改指向权威 s00_v10"
+   ],
+   "not_fixed_by_design": [
+    "SG02/SG03/SG05/SG07 低基数无确认映射，记 NO_CONFIRM_RULE，本版不计入"
+   ]
+  },
+  "release_S05": false,
+  "release_note": "自检不等同独立复核；须第二轮外部复核通过后才放行 S05",
+  "limits": [
+   "自检不等同独立复核；S05 仍须外部复核通过后才放行",
+   "未回读 PDF、未新增业务采用；入选不等于投资候选",
+   "SG02/SG03/SG05/SG07 低基数无确认映射，记 NO_CONFIRM_RULE，本版不计入",
+   "绝对额通道（SG06/SG08）资格单独登记，未改写 M05 的 UNDEFINED_BASE",
+   "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
+  ],
+  "report": "runs/issues/S04/REPORT.md",
+  "waiting_reason": "S00 勘误 V5 识别 43 家名单内公司的 L2 通过依赖未闭合或待核差异，须待证据闭合；另有 207 家名单外公司争议键落在候选依赖内，须核证重算判是否漏筛",
+  "s00_errata_ref": "runs/issues/S00/errata_20261111_v5/"
+ },
+ "s00_errata": {
+  "stage": "ERRATA",
+  "issue_key": "S00",
+  "directory": "runs/issues/S00/errata_20261111_v5/",
+  "v2_directory_preserved": "runs/issues/S00/errata_20261111/",
+  "v1_directory_preserved": "runs/issues/S00/errata_20261111/superseded_v1/",
+  "supersession": "runs/issues/S00/supersession.json",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+  "reviewed_at": "2026-11-12T03:20:00+08:00",
+  "trigger": "Codex 第六轮复核 RETURN_FOR_REWORK：required_scope 期间参数误用（非自身期间 1,240 条从未要求 COMPARATIVE_SCOPE）；极性把「提到」当「排除」（0.00元 命中 100.00元、「本期发生前期差错更正」被记排除）；「同报告内 YTD 相减自动抵消」不成立，须核父输入文档/版本/范围/单位兼容；C14 裁决类只查非空、C26 跳过裁决与确认类、C29 只查列非空、C30 只证明旧标签不被接受、受限表 ledger_sha256 全填 meta_diff",
+  "authoritative_input": {
+   "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+   "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+  },
+  "superseded_input": {
+   "path": "runs/issues/S00/financial_normalized.csv",
+   "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6",
+   "status": "SUPERSEDED_DO_NOT_CONSUME"
+  },
+  "lineage": "A(228,155) → v7(229,393) → v9(229,666) → B(229,667)",
+  "diff_totals": {
+   "value": 240,
+   "key": 2056,
+   "meta_core": 17728,
+   "meta_extra_cells": 1505,
+   "resolved": 12183,
+   "unresolved_core": 7841,
+   "unresolved_with_extra": 9346,
+   "value_unresolved": 34,
+   "key_unresolved": 405,
+   "meta_unresolved": 7402,
+   "extra_unresolved": 1505,
+   "pending_scope_limited_method": 6373,
+   "pending_scope_limited_own_period": 5270,
+   "pending_weak": 515,
+   "pending_source_provenance": 47,
+   "pending_cause_uncovered": 58,
+   "doc_not_in_list": 26,
+   "field_not_in_record": 116,
+   "record_is_remove": 8,
+   "evidence_contradicts": 0,
+   "resolved_by_ruling": 1,
+   "sign_flip": 89,
+   "resolved_restatement_confirmed": 0,
+   "pending_parent_compatibility": 5,
+   "pending_confirmed_event_field_open": 8,
+   "pending_confirmed_unsupported": 1,
+   "evidence_mismatch": 4,
+   "resolved_scope_covered": 9971,
+   "comparative_period_rows": 1240,
+   "parent_compatible_yes": 3566,
+   "parent_compatible_no": 133,
+   "dispute_unique_ids": 9346
+  },
+  "key_change_vs_v2": "重述核验改按 document_id 匹配（tools/s00_restatement_apply.py 第36/46行只按文档应用，1,007 文档 1:1）；元数据判据改为字段精确+操作语义+终值相等",
+  "downstream": {
+   "universe": 1054,
+   "not_affected": 329,
+   "still_passes_without": 73,
+   "hold_pending_errata": 43,
+   "r2_may_change": 207,
+   "r1_no_link": 402,
+   "restricted_claim_rows": 294,
+   "restricted_unique_disputes": 283,
+   "dispute_ledger": 9346,
+   "restatement_groups": 73
+  },
+  "checks": "37/37 PASS（C33 期间三态+非自身期间须比较范围；C34 极性四反例；C35 逐表哈希；C14 裁决须命中 rulings 清单、确认类须事件+来源双证；C24 放行须 content_review；C26 全类别双向重算；C28 稳定 ID+逐表同键；C29 按重算判覆盖；C30 映射后注入三反例）",
+  "reproducible": true,
+  "limits": [
+   "未回读全部 PDF（抽验 37 条，覆盖 1,007 份核验文档中的 20 份）",
+   "9,927 条 NOTE_TRACE_NA 已解决项未做方法适用性复审",
+   "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）未逐条回读原注",
+   "1,505 格补充元数据仅登记字段级核验要求，未逐项核完",
+   "未覆盖锚定期回退与上游准入的间接依赖",
+   "第 4 步批量核证、第 5 步重算分层未做；43/207/445 均未锁定",
+   "不给出最终未闭合数；自检不等同独立验收"
+  ],
+  "report": "runs/issues/S00/errata_20261111_v5/REPORT.md",
+  "handoff": "runs/issues/S00/errata_20261111_v5/handoff.md",
+  "issue_number": 53,
+  "github_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/53",
+  "version": "ERRATA_V5",
+  "v2_defects_fixed": [
+   "元数据子串判据（changed_columns 1,425/2,022 为全列清单）",
+   "C13 未要求记录存在与 UPDATE",
+   "C14 只检查 evidence 文字、对 V1 空转",
+   "单季派生未展开累计父输入",
+   "19 列 1,505 格未登记",
+   "重述按 (公司,期间) 匹配导致 5,073 条误判未覆盖"
+  ],
+  "v3_directory_preserved": "runs/issues/S00/errata_20261111_v3/",
+  "v3_defects_fixed": [
+   "document_id 广播解除→三态化并待范围对账",
+   "父键展开未实现→l2_core 递归",
+   "C21 未拆分→C21a/b/c",
+   "补充元数据同键免责→PENDING_FIELD_LEVEL_CHECK",
+   "山东钢铁 4 条误判→PENDING_SCOPE_AUDIT",
+   "杭叉 4 条归因→SH:603298"
+  ],
+  "v4_directory_preserved": "runs/issues/S00/errata_20261111_v4/",
+  "key_change_vs_v4": "闭合判据从「行期间==文档自身期间」改为「证据覆盖范围 ⊇ 必需范围」；受限方法强制待核；依赖引擎按 B 的 status 展开父键；补充元数据四类实质字段全部字段级待核",
+  "sampling": {
+   "samples": 37,
+   "risk_types": 20,
+   "page_reread": {
+    "MATCH": 17,
+    "PARTIAL": 7,
+    "NO_PAGE_RECORDED": 4,
+    "NOT_APPLICABLE_EXTRA_FIELD": 6,
+    "WEAK_LOCATE": 2,
+    "NOT_FOUND_IN_DOC": 1
+   },
+   "new_in_round6": [
+    "R6_CROSS_DOC_PARENT",
+    "R5_CAUSE_AFFIRMED",
+    "R7_PARTIAL_LOCATED"
+   ],
+   "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位"
+  },
+  "self_check": {
+   "checks": 37,
+   "pass": 37,
+   "version": "V6",
+   "fault_injection_v1": {
+    "C13": 6,
+    "C14": 11936,
+    "C17": 12076
+   },
+   "fault_injection_v4_mapped": {
+    "C26": 6457,
+    "C14": 5345,
+    "limited_method_own_period": 5270
+   },
+   "targeted_injections": {
+    "scope_insufficient": "PENDING_SOURCE_PROVENANCE",
+    "cause_affirmed": "UNRESOLVED_EVIDENCE_CONTRADICTS",
+    "parent_incompatible": "PENDING_PARENT_COMPATIBILITY"
+   }
+  },
+  "not_done": [
+   "第 4 步按已验证方法批量核证",
+   "第 5 步重算风险分层及受限表再报"
+  ],
+  "open_questions_for_codex": [
+   "MERGER_RETRO 已无「明确排除」实例，1,240 条非自身期间行是否接受长期停在待核",
+   "RESOLVED_RESTATEMENT_CONFIRMED 归零（8 条转 PENDING_CONFIRMED_EVENT_FIELD_OPEN）是否正确",
+   "SH:600936 证据文本在原件全文找不到，该走何种处置",
+   "第 4 步粒度：73 个同质分组能否按组裁定",
+   "是否放行 S04 第二轮与 S05"
+  ]
+ }
 }
