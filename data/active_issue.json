@@ -4,8 +4,8 @@
   "active_issue_key": "S00_ERRATA_REVIEW",
   "executor": "WorkBuddy AI",
   "started_at": "2026-11-11 22:10:00 +08:00",
-  "status": "S00_ERRATA_V3_SELF_CHECK_PASS_AWAITING_RECHECK",
-  "claim_note": "已按 Codex 第三轮裁决返工出 S00 勘误 V3：重述核验改按 document_id 匹配（回填脚本只按文档应用，1,007 文档 1:1），元数据判据改为字段精确+操作语义+终值相等（changed_columns 有 1,425/2,022 为全列清单，旧子串判据恒真），登记 19 列/1,505 格补充元数据。核心未闭合 1,349、含补充列 1,719；全池 14 家须 HOLD、33 家须核证重算、5 家待定。自检 22/22 PASS，V1 台账代入 C13/C14/C17 分别检出 6/437/140 条违例。S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
+  "status": "S00_ERRATA_V4_SELF_CHECK_PASS_AWAITING_RECHECK",
+  "claim_note": "S00 勘误 V4：按 Codex 第四轮裁决把「文档定位」与「证据适用范围」分离，重述三态化（行期间=文档自身期间才判已解决 15,316；取自比较列/分季度表 1,148 转待范围对账）；新建 l2_core.py 真正递归展开累计父键；补充元数据 1,273 格取消同键免责。核心未闭合/待核 2,497、含 19 列 3,770；全池 37 家临时 HOLD、203 家须核证重算、406 家无关联。自检 27/27 PASS。S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
   "last_completed": {
     "issue_key": "S04",
     "issue_number": 39,
@@ -403,21 +403,21 @@
       "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
     ],
     "report": "runs/issues/S04/REPORT.md",
-    "waiting_reason": "S00 勘误 V3 识别 14 家名单内公司的 L2 通过依赖未闭合差异（重述 WEAK 8、无依据补行 2、告警解除无证 2、键记录不符 1、重述判定相反 1），须待证据闭合；另有 33 家名单外公司争议键落在候选信号依赖内，须核证重算判是否漏筛",
-    "s00_errata_ref": "runs/issues/S00/errata_20261111_v3/"
+    "waiting_reason": "S00 勘误 V4 识别 37 家名单内公司的 L2 通过依赖未闭合或待核差异，须待证据闭合；另有 203 家名单外公司争议键落在候选依赖内，须核证重算判是否漏筛",
+    "s00_errata_ref": "runs/issues/S00/errata_20261111_v4/"
   },
   "s00_errata": {
     "stage": "ERRATA",
     "issue_key": "S00",
-    "directory": "runs/issues/S00/errata_20261111_v3/",
+    "directory": "runs/issues/S00/errata_20261111_v4/",
     "v2_directory_preserved": "runs/issues/S00/errata_20261111/",
     "v1_directory_preserved": "runs/issues/S00/errata_20261111/superseded_v1/",
     "supersession": "runs/issues/S00/supersession.json",
     "executor": "WorkBuddy AI",
     "review_nature": "SELF_CHECK",
     "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-    "reviewed_at": "2026-11-11T21:30:00+08:00",
-    "trigger": "Codex 第三轮复核 RETURN_FOR_REWORK：元数据子串判据恒真、C14 对 V1 空转、单季派生未展开累计父输入、19 列 1,505 格未登记、报告分项写错",
+    "reviewed_at": "2026-11-12T00:05:00+08:00",
+    "trigger": "Codex 第四轮复核 RETURN_FOR_REWORK：document_id 只能定位文档不能广播解除；累计父输入展开未实现；C21 未拆分；补充元数据仍同键兜底；山东钢铁 4 条误判已解决；杭叉归因写错",
     "authoritative_input": {
       "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
       "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
@@ -432,18 +432,17 @@
       "value": 240,
       "key": 2056,
       "meta_core": 17728,
-      "meta_extra_columns": 1505,
       "meta_extra_cells": 1505,
-      "resolved": 19810,
-      "unresolved_core": 1349,
-      "unresolved_with_extra": 1719,
+      "resolved": 17759,
+      "unresolved_core": 2497,
+      "unresolved_with_extra": 3770,
       "value_unresolved": 34,
       "key_unresolved": 405,
-      "meta_unresolved": 910,
-      "extra_unresolved": 370,
-      "weak": 515,
-      "unbacked_addition": 364,
-      "doc_never_verified": 26,
+      "meta_unresolved": 2058,
+      "extra_unresolved": 1273,
+      "pending_scope_audit": 1148,
+      "pending_weak": 515,
+      "doc_not_in_list": 26,
       "field_not_in_record": 116,
       "record_is_remove": 8,
       "sign_flip": 89
@@ -451,45 +450,29 @@
     "key_change_vs_v2": "重述核验改按 document_id 匹配（tools/s00_restatement_apply.py 第36/46行只按文档应用，1,007 文档 1:1）；元数据判据改为字段精确+操作语义+终值相等",
     "downstream": {
       "universe": 1054,
-      "not_affected": 430,
-      "still_passes_without": 1,
-      "hold_pending_errata": 14,
-      "r2_may_change": 33,
-      "r3_pending": 5,
-      "r1_no_link": 571,
-      "restricted_claims": 74,
-      "hold_list": [
-        "BJ:920022 世昌股份",
-        "BJ:920198 微创光电",
-        "BJ:920220 朗信电气",
-        "BJ:920289 华汇智能",
-        "SH:688320 禾川科技",
-        "SH:688328 深科达",
-        "SH:688518 联赢激光",
-        "SZ:000591 太阳能",
-        "SZ:002010 传化智联",
-        "SZ:002261 拓维信息",
-        "SZ:002594 比亚迪",
-        "SZ:002833 弘亚数控",
-        "SZ:002933 新兴装备",
-        "SZ:300193 佳士科技"
-      ]
+      "not_affected": 331,
+      "still_passes_without": 77,
+      "hold_pending_errata": 37,
+      "r2_may_change": 203,
+      "r1_no_link": 406,
+      "restricted_claims": 253
     },
-    "checks": "22/22 PASS（含 V1 故障注入：C13/C14/C17 分别检出 6/437/140 条违例）",
+    "checks": "27/27 PASS（C21a/b/c 分别检验 C13/C14/C17 拦住 V1；C18 合成父键争议；C23 山东钢铁）",
     "reproducible": true,
     "limits": [
       "未回读 PDF、未修改任何数据文件",
-      "1,349 条核心未闭合未做原文核验",
-      "未覆盖锚定期回退路径的间接依赖",
-      "370 格补充元数据未判定是否影响入选",
-      "自检不等同独立验收",
-      "只能称「已识别 14 家须 HOLD」，不能称「只有 14 家」"
+      "2,497 条核心未闭合/待核未做原文核验",
+      "1,148 条待范围对账未核比较列追溯调整",
+      "1,273 格补充元数据未做字段级核验",
+      "未覆盖锚定期回退与上游准入的间接依赖",
+      "不给出最终未闭合数；自检不等同独立验收",
+      "只能称「已识别 37 家须临时 HOLD」，不能称「只有 37 家」"
     ],
-    "report": "runs/issues/S00/errata_20261111_v3/REPORT.md",
-    "handoff": "runs/issues/S00/errata_20261111_v3/handoff.md",
+    "report": "runs/issues/S00/errata_20261111_v4/REPORT.md",
+    "handoff": "runs/issues/S00/errata_20261111_v4/handoff.md",
     "issue_number": 53,
     "github_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/53",
-    "version": "ERRATA_V3",
+    "version": "ERRATA_V4",
     "v2_defects_fixed": [
       "元数据子串判据（changed_columns 1,425/2,022 为全列清单）",
       "C13 未要求记录存在与 UPDATE",
@@ -497,6 +480,15 @@
       "单季派生未展开累计父输入",
       "19 列 1,505 格未登记",
       "重述按 (公司,期间) 匹配导致 5,073 条误判未覆盖"
+    ],
+    "v3_directory_preserved": "runs/issues/S00/errata_20261111_v3/",
+    "v3_defects_fixed": [
+      "document_id 广播解除→三态化并待范围对账",
+      "父键展开未实现→l2_core 递归",
+      "C21 未拆分→C21a/b/c",
+      "补充元数据同键免责→PENDING_FIELD_LEVEL_CHECK",
+      "山东钢铁 4 条误判→PENDING_SCOPE_AUDIT",
+      "杭叉 4 条归因→SH:603298"
     ]
   }
 }

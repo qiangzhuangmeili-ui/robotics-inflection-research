@@ -1,0 +1,276 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V4",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+  "reviewed_at": "2026-11-12T00:05:00+08:00",
+  "checks_pass": 27,
+  "checks_total": 27,
+  "checks": [
+    {
+      "id": "C01",
+      "name": "输入哈希与 summary 一致",
+      "result": "PASS",
+      "detail": {
+        "A": "a1f27f1ceacfba10",
+        "B": "fc312c52ace51feb"
+      }
+    },
+    {
+      "id": "C02",
+      "name": "B 行数与登记一致",
+      "result": "PASS",
+      "detail": {
+        "rows": 229667
+      }
+    },
+    {
+      "id": "C03",
+      "name": "台账行数与 summary 一致",
+      "result": "PASS",
+      "detail": {
+        "cell": 240,
+        "key": 2056,
+        "meta": 17728,
+        "extra": 1505
+      }
+    },
+    {
+      "id": "C04",
+      "name": "每条差异均有处置结论",
+      "result": "PASS",
+      "detail": {
+        "rows": 21529
+      }
+    },
+    {
+      "id": "C05",
+      "name": "未闭合/待核项均写明原因",
+      "result": "PASS",
+      "detail": {
+        "missing": 0
+      }
+    },
+    {
+      "id": "C06",
+      "name": "重述差异 17,009",
+      "result": "PASS",
+      "detail": {
+        "count": 17009
+      }
+    },
+    {
+      "id": "C07",
+      "name": "符号翻转 89 格",
+      "result": "PASS",
+      "detail": {
+        "sign_flip": 89
+      }
+    },
+    {
+      "id": "C08",
+      "name": "全池 1054 家守恒",
+      "result": "PASS",
+      "detail": {
+        "total": 1054,
+        "by_verdict": {
+          "R1_NO_LINK": 406,
+          "HOLD_PENDING_ERRATA": 37,
+          "R2_MAY_CHANGE": 203,
+          "NOT_AFFECTED": 331,
+          "STILL_PASSES_WITHOUT": 77
+        }
+      }
+    },
+    {
+      "id": "C09",
+      "name": "HOLD 争议可追溯到字段与期间",
+      "result": "PASS",
+      "detail": {
+        "hold_count": 37
+      }
+    },
+    {
+      "id": "C10",
+      "name": "核心未闭合+待核与 summary 一致",
+      "result": "PASS",
+      "detail": {
+        "computed": 2497,
+        "declared": 2497
+      }
+    },
+    {
+      "id": "C11",
+      "name": "键差异方向统计",
+      "result": "PASS",
+      "detail": {
+        "ONLY_B": 1784,
+        "ONLY_A": 272
+      }
+    },
+    {
+      "id": "C12",
+      "name": "输入文件未被本次工作修改",
+      "result": "PASS",
+      "detail": {
+        "mtimes": [
+          "2026-10-29T09:49:48.000675",
+          "2026-11-02T22:31:45.981410"
+        ]
+      }
+    },
+    {
+      "id": "C13",
+      "name": "已解决值差异：记录存在且为 UPDATE 且终值等于 B",
+      "result": "PASS",
+      "detail": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "C14",
+      "name": "已解决重述：文档级判定等于 B 且非假设",
+      "result": "PASS",
+      "detail": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "C17",
+      "name": "已解决元数据：不得引用 REMOVE 或非 status 字段",
+      "result": "PASS",
+      "detail": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "C15",
+      "name": "M03 生产依赖为四季（t/t−1q/t−1y/t−1y−1q）",
+      "result": "PASS",
+      "detail": {
+        "M03_keys": 8,
+        "M01_keys": 2
+      }
+    },
+    {
+      "id": "C16",
+      "name": "生产依赖命中前季争议（合成键）",
+      "result": "PASS",
+      "detail": {
+        "synthetic": "('FIN.REV.SQ', '20250331')",
+        "in_M03": true,
+        "in_M01": false
+      }
+    },
+    {
+      "id": "C18",
+      "name": "单季派生递归展开累计父键（合成 REV.YTD 争议被命中）",
+      "result": "PASS",
+      "detail": {
+        "parent_key": "('FIN.REV.YTD', '20260630')"
+      }
+    },
+    {
+      "id": "C19",
+      "name": "19 列 / 1,505 格元数据差异已登记",
+      "result": "PASS",
+      "detail": {
+        "columns": 19,
+        "cells": 1505
+      }
+    },
+    {
+      "id": "C20",
+      "name": "受限表字段完整（含 snapshot_hash 与 metric_id）",
+      "result": "PASS",
+      "detail": {
+        "rows": 253,
+        "cols": 16
+      }
+    },
+    {
+      "id": "C21a",
+      "name": "C13 必须独立拦住 V1",
+      "result": "PASS",
+      "detail": {
+        "v1_C13": 6
+      }
+    },
+    {
+      "id": "C21b",
+      "name": "C14 必须独立拦住 V1",
+      "result": "PASS",
+      "detail": {
+        "v1_C14": 437
+      }
+    },
+    {
+      "id": "C21c",
+      "name": "C17 必须独立拦住 V1",
+      "result": "PASS",
+      "detail": {
+        "v1_C17": 140
+      }
+    },
+    {
+      "id": "C22",
+      "name": "V4 台账代入同一套检查必须全 PASS",
+      "result": "PASS",
+      "detail": {}
+    },
+    {
+      "id": "C23",
+      "name": "山东钢铁四条不得判已解决（须待范围对账）",
+      "result": "PASS",
+      "detail": {
+        "found": 4,
+        "resolutions": [
+          "PENDING_SCOPE_AUDIT"
+        ]
+      }
+    },
+    {
+      "id": "C24",
+      "name": "补充元数据不得以同键记录自动免责",
+      "result": "PASS",
+      "detail": {
+        "leaked": 0,
+        "pending": 1273
+      }
+    },
+    {
+      "id": "C25",
+      "name": "受限表 snapshot_hash 与实际快照一致",
+      "result": "PASS",
+      "detail": {
+        "snapshot_sha": "5857e07960e449ed",
+        "rows_checked": 20
+      }
+    }
+  ],
+  "fault_injection": {
+    "V1": {
+      "cell_rows": 240,
+      "key_rows": 2056,
+      "meta_rows": 17728,
+      "C13_bad": 6,
+      "C14_bad": 437,
+      "C17_bad": 140,
+      "pass": false
+    },
+    "V4_pass": true
+  },
+  "v3_defects_fixed": [
+    "文档定位与证据适用范围分离（PENDING_SCOPE_AUDIT）→ C23",
+    "父键递归展开且生产/自检共用 l2_core → C18",
+    "C21 拆成 C21a/C21b/C21c 分别检验 → C21a-c",
+    "补充元数据取消同键免责 → C24",
+    "受限表补 snapshot_hash 与 metric_id → C20/C25"
+  ],
+  "not_independent": "执行方自检，不构成独立验收；未回读 PDF。",
+  "release_S05": false
+}
