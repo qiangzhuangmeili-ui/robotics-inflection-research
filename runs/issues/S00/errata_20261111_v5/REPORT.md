@@ -1,14 +1,173 @@
-# S00 勘误台账 V5 报告（第十一轮返工后）
+# S00 勘误台账 V5 报告（第十二轮返工后）
 
 - 目录：`runs/issues/S00/errata_20261111_v5/`
 - 性质：**SELF_CHECK**，不是独立验收
-- 自检版本：**V11**，40/40 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
-- 本轮触发：Codex 第十一轮复核 `RETURN_FOR_REWORK`（H 项通过，A–G 七项不通过；不放行 S04 第二轮、不放行 S05）
+- 自检版本：**V12**，41/41 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
+- 本轮触发：Codex 第十二轮复核 `RETURN_FOR_REWORK`（G 项通过，A、B、C、D、E、F、H 七项不通过；不放行 S04 第二轮、不放行 S05）
 - 复现顺序：`python build_errata_v5.py` → `python check_l2_v5.py` → `python sampling_v5.py` → `python replay_polarity_v5.py` → `python verify_v5.py`
 
 ---
 
-## 一、第十一轮裁决的逐条落实
+## 一、第十二轮裁决的逐条落实
+
+第十二轮裁决的结论是：**G 项通过**，A、B、C、D、E、F、H 七项不通过。
+与上一轮不同的是，本轮七项里有六项**不是「判据不够严」而是「判据判错了方向」**——
+Codex 每一处都给了真实语料上的反例，不是合成语料。
+
+### 1.1 A 项：极性「新主语」改按中心语判，并承认判据确实会触发
+
+上一轮用「金额左侧 10 字以名词收尾」判新主语，Codex 用三句话打穿：
+
+| 输入 | 上一轮判定 | 应为 | 原因 |
+|---|---|---|---|
+| `…其中营业总收入金额为100.00元` | 续写 | 新主语 | 词尾是「为」，被当成功能词 |
+| `…其中营业总收入确认的金额100.00元` | 续写 | 新主语 | 词尾是「金额」，被当成计量单位 |
+| `…其中营业总收入合计100.00元` | 续写 | 新主语 | 词尾是「合计」，被当成汇总词 |
+| `…影响0.00元，影响增加100.00元` | 新主语 | 续写 | 词尾是「增加」，被当成动词 |
+
+改为**取中心语**：用闭集功能词/动词/量词表（`_TAIL_STRIP`）从右往左反复剥离，
+剩下的名词片段即中心语；中心语属权益项目（`_RE_SCOPED_ITEM`）/原因短语（`_CAUSE_ANY`）/
+治理参与方（`_RE_PROCEDURE`）/空 → 判续写，否则判新主语。四条反例分别记为 ⑯–⑲，
+另加 ⑳ 守护「同分句原因就近命中时不按 new_subj 否定」。
+
+**关于 `tgt` 分支**：上一轮汇报说「已给 `tgt` 分支也加了 `new_subj`」，实际代码没加。
+本轮明确：**这是有意的，不加**——`tgt` 表示本分句内原因词就近命中，此时金额无论挂在
+哪个项目上都能证明该事件发生；`new_subj` 只约束 `single` / `prev_causes` 两条跨分句继承分支。
+docstring 第 6 条写明了这个区别，汇报也改成与代码一致。
+
+**关于「从未触发」**：上一轮汇报写「新判据在真实证据上从未触发」，Codex 插桩显示
+`_new_subject` 被调用 88 次、判真 44 次，该说法无据。本轮把计数器直接打进
+`replay_polarity_v5.json`，当前值：
+
+```
+documents 1007 / clause_changed 0 / polarity_changed 0
+new_subject_calls 88 / new_subject_true 0 / new_subject_true_nonzero 0
+head_nouns {"附注：由于重大会计差错更正影响期初未分配利润": 44, "同一控制合并范围变更": 44}
+```
+
+即：判据在 1,007 份存量证据上被调用 88 次，中心语只出现两种，**都是原因短语**。
+补词表前那 44 次「判真」全部来自 `同一控制合并范围变更`——它是原因短语，只是没写成
+`同一控制下企业合并`，被旧词表漏掉，于是被误判成新主语（该条不影响结论，因为同分句
+原因词就近命中，走 `tgt` 分支）。补词表后判真 0 次。**结论只能说「对存量证据的极性结果
+无影响」，不能说「判据从未触发」；判据是否承重由 38 条反例证明，不由回放证明。**
+
+### 1.2 B 项：父输入栏目改「带状态返回 + 目标行绑定 + 期间语义类」
+
+Codex 三条实测：
+
+1. 同页有两个相同金额时，`column_of_amount` 取第一个，可能取到别的行；
+2. 登记列头「本期发生额」与原件列头「本期数」被判为不同列，误拒；
+3. 扫描页（无文本层）应记「待回读」，不是「不可解」。
+
+改法：`column_of_amount_ex()` 返回 `(列头, 金额, 状态)`，状态五态
+`OK / NO_WORDS / NO_AMOUNT / AMBIGUOUS / NO_COLUMN`；`label` 参数把金额**绑定到目标行**
+（词坐标 + 指标名同行），同页重复金额记 `AMBIGUOUS` 而不是取第一个；
+`cols_equivalent()` 先按**期间语义类**比对（`PRIOR_YEAR_SAME / YEAR_OPEN / PERIOD_END / CURRENT`），
+再退回子串，「本期发生额 vs 本期数」归同一类；`NO_WORDS` 记
+`PARENT_COLUMN_NEEDS_REREAD`（待回读），不再与「不可解」混为一谈。
+C37 注入链由 29 环扩到 **35 环**，新增 6 环正是上述三条：`real_column_needs_reread`、
+`real_column_ambiguous`、`duplicate_amount_ambiguous`、`duplicate_amount_row_bound`、
+`column_synonym_ok`、`column_antonym_rejected`。
+
+### 1.3 C 项：证据标签要「数量」、SELF_PAGE 要「目标行」、币种要「受控映射」
+
+- `evidence_label` 原先只要 20 字内有数字就放行，于是「见第12页附表说明」里的 12 冒充金额。
+  现在要求「标签 + 20 字内**数量**」（带单位或带小数），且该片段不得命中页码/表号
+  正则（`_RE_PAGE_REF`），否则记 `REVIEW_LITERAL_NUMBER_IS_PAGE_REF`。
+- `SELF_PAGE` 原先取「该金额在原件里最早出现的页」，页眉重复金额会让第 1 页抢走第 2 页
+  的真实表格行。现在改为**目标行定位**：词坐标 → 指标名同行 → 该金额 → 列头；
+  无词坐标时退回「同页同时出现指标名与该金额」。`NO_AMOUNT / AMBIGUOUS / NO_COLUMN`
+  各自有拒绝原因。
+- `currency='CNY'` 遇「记账本位币：人民币」被拒属误拒。新增 `CURRENCY_ALIASES`
+  受控映射（CNY/HKD/USD 各自一组同义写法），只在组内互认，不做模糊匹配。
+
+### 1.4 D 项：裁决清单自身也受检
+
+上一轮新增 `ruling_scope.csv` 挡住「把 key 和 ruled_key 一起改写」，但 Codex 指出：
+**清单里的 `ruling_file_sha256` 改成 64 个 0 照样生效**——清单本身可被改写，等于授权范围可被改写。
+
+新增 `scope_row_ok(section, ent)`：清单行的 `ruling_file` 必须存在、`ruling_file_sha256`
+必须与文件实算一致（`RULING_SCOPE_FILE_UNBOUND / _MISSING / _HASH_MISMATCH`），
+且须与登记条目自报的裁决文件/哈希一致（`RULING_SCOPE_FILE_DISAGREES`）。
+C14 注入由 10 种增至 **13 种**：新增 `scope_file_sha_disagrees`（登记条目与清单不一致）、
+`scope_row_hash_tampered`（清单行哈希被改）、`scope_allowed_key_narrowed`（见下）。
+
+**关于「换成另一个已登记 section」**：真实清单只有 1 个 section，这个攻击在真实数据上
+构造不出来——换了 section，裁决行文本就对不上，会先被 `RULING_SECTION_MISMATCH` 拦下，
+测不到白名单本身。本轮改为直接改清单内容：把该 section 的 `allowed_key` 换成**同公司
+另一个已登记字段**，再单独调 `ruling_gap`，必须返回 `RULING_KEY_NOT_IN_SCOPE`。
+这在效果上等价于「允许范围被换成了别的条目」，且不依赖自报字段。
+
+### 1.5 E 项：窗口规则下沉，远距离拼接与页脚载体都不算覆盖
+
+Codex 两条实测：把维度载体词放在 501 字之外仍算同窗口；页脚写「分季度见附表」也算覆盖。
+上一轮的窗口规则只活在 `verify_v5._dim_window` 里，`scope_dims()` 用的是另一套三词检查。
+
+本轮把规则**下沉到 `parent_verify.dim_window_ok()`**，`scope_dims()` 与自检共用同一份：
+三词（指标名 + 该行具体期间 + 维度载体）跨度 ≤ `_MAX_DIM_SPAN = 160`，
+且载体词所在句不得是注释/页脚（`注：/附注/脚注/见附表/附表见/页脚/见附录/详见`）。
+C38 注入由 12 种增至 **14 种**，新增 `rejected_quote_marker_too_far`、
+`rejected_quote_footnote_marker`。
+
+### 1.6 F 项：抽样键集变更的退出归因
+
+Codex 实测：`sampling_keys_diff.csv` 把 `SH:600060|FIN.NPDEDT.SQ|20260630` 的退出原因
+写成「不再命中判据」，但该键**仍满足** `_r6_pred`，实际退出原因是排序/名额截取。
+另外汇报写「新增 600143 两父数均定位」，而字段 `parent_amount_located` 实为 `ONE`。
+
+改法：
+
+- 入选判据从抽样循环里的匿名 lambda 提为**具名谓词**（`_pred_r1` … `_pred_r10`、`_r6_pred`），
+  抽样与 diff 共用同一份——上一轮的教训「阈值只能写在一处」在这里同样适用。
+- `REMOVED` 必须归到四类之一：`LEDGER_KEY_GONE`（台账无该键）/ `PREDICATE_FALSE`
+  （键在台账但判据不再成立）/ `RANK_CUT`（判据成立但被同公司去重、候选池上限 14、
+  评分取前 3 截掉）/ `UNKNOWN`（判据未登记，须人工看，不得默认成前两类）。
+- 归因**自证**：`RANK_CUT` 必须谓词为真、`PREDICATE_FALSE` 必须谓词为假、
+  `LEDGER_KEY_GONE` 必须台账无该键，结果写进 `sampling_v5.json:keys_diff.exit_code_selfcheck`，
+  并由 C31 纳入 PASS 条件。
+- R6 样本说明按 `parent_amount_located` 的 `BOTH / ONE / NONE` **逐字对应**：
+  `BOTH` → 两个父数均已定位，`ONE` → 仅一个定位、另一个未定位（不得记作两父均已定位），
+  `NONE` → 均未定位。600143 现在写作 `ONE`。
+
+当前 diff：28 行 = KEPT 26 / ADDED 1（`SH:600143|FIN.NPP.SQ|20260630`）/
+REMOVED 1（`SH:600060|FIN.NPDEDT.SQ|20260630`，`exit_code = RANK_CUT`）。
+
+### 1.7 H 项：状态文件改成单一写者，且不再复述任何计数
+
+Codex 连续两轮都抓到 `data/active_issue.json` 里留着上一版的数字：
+`s00_errata.checks` 仍写着「V10：C34 30 条反例；C37 27 环；C14 9 种」，
+`sampling.unique_keys_note` 仍写着「新增该键、无删除」。
+
+根因不是「忘改」，是**同一份摘要有两个写者**。本轮：
+
+- 派生字段（`status` / `self_check_version` / `self_check` / `checks` / `sampling` /
+  `round` / `decision` / `report_to_codex`）改由 `verify_v5.write_status()` **唯一写出**；
+- 写出的内容只含**指针与版本号**，不再复述条数、环数、注入种数、键数与增删结论；
+- 新增 **C39**：旧计数口径必须消失（`条反例|环 =|种伪造|种绕过|PASS（V` 一律不许出现）、
+  版本必须等于本次、`locator_version` 必须与 `sampling_v5.json` 一致、状态必须含
+  `AWAITING_RECHECK_13`。
+
+连跑两次 `verify_v5.py`，`data/active_issue.json` 与 `review.json` 的 md5 完全相同（幂等）。
+
+### 1.8 数字变化（与裁决口径的差异）
+
+| 项 | 第十一轮（V11） | 第十二轮（V12） |
+|---|---|---|
+| 自检 | 40/40 | **41/41**（新增 C39） |
+| C34 反例 | 33 条 | **38 条**（⑯–⑳） |
+| C37 注入链 | 29 环 | **35 环** |
+| C14 注入 | 10 种 | **13 种** |
+| C38 注入 | 12 种 | **14 种** |
+| C24 注入 | 13 键 + 1 枚举 | 13 键 + 1 枚举（未变） |
+| 抽样定位器 | V11 | **V12** |
+| 抽样键集 | 27 键 | 27 键（KEPT 26 / ADDED 1 / REMOVED 1） |
+
+`meta_diff.csv` 与 `summary.json` 在本轮全链重跑后**逐字节不变**（md5 前后一致），
+说明本轮改的都是判据与校验，没有动数据。
+
+---
+
+## 二、第十一轮裁决的逐条落实
 
 第十一轮裁决的结论是：**H 项（文本与状态同步）通过**，A–G 七项不通过——每一处都能被
 一句合成语料或一条真实原件绕过。本轮七项全部改的是**判据本身**，不是补一条反例。
@@ -162,7 +321,7 @@ C14 注入 9 → **10 种**，新增「`key` + `ruled_key` 同时改写」→ `R
 
 ---
 
-## 二、第十轮裁决的逐条落实（历史段落，对应自检 V10）
+## 三、第十轮裁决的逐条落实（历史段落，对应自检 V10）
 
 第十轮裁决的结论是：A 项上一轮指定整改通过（22 条反例全过、1,007 份证据零变化），
 但**新增边界测试不通过**；B/C/D/E/F 五处入口仍可接受伪造或形式化依据；G 项自检存在
@@ -282,7 +441,7 @@ C24 的 13 种注入 + 1 种枚举注入全部改为「以完整正例为基线�
 
 ---
 
-## 三、第九轮裁决的逐条落实（历史段落，对应自检 V9）
+## 四、第九轮裁决的逐条落实（历史段落，对应自检 V9）
 
 第九轮裁决的结论是：三协电机整改通过，但**极性仍有误放行反例**，父输入 / 来源维度 /
 C24 / C14 的新入口仍可接受伪造依据，R6 尚未交付两个实际累计父数的完整核证。
@@ -442,7 +601,7 @@ C38 注入 **9 种**：结论不符、引文不可定位、无审查人、角色
 
 ---
 
-## 四、第八轮裁决的落实（历史段落，对应自检 V8；有更新的已就地标注）
+## 五、第八轮裁决的落实（历史段落，对应自检 V8；有更新的已就地标注）
 
 ### 1.1 A 项：必需范围取并集 —— 已通过（第八轮确认）
 
@@ -629,7 +788,7 @@ V8 新增 `scope_verifications.csv` 与 `judge(scope_ok=…)`：这两个维度*
 
 ---
 
-## 五、数字
+## 六、数字
 
 ### 2.1 重述差异（17,728 条元数据差异中的 17,009 条 `restatement_flag`）
 
@@ -696,7 +855,11 @@ V8 新增 `scope_verifications.csv` 与 `judge(scope_ok=…)`：这两个维度*
 
 ---
 
-## 六、自检 40 项
+## 七、自检 41 项
+
+V12 相对 V11 的变动：**新增 C39**（状态文件单一写者：旧计数必须消失、版本与定位器版本
+必须本次一致）；C31 增加「键集变更的退出归因须机器自证」；C34 38 条、C37 35 环、
+C14 13 种、C38 14 种（见第一节 1.8 的数字表）。
 
 V8 相对 V7 的变动：
 
@@ -706,11 +869,11 @@ V8 相对 V7 的变动：
 - **C14** 增加裁决原文片段与行号的回读核对，注入 2 种绕过；
 - **新增 C38** 来源维度结构化核证入口。
 
-`python verify_v5.py` 输出 `40/40 PASS → SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`。
+`python verify_v5.py` 输出 `41/41 PASS → SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`。
 
 ---
 
-## 七、故障注入
+## 八、故障注入
 
 | 注入对象 | 结果 |
 |---|---|
@@ -724,7 +887,7 @@ V8 相对 V7 的变动：
 
 ---
 
-## 八、抽验（37 行 / 20 类 / 27 个键；键数取自 `sampling_v5.json:unique_keys`）
+## 九、抽验（37 行 / 20 类 / 27 个键；键数取自 `sampling_v5.json:unique_keys`）
 
 - 原件物理页回读：`MATCH` 18、`PARTIAL` 5、`LOCATED` 2、`WEAK_LOCATE` 1、
   `NO_PAGE_RECORDED` 5、补充字段不适用 6（合计 37，逐项取自 `sampling_v5.json:page_reread`）；
@@ -739,7 +902,7 @@ V8 相对 V7 的变动：
 
 ---
 
-## 九、仍未闭合的已知问题
+## 十、仍未闭合的已知问题
 
 1. **`NOTE_TRACE_NA` 合计 9,954 条 / 631 份文档，其中已解除 8,655 条 / 630 份**，均未做方法适用性复审；已解除部分同样须纳入复审。
 2. `NOTE_RETAINED_ERRATA_ZERO` 642 条（自身 563 / 非自身 79，42 份文档）未逐条回读原注。
@@ -752,7 +915,7 @@ V8 相对 V7 的变动：
 
 ---
 
-## 十、本轮不做的事
+## 十一、本轮不做的事
 
 - 不启动 S04 第二轮正式验收；S05 保持 `WAITING_DEPENDENCIES`。
 - 不锁定 44 / 231 / 378 或任何名单数字。

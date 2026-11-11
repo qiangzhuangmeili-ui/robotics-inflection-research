@@ -86,30 +86,54 @@ _RE_OTHER_ITEM = re.compile(
     r"现金流量净额|每股收益|毛利率")
 
 # 第十一轮 A 项：**不得靠扩充项目词表**判断「这句换了主语」。
-# 判据改为看金额左侧紧跟的片段：
-#   - 片段里有权益项目（期初未分配利润/净资产…）→ 该金额是原因的宾语，属续写；
-#   - 片段以动词/功能词收尾（为/是/达/影响/确认/金额/元…）→ 属续写；
-#   - 否则片段里的名词性成分就是**新主语**，不得承接上一分句的原因。
-# 反例：`前期差错更正对期初未分配利润影响0.00元，其中营业总收入100.00元`
-#   第二分句金额左侧是「其中营业总收入」，以名词收尾 → 新主语 → 不肯定 ERRATA。
-_RE_VERB_TAIL = re.compile(
-    r"(?:为|是|达|计|影响|确认|调整|重述|发生|存在|采用|金额|差额|净额|合计|"
-    r"元|及|和|与|的|，|,|：|:|\d)$")
-_RE_TAIL_FILLER = re.compile(
-    r"其中|该|上述|前述|其|本期|本年|年初|累计|经|对|的|元|"
-    r"[\s，,。；;：:\d\-−+.]")
+# 第十二轮 A 项：`_RE_VERB_TAIL` 的**词尾**匹配仍不够——「金额为」「确认的金额」
+# 被当续写、「影响增加」被当新主语，方向正好相反。改为**取中心语**：
+#   把金额左侧的闭集功能词/动词/量词/单位从右往左逐个剥掉，剩下的名词片段
+#   才是这笔金额的中心语。中心语若是
+#     · 受影响权益项目（期初未分配利润/净资产…）→ 续写（scoped）；
+#     · 原因短语本身（前期差错更正…）        → 续写（affirmed）；
+#     · 治理/程序参与方（董事会/监事会/审核…）→ 续写（金额是处理结果）；
+#     · 空 / 只剩功能词                        → 续写；
+#   其余（出现了一个新的名词中心语）→ 新主语，不承接上一分句的原因。
+# 这是**闭集功能词表 + 名词中心语**，不是开放的项目词表：新增报表项目不需要改这里。
+_TAIL_STRIP = re.compile(
+    r"(?:金额|差额|净额|合计|总额|小计|影响|增加|减少|调整|重述|确认|核算|审核|评估|"
+    r"复核|批准|审议|核准|备案|审计|经|为|是|达|计|约|共|有|发生|存在|采用|"
+    r"的|后|元|万元|千元|及|和|与|或|之|其|该|上述|前述|本期|本年|年初|期末|期初|"
+    r"累计|其中|对|将|把|按|以|所|者|数|值|上|下|内|中|"
+    r"[\s，,。；;：:、（）()\[\]\"'“”‘’\-−+*]|[\d.,]+)$")
+_RE_PROCEDURE = re.compile(r"董事会|监事会|股东会|股东大会|审计|审核|核算|评估|复核|"
+                          r"批准|审议|核准|备案")
+# 第十二轮 A 项补：回放里唯一的「判真且非零」是「同一控制合并范围变更-136,587,997.02元」，
+# 中心语判据把它当成了新主语。它其实是原因短语（只是没写成「同一控制下企业合并」），
+# 故词表补上合并范围变更的常见写法；这一条由 tgt 分支兜住不影响结论，但语义上应判为原因。
+_CAUSE_ANY = re.compile(r"前期差错更正|会计差错更正|差错更正|追溯重述|追溯调整|"
+                        r"同一控制下企业合并|同一控制下?[^，。；]{0,4}合并|"
+                        r"合并范围变更|会计政策变更")
 
 
-def _new_subject(clause, st, window=10):
-    """金额左侧紧跟片段是否构成**新主语**（第十一轮 A 项）。"""
-    tail = clause[max(0, st - window):st]
-    if not tail:
+def _head_noun(clause, st, span=24):
+    """金额左侧的中心语（剥掉闭集功能词/动词/量词后的名词片段）。"""
+    tail = clause[max(0, st - span):st]
+    prev = None
+    while tail and prev != tail:
+        prev = tail
+        tail = _TAIL_STRIP.sub("", tail)
+    return tail
+
+
+def _new_subject(clause, st, span=24):
+    """该金额是否换了主语（第十二轮 A 项：按**中心语**判，不看词尾）。"""
+    head = _head_noun(clause, st, span)
+    if not head:
         return False
-    if _RE_SCOPED_ITEM.search(tail):
+    if _RE_SCOPED_ITEM.search(head):
         return False
-    if _RE_VERB_TAIL.search(tail):
+    if _CAUSE_ANY.search(head):
         return False
-    return len(_RE_TAIL_FILLER.sub("", tail)) >= 2
+    if _RE_PROCEDURE.search(head):
+        return False
+    return len(head) >= 2
 # 肯定：确认发生 / 已采用 / 已调整
 # 肯定词：必须是谓词，不能是原因短语本身。
 # 「追溯重述」「追溯调整」多为小节标题（「追溯重述法的前期会计差错更正事项。」），
@@ -456,7 +480,12 @@ def _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c, singl
        报表项目词即断开；无原因词的分句还须以续写词/权益项目/金额起句。
     5. **不得只靠项目词表**（第十一轮 A 项）。`…影响0.00元，其中营业总收入100.00元`
        里的「营业总收入」不在词表内，于是 100.00 元被承接成 ERRATA 肯定。
-       现改为结构判据 `_new_subject()`：金额左侧紧跟片段以名词收尾即为新主语。
+       现改为结构判据 `_new_subject()`：取金额左侧的**中心语**，中心语是新的名词
+       即判新主语（第十二轮把「词尾」改成「中心语」，见 `_head_noun`）。
+    6. **`tgt` 分支不加 `new_subj`，这是有意的**（第十二轮说明）。`tgt` 表示
+       **本分句内**有原因词就近命中，此时金额无论挂在哪个项目上，都证明该原因
+       确实发生；`new_subj` 只约束两条**跨分句继承**分支（`single` / `prev_causes`），
+       防止把别的主语的金额算到上一分句的原因头上。两者语义不同，不能一并套用。
     """
     amounts = _amounts(c)
     if not amounts:
@@ -469,6 +498,7 @@ def _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c, singl
         new_subj = _new_subject(c, st)
         targets = set()
         if tgt:
+            # 本分句原因就近命中：不再判 new_subj（见 docstring 第 6 条）
             targets = {tgt}
         elif single and not other_item and not new_subj:
             targets = {single}

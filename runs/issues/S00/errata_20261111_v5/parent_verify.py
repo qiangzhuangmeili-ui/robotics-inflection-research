@@ -204,6 +204,53 @@ def _period_tokens(pk):
     return _PERIOD_TOKENS.get(tail, ())
 
 
+# 第十二轮 E 项：三项词语同时出现 ≠ 三者属于同一证据关系。
+_MAX_DIM_SPAN = 160                       # 指标名—期间—载体三者的最大字符跨度
+_RE_FOOTNOTE = re.compile(r"注\s*[:：]|附注|脚注|见附表|附表见|页脚|见附录|详见")
+
+
+def dim_window_ok(q, key, dim):
+    """引文是否把「目标指标名 + 该行具体期间 + 维度载体」绑在同一个窗口内。
+
+    第十二轮实测的两个绕过：
+      - `2025年上半年营业收入` + `甲`×501 + `比较`：三词都在，但相隔 500 字；
+      - `2025年上半年营业收入100.00元。……页脚注释：分季度见附表`：载体词来自页脚。
+    因此除「三词同现」外还要求：三者跨度 ≤ `_MAX_DIM_SPAN`，且载体词所在句子
+    不是注释/页脚（`注：`/`附注`/`见附表`/`详见`…）。
+    """
+    names = METRIC_ALIASES.get(key[1]) or METRIC_ALIASES.get(
+        key[1][:-3] + ".YTD" if key[1].endswith(".SQ") else key[1])
+    ptoks = _period_tokens(key[2])
+    markers = DIM_MARKERS.get(dim, ())
+    if not names or not ptoks or not markers:
+        return False
+    ni = [q.find(n) for n in names if q.find(n) >= 0]
+    if not ni:
+        return False
+    ti = [q.find(t) for t in ptoks if q.find(t) >= 0]
+    if not ti:
+        return False
+    mi = [(q.find(m), m) for m in markers if q.find(m) >= 0]
+    if not mi:
+        return False
+    best = None
+    for i in ni:
+        for j in ti:
+            for k, m in mi:
+                span = max(i, j, k + len(m)) - min(i, j, k)
+                if best is None or span < best[0]:
+                    best = (span, k, m)
+    if best is None or best[0] > _MAX_DIM_SPAN:
+        return False
+    _span, k, m = best
+    # 载体词所在句子不得是注释/页脚
+    cut = max(q.rfind(s, 0, k) for s in "。；;") if any(s in q[:k] for s in "。；;") else -1
+    seg = q[cut + 1:k + len(m)]
+    if _RE_FOOTNOTE.search(seg):
+        return False
+    return True
+
+
 def scope_dims(entries, key, evidence_of, expect_doc=None):
     """该行已获结构化核证的来源维度。
 
@@ -251,11 +298,9 @@ def scope_dims(entries, key, evidence_of, expect_doc=None):
         # 第十一轮 E 项：维度词 + 年份仍不构成「实质关系」。
         # `经营计划2025年，公司成功登陆……报告期初比较` 这类经营叙述曾取得比较范围，
         # 但它没有点出目标指标、也没有点出该行的具体期间，证明不了这个维度。
-        names = METRIC_ALIASES.get(key[1]) or METRIC_ALIASES.get(
-            key[1][:-3] + ".YTD" if key[1].endswith(".SQ") else key[1])
-        if names and not any(n in q for n in names):
-            continue
-        if not any(tok in q for tok in _period_tokens(key[2])):
+        # 第十二轮：窗口/距离/页脚规则下沉到这里——`_dim_window()` 只约束自检侧
+        # 构造记录，外部登记记录走 `scope_dims()`，两处口径必须同一套。
+        if not dim_window_ok(q, key, dim):
             continue
         ok.add(dim)
     return ok
@@ -263,6 +308,34 @@ def scope_dims(entries, key, evidence_of, expect_doc=None):
 
 def _col_norm(s):
     return re.sub(r"[\s*_]", "", s or "")
+
+
+# 期间列头的**语义类**（第十二轮 B 项）：只做子串比对时，「登记：本期发生额」
+# 与「实际：本期数」会被判不一致（正确登记被拒），而「登记：本期」与
+# 「实际：上年同期」反而可能靠子串蒙过。改为先归到期间类，再比类。
+_COL_CLASSES = [
+    ("PRIOR_YEAR_SAME", r"上年同期|上年同期数|上期|上期数|上期发生额|上期金额|同期数|比较期"),
+    ("YEAR_OPEN", r"年初|期初|上年年末|上年度末|年初数"),
+    ("PERIOD_END", r"期末|期末数|年末|年末数"),
+    ("CURRENT", r"本期|本期数|本期发生额|本期金额|本报告期|报告期|本年累计|本期累计|本年数"),
+]
+
+
+def _col_class(s):
+    t = _col_norm(s)
+    for name, pat in _COL_CLASSES:
+        if re.search(pat, t):
+            return name
+    return None
+
+
+def cols_equivalent(registered, actual):
+    """登记列头与实际列头是否指同一列。"""
+    a, b = _col_class(registered), _col_class(actual)
+    if a and b:
+        return a == b
+    na, nb = _col_norm(registered), _col_norm(actual)
+    return bool(na) and bool(nb) and (na in nb or nb in na)
 
 
 def _num_of(txt):
@@ -297,43 +370,82 @@ def page_words(pdf_path, page):
         return []
 
 
-def column_of_amount(words, value, x_tol=3.0, y_tol=4.0):
-    """按词坐标找该金额**所在列**的期间列头（第十一轮 B 项）。
+def rows_of_words(words, y_tol=4.0):
+    """按 y 聚成行：返回 [(y0, [(x0, x1, text), …])]，按 y 升序。"""
+    rows = []
+    for x0, y0, _x1, _y1, tx in sorted(words, key=lambda w: (w[1], w[0])):
+        if rows and abs(y0 - rows[-1][0]) <= y_tol:
+            rows[-1][1].append((x0, _x1, tx))
+        else:
+            rows.append([y0, [(x0, _x1, tx)]])
+    return [(y, sorted(cells)) for y, cells in rows]
 
-    只按文字先后顺序取「金额前最后一个期间词」会把「上年同期」错认成
-    本期金额的栏目——列头在文字流里往往排在行标签之前，与金额的物理列无关。
-    这里改为：金额词 → 取其 x 中心 → 在上方找**同一 x 区间**、**非数值**、
-    最近的一行词，拼成列头。
-    返回 (column_text, amount_text)；找不到返回 (None, amount_text|None)。
+
+def column_of_amount_ex(words, value, label=None, x_tol=3.0, y_tol=4.0):
+    """返回 (column_text, amount_text, status)。
+
+    status ∈ {OK, NO_WORDS, NO_AMOUNT, AMBIGUOUS, NO_COLUMN}
+
+    第十二轮 B 项两条修正：
+
+    1. **必须绑定目标行**。同一页常有多笔相同金额（合计行与明细行、上年与本期），
+       原实现按 y 取第一笔，会把「上年同期」列头配给本期金额。现在用 `label`
+       （该行指标别名）限定「只有与指标名同一行的金额才是目标金额」；同页出现
+       多笔且无法唯一绑定时返回 `AMBIGUOUS`，交回人工，不猜。
+    2. **扫描页/无文本层** 返回 `NO_WORDS`，由调用方记为「待回读/OCR」，
+       不能表述成「原件不可解」——技术取词失败与原件本身不可读是两件事。
     """
+    if not words:
+        return None, None, "NO_WORDS"
     target = _num_of(value)
     if target is None:
-        return None, None
+        return None, None, "NO_AMOUNT"
+    rows = rows_of_words(words, y_tol)
     cands = []
-    for x0, y0, x1, y1, tx in words:
-        v = _num_of(tx)
-        if v is not None and abs(v - target) < 0.01:
-            cands.append((x0, y0, x1, y1, tx))
+    for ri, (_y, cells) in enumerate(rows):
+        for x0, x1, tx in cells:
+            v = _num_of(tx)
+            if v is not None and abs(v - target) < 0.01:
+                cands.append((ri, x0, x1, tx))
     if not cands:
-        return None, None
-    cands.sort(key=lambda c: (c[1], c[0]))
-    ax0, ay0, ax1, ay1, atxt = cands[0]
+        return None, None, "NO_AMOUNT"
+    if label:
+        want = [label] if isinstance(label, str) else [x for x in label if x]
+        hit = []
+        for ri, x0, x1, tx in cands:
+            row_txt = "".join(c[2] for c in rows[ri][1])
+            if any(w in row_txt for w in want):
+                hit.append((ri, x0, x1, tx))
+        if len(hit) > 1:
+            return None, hit[0][3], "AMBIGUOUS"
+        if hit:
+            cands = hit
+        elif len(cands) > 1:
+            return None, cands[0][3], "AMBIGUOUS"
+    elif len(cands) > 1:
+        return None, cands[0][3], "AMBIGUOUS"
+    ri, ax0, ax1, atxt = cands[0]
     cx = (ax0 + ax1) / 2.0
     above = []
-    for x0, y0, x1, y1, tx in words:
-        if y1 > ay0 - 0.5:
-            continue
-        if _num_of(tx) is not None:
-            continue
-        if x1 < cx - x_tol or x0 > cx + x_tol:
-            continue
-        above.append((y0, x0, tx))
+    for rj in range(ri):
+        for x0, x1, tx in rows[rj][1]:
+            if _num_of(tx) is not None:
+                continue
+            if x1 < cx - x_tol or x0 > cx + x_tol:
+                continue
+            above.append((rj, x0, tx))
     if not above:
-        return None, atxt
-    above.sort(key=lambda a: -a[0])
-    top = above[0][0]
-    line = sorted([a for a in above if abs(a[0] - top) <= y_tol], key=lambda a: a[1])
-    return "".join(a[2] for a in line), atxt
+        return None, atxt, "NO_COLUMN"
+    rj = max(a[0] for a in above)
+    line = sorted([a for a in above if a[0] == rj], key=lambda a: a[1])
+    return "".join(a[2] for a in line), atxt, "OK"
+
+
+def column_of_amount(words, value, label=None, x_tol=3.0, y_tol=4.0):
+    """兼容旧签名：只返回 (column_text, amount_text)。"""
+    col, amt, _st = column_of_amount_ex(words, value, label=label,
+                                        x_tol=x_tol, y_tol=y_tol)
+    return col, amt
 
 
 def gap(ent, expect, evidence_of, col_of=None):
@@ -374,14 +486,21 @@ def gap(ent, expect, evidence_of, col_of=None):
         if not _page_ok(ent.get("%s_page" % side)):
             return "PARENT_PAGE_INVALID"
         # 栏目必须真是该金额所在列（第十一轮 B 项）：只验「列头出现在引文里」
-        # 挡不住「金额在本期列、登记写上期列」。`col_of` 由调用方按原件词坐标提供。
+        # 挡不住「金额在本期列、登记写上期列」。`col_of` 由调用方按原件词坐标提供，
+        # 返回 (column_text, status)。第十二轮再收紧：绑定目标行、期间类比对、
+        # 扫描页记「待回读」而不是「原件不可解」。
         if col_of is not None:
-            actual_col = col_of((ent.get("%s_doc" % side) or "").strip(),
-                                (ent.get("%s_page" % side) or "").strip(),
-                                exp.get("value"))
+            actual_col, st = col_of((ent.get("%s_doc" % side) or "").strip(),
+                                    (ent.get("%s_page" % side) or "").strip(),
+                                    exp.get("value"),
+                                    METRIC_ALIASES.get((expect.get("field") or "").strip()))
+            if st == "NO_WORDS":
+                return "PARENT_COLUMN_NEEDS_REREAD"
+            if st == "AMBIGUOUS":
+                return "PARENT_COLUMN_AMBIGUOUS"
             if not actual_col:
                 return "PARENT_COLUMN_UNRESOLVED"
-            if _col_norm(col) not in _col_norm(actual_col):
+            if not cols_equivalent(col, actual_col):
                 return "PARENT_COLUMN_MISMATCH"
         ver = (ent.get("%s_adjust_version" % side) or "").strip()
         if ver not in ADJUST_VERSIONS:

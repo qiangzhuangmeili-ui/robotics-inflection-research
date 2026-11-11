@@ -1,0 +1,71 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V12，41/41 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round12.txt（RETURN_FOR_REWORK，G 通过，A/B/C/D/E/F/H 不通过）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round13.md（先读这一份）
+
+任务：逐项核实 A–H 是否真的改到位，不要只看汇报的自述。每一项都要**自己动手验证**，
+不接受「代码里有这个函数」作为通过依据；必须构造或找到能区分「改前/改后」的输入。
+
+## A 极性「新主语」
+1. 用这四个句子直接跑 evidence_scope.analyse，看 polarity 是否与汇报一致：
+   - 「前期差错更正对期初未分配利润影响0.00元，其中营业总收入金额为100.00元」→ 不应有 ERRATA 肯定
+   - 「前期差错更正对期初未分配利润影响0.00元，其中营业总收入确认的金额100.00元」→ 同上
+   - 「前期差错更正对期初未分配利润影响0.00元，其中营业总收入合计100.00元」→ 同上
+   - 「前期差错更正对期初未分配利润影响0.00元，影响增加100.00元」→ 应有 ERRATA 肯定（续写）
+2. 再自己造 3–5 个同构但不同的句子（换项目名、换功能词、加空格/标点），看判据是否稳定；
+   重点找「中心语剥离表漏词」导致的错判。
+3. 检查 `tgt` 分支是否真的没有 `new_subj`，并判断这个设计取舍是否可接受（不是「与汇报一致」就算过）。
+4. 看 replay_polarity_v5.json 的 new_subject_calls / new_subject_true / head_nouns，
+   判断「中心语只有两种且都是原因短语」是否可信；若你认为回放样本不足以支撑结论，请直说。
+
+## B 父输入栏目
+5. 找到 parent_verify.column_of_amount_ex 与 cols_equivalent，核实：
+   - 同页两个相同金额时是否真的记 AMBIGUOUS 而不是取第一个（用 C37 的夹具或自己造）；
+   - 「本期发生额 vs 本期数」是否同列（期间语义类）；
+   - 扫描页（NO_WORDS）是否记 PARENT_COLUMN_NEEDS_REREAD 而不是 UNRESOLVED。
+6. 检查是否存在「语义类相同但实际是不同列」的反向风险（例如把「上年同期」与「上期」当同类是否合适）。
+
+## C C24 文本字段
+7. 核实 evidence_label 的数量判据与 _RE_PAGE_REF：自己造 3 条「页码/表号冒充金额」和 3 条合法数量，
+   看是否按预期收/拒。
+8. 核实 SELF_PAGE 的「目标行定位」是否真的绑定到目标行（构造页眉重复金额的版面）。
+9. 核实 CURRENCY_ALIASES 是否只在组内互认（例如 CNY 遇 HKD 应拒）。
+
+## D C14 裁决适用范围
+10. 核实 scope_row_ok 四道关：把 ruling_scope.csv 的哈希改成 64 个 0、把 ruling_file 指向不存在文件、
+    把登记条目的哈希改掉，三种是否分别按预期拒绝。
+11. 核实 scope_allowed_key_narrowed 这条注入是否真的证明了白名单起作用（不是绕过）。
+12. 判断「换另一个已登记 section 不可构造」这个解释是否成立；若不成立请给出可构造的输入。
+
+## E C38 窗口
+13. 核实 dim_window_ok 已下沉、scope_dims 与自检共用同一份（不要出现两套实现）。
+14. 自己造「载体词距离 200/500 字」与「载体词在页脚」的两种输入，看是否被拒。
+
+## F 抽样键集退出归因
+15. 打开 sampling_keys_diff.csv，核实 SH:600060|FIN.NPDEDT.SQ|20260630 的 exit_code 是否为 RANK_CUT，
+    并自己重算 _r6_pred 确认「判据仍成立」这一说法。
+16. 核实 sampling_v5.json:keys_diff.exit_code_selfcheck 的自证逻辑是否真能发现归因写错
+    （试着把某个 REMOVED 的 exit_code 改成 PREDICATE_FALSE，看 C31 是否 FAIL）。
+17. 核实 R6 样本说明与 parent_amount_located 字段逐字对应（BOTH/ONE/NONE）。
+
+## H 状态文件单一写者
+18. 核实 data/active_issue.json 的 s00_errata.checks / self_check / sampling 是否只剩指针与版本号，
+    旧计数（「条反例」「环」「种伪造」）是否已消失。
+19. 核实 write_status 是唯一写者：连跑两次 verify_v5.py，data/active_issue.json 与 review.json
+    是否逐字节相同（幂等）。
+20. 核实 C39 是否真能拦住回退：手工把 checks 改回一句话（含「30 条反例」），看 C39 是否 FAIL。
+
+## 通用要求
+- 先看 report_to_codex_round13.md 的「10. 与上一轮汇报口径不一致、本轮已改的地方」，
+  逐条判断这些更正是否诚实（有没有把「没改」说成「有意不改」）。
+- 特别核查：汇报里凡是写「有意不加」「不可构造」「只能说明无影响」这类**降级表述**的地方，
+  是真实的设计取舍，还是给没做找理由。这一点比数字对不对更重要。
+- 给出裁决：ACCEPTED / ACCEPTED_WITH_LIMITS / RETURN_FOR_REWORK，并逐项列 A–H 的通过/不通过。
+- 若 RETURN_FOR_REWORK，请给**能区分改前改后的具体输入**，不要只写「不够严」。
+
+## 读取纪律（请遵守，避免超时）
+- 不要整文件读；用 grep 定位后只读相关行段，单次 ≤120 行。
+- 总读取量控制在 60 KB 以内；verify_v5.py 有 2900+ 行，只读你需要的函数。
+- 运行 python 时加 -B，不要生成 .pyc。
+- 回答控制在 300 行以内，按 A–H 分节，每节写「核实方式 / 结果 / 判定」。

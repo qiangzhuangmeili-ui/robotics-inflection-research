@@ -2,12 +2,12 @@
   "issue_key": "S00",
   "stage": "ERRATA",
   "version": "ERRATA_V5",
-  "self_check_version": "V11",
+  "self_check_version": "V12",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-12T23:40:00+08:00",
-  "checks_pass": 40,
-  "checks_total": 40,
+  "reviewed_at": "2026-11-13T09:20:00+08:00",
+  "checks_pass": 41,
+  "checks_total": 41,
   "checks": [
     {
       "id": "C01",
@@ -218,6 +218,14 @@
               "RULING_KEY_MISMATCH"
             ]
           },
+          "scope_file_sha_disagrees": {
+            "caught": true,
+            "reason": "RULING_SCOPE_FILE_DISAGREES",
+            "expect": "RULING_SCOPE_FILE_DISAGREES",
+            "ledger_reasons": [
+              "RULING_FILE_UNBOUND_OR_SHA_DRIFT"
+            ]
+          },
           "negative_verdict_substring": {
             "caught": true,
             "reason": "RULING_VERDICT_NEGATED",
@@ -225,9 +233,23 @@
             "ledger_reasons": [
               "RULING_WITHOUT_LOCATED_QUOTE"
             ]
+          },
+          "scope_row_hash_tampered": {
+            "caught": true,
+            "reason": "RULING_SCOPE_FILE_HASH_MISMATCH",
+            "expect": "RULING_SCOPE_FILE_HASH_MISMATCH",
+            "ledger_reasons": [
+              "RULING_WITHOUT_LOCATED_QUOTE"
+            ]
+          },
+          "scope_allowed_key_narrowed": {
+            "caught": true,
+            "reason": "RULING_KEY_NOT_IN_SCOPE",
+            "expect": "RULING_KEY_NOT_IN_SCOPE",
+            "ledger_reasons": []
           }
         },
-        "injection_count": 10,
+        "injection_count": 13,
         "not_caught": [],
         "reason_mismatch": {},
         "ruling_scope_rows": 1
@@ -524,7 +546,7 @@
     },
     {
       "id": "C31",
-      "name": "分层抽验覆盖 12 类必需风险 + 补充字段；原文定位须区分已核与未定位",
+      "name": "分层抽验覆盖 12 类必需风险 + 补充字段；原文定位须区分已核与未定位；键集变更的退出归因须机器自证",
       "result": "PASS",
       "detail": {
         "samples": 37,
@@ -547,6 +569,20 @@
           "LOCATED(p.168)": 1,
           "LOCATED(p.159)": 1,
           "WEAK_LOCATE(p.168)": 1
+        },
+        "keys_diff": {
+          "rows": 28,
+          "removed": 1,
+          "by_status": {
+            "KEPT": 26,
+            "REMOVED": 1,
+            "ADDED": 1
+          },
+          "removed_exit_code": {
+            "SH:600060|FIN.NPDEDT.SQ|20260630": "RANK_CUT"
+          },
+          "exit_code_selfcheck_ok": true,
+          "bad": []
         },
         "r7_conclusion": {
           "ORIGINAL_FRAGMENT_LOCATED": 2,
@@ -580,17 +616,25 @@
     },
     {
       "id": "C34",
-      "name": "极性回归：33 条反例（含第八轮裁决表五条原文用例 + 三协电机真实版面）；1,007 份存量证据 A/B 回放须分句与极性均零变化",
+      "name": "极性回归：38 条反例（含第八轮裁决表五条原文用例 + 三协电机真实版面）；1,007 份存量证据 A/B 回放须分句与极性均零变化",
       "result": "PASS",
       "detail": {
         "violations": [],
-        "case_count": 33,
+        "case_count": 38,
         "case_failures": [],
         "replay_ab": {
           "documents": 1007,
           "clause_changed": 0,
           "polarity_changed": 0,
-          "note": "A/B 对照：old = 第十轮判据（_new_subject 恒 False），new = 第十一轮判据（结构性新主语）。分句逻辑本轮未改，故 clause_changed 应为 0。",
+          "new_subject_calls": 88,
+          "new_subject_true": 0,
+          "new_subject_true_nonzero": 0,
+          "nonzero_cases": [],
+          "head_nouns": {
+            "附注：由于重大会计差错更正影响期初未分配利润": 44,
+            "同一控制合并范围变更": 44
+          },
+          "note": "A/B 对照：old = 关闭新主语判据（_new_subject 恒 False），new = 当前中心语判据。clause_changed 统计分句归属是否变化，polarity_changed 统计 excluded/affirmed/scoped/mentioned/conflict 是否变化。判据确实被调用（new_subject_calls）也确实判真（new_subject_true），其中判真且该位置金额非零的有 new_subject_true_nonzero 条。结论只能说「对存量证据的极性结果无影响」，不能说「判据从未触发」；判据是否承重由 C34 的 38 条反例证明，不由本回放证明。",
           "changed_samples": []
         },
         "cases": {
@@ -658,7 +702,13 @@
           "quote_without_parent_value": true,
           "original_quote_with_restated_mark": true,
           "real_wrong_column": true,
-          "real_column_unresolved": true
+          "real_column_unresolved": true,
+          "real_column_needs_reread": true,
+          "real_column_ambiguous": true,
+          "duplicate_amount_ambiguous": true,
+          "duplicate_amount_row_bound": true,
+          "column_synonym_ok": true,
+          "column_antonym_rejected": true
         },
         "reject_reasons": {
           "quote_other_metric": "PARENT_QUOTE_WITHOUT_TARGET_METRIC",
@@ -735,10 +785,34 @@
           "rejected_quote_without_year": true,
           "rejected_quote_on_wrong_page": true,
           "rejected_quote_without_dim_marker": true,
-          "rejected_page_invalid": true
+          "rejected_page_invalid": true,
+          "rejected_quote_marker_too_far": true,
+          "rejected_quote_footnote_marker": true
         },
         "register_rows": 0,
         "pending_source_provenance": 47
+      }
+    },
+    {
+      "id": "C39",
+      "name": "状态文件派生字段由自检单一写出：旧计数必须消失、版本与定位器版本必须本次一致",
+      "result": "PASS",
+      "detail": {
+        "violations": [],
+        "file": "data/active_issue.json",
+        "legacy_sampling_keys": [
+          "samples",
+          "risk_types",
+          "unique_keys",
+          "unique_keys_note",
+          "page_reread",
+          "r7_locate_status",
+          "parent_orig_verified",
+          "new_in_round7",
+          "new_in_round8",
+          "new_in_round10"
+        ],
+        "locator_version": "V12"
       }
     }
   ],
@@ -798,6 +872,15 @@
     "H（维护意见）｜同一份自检摘要不再维护两处：active_issue.json 顶层 self_check 降为指针，canonical 指向 s00_errata.self_check，避免明细两处漂移",
     "新增 sampling_keys_diff.csv：抽样键集相对上一交付版（V10）的增加/删除/保留逐键留痕，带样本 ID、原因、定位器版本与前后来源哈希；基线冻结在 sampling_keys_baseline.csv"
   ],
+  "round12_fixes": [
+    "A｜极性中心语判据：不再用「词尾是不是动词/量词」猜主语，改为**取中心语**——用闭集功能词/动词/量词表从右往左反复剥离，剩下的名词片段即中心语；中心语属权益项目/原因短语/治理参与方/空 → 续写，否则判新主语。「金额为」「确认的金额」「合计」不再被当续写，「影响增加」不再被误判新主语；`tgt` 分支有意不加 `new_subj`（本分句原因就近命中即已证明事件发生），此前汇报称「已加」与代码不符，本次改正 → C34 增至 38 条反例（⑯–⑳）",
+    "B｜父输入栏目改「带状态返回 + 目标行绑定 + 期间语义类」：column_of_amount_ex() 返回(列头, 金额, 状态)，状态分 OK/NO_WORDS/NO_AMOUNT/AMBIGUOUS/NO_COLUMN；label 参数把金额绑定到目标行，同页重复金额不再取第一个；cols_equivalent() 先比期间语义类（PRIOR_YEAR_SAME/YEAR_OPEN/PERIOD_END/CURRENT）再退回子串，「本期发生额 vs 本期数」不再判为不同列；扫描页记 PARENT_COLUMN_NEEDS_REREAD（待回读），不再记「不可解」",
+    "C｜证据标签与页码：evidence_label 必须「标签 + 20 字内数量」（带单位或带小数），且不得是页码/表号（_RE_PAGE_REF），「见第12页附表说明」不再冒充金额；SELF_PAGE 从「该金额最早出现的页」改为**目标行定位**（词坐标 → 指标名同行 → 该金额 → 列头），页眉重复金额不再抢走真实表格行；新增 CURRENCY_ALIASES 受控映射，currency='CNY' 遇「记账本位币：人民币」不再误拒",
+    "D｜裁决清单自身受检：ruling_scope.csv 的 ruling_file / ruling_file_sha256 必须校验，且须与登记条目一致（RULING_SCOPE_FILE_UNBOUND/_MISSING/_HASH_MISMATCH/_DISAGREES），把哈希改成 64 个 0 不再生效；C14 增至 11 种注入（新增清单哈希篡改、清单与登记条目不一致）",
+    "E｜窗口规则下沉：三词同窗口判据从 verify_v5._dim_window 下沉为 parent_verify.dim_window_ok()，scope_dims() 与自检共用同一套；跨度 ≤160 字，且载体词所在句不得是注释/页脚（注：/附注/附表见/页脚/详见）。500 字远距离拼接与页脚「分季度见附表」不再算 COMPARATIVE_SCOPE 覆盖；C38 增至 14 种注入",
+    "F｜抽样键集变更的退出归因：入选判据从匿名 lambda 提为具名谓词（_pred_r1…_pred_r10、_r6_pred），抽样与 diff 共用同一份；REMOVED 必须归到四类之一（LEDGER_KEY_GONE / PREDICATE_FALSE / RANK_CUT / UNKNOWN），SH:600060@20260630 改记「判据仍成立、被名额规则截掉」，不再笼统写「不再命中判据」；R6 样本说明按 parent_amount_located 的 BOTH/ONE/NONE 逐字对应，SH:600143@20260630 实为 ONE，不再写「两父均已定位」",
+    "H｜状态文件单一写者：data/active_issue.json 的派生字段（status / self_check / checks / sampling）改由 verify_v5.write_status() 唯一写出，且只写指针与版本号，不再复述条数、环数、键数与增删结论（旧版残留 V10 的 30 条/27 环/9 项与「新增该键、无删除」）；新增 C39 检查旧字段必须消失、版本与定位器版本必须本次一致"
+  ],
   "open_findings": [
     "NOTE_TRACE_NA 总量 9,954 条 / 631 份文档；其中已解除 8,655 条 / 630 份，剩余 1,299 条 / 1 份仍待核。第 4 步须按「文档版本+具体栏目+实际选项组+覆盖期间」核共同事实再映射成员键，已解除的 8,655 条同样复审",
     "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
@@ -806,6 +889,6 @@
     "第 5 步重算分层与受限表未开始；44/231/378 未锁定",
     "锚定期回退与上游准入的间接依赖未覆盖"
   ],
-  "not_independent": "执行方自检，不构成独立验收；仅抽验 37 行 / 20 类 / 27 键回读原件物理页（见 sampling_v5.json 的 samples / risk_types / unique_keys）。",
+  "not_independent": "执行方自检，不构成独立验收；仅抽验 37 行 / 20 类 / 27 键回读原件物理页（计数取自 sampling_v5.json，不在此处另写一份）。",
   "release_S05": false
 }

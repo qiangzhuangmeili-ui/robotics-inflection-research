@@ -313,48 +313,108 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
     samples.append(row)
 
 
+# ---------------------------------------------------------------
+# 入选判据单点定义（第十二轮 F 项）
+# 抽样用它，`sampling_keys_diff.csv` 的「退出归因」也用它——同一个谓词。
+# 之前把谓词写成抽样循环里的匿名 lambda，diff 只能笼统写「不再命中判据」，
+# 无法区分「判据不再成立」和「判据成立但被名额截掉」，Codex 据此退回。
+# ---------------------------------------------------------------
+def _pred_r1(x):
+    return (x["status_B"] == "EXTRACTED_QUARTERLY_TABLE"
+            and x["own_period"] == x["period_key"]
+            and x["resolution"].startswith("PENDING"))
+
+
+def _pred_r2(x):
+    return x["status_B"] == "DERIVED_CUMULATIVE_DIFF"
+
+
+def _pred_r3(x):
+    return x["status_B"] == "DERIVED_Q1_EQUALS_YTD"
+
+
+def _pred_r4(x):
+    return (bool(x["own_period"]) and x["own_period"] != x["period_key"]
+            and x["resolution"].startswith("PENDING"))
+
+
+def _pred_r5a(x):
+    return "MERGER_RETRO" in mentioned(x)
+
+
+def _pred_r5b(x):
+    return ("POLICY_CHANGE" in (x["scope_covered"] or "")
+            and "MERGER_RETRO" not in (x["scope_covered"] or ""))
+
+
+def _pred_r5c_conflict(x):
+    return ("affirmed=-" not in (x["polarity"] or "")
+            and x["resolution"].startswith(("UNRESOLVED", "PENDING")))
+
+
+def _pred_r5c_event(x):
+    return x["resolution"] == "PENDING_CONFIRMED_EVENT_FIELD_OPEN"
+
+
+def _pred_r14(x):
+    return x["resolution"] == "PENDING_WEAK_ASSUMPTION"
+
+
+def _pred_r15(x):
+    return x["resolution"] == "UNRESOLVED_EVIDENCE_MISMATCH"
+
+
+def _pred_r8(x):
+    return (x["security_id"] == "SH:600022" and x["period_key"] == "20250630"
+            and x["field_id"] == "FIN.REV.SQ")
+
+
+def _pred_r9(x):
+    return (x["security_id"] == "SH:603025" and x["period_key"] == "20250331"
+            and x["field_id"] == "FIN.REV.SQ")
+
+
+def _pred_r10(x):
+    return x["security_id"] == "SH:603298"
+
+
 # R1 直接季度表 + 自身期间
-for r in pick(lambda x: x["status_B"] == "EXTRACTED_QUARTERLY_TABLE"
-              and x["own_period"] == x["period_key"]
-              and x["resolution"].startswith("PENDING"), 3):
+for r in pick(_pred_r1, 3):
     add_sample("R1_QUARTERLY_TABLE_OWN", "分季度表直接取值且为文档自身期间，NA 证据不涉该表", r)
 
 # R2 累计差分
-for r in pick(lambda x: x["status_B"] == "DERIVED_CUMULATIVE_DIFF", 3):
+for r in pick(_pred_r2, 3):
     add_sample("R2_CUMULATIVE_DIFF", "单季由累计差分得到，须核 YTD(t)/YTD(t−1q) 父输入", r)
 
 # R3 Q1
-for r in pick(lambda x: x["status_B"] == "DERIVED_Q1_EQUALS_YTD", 2, need_rec=False):
+for r in pick(_pred_r3, 2, need_rec=False):
     add_sample("R3_Q1_EQUALS_YTD",
                "Q1 单季即累计，不应减上年年末；口径本身由 C27 单键检验，"
                "本行属供给文档不在核验清单的实例", r)
 
 # R4 比较列（行期间≠文档自身期间）
-for r in pick(lambda x: x["own_period"] and x["own_period"] != x["period_key"]
-              and x["resolution"].startswith("PENDING"), 3):
+for r in pick(_pred_r4, 3):
     add_sample("R4_COMPARATIVE_COLUMN", "行期间≠文档自身期间，取值来自比较列/分季度表", r)
 
 # R5 不同重述原因
 # 第六轮裁决第三节的后果：极性改为三分后，「同一控制合并范围变更0.00元」只对期初
 # 未分配利润给出零值，不再算作对本字段的排除。因此 MERGER_RETRO 在全量中已无
 # 「明确排除」实例，样本改为抽「提到但未排除」——正是旧判据误当排除的那一类。
-for r in pick(lambda x: "MERGER_RETRO" in mentioned(x), 2):
+for r in pick(_pred_r5a, 2):
     add_sample("R5_CAUSE_MERGER_RETRO",
                "证据提到同一控制/合并范围，但只对特定权益项目给零值，未排除对本字段的影响"
                "（旧判据在此误判为排除）", r)
 # R5b 证据含 POLICY_CHANGE
-for r in pick(lambda x: "POLICY_CHANGE" in (x["scope_covered"] or "")
-              and "MERGER_RETRO" not in (x["scope_covered"] or ""), 2):
+for r in pick(_pred_r5b, 2):
     add_sample("R5_CAUSE_POLICY_CHANGE", "证据正文含会计政策变更，但未排除同一控制下合并", r)
 
 # R5c 肯定发生（第六轮裁决第三节：极性不能把「提到」当「排除」）
 # 两类样本：B=否 但证据确认发生（冲突，须停在未闭合）；B=是 且事件已确认
 # 但来源维度未核（事件层已确认、字段层仍开）。
-for r in pick(lambda x: "affirmed=-" not in (x["polarity"] or "")
-              and x["resolution"].startswith(("UNRESOLVED", "PENDING")), 2):
+for r in pick(_pred_r5c_conflict, 2):
     add_sample("R5_CAUSE_AFFIRMED",
                "证据确认发生调整（肯定极性），不得按「未提及」或「零值」闭合", r)
-for r in pick(lambda x: x["resolution"] == "PENDING_CONFIRMED_EVENT_FIELD_OPEN", 2):
+for r in pick(_pred_r5c_event, 2):
     add_sample("R5_CAUSE_AFFIRMED",
                "B=是 且事件已由证据确认，但来源维度（分季度表/比较列/父输入）尚未核", r)
 
@@ -732,23 +792,33 @@ for r in _r6_pool:
     rank = {"BOTH": 0, "ONE": 1, "NONE": 2}.get(d.get("parent_orig_verified"), 3)
     _r6_scored.append((rank, r, d))
 _r6_scored.sort(key=lambda z: z[0])
+# 第十二轮 F 项：定位结论必须逐字对应 parent_amount_located 的 BOTH/ONE/NONE，
+# 不能一律写「两个父数均已定位」——600143 实际是 ONE，汇报与字段对不上被 Codex 抓到。
+_LOCATED_TXT = {
+    "BOTH": "两个实际累计父数均已按金额在原件定位",
+    "ONE": "仅一个实际累计父数在原件定位，另一个未定位（不得记作两父均已定位）",
+    "NONE": "两个实际累计父数均未在原件定位",
+}
 for _rank, r, d in _r6_scored[:3]:
     x = cross_doc_parent(r["security_id"], r["field_id"], r["period_key"])
+    _loc = d.get("parent_amount_located", "NA")
     add_sample("R6_CROSS_DOC_PARENT",
                "单季由两期累计相减得到，两父输入来自不同文档（%s / %s）；"
-               "两个实际累计父数已按金额在原件定位（%s，p.%s / p.%s），并交付期间列、"
+               "%s（%s，p.%s / p.%s），并交付期间列、"
                "表头单位与调整前后版本；但兼容性仍为 %s（%s），不得据此认定两父核证完成"
-               % (x[1][:16], x[2][:16], d.get("parent_amount_located", "NA"),
+               % (x[1][:16], x[2][:16],
+                  _LOCATED_TXT.get(_loc, "定位结论未知（%s）" % _loc),
+                  _loc,
                   d.get("parent_p1_locate", ""), d.get("parent_p2_locate", ""),
                   d.get("parent_compatible", "NA"), d.get("parent_compat_gap", "")), r,
                extra_cols=d)
 
 # R6 假设方法
-for r in pick(lambda x: x["resolution"] == "PENDING_WEAK_ASSUMPTION", 2):
+for r in pick(_pred_r14, 2):
     add_sample("R14_WEAK_ASSUMPTION", "方法为假设，未查原文（不得计入已闭合）", r)
 
 # R7 证据与断言冲突
-for r in pick(lambda x: x["resolution"] == "UNRESOLVED_EVIDENCE_MISMATCH", 2):
+for r in pick(_pred_r15, 2):
     add_sample("R15_EVIDENCE_MISMATCH",
                "旧核验判定与 B 相反，须先判旧判据范围是否不足，不能直接认定 B 错", r)
 
@@ -840,7 +910,7 @@ with open(OUT / "sampling_v5.csv", "w", encoding="utf-8-sig", newline="") as f:
 # 对照基线 `sampling_keys_baseline.csv`（上一交付版的样本键集，含来源哈希），
 # 逐键记录 增加/删除/保留，并把「为什么变」写清楚——不能只在报告里口头解释。
 # ---------------------------------------------------------------
-LOCATOR_VERSION = "V11"      # 定位器改版即改此值，diff 里逐行带上
+LOCATOR_VERSION = "V12"      # 定位器改版即改此值，diff 里逐行带上
 _SHA_SAMPLING = hashlib.sha256((OUT / "sampling_v5.csv").read_bytes()).hexdigest()
 
 
@@ -863,15 +933,73 @@ if _p_base.exists():
 
 # 台账里还存不存在这个键——用来区分「键被删」和「键还在但不再命中判据」
 _ledger_keys = set()
+_ledger_by_key = {}
 for _r in meta:
-    _ledger_keys.add("|".join([_r["security_id"], _r["field_id"], _r["period_key"]]))
+    _kk = "|".join([_r["security_id"], _r["field_id"], _r["period_key"]])
+    _ledger_keys.add(_kk)
+    _ledger_by_key.setdefault(_kk, []).append(_r)
 for _r in extra:
-    _ledger_keys.add("|".join([_r["security_id"], _r["field_id"], _r["period_key"]]))
+    _kk = "|".join([_r["security_id"], _r["field_id"], _r["period_key"]])
+    _ledger_keys.add(_kk)
+    _ledger_by_key.setdefault(_kk, []).append(_r)
+
+# 风险类型 → (入选判据, 名额规则说明)。第十一轮 F 项：退出原因必须归到具体环节。
+_PRED_OF_RISK = {
+    "R1_QUARTERLY_TABLE_OWN": (_pred_r1, "取前 3 家（同公司去重，且须有核验记录）"),
+    "R2_CUMULATIVE_DIFF": (_pred_r2, "取前 3 家（同公司去重）"),
+    "R3_Q1_EQUALS_YTD": (_pred_r3, "取前 2 家（同公司去重，不要求核验记录）"),
+    "R4_COMPARATIVE_COLUMN": (_pred_r4, "取前 3 家（同公司去重）"),
+    "R5_CAUSE_MERGER_RETRO": (_pred_r5a, "取前 2 家（同公司去重）"),
+    "R5_CAUSE_POLICY_CHANGE": (_pred_r5b, "取前 2 家（同公司去重）"),
+    "R5_CAUSE_AFFIRMED": (_pred_r5c_conflict, "取前 2 家（同公司去重）"),
+    "R6_CROSS_DOC_PARENT": (_r6_pred, "同公司去重 → 候选池上限 14 家 → 按定位结论 BOTH/ONE/NONE 排序取前 3"),
+    "R8_SHANDONG_POSITIVE": (_pred_r8, "全量命中即入选（点名正例）"),
+    "R9_DAHAO_RULED": (_pred_r9, "全量命中即入选（点名正例）"),
+    "R10_HANGCHA_CROSS_SOURCE": (_pred_r10, "取前 2 条"),
+    "R14_WEAK_ASSUMPTION": (_pred_r14, "取前 2 家（同公司去重）"),
+    "R15_EVIDENCE_MISMATCH": (_pred_r15, "取前 2 家（同公司去重）"),
+}
+
+
+def _exit_reason(key, base_rows):
+    """REMOVED 的退出归因。四类互斥，不允许写成含糊的「不再命中判据」。
+
+    LEDGER_KEY_GONE  台账已无该键（键集本身变化）
+    PREDICATE_FALSE  键仍在台账，但按当前定位器重算不再命中该风险类型的入选判据
+    RANK_CUT         判据仍成立，被同公司去重 / 候选池上限 / 评分排序截掉
+    UNKNOWN          判据未登记，无法重算——须人工看，不得默认成上面任一类
+    """
+    if key not in _ledger_keys:
+        return "LEDGER_KEY_GONE", "台账已无该键（键集本身变化）"
+    risks = sorted({x["risk_type"] for x in base_rows})
+    for _rk in risks:
+        _ent = _PRED_OF_RISK.get(_rk)
+        if _ent is None:
+            continue
+        _pred, _quota = _ent
+        _hit = False
+        for _row in _ledger_by_key.get(key, []):
+            try:
+                if _pred(_row):
+                    _hit = True
+                    break
+            except Exception:
+                continue
+        if _hit:
+            _msg = "判据仍成立（%s 谓词为真），但被名额规则截掉：%s" % (_rk, _quota)
+            if _rk.startswith("R6"):
+                _msg += "；本轮实际入选的同类样本见 sampling_v5.csv 的 R6_* 行"
+            return "RANK_CUT", _msg
+        return ("PREDICATE_FALSE",
+                "键仍在台账，但按 %s 定位器重算已不满足 %s 的入选判据"
+                % (LOCATOR_VERSION, _rk))
+    return ("UNKNOWN", "判据未登记（%s），无法自动归因，须人工判定" % "/".join(risks))
 
 _diff_rows = []
 for _k in sorted(set(_cur) | set(_base)):
     _c = _cur.get(_k) or []
     _b = _base.get(_k) or []
+    _exit_code = ""
     if _c and _b:
         _status = "KEPT"
         _reason = "键集未变（当前风险类型 %s）" % "/".join(sorted({x["risk_type"] for x in _c}))
@@ -880,9 +1008,7 @@ for _k in sorted(set(_cur) | set(_base)):
         _reason = "；".join(sorted({x.get("why_selected") or "" for x in _c}))[:400]
     else:
         _status = "REMOVED"
-        _reason = ("台账已无该键（键集本身变化）" if _k not in _ledger_keys
-                   else "键仍在台账，但 %s 定位器下不再命中原风险类型 %s 的入选判据"
-                        % (LOCATOR_VERSION, "/".join(sorted({x["risk_type"] for x in _b}))))
+        _exit_code, _reason = _exit_reason(_k, _b)
     _diff_rows.append({
         "status": _status,
         "key": _k,
@@ -894,6 +1020,7 @@ for _k in sorted(set(_cur) | set(_base)):
         "baseline_risk_type": "/".join(sorted({x["risk_type"] for x in _b})),
         "current_sample_id": "/".join(sorted({x["sample_id"] for x in _c})),
         "current_risk_type": "/".join(sorted({x["risk_type"] for x in _c})),
+        "exit_code": _exit_code,
         "reason": _reason,
         "locator_version": LOCATOR_VERSION,
         "baseline_sha256": _base_sha,
@@ -904,6 +1031,27 @@ with open(OUT / "sampling_keys_diff.csv", "w", encoding="utf-8-sig", newline="")
     w.writeheader()
     w.writerows(_diff_rows)
 _diff_cnt = Counter(r["status"] for r in _diff_rows)
+
+# 退出归因自证（第十二轮 F 项）：RANK_CUT 必须谓词为真、PREDICATE_FALSE 必须谓词为假、
+# LEDGER_KEY_GONE 必须台账无该键。归因表与判据来自同一份谓词，这里只是防归因表写错。
+_exit_bad, _exit_checked = [], 0
+for _r in _diff_rows:
+    if _r["status"] != "REMOVED":
+        continue
+    _exit_checked += 1
+    if _r["key"] not in _ledger_keys:
+        _expect = "LEDGER_KEY_GONE"
+    else:
+        _ent = _PRED_OF_RISK.get(_r["baseline_risk_type"])
+        if _ent is None:
+            _expect = "UNKNOWN"
+        else:
+            _expect = ("RANK_CUT"
+                       if any(_ent[0](_row) for _row in _ledger_by_key.get(_r["key"], []))
+                       else "PREDICATE_FALSE")
+    if _r["exit_code"] != _expect:
+        _exit_bad.append({"key": _r["key"], "got": _r["exit_code"], "expect": _expect})
+_exit_ok = not _exit_bad
 
 risk_cnt = Counter(s["risk_type"] for s in samples)
 reread = Counter(s["page_reread"] for s in samples)
@@ -942,6 +1090,10 @@ summary = {
         "baseline_sha256": _base_sha,
         "current_sha256": _SHA_SAMPLING,
         "by_status": dict(_diff_cnt),
+        "removed_exit_code": {r["key"]: r["exit_code"]
+                              for r in _diff_rows if r["status"] == "REMOVED"},
+        "exit_code_selfcheck": {"checked": _exit_checked, "bad": _exit_bad,
+                                "ok": _exit_ok},
         "added": [r["key"] for r in _diff_rows if r["status"] == "ADDED"],
         "removed": [r["key"] for r in _diff_rows if r["status"] == "REMOVED"],
         "file": "sampling_keys_diff.csv",

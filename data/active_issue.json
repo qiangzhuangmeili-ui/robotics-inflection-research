@@ -4,7 +4,7 @@
  "active_issue_key": "S00_ERRATA_REVIEW",
  "executor": "WorkBuddy AI",
  "started_at": "2026-11-11 22:10:00 +08:00",
- "status": "S00_ERRATA_V5_SELF_CHECK_V11_PASS_AWAITING_RECHECK_12",
+ "status": "S00_ERRATA_V5_SELF_CHECK_V12_PASS_AWAITING_RECHECK_13",
  "claim_note": "S00 勘误 V5（自检 V10，40/40 PASS）：按 Codex 第十轮裁决修 10 处——①极性五条新绕过全修（单符号跨行合并、含符号原因标签仍作主语行、「适用」与「某原因未勾」并存判歧义、无关报表项目金额不再承接为主语肯定、单原因分句金额直绑），C34 增至 30 条反例，回放 1,007 份证据分句/极性变化均为 0；②父输入单位折算键名修正（gap 原读 expect['unit']，实际键为 unit_scale，折算恒为 1 倍）；③父输入栏目须为期间列头且出现在引文中，调整版本须等于该父实际 version_used 的归类；④父输入引文源改为回读原件登记页，不再用 results.csv.evidence；C37 注入 27 环（1 正例 + 26 反例）+ 真实原件阳性 + 单位三档 + 错误栏目 + 同数异义负例，逐项断言拒绝原因；⑤C24 数值先去千分位再比较，同页上年数冒充本期终值不再过关，并新增 REVIEW_KEY_MISMATCH；⑥C24 改为字段规则表（NUM/UNIT/DATE/LITERAL/SELF_PAGE），11 个无规则字段一律留待核；⑦C24 注入改以完整正例为基线、每次只改一个条件并断言拒绝原因；⑧C14 须绑定正式裁决表条目（引文行必须是 | Qn … | 行、裁决项标题点名该键、ruled_key 须与待判键完全一致、结论须前缀匹配且不得是否定表述，注入 9 种）；⑨C38 核对 source_page 并绑定维度证据载体（封面片段不再同时取得两个维度）；⑩R6 按词坐标确认目标行与目标列，单位绑定该表表头，调整前后取原件列头标记。自动 YES 仍为 0，PENDING_PARENT_COMPATIBILITY 1,277；重述差异待处置 8,309；全表核心未闭合 9,113、含补充 10,618；全池 44 HOLD / 231 待核证 / 378 无关联；受限表 407 行。第 4–5 步未做，S04 第二轮与 S05 不放行",
  "last_completed": {
   "issue_key": "S04",
@@ -480,10 +480,14 @@
    "dispute_ledger": 10618,
    "restatement_groups": 89
   },
-  "checks": "40/40 PASS（V10：C34 30 条反例；C37 27 环 = 1 正例 + 26 反例，逐环断言拒绝原因；C24 13 种伪造 + 1 种枚举注入，均断言原因；C14 9 种伪造，均断言原因；C38 12 种绕过）",
+  "checks": {
+   "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
+   "count": 41,
+   "note": "检查项名称/结果/明细一律不在状态文件复述；旧版曾在此写死反例数、注入链环数与注入种数，与 review.json 漂移，被复核抓到。"
+  },
   "reproducible": true,
   "limits": [
-   "未回读全部 PDF（抽验 37 行 / 20 类 / 27 个键，覆盖 1,007 份核验文档中的 20 份）。键数由上版 26 变为 27：R6 抽样谓词改用新的坐标定位器后，第三条样本由 SH:600053 变为 SH:600060，键集合随之 +1；该数由 sampling_v5.json 的 unique_keys 直接给出，不再手写",
+   "未回读全部 PDF（抽验 37 行 / 20 类 / 27 个键，覆盖 1,007 份核验文档中的 20 份）。键数由 sampling_v5.json 的 unique_keys 直接给出，不再手写；相对上一交付版（V10）的逐键增删见 sampling_keys_diff.csv（KEPT 26 / ADDED 1 / REMOVED 1，REMOVED 的退出归因为 RANK_CUT）。",
    "NOTE_TRACE_NA 总量 9,954 条 / 631 份文档；其中已解除 8,655 条 / 630 份，剩余 1,299 条 / 1 份仍待核。总量与解除量分列，不能按文档或方法名广播解除；第 4 步须按「文档版本+具体栏目+实际选项组+覆盖期间」核共同事实后再映射成员键，已解除的 8,655 条同样复审",
    "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79，42 份文档）未逐条回读原注",
    "1,505 格补充元数据仅登记字段级核验要求，未逐项核完",
@@ -518,256 +522,20 @@
   "v4_directory_preserved": "runs/issues/S00/errata_20261111_v4/",
   "key_change_vs_v4": "闭合判据从「行期间==文档自身期间」改为「证据覆盖范围 ⊇ 必需范围」；受限方法强制待核；依赖引擎按 B 的 status 展开父键；补充元数据四类实质字段全部字段级待核",
   "sampling": {
-   "samples": 37,
-   "risk_types": 20,
-   "unique_keys": 27,
-   "page_reread": {
-    "MATCH": 18,
-    "PARTIAL": 5,
-    "LOCATED": 2,
-    "WEAK_LOCATE": 1,
-    "NO_PAGE_RECORDED": 5,
-    "NOT_APPLICABLE_EXTRA_FIELD": 6
-   },
-   "r7_locate_status": {
-    "VERIFIED": 2,
-    "WEAK": 1
-   },
-   "new_in_round7": [
-    "R6 两父输入核证结论",
-    "R7 locate_status",
-    "R2 含待核实例"
-   ],
-   "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据未定位到，属上游核验记录异常，未放行",
-   "parent_orig_verified": {
-    "BOTH": 3
-   },
-   "new_in_round8": [
-    "R6 两父输入取值/状态/原件定位/命中片段",
-    "R7 located_page + located_fragment",
-    "evidence_conflicts.csv 传播范围"
-   ],
-   "unique_keys_note": "上一轮 26 键，本轮 27 键：R6 抽样池按 parent_orig_verified 排序取前三，新词坐标定位器下 SH:600053@20260630 判为 ONE（p1 LOCATED_ROW_MISMATCH），S21 顺延为 SH:600060@20260630（BOTH），键集合 +1。逐键差集：新增该键，无删除。",
-   "new_in_round10": [
-    "R6 parent_p1_row / parent_p2_row（目标行标签）",
-    "R6 parent_p1_unit / parent_p2_unit（原件表头单位对照）",
-    "R6 parent_p1_version / parent_p2_version（原件调整前后标记）",
-    "sampling_v5.json unique_keys（键数不再手写）"
-   ],
-   "keys_diff": {
-    "baseline_version": "V10",
-    "baseline_sha256": "0d0940cc200f5490afedab736ccd99ade787e38f8acf68e0c39587dcbe03eb9d",
-    "current_sha256": "7261322a968eb995806383daa709484df9b7195f7789b00b6a53403c8c6ce504",
-    "by_status": {
-     "KEPT": 26,
-     "REMOVED": 1,
-     "ADDED": 1
-    },
-    "added": [
-     "SH:600143|FIN.NPP.SQ|20260630"
-    ],
-    "removed": [
-     "SH:600060|FIN.NPDEDT.SQ|20260630"
-    ],
-    "file": "sampling_keys_diff.csv"
-   },
-   "locator_version": "V11"
+   "canonical": "runs/issues/S00/errata_20261111_v5/sampling_v5.json",
+   "rows": "runs/issues/S00/errata_20261111_v5/sampling_v5.csv",
+   "keys_diff": "runs/issues/S00/errata_20261111_v5/sampling_keys_diff.csv",
+   "locator_version": "V12",
+   "note": "行数/风险类型数/键数/page_reread 分布/逐键增删一律不复述，见 canonical 与 keys_diff；状态文件只留定位器版本与指针，杜绝第二份数字漂移。",
+   "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据未定位到，属上游核验记录异常，未放行"
   },
   "self_check": {
-   "checks": 40,
-   "pass": 40,
-   "version": "V11",
-   "fault_injection_v1": {
-    "C13": 6,
-    "C14": 11936,
-    "C17": 12076,
-    "C26": 17009
-   },
-   "fault_injection_v4_mapped": {
-    "C26": 7729,
-    "C14": 6617,
-    "limited_method_own_period": 5270
-   },
-   "targeted_injections": {
-    "scope_insufficient": "PENDING_SOURCE_PROVENANCE",
-    "cause_affirmed": "UNRESOLVED_EVIDENCE_CONTRADICTS",
-    "parent_incompatible": "PENDING_PARENT_COMPATIBILITY"
-   },
-   "c34_polarity": {
-    "case_count": 33,
-    "case_failures": 0,
-    "replay_documents": 1007,
-    "clause_changes": 0,
-    "polarity_changes": 0,
-    "new_in_round11": [
-     "⑭ 词表外项目切换（其中营业总收入100.00元）",
-     "⑭ 词表内项目切换（守护：仍不承接）",
-     "⑮ 权益项目续写（守护：仍 scoped）"
-    ]
-   },
-   "c37_injection_chain": {
-    "rings": 29,
-    "positive_rings": 1,
-    "negative_rings": 28,
-    "reason_asserted": true,
-    "unit_paths_ok": true,
-    "real_original_positive": true,
-    "real_original_key": "SH:600008|FIN.OCF.SQ|20260630",
-    "real_original_columns": {
-     "p1": "本期数",
-     "p2": "本报告期"
-    },
-    "real_wrong_column_reason": "PARENT_COLUMN_MISMATCH",
-    "real_column_unresolved_reason": "PARENT_COLUMN_UNRESOLVED",
-    "register_rows": 0,
-    "reopened_pending": 1277,
-    "reject_reasons": {
-     "quote_other_metric": "PARENT_QUOTE_WITHOUT_TARGET_METRIC",
-     "wrong_conclusion": "VERIFICATION_NOT_COMPATIBLE",
-     "value_mismatch": "PARENT_VALUE_MISMATCH",
-     "quote_not_located": "PARENT_QUOTE_NOT_LOCATED",
-     "empty_scope": "SCOPE_FIELD_EMPTY",
-     "no_reviewer": "VERIFICATION_WITHOUT_REVIEWER",
-     "p2_quote_missing": "PARENT_QUOTE_TOO_SHORT",
-     "doc_mismatch": "PARENT_DOC_MISMATCH",
-     "p2_doc_mismatch": "PARENT_DOC_MISMATCH",
-     "period_mismatch": "PARENT_PERIOD_MISMATCH",
-     "column_empty": "PARENT_COLUMN_EMPTY",
-     "column_not_period": "PARENT_COLUMN_NOT_PERIOD",
-     "column_not_in_quote": "PARENT_COLUMN_NOT_IN_QUOTE",
-     "page_invalid": "PARENT_PAGE_INVALID",
-     "quote_on_wrong_page": "PARENT_SOURCE_UNAVAILABLE",
-     "adjust_version_invalid": "PARENT_ADJUST_VERSION_INVALID",
-     "adjust_version_mismatch": "PARENT_ADJUST_VERSION_MISMATCH",
-     "adjust_version_other_side": "PARENT_ADJUST_VERSION_MISMATCH",
-     "scope_mismatch": "SCOPE_MISMATCH_WITH_PARENT",
-     "scope_basis_missing": "SCOPE_BASIS_MISSING",
-     "reviewer_placeholder": "VERIFICATION_WITHOUT_REVIEWER",
-     "no_date": "VERIFICATION_WITHOUT_DATE",
-     "role_unmarked": "VERIFICATION_WITHOUT_ROLE",
-     "quote_without_parent_value": "PARENT_QUOTE_WITHOUT_TARGET_METRIC",
-     "original_quote_with_restated_mark": "PARENT_QUOTE_NOT_LOCATED"
-    },
-    "column_check": "按词坐标取金额 x 区间正上方最近的非数值词为实际列头，归一化后与登记列头比对"
-   },
-   "c24_injections": {
-    "count": 13,
-    "enum_injection": 1,
-    "baseline": "完整正例（SH:600100|FIN.REV.YTD|20250630|value_raw）为基线，每次只改一个条件",
-    "control_accepted": true,
-    "unit_path_ok": true,
-    "reason_mismatch": {},
-    "keys_equal_expect": true,
-    "expect_reason_keys": 13,
-    "key_gap": [],
-    "key_extra": [],
-    "not_exercised": {},
-    "enum_reason": "REVIEW_FIELD_RULE_UNDEFINED",
-    "reasons": {
-     "no_review": "RELEASE_WITHOUT_CONTENT_REVIEW",
-     "unbound_digest": "LEDGER_NOT_LINKED_TO_REVIEW",
-     "wrong_period_key": "REVIEW_KEY_MISMATCH",
-     "document_mismatch": "REVIEW_DOCUMENT_MISMATCH",
-     "placeholder_reviewer": "REVIEW_WITHOUT_REVIEWER",
-     "no_date": "REVIEW_WITHOUT_DATE",
-     "role_unmarked": "REVIEW_ROLE_UNMARKED",
-     "conclusion_invalid": "REVIEW_WITHOUT_CONCLUSION",
-     "fragment_wrong_page": "REVIEW_FRAGMENT_NOT_IN_ORIGINAL_PAGE",
-     "fragment_boilerplate": "REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT",
-     "value_not_declared": "REVIEW_VALUE_NOT_DECLARED",
-     "basis_placeholder": "REVIEW_BASIS_TOO_SHORT",
-     "same_page_other_amount": "REVIEW_PRINTED_VALUE_NOT_SUPPORT_VALUE"
-    },
-    "note": "第十一轮：原因不再写死，改从 extra_leaks 捕获；注入键集合与预期原因集合严格相等；条件型注入构造不出对照物记 not_exercised 并判失败；枚举注入把 REVIEW_FIELD_RULE_UNDEFINED 纳入 PASS 条件。"
-   },
-   "c14_injections": {
-    "count": 10,
-    "control_accepted": true,
-    "reason_mismatch": {},
-    "not_caught": [],
-    "ruling_scope_rows": 1,
-    "reasons": {
-     "placeholder_basis": "RULING_BASIS_TOO_SHORT",
-     "wrong_line": "RULING_QUOTE_NOT_AT_LINE",
-     "unrelated_quote": "RULING_LINE_NOT_A_RULING_ROW",
-     "registry_note": "RULING_LINE_NOT_A_RULING_ROW",
-     "key_pattern_other_company": "RULING_ITEM_DOES_NOT_NAME_KEY",
-     "section_not_on_line": "RULING_SECTION_MISMATCH",
-     "generic_ruling_item": "RULING_SCOPE_NOT_LISTED",
-     "field_other_same_company": "RULING_KEY_MISMATCH",
-     "both_key_and_ruled_rewritten": "RULING_KEY_NOT_IN_SCOPE",
-     "negative_verdict_substring": "RULING_VERDICT_NEGATED"
-    },
-    "note": "裁决解除的粒度是「这一个键」：`ruled_key` 须与待判键三元组完全相等，且该键须在独立维护的 ruling_scope.csv 适用范围内（第十一轮新增，堵 key+ruled_key 同时改写）；结论须与单元格前缀匹配且不得含否定词。"
-   },
-   "c38_injection": {
-    "count": 12,
-    "key": "BJ:920100|FIN.REV.SQ|20250630",
-    "with_record": "PENDING_CAUSE_UNCOVERED",
-    "without_record": "PENDING_SOURCE_PROVENANCE",
-    "with_parent_dim_only": "PENDING_SOURCE_PROVENANCE",
-    "dims_from_record": [
-     "COMPARATIVE_SCOPE",
-     "QUARTERLY_TABLE_PROVENANCE"
-    ],
-    "dims_required": [
-     "COMPARATIVE_SCOPE",
-     "QUARTERLY_TABLE_PROVENANCE"
-    ],
-    "evidence_pages": {
-     "COMPARATIVE_SCOPE": "149",
-     "QUARTERLY_TABLE_PROVENANCE": "10"
-    },
-    "rejected": [
-     "wrong_conclusion",
-     "unlocatable_quote",
-     "no_reviewer",
-     "role_unmarked",
-     "no_date",
-     "other_document",
-     "parent_dimension",
-     "wrong_target",
-     "quote_without_year",
-     "quote_on_wrong_page",
-     "quote_without_dim_marker",
-     "page_invalid"
-    ],
-    "register_rows": 0,
-    "note": "第十一轮：维度证据须「目标指标名 + 该行具体期间表述 + 维度载体」同页同窗口，窗口须含该行年份；经营计划叙述不再算覆盖。"
-   },
-   "note": "完整注入明细的唯一维护点在本对象；顶层 self_check 只是指针，不重复存放，避免双份漂移。",
-   "interrupt_fixes_round11": [
-    "C14 裁决只解除它裁定的那一个键：ruling_gap 新增 ruled_key 精确绑定（RULING_KEY_MISMATCH）",
-    "C14 结论不得用否定表述：ruling_verdict 须前缀匹配结论单元格且不含否定词（RULING_VERDICT_NEGATED）"
-   ],
-   "round11_fixes": [
-    "A｜极性「结构性新主语」：金额左侧紧跟片段以名词收尾（且不含受影响权益项目、不是动词/量词/标点收尾）即判为新主语，不再承接前一分句的原因。「前期差错更正对期初未分配利润影响0.00元，其中营业总收入100.00元」不再把 100.00 判成 ERRATA 肯定 → C34 增至 33 条反例（新增 ⑭ 词表外/词表内项目切换、⑮ 权益项目续写守护）",
-    "B｜父输入栏目改按**词坐标**核实：金额词 → x 中心 → 同 x 区间上方最近的非数值词 = 实际列头，与登记的 p1_column/p2_column 归一化后比对；取不到列头记 PARENT_COLUMN_UNRESOLVED。BJ:920289 的「上年同期」冒充「本期」不再过关；C37 新增 2 条真实负例（错列 / 列头不可解）",
-    "C｜C24 文本字段改按**标签**绑定：unit_raw 须见「单位：」、currency 须见「币种/货币/记账本位币」，且 evidence_label 须与紧随其后的金额相邻（20 字内出现数字），不再拿片段里的「2025」蒙过；SELF_PAGE 改为**独立定位**——该行金额在原件里最早出现的页，而不是比对两个自报页码",
-    "D｜C14 裁决适用范围独立维护：新增 ruling_scope.csv（section → allowed_key），裁决必须同时满足「ruled_key 精确等于待判键」与「该键在登记范围内」（RULING_KEY_NOT_IN_SCOPE）；`key` 与 `ruled_key` 一起改写不再能借用原裁决",
-    "E｜C38 维度证据要求「目标指标名 + 该行具体期间表述 + 维度载体」同页同窗口，窗口须含该行年份；经营计划叙述「报告期初比较」不再算 COMPARATIVE_SCOPE 覆盖",
-    "F｜R6 词坐标：断行标签向上回看 3 行逐行拼接，直到出现目标指标名；调整前后标记只取与金额 x 区间重叠的词，页内别列的「调整前」不再串味；600053 断行误判改判为已定位",
-    "G｜C24 注入键集合与预期原因集合**严格相等**（key_gap / key_extra 均为 0 才算过）；no_review / unbound_digest 改为从 extra_leaks 捕获实际拒绝原因，不再写死字符串；fragment_wrong_page 纳入预期原因表；条件型注入构造不出对照物时记 not_exercised 并判失败，不再用「(True, 占位原因)」蒙混；枚举注入把 REVIEW_FIELD_RULE_UNDEFINED 纳入 PASS 条件；C14 注入同样改为一张表管住「注入名→改法→预期原因」，10 种逐项比对",
-    "H（维护意见）｜同一份自检摘要不再维护两处：active_issue.json 顶层 self_check 降为指针，canonical 指向 s00_errata.self_check，避免明细两处漂移",
-    "新增 sampling_keys_diff.csv：抽样键集相对上一交付版（V10）的增加/删除/保留逐键留痕，带样本 ID、原因、定位器版本与前后来源哈希；基线冻结在 sampling_keys_baseline.csv"
-   ],
-   "sampling_keys_diff": {
-    "baseline_version": "V10",
-    "baseline_sha256": "0d0940cc200f5490afedab736ccd99ade787e38f8acf68e0c39587dcbe03eb9d",
-    "current_sha256": "7261322a968eb995806383daa709484df9b7195f7789b00b6a53403c8c6ce504",
-    "by_status": {
-     "KEPT": 26,
-     "REMOVED": 1,
-     "ADDED": 1
-    },
-    "added": [
-     "SH:600143|FIN.NPP.SQ|20260630"
-    ],
-    "removed": [
-     "SH:600060|FIN.NPDEDT.SQ|20260630"
-    ],
-    "file": "sampling_keys_diff.csv"
-   }
+   "version": "V12",
+   "checks": 41,
+   "pass": 41,
+   "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
+   "detail": "runs/issues/S00/errata_20261111_v5/review.json",
+   "note": "计数由 verify_v5.py 写出；逐项结果与注入明细只在 review.json。"
   },
   "not_done": [
    "第 4 步按已验证方法批量核证",
@@ -780,8 +548,8 @@
    "第 4 步：文档级核证能否作为组内字段级解除的必要条件（非充分条件）",
    "是否放行 S04 第二轮与 S05"
   ],
-  "self_check_version": "V11",
-  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round12.md",
+  "self_check_version": "V12",
+  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round13.md",
   "fault_injection_v4_mapped": {
    "C26": 7729,
    "C14": 6617
@@ -789,17 +557,18 @@
   "stats": {
    "dispute_unique_ids": 10618
   },
-  "round": "第十轮返工"
+  "round": "第十二轮返工",
+  "claim_note": "S00 勘误 V5 自检 V12（41/41 PASS）。逐项结果、注入明细与限制见 runs/issues/S00/errata_20261111_v5/review.json 与 REPORT.md；此处不复述条数/环数/种数，避免与 review.json 漂移。第 4 步批量核证与第 5 步重算分层未做；44/231/378 未冻结；S04 第二轮与 S05 不放行。"
  },
- "self_check_version": "V11",
- "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round12.md",
- "updated_at": "2026-11-12",
+ "self_check_version": "V12",
+ "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round13.md",
+ "updated_at": "2026-11-13T09:20:00+08:00",
  "self_check": {
-  "version": "V11",
-  "checks": 40,
-  "pass": 40,
-  "canonical": "s00_errata.self_check",
+  "version": "V12",
+  "checks": 41,
+  "pass": 41,
+  "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
   "detail": "runs/issues/S00/errata_20261111_v5/review.json",
-  "note": "为避免同一份注入明细维护两处而漂移，顶层只保留版本与计数，明细见 canonical 指向的对象。"
+  "note": "顶层与 s00_errata 两处同源，均由 verify_v5.py 写出，不手工维护。"
  }
 }

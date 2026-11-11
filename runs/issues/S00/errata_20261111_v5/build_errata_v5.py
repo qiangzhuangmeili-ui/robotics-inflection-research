@@ -87,16 +87,16 @@ def _pdf_path(sec, doc):
 
 
 def _col_of(sec):
-    """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项）。"""
-    def f(doc, page, value):
+    """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项，第十二轮绑定目标行）。"""
+    def f(doc, page, value, label=None):
         pdf = _pdf_path(sec, doc)
         if pdf is None:
-            return None
+            return None, "NO_WORDS"
         words = pv.page_words(pdf, page)
         if not words:
-            return None
-        col, _amt = pv.column_of_amount(words, value)
-        return col
+            return None, "NO_WORDS"
+        col, _amt, st = pv.column_of_amount_ex(words, value, label=label)
+        return col, st
     return f
 
 
