@@ -4,8 +4,8 @@
   "active_issue_key": "S04",
   "executor": "WorkBuddy AI",
   "started_at": "2026-11-08 17:45:00 +08:00",
-  "status": "SELF_CHECK_PASS_WITH_LIMITS",
-  "claim_note": "S04 返工完成：按 Codex 裁决冻结规则 v3，实现低基数同口径绝对额确认与 L2 双通道资格，通过 445 家（v1 为 443，新增公元股份/同兴达）；9/9 自检 + 16/16 回归测试；未改任何阈值；S05 仍不放行，须外部复核",
+  "status": "S00_ERRATA_SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+  "claim_note": "S00 勘误台账完成：20,024 条差异逐条定性，14,324 有依据、5,700 未解决；445 家中 443 家 L2 结论不受影响，禾川科技/联赢激光待勘误闭合。S04 第二轮复核与 S00 补充验收均未完成，S05 不放行",
   "last_completed": {
     "issue_key": "S04",
     "issue_number": 39,
@@ -23,9 +23,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 40,
-  "next_recommended_issue_key": "S05",
-  "next_recommended_reason": "S04 返工自检通过但尚无第二轮独立复核；S05 仍 WAITING_DEPENDENCIES，须先取得外部复核记录再进入现金流/应收存货/低基数第三道质量检查",
+  "next_recommended_issue_number": 35,
+  "next_recommended_issue_key": "S00_ERRATA_REVIEW",
+  "next_recommended_reason": "按 Codex 裁决顺序：先完成 S00 勘误的独立补充验收（重点 2 家 HOLD、475 行弱依据、5,073 行未覆盖重述），再完成 S04 第二轮外部复核；S05 保持 WAITING_DEPENDENCIES",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -402,6 +402,60 @@
       "绝对额通道（SG06/SG08）资格单独登记，未改写 M05 的 UNDEFINED_BASE",
       "未改 S02 输入、S03 结果、S01 v2 规则与既有验收状态"
     ],
-    "report": "runs/issues/S04/REPORT.md"
+    "report": "runs/issues/S04/REPORT.md",
+    "waiting_reason": "S00 勘误发现 2 家名单内公司（禾川科技 SH:688320、联赢激光 SH:688518）的 L2 通过依赖无依据的告警解除，须待勘误闭合后重新确认；其余 443 家结论不受未解决差异影响",
+    "s00_errata_ref": "runs/issues/S00/errata_20261111/"
+  },
+  "s00_errata": {
+    "stage": "ERRATA",
+    "issue_key": "S00",
+    "directory": "runs/issues/S00/errata_20261111/",
+    "supersession": "runs/issues/S00/supersession.json",
+    "executor": "WorkBuddy AI",
+    "review_nature": "SELF_CHECK",
+    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+    "reviewed_at": "2026-11-11T16:20:00+08:00",
+    "trigger": "发现 A(S00 交付件) 与 B(s00_v10) 并存且数值冲突；Codex 裁决要求补做限定范围的 S00 勘误验收",
+    "authoritative_input": {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+    },
+    "superseded_input": {
+      "path": "runs/issues/S00/financial_normalized.csv",
+      "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6",
+      "status": "SUPERSEDED_DO_NOT_CONSUME"
+    },
+    "lineage": "A(228,155) → v7(229,393) → v9(229,666) → B(229,667)",
+    "diff_totals": {
+      "value": 240,
+      "key": 2056,
+      "meta": 17728,
+      "resolved": 14324,
+      "unresolved": 5700,
+      "value_unresolved": 28,
+      "key_unresolved": 374,
+      "meta_unresolved": 5298,
+      "sign_flip": 89
+    },
+    "downstream": {
+      "companies_with_diff": 419,
+      "in_s04_list_with_diff": 175,
+      "l2_not_affected": 443,
+      "l2_hold_pending_errata": 2,
+      "hold_list": [
+        "SH:688320 禾川科技",
+        "SH:688518 联赢激光"
+      ]
+    },
+    "checks": "12/12 PASS",
+    "reproducible": true,
+    "limits": [
+      "未回读 PDF、未修改任何数据文件",
+      "5,700 条未解决项未做原文核验",
+      "未覆盖最新可用期选择等间接依赖",
+      "自检不等同独立验收"
+    ],
+    "report": "runs/issues/S00/errata_20261111/REPORT.md",
+    "handoff": "runs/issues/S00/errata_20261111/handoff.md"
   }
 }

@@ -1,0 +1,90 @@
+{
+  "document": "S00 标准化数据集替代关系登记表",
+  "created_at": "2026-11-11T16:10:00+08:00",
+  "purpose": "登记 S00 阶段产出的多份标准化数据文件，明确唯一允许下游消费的版本，并保留被取代版本的历史身份。本文件不修改任何数据文件本身。",
+  "authoritative": {
+    "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+    "label": "B",
+    "version": "S00_HANGCHA_RESTATED_COMPARATIVE_V10_20261101",
+    "rows": 229667,
+    "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+    "status": "CURRENT_COMPUTE_INPUT_PENDING_S00_SUPPLEMENTARY_ACCEPTANCE",
+    "consumed_by": ["S02", "S03", "S04"],
+    "acceptance_refs": [
+      {
+        "record": "runs/issues/S02/acceptance_20261106/review.json",
+        "nature": "EXTERNAL_TECHNICAL_RECHECK",
+        "scope": "计算、指纹与消费链一致性；不含源值、单位、版本与资格元数据验收"
+      }
+    ],
+    "note": "被 S02-S04 实际消费；sha256 与 s03_input_contract.json 的 normalized.sha256 一致。尚无覆盖其相对 A 的全部变更的 S00 层验收。"
+  },
+  "superseded": [
+    {
+      "path": "runs/issues/S00/financial_normalized.csv",
+      "label": "A",
+      "rows": 228155,
+      "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6",
+      "generated_at": "2026-10-29T09:49:00+08:00",
+      "status": "SUPERSEDED_DO_NOT_CONSUME",
+      "acceptance_refs": [
+        {
+          "record": "runs/issues/S00/acceptance_20261029.json",
+          "nature": "INDEPENDENT_TECHNICAL_AND_PIPELINE_REVIEW",
+          "scope": "技术与数据管线复核；明确不代表全池原文核验"
+        }
+      ],
+      "note": "S00 交付件，S00 验收针对此文件。下游自 S02 起未使用。禁止用于任何复算或交叉校验取值，仅作历史快照。"
+    }
+  ],
+  "intermediate_versions": [
+    {
+      "path": "runs/issues/S02/remediation_20261029/collect_q3_2026/s00_v7.csv",
+      "rows": 229393,
+      "sha256": "c5ef89d1f58fd714165952ddc2bfb4c9d590730e9336c8388cab88b86583c479",
+      "role": "remediation 阶段产物（含 1,007 份重述原文核验的标记回填）",
+      "status": "HISTORY_ONLY"
+    },
+    {
+      "path": "runs/issues/S02/m07_repair_20261030/s00_v8.csv.gz",
+      "rows": 229616,
+      "role": "M07 扣非修复（v8，被 v9 取代）",
+      "status": "HISTORY_ONLY"
+    },
+    {
+      "path": "runs/issues/S02/m07_repair_20261030/s00_v9.csv.gz",
+      "rows": 229666,
+      "sha256": "8c27f5fbcd9be1ba85bbb94f5face713540b127bb7b95f511b276f937e6f9a73",
+      "role": "M07 中文版 H1 扣非修复（v10 的直接来源）",
+      "status": "HISTORY_ONLY"
+    }
+  ],
+  "lineage": [
+    "A (S00 交付件, 228,155)",
+    "→ v7 (remediation + 重述核验回填, 229,393)",
+    "→ v9 (M07 扣非补行, 229,666)",
+    "→ B = v10 (杭叉重述比较值采用, 229,667)"
+  ],
+  "errata": {
+    "directory": "runs/issues/S00/errata_20261111/",
+    "summary": "runs/issues/S00/errata_20261111/summary.json",
+    "scope": "A 与 B 的全部差异：值 240 格、键 2,056、元数据 17,728 行，逐条给出依据与处置",
+    "unresolved_total": 5700,
+    "unresolved_breakdown": {
+      "value": 28,
+      "key": 374,
+      "meta": 5298
+    }
+  },
+  "consumption_rule": {
+    "text": "消费者启动时必须核对「实际输入哈希 = 输入契约哈希 = 上游有效验收记录绑定的交付哈希」，并检查验收范围允许本次用途；任一不符立即失败，不回退读取其他版本。",
+    "proposed_by": "Codex 顾问裁决 2026-11-11（runs/issues/S04/codex_ruling_s00_split.md）",
+    "implemented": false,
+    "current_gap": "S04 脚本仅校验前两项，尚未追到验收范围"
+  },
+  "pending": [
+    "S00 限定范围勘误验收（覆盖 5,700 条未解决差异）",
+    "规则 v3 universe.source 仍指向 A，须以有记录的元数据勘误修正",
+    "S04 第二轮外部复核"
+  ]
+}

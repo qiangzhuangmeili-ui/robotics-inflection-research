@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-11-11T15:40:00+08:00",
+  "scope": "A(runs/issues/S00/financial_normalized.csv) vs B(s00_v10)",
+  "nature": "SELF_CHECK",
+  "versions": {
+    "A": {
+      "path": "runs\\issues\\S00\\financial_normalized.csv",
+      "rows": 228155,
+      "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6"
+    },
+    "v7": {
+      "path": "runs\\issues\\S02\\remediation_20261029\\collect_q3_2026\\s00_v7.csv",
+      "rows": 229393,
+      "sha256": "c5ef89d1f58fd714165952ddc2bfb4c9d590730e9336c8388cab88b86583c479"
+    },
+    "v9": {
+      "path": "runs\\issues\\S02\\m07_repair_20261030\\s00_v9.csv.gz",
+      "rows": 229666,
+      "sha256": "8c27f5fbcd9be1ba85bbb94f5face713540b127bb7b95f511b276f937e6f9a73"
+    },
+    "B": {
+      "path": "runs\\issues\\S02\\hangcha_restated_20261101\\s00_v10\\s00_v10.csv.gz",
+      "rows": 229667,
+      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+    }
+  },
+  "value_diff": {
+    "total": 240,
+    "by_step": {
+      "A_to_v7": 217,
+      "v9_to_v10": 21,
+      "unknown": 2
+    },
+    "by_bucket": {
+      "量级差异": 154,
+      "小幅差异": 53,
+      "中间倍数": 33
+    },
+    "sign_flip": 89,
+    "by_resolution": {
+      "RESOLVED_NORMALIZED_DELTA": 191,
+      "UNRESOLVED_NO_EVIDENCE": 28,
+      "RESOLVED_RESTATED_ADOPTION": 21
+    },
+    "companies": 37
+  },
+  "key_diff": {
+    "total": 2056,
+    "by_step": {
+      "A_to_v7": 1786,
+      "v7_to_v9": 269,
+      "v9_to_v10": 1
+    },
+    "by_side": {
+      "ONLY_B": 1784,
+      "ONLY_A": 272
+    },
+    "by_resolution": {
+      "RESOLVED_NORMALIZED_DELTA": 1412,
+      "UNRESOLVED_NO_EVIDENCE": 374,
+      "RESOLVED_M07_NPDEDT_OVERRIDE": 228,
+      "RESOLVED_M07_REPAIR": 41,
+      "RESOLVED_RESTATED_ADOPTION": 1
+    },
+    "companies": 141
+  },
+  "meta_diff": {
+    "total": 17728,
+    "by_field": {
+      "restatement_flag": 17009,
+      "status": 555,
+      "document_id": 83,
+      "pit_status": 48,
+      "consolidation_scope": 33
+    },
+    "by_resolution": {
+      "RESOLVED_RESTATEMENT_VERIFY": 11461,
+      "UNRESOLVED_NO_EVIDENCE": 5298,
+      "RESOLVED_NORMALIZED_DELTA": 494,
+      "RESOLVED_RESTATEMENT_VERIFY_WEAK": 475
+    },
+    "companies": 392
+  },
+  "downstream": {
+    "companies_with_diff": 419,
+    "by_s04_status": {
+      "IN_TIGHT_OBSERVE": 244,
+      "IN_TIGHT_PASS": 175
+    },
+    "by_verdict": {
+      "OBSERVE_WITH_UNRESOLVED_DEPS": 165,
+      "IN_LIST_WITH_UNRESOLVED_DEPS": 131,
+      "CLEAN_ALL_RESOLVED": 123
+    }
+  },
+  "restatement_apply_summary": {
+    "NEEDS_REVIEW->否": 17266,
+    "NEEDS_REVIEW->是": 9
+  },
+  "known_gaps": [
+    "26 格值差异与 374 个键增删在 normalized_delta 中无记录，标 UNRESOLVED",
+    "5,073 行重述标记变化不在 results.csv 覆盖范围内，标 UNRESOLVED",
+    "ASSUMED_NO_PENDING_REVIEW 方法属假设非实证，单列 WEAK"
+  ]
+}
