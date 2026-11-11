@@ -1,0 +1,118 @@
+{
+  "purpose": "核验表的 period_key 是否可作为匹配键",
+  "source": "runs/issues/S02/remediation_20261029/restatement_verify/results.csv",
+  "registry": "runs/collection/collection_index.csv",
+  "total_records": 1007,
+  "counts": {
+    "MISMATCH": 321,
+    "MATCH": 685,
+    "NOT_IN_REGISTRY": 1
+  },
+  "mismatch_pattern": {
+    "FY2025->20251231(记作20250630)": 320,
+    "FY2025->20251231(记作20250930)": 1
+  },
+  "conclusion": "321 条把 FY2025 年报登记为 period_key=20250630；period_key 不是文档自身期间，不能作为匹配键，只能按 document_id 匹配",
+  "samples": [
+    {
+      "security_id": "SH:688248",
+      "document_id": "DOC-01140151955D939E",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "IMPORTANT_MATTER_NA"
+    },
+    {
+      "security_id": "SH:688686",
+      "document_id": "DOC-0204985A6FCAAEE9",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "IMPORTANT_MATTER_NA"
+    },
+    {
+      "security_id": "SH:603809",
+      "document_id": "DOC-03707F357139EFA4",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "IMPORTANT_MATTER_NA"
+    },
+    {
+      "security_id": "SH:600081",
+      "document_id": "DOC-03A2BE111A1A723A",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "IMPORTANT_MATTER_NA"
+    },
+    {
+      "security_id": "SH:603501",
+      "document_id": "DOC-03D5A74AE29CF379",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "ASSUMED_NO_PENDING_REVIEW"
+    },
+    {
+      "security_id": "SH:688396",
+      "document_id": "DOC-03E8956EBEF6B824",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "NOTE_RETAINED_ERRATA_ZERO"
+    },
+    {
+      "security_id": "SH:600835",
+      "document_id": "DOC-043CA73E9B9D4F6E",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "IMPORTANT_MATTER_NA"
+    },
+    {
+      "security_id": "SH:688515",
+      "document_id": "DOC-04415C569433DFCE",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "IMPORTANT_MATTER_NA"
+    },
+    {
+      "security_id": "SH:600936",
+      "document_id": "DOC-05EECEBBBF9C9320",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "是",
+      "method": "MANUAL_EVIDENCE"
+    },
+    {
+      "security_id": "SH:688028",
+      "document_id": "DOC-064AEF09AFE0518D",
+      "document_period": "FY2025",
+      "document_type": "ANNUAL_REPORT",
+      "expected_period_key": "20251231",
+      "recorded_period_key": "20250630",
+      "verdict": "否",
+      "method": "IMPORTANT_MATTER_NA"
+    }
+  ]
+}
