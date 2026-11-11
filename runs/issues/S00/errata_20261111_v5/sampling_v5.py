@@ -95,7 +95,7 @@ def locate_in_doc(sec, doc, evidence, near=None):
         pdf = p
         break
     if pdf is None:
-        return "PDF_MISSING", 0, ""
+        return "PDF_MISSING", 0, "", "", 0
     try:
         import pymupdf
         d = pymupdf.open(str(pdf))
@@ -103,12 +103,12 @@ def locate_in_doc(sec, doc, evidence, near=None):
         pages = [norm(d[i].get_text()) for i in range(d.page_count)]
         d.close()
     except Exception as e:
-        return "READ_ERROR:%s" % e, 0, ""
+        return "READ_ERROR:%s" % e, 0, "", "", 0
     if not ev:
-        return "NO_EVIDENCE_TEXT", 0, ""
+        return "NO_EVIDENCE_TEXT", 0, "", "", 0
     # 判据改为「最长连续原文片段」：证据常是多页文字拼接，按整段命中率算会把
     # 真实逐字命中误判成弱定位。任一片段 ≥20 字逐字出现在某页即视为已定位。
-    best_page, best_len, best_txt = 0, 0, ""
+    best_page, best_len, best_txt, best_frag = 0, 0, "", ""
     for w in (60, 40, 30, 20):
         if len(ev) < w:
             continue
@@ -119,10 +119,13 @@ def locate_in_doc(sec, doc, evidence, near=None):
                 if t and frag in t:
                     if w > best_len:
                         best_page, best_len, best_txt = pi + 1, w, t[:120]
+                        best_frag = frag
         if best_len >= 20:
             break
     if best_len >= 20:
-        return ("LOCATED(p.%d)" % best_page), round(min(1.0, best_len / max(20, len(ev))), 3), best_txt
+        # 第八轮 F 项：只交付「命中的原文片段」本身，措辞不得称整段逐字一致
+        return ("LOCATED(p.%d)" % best_page), round(min(1.0, best_len / max(20, len(ev))), 3), \
+            best_txt, best_frag, best_page
     # 退而求其次：12 字窗命中率
     wins = [ev[i:i + 12] for i in range(0, max(1, len(ev) - 11), 6)]
     best, best_n = 0, 0
@@ -133,8 +136,9 @@ def locate_in_doc(sec, doc, evidence, near=None):
         if n > best_n:
             best, best_n = pi + 1, n
     if best_n <= 0:
-        return "NOT_FOUND_IN_DOC", 0, ""
-    return ("WEAK_LOCATE(p.%d)" % best), round(best_n / max(1, len(wins)), 3), pages[best - 1][:120]
+        return "NOT_FOUND_IN_DOC", 0, "", "", 0
+    return ("WEAK_LOCATE(p.%d)" % best), round(best_n / max(1, len(wins)), 3), \
+        pages[best - 1][:120], "", best
 
 
 
@@ -267,10 +271,16 @@ def add_sample(risk, why, r, extra_cols=None, meta_row=None):
         "evidence_head": norm((rec or {}).get("evidence", ""))[:100],
         "located_conclusion": "",
         "locate_status": "",
+        "located_page": "", "located_fragment": "",
         "parent_p1": "", "parent_p2": "",
         "parent_p1_doc": "", "parent_p2_doc": "",
+        "parent_p1_value": "", "parent_p2_value": "",
+        "parent_p1_status": "", "parent_p2_status": "",
         "parent_scope_unit_cur": "", "parent_doc_verdict": "",
         "parent_compatible": "",
+        "parent_p1_locate": "", "parent_p2_locate": "",
+        "parent_p1_fragment": "", "parent_p2_fragment": "",
+        "parent_orig_verified": "",
     }
     if extra_cols:
         row.update(extra_cols)
@@ -337,18 +347,74 @@ for r in pick(lambda x: x["resolution"] == "PENDING_CONFIRMED_EVENT_FIELD_OPEN",
     add_sample("R5_CAUSE_AFFIRMED",
                "B=是 且事件已由证据确认，但来源维度（分季度表/比较列/父输入）尚未核", r)
 
+def locate_amount_in_doc(sec, doc, value):
+    """按金额在原件中定位父数所在物理页（父输入文档常不在 1,007 份核验清单内）。
+
+    返回 (status, page, fragment)。只认千分位格式化后的完整金额串，
+    避免把 1,234.56 命中 11,234.56 这类子串误判。
+    """
+    try:
+        amt = "{:,.2f}".format(float(value))
+    except (TypeError, ValueError):
+        return "NO_AMOUNT", 0, ""
+    code = sec.split(":")[1]
+    pdf = None
+    for p in (ORIG / code).rglob(doc + ".pdf"):
+        pdf = p
+        break
+    if pdf is None:
+        return "PDF_MISSING", 0, ""
+    try:
+        import pymupdf
+        d = pymupdf.open(str(pdf))
+        pages = [norm(d[i].get_text()) for i in range(d.page_count)]
+        d.close()
+    except Exception as e:
+        return "READ_ERROR:%s" % e, 0, ""
+    for pi, t in enumerate(pages):
+        if t and amt in t:
+            i = t.index(amt)
+            return "LOCATED_AMOUNT(p.%d)" % (pi + 1), pi + 1, t[max(0, i - 30):i + len(amt) + 10]
+    return "AMOUNT_NOT_FOUND", 0, ""
+
+
 def parent_detail(sec, fld, pk):
-    """交付两个父输入各自的核证结论，而不只是「存在跨文档」这一事实。"""
+    """交付两个父输入各自的核证结论，而不只是「存在跨文档」这一事实。
+
+    第八轮 C 项：同文档/双否都不能自动证明兼容，必须定位两个实际累计父数，
+    并证明它们采用一致的调整、期间和报表口径。故逐个父输入给出
+    取值、取值状态、原件定位结论与命中片段。
+    """
     if fld not in es.SIMPLE_SQ or es.is_q1(pk):
         return {}
     ytd = fld[:-3] + ".YTD"
     k1, k2 = (sec, ytd, pk), (sec, ytd, prev_quarter(pk))
     r1, r2 = D10.get(k1, {}), D10.get(k2, {})
     d1, d2 = r1.get("document_id", ""), r2.get("document_id", "")
+
+    def _loc(doc, val):
+        if not doc:
+            return "NO_DOCUMENT", ""
+        ev = (vrec.get(doc) or {}).get("evidence", "")
+        if ev:
+            st, _ratio, _ex, frag, _pno = locate_in_doc(sec, doc, ev)
+            return st, frag
+        # 该文档不在核验清单内：退到「按金额定位父数所在页」
+        st, _pno, frag = locate_amount_in_doc(sec, doc, val)
+        return st, frag
+
+    s1, f1 = _loc(d1, r1.get("value_cny", ""))
+    s2, f2 = _loc(d2, r2.get("value_cny", ""))
+    ok1 = s1.startswith("LOCATED")
+    ok2 = s2.startswith("LOCATED")
     return {
         "parent_p1": "%s@%s" % (ytd, pk),
         "parent_p2": "%s@%s" % (ytd, prev_quarter(pk)),
         "parent_p1_doc": d1, "parent_p2_doc": d2,
+        "parent_p1_value": r1.get("value_cny", ""),
+        "parent_p2_value": r2.get("value_cny", ""),
+        "parent_p1_status": r1.get("status", ""),
+        "parent_p2_status": r2.get("status", ""),
         "parent_scope_unit_cur": "%s/%s/%s | %s/%s/%s" % (
             r1.get("consolidation_scope", ""), r1.get("unit_scale", ""), r1.get("currency", ""),
             r2.get("consolidation_scope", ""), r2.get("unit_scale", ""), r2.get("currency", "")),
@@ -356,6 +422,10 @@ def parent_detail(sec, fld, pk):
             (vrec.get(d1) or {}).get("verdict", "NA"), (vrec.get(d2) or {}).get("verdict", "NA")),
         "parent_compatible": {True: "YES", False: "NO", None: "NA"}[
             _pc((sec, fld, pk))],
+        "parent_p1_locate": s1, "parent_p2_locate": s2,
+        "parent_p1_fragment": f1, "parent_p2_fragment": f2,
+        "parent_orig_verified": ("BOTH" if ok1 and ok2 else
+                                 "ONE" if ok1 or ok2 else "NONE"),
     }
 
 
@@ -387,15 +457,38 @@ def _pc(k):
 
 
 # R6 跨文档父输入（第七轮 C 项：必须交付两父输入各自的核证结论）
-for r in pick(lambda x: x["status_B"] in ("DERIVED_CUMULATIVE_DIFF",
-                                          "DERIVED_QUARTERLY_SUM_OVERRIDE")
-              and cross_doc_parent(x["security_id"], x["field_id"], x["period_key"]) is not None
-              and cross_doc_parent(x["security_id"], x["field_id"], x["period_key"])[0], 3):
+# 第八轮 C 项：同文档/双否不能自动证明兼容，须定位两个实际累计父数。
+# 抽样优先取「两父输入在原件中都能定位」的样本，定位不到就如实记 NONE/ONE。
+def _r6_pred(x):
+    if x["status_B"] not in ("DERIVED_CUMULATIVE_DIFF", "DERIVED_QUARTERLY_SUM_OVERRIDE"):
+        return False
+    y = cross_doc_parent(x["security_id"], x["field_id"], x["period_key"])
+    return y is not None and y[0]
+
+
+_r6_pool, _r6_seen = [], set()
+for r in meta:
+    if not _r6_pred(r):
+        continue
+    if r["security_id"] in _r6_seen:
+        continue
+    _r6_seen.add(r["security_id"])
+    _r6_pool.append(r)
+    if len(_r6_pool) >= 14:
+        break
+_r6_scored = []
+for r in _r6_pool:
+    d = parent_detail(r["security_id"], r["field_id"], r["period_key"])
+    rank = {"BOTH": 0, "ONE": 1, "NONE": 2}.get(d.get("parent_orig_verified"), 3)
+    _r6_scored.append((rank, r, d))
+_r6_scored.sort(key=lambda z: z[0])
+for _rank, r, d in _r6_scored[:3]:
     x = cross_doc_parent(r["security_id"], r["field_id"], r["period_key"])
     add_sample("R6_CROSS_DOC_PARENT",
-               "单季由两期累计相减得到，两父输入来自不同文档（%s / %s），"
-               "须核文档/版本/合并范围/单位兼容" % (x[1][:16], x[2][:16]), r,
-               extra_cols=parent_detail(r["security_id"], r["field_id"], r["period_key"]))
+               "单季由两期累计相减得到，两父输入来自不同文档（%s / %s）；"
+               "须逐个定位实际累计父数并核文档/版本/合并范围/单位兼容（原件定位=%s）"
+               % (x[1][:16], x[2][:16], d.get("parent_orig_verified", "NA")), r,
+               extra_cols=d)
 
 # R6 假设方法
 for r in pick(lambda x: x["resolution"] == "PENDING_WEAK_ASSUMPTION", 2):
@@ -453,9 +546,12 @@ for s in _partial[:10]:
     k = (s["security_id"], s["field_id"], s["period_key"])
     doc = D10.get(k, {}).get("document_id", "")
     rec = vrec.get(doc) or {}
-    st, ratio, excerpt = locate_in_doc(s["security_id"], doc, rec.get("evidence", ""))
+    st, ratio, excerpt, frag, pno = locate_in_doc(
+        s["security_id"], doc, rec.get("evidence", ""))
     if st.startswith("LOCATED"):
-        concl, ls = "VERBATIM_ORIGINAL", "VERIFIED"
+        # 第八轮 F 项：20 字片段命中 ≠ 整段逐字准确，措辞必须如实
+        concl, ls = ("ORIGINAL_FRAGMENT_LOCATED：%d 字连续片段已在 p.%d 逐字命中；"
+                     "仅证明该片段出自原件，不等于整段证据逐字无误" % (len(frag), pno)), "VERIFIED"
     elif st.startswith("WEAK_LOCATE"):
         concl, ls = ("SUMMARY_NOTE_NOT_VERBATIM：证据为核验者汇总注，全文最佳匹配页仅部分命中，"
                      "不能作为字段级原文证据"), "WEAK"
@@ -463,9 +559,9 @@ for s in _partial[:10]:
         concl, ls = "NOT_FOUND：原件全文未检索到证据文本（不等于原件中不存在）", "NOT_LOCATED"
     else:
         concl, ls = "LOCATE_ERROR：%s" % st, "NOT_LOCATED"
-    _r7_cand.append((ls, s, st, ratio, excerpt, concl))
+    _r7_cand.append((ls, s, st, ratio, excerpt, concl, frag, pno))
 _r7_cand.sort(key=lambda x: {"VERIFIED": 0, "WEAK": 1, "NOT_LOCATED": 2}[x[0]])
-for ls, s, st, ratio, excerpt, concl in _r7_cand[:3]:
+for ls, s, st, ratio, excerpt, concl, frag, pno in _r7_cand[:3]:
     row = dict(s)
     row["sample_id"] = "S%02d" % (len(samples) + 1)
     row["risk_type"] = "R7_PARTIAL_LOCATED"
@@ -474,6 +570,8 @@ for ls, s, st, ratio, excerpt, concl in _r7_cand[:3]:
     row["page_reread"] = st
     row["page_match_ratio"] = ratio
     row["page_excerpt"] = excerpt
+    row["located_page"] = pno
+    row["located_fragment"] = frag
     row["located_conclusion"] = concl
     row["locate_status"] = ls
     samples.append(row)
@@ -500,6 +598,9 @@ summary = {
         "不同重述原因": any(k.startswith("R5") for k in risk_cnt),
         "肯定发生（极性非「提及即排除」）": any(k == "R5_CAUSE_AFFIRMED" for k in risk_cnt),
         "跨文档父输入": any(k.startswith("R6_CROSS_DOC") for k in risk_cnt),
+        "两父输入原件均已定位": any(x["risk_type"].startswith("R6_")
+                                    and x.get("parent_orig_verified") == "BOTH"
+                                    for x in samples),
         "PARTIAL 原文定位": any(k.startswith("R7_PARTIAL") for k in risk_cnt),
         "原文定位已核（VERIFIED）": sum(1 for x in samples
                                        if x["risk_type"].startswith("R7_")

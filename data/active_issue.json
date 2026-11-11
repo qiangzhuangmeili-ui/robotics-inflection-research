@@ -4,8 +4,8 @@
  "active_issue_key": "S00_ERRATA_REVIEW",
  "executor": "WorkBuddy AI",
  "started_at": "2026-11-11 22:10:00 +08:00",
- "status": "S00_ERRATA_V5_SELF_CHECK_V7_PASS_AWAITING_RECHECK_8",
- "claim_note": "S00 勘误 V5（自检 V7，39/39 PASS）：按 Codex 第七轮裁决修三处实现缺陷——必需范围改期间∪来源并集（非自身期间 1,240 行不再丢来源维度）、极性重写（勾选符号识别/否定就近绑定/冲突单列/事件与影响分离/标签行不判极性）、父输入兼容性撤销四条捷径并让 Q1 按单父输入处理（PENDING_PARENT_COMPATIBILITY 5→1,277）。自检 C24 分类锁定+审查绑定、C28 集合相等、C14 裁决文件 sha 绑定。重述差异待处置 8,294；全表核心未闭合 9,098、含补充 10,603；全池 44 HOLD / 231 待核证 / 378 无关联；受限表 407 行 / 401 个唯一 ID。第 4–5 步未做，S04 第二轮与 S05 不放行",
+ "status": "S00_ERRATA_V5_SELF_CHECK_V8_PASS_AWAITING_RECHECK_9",
+ "claim_note": "S00 勘误 V5（自检 V8，40/40 PASS）：按 Codex 第八轮裁决修 8 处——①极性按版面整体求解（三协电机 DOC-E2BDEAB4F6274B6E p.135 的「□会计政策变更 √会计差错更正 □其他原因 □不适用」此前被判 excluded=ERRATA，该文档 15 条重述差异全部误解除，现全部转 UNRESOLVED_EVIDENCE_CONTRADICTS 并登记 evidence_conflicts.csv）；②千分位逗号不再切断分句（此前 -160,517.06元 被切成两段，*ST九鼎/派斯林 8 条事件确认丢失）；③勾选组主语跨标题不再误绑；④父输入兼容性只认 parent_verifications.csv，同文档与上游「双否」两条自动判据全部撤销（YES 4→0，PENDING_PARENT_COMPATIBILITY 1,277 全部待核）；⑤C24 改绑外部审查登记表 content_reviews.csv（完整键含 period_key+终值+引文可定位）；⑥C14 须回读裁决文件核对原文片段与行号（写 x 不再通过）；⑦R6 交付两父输入各自的取值/状态/原件定位/命中片段（3 条样本两父均可定位）；⑧R7 措辞改「原文片段已定位」并保存命中片段。另新增 C38：比较范围/季度表来源只能由 scope_verifications.csv 覆盖，撤去后退回待核。重述差异待处置 8,309；全表核心未闭合 9,113、含补充 10,618；全池 44 HOLD / 231 待核证 / 378 无关联；受限表 407 行。第 4–5 步未做，S04 第二轮与 S05 不放行",
  "last_completed": {
   "issue_key": "S04",
   "issue_number": 39,
@@ -416,8 +416,8 @@
   "executor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-12T04:40:00+08:00",
-  "trigger": "Codex 第七轮复核 RETURN_FOR_REWORK：required_scope 非自身期间分支直接 return，覆盖掉来源维度；极性三个反例仍误放行（勾选未识别实际取值、否定广播到全句、肯定否定冲突未判）；parent_compatible 四条捷径（同文档、同 version_used、任一父键在采用审计、空口径相等）；C24 可改标展示绕过、C28 两处同删仍通过、C14 只查字符串 verdict；R6 未交付两父输入结论、R7 弱定位算通过",
+  "reviewed_at": "2026-11-12T10:20:00+08:00",
+  "trigger": "Codex 第八轮复核 RETURN_FOR_REWORK：三协电机真实误放行（选项组被逐符号混判成 conflict，15 条重述差异误解除）、极性五反例（同句肯定否定/无重大影响/勾选与叙述冲突/后置符号/零值非零混排）、父输入「同文档」「上游双否」不能自动证明兼容、C24 审查记录可伪造且缺 period_key、C14 占位解释仍通过、R6 未交付两父原文核证、R7 措辞称整段逐字、verify 把所有跨文档同版本兼容都判成捷径",
   "authoritative_input": {
    "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
    "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
@@ -434,11 +434,11 @@
    "meta_core": 17728,
    "meta_extra_cells": 1505,
    "resolved": 10926,
-   "unresolved_core": 9098,
-   "unresolved_with_extra": 10603,
+   "unresolved_core": 9113,
+   "unresolved_with_extra": 10618,
    "value_unresolved": 34,
    "key_unresolved": 405,
-   "meta_unresolved": 8659,
+   "meta_unresolved": 8674,
    "extra_unresolved": 1505,
    "pending_scope_limited_method": 6373,
    "pending_scope_limited_own_period": 5270,
@@ -448,7 +448,7 @@
    "doc_not_in_list": 26,
    "field_not_in_record": 116,
    "record_is_remove": 8,
-   "evidence_contradicts": 0,
+   "evidence_contradicts": 15,
    "resolved_by_ruling": 1,
    "sign_flip": 89,
    "resolved_restatement_confirmed": 0,
@@ -456,16 +456,16 @@
    "pending_confirmed_event_field_open": 8,
    "pending_confirmed_unsupported": 1,
    "evidence_mismatch": 4,
-   "resolved_scope_covered": 8714,
+   "resolved_scope_covered": 8699,
    "comparative_period_rows": 1240,
-   "parent_compatible_yes": 4,
-   "parent_compatible_no": 3675,
-   "dispute_unique_ids": 10603,
-   "restatement_pending": 8294,
+   "parent_compatible_yes": 0,
+   "parent_compatible_no": 3768,
+   "dispute_unique_ids": 17728,
+   "restatement_pending": 8309,
    "pending_weak_assumption": 515,
    "comparative_pending": 1239,
    "comparative_ruled": 1,
-   "parent_compatible_na": 13330
+   "parent_compatible_na": 13960
   },
   "key_change_vs_v2": "重述核验改按 document_id 匹配（tools/s00_restatement_apply.py 第36/46行只按文档应用，1,007 文档 1:1）；元数据判据改为字段精确+操作语义+终值相等",
   "downstream": {
@@ -477,19 +477,20 @@
    "r1_no_link": 378,
    "restricted_claim_rows": 407,
    "restricted_unique_disputes": 401,
-   "dispute_ledger": 10603,
-   "restatement_groups": 87
+   "dispute_ledger": 17728,
+   "restatement_groups": 89
   },
-  "checks": "39/39 PASS（新增 C36 必需范围并集、C37 父输入兼容性撤销捷径；C34 扩为九反例；C24 分类由 meta_classes.py 锁定并绑定 content_review_ref；C28 从源表重建预期引用集合做集合相等；C14 须绑定裁决文件 sha+键+冲突解释；C31 要求 R7 至少 1 条 VERIFIED）",
+  "checks": "40/40 PASS（新增 C38 来源维度结构化核证；C37 改为「撤去真实兼容依据后必须变 NO」的注入链；C34 扩为 17 条反例，含第八轮裁决表五条原文用例与三协电机真实版面；C24 改绑外部审查登记表；C14 须回读裁决原文行）",
   "reproducible": true,
   "limits": [
-   "未回读全部 PDF（抽验 37 条，覆盖 1,007 份核验文档中的 20 份）",
-   "9,927 条 NOTE_TRACE_NA 已解决项未做方法适用性复审（630 份文档）",
+   "未回读全部 PDF（抽验 37 行 / 27 个键，覆盖 1,007 份核验文档中的 20 份）",
+   "9,954 条 NOTE_TRACE_NA 已解决项未做方法适用性复审（631 份文档，已解除 8,655 条 / 630 份）",
    "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79，42 份文档）未逐条回读原注",
    "1,505 格补充元数据仅登记字段级核验要求，未逐项核完",
    "未覆盖锚定期回退与上游准入的间接依赖",
-   "第 4 步批量核证、第 5 步重算分层未做；43/231/378 均未锁定",
+   "第 4 步批量核证、第 5 步重算分层未做；44/231/378 均未锁定",
    "C26/C29 与生产同源，属同源重算，不能替代独立方法验证",
+   "三协电机 15 条仅登记为证据冲突，上游 results.csv 的 verdict 尚未修正（属 S02 动作）",
    "不给出最终未闭合数；自检不等同独立验收"
   ],
   "report": "runs/issues/S00/errata_20261111_v5/REPORT.md",
@@ -521,11 +522,11 @@
    "risk_types": 20,
    "unique_keys": 27,
    "page_reread": {
-    "MATCH": 17,
-    "PARTIAL": 6,
+    "MATCH": 19,
+    "PARTIAL": 5,
     "LOCATED": 2,
     "WEAK_LOCATE": 1,
-    "NO_PAGE_RECORDED": 5,
+    "NO_PAGE_RECORDED": 4,
     "NOT_APPLICABLE_EXTRA_FIELD": 6
    },
    "r7_locate_status": {
@@ -537,12 +538,20 @@
     "R7 locate_status",
     "R2 含待核实例"
    ],
-   "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据未定位到，属上游核验记录异常，未放行"
+   "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据未定位到，属上游核验记录异常，未放行",
+   "parent_orig_verified": {
+    "BOTH": 3
+   },
+   "new_in_round8": [
+    "R6 两父输入取值/状态/原件定位/命中片段",
+    "R7 located_page + located_fragment",
+    "evidence_conflicts.csv 传播范围"
+   ]
   },
   "self_check": {
-   "checks": 39,
-   "pass": 39,
-   "version": "V7",
+   "checks": 40,
+   "pass": 40,
+   "version": "V8",
    "fault_injection_v1": {
     "C13": 6,
     "C14": 11936,
@@ -558,10 +567,34 @@
     "cause_affirmed": "UNRESOLVED_EVIDENCE_CONTRADICTS",
     "parent_incompatible": "PENDING_PARENT_COMPATIBILITY"
    },
+   "c14_injections": {
+    "placeholder_basis": true,
+    "wrong_ruling_line": true
+   },
    "c24_injections": {
     "no_review": true,
     "misclassified_as_display": true,
-    "unbound_review": true
+    "unbound_digest": true,
+    "digest_only_no_register": true,
+    "wrong_period_key": true,
+    "quote_not_located": true
+   },
+   "c37_injection_chain": {
+    "with_record": true,
+    "no_record": true,
+    "wrong_conclusion": true,
+    "value_mismatch": true,
+    "quote_not_located": true,
+    "empty_scope": true,
+    "no_reviewer": true,
+    "p2_quote_missing": true
+   },
+   "c38_injection": {
+    "without_record": "PENDING_SOURCE_PROVENANCE",
+    "with_record": "covered",
+    "rejected_wrong_conclusion": true,
+    "rejected_unlocatable_quote": true,
+    "rejected_no_reviewer": true
    }
   },
   "not_done": [
@@ -569,14 +602,13 @@
    "第 5 步重算风险分层及受限表再报"
   ],
   "open_questions_for_codex": [
-   "Q1/0331 行豁免 PARENT_COMPATIBILITY 是否正确",
-   "同文档是否足以证明两期口径一致（若否，全部累计差分将停待核）",
-   "跨文档「双否即兼容」依赖上游 verdict，是否构成循环",
+   "上游 results.csv 对 DOC-E2BDEAB4F6274B6E 的 verdict=否 与原文相反，修正动作归 S02 还是 S00 勘误",
+   "累计差分「正常同口径相减」的充分依据，除两父原文核证外是否还接受别的证据形式",
    "PENDING_EVENT_CONFIRMED_SCOPE_LIMITED 这个中间态是否必要",
    "第 4 步：文档级核证能否作为组内字段级解除的必要条件（非充分条件）",
    "是否放行 S04 第二轮与 S05"
   ],
-  "self_check_version": "V7",
-  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round8.md"
+  "self_check_version": "V8",
+  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round9.md"
  }
 }

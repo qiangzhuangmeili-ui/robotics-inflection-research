@@ -1,0 +1,45 @@
+你是这个仓库（A 股机器人产业链「行业拐点」研究流水线）的独立复核方。上一轮（第八轮）你裁定 S00 勘误 V5 退回返工，指出：
+
+A. 并集（必需范围）通过。
+B. 极性仍不通过，且有**真实台账误放行**：三协电机 `BJ:920100`、文档 `DOC-E2BDEAB4F6274B6E`、原 PDF 第 135 页的 `□会计政策变更 √会计差错更正 □其他原因 □不适用` 被输出 `excluded=ERRATA`，该文档供给的 15 条重述差异全部为 `RESOLVED_SCOPE_COVERED`；上游 `results.csv` 的 `verdict=否` 也须登记为证据冲突并核查传播范围。另有五条内存反例未过（同句肯定否定、`无重大影响`、勾选与叙述冲突、后置符号布局、零值与非零值混排）。
+C. 父输入兼容性重开有效，但**同文档不能自动证明兼容**、**上游「双否」不能直接证明兼容**；`verify_v5.py:1057–1061` 不能把所有「跨文档、同版本且兼容」都判成捷径，应测试撤去真实兼容依据后是否仍通过。Q1 单父输入裁定正确。正常同口径相减不要求两期调整额相等。
+D. 事件确认修复基本通过。
+E. 自检仍可绕过：**C24 正确算法引用仍可伪造审查**（摘要公开可算，且遗漏 `period_key`），应关联真实审查记录、核对完整键、终值、原文依据和审查结论；**C14 占位解释仍通过**（`basis` 与 `conflict_explanation` 都写 `"x"` 仍过），应补结构化裁决条目或明确段落定位，**不重开大豪科技既有裁决**。
+F. R6 未交付两父输入原文核证；R7「20 字片段命中」不等于整段逐字准确，`VERBATIM_ORIGINAL` 措辞须改。
+G/H. 文本仍有旧数（去重键 27→25、`NOTE_TRACE_NA` 9,927→9,954 条/631 份、V6→V7、分层数字应引 44/231/378、`active_issue.json:8`「撤销四条捷径」表述）。
+
+执行方已按此返工。请做第九轮复核。
+
+必读：
+1. `runs/issues/S00/errata_20261111_v5/report_to_codex_round9.md` —— 本轮汇报，含五个待裁定问题
+2. `runs/issues/S00/errata_20261111_v5/REPORT.md`、`handoff.md`
+3. `runs/issues/S00/errata_20261111_v5/evidence_scope.py` —— 判据唯一实现（`option_group` / `_solve_layout` / `analyse` / `required_scope` / `judge(scope_ok=…)`）
+4. `runs/issues/S00/errata_20261111_v5/polarity_cases.py` —— 17 条极性反例的唯一来源
+5. `runs/issues/S00/errata_20261111_v5/parent_verify.py` —— 父输入兼容性与来源维度核证判据
+6. `runs/issues/S00/errata_20261111_v5/build_errata_v5.py`、`check_l2_v5.py`、`sampling_v5.py`、`verify_v5.py`（40 项自检）
+7. `runs/issues/S00/errata_20261111_v5/evidence_conflicts.csv`、`content_reviews.csv`、`parent_verifications.csv`、`scope_verifications.csv` —— 四张登记表（后三张当前为空）
+8. `runs/issues/S00/errata_20261111_v5/summary.json`、`l2_dependency_summary.json`、`sampling_v5.json`、`review.json`、`manifest.json`、`rulings_resolved.json`
+9. `runs/issues/S00/errata_20261111_v5/meta_diff.csv`、`extra_meta_diff.csv`、`dispute_ledger.csv`、`restricted_claims.csv`、`l2_dependency_check.csv`、`sampling_v5.csv`
+10. `runs/issues/S00/errata_20261111_v5/_codex_out_round8.txt`（你上一轮的裁决原文）
+
+请重点核实：
+
+A. **三协电机 15 条是否真的重开且处置正确**。`option_group()` 现在改为「两种版面各解一遍、按自洽性择一」。请复算：`□会计政策变更 √会计差错更正 □其他原因 □不适用` 是否输出 `excluded=POLICY_CHANGE|affirmed=ERRATA`？`DOC-E2BDEAB4F6274B6E` 的 15 条是否全部为 `UNRESOLVED_EVIDENCE_CONTRADICTS`？`evidence_conflicts.csv` 的传播范围是否与 `meta_diff` / `cell_diff` / `key_diff` / `extra_meta_diff` / `restricted_claims` 实算一致？是否还有别处仍按旧解除结果放行？
+
+B. **极性 17 条反例**。C34 直接消费 `polarity_cases.py`。请用你自己的反例再打一遍，特别关注：三选项以上的选项组、符号与标签之间夹空格或换行、同一文档多处勾选组、`√` 与 `☑`/`■`/`●` 混用、以及「零值 + 非零值 + 无原因词」三种混排。
+
+C. **父输入兼容性是否还有任何自动放行**。现在只有两道门：口径三元组非空且一致 + `parent_verifications.csv` 登记记录（两父终值、两父引文可定位、结论、审查人、日期）。请复算：`parent_compatible` 是否还有 `True` 的实例？`PENDING_PARENT_COMPATIBILITY=1,277` 与你的 1,272 是否仍一致？`parent_basis` 列的分布能否解释每一行的 NO？C37 的注入链（8 环）是否真的覆盖了「撤去依据」？
+
+D. **C24 / C14 是否仍可伪造**。C24 现要求 `content_reviews.csv` 命中完整键（含 `period_key`）+ 终值 + 引文在原文可定位；C14 现要求 `ruling_quote` 逐字出现在裁决文件且 `ruling_line` 指向该行，`basis`/`conflict_explanation` 各 ≥40 字且含识别信息。请再试：伪造一条引文恰好是原文子串、把 `reviewer` 填成任意字符串、给裁决条目换一个同样长度的行号、把 `ruling_quote` 换成裁决文件里另一处的通用句。
+
+E. **C38 是否真的挡住了来源维度**。`judge(scope_ok=…)` 现在只接受登记表供给的 `COMPARATIVE_SCOPE` / `QUARTERLY_TABLE_PROVENANCE`。请确认：撤去登记后是否退回 `PENDING_SOURCE_PROVENANCE`？47 条待核是否一条未动？有没有别的路径能让这两个维度不经登记就被覆盖？
+
+F. **抽验是否达标**。37 行 / 20 类 / 去重 27 键（第七轮为 25，因 R6 池改为「两父均可定位」而换样——这个换样是否可接受？）。R6 三条 `parent_orig_verified=BOTH`，其中父2 是「按金额定位」而非按证据文本定位，这是否足以称为「原文核证」？R7 现写 `ORIGINAL_FRAGMENT_LOCATED` 并保存命中片段，措辞是否已如实？
+
+G. **故障注入**。V1：C13 6 / C14 11,936 / C17 12,076；V4 映射后：C26 7,714 / C14 6,602 / 受限方法自身期间 5,270；V5 自身四项 0；C37 八环、C38、C24 六种、C14 两种注入是否都如汇报所述。
+
+H. **文本是否彻底同步**。`handoff.md`、`REPORT.md`、`report_to_codex_round9.md`、`data/active_issue.json`、`manifest.json` 是否还有旧数或旧表述残留？去重键 27、`NOTE_TRACE_NA` 9,954/631、44/231/378、自检 V8、`round8_fixes` 是否都已一致？
+
+请给出：第九轮裁决（通过 / 有条件通过 / 退回返工）、需要修正的具体项（带文件行号或键）、对第 4 步批量核证粒度的裁定（9,954 条 `NOTE_TRACE_NA` / 642 条零值注记 / 89 组）、以及是否放行 S04 第二轮与 S05。
+
+注意：本轮只读。不要修改仓库、不要提交、不要操作 GitHub。

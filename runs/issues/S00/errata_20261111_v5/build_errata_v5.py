@@ -25,6 +25,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 import evidence_scope as es
+import parent_verify as pv
 import meta_classes as mc
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -118,6 +119,13 @@ with open(P_VERIFY, encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
         vrec[r["document_id"]] = r
 
+# 父输入兼容性核证登记表（唯一 YES 来源）
+PARENT_VERIFS = pv.load(OUT / "parent_verifications.csv")
+print("父输入核证登记项:", len(PARENT_VERIFS))
+# 来源维度核证登记表（比较范围 / 季度表来源）：judge 的结构化核证入口
+SCOPE_VERIFS = pv.load_scope(OUT / "scope_verifications.csv")
+print("来源维度核证登记项:", len(SCOPE_VERIFS))
+
 adopt = {}
 with open(P_ADOPT, encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):
@@ -136,6 +144,16 @@ if P_RULED.exists():
     _d = json.loads(P_RULED.read_text(encoding="utf-8"))
     RULED = {e["key"]: e for e in _d.get("entries", [])}
     print("已裁决解除项:", len(RULED))
+
+# 内容审查登记表：放行补充元数据差异必须有真实审查记录（第八轮 E 项）
+P_REVIEWS = OUT / "content_reviews.csv"
+REVIEWS = {}
+if P_REVIEWS.exists():
+    with open(P_REVIEWS, encoding="utf-8-sig", newline="") as f:
+        for _r in csv.DictReader(f):
+            REVIEWS[(_r["security_id"], _r["field_id"], _r["period_key"],
+                     _r["meta_field"])] = _r
+    print("内容审查登记项:", len(REVIEWS))
 
 v9sum = json.loads(P_V9SUM.read_text(encoding="utf-8"))
 v9_added = {(x["security_id"], x["field_id"], x["period_key"])
@@ -171,7 +189,8 @@ def _parent_basis(kp):
             "scope": (r.get("consolidation_scope") or "").strip(),
             "unit": (r.get("unit_scale") or "").strip(),
             "cur": (r.get("currency") or "").strip(),
-            "ver": (r.get("version_used") or "").strip()}
+            "ver": (r.get("version_used") or "").strip(),
+            "val": (r.get("value_cny") or "").strip()}
 
 
 def _doc_verdict(doc):
@@ -179,19 +198,14 @@ def _doc_verdict(doc):
 
 
 def parent_compatible(k):
-    """累计差分行的两个累计父输入是否同一调整口径。
+    """父输入兼容性：**只认核证登记表**（第八轮 C 项）。
 
-    第七轮 C 项：V6 的四条捷径全部撤销——
-      · 文档相同 不证明调整额相同（保留：同文档至少证明同一口径，见下）；
-      · `version_used` 同为 ORIGINAL 不证明同一调整版本（撤销该分支）；
-      · 任一父键在采用审计中 不证明另一父键兼容（撤销该分支）；
-      · 空的范围/币种/单位字段相等 不作为「已确认一致」（改为必须非空）。
-
-    保留并新增的判据：
-      · 合并范围/单位/币种三者必须**非空且一致**；
-      · 同文档 → 同一报告口径，兼容；
-      · 跨文档 → 只有「两份文档都判定未被重述」或「两个父键都已采用同一修订文档」才兼容；
-      · 其余一律不兼容（停待核，不豁免）。
+    Codex 第八轮否掉两条自动判据：同文档不能自动证明兼容（同一报告可能含
+    调整前后列或混合来源）；上游「双否」不能直接证明兼容（三协电机已证明
+    verdict 可能与原文相反，只能作待核线索）。因此本函数只剩两道门：
+      1. 口径三元组（合并范围/单位/币种）必须非空且一致——必要条件；
+      2. parent_verifications.csv 给出两个实际累计父数、原文引文与审查结论
+         ——充分条件。登记表为空时，全部累计差分停在待核。
     """
     sec, fld, pk = k
     if fld not in es.SIMPLE_SQ:
@@ -206,19 +220,26 @@ def parent_compatible(k):
     for f in ("scope", "unit", "cur"):
         if not b1[f] or b1[f] != b2[f]:
             return False
-    if b1["doc"] and b1["doc"] == b2["doc"]:
-        return True
-    # 跨文档：两份文档都未被重述 → 同为原始口径，差分有效
-    if _doc_verdict(b1["doc"]) == "否" and _doc_verdict(b2["doc"]) == "否":
-        return True
-    # 或两个父键都已采用同一份修订后文档
-    a1, a2 = adopt.get(k1), adopt.get(k2)
-    if a1 and a2:
-        d1 = (a1.get("document_id_after") or "").strip()
-        d2 = (a2.get("document_id_after") or "").strip()
-        if d1 and d1 == d2:
-            return True
-    return False
+    return pv.gap(PARENT_VERIFS.get(k), b1["val"], b2["val"],
+                  lambda d: (vrec.get(d) or {}).get("evidence", "")) is None
+
+
+def parent_gap(k):
+    """兼容性判定依据，写入台账供逐条追溯。"""
+    sec, fld, pk = k
+    if fld not in es.SIMPLE_SQ or es.is_q1(pk):
+        return "NA"
+    ytd = fld[:-3] + ".YTD"
+    k1, k2 = (sec, ytd, pk), (sec, ytd, prev_quarter(pk))
+    b1, b2 = _parent_basis(k1), _parent_basis(k2)
+    if not b1 or not b2:
+        return "PARENT_MISSING"
+    for f in ("scope", "unit", "cur"):
+        if not b1[f] or b1[f] != b2[f]:
+            return "SCOPE_UNIT_CURRENCY_MISMATCH"
+    g = pv.gap(PARENT_VERIFS.get(k), b1["val"], b2["val"],
+               lambda d: (vrec.get(d) or {}).get("evidence", ""))
+    return "VERIFIED" if g is None else g
 
 
 # ---------- 1. 值差异 ----------
@@ -368,11 +389,13 @@ for fld in META_FIELDS:
             rk = "%s|%s|%s" % (k[0], k[1], k[2])
             status_b = b.get("status", "")
             pok = parent_compatible(k)
+            _sok = pv.scope_dims(SCOPE_VERIFS, k,
+                                 lambda d: (vrec.get(d) or {}).get("evidence", ""))
             # 判据：证据实际覆盖该行断言。document_period 与 row_period 分开传，
             # 由 evidence_scope 内部判定 is_own，不再用字符串真值。
             if rk in RULED:
                 r = es.judge(rec, doc, status_b, own, k[2], ruled=RULED[rk],
-                             bval=bval, parent_ok=pok)
+                             bval=bval, parent_ok=pok, scope_ok=_sok)
             elif rec is not None and rec["verdict"] != bval and (rec.get("method") or "") != "NOTE_RETAINED_ERRATA_NONZERO":
                 # 判定与 B 相反：先登记该行按来源应有的必需范围，处置停在未闭合。
                 _req = es.required_scope(status_b, own, k[2])
@@ -384,7 +407,8 @@ for fld in META_FIELDS:
                      "evidence_note": ("文档判定=%s 但 B=%s（doc=%s）；须先判旧判据范围是否不足，"
                                        "不能直接认定 B 错" % (rec["verdict"], bval, doc[:20]))}
             else:
-                r = es.judge(rec, doc, status_b, own, k[2], bval=bval, parent_ok=pok)
+                r = es.judge(rec, doc, status_b, own, k[2], bval=bval,
+                             parent_ok=pok, scope_ok=_sok)
             resolution = r["resolution"]
             scope_req, scope_cov = r["scope_required"], r["scope_covered"]
             scope_mis, evidence = r["scope_missing"], r["evidence_note"]
@@ -428,6 +452,7 @@ for fld in META_FIELDS:
             "parent_compatible": {True: "YES", False: "NO", None: "NA"}[parent_compatible(k)],
             "polarity": polarity,
             "evidence_group": grp,
+            "parent_basis": parent_gap(k) if fld == "restatement_flag" else "",
             "scope_required": scope_req, "scope_covered": scope_cov,
             "scope_missing": scope_mis,
             "value_A": a.get(fld, ""), "value_B": bval,
@@ -439,6 +464,45 @@ with open(OUT / "meta_diff.csv", "w", encoding="utf-8-sig", newline="") as f:
     w.writeheader()
     w.writerows(rows_meta)
 print("meta_diff.csv: %d 行" % len(rows_meta))
+
+# ---------- 3b. 上游判定与原文极性相冲突的登记（第八轮 B 项）----------
+# 裁决要求：不能只改分析器而保留旧解除结果。凡 results.csv 的 verdict 与原文
+# 极性相反，逐行登记为证据冲突，并给出该文档在 B 中的传播范围。
+_conf_docs = {r["document_id"] for r in rows_meta
+              if r["resolution"] == "UNRESOLVED_EVIDENCE_CONTRADICTS"}
+_prop = Counter()
+for _r in rows_meta:
+    if _r["document_id"] in _conf_docs:
+        _prop[_r["document_id"]] += 1
+rows_conf = []
+for r in rows_meta:
+    if r["document_id"] not in _conf_docs:
+        continue
+    rec = vrec.get(r["document_id"]) or {}
+    rows_conf.append({
+        "document_id": r["document_id"],
+        "security_id": r["security_id"], "stock_name": r["stock_name"],
+        "period_key": r["period_key"], "field_id": r["field_id"],
+        "value_B": r["value_B"],
+        "upstream_verdict": rec.get("verdict", ""),
+        "upstream_method": rec.get("method", ""),
+        "source_page": rec.get("page", ""),
+        "original_polarity": r["polarity"],
+        "scope_required": r["scope_required"],
+        "rows_in_document": _prop[r["document_id"]],
+        "propagation_scope": "该文档在 B 中供给 %d 个元数据槽，全部转证据冲突"
+                             % _prop[r["document_id"]],
+        "resolution": "UNRESOLVED_EVIDENCE_CONTRADICTS",
+        "required_action": "回读原页确认勾选后修正上游 verdict；修正前不得按 否 解除",
+    })
+if rows_conf:
+    with open(OUT / "evidence_conflicts.csv", "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows_conf[0].keys()), lineterminator="\n")
+        w.writeheader()
+        w.writerows(rows_conf)
+    print("evidence_conflicts.csv: %d 行 / %d 份文档" % (len(rows_conf), len(_conf_docs)))
+else:
+    print("evidence_conflicts.csv: 0 行")
 
 # ---------- 4. 其余 19 列元数据差异 ----------
 rows_extra = []
@@ -471,7 +535,9 @@ for fld in [c for c in all_cols if c not in covered]:
             "document_changed": ("YES" if (DA[k].get("document_id") or "") != (D10[k].get("document_id") or "") else "NO"),
             "period_source_changed": ("YES" if (DA[k].get("period_source") or "") != (D10[k].get("period_source") or "") else "NO"),
             "resolution": resolution, "evidence": evidence,
-            "content_review": "", "content_review_ref": "",
+            "content_review": (REVIEWS.get((k[0], k[1], k[2], fld), {}).get("conclusion") or ""),
+            "content_review_ref": ("|".join([k[0], k[1], k[2], fld])
+                                   if (k[0], k[1], k[2], fld) in REVIEWS else ""),
         })
 
 with open(OUT / "extra_meta_diff.csv", "w", encoding="utf-8-sig", newline="") as f:

@@ -40,7 +40,9 @@ _CAUSE_RE = {ERRATA: _RE_ERRATA, MERGER_RETRO: _RE_MERGER, POLICY_CHANGE: _RE_PO
 # 否定：按「就近绑定」处理，不再整句广播。裸「无」也纳入，但绑定半径收紧到 8 字，
 # 避免「无商誉减值……本期发生差错更正」这类跨主题误绑（误绑方向是待核，不会误放行）。
 _NEG_TOKENS = ["不适用", "未发生", "未采用", "未涉及", "不存在", "未进行",
-               "无需", "没有发生", "无重大", "无前期", "均无", "未", "无"]
+               "无需", "没有发生", "无前期", "均无", "未", "无"]
+# 「无重大影响」「无实质性影响」是在说重要性，不是在说没发生，不能当否定
+_RE_MATERIALITY = re.compile(r"^(重大影响|实质性影响|影响|重大)")
 _NEG_SHORT = {"未", "无"}
 _NEG_RADIUS = 14
 _NEG_RADIUS_SHORT = 8
@@ -87,7 +89,9 @@ QUARTERLY_TABLE_STATUS = "EXTRACTED_QUARTERLY_TABLE"
 def is_q1(row_period):
     return (row_period or "")[4:] == "0331"
 
-_CLAUSE_SPLIT = re.compile(r"[；;。\n]")
+# 分句：全角逗号一律切；半角逗号只在不是千分位时切
+# （`-160,517.06元` 曾被切成两段，8 条事件确认因此丢失）
+_CLAUSE_SPLIT = re.compile(r"[；;。，\n]|(?<!\d),(?!\d)")
 # 勾选式取值：□/√/☑ + 适用/不适用/是/否
 _RE_CHECKBOX_PAIR = re.compile(r"([□√☑■✔●○])\s*(不适用|适用|是|否)")
 _CHECKED_MARKS = set("√☑■✔●")
@@ -159,7 +163,14 @@ def _mask(clause):
     return "".join(out)
 
 
-def _pos_positions(clause):
+def _pos_positions(clause, negs=(), spans=()):
+    """肯定谓词位置。
+
+    除「前一字是否定字」外，还要处理跨词否定：`本期未发生采用追溯重述法的
+    前期会计差错更正事项` 里的「采用」被「未发生」管辖，不能算肯定——否则与
+    否定撞成假冲突（第八轮 618 条误冲突的根因）。判据：该肯定之前存在否定词，
+    且否定词与该肯定之间没有再出现别的原因词（出现则说明否定只管前半句）。
+    """
     out = []
     for tok in _POS_TOKENS:
         for m in re.finditer(re.escape(tok), clause):
@@ -167,101 +178,219 @@ def _pos_positions(clause):
             # 「未发生」「没有发生」「不存在」里的「发生/存在」不算肯定
             if st > 0 and clause[st - 1] in _POS_SUPPRESS:
                 continue
+            if any(ne <= st and not any(ns < cs < st for cs, _ce, _c in spans)
+                   for ns, ne, _t in negs):
+                continue
             out.append((st, m.end()))
     return out
 
 
-def analyse(rec):
-    """按分句 + 就近绑定判极性。
+# 小节标题：`（二）`/`一、`/`2、`/`注1：` 等，用来判「勾选组的主语是否换了」
+_RE_HEADING = re.compile(r"^(?:[（(][一二三四五六七八九十]+[）)]|"
+                         r"[一二三四五六七八九十]+、|\d+\s*[、.．]|"
+                         r"注\s*\d+\s*[、.：:]?)")
 
-    返回 Polarity(excluded, affirmed, scoped, mentioned, conflict)：
-    - excluded：该原因被明确排除（否定词就近绑到它）
-    - affirmed：该原因被确认发生（肯定词或非零金额）
-    - scoped：只对特定权益项目给出金额，不能证明本字段受影响
-    - mentioned：仅出现原因词
-    - conflict：同一原因同时被肯定与否定（必须待核，不得解除）
+
+_OPT_LABELS = [
+    ("不适用", "NA"), ("适用", "YES"), ("是", "YES"), ("否", "NA"),
+    ("会计政策变更", "POLICY_CHANGE"), ("会计差错更正", "ERRATA"),
+    ("前期差错更正", "ERRATA"), ("差错更正", "ERRATA"),
+    ("其他原因", "OTHER"), ("同一控制下企业合并", "MERGER_RETRO"),
+    ("合并范围变更", "MERGER_RETRO"), ("未来适用法", "FUTURE"),
+    ("追溯重述法", "RETRO"),
+]
+_MARK_CHARS = "\u25a1\u221a\u2611\u25a0\u2714\u25cf\u25cb"
+_RE_MARK = re.compile(r"[%s]" % _MARK_CHARS)
+CANON = {ERRATA: "ERRATA", MERGER_RETRO: "MERGER_RETRO", POLICY_CHANGE: "POLICY_CHANGE"}
+
+
+def _label_at(text, at_start):
+    """在 text 的开头/结尾匹配一个选项标签，返回 (canon, 长度)。"""
+    best = None
+    for lab, canon in _OPT_LABELS:
+        if at_start:
+            if text.startswith(lab) and (best is None or len(lab) > best[1]):
+                best = (canon, len(lab))
+        else:
+            if text.endswith(lab) and (best is None or len(lab) > best[1]):
+                best = (canon, len(lab))
+    return best
+
+
+def _solve_layout(clause, marks, layout):
+    """按单一版面假设解出每个符号的取值。
+
+    layout="after"：符号在标签前（`√适用 □不适用`），取符号右侧的标签；
+    layout="before"：符号在标签后（`适用√ 不适用□`），取符号左侧的标签。
+    选中侧无标签时回退到另一侧（混排版面）；两侧都无标签、或解出的标签重复
+    （同一选项被两个符号认领）时，该版面假设不成立，返回 None。
+    """
+    out = []
+    for m in marks:
+        before = clause[:m.start()].rstrip()
+        after = clause[m.end():].lstrip()
+        primary, fallback = ((after, True), (before, False)) if layout == "after" \
+            else ((before, False), (after, True))
+        lab = _label_at(primary[0], at_start=primary[1])
+        if lab is None:
+            lab = _label_at(fallback[0], at_start=fallback[1])
+        if lab is None:
+            return None
+        out.append((m.group(0) in _CHECKED_MARKS, lab[0]))
+    labels = [x[1] for x in out]
+    if len(set(labels)) != len(labels):
+        return None
+    return out
+
+
+def option_group(clause):
+    """解析勾选式选项组，返回 (checked, unchecked, ambiguous)。
+
+    必须按符号位置判实际取值：`□适用√不适用` 与 `√适用□不适用` 文字完全相同。
+    两种版面都要支持——符号在标签前（常见）与符号在标签后（`适用√不适用□`）。
+
+    第八轮返工：V7 逐符号同时看左右两侧，把「左侧是上一个选项」当成歧义，
+    于是任何正常选项行（`□会计政策变更 √会计差错更正 □其他原因 □不适用`）
+    都判成 conflict，三协电机 15 条重述差异被误放行。现改为**版面整体求解**：
+    两种版面各自解一遍，取能自洽（标签互不重复）的那一种；两种都自洽且结论
+    不同才算真歧义。
+    """
+    marks = list(_RE_MARK.finditer(clause))
+    if not marks:
+        return set(), set(), False
+    sol_after = _solve_layout(clause, marks, "after")
+    sol_before = _solve_layout(clause, marks, "before")
+    if sol_after is not None and sol_before is not None and sol_after != sol_before:
+        return set(), set(), True
+    chosen = sol_after if sol_after is not None else sol_before
+    if chosen is None:
+        return set(), set(), True
+    checked = {lab for chk, lab in chosen if chk}
+    unchecked = {lab for chk, lab in chosen if not chk}
+    return checked, unchecked, False
+
+
+def _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c):
+    """金额句绑定：优先本句原因，其次承接上一分句的原因（主语延续）。"""
+    zero = bool(_RE_ZERO.search(c))
+    nonzero = bool(_RE_AMOUNT.search(c)) and not zero
+    if not (zero or nonzero):
+        return
+    pos = c.find("元")
+    tgt = _nearest(spans, pos, limit=_AMOUNT_RADIUS) if spans else None
+    targets = {tgt} if tgt else (set(prev_causes) if prev_causes else set())
+    if not targets:
+        return
+    has_item = bool(_RE_SCOPED_ITEM.search(c))
+    for t in targets:
+        if has_item:
+            scoped.add(t)
+            if nonzero and t not in neg_c and t not in excluded:
+                affirmed.add(t)
+        elif nonzero and t not in neg_c and t not in excluded:
+            affirmed.add(t)
+
+
+def analyse(rec):
+    """按分句 + 选项组 + 就近绑定判极性。
+
+    第七轮、第八轮两次返工的要点：
+    - 勾选式选项组按符号判取值，支持「符号在前」与「符号在后」两种版面；歧义时记冲突。
+    - 勾选结果只作用于本选项组，不能广播到整句后跳过其余叙述（三协电机误放行的根因）。
+    - 「无重大影响」是重要性表述，不是否定。
+    - 金额句在无原因词时承接上一分句的原因，避免「影响0.00元，对净资产影响100.00元」丢失非零事件。
     """
     txt = (rec.get("evidence") or "") if isinstance(rec, dict) else str(rec or "")
     excluded, affirmed, scoped, mentioned = set(), set(), set(), set()
     cls = _clauses(txt)
+    prev_causes = set()
 
-    for idx, raw in enumerate(cls):
+    for raw in cls:
         c = raw.strip()
         spans = _cause_spans(c)
-        if not spans:
-            continue
         causes = {s[2] for s in spans}
-        mentioned |= causes
+        if causes:
+            mentioned |= causes
 
-        # 1) 同句勾选：先看符号定实际取值（`√适用□不适用` 与 `□适用√不适用` 文字相同）
-        val = checkbox_value(c)
-        if val is not None:
-            if val in ("不适用", "否"):
-                excluded |= causes
+        # 0) 选项组：符号决定取值，且只作用于本组原因
+        chk, unchk, ambig = option_group(c)
+        if chk or unchk or ambig:
+            # 勾选行常与原因标题分行（`前期差错更正\n√适用□不适用`）：
+            # 本句无原因词时承接上一分句的主语，不能因「本句没提原因」而丢弃勾选结果。
+            tgt = causes or prev_causes
+            if ambig:
+                for cs in tgt:
+                    excluded.add(cs)
+                    affirmed.add(cs)
             else:
-                affirmed |= causes
+                explicit = {CANON[cs] for cs in tgt}
+                for cs in tgt:
+                    lab = CANON[cs]
+                    if lab in chk:
+                        affirmed.add(cs)
+                    elif lab in unchk:
+                        excluded.add(cs)
+                # 组内只有「适用/不适用」而无具体原因标签：作用到本组主语
+                if "YES" in chk and not (explicit & chk):
+                    for cs in tgt:
+                        if CANON[cs] not in unchk:
+                            affirmed.add(cs)
+                if "NA" in chk:
+                    for cs in tgt:
+                        if CANON[cs] not in chk:
+                            excluded.add(cs)
+            if causes:
+                _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, set())
+                prev_causes = causes
             continue
 
-        # 2) 勾选式版面：短标签句 + 下一句纯取值。
-        #    必须先于「肯定词绑定」，否则「追溯重述法」这个标签词本身会被当成肯定。
-        if len(c) <= 40 and not _RE_AMOUNT.search(c) and idx + 1 < len(cls):
-            nxt = cls[idx + 1].strip()
-            nv = checkbox_value(nxt) if (len(nxt) <= 16 and not _cause_spans(nxt)) else None
-            if nv is not None:
-                if nv in ("不适用", "否"):
-                    excluded |= causes
-                else:
-                    affirmed |= causes
+        if not causes:
+            # 标题行：主语换到别的话题（`（四）审批程序及其他说明`），
+            # 后续勾选组不得再绑到上一个差错更正标题上。
+            if _RE_HEADING.match(c):
+                prev_causes = set()
                 continue
-
-        # 3) 纯标签行（如「追溯重述法」小标题）不断言任何事，只记提及。
-        #    否则标签里的「追溯重述」会被当成肯定，与下一句「未发生」构成假冲突。
-        if _RE_LABEL.match(c):
+            # 主语承接：本句无原因词，但带金额 → 绑到上一分句的原因
+            if prev_causes:
+                _bind_amount(c, [], prev_causes, scoped, affirmed, excluded, set())
             continue
 
-        # 4) 否定就近绑定：每个否定词只作用于离它最近的那一个原因。
-        #    单原因分句直接绑——长句「本期未发生采用未来适用法的前期会计差错更正事项」
-        #    的否定词离原因词 15 字，按半径会漏掉，反而把「采用」当肯定。
-        #    先遮罩专有名词——「期初未分配利润」里的「未」不是否定词。
+        # 纯标签行（小标题）不断言
+        if _RE_LABEL.match(c):
+            prev_causes = causes
+            continue
+
         scan = _mask(c)
         single = len(causes) == 1
         only = next(iter(causes))
+        negs = _neg_positions(scan)
         neg_c = set()
-        for st, en, tok in _neg_positions(scan):
+        for st, en, tok in negs:
+            if tok in _NEG_SHORT and _RE_MATERIALITY.match(scan[en:en + 6]):
+                continue
             if single:
                 neg_c.add(only)
-                break
+                continue
             radius = _NEG_RADIUS_SHORT if tok in _NEG_SHORT else _NEG_RADIUS
             tgt = _nearest(spans, st if st else en, limit=radius)
             if tgt:
                 neg_c.add(tgt)
 
-        # 5) 肯定就近绑定（同一分句内已被否定的原因不再肯定）
         pos_c = set()
-        for st, en in _pos_positions(scan):
-            if single:
-                tgt = only
-            else:
-                tgt = _nearest(spans, st, limit=_NEG_RADIUS)
-            if tgt and tgt not in neg_c:
+        for st, en in _pos_positions(scan, negs, spans):
+            tgt = only if single else _nearest(spans, st, limit=_NEG_RADIUS)
+            if tgt:
                 pos_c.add(tgt)
 
-        excluded |= neg_c
-        affirmed |= pos_c
+        if single and neg_c and pos_c:
+            excluded.add(only)
+            affirmed.add(only)
+        else:
+            excluded |= neg_c
+            affirmed |= pos_c
 
-        # 5) 金额：非零确认事件；权益项目金额同时记「影响仅限该项目」
-        zero = bool(_RE_ZERO.search(c))
-        nonzero = bool(_RE_AMOUNT.search(c)) and not zero
-        if (zero or nonzero) and _RE_SCOPED_ITEM.search(c):
-            tgt = _nearest(spans, c.find("元"), limit=_AMOUNT_RADIUS)
-            if tgt:
-                scoped.add(tgt)
-                if nonzero and tgt not in neg_c:
-                    affirmed.add(tgt)
-        elif nonzero:
-            tgt = _nearest(spans, c.find("元"), limit=_AMOUNT_RADIUS)
-            if tgt and tgt not in neg_c:
-                affirmed.add(tgt)
+        _bind_amount(c, spans, prev_causes, scoped, affirmed, excluded, neg_c)
+        prev_causes = causes
 
     conflict = excluded & affirmed
     return Polarity(excluded, affirmed, scoped, mentioned, conflict)
@@ -334,8 +463,13 @@ def source_dims_for(status, document_period, row_period):
 
 
 def judge(rec, doc, status, document_period, row_period, ruled=None, bval="",
-          parent_ok=None):
-    """返回 dict：resolution / scope_required / scope_covered / scope_missing / evidence_note / polarity。"""
+          parent_ok=None, scope_ok=None):
+    """返回 dict：resolution / scope_required / scope_covered / scope_missing / evidence_note / polarity。
+
+    `scope_ok`：该行已取得结构化核证记录的来源维度集合（比较范围 / 季度表来源）。
+    第八轮 C 项：这些维度不能靠「文档里提到过」自动覆盖，只能由核证登记表供给；
+    未传或为空即视为未核，仍留在 scope_missing。
+    """
     def out(res, req=(), cov=(), mis=(), note="", pol="", lvl=""):
         return {"resolution": res,
                 "scope_level": lvl,
@@ -362,6 +496,8 @@ def judge(rec, doc, status, document_period, row_period, ruled=None, bval="",
     covered = set(p.excluded)
     if PARENT_COMPATIBILITY in req and parent_ok is True:
         covered.add(PARENT_COMPATIBILITY)
+    if scope_ok:
+        covered |= (set(scope_ok) & set(SOURCE_DIMS)) & req
     missing = req - covered
     level = "FIELD" if binds_field(rec) else "SECTION"
     pol = polarity_str(p)
