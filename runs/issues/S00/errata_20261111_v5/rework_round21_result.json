@@ -1,0 +1,216 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V19",
+  "round": 22,
+  "nature": "REWORK_RESULT",
+  "answers_ruling": "runs/issues/S00/errata_20261111_v5/_codex_out_round21.txt",
+  "ruling_verdict": "RETURN_FOR_REWORK",
+  "ruling_scope_note": "本裁决不认定 64 条登记全部错误，272 条事件证据保留；暂不放行批次 C。",
+  "reworked_at": "2026-11-12T23:59:00+08:00",
+  "comparison_baselines": {
+    "round20": "4ac102d",
+    "round21": "b4738b2",
+    "note": "上一份汇报把 HEAD 当成上轮（HEAD 已是本轮提交），裁决指出后本轮两处都写明 SHA。"
+  },
+  "scope_discipline": {
+    "changed": "只改判据（列边界归属、同侧语义单向包含、旁证合并前置判据、汇报统计口径）",
+    "not_changed": [
+      "screen_rules_v2.json 未改",
+      "l2_core.py 依赖映射未改",
+      "S02 上游 results.csv 未改",
+      "43/231/378 仍未冻结",
+      "87 条目标键集与 64 条登记键集未改"
+    ]
+  },
+  "items": [
+    {
+      "id": "R1",
+      "requirement": "互补语义不能单独证明属于同一列；合并前用数字列格/相邻列边界检查片段归属；片段分属不同列或无法证明同列时返回歧义／待核；保留真实同列断词正例",
+      "status": "DONE",
+      "root_cause": "上一版 `_compatible()` 只证明「两段语义不冲突」，不能证明「两段属于同一列」。`本报告期` 与右邻列 `（4-6月）` 互补且间隙 4pt，于是被并成一列，生产与旁证都把第一列认成 `本报告期（4-6月）`",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_amount_bounds（新增）",
+          "what": "取「本列金额与同一行左右相邻数字的中点」作列边界；无相邻则 ±inf。无任何拍定阈值"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_header_cells(bounds=)",
+          "what": "合并前比对两段中心是否同侧：(c1<left)!=(c2<left) 或 (c1>right)!=(c2>right) 即不合并"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "column_of_amount_aligned_ex",
+          "what": "把 bounds 传入 _header_cells；不再用整页数字列格切区"
+        }
+      ],
+      "evidence": {
+        "selftest": [
+          "D5 邻列互补片段不得并进本列 PASS st=OK col='本报告期'（上一版 本报告期（4-6月））",
+          "D5 列边界取相邻数字中点 PASS bounds=(-inf, 135.0)"
+        ],
+        "c37": "neighbor_fragment_not_merged = True",
+        "rejected_approach": "整页数字列格（_column_grid）切区：被脚注编号/页码切碎，6 个真实列切成 12 簇，SH:600590/603082/603273/688067 的 p2 由 OK:AGREE 变 OK:DISAGREE（列名削成 年第一季度），已回退"
+      },
+      "open_question": "该反例现在返回 OK + 本报告期，不是 AMBIGUOUS（邻列片段中心落在金额跨度之外）。若要求「同表头行内有被列边界拒掉的片段即整列待核」，请指定。"
+    },
+    {
+      "id": "R2",
+      "requirement": "把「跨文档名称兼容」与「同页实际金额列身份」分开；同侧登记不得增加实际列尚未证明的区间/年份/累计语义；补充信息须绑定该金额所在列；经真实 gap → C41 检验拒绝；说明 Q2 统计对象并逐侧重算",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_no_extra_semantics（新增）",
+          "what": "同侧单向包含：登记的每个「已写」分量，实际列也必须写出；反向（实际更详细）放行"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "gap",
+          "what": "cols_equivalent 通过后追加 PARENT_COLUMN_SEMANTICS_UNPROVEN"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "check_c41",
+          "what": "同位置追加 <SIDE>_COLUMN_SEMANTICS_UNPROVEN"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "_c41_semantics_probe（新增）",
+          "what": "合成引文探针：让开「引文里没有该列名」的前置检查，使唯一可能拦住它的就是「实际列没有这段语义」"
+        }
+      ],
+      "evidence": {
+        "before": "登记 本报告期（1-6月）、实际 本报告期 → 生产取列 OK、gap() None、check_c41 []",
+        "after": "gap() = PARENT_COLUMN_SEMANTICS_UNPROVEN；check_c41 = P1_COLUMN_SEMANTICS_UNPROVEN:本报告期（1-6月）⊄本报告期",
+        "reverse_case": "登记 本报告期、实际 本报告期（1-6月）→ 不报此项（same_side_more_detail_ok = True）",
+        "q2_statistic_correction": {
+          "wrong_object": "上一轮把 p1_column 与 p2_column（两个不同文档）做 _canon_parts 比较，得 43 行；这是跨文档比较，不构成同侧列身份",
+          "codex_object": "裁决按 p1/p2 比较得 63 行不一致 / 32 行等价，对象同样是跨文档",
+          "correct_object": "同侧「登记 vs 实际」：64 条里 _no_extra_semantics 不成立的是 0 条（登记列名就是生产取列的输出）",
+          "conflation_admitted": "上一轮把 _compatible（片段合并，2026年半年度 对 本报告期 = True）当成 cols_equivalent（身份，同一对 = False）的结果；裁决指出后者为 False，正确"
+        }
+      }
+    },
+    {
+      "id": "R3",
+      "requirement": "旁证在横向合并前检查冲突；保留可追溯片段；内部冲突必须报歧义；补横向冲突、纵向冲突及互补正例",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "_merge_header_cells（由 witness 内联抽出）",
+          "what": "合并前过 _compatible + 列边界；返回原始片段 [(x0,x1,[frag...])]"
+        },
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "_hmerge_conflict（新增）",
+          "what": "按原始片段再查一遍内部冲突，兜住将来合并判据被放宽"
+        }
+      ],
+      "evidence": {
+        "before": "2025年半年度 x[100,113] + 2026年半年度 x[114,130] → 旁证 OK，column=2025年半年度2026年半年度",
+        "after": "merged=[(100,113,['2025年半年度']), (114,130,['2026年半年度'])]，两两检查 → AMBIGUOUS",
+        "selftest": [
+          "D5 旁证横向冲突不得并成一格 PASS",
+          "D5 旁证互补片段仍合并 PASS",
+          "D5 旁证跨列片段不得合并 PASS",
+          "D5 旁证纵向两两检查能发现冲突 PASS"
+        ],
+        "real_data": "64/64 WITNESS_OK，两侧全 OK:AGREE"
+      },
+      "disclosed_weakness": "旁证现在直接调用 pv._amount_bounds，与生产共用同一个函数——这会进一步削弱「独立」。裁决已认定旁证与生产共享表头行/指标带假设，本项不辩解。"
+    },
+    {
+      "id": "R4",
+      "requirement": "修正统计与解释：边界诊断侧数、零新增 BLOCKED 的推论、比较基线 SHA、Q2 统计对象、C37 不是四项各自跑完整链",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "report_to_codex_round22.md",
+          "anchor": "§一.4",
+          "what": "边界诊断侧数改为 21 侧（p1=9 / p2=12），并列出 6 个 p2 为「候选页失败、另一页成功」"
+        },
+        {
+          "file": "report_to_codex_round22.md",
+          "anchor": "§一.4(b)",
+          "what": "撤回「零新增 BLOCKED 可推出边界规则没有过度收紧」；引用 SH:600590 第 9 页 NO_HEADER_ROW → TABLE_BOUNDARY_UNPROVEN 属失败原因细化"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C37 描述",
+          "what": "改为「以上新增项共同覆盖生产链，不是每一项都各自单独跑完整链」，并点名四项承担完整链"
+        },
+        {
+          "file": "report_to_codex_round22.md",
+          "anchor": "头部与 §三",
+          "what": "写明比较基线 SHA（4ac102d / b4738b2）；swap_column 的 32 行解释改为「单向缺省」而不是「与区间判据无关」"
+        }
+      ],
+      "evidence": {
+        "boundary_sides_in_23_blocked": {"p1_NOT_FOUND": 6, "p1_OK": 3, "p2_NOT_FOUND": 6, "p2_OK": 6, "total": 21},
+        "boundary_sides_all_rows": 72,
+        "note": "全表还有 26 个 p1 + 25 个 p2 带边界诊断但换页成功，故真实触发面是 72 个侧实例"
+      }
+    }
+  ],
+  "counts_after": {
+    "targets": 87,
+    "evidence_ok": 64,
+    "blocked": 23,
+    "registered": 64,
+    "registered_cols": 27,
+    "witness_ok": "64/64（两侧 OK:AGREE，不一致 0）",
+    "p1": {"OK": 73, "NOT_FOUND": 14},
+    "p2": {"OK": 70, "NOT_FOUND": 17},
+    "meta_diff_open": 8611,
+    "open_total_core": 9050,
+    "open_total_all": 10555,
+    "PENDING_PARENT_COMPATIBILITY": 1214,
+    "RESOLVED_SCOPE_COVERED": 8762,
+    "l2_verdicts": {
+      "HOLD_PENDING_ERRATA": 43,
+      "R2_MAY_CHANGE": 231,
+      "R1_NO_LINK": 378,
+      "NOT_AFFECTED": 321,
+      "STILL_PASSES_WITHOUT": 81
+    }
+  },
+  "zero_change_proof": {
+    "step4_parent_scan.csv": "87 行、键集相同、逐格差异 0",
+    "parent_verifications.csv": "64 行 × 27 列、键集相同、逐格差异 0",
+    "note": "本轮只改判据；新判据在 87 条真实数据上零变化，生效证据只在构造反例与自测里。"
+  },
+  "self_check": {
+    "version": "V19",
+    "checks_pass": 43,
+    "checks_total": 43,
+    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+    "nature": "SELF_CHECK_NOT_ACCEPTANCE",
+    "selftest_column_rules": "50 项 FAIL 0"
+  },
+  "regressions_found_and_fixed": [
+    "整页数字列格切区把真实列切碎（4 条 p2 由 OK:AGREE 变 OK:DISAGREE），已回退为「只取金额那一行」",
+    "_band() 的 def 行被误并 docstring（语法合法但可读性差），已复原",
+    "_c41_semantics_probe 的 stub 签名首版写错（page_of(sec,doc,pg) / col_of_for(sec)->callable），TypeError，已改"
+  ],
+  "still_blocked": {
+    "batch_C_D_E": "未开始（等第 22 轮裁决）",
+    "step5_recompute_strata": "未开始",
+    "S04_round2": "不放行",
+    "S05": "不放行",
+    "freeze_43_231_378": false,
+    "F32_language_dimension": "未修",
+    "bare_RE_POLICY": "未修"
+  },
+  "open_risks": [
+    "列边界只取金额那一行的相邻数字：窄表（该行只有一个数字）退化为 ±inf，等于没有约束",
+    "「邻列片段与本列同处一个表头行」目前只做到「不并入」，没有升级为「整列待核」；若裁决要求后者，需再加一条",
+    "check_c41 侧的同侧语义检查用合成引文探针证明，不是逐行注入（逐行注入会先被 QUOTE_WITHOUT_COLUMN 拦住，证明不了新判据）",
+    "旁证与生产共用 _amount_bounds，独立性进一步下降",
+    "表格边界收紧的覆盖率上限仍未量化：全表 72 个侧实例带边界诊断，其中 51 个换页成功"
+  ]
+}

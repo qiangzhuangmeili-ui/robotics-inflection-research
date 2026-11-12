@@ -1,11 +1,10 @@
-# S00 勘误 V5 交接说明（自检 V18；取列判据收紧与表格边界后，待第 21 轮复核）
+# S00 勘误 V5 交接说明（自检 V19；列边界与同侧语义收紧后，待第 22 轮复核）
 
-> 版本：`ERRATA_V5`，自检 `V18`，43/43 PASS。
-> 复核：Codex 第二十轮 **RETURN_FOR_REWORK**（6 条返工项，不放行批次 C）→ `_codex_out_round20.txt`；
-> 本轮返工结果逐条对照见 `rework_round20_result.json`。
-> 第 4 步批次 B **重验 87 条 → 登记 64 条 / 待核 23 条**，**键集与名单与上一轮逐位相同**
-> （唯一变化 `SH:688800 FIN.OCF.SQ@20251231` 的 p2 `OK`→`NOT_FOUND`，原因 `AMBIGUOUS`，
-> 该行本就 `BLOCKED`）；登记表 64 行 × 27 列，逐格比对**唯一变化字段是 `version_basis`**。
+> 版本：`ERRATA_V5`，自检 `V19`，43/43 PASS。
+> 复核：Codex 第二十一轮 **RETURN_FOR_REWORK**（4 条返工项，暂不放行批次 C）→ `_codex_out_round21.txt`；
+> 本轮返工结果逐条对照见 `rework_round21_result.json`。
+> 第 4 步批次 B **重验 87 条 → 登记 64 条 / 待核 23 条**，与 `b4738b2` **逐格差异 0**
+> （`step4_parent_scan.csv` 87 行、`parent_verifications.csv` 64×27）。
 > **L2 维持 43/231/321/81/378**（`SH:600143` 已在第二十轮脱离 HOLD，见 §0-b）。
 > 第 4 步批次 C–E 与第 5 步未开始；43/231/378 未冻结；S04 第二轮与 S05 不放行。
 > 性质：**SELF_CHECK**。自检通过 ≠ 独立验收通过。
@@ -14,7 +13,26 @@
 > `build_errata_v5.py` → `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`
 > （顺序不能换；旁证必须在登记之前跑，否则等于先登记后补证）。
 
-## 0-a. 第 4 步批次 B：取列判据收紧与表格边界（本轮，V18）
+## 0-a2. 第 4 步批次 B：列边界与同侧语义（本轮，V19）
+
+第二十一轮裁决 4 条，逐条落地：
+
+| 裁决项 | 本轮实现 | 位置 |
+|---|---|---|
+| 1 互补语义≠同列 | `_amount_bounds()` 取「本列金额与**同一行**左右相邻数字的中点」作列边界（无相邻 ±inf，无拍定阈值）；`_header_cells(bounds=)` 合并前比对两段中心是否同侧 | `parent_verify.py:683, 731` |
+| 2 同侧不得增加语义 | `_no_extra_semantics()` 单向包含（登记 ⊆ 实际，反向放行）；`gap()` → `PARENT_COLUMN_SEMANTICS_UNPROVEN`；`check_c41` → `<SIDE>_COLUMN_SEMANTICS_UNPROVEN`；合成引文探针 `_c41_semantics_probe()` | `parent_verify.py:1035, 1105`；`verify_v5.py` |
+| 3 旁证合并前检查冲突 | `_merge_header_cells()` 合并前过 `_compatible` + 列边界并保留原始片段；`_hmerge_conflict()` 按片段复查 | `step4_column_witness.py:103, 152` |
+| 4 修正统计与解释 | 边界侧数 21（p1=9/p2=12）、全表 72；撤回「零新增 BLOCKED ⇒ 未过度收紧」；写明基线 SHA；Q2 改同侧对象（0/64）；C37 改「共同覆盖生产链」 | `report_to_codex_round22.md` |
+
+**结果**：87 / `EVIDENCE_OK` 64 / `BLOCKED` 23 / 登记 64×27 / 旁证 64/64 `WITNESS_OK`（两侧 `OK:AGREE`）；
+与 `b4738b2` **逐格差异 0**；计数 `8611 / 9050 / 10555 / 1214 / 8762`、L2 `43/231/321/81/378` 全部不变。
+自测 **50 项 FAIL 0**；C41 十二类 64/64 + `swap_column` 32/32 + 语义探针命中。
+
+**自己造出来又回退的回归**：先试「整页数字列格切区」，被脚注/页码切碎
+（`SH:603273` 的 p2 页 6 个真实列切成 12 簇），4 条 p2 由 `OK:AGREE` 变 `OK:DISAGREE`；
+回退为「只取金额那一行」后恢复。日志 `_run_wit_r22b.log` / `_run_wit_r22c.log`。
+
+## 0-a. 第 4 步批次 B：取列判据收紧与表格边界（第二十一轮，历史）
 
 第二十轮裁决：**`RETURN_FOR_REWORK`，不放行批次 C**；边界是「不认定 64 条全部错误、
 272 条事件证据保留不重评」。本轮仍然**只改判定方法**，再按新方法把 87 条全部重推。

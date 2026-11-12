@@ -678,9 +678,37 @@ _BAND_PAD_LEFT = 8.0
 _HDR_MERGE_GAP = 50.0          # 表头跨行合并的最大行距（pt）
 _CELL_WORD_GAP = 6.0           # 同一表头单元格内相邻词的允许间隙（pt）
 _CELL_X_TOL = 3.0              # 跨行表头视为同一列的横向容差（pt）
+_EDGE_TOL = 4.0                # 数字右边界聚类容差（pt）
 
 
-def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP):
+def _amount_bounds(rows, ri, ax0, ax1):
+    """金额所在列的左右边界：与**同一行**左右相邻数字的中点（无相邻则 ±inf）。
+
+    第二十一轮裁决 1 的根因：`_compatible()` 只能证明「两段语义互补」，不能证明
+    「两段属于同一列」。短表头 `本报告期` 与右邻列 `（4-6月）` 语义互补、间隙
+    只有 4pt，于是被并成一列——生产与旁证都把第一列认成 `本报告期（4-6月）`。
+
+    裁决给的口径是「按**相邻列边界**约束」，并明确否掉「金额宽度 + N pt」这类
+    未校准的阈值。所以这里只用报表最硬的一条几何事实：**同一行的数字是分列的**，
+    取「本列数字与左右相邻数字的中点」作为边界。表头片段中心越界即判为邻列。
+
+    只取金额**那一行**的数字，不取整页列格：整页列格会被脚注编号、页码切碎
+    （实测 6 个真实列被切成 12 个簇），据此切区反而把同列断词判成两列。
+    """
+    lefts, rights = [], []
+    for x0, x1, tx in rows[ri][1]:
+        if _dec(tx) is None:
+            continue
+        if x1 <= ax0 - 0.5:
+            lefts.append(x1)
+        elif x0 >= ax1 + 0.5:
+            rights.append(x0)
+    left = (max(lefts) + ax0) / 2.0 if lefts else float("-inf")
+    right = (min(rights) + ax1) / 2.0 if rights else float("inf")
+    return left, right
+
+
+def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP, bounds=None):
     """把每个表头行的词按横向间隙并成**单元格**：[(y, x0, x1, text)]。
 
     表格里 `2026年` 与 `半年度` 常是两个词，中间只隔 1–2pt；而邻列的两个词
@@ -696,6 +724,10 @@ def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP):
     正确的判据不是「完整不完整」，而是「**有没有互相冲突的维度**」：
     `本报告期`(本期,-,-) 与 `（1-6月）`(-,R0-1-6,累计) 互补，照并；
     `2025年半年度` 与 `2026年半年度` 区间冲突，不并。
+
+    第二十一轮裁决 1：语义互补只是**必要**条件，不是充分条件。给了 `bounds`
+    （`_amount_bounds` 的左右边界）时还要求两段**在同一侧**——`本报告期` 与
+    右邻列的 `（4-6月）` 语义互补、间隙 4pt，但后者的中心已越出本列右边界。
     """
     out = []
     for rj in hdr_rows:
@@ -704,6 +736,12 @@ def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP):
         for x0, x1, tx in sorted(cells, key=lambda c: c[0]):
             joinable = (cur is not None and x0 - cur[1] <= gap
                         and _compatible(cur[2], tx))
+            if joinable and bounds:
+                left, right = bounds
+                c1 = (cur[0] + cur[1]) / 2.0
+                c2 = (x0 + x1) / 2.0
+                if (c1 < left) != (c2 < left) or (c1 > right) != (c2 > right):
+                    joinable = False
             if joinable:
                 cur[1] = max(cur[1], x1)
                 cur[2] += tx
@@ -902,7 +940,10 @@ def column_of_amount_aligned_ex(words, value, label=None, y_tol=4.0, edge_tol=4.
     # 排在前面，归一后就成了「本列 = 2025年半年度」——邻列表头被认成本列。
     # 现在先还原列结构，再按「几个期间列候选」决定：≥2 个一律报歧义。
     lo, hi = ax0 - _BAND_PAD_LEFT, ax1 + edge_tol
-    chains = _chain_cells(_header_cells(rows, hdr_rows))
+    # 第二十一轮裁决 1：用「同一行左右相邻数字的中点」作列边界，
+    # 表头片段中心越界即判为邻列，不得并进本列。
+    bounds = _amount_bounds(rows, ri, ax0, ax1)
+    chains = _chain_cells(_header_cells(rows, hdr_rows, bounds=bounds))
     hit = [c for c in chains if c[1] > lo and c[0] < hi]
     aw = (ax0, ax1, atxt)
     if not hit:
@@ -966,6 +1007,28 @@ def _compatible(a, b):
     pa, pb = _canon_parts(a), _canon_parts(b)
     for x, y in zip(pa, pb):
         if x and y and x != y:
+            return False
+    return True
+
+
+def _no_extra_semantics(registered, actual):
+    """**同侧**列身份：登记名不得断言实际列尚未证明的语义。
+
+    第二十一轮裁决 2：`cols_equivalent()` 对「一侧有分量、另一侧为空」判等价，
+    这条对「跨文档名称兼容」是对的（p1 写 `2026年半年度`、p2 写 `本报告期`
+    本来就是两份文档的不同写法），但对**同一侧**的列身份是漏洞：
+
+        目标金额实际表头 `本报告期`，邻列表头 `本报告期（1-6月）`；
+        把登记列名写成邻列的长名称 → 取列得 `本报告期`、`cols_equivalent` 为真、
+        `gap()` 返回 `None`、`check_c41` 零违例。
+
+    长名称确实在同页连续出现，但属于邻列。所以同侧必须单向：登记的每个
+    「已写」分量，实际列也必须写出来。反向（实际比登记更详细）允许——实际列
+    带了额外写法不影响它是不是同一列。
+    """
+    pr, pa = _canon_parts(registered), _canon_parts(actual)
+    for r, a in zip(pr, pa):
+        if r and not a:
             return False
     return True
 
@@ -1104,6 +1167,10 @@ def gap(ent, expect, evidence_of, col_of=None):
                 return "PARENT_COLUMN_UNRESOLVED"
             if not cols_equivalent(col, actual_col):
                 return "PARENT_COLUMN_MISMATCH"
+            # 第二十一轮裁决 2：等价只证明「可以互认」，不证明「就是这个列」。
+            # 同侧登记不得凭空增加实际列没有的区间/年份/累计语义。
+            if not _no_extra_semantics(col, actual_col):
+                return "PARENT_COLUMN_SEMANTICS_UNPROVEN"
         ver = (ent.get("%s_adjust_version" % side) or "").strip()
         if ver not in ADJUST_VERSIONS:
             return "PARENT_ADJUST_VERSION_INVALID"

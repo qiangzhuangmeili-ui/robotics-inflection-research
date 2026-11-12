@@ -1,0 +1,117 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V19，43/43 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round21.txt（RETURN_FOR_REWORK，4 条返工项）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round22.md（先读这一份）
+本轮逐条对照：runs/issues/S00/errata_20261111_v5/rework_round21_result.json
+
+比较基线（你上轮指出我把 HEAD 当上轮，这次两处都写 SHA）：
+- 第二十轮 = `4ac102d`；第二十一轮 = `b4738b2`；本轮 = 待提交。
+- 与 `b4738b2` 逐格比对：`step4_parent_scan.csv` 87 行、`parent_verifications.csv` 64×27，
+  键集相同、**逐格差异 0**。
+
+本轮只改判定方法。批次 C–E、第 5 步、S04 第二轮、S05 都没动；272 条事件证据不重评。
+
+## 一、第 1 项：互补语义不能单独证明同列
+
+1. 读 `parent_verify.py` 的 `_amount_bounds`（新增）：取「本列金额与**同一行**左右相邻
+   数字的中点」作列边界，无相邻则 ±inf。确认它**没有任何拍定的宽度阈值**（你否掉了
+   「金额宽度 + N pt」，也没接受「真实财报不会这样排」的推断）。
+2. 读 `_header_cells(..., bounds=)`：合并前比对两段**中心**是否同侧
+   （`(c1<left)!=(c2<left)` 或 `(c1>right)!=(c2>right)` 即不合并）。
+3. **请复现你上轮那个反例**：
+   ```
+   表头 y=70：本报告期 x[100,130]；（4-6月）x[134,165]
+   金额 y=90：100.00  x[100,130]；200.00   x[140,170]
+   ```
+   上一版第一列被认成 `本报告期（4-6月）`；本轮必须 `本报告期`。
+   对应 `selftest_column_rules.py` 的 `D5 邻列互补片段不得并进本列`，
+   但请自己独立构造一次。
+4. **请判定两件事**（汇报 §六 Q1/Q2）：
+   - 该反例现在返回 `OK` + `本报告期`，**不是 `AMBIGUOUS`**（邻列片段中心落在金额跨度之外）。
+     我理解你的要旨是「不得并入邻列片段」。若你要求「同表头行内有被列边界拒掉的片段
+     即整列待核」，我加一条即可——请指定。
+   - 窄表（金额那一行只有一个数字）时边界退化为 ±inf，等于没有约束。这个
+     「无相邻即不约束」是否可接受？
+5. **我主动披露一次自己造出来的回归**：我先试的是「整页数字列格切区」
+   （`_column_grid` 右边界聚类 + 相邻边界），被脚注编号/页码切碎——
+   `SH:603273` 的 p2 页里 6 个真实列被切成 12 个簇，把 `2026` 与 `年第一季度` 判成两列，
+   列名削成 `年第一季度`；`SH:600590 / 603082 / 603273 / 688067` 四条 p2 由
+   `OK:AGREE` 变 `OK:DISAGREE`。已回退为「只取金额那一行」，恢复 64/64。
+   日志：`_run_wit_r22b.log`（失败）/ `_run_wit_r22c.log`（修复后）。
+
+## 二、第 2 项：堵住同侧登记凭空增加期间语义
+
+6. 读 `parent_verify.py` 的 `_no_extra_semantics`（新增）：**同侧单向包含**——登记的每个
+   「已写」分量，实际列也必须写出；反向（实际更详细）放行。
+   确认 `_compatible`（片段合并）与 `cols_equivalent`（跨文档互认）**保留**「空 = 不约束」，
+   这正是你认可的部分。
+7. 读 `gap()`：`cols_equivalent` 通过后追加 `PARENT_COLUMN_SEMANTICS_UNPROVEN`。
+   读 `verify_v5.py` 的 `check_c41`：同位置追加 `<SIDE>_COLUMN_SEMANTICS_UNPROVEN`。
+8. **请复现你上轮那个反例**：目标金额实际表头 `本报告期`、邻列表头 `本报告期（1-6月）`，
+   把登记列名写成邻列长名称。现在 `gap()` 必须返回 `PARENT_COLUMN_SEMANTICS_UNPROVEN`。
+   对应自测 `D5 登记凭空加区间须被 gap 拒绝`。
+9. 读 `_c41_semantics_probe()`（新增）：这是**合成引文探针**，不是逐行注入。理由：
+   换成邻列长名称后，引文里本来就没有那串字，`*_QUOTE_WITHOUT_COLUMN` 会先拦住——
+   拦是拦住了但证明不了新判据。探针把这道前置检查让开，唯一可能拦住它的就是
+   「实际列没有这段语义」。当前输出：
+   `P1_COLUMN_SEMANTICS_UNPROVEN:本报告期（1-6月）⊄本报告期`。
+   **请判定这算不算「用合成数据替代真实路径」**（汇报 §六 Q4）。
+10. **Q2 统计对象——我上轮统计错了，请你核这一条**（汇报 §一.4 末段）：
+    - 我上轮的「43 条」是拿 `p1_column` 与 `p2_column`（两个不同文档）做 `_canon_parts`
+      比较、数「任一分量一侧有值一侧为空」，**对象错了**；
+    - 你按 p1/p2 比较得 63/32，对象同样是跨文档；
+    - 正确对象是**同侧「登记 vs 实际」**：64 条里 `_no_extra_semantics` 不成立的是 **0 条**
+      （登记列名就是生产取列的输出）；
+    - 你指出 `2026年半年度` 对 `本报告期` 为 `False` —— 对，我核过：
+      `cols_equivalent(...)` = False、`_compatible(...)` = True。我上轮把后者当成前者。
+    请确认这个更正成立，并指出还有没有别的同名字段被我混用。
+
+## 三、第 3 项：旁证横向合并前检查冲突
+
+11. 读 `step4_column_witness.py` 的 `_merge_header_cells`（由 `witness` 内联抽出）：
+    合并前过 `pv._compatible()` + `pv._amount_bounds()` 的列边界，返回**原始片段**
+    `[(x0, x1, [frag...])]`。读 `_hmerge_conflict`：按原始片段再查一遍（兜底）。
+12. **请复现你上轮那个反例**：同一表头行 `2025年半年度 x[100,113]`、`2026年半年度 x[114,130]`。
+    上一版旁证返回 `OK`、`column=2025年半年度2026年半年度`；本轮合并即被拒，
+    两两检查报 `AMBIGUOUS`。自测：`D5 旁证横向冲突不得并成一格`、`D5 旁证互补片段仍合并`、
+    `D5 旁证跨列片段不得合并`、`D5 旁证纵向两两检查能发现冲突`。
+13. **请判定**（汇报 §六 Q5）：旁证现在**直接调用** `pv._amount_bounds`，与生产共用同一个
+    函数——这会进一步削弱「独立」。这能否算「合并前检查冲突」？还是你要求旁证自己实现
+    一套边界算法？（我主动披露这一点，不辩解。）
+
+## 四、第 4 项：修正统计与解释
+
+14. **边界诊断侧数**：你说是 21 侧（p1=9、p2=12）。我重算确认：
+    ```
+    p1 NOT_FOUND 6 + p1 OK 3 + p2 NOT_FOUND 6 + p2 OK 6 = 21
+    ```
+    我上轮只数了「侧状态非 OK」，漏了 6 个 p2（候选页失败、另一页成功）。
+    另：全表（含 64 条 `EVIDENCE_OK`）还有 26 个 p1 + 25 个 p2 带边界诊断，
+    所以真实触发面是 **72 个侧实例**。请在 `step4_parent_scan.csv` 里核对这两组数。
+15. **「零新增 BLOCKED」的推论已撤回**：不再据此说边界规则没有过度收紧。
+    你抽查的 `SH:600590` 第 9 页，本轮 p1 `FIN.NPP.SQ@20251231` 仍是 `NOT_FOUND`，
+    note 为 `78:TABLE_BOUNDARY_UNPROVEN;1:NO_AMOUNT;2:NO_AMOUNT`。
+16. **C37 描述已改**：明确「以上新增项共同覆盖生产链，不是每一项都各自单独跑完整链」，
+    并点名 `cols_equivalent → gap` 的完整链由 `canon_keeps_semantics_via_equivalent`、
+    `rel_year_rejected_by_gap`、`annual_year_rejected_by_gap`、`same_side_semantics_unproven`
+    四项承担。读 `verify_v5.py` 的 `add("C37", ...)` 确认措辞。
+17. **`swap_column` 的解释已改**：那 32 行两侧列名**含区间省略**（`本报告期（1－6月）`
+    对 `本报告期`），互换后拦不住走的是「空 = 不约束」，不是「与区间判据无关」。
+    分母 32 用**生产函数** `cols_equivalent(p1_column, p2_column)` 重算，未变。
+
+## 五、逐键比对与计数（请自己跑）
+
+18. `git show b4738b2:runs/issues/S00/errata_20261111_v5/step4_parent_scan.csv` 与工作区比对：
+    87 vs 87、键集相同、**逐格差异 0**。`parent_verifications.csv` 同理（64×27、差异 0）。
+19. 计数：`8611 + 405 + 34 = 9050`，`9050 + 1505 = 10555`；`PENDING_PARENT_COMPATIBILITY` 1214；
+    `RESOLVED_SCOPE_COVERED` 8762；L2 **43/231/321/81/378**。
+20. `selftest_column_rules.py` 应 **50 项 FAIL 0**；C41 十三类注入应十二类 64/64 +
+    `swap_column` 32/32，且 `semantics_inflation_probe` 含 `SEMANTICS_UNPROVEN`。
+
+## 六、边界
+
+S04 第二轮与 S05 继续不放行；批次 C–E 与第 5 步未开始；43/231/378 未冻结；
+F32（26 份英文版年报）与 `_RE_POLICY` 裸「会计政策」未修。
+
+请按「是否放行批次 C」给结论。若不通过，请把要改的点写成可执行清单（文件 + 函数 + 判据方向）。

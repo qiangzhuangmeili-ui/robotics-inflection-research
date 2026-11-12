@@ -100,6 +100,60 @@ def _column_span(grid, x1):
     return idx, (left, right)
 
 
+def _merge_header_cells(rows, rj, bounds, gap=6.0):
+    """把表头第 `rj` 行的词并成单元格：[(x0, x1, [原始片段...])]。
+
+    第二十一轮裁决 3：合并**必须**带两条前置判据，不能先并无条件再回头检查——
+    并进同一格以后，两两比较再也看不到内部冲突。
+
+    1. `pv._compatible()`：两段语义不得冲突（区间/相对年/累计）；
+    2. 列边界：两段必须落在本列左右边界内（`pv._amount_bounds`，即与同一行
+       左右相邻数字的中点），否则是邻列。
+
+    返回的第三个元素保留**原始片段**，供调用方在合并后仍能追溯是哪两段冲突。
+    """
+    cells = sorted(rows[rj][1], key=lambda c: c[0])
+    out = []
+    cur = None
+    for x0, x1, tx in cells:
+        joinable = (cur is not None and x0 - cur[1] <= gap
+                    and pv._compatible(cur[2], tx))
+        if joinable and bounds:
+            left, right = bounds
+            c1 = (cur[0] + cur[1]) / 2.0
+            c2 = (x0 + x1) / 2.0
+            if (c1 < left) != (c2 < left) or (c1 > right) != (c2 > right):
+                joinable = False
+        if joinable:
+            cur[1] = max(cur[1], x1)
+            cur[2] += tx
+            cur[3].append(tx)
+        else:
+            if cur is not None:
+                out.append((cur[0], cur[1], cur[3]))
+            cur = [x0, x1, tx, [tx]]
+    if cur is not None:
+        out.append((cur[0], cur[1], cur[3]))
+    return out
+
+
+def _hmerge_conflict(merged_rows):
+    """横向合并后的**内部冲突**检查：返回 (原因, 拼好的列名) 或 None。
+
+    合并时已用 `_compatible` 拦过一次；这里按**原始片段**再查一遍，是为了
+    兜住「合并判据被放宽」或「片段被后续处理重新拼起来」的路径——片段级证据
+    保留下来，才能证明这个格子内部没有互相矛盾的期间。
+    """
+    for cells in merged_rows:
+        for _x0, _x1, frags in cells:
+            for i in range(len(frags)):
+                for j in range(i + 1, len(frags)):
+                    if not pv._compatible(frags[i], frags[j]):
+                        return ("hmerge:%s|%s" % (frags[i], frags[j]),
+                                "".join(frags))
+    return None
+
+
 def _band(rows, ri, max_rows=2, max_dy=40.0):
     """指标名取词带：金额行 + 紧邻的无数字行（指标名换行时拼回来）。"""
     parts = ["".join(c[2] for c in rows[ri][1])]
@@ -193,25 +247,28 @@ def witness(pdf, page, value, aliases):
     # 3) 该列的表头文字：先把表头行的词按间隙并成单元格，再按单元格**中心**
     #    落进列范围（`2026` + `年第一季度` 是一个单元格的两个词，只取到后半个
     #    会丢掉年份，`cols_equivalent` 会判成不同列）。
+    #
+    #    第二十一轮裁决 3：上一版**无条件**按间隙 ≤6pt 合并，之后的两两
+    #    `_compatible` 已经看不到被并进同一格的内部冲突——
+    #    `2025年半年度` x[100,113] 与 `2026年半年度` x[114,130] 被拼成
+    #    `2025年半年度2026年半年度` 后仍返回 `OK`（生产返回 `AMBIGUOUS`）。
+    #    现在合并前先过 `_compatible`，并按数字列格检查两段归属同一列；
+    #    冲突则不并，交给下面保留的两两检查报歧义。
+    bounds = pv._amount_bounds(rows, ri, ax0, ax1)
+    merged_rows = [_merge_header_cells(rows, j, bounds) for j in hdr]
+    # 第二十一轮裁决 3：同一表头行内**横向**冲突必须在合并那一刻拦住。
+    # 上一版先无条件按间隙 ≤6pt 并词，之后的两两 `_compatible` 已经看不到被并进
+    # 同一格的内部冲突（`2025年半年度` x[100,113] 与 `2026年半年度` x[114,130]
+    # 拼成 `2025年半年度2026年半年度` 后仍返回 `OK`，而生产返回 `AMBIGUOUS`）。
+    conf = _hmerge_conflict(merged_rows)
+    if conf is not None:
+        return {"status": "AMBIGUOUS", "column": conf[1], "why": conf[0]}
     parts = []
-    for j in hdr:
-        cells = sorted(rows[j][1], key=lambda c: c[0])
-        cur = None
-        merged = []
-        for x0, x1, tx in cells:
-            if cur is not None and x0 - cur[1] <= 6.0:
-                cur[1] = max(cur[1], x1)
-                cur[2] += tx
-            else:
-                if cur is not None:
-                    merged.append(cur)
-                cur = [x0, x1, tx]
-        if cur is not None:
-            merged.append(cur)
-        for x0, x1, tx in merged:
+    for j, cells in zip(hdr, merged_rows):
+        for x0, x1, frags in cells:
             c = (x0 + x1) / 2.0
             if span[0] < c <= span[1]:
-                parts.append((rows[j][0], x0, tx))
+                parts.append((rows[j][0], x0, "".join(frags)))
     if not parts:
         return {"status": "NO_COLUMN_TEXT", "why": "span=%.1f-%.1f" % span}
     # 第二十轮裁决 5：旁证列范围也要处理「多个期间候选」。同一列范围内若落进

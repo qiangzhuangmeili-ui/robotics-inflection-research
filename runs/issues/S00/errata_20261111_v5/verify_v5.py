@@ -44,12 +44,12 @@ import polarity_cases as pc
 
 ROOT = core.ROOT
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
-SELF_CHECK_VERSION = "V18"
+SELF_CHECK_VERSION = "V19"
 # 待复核轮次：状态串与校验条件共用一处，避免两处字面各写一遍再漂移
-RECHECK_ROUND = 21
+RECHECK_ROUND = 22
 # 第二十一轮自查：`reviewed_at` 原先在 review 字典里硬编码（每轮都要手改一次，
 # 必然漂移——与第十六轮 `round`/汇报指针同一类坑）。改为常量，只在这里写一次。
-REVIEWED_AT = "2026-11-12T23:45:00+08:00"
+REVIEWED_AT = "2026-11-12T23:58:00+08:00"
 
 
 def _cn_num(n):
@@ -67,7 +67,7 @@ def _cn_num(n):
 # 每轮必漂。现在两处都由 RECHECK_ROUND 派生：
 # 本轮改的是「上一轮」的裁决 → 返工轮次 = RECHECK_ROUND − 1；
 # 汇报文件名与本轮待复核轮次同号 → round{RECHECK_ROUND}。
-ROUND_PHASE = "裁决后批次 B 取列判据收紧与表格边界"
+ROUND_PHASE = "裁决后取列列边界与同侧语义收紧"
 ROUND_LABEL = "第%s轮%s" % (_cn_num(RECHECK_ROUND - 1), ROUND_PHASE)
 REPORT_NAME = "report_to_codex_round%d.md" % RECHECK_ROUND
 # 复核结论：`None` = 仍在等第 RECHECK_ROUND 轮复核；给出字符串 = 已收到裁决。
@@ -2846,6 +2846,41 @@ if _real_k is not None:
     chain["annual_year_rejected_by_gap"] = (_gap_yr == "PARENT_COLUMN_MISMATCH")
     if not chain["annual_year_rejected_by_gap"]:
         c37.append("ANNUAL_YEAR_PASSES_GAP:%s" % _gap_yr)
+    # 第二十一轮裁决 1：语义互补**不足以**证明同列。两列数字 +
+    # `本报告期` 与右邻列 `（4-6月）` 只隔 4pt，上一版把第一列认成
+    # `本报告期（4-6月）`。现在列边界取同一行相邻数字的中点，越界即邻列。
+    _w_nb = [(0, 90, 40, 100, "营业收入"),
+             (100, 70, 130, 80, "本报告期"),
+             (134, 70, 165, 80, "（4-6月）"),
+             (100, 90, 130, 100, "100.00"),
+             (140, 90, 170, 100, "200.00"),
+             (0, 60, 200, 66, "单位：元")]
+    _c_nb, _a_nb, _s_nb = pv.column_of_amount_aligned(
+        _w_nb, "100.00", label=("营业收入",))
+    chain["neighbor_fragment_not_merged"] = (
+        _s_nb == "OK" and _c_nb == "本报告期")
+    if not chain["neighbor_fragment_not_merged"]:
+        c37.append("NEIGHBOR_FRAGMENT_MERGED:%s/%r" % (_s_nb, _c_nb))
+    # 第二十一轮裁决 2：同侧登记不得凭空增加实际列没有的期间语义。
+    # 上一版 `cols_equivalent("本报告期（1-6月）", "本报告期")` 为真 →
+    # `gap()` 返回 None → 把邻列的长名称登记成本列也能过。
+    _ent_sem = dict(_real_ent)
+    _ent_sem["p1_column"] = "本报告期（1-6月）"
+    _gap_sem = _pgap(_real_k, _ent_sem, None,
+                     col_of=lambda d, p, v, label=None: ("本报告期", "OK"))
+    chain["same_side_semantics_unproven"] = (
+        _gap_sem == "PARENT_COLUMN_SEMANTICS_UNPROVEN")
+    if not chain["same_side_semantics_unproven"]:
+        c37.append("INFLATED_COLUMN_PASSES_GAP:%s" % _gap_sem)
+    # 反向：实际列比登记更详细时不得因此被拒（否则等于强迫两侧逐字相同）
+    _ent_sem2 = dict(_real_ent)
+    _ent_sem2["p1_column"] = "本报告期"
+    _gap_sem2 = _pgap(_real_k, _ent_sem2, None,
+                      col_of=lambda d, p, v, label=None: ("本报告期（1-6月）", "OK"))
+    chain["same_side_more_detail_ok"] = (
+        _gap_sem2 != "PARENT_COLUMN_SEMANTICS_UNPROVEN")
+    if not chain["same_side_more_detail_ok"]:
+        c37.append("MORE_DETAIL_REJECTED:%s" % _gap_sem2)
     # 期间列头语义类：同义须通、异义须拒（第十三轮 B 项扩到 4 组同义 + 4 组异义）
     # 第十四轮 B 项：「本报告期 / 本期金额」从同义表里**撤掉**——没有区间时把它当同义
     # 是惯例，不是可证事实（中报里两者可能分别是 6 个月与 3 个月）。它改到异义表，
@@ -2888,8 +2923,13 @@ add("C37", "父输入兼容性只认核证登记表：撤去真实依据后必�
            "栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类；"
            "取列反例必须走**生产路径**：邻列表头不得被认成本列、两列重叠须报歧义、"
            "列链内冲突期间须报歧义、不得跨表借表头、金额须逐位相等（含分位以下尾数）、"
-           "指标行未命中不得回退、canon 不得把区间/相对年/年度压掉且错误标签须穿不过 "
-           "cols_equivalent → gap 的完整链",
+           "指标行未命中不得回退、canon 不得把区间/相对年/年度压掉、"
+           "语义互补的邻列片段不得被并进本列（列边界取同一行相邻数字中点）、"
+           "同侧登记不得凭空增加实际列没有的期间语义且反向（实际更详细）不得被拒；"
+           "以上新增项共同覆盖生产链，不是每一项都各自单独跑完整链——"
+           "`cols_equivalent → gap` 的完整链由 `canon_keeps_semantics_via_equivalent`、"
+           "`rel_year_rejected_by_gap`、`annual_year_rejected_by_gap`、"
+           "`same_side_semantics_unproven` 四项承担",
     not c37,
     {"violations": c37, "auto_passes": len(auto_pass),
      "empty_scope_passes": len(empty_scope_pass),
@@ -3636,6 +3676,12 @@ def check_c41(rows, page_of=None, col_of_for=None):
                 if not pv.cols_equivalent(col, actual):
                     bad.append(tag + ("%s_COLUMN_MISMATCH:%s≠%s"
                                       % (side.upper(), col, actual),))
+                    continue
+                # 第二十一轮裁决 2：同侧登记不得凭空增加实际列没有的语义
+                # （把邻列的长列名登记成该金额所在列，正是靠「空=不约束」蒙过的）。
+                if not pv._no_extra_semantics(col, actual):
+                    bad.append(tag + ("%s_COLUMN_SEMANTICS_UNPROVEN:%s⊄%s"
+                                      % (side.upper(), col, actual),))
     return bad
 
 
@@ -3707,6 +3753,32 @@ def _c41_inject():
 
 _c41 = check_c41(_PV_ROWS, page_of=_pdf_ev, col_of_for=_col_of)
 _c41_inj_ok, _c41_inj = _c41_inject()
+
+
+def _c41_semantics_probe():
+    """第二十一轮裁决 2：同侧登记**凭空增加**期间语义，`check_c41` 必须拒。
+
+    为什么不用逐行注入：把登记列名换成邻列的长名称后，引文里本来就没有那串字，
+    `*_QUOTE_WITHOUT_COLUMN` 会先拦住——拦是拦住了，但证明不了新判据。
+
+    这里用一行**合成引文**（页文与引文同源），把「引文里没有该列名」这道前置
+    检查让开，于是唯一可能拦住它的就是「实际列没有这段语义」。返回拦住的理由，
+    空串表示没拦住。
+    """
+    if not _PV_ROWS:
+        return "NO_ROWS"
+    r = dict(_PV_ROWS[0])
+    names = pv.METRIC_ALIASES.get((r.get("ytd_field") or "").strip()) or ()
+    r["p1_column"] = "本报告期（1-6月）"
+    r["p1_quote"] = "本报告期（1-6月）" + (names[0] if names else "") + \
+                    (r.get("p1_value") or "")
+    bad = check_c41([r], page_of=lambda *a, **k: r["p1_quote"],
+                    col_of_for=lambda sec: (lambda *a, **k: ("本报告期", "OK", None)))
+    hit = [b[-1] for b in bad if "SEMANTICS_UNPROVEN" in (b[-1] or "")]
+    return hit[0] if hit else (bad[0][-1] if bad else "")
+
+
+_c41_sem = _c41_semantics_probe()
 add("C41", "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、"
     "父期间须绑定本行两期、栏目须是原文连续片段且等于该金额在原件中的实际列、"
     "页码须合法、调整版本须等于 s00_v10 的 version_used 归类、"
@@ -3715,10 +3787,12 @@ add("C41", "父输入登记必须能从原件重推：逐行回读登记页，�
     "假引文/错栏目/错父数/错页/版本反写/短依据/"
     "错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换/"
     "只解释 p1 的版本依据/只给一期的口径依据十三类注入"
-    "必须**逐行**全部被拦住，且分母按被拦住的唯一记录键数计",
-    (not _c41) and _c41_inj_ok,
+    "必须**逐行**全部被拦住，且分母按被拦住的唯一记录键数计；"
+    "同侧登记凭空增加实际列没有的区间/年份/累计语义时，须报 COLUMN_SEMANTICS_UNPROVEN",
+    (not _c41) and _c41_inj_ok and "SEMANTICS_UNPROVEN" in (_c41_sem or ""),
     {"violations": _c41[:5], "violation_count": len(_c41),
-     "registered": len(_PV_ROWS), "injections": _c41_inj})
+     "registered": len(_PV_ROWS), "injections": _c41_inj,
+     "semantics_inflation_probe": _c41_sem})
 
 add("C39", "状态文件派生字段由自检单一写出：写前回退必须被报出、写后产出必须合规、"
     "检查函数须能拦住旧计数/旧 sampling 字段/旧版本",
@@ -3932,8 +4006,10 @@ review = {
         "`_RE_POLICY` 是裸「会计政策」，正文里的「公司会计政策」也会被认成 POLICY_CHANGE 原因；本轮未改——收紧它会让 1,007 份存量证据的极性发生变化，需单独一轮并重做回放口径",
         "影响动词窗口已在第十四轮改为 `_effect_win()`（分句级、不设字数上限），本条原先写的「span=24、本轮未改」已失效，此处更正：残余风险方向反转——同一分句内「动词在前、金额在后很远」会**多认**（不是漏认）；窗口仍受「上一笔金额结束位置」约束，不会跨金额传播；上述两点均尚无真实语料检验",
         "`_date_span()` 只能解析「年+月区间 / 上半年 / H1H2 / Qn / 第n季度 / 年月日 / 年月」这些写法；两侧都写了期间但都解析不出时仍会退到语义类（如「年初至报告期末」对「本期数」），第十五轮只堵住「一侧解析出、另一侧写着期间线索却解不出」这一种，不是全量覆盖",
-        "第二十一轮新增的取列判据仍有两处放松，均已在 `report_to_codex_round21.md` §0.4 披露：① `_compatible()` 把「一侧有分量、另一侧为空」当不约束，64 条登记里 43 条靠这条通过；② `TABLE_BOUNDARY_UNPROVEN` 收紧后对 12 个侧实例生效，全部同时已有 `NO_LABEL_ROW`/`NO_AMOUNT`（零新增待核），但表头与数据之间夹「单位：元」或「续」的真实页面会退化为待核，覆盖率上限未量化",
-        "`step4_column_witness.py` 与生产取列**共享「表头行 / 指标带」假设**（只有列聚类路径不同：右边界聚类 vs 词坐标三段还原），不能称为完全独立；`EVIDENCE_OK && WITNESS_OK` 只是双路径互不矛盾，不替代外部复核",
+        "第二十一轮新增的取列判据仍有一处放松，已在 `report_to_codex_round21.md` §0.4 披露：`TABLE_BOUNDARY_UNPROVEN` 收紧后，表头与数据之间夹「单位：元」或「续」的真实页面会退化为待核，覆盖率上限未量化",
+        "第二十二轮更正上一轮的统计与推论：① 边界诊断的侧数是 **21 侧（p1=9 / p2=12）** 不是 12 侧——上一轮只数了「侧状态非 OK」的实例，漏掉 6 个「note 有边界诊断但最终侧状态 OK」的 p2（候选页失败、另一页成功）；全表（含 64 条 EVIDENCE_OK）共 **72 个侧实例**带边界诊断，故真实触发面远大于 12。② 「零新增 BLOCKED」**不能**推出「边界规则没有过度收紧」——`SH:600590` 第 9 页旧函数 `NO_HEADER_ROW`、新函数 `TABLE_BOUNDARY_UNPROVEN`，属失败原因细化。③ 上一轮「43 条靠空侧通过」的比较对象错了（拿 p1_column 与 p2_column 两个不同文档比），正确对象是同侧「登记 vs 实际」，按此重算为 **0/64**；且 `_compatible`（片段合并）与 `cols_equivalent`（列身份）不是一回事，`2026年半年度` 对 `本报告期` 前者 True、后者 False",
+        "第二十二轮新增判据的残余放松，均已在 `report_to_codex_round22.md` 披露：① 列边界只取「金额那一行」的相邻数字，窄表（该行只有一个数字）退化为 ±inf，等于没有约束；② 「邻列片段与本表头行同处」目前只做到「不并入」，没有升级为「整列待核」；③ `check_c41` 侧的同侧语义检查用**合成引文探针**证明，不是逐行注入（逐行注入会先被 `*_QUOTE_WITHOUT_COLUMN` 拦住，证明不了新判据）；④ 旁证现在直接调用 `pv._amount_bounds`，与生产共用同一个函数，独立性进一步下降",
+        "`step4_column_witness.py` 与生产取列**共享「表头行 / 指标带 / 列边界函数」假设**（只有列聚类路径不同：右边界聚类 vs 词坐标三段还原），不能称为完全独立；`EVIDENCE_OK && WITNESS_OK` 只是双路径互不矛盾，不替代外部复核",
     ],
     "not_independent": "执行方自检，不构成独立验收；仅抽验 %d 行 / %d 类 / %d 键回读原件物理页"
                        "（计数取自 sampling_v5.json，不在此处另写一份）。"

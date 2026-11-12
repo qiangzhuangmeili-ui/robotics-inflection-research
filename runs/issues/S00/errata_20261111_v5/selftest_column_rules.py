@@ -214,10 +214,109 @@ def d4():
        pv._num_in_quote("营业收入100.00", "100", exact="100.00"))
 
 
+# ---------------- D5：第二十一轮裁决的四项 ----------------
+def d5():
+    # ① 裁决 1 原反例：两列数字 + 语义互补但分属两列的表头片段。
+    #    上一版把第一列认成 `本报告期（4-6月）`；现在第一列只能是 `本报告期`。
+    words = [
+        W(0, 90, 40, 100, "营业收入"),
+        W(100, 70, 130, 80, "本报告期"),
+        W(134, 70, 165, 80, "（4-6月）"),
+        W(100, 90, 130, 100, "100.00"),
+        W(140, 90, 170, 100, "200.00"),
+        W(0, 60, 200, 66, "单位：元"),
+    ]
+    col, _amt, st = pv.column_of_amount_aligned(words, "100.00", label=("营业收入",))
+    ck("D5 邻列互补片段不得并进本列",
+       st == "OK" and col == "本报告期",
+       "st=%s col=%r（上一版是 本报告期（4-6月））" % (st, col))
+
+    # ② 裁决 2：同侧登记不得增加实际列没有的区间/年份/累计语义
+    ck("D5 同侧不得增加区间",
+       not pv._no_extra_semantics("本报告期（1-6月）", "本报告期"))
+    ck("D5 实际更详细时允许",
+       pv._no_extra_semantics("本报告期", "本报告期（1-6月）"))
+    ck("D5 同侧完全一致时允许",
+       pv._no_extra_semantics("2026年半年度", "2026年半年度"))
+    ck("D5 同侧不得增加相对年",
+       not pv._no_extra_semantics("上年同期", "（1-6月）"))
+
+    # ③ 裁决 3：旁证横向合并前必须拦冲突（上一版并成
+    #    `2025年半年度2026年半年度` 仍返回 OK）
+    import step4_column_witness as cw
+    INF = float("inf")
+    rows = [(70, [(100.0, 113.0, "2025年半年度"),
+                  (114.0, 130.0, "2026年半年度")])]
+    merged = cw._merge_header_cells(rows, 0, None)
+    ck("D5 旁证横向冲突不得并成一格",
+       len(merged) == 2 and all("2025" not in t or "2026" not in t
+                                for _a, _b, fs in merged for t in ["".join(fs)]),
+       "merged=%r" % (merged,))
+    # 互补片段仍须合并（真实同列断词的正例）
+    rows2 = [(70, [(100.0, 130.0, "本报告期"),
+                   (131.0, 165.0, "（1－6月）")])]
+    merged2 = cw._merge_header_cells(rows2, 0, (-INF, 155.0))
+    ck("D5 旁证互补片段仍合并",
+       len(merged2) == 1 and "".join(merged2[0][2]) == "本报告期（1－6月）",
+       "merged=%r" % (merged2,))
+    # 跨列互补片段不得合并（相邻数字中点给出列边界：金额 [100,130]、右邻 [140,170]）
+    rows3 = [(70, [(100.0, 130.0, "本报告期"),
+                   (134.0, 165.0, "（4-6月）")])]
+    merged3 = cw._merge_header_cells(rows3, 0, (-INF, 135.0))
+    ck("D5 旁证跨列片段不得合并",
+       len(merged3) == 2, "merged=%r" % (merged3,))
+    # 列边界由同一行相邻数字给出（不是拍阈值）：100.00 [100,130] 与 200.00 [140,170]
+    b = pv._amount_bounds([(90, [(100.0, 130.0, "100.00"), (140.0, 170.0, "200.00")])],
+                          0, 100.0, 130.0)
+    ck("D5 列边界取相邻数字中点", b == (-INF, 135.0), "bounds=%r" % (b,))
+    # 纵向冲突（同一列上下两行）仍须报歧义
+    rows4 = [(70, [(100.0, 130.0, "2025年半年度")]),
+             (80, [(100.0, 130.0, "2026年半年度")])]
+    m4a = cw._merge_header_cells(rows4, 0, None)
+    m4b = cw._merge_header_cells(rows4, 1, None)
+    ck("D5 旁证纵向两两检查能发现冲突",
+       not pv._compatible(m4a[0][2][0], m4b[0][2][0]))
+
+    # ④ 裁决 2 的完整链：登记写成邻列长名称、实际列只有 `本报告期`
+    #    → 必须穿不过 `gap()`（上一版返回 None）
+    def _side(doc, per, val):
+        return {"doc": doc, "period": per, "value": val,
+                "consolidation_scope": "CONSOLIDATED", "unit_scale": "1",
+                "currency": "CNY", "adjust_version": "ORIGINAL"}
+    ent = {"conclusion": "COMPATIBLE", "reviewer": "WorkBuddy-Agent",
+           "review_role": "SELF_CHECK", "reviewed_at": "2026-11-12",
+           "consolidation_scope": "CONSOLIDATED", "unit_scale": "1",
+           "currency": "CNY", "scope_basis": "合并范围：合并报表；单位：元；币种：人民币；"
+                                             "期间：20260630 与 20260331 两期均为合并口径。",
+           "p1_doc": "DOC-A", "p1_period": "20260630", "p1_value": "100.00",
+           "p1_page": "1", "p1_adjust_version": "ORIGINAL",
+           "p2_doc": "DOC-B", "p2_period": "20260331", "p2_value": "50.00",
+           "p2_page": "1", "p2_adjust_version": "ORIGINAL"}
+    expect = {"field": "FIN.REV.SQ", "p1": _side("DOC-A", "20260630", "100.00"),
+              "p2": _side("DOC-B", "20260331", "50.00")}
+
+    def _mk(col):
+        e = dict(ent)
+        e["p1_column"] = col
+        e["p2_column"] = "本报告期"
+        return e
+
+    def _col_of(_doc, _page, _val, _names):
+        return ("本报告期", "OK", None)      # 实际列只有 `本报告期`
+
+    r1 = pv.gap(_mk("本报告期（1-6月）"), expect, lambda d, p: "", _col_of)
+    ck("D5 登记凭空加区间须被 gap 拒绝",
+       r1 == "PARENT_COLUMN_SEMANTICS_UNPROVEN", "gap=%r" % (r1,))
+    r2 = pv.gap(_mk("本报告期"), expect, lambda d, p: "", _col_of)
+    ck("D5 登记与实际一致时 gap 不报此项",
+       r2 != "PARENT_COLUMN_SEMANTICS_UNPROVEN", "gap=%r" % (r2,))
+
+
 d1()
 d2()
 d3()
 d4()
+d5()
 print("-" * 60)
 print("FAIL %d" % len(FAIL), FAIL)
 sys.exit(1 if FAIL else 0)
