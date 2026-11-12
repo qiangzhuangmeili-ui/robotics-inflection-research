@@ -1,0 +1,258 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V18",
+  "round": 21,
+  "nature": "REWORK_RESULT",
+  "answers_ruling": "runs/issues/S00/errata_20261111_v5/_codex_out_round20.txt",
+  "ruling_verdict": "RETURN_FOR_REWORK",
+  "ruling_scope_note": "本裁决不认定 64 条登记全部错误，也不放行批次 C；272 条已接受事件证据保留不重评。",
+  "reworked_at": "2026-11-12T23:35:00+08:00",
+  "scope_discipline": {
+    "changed": "只改判据（表头合并语义、等价函数、金额精度、依据逐侧绑定、表格边界、目标基线）",
+    "not_changed": [
+      "screen_rules_v2.json 未改",
+      "evidence_scope.py 判据未改",
+      "l2_core.py 依赖映射未改（裁决明确金发科技名单后果可接受）",
+      "S02 上游 results.csv 未改",
+      "43/231/378 仍未冻结"
+    ]
+  },
+  "items": [
+    {
+      "id": "R1",
+      "requirement": "修复表头合并后的期间冲突：区分「互补片段」与「互相冲突的完整期间」；列链内含多个冲突期间必须 AMBIGUOUS；不能只用 canon 非空判断完整列名",
+      "status": "DONE",
+      "root_cause": "上一版用「两侧 canon 都非空就不并」当语义保护，同时管了过严（同一列横排的 本报告期 + （1-6月） 被拆成两个单元格）与过松（_chain_cells 跨行合并只看几何，把 2025年半年度 与 2026年半年度 拼成一个候选）两件事",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_canon_parts / _compatible",
+          "what": "新增三维拆分 (相对年, 区间, 累计) 与 _compatible()：任一维度两侧都写了且不同即冲突"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_header_cells",
+          "what": "并单元格判据由 `not (canon(cur) and canon(tx))` 改为 `_compatible(cur, tx)`"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_chain_cells",
+          "what": "跨行合并前先过 _compatible；冲突则不并，形成两个候选，由调用方按「期间列候选>1」判 AMBIGUOUS"
+        }
+      ],
+      "evidence": {
+        "selftest": [
+          "D4 横排互补片段成一列 PASS（本报告期 + （1-6月） → 本期|R0-1-6|累计）",
+          "D4 列链冲突期间报歧义 PASS（x[100,130] y=70 2025年半年度 / y=80 2026年半年度 → AMBIGUOUS）"
+        ],
+        "real_data": "SH:688800 FIN.OCF.SQ@20251231 的 p2 由 OK 变 AMBIGUOUS（该行本就 BLOCKED，未影响 64 条）"
+      }
+    },
+    {
+      "id": "R2",
+      "requirement": "生产等价判定保留完整语义；年份/相对期间/起止区间/累计属性有冲突即拒绝；年度也须解析年份；C37 补完整链反例",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "cols_equivalent",
+          "what": "删去「两侧都有区间就直接 return sa == sb」的短路，改为任一维度冲突即 False：区间、相对年、累计依次比对；两侧区间相等且不冲突才等价"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_RE_SPAN_YEAR + _date_span",
+          "what": "新增年度解析 (\\d{4})年(?:度|全年|报表) → R-y-1-12，2025年度 与 2026年度 不再都归成 ||累计"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C37 chain",
+          "what": "新增 canon_keeps_semantics_via_equivalent（四组异义对必须连 cols_equivalent 一起拒）、annual_year_kept、rel_year_rejected_by_gap、annual_year_rejected_by_gap（错误标签必须穿不过 gap）"
+        }
+      ],
+      "evidence": {
+        "before": "cols_equivalent('上年同期（1-6月）','本报告期（1-6月）') = True；cols_equivalent('上期（2026年1-6月）','本期（2026年1-6月）') = True",
+        "after": "两者均为 False；canon_column('2025年度')='|R-2025-1-12|累计'、('2026年度')='|R-2026-1-12|累计'",
+        "regression": "四组同义仍判等价（本期数=本报告期、本年累计=年初至报告期末、2026年半年度=2026年1-6月、上年同期=上年同期金额）"
+      }
+    },
+    {
+      "id": "R3",
+      "requirement": "金额按合法单位折算后直接比较 Decimal；超过允许精度且有非零尾数时拒绝或待核；引文验证须携带金额词位置并再次核对该词数值与目标；粘连只能沿已知词边界拆分，取消任意数字位切分",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_same_amount",
+          "what": "由「各自 quantize(0.01) 再比」改为直接比 Decimal 数值（1.0 == 1.00 为真，100.004 == 100.00 为假）"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_has_subcent + column_of_amount_aligned_ex",
+          "what": "分位以下有非零尾数的目标值直接判 AMOUNT_PRECISION_INVALID（不参与匹配）"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_num_in_quote",
+          "what": "① 给了 exact 时必须同时满足「该词文本在引文里」且「该词数值×unit_scale == 目标」；② 未给 exact 时只做严格 token 全等，删除任意数字位切分的第三级"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "gap",
+          "what": "新增状态映射 PARENT_AMOUNT_PRECISION_INVALID / PARENT_TABLE_BOUNDARY_UNPROVEN"
+        }
+      ],
+      "evidence": {
+        "before": "页面 100.00 对目标 100.004 → 取列 OK；_num_in_quote('营业收入100999999','100') = True；_num_in_quote('营业收入100.00','999',exact='100.00') = True",
+        "after": "取列 AMOUNT_PRECISION_INVALID；前两条均 False；正确用例 _num_in_quote('营业收入100.00','100',exact='100.00') = True"
+      }
+    },
+    {
+      "id": "R4",
+      "requirement": "两侧分别绑定文档、期间和版本归类，缺任一侧均拒绝；补单项注入；注入覆盖按被拦截的唯一记录键数计算；swap_column 子集须在修复等价函数后重算",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "verify_v5.py",
+          "anchor": "_basis_clauses / _version_basis_ok",
+          "what": "改为按子句逐侧绑定：每侧须找到含 p1/p2 标记、该侧版本词、且含该侧文档号或期间的子句；缺任一侧即 False"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "_scope_basis_ok",
+          "what": "期间由「任一出现」改为「两期都出现」"
+        },
+        {
+          "file": "step4_apply_parents.py",
+          "anchor": "_version_basis",
+          "what": "生成的依据文字在每侧子句里写入 （DOC-…，期间 …），使逐侧绑定在真实数据上可满足"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "_c41_inject",
+          "what": "新增 version_basis_p1_only / scope_basis_one_period 两类单侧注入；拦截数改为按 (sec,fld,pk) 去重后的唯一键数计"
+        }
+      ],
+      "evidence": {
+        "c41_injections": {
+          "fake_quote": "64/64",
+          "wrong_column": "64/64",
+          "wrong_value": "64/64",
+          "wrong_page": "64/64",
+          "version_flip": "64/64",
+          "short_basis": "64/64",
+          "wrong_period": "64/64",
+          "empty_version_basis": "64/64",
+          "repeat_version_basis": "64/64",
+          "repeat_scope_basis": "64/64",
+          "version_basis_p1_only": "64/64",
+          "scope_basis_one_period": "64/64",
+          "swap_column": "32/32（分母=两侧列不等价子集，修复 cols_equivalent 后重算）"
+        },
+        "denominator_rule": "分母 = 该类注入行数；拦截数 = 被拦住的唯一记录键数"
+      }
+    },
+    {
+      "id": "R5",
+      "requirement": "补表格边界：先限定同一表格区域再绑定表头/指标行/金额列；遇到新表标题或无法证明连续性时留待核；旁证列范围须处理重叠与多个期间候选",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_TITLE_ROW",
+          "what": "标题行正则扩到报表标题（合并资产负债表/利润表/现金流量表/所有者权益变动表/母公司…/财务报表附注）"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "column_of_amount_aligned_ex",
+          "what": "向上找表头时遇到标题行即停（原为 continue），表头必须落在「本表标题→金额行」之间；扫不过去记 TABLE_BOUNDARY_UNPROVEN"
+        },
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "_header_rows / witness",
+          "what": "同一条边界规则；并在列范围内对表头片段做两两 _compatible 检查，冲突即 AMBIGUOUS"
+        }
+      ],
+      "evidence": {
+        "selftest": "D4 不得跨表借表头 PASS（上方有表头表 + 合并现金流量表标题 + 下方无表头表 → TABLE_BOUNDARY_UNPROVEN）",
+        "c37": "table_boundary_rejected_by_gap = True"
+      }
+    },
+    {
+      "id": "R6",
+      "requirement": "targets() 固定重验基线（不可变 70 键或固定 87 键 assignment）；重跑不得因登记撤下或 HOLD 变化而缩小范围；REPORT.md 历史段就地标注原汇报错误",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "step4_parent_targets.csv",
+          "anchor": "新增文件",
+          "what": "87 键固定 assignment（含 frozen_at 与说明），一次性冻结"
+        },
+        {
+          "file": "step4_parent_scan.py",
+          "anchor": "load_target_baseline / targets",
+          "what": "keep 集合改为「不可变基线 ∪ 当前登记键」；基线里在 meta_diff 找不到的键记入 MISSING_FROM_SCOPE 并打印，不静默消失"
+        },
+        {
+          "file": "REPORT.md",
+          "anchor": "§0-prev 0.3",
+          "what": "就地标注「原汇报错误，实际各 1 条」"
+        },
+        {
+          "file": "report_to_codex_round19.md",
+          "anchor": "六类注入段",
+          "what": "同上，标注该表数字不实、勿再引用"
+        }
+      ],
+      "evidence": {
+        "before": "用当前 64 行登记表重算 targets() 只得 86 条，漏 SH:600143 FIN.OCF.SQ@20260630",
+        "after": "读固定基线 → 87 条；MISSING_FROM_SCOPE 为空",
+        "baseline_covers_prev70": true
+      }
+    }
+  ],
+  "counts_after": {
+    "targets": 87,
+    "evidence_ok": 64,
+    "blocked": 23,
+    "registered": 64,
+    "witness_ok": "64/64（两侧 OK:AGREE，不一致 0）",
+    "p1": {"OK": 73, "NOT_FOUND": 14},
+    "p2": {"OK": 70, "NOT_FOUND": 17},
+    "meta_diff_open": 8611,
+    "open_total_core": 9050,
+    "open_total_all": 10555,
+    "PENDING_PARENT_COMPATIBILITY": 1214,
+    "RESOLVED_SCOPE_COVERED": 8762,
+    "l2_verdicts": {
+      "HOLD_PENDING_ERRATA": 43,
+      "R2_MAY_CHANGE": 231,
+      "R1_NO_LINK": 378,
+      "NOT_AFFECTED": 321,
+      "STILL_PASSES_WITHOUT": 81
+    }
+  },
+  "counts_unchanged_note": "判据收紧后 64 条登记的键集与上一轮完全相同；仅 SH:688800 FIN.OCF.SQ@20251231 的 p2 由 OK 变 AMBIGUOUS，该行本就 BLOCKED，故 EVIDENCE_OK / 登记 / 计数 / L2 全部不变。",
+  "self_check": {
+    "version": "V18",
+    "checks_pass": 43,
+    "checks_total": 43,
+    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+    "nature": "SELF_CHECK_NOT_ACCEPTANCE"
+  },
+  "still_blocked": {
+    "batch_C_D_E": "未开始（等第 21 轮裁决）",
+    "step5_recompute_strata": "未开始",
+    "S04_round2": "不放行",
+    "S05": "不放行",
+    "freeze_43_231_378": false,
+    "F32_language_dimension": "未修",
+    "bare_RE_POLICY": "未修"
+  },
+  "open_risks": [
+    "witness 仍与生产共享「表头行/指标带」的部分假设，只是列聚类路径不同，不能称完全独立",
+    "NO_LABEL_ROW 的带窗仍是经验值（上下各≤2 行、行距≤40pt），跨页断行会漏取（方向安全）",
+    "表格边界改严后，真实页面里若表头与数据之间夹了「单位：元」或「续」字样，会退化为待核；本轮 64 条未受影响，但覆盖率上限未量化"
+  ]
+}

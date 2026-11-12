@@ -2,10 +2,10 @@
   "issue_key": "S00",
   "stage": "ERRATA",
   "version": "ERRATA_V5",
-  "self_check_version": "V17",
+  "self_check_version": "V18",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
-  "reviewed_at": "2026-11-12T00:50:00+08:00",
+  "reviewed_at": "2026-11-12T23:45:00+08:00",
   "checks_pass": 43,
   "checks_total": 43,
   "checks": [
@@ -669,7 +669,7 @@
     },
     {
       "id": "C37",
-      "name": "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开；栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类；取列反例必须走**生产路径**：邻列表头不得被认成本列、两列重叠须报歧义、金额须逐位相等、指标行未命中不得回退、canon 不得把区间/相对年压掉",
+      "name": "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开；栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类；取列反例必须走**生产路径**：邻列表头不得被认成本列、两列重叠须报歧义、列链内冲突期间须报歧义、不得跨表借表头、金额须逐位相等（含分位以下尾数）、指标行未命中不得回退、canon 不得把区间/相对年/年度压掉且错误标签须穿不过 cols_equivalent → gap 的完整链",
       "result": "PASS",
       "detail": {
         "violations": [],
@@ -712,8 +712,16 @@
           "neighbor_header_not_taken": true,
           "overlapping_columns_ambiguous": true,
           "amount_exact_decimal": true,
+          "amount_subcent_rejected": true,
+          "amount_precision_status": true,
+          "amount_precision_rejected_by_gap": true,
+          "table_boundary_rejected_by_gap": true,
           "label_row_required": true,
           "canon_keeps_semantics": true,
+          "canon_keeps_semantics_via_equivalent": true,
+          "annual_year_kept": true,
+          "rel_year_rejected_by_gap": true,
+          "annual_year_rejected_by_gap": true,
           "column_synonym_ok": true,
           "column_antonym_rejected": true,
           "column_synonym_pairs": [
@@ -882,7 +890,7 @@
     },
     {
       "id": "C41",
-      "name": "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、父期间须绑定本行两期、栏目须是原文连续片段且等于该金额在原件中的实际列、页码须合法、调整版本须等于 s00_v10 的 version_used 归类、范围/单位/币种须与实际两期父输入同时相符、口径依据须点到合并范围/单位/币种/期间、版本依据须写出两侧各自的版本归类；假引文/错栏目/错父数/错页/版本反写/短依据/错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换十一类注入必须**逐行**全部被拦住",
+      "name": "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、父期间须绑定本行两期、栏目须是原文连续片段且等于该金额在原件中的实际列、页码须合法、调整版本须等于 s00_v10 的 version_used 归类、范围/单位/币种须与实际两期父输入同时相符、口径依据须点到合并范围/单位/币种/期间、版本依据须写出两侧各自的版本归类并逐侧绑定文档/期间、口径依据须给出两侧期间；假引文/错栏目/错父数/错页/版本反写/短依据/错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换/只解释 p1 的版本依据/只给一期的口径依据十三类注入必须**逐行**全部被拦住，且分母按被拦住的唯一记录键数计",
       "result": "PASS",
       "detail": {
         "violations": [],
@@ -911,6 +919,10 @@
           "repeat_scope_basis": 64,
           "_rows_swap_column": 32,
           "swap_column": 32,
+          "_rows_version_basis_p1_only": 64,
+          "version_basis_p1_only": 64,
+          "_rows_scope_basis_one_period": 64,
+          "scope_basis_one_period": 64,
           "_rows": 64
         }
       }
@@ -1064,11 +1076,13 @@
     "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
     "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位，属上游核验记录问题",
     "第 4 步只做了批次 A 的**证据采集**（272 份年报的文档级事件确认），**未据此闭合任何一条**：证据命题到采用对象的映射未建立，3,803 条已回退待核；字段级影响确认（`content_reviews`）、采用链确认（`parent_verifications`）、分季度表来源（`scope_verifications`）三张登记表仍为空",
-    "第 5 步重算分层与受限表未开始；44/231/378 未锁定",
+    "第 5 步重算分层与受限表未开始；43/231/378 未锁定（第二十轮 `SH:600143` 脱离 HOLD 后由 44/320 变为 43/321，仍未冻结）",
     "锚定期回退与上游准入的间接依赖未覆盖",
     "`_RE_POLICY` 是裸「会计政策」，正文里的「公司会计政策」也会被认成 POLICY_CHANGE 原因；本轮未改——收紧它会让 1,007 份存量证据的极性发生变化，需单独一轮并重做回放口径",
     "影响动词窗口已在第十四轮改为 `_effect_win()`（分句级、不设字数上限），本条原先写的「span=24、本轮未改」已失效，此处更正：残余风险方向反转——同一分句内「动词在前、金额在后很远」会**多认**（不是漏认）；窗口仍受「上一笔金额结束位置」约束，不会跨金额传播；上述两点均尚无真实语料检验",
-    "`_date_span()` 只能解析「年+月区间 / 上半年 / H1H2 / Qn / 第n季度 / 年月日 / 年月」这些写法；两侧都写了期间但都解析不出时仍会退到语义类（如「年初至报告期末」对「本期数」），第十五轮只堵住「一侧解析出、另一侧写着期间线索却解不出」这一种，不是全量覆盖"
+    "`_date_span()` 只能解析「年+月区间 / 上半年 / H1H2 / Qn / 第n季度 / 年月日 / 年月」这些写法；两侧都写了期间但都解析不出时仍会退到语义类（如「年初至报告期末」对「本期数」），第十五轮只堵住「一侧解析出、另一侧写着期间线索却解不出」这一种，不是全量覆盖",
+    "第二十一轮新增的取列判据仍有两处放松，均已在 `report_to_codex_round21.md` §0.4 披露：① `_compatible()` 把「一侧有分量、另一侧为空」当不约束，64 条登记里 43 条靠这条通过；② `TABLE_BOUNDARY_UNPROVEN` 收紧后对 12 个侧实例生效，全部同时已有 `NO_LABEL_ROW`/`NO_AMOUNT`（零新增待核），但表头与数据之间夹「单位：元」或「续」的真实页面会退化为待核，覆盖率上限未量化",
+    "`step4_column_witness.py` 与生产取列**共享「表头行 / 指标带」假设**（只有列聚类路径不同：右边界聚类 vs 词坐标三段还原），不能称为完全独立；`EVIDENCE_OK && WITNESS_OK` 只是双路径互不矛盾，不替代外部复核"
   ],
   "not_independent": "执行方自检，不构成独立验收；仅抽验 37 行 / 20 类 / 27 键回读原件物理页（计数取自 sampling_v5.json，不在此处另写一份）。",
   "release_S05": false

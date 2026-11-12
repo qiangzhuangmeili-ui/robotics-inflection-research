@@ -1,0 +1,132 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V18，43/43 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round20.txt（RETURN_FOR_REWORK，6 条返工项）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round21.md（先读这一份）
+本轮逐条对照：runs/issues/S00/errata_20261111_v5/rework_round20_result.json
+
+本轮只改判定方法，不改「哪些键应当闭合」。批次 C–E、第 5 步、S04 第二轮、S05 都没动。
+不要重新评估你已接受的事件证据（272 条保留）；本裁决也未认定 64 条登记全部错误。
+结论先给：87 条键集、64 条登记、23 条待核、全部计数、L2 五档，与上一轮**逐位相同**；
+唯一变化是 SH:688800 FIN.OCF.SQ@20251231 的 p2 由 OK 变 NOT_FOUND（AMBIGUOUS），该行本就 BLOCKED。
+
+## 一、第 1 项：表头合并后的期间冲突
+
+1. 读 `parent_verify.py:933-971`（`_canon_parts` / `_compatible`）、`:683-716`（`_header_cells`）、
+   `:719-754`（`_chain_cells`）。确认：并单元格与跨行合并都用 `_compatible`，
+   冲突则**不并**、形成两个候选，由调用方按「期间列候选 >1」判 `AMBIGUOUS`。
+2. **请复现你上轮那个反例**：`x[100,130]`、`y=70` 的 `2025年半年度`，`y=80` 的 `2026年半年度`，
+   金额 `100.00` 在 `y=90`。上一版返回 `('2025年半年度2026年半年度','100.00','OK',...)`，
+   本轮必须 `AMBIGUOUS`。对应自测 `selftest_column_rules.py` 的 `D4 列链冲突期间报歧义`，
+   但请**自己独立构造一次**，不要只信断言。
+3. 同时确认横排互补片段：同一列 `本报告期` + `（1-6月）` 必须并成 `本报告期（1-6月）`
+   且 canon 为 `本期|R0-1-6|累计`（自测 `D4 横排互补片段成一列`）。
+4. **请判定我主动披露的残留风险**（汇报 §六 Q1）：紧排表（列间距 3–5pt）里若真有**两列**
+   分别写 `本报告期` 与 `（4-6月）`，`_compatible` 会判互补并合并成一列。
+   我认为真实财报不会这样排版，但这是推断。要不要加「合并后单元格宽度 ≤ 金额跨度 + N pt」
+   的几何上界？请指定阈值或否掉。
+
+## 二、第 2 项：生产等价判定保留完整语义 + C37 补完整链
+
+5. 读 `cols_equivalent()`（`parent_verify.py:433`）：确认**已删**「两侧都有区间就直接
+   `return sa == sb`」的短路，改为逐维度（区间 → 相对年 → 累计）比对，任一维度冲突即 False。
+6. 读 `_RE_SPAN_YEAR`（`:369`）与 `_date_span`：确认 `2025年度` / `2026年度` 分别解析为
+   `R-2025-1-12` / `R-2026-1-12`，不再都归成 `||累计`。
+7. **复现你上轮的三个用例**（我本轮现场跑过，请独立重跑）：
+   `cols_equivalent("上年同期（1-6月）","本报告期（1-6月）")` 必须 False；
+   `cols_equivalent("上期（2026年1-6月）","本期（2026年1-6月）")` 必须 False；
+   `canon_column("2025年度") != canon_column("2026年度")`。
+8. 读 `verify_v5.py:2810-2890`：确认 C37 新增 `canon_keeps_semantics_via_equivalent`、
+   `annual_year_kept`、`rel_year_rejected_by_gap`、`annual_year_rejected_by_gap` 四项，
+   且都走 `canon_column → cols_equivalent → gap()` 的**真实生产链**，不是自造小函数。
+9. **请判定「空 = 不约束」**（汇报 §六 Q2）：`_compatible` 把「一侧有值、另一侧为空」
+   当作不约束。我实测 64 条登记里 **43 条**至少一个分量属于这种情形
+   （典型 `本报告期（1－6月）` 对 `本报告期`，或 `2026年半年度` 对 `本报告期`）。
+   若要「空也必须匹配」，这 43 条全灭。我认为不该灭（两侧是不同文档的不同列名习惯），
+   但请指出这条放松会不会让「实际表头更短」的情形蒙混过关——
+   目前只靠 `registrable_column()` 的「候选须在正文连续出现」兜。
+
+## 三、第 3 项：金额比较与引文边界
+
+10. 读 `_same_amount`（`:510`）：确认**直接比 Decimal**，不再 `quantize(0.01)`；
+    `1.0 == 1.00` 真、`100.004 == 100.00` 假。
+11. 读 `_has_subcent`（`:495`）与 `column_of_amount_aligned_ex`（`:792`）入口：
+    确认分位以下有非零尾数的目标值直接 `AMOUNT_PRECISION_INVALID`，**不参与匹配**。
+12. 读 `_num_in_quote`（`:132`）：确认已**删除**「token 在某数字位切开」的第三级，
+    只剩两级——给 `exact` 时须「词文本在引文里」且「词值 × unit_scale == 目标」；
+    不给 `exact` 时只做严格 token 全等。
+13. **复现你上轮的三个用例**：
+    页面 `100.00`、目标 `100.004` → 取列必须 `AMOUNT_PRECISION_INVALID`；
+    `_num_in_quote("营业收入100999999","100")` 必须 False；
+    `_num_in_quote("营业收入100.00","999",exact="100.00")` 必须 False；
+    正确用例 `_num_in_quote("营业收入100.00","100",exact="100.00")` 必须 True。
+14. `gap()` 的映射：`AMOUNT_PRECISION_INVALID → PARENT_AMOUNT_PRECISION_INVALID`、
+    `TABLE_BOUNDARY_UNPROVEN → PARENT_TABLE_BOUNDARY_UNPROVEN`。确认没有新增「放行」分支。
+15. **请判定**（汇报 §六 Q3）：`AMOUNT_PRECISION_INVALID` 我选了**直接拒绝取列**（不是取到再标待核）。
+    你的口径是「拒绝或待核」，这是否算取严的那一支？
+
+## 四、第 4 项：C41 逐侧依据 + 逐行注入
+
+16. 读 `verify_v5.py:3457`（`_basis_clauses`）、`:3462`（`_version_basis_ok`）、
+    `:3488`（`_scope_basis_ok`）。确认：版本依据按子句**逐侧绑定**（每侧须含该侧标记、
+    该侧版本词、且含该侧文档号或期间）；口径依据由「任一期出现」改为「两期都出现」。
+17. 读 `step4_apply_parents.py` 的 `_version_basis`：确认生成的依据在每侧子句末尾写
+    `（DOC-…，期间 …）`。**请判定**（汇报 §六 Q4）：这算不算「为了过检而改证据」？
+    我的理由是该行的文档号与期间本来就是已登记字段，追加只是把隐含信息显式化。
+    若不认可，请指出应当在哪一层满足逐侧绑定（例如把 p1_doc/p2_doc 直接当依据的独立字段）。
+18. **复现你上轮的组合注入**：把某行依据替换为「仅解释 p1 原版 + 只写一个期间」。
+    现在必须被拦。读 `_c41_inject`（`:3639`）确认新增 `version_basis_p1_only`、
+    `scope_basis_one_period` 两类单侧注入，且拦截数按 `(security_id, field_id, period_key)`
+    **去重后的唯一键数**计，不用违例条数。
+19. 核实 `review.json.C41.detail.injections`：十二类各 64/64、`swap_column` 32/32，
+    `_rows_*` 与拦截数逐项相等。
+20. **`swap_column` 分母 32**：你上轮认可该口径，要求「先修等价函数再重算子集」。
+    我已重算，仍 32（那 32 行两侧列名等价是字符串层面的 `本报告期（1－6月）` vs `本报告期`，
+    与相对年/区间判据无关）。请确认这个「重算后不变」的解释成立。
+21. 核实登记表：`parent_verifications.csv` **64 行 / 27 列**，键集与上一轮**双向差集为空**，
+    逐格比对**唯一变化的字段是 `version_basis`（64/64 行）**，其余 26 列逐字相同。
+    请判断这是否证明第 4 项改的是「依据形态」而非「登记结论」。
+
+## 五、第 5 项：表格边界
+
+22. 读 `_TITLE_ROW`（`parent_verify.py:665`）：确认已扩到报表标题（合并资产负债表/利润表/
+    现金流量表/所有者权益变动表/母公司…/财务报表附注）。
+23. 读 `column_of_amount_aligned_ex`（`:792`）：确认向上找表头**遇标题行即停**（原为 `continue`），
+    表头必须落在「本表标题 → 金额行」之间，扫不过去记 `TABLE_BOUNDARY_UNPROVEN`。
+24. 读 `step4_column_witness.py:124`（`_header_rows` 返回 `(rows, blocked)`）与 `:160`（`witness`）：
+    确认同一条边界规则，并在列范围内对表头片段做两两 `_compatible` 检查，冲突即 `AMBIGUOUS`。
+25. **复现你上轮那个反例**：上方一张有期间表头的表 + 下方另一张无表头表，两条路径都必须
+    不再返回 `OK`。对应自测 `D4 不得跨表借表头`（`TABLE_BOUNDARY_UNPROVEN`）。
+26. **请判定**（汇报 §六 Q5）：`TABLE_BOUNDARY_UNPROVEN` 现对 **12 个侧实例**生效
+    （p1 6 / p2 6），全部同时已有 `NO_LABEL_ROW` 或 `NO_AMOUNT`，即零新增待核。
+    这是巧合还是判据确实没过度收紧？请抽查。
+    另外请确认你上轮的判断仍成立：旁证与生产**共享**表头行/指标带假设，不能称完全独立。
+
+## 六、第 6 项：固定重验基线
+
+27. 读 `step4_parent_targets.csv`（**新文件**）：87 键固定 assignment，含 `frozen_at` / `frozen_note`。
+28. 读 `step4_parent_scan.py:155`（`load_target_baseline`）与 `:172`（`targets`）：
+    keep 集合是「不可变基线 ∪ 当前登记键」，基线里在 `meta_diff` 找不到的键记入
+    `MISSING_FROM_SCOPE` 并打印 `BASELINE_KEYS_NOT_IN_SCOPE`。
+29. **复现你上轮的用例**：用当前 64 行登记表重算 `targets()` 应得 87（不是 86），
+    `SH:600143 FIN.OCF.SQ@20260630` 必须在内。核实 `step4_parent_scan.csv` 是 87 行、
+    基线 87 键 ⊇ 旧 70 键、`MISSING_FROM_SCOPE` 为空。
+30. 核实 `REPORT.md:183` 与 `report_to_codex_round19.md` 的「六类注入各 70 条全部拦住」
+    已**就地**标注「原汇报错误，实际各 1 条」，不是删除。
+31. **请判定**（汇报 §六 Q6）：`step4_parent_targets.csv` 一次性冻结，将来批次 C 需新增目标键时
+    我打算 **append-only**（不改旧行）。这个约定是否可接受？
+
+## 七、逐键比对（我认为这是本轮最硬的证据）
+
+32. 请自己跑：`git show HEAD:runs/issues/S00/errata_20261111_v5/step4_parent_scan.csv`
+    与本轮工作区文件逐键比对，确认：87 vs 87、双向差集为空、verdict 变化 0、
+    侧状态变化**恰好 1 条**（`SH:688800 FIN.OCF.SQ@20251231` 的 p2 `OK` → `NOT_FOUND`）。
+33. 计数：`8611 + 405 + 34 = 9050`，`9050 + 1505 = 10555`；`PENDING_PARENT_COMPATIBILITY` 1214；
+    `RESOLVED_SCOPE_COVERED` 8762；L2 43/231/321/81/378。
+
+## 八、边界
+
+S04 第二轮与 S05 继续不放行；批次 C–E 与第 5 步未开始；43/231/378 未冻结；
+F32（26 份英文版年报）与 `_RE_POLICY` 裸「会计政策」未修。
+
+请按「是否放行批次 C」给结论。若不通过，请把要改的点写成可执行清单（文件 + 函数 + 判据方向）。

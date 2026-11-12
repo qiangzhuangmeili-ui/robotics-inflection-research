@@ -44,9 +44,12 @@ import polarity_cases as pc
 
 ROOT = core.ROOT
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
-SELF_CHECK_VERSION = "V17"
+SELF_CHECK_VERSION = "V18"
 # 待复核轮次：状态串与校验条件共用一处，避免两处字面各写一遍再漂移
-RECHECK_ROUND = 20
+RECHECK_ROUND = 21
+# 第二十一轮自查：`reviewed_at` 原先在 review 字典里硬编码（每轮都要手改一次，
+# 必然漂移——与第十六轮 `round`/汇报指针同一类坑）。改为常量，只在这里写一次。
+REVIEWED_AT = "2026-11-12T23:45:00+08:00"
 
 
 def _cn_num(n):
@@ -64,7 +67,7 @@ def _cn_num(n):
 # 每轮必漂。现在两处都由 RECHECK_ROUND 派生：
 # 本轮改的是「上一轮」的裁决 → 返工轮次 = RECHECK_ROUND − 1；
 # 汇报文件名与本轮待复核轮次同号 → round{RECHECK_ROUND}。
-ROUND_PHASE = "裁决后第 4 步批次 B 取列返工与独立旁证"
+ROUND_PHASE = "裁决后批次 B 取列判据收紧与表格边界"
 ROUND_LABEL = "第%s轮%s" % (_cn_num(RECHECK_ROUND - 1), ROUND_PHASE)
 REPORT_NAME = "report_to_codex_round%d.md" % RECHECK_ROUND
 # 复核结论：`None` = 仍在等第 RECHECK_ROUND 轮复核；给出字符串 = 已收到裁决。
@@ -2766,9 +2769,36 @@ if _real_k is not None:
     ]
     _c_amt, _a_amt, _s_amt = pv.column_of_amount_aligned(_w_amt, "100.009",
                                                         label=("营业收入",))
-    chain["amount_exact_decimal"] = (_s_amt == "NO_AMOUNT")
+    # 第二十轮裁决 3：分位以下有非零尾数 → AMOUNT_PRECISION_INVALID（比 NO_AMOUNT 更明确）
+    chain["amount_exact_decimal"] = (_s_amt in ("NO_AMOUNT", "AMOUNT_PRECISION_INVALID"))
     if not chain["amount_exact_decimal"]:
         c37.append("AMOUNT_TOLERANCE_STILL_LOOSE:%s/%s" % (_s_amt, _c_amt))
+    chain["amount_subcent_rejected"] = not pv._same_amount(
+        pv._dec("100.004"), pv._dec("100.00"))
+    if not chain["amount_subcent_rejected"]:
+        c37.append("SUBCENT_AMOUNT_STILL_EQUAL")
+    # 第二十轮裁决 3：分位尾数不是「列取不到」，而是「这个数不合法」，要能被
+    # gap() 以专门原因拒绝，而不是笼统地回到「原件不可解」。
+    _w_prec = [(0, 100, 40, 110, "营业收入"), (100, 80, 130, 90, "2026年半年度"),
+               (100, 100, 110, 110, "100.00"), (0, 60, 200, 70, "单位：元")]
+    chain["amount_precision_status"] = (
+        pv.column_of_amount_aligned_ex(_w_prec, "100.004",
+                                       label=("营业收入",))[2]
+        == "AMOUNT_PRECISION_INVALID")
+    if not chain["amount_precision_status"]:
+        c37.append("PRECISION_STATUS_MISSING")
+    _gap_prec = _pgap(_real_k, _real_ent, None,
+                      col_of=lambda d, p, v, label=None: (None, "AMOUNT_PRECISION_INVALID"))
+    chain["amount_precision_rejected_by_gap"] = (
+        _gap_prec == "PARENT_AMOUNT_PRECISION_INVALID")
+    if not chain["amount_precision_rejected_by_gap"]:
+        c37.append("PRECISION_PASSES_GAP:%s" % _gap_prec)
+    _gap_tbl = _pgap(_real_k, _real_ent, None,
+                     col_of=lambda d, p, v, label=None: (None, "TABLE_BOUNDARY_UNPROVEN"))
+    chain["table_boundary_rejected_by_gap"] = (
+        _gap_tbl == "PARENT_TABLE_BOUNDARY_UNPROVEN")
+    if not chain["table_boundary_rejected_by_gap"]:
+        c37.append("TABLE_BOUNDARY_PASSES_GAP:%s" % _gap_tbl)
     # ④ 指标行未命中不得回退接受
     _c_lab, _a_lab, _s_lab2 = pv.column_of_amount_aligned(_w_amt, "100.00",
                                                          label=("营业收入",))
@@ -2787,6 +2817,35 @@ if _real_k is not None:
         c37.append("CANON_COLLAPSED:%s" % [
             (a, b, pv.canon_column(a), pv.canon_column(b))
             for a, b in _CANON_DIFF if pv.canon_column(a) == pv.canon_column(b)])
+    # 第二十轮裁决 2：**完整链**反例——canon 不同还不够，错误标签必须被
+    # `cols_equivalent` 拒，并且穿过 `gap()` 时也拒（不能只证明比较函数正确，
+    # 要证明它真的接在生产判据上）。
+    chain["canon_keeps_semantics_via_equivalent"] = not any(
+        pv.cols_equivalent(a, b) for a, b in _CANON_DIFF)
+    if not chain["canon_keeps_semantics_via_equivalent"]:
+        c37.append("CANON_DIFF_BUT_EQUIVALENT:%s" % [
+            (a, b) for a, b in _CANON_DIFF if pv.cols_equivalent(a, b)])
+    chain["annual_year_kept"] = (pv.canon_column("2025年度")
+                                and pv.canon_column("2025年度")
+                                != pv.canon_column("2026年度")
+                                and not pv.cols_equivalent("2025年度", "2026年度"))
+    if not chain["annual_year_kept"]:
+        c37.append("ANNUAL_YEAR_LOST:%r/%r" % (pv.canon_column("2025年度"),
+                                               pv.canon_column("2026年度")))
+    _ent_rel = dict(_real_ent)
+    _ent_rel["p1_column"] = "上年同期（1-6月）"
+    _gap_rel = _pgap(_real_k, _ent_rel, None,
+                     col_of=lambda d, p, v, label=None: ("本报告期（1-6月）", "OK"))
+    chain["rel_year_rejected_by_gap"] = (_gap_rel == "PARENT_COLUMN_MISMATCH")
+    if not chain["rel_year_rejected_by_gap"]:
+        c37.append("REL_YEAR_PASSES_GAP:%s" % _gap_rel)
+    _ent_yr = dict(_real_ent)
+    _ent_yr["p1_column"] = "2025年度"
+    _gap_yr = _pgap(_real_k, _ent_yr, None,
+                    col_of=lambda d, p, v, label=None: ("2026年度", "OK"))
+    chain["annual_year_rejected_by_gap"] = (_gap_yr == "PARENT_COLUMN_MISMATCH")
+    if not chain["annual_year_rejected_by_gap"]:
+        c37.append("ANNUAL_YEAR_PASSES_GAP:%s" % _gap_yr)
     # 期间列头语义类：同义须通、异义须拒（第十三轮 B 项扩到 4 组同义 + 4 组异义）
     # 第十四轮 B 项：「本报告期 / 本期金额」从同义表里**撤掉**——没有区间时把它当同义
     # 是惯例，不是可证事实（中报里两者可能分别是 6 个月与 3 个月）。它改到异义表，
@@ -2828,7 +2887,9 @@ if reopened < 1000:
 add("C37", "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开；"
            "栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类；"
            "取列反例必须走**生产路径**：邻列表头不得被认成本列、两列重叠须报歧义、"
-           "金额须逐位相等、指标行未命中不得回退、canon 不得把区间/相对年压掉",
+           "列链内冲突期间须报歧义、不得跨表借表头、金额须逐位相等（含分位以下尾数）、"
+           "指标行未命中不得回退、canon 不得把区间/相对年/年度压掉且错误标签须穿不过 "
+           "cols_equivalent → gap 的完整链",
     not c37,
     {"violations": c37, "auto_passes": len(auto_pass),
      "empty_scope_passes": len(empty_scope_pass),
@@ -3396,20 +3457,43 @@ _VER_BASIS_TOKENS = {
 }
 
 
-def _version_basis_ok(s, v1, v2):
-    """版本依据是否**真的说明了**两侧各自的版本，而不是一句套话。"""
+def _basis_clauses(t):
+    """把依据文字切成子句：依据必须**逐侧**陈述，不能两句合并成一句套话。"""
+    return [c for c in re.split(r"[；;。\n]", t) if c.strip()]
+
+
+def _version_basis_ok(s, sides):
+    """版本依据是否**逐侧**说明了版本，且绑到该侧的文档或期间。
+
+    第二十轮裁决 4：上一版把 `v1, v2` 收进一个 `set` 再查「两个版本词都出现过」，
+    于是「只解释 p1 的原版」也能过——因为它既没绑定 p1/p2，也不要求两侧各有陈述。
+    现在 `sides` 是 [(tag, doc, period, 版本归类)]，每一侧都必须找到**自己的子句**，
+    该子句要同时含 tag、该侧的版本词、以及该侧的文档号或期间。缺任一侧即拒绝。
+    """
     t = pv._nz(s)
     if len(t) < 12 or _filler_text(t):
         return False
-    for v in {v1, v2}:
-        toks = _VER_BASIS_TOKENS.get(v) or ()
-        if not any(x in t for x in toks):
+    cl = _basis_clauses(t)
+    for tag, doc, period, ver in sides:
+        toks = _VER_BASIS_TOKENS.get(ver) or ()
+        hit = None
+        for c in cl:
+            if tag in c and any(x in c for x in toks):
+                hit = c
+                break
+        if hit is None:
+            return False
+        if not ((doc and doc in hit) or (period and period in hit)):
             return False
     return True
 
 
 def _scope_basis_ok(s, periods):
-    """口径依据是否点到合并范围、单位、币种，并至少给出一个具体期间。"""
+    """口径依据是否点到合并范围、单位、币种，并**给出两侧各自的期间**。
+
+    第二十轮裁决 4：上一版只要求「任一期出现」，于是「只写一个期间」也能过。
+    两期口径是这条核证的全部意义（累计差分要两个父数同口径），缺一期即拒绝。
+    """
     t = pv._nz(s)
     if len(t) < pv._MIN_BASIS or _filler_text(t):
         return False
@@ -3419,7 +3503,7 @@ def _scope_basis_ok(s, periods):
         return False
     if not any(x in t for x in _BASIS_CUR_TOKENS):
         return False
-    if not any(p and p in t for p in periods):
+    if not all(p and p in t for p in periods):
         return False
     return True
 
@@ -3459,6 +3543,8 @@ def check_c41(rows, page_of=None, col_of_for=None):
             bad.append(tag + ("PARENT_ABSENT",))
             continue
         # 口径三项：非空、与实际父输入一致、且**两侧父输入本身必须同口径**
+        v1 = (r.get("p1_adjust_version") or "").strip()
+        v2 = (r.get("p2_adjust_version") or "").strip()
         for f in ("consolidation_scope", "unit_scale", "currency"):
             v = (r.get(f) or "").strip()
             if not v:
@@ -3475,10 +3561,12 @@ def check_c41(rows, page_of=None, col_of_for=None):
             bad.append(tag + ("SCOPE_NOT_SHARED_BETWEEN_PARENTS:currency",))
         if (r.get("unit_scale") or "").strip() not in pv.AMOUNT_UNITS:
             bad.append(tag + ("UNIT_NOT_AMOUNT",))
-        v1 = (r.get("p1_adjust_version") or "").strip()
-        v2 = (r.get("p2_adjust_version") or "").strip()
         # 第十九轮 D4：版本依据必须写出两侧各自的版本归类，不能只留一句套话。
-        if not _version_basis_ok(r.get("version_basis"), v1, v2):
+        # 第二十轮裁决 4：还要**逐侧绑定**文档/期间，缺任一侧即拒绝。
+        if not _version_basis_ok(
+                r.get("version_basis"),
+                [("p1", (r.get("p1_doc") or "").strip(), pk, v1),
+                 ("p2", (r.get("p2_doc") or "").strip(), prev_quarter(pk), v2)]):
             bad.append(tag + ("VERSION_BASIS_UNSUBSTANTIATED",))
         colf = col_of_for(sec) if col_of_for else None
         for side, b in (("p1", b1), ("p2", b2)):
@@ -3587,13 +3675,31 @@ def _c41_inject():
         ("swap_column", lambda r: r.update(p1_column=r.get("p2_column") or "本期"),
          lambda r: not pv.cols_equivalent(r.get("p1_column") or "",
                                           r.get("p2_column") or "")),
+        # 第二十轮裁决 4：只解释一侧的依据必须被拦住。
+        # 这两条注入的文本**满足除「另一侧」以外的全部条件**，所以拦得住才说明
+        # 判据真的在逐侧比对，而不是靠长度/关键词碰巧过不去。
+        ("version_basis_p1_only",
+         lambda r: r.update(version_basis=(
+             "p1 的 s00_v10 version_used 为 %s，取该版本列（%s）"
+             % ((r.get("p1_adjust_version") or "").strip(),
+                (r.get("p1_doc") or "").strip()))),
+         None),
+        ("scope_basis_one_period",
+         lambda r: r.update(scope_basis=(
+             "两期均为合并口径、币种人民币、金额单位元；p1 取 %s 第 %s 页（期间 %s）"
+             % ((r.get("p1_doc") or "").strip(), (r.get("p1_page") or "").strip(),
+                (r.get("p1_period") or "").strip()))),
+         None),
     ]
     for name, mut, pick in cases:
         rows = [dict(x) for x in base if (pick is None or pick(x))]
         out["_rows_" + name] = len(rows)
         for x in rows:
             mut(x)
-        out[name] = len(check_c41(rows, page_of=_pdf_ev, col_of_for=_col_of))
+        bad = check_c41(rows, page_of=_pdf_ev, col_of_for=_col_of)
+        # 第二十轮裁决 4：分母按**被拦住的唯一记录键数**算，不用违例条数冒充行数
+        # （一行可能报出多条违例，那样「拦住数」会虚高）。
+        out[name] = len({(b[0], b[1], b[2]) for b in bad})
     out["_rows"] = len(base)
     ok = all(out[k] == out["_rows_" + k] for k in out if not k.startswith("_"))
     return ok, out
@@ -3605,9 +3711,11 @@ add("C41", "父输入登记必须能从原件重推：逐行回读登记页，�
     "父期间须绑定本行两期、栏目须是原文连续片段且等于该金额在原件中的实际列、"
     "页码须合法、调整版本须等于 s00_v10 的 version_used 归类、"
     "范围/单位/币种须与实际两期父输入同时相符、口径依据须点到合并范围/单位/币种/期间、"
-    "版本依据须写出两侧各自的版本归类；假引文/错栏目/错父数/错页/版本反写/短依据/"
-    "错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换十一类注入"
-    "必须**逐行**全部被拦住",
+    "版本依据须写出两侧各自的版本归类并逐侧绑定文档/期间、口径依据须给出两侧期间；"
+    "假引文/错栏目/错父数/错页/版本反写/短依据/"
+    "错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换/"
+    "只解释 p1 的版本依据/只给一期的口径依据十三类注入"
+    "必须**逐行**全部被拦住，且分母按被拦住的唯一记录键数计",
     (not _c41) and _c41_inj_ok,
     {"violations": _c41[:5], "violation_count": len(_c41),
      "registered": len(_PV_ROWS), "injections": _c41_inj})
@@ -3634,7 +3742,7 @@ review = {
     "review_nature": "SELF_CHECK",
     "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS" if passed == len(checks)
                 else "SELF_CHECK_FAIL",
-    "reviewed_at": "2026-11-12T00:50:00+08:00",
+    "reviewed_at": REVIEWED_AT,
     "checks_pass": passed, "checks_total": len(checks),
     "checks": checks,
     "fault_injection": {
@@ -3819,11 +3927,13 @@ review = {
         "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
         "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位，属上游核验记录问题",
         "第 4 步只做了批次 A 的**证据采集**（272 份年报的文档级事件确认），**未据此闭合任何一条**：证据命题到采用对象的映射未建立，3,803 条已回退待核；字段级影响确认（`content_reviews`）、采用链确认（`parent_verifications`）、分季度表来源（`scope_verifications`）三张登记表仍为空",
-        "第 5 步重算分层与受限表未开始；44/231/378 未锁定",
+        "第 5 步重算分层与受限表未开始；43/231/378 未锁定（第二十轮 `SH:600143` 脱离 HOLD 后由 44/320 变为 43/321，仍未冻结）",
         "锚定期回退与上游准入的间接依赖未覆盖",
         "`_RE_POLICY` 是裸「会计政策」，正文里的「公司会计政策」也会被认成 POLICY_CHANGE 原因；本轮未改——收紧它会让 1,007 份存量证据的极性发生变化，需单独一轮并重做回放口径",
         "影响动词窗口已在第十四轮改为 `_effect_win()`（分句级、不设字数上限），本条原先写的「span=24、本轮未改」已失效，此处更正：残余风险方向反转——同一分句内「动词在前、金额在后很远」会**多认**（不是漏认）；窗口仍受「上一笔金额结束位置」约束，不会跨金额传播；上述两点均尚无真实语料检验",
         "`_date_span()` 只能解析「年+月区间 / 上半年 / H1H2 / Qn / 第n季度 / 年月日 / 年月」这些写法；两侧都写了期间但都解析不出时仍会退到语义类（如「年初至报告期末」对「本期数」），第十五轮只堵住「一侧解析出、另一侧写着期间线索却解不出」这一种，不是全量覆盖",
+        "第二十一轮新增的取列判据仍有两处放松，均已在 `report_to_codex_round21.md` §0.4 披露：① `_compatible()` 把「一侧有分量、另一侧为空」当不约束，64 条登记里 43 条靠这条通过；② `TABLE_BOUNDARY_UNPROVEN` 收紧后对 12 个侧实例生效，全部同时已有 `NO_LABEL_ROW`/`NO_AMOUNT`（零新增待核），但表头与数据之间夹「单位：元」或「续」的真实页面会退化为待核，覆盖率上限未量化",
+        "`step4_column_witness.py` 与生产取列**共享「表头行 / 指标带」假设**（只有列聚类路径不同：右边界聚类 vs 词坐标三段还原），不能称为完全独立；`EVIDENCE_OK && WITNESS_OK` 只是双路径互不矛盾，不替代外部复核",
     ],
     "not_independent": "执行方自检，不构成独立验收；仅抽验 %d 行 / %d 类 / %d 键回读原件物理页"
                        "（计数取自 sampling_v5.json，不在此处另写一份）。"

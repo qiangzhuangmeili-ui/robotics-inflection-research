@@ -1,18 +1,45 @@
-# S00 勘误 V5 交接说明（自检 V17；批次 B 取列返工与独立旁证后，待第 20 轮复核）
+# S00 勘误 V5 交接说明（自检 V18；取列判据收紧与表格边界后，待第 21 轮复核）
 
-> 版本：`ERRATA_V5`，自检 `V17`，43/43 PASS。
-> 复核：Codex 第十九轮 **RETURN_FOR_REWORK**（D1–D5 五项缺陷 + 6 条返工清单）→ `rework_round19.json`；
-> 本轮返工结果逐条对照见 `rework_round19_result.json`。
-> 第 4 步批次 B **重验 87 条 → 登记 64 条**（旧 70 条中 9 条撤下、3 条新增），
-> 新增独立列身份旁证 `step4_column_witness.py`（64/64 两侧 `OK:AGREE`）；L2 仍 44/231/320/81/378（未变）。
-> 第 4 步批次 C–E 与第 5 步未开始；44/231/378 未冻结；S04 第二轮与 S05 不放行。
+> 版本：`ERRATA_V5`，自检 `V18`，43/43 PASS。
+> 复核：Codex 第二十轮 **RETURN_FOR_REWORK**（6 条返工项，不放行批次 C）→ `_codex_out_round20.txt`；
+> 本轮返工结果逐条对照见 `rework_round20_result.json`。
+> 第 4 步批次 B **重验 87 条 → 登记 64 条 / 待核 23 条**，**键集与名单与上一轮逐位相同**
+> （唯一变化 `SH:688800 FIN.OCF.SQ@20251231` 的 p2 `OK`→`NOT_FOUND`，原因 `AMBIGUOUS`，
+> 该行本就 `BLOCKED`）；登记表 64 行 × 27 列，逐格比对**唯一变化字段是 `version_basis`**。
+> **L2 维持 43/231/321/81/378**（`SH:600143` 已在第二十轮脱离 HOLD，见 §0-b）。
+> 第 4 步批次 C–E 与第 5 步未开始；43/231/378 未冻结；S04 第二轮与 S05 不放行。
 > 性质：**SELF_CHECK**。自检通过 ≠ 独立验收通过。
 > 上一版 V4 保留在 `runs/issues/S00/errata_20261111_v4/`，未删除。
 > 复现：`step4_parent_scan.py` → `step4_column_witness.py` → `step4_apply_parents.py` →
 > `build_errata_v5.py` → `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`
 > （顺序不能换；旁证必须在登记之前跑，否则等于先登记后补证）。
 
-## 0-b. 第 4 步批次 B 返工：取列结构还原 + 独立旁证（本轮）
+## 0-a. 第 4 步批次 B：取列判据收紧与表格边界（本轮，V18）
+
+第二十轮裁决：**`RETURN_FOR_REWORK`，不放行批次 C**；边界是「不认定 64 条全部错误、
+272 条事件证据保留不重评」。本轮仍然**只改判定方法**，再按新方法把 87 条全部重推。
+
+| 裁决项 | 本轮实现 | 位置 |
+|---|---|---|
+| 1 表头合并的期间冲突 | `_canon_parts` 三维拆分 + `_compatible`（任一分量两侧都写且不同即冲突）；`_header_cells` 并格改用它；`_chain_cells` **合并前**过 `_compatible`，冲突则不并 → 两个候选 → `AMBIGUOUS` | `parent_verify.py:933-971, 683, 719` |
+| 2 等价判定保留完整语义 | `cols_equivalent` 删短路，逐维度比对；`_RE_SPAN_YEAR` 使 `2025年度`/`2026年度` → `R-y-1-12`；C37 补四项完整链反例 | `parent_verify.py:433, 369`；`verify_v5.py:2810-2890` |
+| 3 金额与引文边界 | `_same_amount` 直接比 Decimal；`_has_subcent` → 取列入口 `AMOUNT_PRECISION_INVALID`；`_num_in_quote` 删「任意数字位切分」，只留 exact 双核对 / 严格 token 全等 | `parent_verify.py:495, 510, 132` |
+| 4 逐侧依据 + 逐行注入 | `_basis_clauses` + `_version_basis_ok` 逐侧绑定；`_scope_basis_ok` 须两期都出现；`_version_basis` 每侧追加 `（DOC-…，期间 …）`；注入新增 `version_basis_p1_only` / `scope_basis_one_period`，拦截按唯一键数计 | `verify_v5.py:3457, 3462, 3488, 3639` |
+| 5 表格边界 | `_TITLE_ROW` 扩到报表标题；向上找表头遇标题行即停，扫不过去记 `TABLE_BOUNDARY_UNPROVEN`；旁证同规则 + 表头片段两两 `_compatible` | `parent_verify.py:665, 792`；`step4_column_witness.py:124, 160` |
+| 6 固定重验基线 | `step4_parent_targets.csv`（87 键 + `frozen_at`）；`load_target_baseline()`；keep = 基线 ∪ 当前登记键；缺键记 `MISSING_FROM_SCOPE` 并打印 | `step4_parent_scan.py:155, 172` |
+
+**结果**：`EVIDENCE_OK 64 / BLOCKED 23`，p1 `OK 73 / NOT_FOUND 14`，p2 `OK 70 / NOT_FOUND 17`；
+旁证 64/64 `WITNESS_OK` 且两侧 `OK:AGREE`；`skipped {not_evidence_ok: 23, 其余 0}`。
+逐键比对上一轮：**87 vs 87、双向差集为空、verdict 变化 0、侧状态变化恰好 1 条**。
+计数 `8611 / 9050 / 10555 / 1214 / 8762` 与 L2 `43/231/321/81/378` **全部不变**。
+
+**判据收紧的代价（不要忘）**：
+- `TABLE_BOUNDARY_UNPROVEN` 对 **12 个侧实例**生效，全部同时已有 `NO_LABEL_ROW`/`NO_AMOUNT`，
+  零新增待核；但表头与数据之间夹 `单位：元` / `续` 的真实页面会退化为待核，上限未量化。
+- `_compatible` 的「空 = 不约束」让 **43/64** 行靠「一侧有分量、另一侧空」通过，是一条放松。
+- `step4_column_witness.py` 仍与生产共享「表头行 / 指标带」假设，不是完全独立。
+
+## 0-b. 第 4 步批次 B 返工：取列结构还原 + 独立旁证（第二十轮，历史）
 
 第十九轮裁决原文：**「本裁决不宣告这 70 条全部为假，但不接受据当前方法将批次 B 核证验收通过。」**
 所以本轮不改「哪些键应当闭合」，只改**判定方法**，再按新方法把 87 条全部重推。

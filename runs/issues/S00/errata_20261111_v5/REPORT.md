@@ -1,23 +1,113 @@
-# S00 勘误台账 V5 报告（批次 B 取列返工与独立旁证后，待第 20 轮复核）
+# S00 勘误台账 V5 报告（取列判据收紧与表格边界后，待第 21 轮复核）
 
 - 目录：`runs/issues/S00/errata_20261111_v5/`
 - 性质：**SELF_CHECK**，不是独立验收
-- 自检版本：**V17**，43/43 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
-- 第十九轮裁决：`RETURN_FOR_REWORK`（5 项缺陷 D1–D5 + 6 条返工清单）→ `rework_round19.json`
-- **本轮**：按 6 条清单返工；批次 B **重验 87 条 → 登记 64 条**（旧 70 条中 9 条撤下、3 条新增），
-  新增**独立列身份旁证** `step4_column_witness.py`（64/64 两侧一致）
-- 计数（口径写明，勿混用）：
-  - 元数据差异未闭合（`meta_diff` open）= 8,606 → **8,611**
-  - 合计核心未闭合（`summary.open_total_core` = 元数据 + 键 + 值）= 9,045 → **9,050**
-  - 含补充列（`summary.open_total_all`）= 10,550 → **10,555**
-  - `PENDING_PARENT_COMPATIBILITY` 1,209 → **1,214**（净增 5：撤下 9 条覆盖的格、登记 3 条新键）
-  - L2 仍 **44 / 231 / 320 / 81 / 378（未变）**
+- 自检版本：**V18**，43/43 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
+- 第二十轮裁决：`RETURN_FOR_REWORK`（6 条返工项，不放行批次 C）→ `_codex_out_round20.txt`
+- **本轮**：按 6 条返工项收紧判据；批次 B **重验 87 条 → 登记 64 条 / 待核 23 条**，
+  **键集与名单与上一轮逐位相同**（唯一变化 `SH:688800 FIN.OCF.SQ@20251231` 的 p2
+  `OK`→`NOT_FOUND`，原因 `AMBIGUOUS`，该行本就 `BLOCKED`）
+- 计数（口径写明，勿混用；本轮**全部不变**）：
+  - 元数据差异未闭合（`meta_diff` open）= **8,611**
+  - 合计核心未闭合（`summary.open_total_core` = 元数据 + 键 405 + 值 34）= **9,050**
+  - 含补充列（`summary.open_total_all` = 核心 + 1,505）= **10,555**
+  - `PENDING_PARENT_COMPATIBILITY` = **1,214**；`RESOLVED_SCOPE_COVERED` = **8,762**
+  - L2 = **43/231/321/81/378**（`SH:600143` 已在第二十轮脱离 HOLD，见 §0-prev20 的 0.5 节）
 - 复现顺序：`step4_parent_scan.py` → `step4_column_witness.py` → `step4_apply_parents.py` →
   `build_errata_v5.py` → `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`
 
 ---
 
-## 〇、第二十轮返工：取列结构还原 + 独立列身份旁证
+## 〇、第二十一轮返工：取列判据收紧与表格边界
+
+第二十轮裁决原文：**「裁决：`RETURN_FOR_REWORK`，本轮不放行批次 C。」**
+边界：**「本裁决不认定 64 条登记全部错误；272 条已接受事件证据保留不重评。」**
+因此本轮仍然只改**判定方法**，再按新方法把 87 条全部重推一遍。
+
+### 0.1 六条返工项逐条落地
+
+| # | 裁决要求 | 本轮实现 | 位置 |
+|---|---|---|---|
+| 1 | 区分「互补片段」与「冲突期间」；列链内含多个冲突期间必须 `AMBIGUOUS`；不能只用 canon 非空判完整列名 | 新增 `_canon_parts()` 三维拆分 + `_compatible()`（任一分量两侧都写了且不同即冲突）。`_header_cells` 的并格判据由 `not (canon(cur) and canon(tx))` 改为 `_compatible(cur,tx)`；`_chain_cells` **跨行合并前**先过 `_compatible`，冲突则不并、形成两个候选，由调用方判 `AMBIGUOUS`（不是链合并后数候选） | `parent_verify.py:933-971, 683, 719` |
+| 2 | 生产等价判定保留完整语义；年份/相对期间/起止区间/累计属性有冲突即拒；年度也须解析年份；C37 补完整链 | `cols_equivalent` **删去**「两侧都有区间就 return」的短路，改为逐维度（区间→相对年→累计）比对；新增 `_RE_SPAN_YEAR` 使 `2025年度`/`2026年度` → `R-y-1-12`；C37 新增四项：`canon_keeps_semantics_via_equivalent`、`annual_year_kept`、`rel_year_rejected_by_gap`、`annual_year_rejected_by_gap` | `parent_verify.py:433, 369, 383`；`verify_v5.py:2810-2890` |
+| 3 | 金额折算后直接比 Decimal；超精度且有非零尾数时拒绝或待核；引文须携带词位置并复核词值；取消任意数字位切分 | `_same_amount` 改直接比 Decimal（`1.0==1.00` 真、`100.004==100.00` 假）；新增 `_has_subcent`，超精度目标在**取列入口**即 `AMOUNT_PRECISION_INVALID`（不参与匹配）；`_num_in_quote` 删掉第三级切分，只留「exact 双核对」与「严格 token 全等」 | `parent_verify.py:495, 510, 132, 792` |
+| 4 | 两侧分别绑定文档/期间/版本归类；缺任一侧均拒；补单项注入；覆盖按**唯一记录键数**计 | 新增 `_basis_clauses()` 按 `；;。\n` 切子句；`_version_basis_ok(s, sides)` 逐侧绑定（该侧标记 + 该侧版本词 + 该侧文档号或期间）；`_scope_basis_ok` 由「任一期」改「两期都」；`step4_apply_parents._version_basis` 每侧追加 `（DOC-…，期间 …）`；`_c41_inject` 新增 `version_basis_p1_only`、`scope_basis_one_period`，拦截数按 `(sec,fld,pk)` 去重计 | `verify_v5.py:3457, 3462, 3488, 3639`；`step4_apply_parents.py` |
+| 5 | 先限定同一表格区域再绑定表头/指标行/金额列；遇新表标题或无法证明连续性时留待核；旁证须处理重叠与多期间候选 | `_TITLE_ROW` 扩到报表标题（合并资产负债表/利润表/现金流量表/所有者权益变动表/母公司…/财务报表附注）；`column_of_amount_aligned_ex` 向上找表头**遇标题行即停**（原为 `continue`），扫不过去记 `TABLE_BOUNDARY_UNPROVEN`；`step4_column_witness._header_rows` 同规则并对表头片段两两 `_compatible` | `parent_verify.py:665, 792`；`step4_column_witness.py:124, 160` |
+| 6 | `targets()` 固定不可变基线；重跑不得因登记撤下或 HOLD 变化缩小范围；文档残留就地标注 | 新增 `step4_parent_targets.csv`（87 键固定 assignment + `frozen_at`）；`load_target_baseline()` 读基线，keep 集合 = 「基线 ∪ 当前登记键」，基线里找不到的键记 `MISSING_FROM_SCOPE` 并打印；`REPORT.md` 与 `report_to_codex_round19.md` 的「各 70 条」**就地**标注「原汇报错误，实际各 1 条」 | `step4_parent_scan.py:155, 172`；`step4_parent_targets.csv` |
+
+### 0.2 结果：键集与名单零变化
+
+| 项 | 上一轮 | 本轮 |
+|---|---|---|
+| 目标（固定基线） | 87 | **87** |
+| `EVIDENCE_OK` | 64 | **64** |
+| `BLOCKED` | 23 | **23** |
+| 登记 `parent_verifications.csv` | 64 行 / 27 列 | **64 行 / 27 列**（键集双向差集为空） |
+| 独立旁证 | 64/64 `WITNESS_OK` | **64/64 `WITNESS_OK`**，p1/p2 全 `OK:AGREE` |
+| `skipped` | — | `{not_evidence_ok: 23, version_inconsistent: 0, witness_fail: 0}` |
+
+两侧状态：`p1 OK 73 / NOT_FOUND 14`、`p2 OK 70 / NOT_FOUND 17`（上轮 p2 为 71/16）。
+
+**逐键比对上一轮扫描表**（`git show HEAD:…/step4_parent_scan.csv`）：
+
+```
+prev 87  now 87        only prev []   only now []
+verdict changed 0      side status changed 1
+  SH:688800 FIN.OCF.SQ@20251231  ('NOT_FOUND','OK') -> ('NOT_FOUND','NOT_FOUND')
+```
+
+该行本就因 p1 `COLUMN_NOT_CONTIGUOUS(2025年度)` 而 `BLOCKED`，p2 转 `AMBIGUOUS`
+不改变 verdict，故 64 / 23 / 计数 / L2 全部不动。
+
+**登记表实际变化**：逐格比对 64 行 × 27 列，**唯一变化的字段是 `version_basis`（64/64 行）**
+——每侧追加了 `（文档号，期间）`。其余 26 列逐字相同。即第 4 项改的是**依据的形态**，
+不是**登记的结论**。
+
+### 0.3 自测与注入
+
+`selftest_column_rules.py`：**38 项全 PASS，`FAIL 0 []`**。新增 `d4()` 十二项：
+横排互补片段成一列、列链冲突期间报歧义、不得跨表借表头、相对年冲突 ×2、年度保留年份、
+年度=1-12月、exact 须核对数值、取消任意数字位切分、exact 正确时命中。
+
+C41 注入十三类（分母 = 该类注入行数，拦截 = 唯一记录键数）：
+
+| 注入类 | 注入 | 拦住 |
+|---|---:|---:|
+| `fake_quote` / `wrong_column` / `wrong_value` / `wrong_page` | 64 | 64 |
+| `version_flip` / `short_basis` / `wrong_period` | 64 | 64 |
+| `empty_version_basis` / `repeat_version_basis` / `repeat_scope_basis` | 64 | 64 |
+| **`version_basis_p1_only`**（新增） | 64 | **64** |
+| **`scope_basis_one_period`**（新增） | 64 | **64** |
+| `swap_column` | 32 | 32 |
+
+`swap_column` 分母 32 已在**修复 `cols_equivalent` 之后**重算，仍为 32
+（那 32 行两侧列名等价是字符串层面的 `本报告期（1－6月）` vs `本报告期`）。
+
+### 0.4 判据收紧的代价（如实报）
+
+- **`TABLE_BOUNDARY_UNPROVEN`** 现对 **12 个侧实例**生效（p1 6 / p2 6），
+  全部同时已有 `NO_LABEL_ROW` 或 `NO_AMOUNT`——**零新增待核**。
+  但覆盖率上限未量化：真实页面若在表头与数据之间夹 `单位：元` 或 `续`，会退化为待核。
+- **「空 = 不约束」**：`_compatible` 把「一侧有值、另一侧为空」当不约束。
+  64 条登记里 **43 条**至少一个分量属于这种情形（典型 `本报告期（1－6月）` 对 `本报告期`）。
+  这是必要的（两侧是不同文档的不同列名习惯），但确实是一条放松。
+- **`AMOUNT_PRECISION_INVALID` 取严的那一支**：直接拒绝取列，不是「取到再标待核」。
+- **`step4_column_witness.py` 仍与生产共享「表头行 / 指标带」假设**，只是列聚类路径不同，
+  不能称为完全独立。
+
+### 0.5 本轮修掉的自查缺陷（不是裁决点，但会造假）
+
+1. `_RE_SPAN_QUARTER` 行尾换行被误删（插入 `_RE_SPAN_YEAR` 时接到同一行）→ `syntax error`，已拆回两条赋值。
+2. `_compatible` 首版只比区间，`2025年度`/`2026年度` 都是 1-12 月仍判兼容 → 加 `_RE_SPAN_YEAR` 后才区分。
+3. 自测夹具自身命中 `_TITLE_ROW`（`单位：元` 挡住表头）→ `D4 列链冲突期间报歧义` 首版返回
+   `TABLE_BOUNDARY_UNPROVEN`，改四列表头夹具后通过。
+4. `_version_basis` 未带文档号/期间，第 4 项改严后 64 条会全灭 → 补写后 64/64 通过。
+   **判据与数据形态必须同时改**，只改判据等于把全部登记打掉。
+5. 注入计数按违例条数（一行可报多条，虚高）→ 改按唯一 `(sec,fld,pk)` 计。
+
+---
+
+## 〇-prev20（第二十轮）：取列结构还原 + 独立列身份旁证
 
 第十九轮裁决原文：**「本裁决不宣告这 70 条全部为假，但不接受据当前方法将批次 B 核证验收通过。」**
 因此本轮不改「哪些键应当闭合」，只改**判定方法**，然后按新方法把 87 条全部重推一遍。
@@ -178,6 +268,10 @@
 
 C41 逐行回原件重推（引文含列名+指标名+父数、页码定位、栏目等于实际列、版本标记、
 口径三项、依据文字），六类注入各 70 条全部拦住。
+
+> **原汇报错误，实际各 1 条**（第二十轮裁决 6 指出）：当时 `_c41_inject()` 只改首行，
+> `review.json` 六项各记 1，「各 70 条」是手写进报告的，与自检产物不符。
+> 已在第二十轮改为逐行注入并记分母 `_rows_*`，报告不再另写数字。此处按裁决要求就地保留原句并标注。
 
 自查发现并修掉：① `pdf_pages()` 前移后 `_nz()` 仍定义在后半段，`NameError` 被逐页
 `try/except` 吞成「整本页面空串」，表现为「原件不可用」；② 整本读取失败不再写入缓存；

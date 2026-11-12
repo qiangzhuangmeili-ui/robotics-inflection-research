@@ -25,6 +25,7 @@ FILES = [
     "scope_verifications.csv", "ruling_scope.csv",
     "event_verifications.csv", "step4_event_scan.csv", "step4_parent_scan.csv",
     "step4_column_witness.csv",
+    "step4_parent_targets.csv",
     "dispute_ledger.csv", "restricted_claims.csv", "l2_dependency_check.csv",
     # 抽样
     "sampling_v5.csv", "l2_dependency_summary.json", "sampling_v5.json",
@@ -39,16 +40,18 @@ FILES = [
     "report_to_codex_round17.md", "report_to_codex_round18.md",
     "report_to_codex_round19.md", "rework_round19.json",
     "report_to_codex_round20.md", "rework_round19_result.json",
+    "report_to_codex_round21.md", "rework_round20_result.json",
     "_codex_prompt_round11.txt", "_codex_prompt_round12.txt",
     "_codex_prompt_round13.txt", "_codex_prompt_round14.txt",
     "_codex_prompt_round15.txt", "_codex_prompt_round16.txt",
     "_codex_prompt_round17.txt", "_codex_prompt_round18.txt",
     "_codex_prompt_round19.txt", "_codex_prompt_round20.txt",
+    "_codex_prompt_round21.txt",
     "codex_ruling_round5.md",
     "_codex_out_round10.txt", "_codex_out_round11.txt", "_codex_out_round12.txt",
     "_codex_out_round13.txt", "_codex_out_round14.txt", "_codex_out_round15.txt",
     "_codex_out_round16.txt", "_codex_out_round17.txt", "_codex_out_round18.txt",
-    "_codex_out_round19.txt",
+    "_codex_out_round19.txt", "_codex_out_round20.txt",
 ]
 
 rev = json.loads((OUT / "review.json").read_text(encoding="utf-8"))
@@ -59,7 +62,7 @@ if missing:
 man = {
     "version": "ERRATA_V5",
     "self_check_version": rev["self_check_version"],
-    "generated_at": "2026-11-12T01:40:00+08:00",
+    "generated_at": "2026-11-12T23:50:00+08:00",
     "issue": "S00",
     "stage": "ERRATA",
     "nature": "SELF_CHECK",
@@ -80,6 +83,7 @@ man = {
         "第十七轮 RETURN_FOR_REWORK（撤销 3,803 条事件闭合）",
         "第十八轮 ACCEPTED_WITH_LIMITS（acceptance_round18.json，批次 A 四项通过）",
         "第十九轮 RETURN_FOR_REWORK（rework_round19.json，D1–D5 + 6 条返工清单）",
+        "第二十轮 RETURN_FOR_REWORK（_codex_out_round20.txt，6 条返工项，不放行批次 C）",
     ],
     "files": [],
 }

@@ -60,16 +60,23 @@ def _version_basis(rec):
     第十九轮 D4：原实现无论两侧是不是 RESTATED，都写「两段引文均不含
     「调整后/重述后/更正后」，即两期都取原版列」——版本是 RESTATED 时这句话
     本身是假的。C41 现在会验这句话的内容，写假话就过不了。
+
+    第二十轮裁决 4：C41 现在按**子句**逐侧绑定——每一侧的子句必须同时含
+    `p1`/`p2` 标记、该侧的版本词、以及该侧的文档号或期间。所以这里把
+    `（DOC-…，期间 …）` 写进各自的子句，不能只写一句总述。
     """
     v1, v2 = pv.ver_class(rec["p1_ver"]), pv.ver_class(rec["p2_ver"])
     seg = []
     for side, v in (("p1", v1), ("p2", v2)):
+        tail = "（%s，期间 %s）" % (rec[side + "_doc"], rec[side + "_period"])
         if v == "RESTATED":
             seg.append("%s 的 s00_v10 version_used 为 %s，取重述/调整后列"
-                       "（引文含「调整后/重述后/更正后」标记）" % (side, rec[side + "_ver"]))
+                       "（引文含「调整后/重述后/更正后」标记）%s"
+                       % (side, rec[side + "_ver"], tail))
         else:
             seg.append("%s 的 s00_v10 version_used 为 %s，取原版列"
-                       "（引文不含「调整后/重述后/更正后」）" % (side, rec[side + "_ver"]))
+                       "（引文不含「调整后/重述后/更正后」）%s"
+                       % (side, rec[side + "_ver"], tail))
     return "；".join(seg) + "。两期版本归类一致，不存在跨版本相减。"
 
 

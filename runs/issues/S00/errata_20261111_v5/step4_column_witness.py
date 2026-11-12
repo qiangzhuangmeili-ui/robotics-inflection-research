@@ -122,21 +122,29 @@ def _band(rows, ri, max_rows=2, max_dy=40.0):
 
 
 def _header_rows(rows, amt_ri):
-    """金额行上方最近的一行「≥2 格 + 含期间词 + 非页眉标题」，可再向上并一行。"""
+    """金额行上方最近的一行「≥2 格 + 含期间词 + 非页眉标题」，可再向上并一行。
+
+    第二十轮裁决 5：标题行是**表格边界**，不是可以跳过的噪声。上一版
+    `continue` 会越过「合并现金流量表」这类标题，把上一张表的表头借给下一张
+    无表头的表。现在扫到标题行就停，返回 `blocked=True` 由调用方记待核。
+    返回 (行号列表, 是否被标题行挡住)。
+    """
     hdr = None
+    blocked = False
     for rj in range(amt_ri - 1, -1, -1):
         _y, cells = rows[rj]
-        if len(cells) < 2:
-            continue
         txt = "".join(c[2] for c in cells)
         if _TITLE.search(txt):
+            blocked = True
+            break
+        if len(cells) < 2:
             continue
         if not any(_HEADER_HINT.search(c[2]) for c in cells):
             continue
         hdr = rj
         break
     if hdr is None:
-        return []
+        return [], blocked
     out = [hdr]
     for rj in range(hdr - 1, -1, -1):
         if rows[out[-1]][0] - rows[rj][0] > 50.0:
@@ -146,7 +154,7 @@ def _header_rows(rows, amt_ri):
             break
         out.append(rj)
         break
-    return out
+    return out, False
 
 
 def witness(pdf, page, value, aliases):
@@ -175,9 +183,9 @@ def witness(pdf, page, value, aliases):
         return {"status": "AMBIGUOUS", "why": "same_row_cols=%d" % len(spans)}
     ri, ax0, ax1, atxt = hits[0]
     # 2) 独立列格：整页数字右边界
-    hdr = _header_rows(rows, ri)
+    hdr, blocked = _header_rows(rows, ri)
     if not hdr:
-        return {"status": "NO_HEADER_ROW"}
+        return {"status": "TABLE_BOUNDARY_UNPROVEN" if blocked else "NO_HEADER_ROW"}
     edges = _column_grid(rows, [rows[j][0] for j in hdr])
     idx, span = _column_span(edges, ax1)
     if span is None:
@@ -206,6 +214,15 @@ def witness(pdf, page, value, aliases):
                 parts.append((rows[j][0], x0, tx))
     if not parts:
         return {"status": "NO_COLUMN_TEXT", "why": "span=%.1f-%.1f" % span}
+    # 第二十轮裁决 5：旁证列范围也要处理「多个期间候选」。同一列范围内若落进
+    # 两个**互相冲突**的期间片段（上一行 2025年半年度、下一行 2026年半年度），
+    # 不得拼起来择一，直接报歧义。
+    txts = [t for _y, _x, t in parts]
+    for i in range(len(txts)):
+        for j in range(i + 1, len(txts)):
+            if not pv._compatible(txts[i], txts[j]):
+                return {"status": "AMBIGUOUS", "column": "".join(txts),
+                        "why": "conflict:%s|%s" % (txts[i], txts[j])}
     col = "".join(t for _y, _x, t in sorted(parts, key=lambda p: (p[0], p[1])))
     if not pv.canon_column(col):
         return {"status": "COLUMN_NOT_PERIOD", "column": col}

@@ -149,14 +149,37 @@ def _quote(page_txt, offs, amt_word, column, aliases):
     return seg
 
 
+MISSING_FROM_SCOPE = []
+
+
+def load_target_baseline():
+    """固定 assignment：`step4_parent_targets.csv`（87 键，一次性冻结）。
+
+    第二十轮裁决 6：上一版把「当前登记表」当作 keep 集合，而登记表本轮已缩到
+    64 条，于是重跑只能得到 **86** 条，`SH:600143 FIN.OCF.SQ@20260630` 被静默
+    丢掉——待验范围会随「上一轮登记结果」收缩，等于自己给自己缩卷子。
+    现在改为读**不可变基线**：基线只增不减，登记撤下与 HOLD 变化都不影响范围。
+    """
+    p = OUT / "step4_parent_targets.csv"
+    if not p.exists():
+        return None
+    out = set()
+    for r in csv.DictReader(io.open(p, encoding="utf-8-sig", newline="")):
+        out.add((r["security_id"], r["field_id"], r["period_key"]))
+    return out
+
+
 def targets(meta, hold, v10):
-    """待核行 = 「HOLD 中仅缺父输入」的 + **上一轮已登记、本轮须重验**的。
+    """待核行 = 「HOLD 中仅缺父输入」的 ∪ **固定基线** ∪ 当前已登记键。
 
     第十九轮裁决：「修复后重验全部 70 条」。只扫「还缺父输入」的行会让已登记的
-    70 条自动消失——那不是重验，是把待验对象换掉了。所以把登记表里的键并进来，
-    用新方法重推一遍；推不出来的由 `step4_apply_parents.py` 撤下。
+    70 条自动消失——那不是重验，是把待验对象换掉了。
+    第二十轮裁决 6：范围必须来自**不可变基线**，不能来自「当前登记表」。
     """
     keep = set()
+    base = load_target_baseline()
+    if base is not None:
+        keep |= base
     p_pv = OUT / "parent_verifications.csv"
     if p_pv.exists():
         for r in csv.DictReader(io.open(p_pv, encoding="utf-8-sig", newline="")):
@@ -190,7 +213,14 @@ def targets(meta, hold, v10):
                     "p2_value": b2["value_cny"], "p2_unit": b2["unit_scale"],
                     "p2_scope": b2["consolidation_scope"], "p2_cur": b2["currency"],
                     "p2_ver": b2["version_used"]})
+    # 基线里那些在 meta_diff 已找不到的键（或 v10 缺父输入）不得静默消失：
+    # 显式记下来，由调用方写进日志与 CSV。
+    got = {(t["security_id"], t["field_id"], t["period_key"]) for t in out}
+    if base is not None:
+        for k in sorted(base - got):
+            MISSING_FROM_SCOPE.append(k)
     return out
+
 
 
 def main():
@@ -201,6 +231,9 @@ def main():
             if r["verdict"] == "HOLD_PENDING_ERRATA"}
     v10 = load_v10()
     tg = targets(meta, hold, v10)
+    if MISSING_FROM_SCOPE:
+        print("BASELINE_KEYS_NOT_IN_SCOPE", len(MISSING_FROM_SCOPE),
+              MISSING_FROM_SCOPE[:5])
     rows = []
     for t in tg:
         r1 = find_evidence(t["security_id"], t["p1_doc"], t["p1_value"],
