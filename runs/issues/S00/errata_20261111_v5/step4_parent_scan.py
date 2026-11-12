@@ -54,20 +54,12 @@ def _pdf(sec, doc):
 
 
 def _num_pattern(value):
-    """把 684956197.48 变成能匹配 `684,956,197.48` / `684956197.48` 的正则。"""
-    s = ("%f" % float(value)).rstrip("0").rstrip(".")
-    if "." in s:
-        ip, fp = s.split(".")
-    else:
-        ip, fp = s, ""
-    grp = ""
-    for i, ch in enumerate(reversed(ip)):
-        grp = ch + grp
-        if i % 3 == 2 and i != len(ip) - 1:
-            grp = "," + grp
-    body = re.escape(grp) + (r"\." + re.escape(fp) if fp else "")
-    loose = r",?".join(re.escape(x) for x in ip) + (r"\." + re.escape(fp) if fp else "")
-    return re.compile("(?:%s|%s)" % (body, loose))
+    """兼容旧签名：金额正则统一由 `parent_verify.amount_pattern()` 生成。
+
+    第十九轮 D3：原实现 `("%f" % float(value))` 会掉精度，且正则没有数字边界
+    （`1100.00` 里能抠出 `100.00`）。现在只有一处实现，生产与自检共用。
+    """
+    return pv.amount_pattern(value)
 
 
 def find_evidence(sec, doc, value, field, prefer_page):
@@ -86,19 +78,17 @@ def find_evidence(sec, doc, value, field, prefer_page):
     tried = []
     for pg in order:
         words = pv.page_words(pdf, pg)
-        col, _amt, st = pv.column_of_amount_aligned(words, value, label=aliases)
+        col, _amt, st, aw = pv.column_of_amount_aligned_ex(
+            words, value, label=aliases)
         if st != "OK":
             tried.append("%s:%s" % (pg, st))
             continue
-        if not pv._PERIOD_COL.search(pv._nz(col)):
-            tried.append("%s:COLUMN_NOT_PERIOD(%s)" % (pg, col))
-            continue
-        page_txt = re.sub(r"\s+", "", "".join(w[4] for w in words))
-        col_reg = _registrable_column(col, page_txt)
+        page_txt, offs = _page_text(words)
+        col_reg = pv.registrable_column(col, page_txt)
         if not col_reg:
             tried.append("%s:COLUMN_NOT_CONTIGUOUS(%s)" % (pg, col))
             continue
-        quote = _quote(page_txt, col_reg, value, aliases)
+        quote = _quote(page_txt, offs, aw, col_reg, aliases)
         if not quote:
             tried.append("%s:QUOTE_UNBUILDABLE(%s)" % (pg, col_reg))
             continue
@@ -107,54 +97,83 @@ def find_evidence(sec, doc, value, field, prefer_page):
     return {"status": "NOT_FOUND", "tried": tried[:6]}
 
 
-def _registrable_column(col, page_txt):
-    """从表头串里取出**在正文中连续出现**的规范列名。
-
-    表头行里同一列的文字可能横跨多行（`本报告期` + `（1－6月）`），也可能因取词
-    窗口把邻列年份带进来（`2026年半年度2025`）。登记值必须是原文里连续的一段，
-    否则引文里根本找不到它；同时必须与 `_col_of` 归一到同一把尺子（`canon_column`）。
-    """
-    c = pv.canon_column(col)
-    if c and c in page_txt:
-        return c
-    return ""
-
-
 _VER_FORBID = ("调整后", "重述后", "更正后")
 
 
-def _quote(page_txt, column, value, aliases):
-    """构造「表头 + 指标行 + 数值」同段的引文；含版本禁用词则换一处或放弃。"""
-    pat = _num_pattern(value)
-    hits = [m for m in pat.finditer(page_txt)]
-    if not hits:
+def _page_text(words):
+    """把词流拼成「无空白正文」并记下每个词的字符区间。
+
+    第十九轮 D3：不再用正则去正文里捞金额。去掉空白以后
+    `684,956,197.48` 会和后一个数粘成 `684,956,197.48585,346,923.80`，
+    任何「数字边界」写法在这里都会误判（要么漏，要么把两个数当一个）。
+    改成**按词坐标定位**：命中金额是哪一个词，由取列函数直接给出。
+    """
+    parts, offs, pos = [], [], 0
+    for x0, _y0, x1, _y1, tx in words:
+        t = re.sub(r"\s+", "", tx)
+        offs.append((pos, pos + len(t), (round(x0, 2), round(x1, 2), tx)))
+        parts.append(t)
+        pos += len(t)
+    return "".join(parts), offs
+
+
+def _quote(page_txt, offs, amt_word, column, aliases):
+    """构造「表头 + 指标行 + 数值」同段的引文；含版本禁用词则放弃。
+
+    金额位置来自词坐标（`amt_word` = 取列函数返回的 `(x0, x1, text)`），
+    指标名必须命中，**不得回退**（第十九轮 D3）。
+    """
+    if not amt_word:
         return ""
+    key = (round(amt_word[0], 2), round(amt_word[1], 2), amt_word[2])
+    idx = next((i for i, (_a, _b, k) in enumerate(offs) if k == key), None)
+    if idx is None:
+        return ""
+    a, b = offs[idx][0], offs[idx][1]
     col_pos = page_txt.find(column)
-    for m in hits:
-        a = min(col_pos, m.start()) if col_pos >= 0 else m.start()
-        b = max(col_pos + len(column), m.end()) if col_pos >= 0 else m.end()
-        seg = page_txt[a:b]
-        if any(w in seg for w in _VER_FORBID):
-            continue
-        if aliases and not any(al in seg for al in aliases):
-            # 指标名可能在数值之前更远处，向前扩一段（仍须是连续原文）
-            seg2 = page_txt[max(0, a - 60):b]
-            if any(al in seg2 for al in aliases) and not any(w in seg2 for w in _VER_FORBID):
-                seg = seg2
-            else:
-                continue
-        if len(pv._nz(seg)) < pv._MIN_QUOTE:
-            continue
-        return seg
-    return ""
+    if col_pos >= 0:
+        a = min(a, col_pos)
+        b = max(b, col_pos + len(column))
+    seg = page_txt[a:b]
+    if any(w in seg for w in _VER_FORBID):
+        return ""
+    if aliases and not any(al in seg for al in aliases):
+        # 指标名可能在数值之前更远处，向前扩一段（仍须是连续原文）
+        seg2 = page_txt[max(0, a - 60):b]
+        if not (any(al in seg2 for al in aliases)
+                and not any(w in seg2 for w in _VER_FORBID)):
+            return ""
+        seg = seg2
+    if len(pv._nz(seg)) < pv._MIN_QUOTE:
+        return ""
+    return seg
 
 
 def targets(meta, hold, v10):
+    """待核行 = 「HOLD 中仅缺父输入」的 + **上一轮已登记、本轮须重验**的。
+
+    第十九轮裁决：「修复后重验全部 70 条」。只扫「还缺父输入」的行会让已登记的
+    70 条自动消失——那不是重验，是把待验对象换掉了。所以把登记表里的键并进来，
+    用新方法重推一遍；推不出来的由 `step4_apply_parents.py` 撤下。
+    """
+    keep = set()
+    p_pv = OUT / "parent_verifications.csv"
+    if p_pv.exists():
+        for r in csv.DictReader(io.open(p_pv, encoding="utf-8-sig", newline="")):
+            keep.add((r["security_id"], r["field_id"], r["period_key"]))
     out = []
+    seen = set()
     for r in meta:
-        if r["security_id"] not in hold or r["scope_missing"] != "PARENT_COMPATIBILITY":
-            continue
         sec, fld, pk = r["security_id"], r["field_id"], r["period_key"]
+        if (sec, fld, pk) in seen:
+            # meta_diff 里同一键可能出现在多行（同一差异的多个来源），去重：
+            # 登记表以 (security_id, field_id, period_key) 为唯一键，重复写会让
+            # 「登记行数」与「实际生效条数」不一致。
+            continue
+        in_scope = (sec in hold and r["scope_missing"] == "PARENT_COMPATIBILITY")
+        if not in_scope and (sec, fld, pk) not in keep:
+            continue
+        seen.add((sec, fld, pk))
         ytd = fld[:-3] + ".YTD"
         p2pk = core.prev_quarter(pk)
         b1, b2 = v10.get((sec, ytd, pk)), v10.get((sec, ytd, p2pk))

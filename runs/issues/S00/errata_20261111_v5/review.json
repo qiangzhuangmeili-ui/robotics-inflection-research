@@ -2,7 +2,7 @@
   "issue_key": "S00",
   "stage": "ERRATA",
   "version": "ERRATA_V5",
-  "self_check_version": "V16",
+  "self_check_version": "V17",
   "review_nature": "SELF_CHECK",
   "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
   "reviewed_at": "2026-11-12T00:50:00+08:00",
@@ -77,9 +77,9 @@
         "total": 1054,
         "by_verdict": {
           "R1_NO_LINK": 378,
-          "HOLD_PENDING_ERRATA": 44,
+          "HOLD_PENDING_ERRATA": 43,
           "R2_MAY_CHANGE": 231,
-          "NOT_AFFECTED": 320,
+          "NOT_AFFECTED": 321,
           "STILL_PASSES_WITHOUT": 81
         }
       }
@@ -89,7 +89,7 @@
       "name": "HOLD 争议可追溯到字段与期间",
       "result": "PASS",
       "detail": {
-        "hold_count": 44
+        "hold_count": 43
       }
     },
     {
@@ -97,8 +97,8 @@
       "name": "核心未闭合+待核与 summary 一致",
       "result": "PASS",
       "detail": {
-        "computed": 9045,
-        "declared": 9045
+        "computed": 9050,
+        "declared": 9050
       }
     },
     {
@@ -305,7 +305,7 @@
       "name": "受限表字段完整（含逐表差异 ID 与逐表哈希）",
       "result": "PASS",
       "detail": {
-        "rows": 386,
+        "rows": 385,
         "cols": 27,
         "missing": []
       }
@@ -316,7 +316,7 @@
       "result": "PASS",
       "detail": {
         "snapshot_sha": "5857e07960e449ed",
-        "rows_checked": 386
+        "rows_checked": 385
       }
     },
     {
@@ -326,8 +326,8 @@
       "detail": {
         "restricted_bad": 0,
         "ledger_bad": 0,
-        "bundle": "1071b609631461fa",
-        "ledger_rows": 10550
+        "bundle": "0822ec60ac78cc55",
+        "ledger_rows": 10555
       }
     },
     {
@@ -370,8 +370,8 @@
       "name": "V4 旧标签映射后仍必须 FAIL，且三种实质反例各自命中特定标签",
       "result": "PASS",
       "detail": {
-        "v4_c26_violations": 7661,
-        "v4_c14_violations": 6549,
+        "v4_c26_violations": 7666,
+        "v4_c14_violations": 6554,
         "v4_limited_own_period": 5270,
         "inject_scope_insufficient": "PENDING_SOURCE_PROVENANCE",
         "inject_parent_incompatible": "PENDING_PARENT_COMPATIBILITY",
@@ -495,13 +495,13 @@
         "violations": 0,
         "sample": [],
         "labels": {
-          "RESOLVED_SCOPE_COVERED": 8767,
+          "RESOLVED_SCOPE_COVERED": 8762,
           "PENDING_WEAK_ASSUMPTION": 515,
           "PENDING_SOURCE_PROVENANCE": 47,
           "PENDING_SCOPE_LIMITED_METHOD": 6373,
           "UNRESOLVED_EVIDENCE_CONTRADICTS": 15,
           "PENDING_CAUSE_UNCOVERED": 43,
-          "PENDING_PARENT_COMPATIBILITY": 1209,
+          "PENDING_PARENT_COMPATIBILITY": 1214,
           "PENDING_CONFIRMED_EVENT_FIELD_OPEN": 8,
           "PENDING_CONFIRMED_UNSUPPORTED": 1,
           "RESOLVED_BY_RULING": 1,
@@ -525,10 +525,10 @@
       "name": "差异 ID 稳定、逐表引用同键、受限行引用集合与源差异表重建结果相等",
       "result": "PASS",
       "detail": {
-        "ledger_ids": 10550,
-        "unique": 10550,
+        "ledger_ids": 10555,
+        "unique": 10555,
         "dups": 0,
-        "used_ids": 379,
+        "used_ids": 377,
         "unmapped": 0,
         "count_mismatch": 0,
         "id_unstable": 0,
@@ -669,7 +669,7 @@
     },
     {
       "id": "C37",
-      "name": "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开；栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类",
+      "name": "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开；栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类；取列反例必须走**生产路径**：邻列表头不得被认成本列、两列重叠须报歧义、金额须逐位相等、指标行未命中不得回退、canon 不得把区间/相对年压掉",
       "result": "PASS",
       "detail": {
         "violations": [],
@@ -709,6 +709,11 @@
           "real_column_ambiguous": true,
           "duplicate_amount_ambiguous": true,
           "duplicate_amount_row_bound": true,
+          "neighbor_header_not_taken": true,
+          "overlapping_columns_ambiguous": true,
+          "amount_exact_decimal": true,
+          "label_row_required": true,
+          "canon_keeps_semantics": true,
           "column_synonym_ok": true,
           "column_antonym_rejected": true,
           "column_synonym_pairs": [
@@ -805,15 +810,15 @@
         },
         "unit_paths_ok": true,
         "real_original_positive": true,
-        "real_original_key": "SH:600008|FIN.OCF.SQ|20260630",
+        "real_original_key": "BJ:920289|FIN.NPDEDT.SQ|20260630",
         "real_original_columns": {
-          "p1": "本期数",
-          "p2": "本报告期"
+          "p1": "本期",
+          "p2": "年初至报告期末（2026年1-3月）"
         },
         "real_wrong_column_reason": "PARENT_COLUMN_MISMATCH",
         "real_column_unresolved_reason": "PARENT_COLUMN_UNRESOLVED",
-        "register_rows": 70,
-        "reopened_pending": 1209,
+        "register_rows": 64,
+        "reopened_pending": 1214,
         "cumulative_diff_rows": 1419
       }
     },
@@ -877,19 +882,36 @@
     },
     {
       "id": "C41",
-      "name": "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、栏目须是规范列名且等于该金额在原件中的实际列、页码须合法、调整版本须等于 s00_v10 的 version_used 归类、范围/单位/币种须与实际父输入相符、依据不得是空话；假引文/错栏目/错父数/错页/版本反写/短依据六类注入必须各自被拦住",
+      "name": "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、父期间须绑定本行两期、栏目须是原文连续片段且等于该金额在原件中的实际列、页码须合法、调整版本须等于 s00_v10 的 version_used 归类、范围/单位/币种须与实际两期父输入同时相符、口径依据须点到合并范围/单位/币种/期间、版本依据须写出两侧各自的版本归类；假引文/错栏目/错父数/错页/版本反写/短依据/错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换十一类注入必须**逐行**全部被拦住",
       "result": "PASS",
       "detail": {
         "violations": [],
         "violation_count": 0,
-        "registered": 70,
+        "registered": 64,
         "injections": {
-          "fake_quote": 1,
-          "wrong_column": 1,
-          "wrong_value": 1,
-          "wrong_page": 1,
-          "version_flip": 1,
-          "short_basis": 1
+          "_rows_fake_quote": 64,
+          "fake_quote": 64,
+          "_rows_wrong_column": 64,
+          "wrong_column": 64,
+          "_rows_wrong_value": 64,
+          "wrong_value": 64,
+          "_rows_wrong_page": 64,
+          "wrong_page": 64,
+          "_rows_version_flip": 64,
+          "version_flip": 64,
+          "_rows_short_basis": 64,
+          "short_basis": 64,
+          "_rows_wrong_period": 64,
+          "wrong_period": 64,
+          "_rows_empty_version_basis": 64,
+          "empty_version_basis": 64,
+          "_rows_repeat_version_basis": 64,
+          "repeat_version_basis": 64,
+          "_rows_repeat_scope_basis": 64,
+          "repeat_scope_basis": 64,
+          "_rows_swap_column": 32,
+          "swap_column": 32,
+          "_rows": 64
         }
       }
     },
@@ -899,12 +921,7 @@
       "result": "PASS",
       "detail": {
         "pre_regressions": [],
-        "pre_all": [
-          "TOP_VERSION_STALE:V15",
-          "ERRATA_VERSION_STALE:V15",
-          "SELF_CHECK_POINTER_STALE:V15",
-          "STATUS_NOT_CURRENT:S00_ERRATA_V5_SELF_CHECK_V15_PASS_ROUND_18_ACCEPTED_WITH_LIMITS"
-        ],
+        "pre_all": [],
         "post_violations": [],
         "file": "data/active_issue.json",
         "injection": {
@@ -957,8 +974,8 @@
       "pass": false
     },
     "V4_mapped": {
-      "C14": 6549,
-      "C26": 7661,
+      "C14": 6554,
+      "C26": 7666,
       "limited_method_own_period": 5270
     },
     "V5_self": {

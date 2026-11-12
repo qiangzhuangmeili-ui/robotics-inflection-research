@@ -1,0 +1,276 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V17",
+  "round": 20,
+  "nature": "REWORK_RESULT",
+  "answers_ruling": "runs/issues/S00/errata_20261111_v5/rework_round19.json",
+  "ruling_verdict": "RETURN_FOR_REWORK",
+  "reworked_at": "2026-11-12T01:40:00+08:00",
+  "scope_discipline": {
+    "changed": "只改判定方法与证据链，不改「哪些键应当闭合」的规则、不改 L0-L3 阈值、不改 44/231/378 名单口径",
+    "not_changed": [
+      "screen_rules_v2.json 未改（sha256 不变）",
+      "evidence_scope.py 判据未改",
+      "S02 上游 results.csv 未改",
+      "未冻结 44/231/378"
+    ]
+  },
+  "items": [
+    {
+      "id": "R1",
+      "requirement": "多个期间列候选必须报歧义，禁止拼接后择一；加入上述邻列反例",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "654-747",
+          "what": "取列由「金额跨度内拼接所有表头词」改为三段式结构还原：词→单元格(_header_cells, 间隙<=6pt 且两侧不各自都是完整列名才并)→列链(_chain_cells, 同 y 永不合并, 跨行按横向重叠并)"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "755-870",
+          "what": "column_of_amount_aligned_ex(): 期间列候选去重后 >1 一律返回 AMBIGUOUS，不再拼接后取第一个；命中金额落在不同列(spans 去重>1)也判 AMBIGUOUS"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "654",
+          "what": "_BAND_PAD_LEFT 20.0 -> 8.0（原值会把左邻列表头拉进本列）"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "2746-2760",
+          "what": "C37 新增两条生产路径反例：neighbor_header_not_taken（左列 2025年半年度 x[70,90]、本列 2026年半年度 x[100,130]、金额 x[100,110] 必须取本列）、overlapping_columns_ambiguous（两列重叠必须 AMBIGUOUS）"
+        }
+      ],
+      "evidence": {
+        "C37": "PASS，violations 0，verification_chain.neighbor_header_not_taken=true，overlapping_columns_ambiguous=true",
+        "old_repro": "左列 x[70,90] / 本列 x[100,130] / 金额 x[100,110]：旧实现返回「2025年半年度2026年半年度」归一成 2025年半年度；新实现返回 2026年半年度"
+      }
+    },
+    {
+      "id": "R2",
+      "requirement": "归一须保留年份、完整起止区间、本期/上年/上期及累计属性；C37 反例须走完整生产路径（含 canon_column）",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "873-931",
+          "what": "canon_column() 重写为结构化键「相对年|区间|累计」：本期金额（2026年1-6月）-> 本期|R-2026-1-6|累计；本期金额（2026年4-6月）-> 本期|R-2026-4-6|累计；本报告期（1－6月）-> 本期|R0-1-6|累计；上年年初至报告期末 -> 上年||累计。区间正则连字符类扩到 [—–−－~～至\\-]（补全角 － U+FF0D）"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "358-369",
+          "what": "_COL_CLASSES 顺序修正：PRIOR_YEAR_YTD 提到 CURRENT_YTD 之前（否则「上年年初至报告期末」被归成本期累计）"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "932-964",
+          "what": "新增 clean_column_text()（取首个期间片段到末个期间片段的原文连续子串）与 registrable_column()（候选须在正文连续出现且 canon 与整段表头完全相同）"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "2783-2790",
+          "what": "C37 反例 canon_keeps_semantics：上述八组正例 + 十一组异义对必须判不等价；同义对（本期发生额/本期数 等四组）仍判等价"
+        }
+      ],
+      "evidence": {
+        "C37": "column_synonym_pairs 4 组全等价；column_antonym_pairs 11 组全不等价（含 2026年1-6月 vs 2026年4-6月、2026年上半年 vs 2026Q2、期末余额 vs 年末余额）"
+      }
+    },
+    {
+      "id": "R3",
+      "requirement": "金额改用精确十进制比较及完整数字边界；指标行未命中不得回退接受",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "472-535",
+          "what": "新增 _dec/_CENT/_same_amount/_num_of/amount_pattern：全部改 Decimal，比较为分位逐位相等（quantize 0.01），不再用 abs(diff)<0.01 浮点容差"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "63",
+          "what": "_AMOUNT_TOKEN 改为 (?<![\\d.,])-?\\d[\\d,]*(?:\\.\\d+)?，右侧不加 (?!\\d)——去空白拼接会把 61 与 249,206,238.56 粘成 61249,206,238.56，右侧边界会切断真实命中"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "132-193",
+          "what": "_num_in_quote(exact=) 三级判据：①按金额词原文严格命中；②Decimal 全等；③token 在某数字位切开，前半段等于父数、后半段是另一数开头(>=5 字符或自带小数点/千分位)"
+        },
+        {
+          "file": "step4_parent_scan.py",
+          "anchor": "103-151",
+          "what": "_page_text() 返回无空白正文 + 词偏移表；_quote() 按词坐标定位金额（不再用正则在拼接文本里捞），指标名必须命中，未命中即 NO_LABEL_ROW"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "2769-2776",
+          "what": "C37 新增 amount_exact_decimal（目标 100.009、页面只有 100.00 必须 NO_AMOUNT）、label_row_required（只有营业成本行时取营业收入必须 NO_LABEL_ROW）"
+        }
+      ],
+      "evidence": {
+        "C37": "amount_exact_decimal=true，label_row_required=true",
+        "side_effect": "4 条粘连数字键（603273/603380/688248/688400 的 FIN.REV.SQ@20260630）由「判不出」变「可判」，已计入计数变化"
+      }
+    },
+    {
+      "id": "R4",
+      "requirement": "补齐 C41 的父期间、两侧口径、版本依据和依据内容验证；纠正注入次数及 V15/V16 汇报不一致",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "verify_v5.py",
+          "anchor": "3427-3553",
+          "what": "check_c41 新增：父期间绑定（P1_PERIOD_MISMATCH / P2_PERIOD_MISMATCH，须等于本行 p1_period/p2_period）、两侧口径互检（SCOPE_NOT_SHARED_BETWEEN_PARENTS）、两侧口径须与实际父输入同时相符、版本依据须可证（VERSION_BASIS_UNSUBSTANTIATED）"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "3374-3426",
+          "what": "新增 _filler_text()（单字符>40% 或不同字符<6 判填充）、_version_basis_ok()（须逐侧写出版本归类，RESTATED 侧不能写「两段引文均不含调整后」）、_scope_basis_ok()（须点到合并口径/单位/币种中文名与两期期间）"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "3554-3640",
+          "what": "_c41_inject() 由「只改首行」改为逐行注入，并同时写出该类实际注入行数 _rows_<name>；判据改为「拦住数 == 该类注入行数」；swap_column 分母取「两侧列不等价」子集"
+        },
+        {
+          "file": "step4_apply_parents.py",
+          "anchor": "_basis()/_version_basis()",
+          "what": "依据文字由生成端重写：SCOPE_WORD/UNIT_WORD/CUR_WORD 点出合并口径、单位、币种中文名与两期期间；version_basis 逐侧写版本归类（原实现一律写「两段引文均不含调整后…即两期都取原版列」，RESTATED 时是假话）"
+        }
+      ],
+      "evidence": {
+        "C41": "registered 64，violations 0；十一类逐行注入全部拦住：fake_quote/wrong_column/wrong_value/wrong_page/version_flip/short_basis/wrong_period/empty_version_basis/repeat_version_basis/repeat_scope_basis 各 64/64，swap_column 32/32",
+        "reporting_fix": "review.json 同时记录 _rows_* 分母，不再出现「各 70」这类与产物不符的汇报"
+      }
+    },
+    {
+      "id": "R5",
+      "requirement": "全页取词失败不得缓存为空白证据；保留技术失败状态",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "verify_v5.py",
+          "anchor": "448-490",
+          "what": "pdf_pages()：逐页异常记 None（与真实空页 \"\" 区分），failed 计数；整本 failed>0 一律不写 _PDF_CACHE"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "491-520",
+          "what": "_pdf_ev()：技术失败返回 None、真空页返回 \"\"；page_words 为空也返回 None（不把取词失败当「页面无此证据」）"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "3427",
+          "what": "check_c41：src is None -> <SIDE>_SOURCE_READ_FAILED（技术失败，不计入证据缺失）；not src -> <SIDE>_SOURCE_UNAVAILABLE"
+        }
+      ],
+      "evidence": {
+        "C41": "PASS，violations 0；技术失败与真空页在状态上已可区分"
+      }
+    },
+    {
+      "id": "R6",
+      "requirement": "修复后重验全部 70 条，补独立列身份旁证，再重算闭合数；不满足者保留待核",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "step4_parent_scan.py",
+          "anchor": "152-215",
+          "what": "targets() 并入上一轮已登记的 70 个键（不只取 HOLD 中仅缺 PARENT_COMPATIBILITY 的），并按 (sec, fld, pk) 去重 → 87 条全量重推"
+        },
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "全文件",
+          "what": "新增独立旁证：数字右边界聚类成列 → 列范围取 [该列最左数字左边界-12pt, 右边界+6pt] → 表头取金额行上方最近一行(>=2 格且含期间词、非标题) → 表头词先并单元格再按中心落列 → 指标名换行上下各并至多 2 行。全程不调用 column_of_amount_aligned*"
+        },
+        {
+          "file": "step4_apply_parents.py",
+          "anchor": "82-100",
+          "what": "登记闸门：verdict==EVIDENCE_OK 且 witness==WITNESS_OK 才写 parent_verifications.csv；否则计入 skipped（not_evidence_ok / version_inconsistent / witness_fail）"
+        }
+      ],
+      "evidence": {
+        "scan": "87 条目标：EVIDENCE_OK 64 / BLOCKED 23；p1 OK 73 / NOT_FOUND 14，p2 OK 71 / NOT_FOUND 16",
+        "witness": "step4_column_witness.csv 64 行，WITNESS_OK 64，p1/p2 均 OK:AGREE，不一致 0",
+        "registered": "parent_verifications.csv 64 行 / 27 列，全部 SELF_CHECK / WorkBuddy-Agent",
+        "skipped": {"not_evidence_ok": 23, "version_inconsistent": 0, "witness_fail": 0},
+        "vs_previous": {
+          "old_registered": 70,
+          "new_registered": 64,
+          "dropped": [
+            "SH:600143 FIN.OCF.SQ 20260630",
+            "SH:600320 FIN.NPDEDT.SQ 20260630",
+            "SH:600590 FIN.NPP.SQ 20251231",
+            "SH:600862 FIN.NPDEDT.SQ 20260630",
+            "SH:600960 FIN.OCF.SQ 20250630",
+            "SH:603350 FIN.NPDEDT.SQ 20260630",
+            "SH:605365 FIN.OCF.SQ 20260630",
+            "SH:688248 FIN.NPDEDT.SQ 20260630",
+            "SH:688800 FIN.OCF.SQ 20251231"
+          ],
+          "added": [
+            "SH:600143 FIN.REV.SQ 20250630",
+            "SH:600143 FIN.REV.SQ 20251231",
+            "SH:688320 FIN.REV.SQ 20260630"
+          ],
+          "dropped_reasons": {
+            "NO_LABEL_ROW/NO_AMOUNT": 6,
+            "NO_HEADER_ROW": 2,
+            "COLUMN_NOT_CONTIGUOUS": 1
+          }
+        }
+      }
+    }
+  ],
+  "counts_after": {
+    "meta_diff_open": 8611,
+    "open_total_core": 9050,
+    "open_total_all": 10555,
+    "PENDING_PARENT_COMPATIBILITY": 1214,
+    "RESOLVED_SCOPE_COVERED": 8762,
+    "parent_compatible_YES_restatement": 64,
+    "l2_verdicts": {
+      "HOLD_PENDING_ERRATA": 43,
+      "R2_MAY_CHANGE": 231,
+      "R1_NO_LINK": 378,
+      "NOT_AFFECTED": 321,
+      "STILL_PASSES_WITHOUT": 81
+    },
+    "l2_previous": {
+      "HOLD_PENDING_ERRATA": 44,
+      "R2_MAY_CHANGE": 231,
+      "R1_NO_LINK": 378,
+      "NOT_AFFECTED": 320,
+      "STILL_PASSES_WITHOUT": 81
+    }
+  },
+  "l2_change_requires_review": {
+    "security_id": "SH:600143",
+    "stock_name": "金发科技",
+    "from": "HOLD_PENDING_ERRATA",
+    "to": "NOT_AFFECTED",
+    "why": "锚定期 20260630 唯一争议维度 GROWTH 来自 SG02=M03=FIN.REV.SQ@20250630；本轮新登记该键（p1 2025年半年度 31636077814.2 / p2 2025年第一季度 15665999806.4，两期均 ORIGINAL、CONSOLIDATED、unit_scale=1、CNY），唯一缺口 PARENT_COMPATIBILITY 补齐后争议闭合",
+    "checks_passed": ["gap() 完整判据", "C41 逐行回推", "step4_column_witness WITNESS_OK 两侧 OK:AGREE"],
+    "note": "非主动放行，是判据自动结果；但属名单级后果（44/231/320 -> 43/231/321），请复核方独立判定是否接受。本记录不把它计入批次 B 成果。"
+  },
+  "self_check": {
+    "version": "V17",
+    "checks_pass": 43,
+    "checks_total": 43,
+    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+    "review_file": "runs/issues/S00/errata_20261111_v5/review.json",
+    "nature": "SELF_CHECK_NOT_ACCEPTANCE"
+  },
+  "still_blocked": {
+    "batch_C_D_E": "未开始",
+    "step5_recompute_strata": "未开始",
+    "S04_round2": "不放行",
+    "S05": "不放行",
+    "freeze_44_231_378": false,
+    "F32_language_dimension": "未修（26 份英文版年报仍在池内）",
+    "bare_RE_POLICY": "未修（_RE_POLICY 仍为裸「会计政策」）"
+  }
+}

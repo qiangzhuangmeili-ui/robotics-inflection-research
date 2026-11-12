@@ -1,0 +1,114 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V17，43/43 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round19.txt（RETURN_FOR_REWORK，D1–D5 + 6 条返工清单）
+你的裁决原文我也落成了机器可读文件：runs/issues/S00/errata_20261111_v5/rework_round19.json
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round20.md（先读这一份）
+本轮逐条对照：runs/issues/S00/errata_20261111_v5/rework_round19_result.json
+
+本轮只改判定方法，不改「哪些键应当闭合」。批次 C–E、第 5 步、S04 第二轮、S05 都没动。
+请不要重新评估已被你接受的事件证据（272 条你说保留）。
+
+## 一、D1：多个期间列候选必须报歧义
+
+1. 读 `parent_verify.py:654-870`（`_BAND_PAD_LEFT`/`_HDR_MERGE_GAP`/`_CELL_WORD_GAP`/`_CELL_X_TOL`、
+   `_header_cells`、`_chain_cells`、`_label_band`、`column_of_amount_aligned_ex`）。
+   确认：① 词→单元格→列链三段还原；② **同一行的两个单元格永不合并**；
+   ③ 期间列候选 >1 → `AMBIGUOUS`，不拼接；④ `_BAND_PAD_LEFT` 已从 20 降到 8。
+2. **请复现你上轮那个反例**：左列 `2025年半年度` x[70,90]、本列 `2026年半年度` x[100,130]、
+   金额 x[100,110]。旧函数返回 `2025年半年度2026年半年度`；新函数应返回 `2026年半年度`。
+   C37 的 `neighbor_header_not_taken` 就是这个用例，但**请你自己独立构造一次**，
+   不要只信我的断言。同时构造两列重叠的用例，确认返回 `AMBIGUOUS`。
+3. `_header_cells` 有一条语义保护：「两侧各自都已是完整列名（`canon_column` 非空）就不并」。
+   这是我为夹具里「两列只隔 5pt」加的保护。**请判断它是否过严或过松**：
+   会不会出现「本列被拆成两列」或「仍然并了邻列」的版面。
+
+## 二、D2：归一须保留期间语义
+
+4. 读 `canon_column()`（`parent_verify.py:873-931`）：确认输出是 `相对年|区间|累计` 三元组，
+   并逐条验证你点名的四组：
+   `本期金额（2026年1-6月）` vs `本期金额（2026年4-6月）`；
+   `本报告期（1－6月）` vs `本报告期（4－6月）`；`上年年初至报告期末` 与 `年初至报告期末`；
+   `2026年上半年` vs `2026Q2`。**前四组必须判不等价**。
+5. 读 `_COL_CLASSES`（`parent_verify.py:358-369`）：确认 `PRIOR_YEAR_YTD` 在 `CURRENT_YTD` 之前。
+6. 读 `clean_column_text()` / `registrable_column()`（`parent_verify.py:932-964`）：
+   确认登记表存的是**原文连续子串**，且要求候选在正文连续出现、canon 与整段表头完全相同。
+7. **C37 反例是否真的走生产路径**：读 `verify_v5.py:2746-2790` 的 `_loc()` 与
+   `neighbor_header_not_taken` / `overlapping_columns_ambiguous` / `amount_exact_decimal` /
+   `label_row_required` / `canon_keeps_semantics`。若发现某个反例绕开了生产函数、自造小函数验证，
+   直接判不通过。
+
+## 三、D3：金额精确十进制 + 完整数字边界 + 指标行不得回退
+
+8. 读 `parent_verify.py:472-535`（`_dec`/`_CENT`/`_same_amount`/`_num_of`/`amount_pattern`）：
+   确认比较是 `quantize(0.01)` 的**分位逐位相等**，没有浮点容差。
+9. 读 `parent_verify.py:63` 的 `_AMOUNT_TOKEN`：**右侧故意没有 `(?!\d)`**。
+   理由：PDF 文本层去空白后，两列相邻数字会粘连（`684,956,197.48` + `585,346,923.80`
+   → `684,956,197.48585,346,923.80`），右侧边界会切断真实命中。
+   **请判断这个「去掉右边界」是否构成放松**，以及 `_num_in_quote` 的三级判据
+   （严格命中 / Decimal 全等 / token 切分兜底）是否足以补上边界。
+   如果你认为第 ③ 级太松，请给出可执行的替代口径。
+10. 读 `step4_parent_scan.py:103-151`（`_page_text` / `_quote`）：确认金额按**词坐标**定位，
+    指标名必须命中，未命中即 `NO_LABEL_ROW`，没有「页面只有一个候选金额就接受」的回退。
+11. 复现你上轮的用例：目标营业收入 `100.009`、页面只有营业成本 `100.00` → 必须 `NO_AMOUNT`。
+
+## 四、D4：C41 的覆盖与注入次数
+
+12. 读 `verify_v5.py:3374-3426`（`_filler_text` / `_version_basis_ok` / `_scope_basis_ok`）
+    与 `3427-3553`（`check_c41`）。确认新增了：父期间绑定（`P1/P2_PERIOD_MISMATCH`）、
+    两侧口径互检（`SCOPE_NOT_SHARED_BETWEEN_PARENTS`）、两侧口径须与实际父输入同时相符、
+    版本依据须逐侧写出归类（`VERSION_BASIS_UNSUBSTANTIATED`）。
+13. 复现你上轮那个组合注入：同时改错首行父期间、清空 `version_basis`、
+    把 `scope_basis` 换成 300 个重复字符。现在必须被拦住。
+14. 读 `verify_v5.py:3554-3640` 的 `_c41_inject()`：确认已改**逐行**注入并写出
+    `_rows_<name>` 分母，判据是「拦住数 == 该类注入行数」。
+15. **`swap_column` 分母是 32 而不是 64**：其中 32 行两侧登记列名在半年报里本就等价
+    （`本报告期（1－6月）` vs `本报告期`），互换后什么都没变。
+    请判断「分母取两侧列不等价子集」是否可接受；若你认为应全量 64 行都拦，请指定注入方式。
+16. 核实 `review.json` 的 `C41.detail.injections` 里 `_rows_*` 与拦截数逐项相等，
+    并确认本报告没有另写一份数字（上轮「各 70」的不实汇报已删）。
+
+## 五、D5：失败不得缓存为空白证据
+
+17. 读 `verify_v5.py:448`（`pdf_pages`）：确认失败页记 `None`、与真实空页 `""` 区分、
+    整本 `failed>0` 不写缓存。
+18. 读 `verify_v5.py:491`（`_pdf_ev`）：确认技术失败返回 `None`、真空页返回 `""`。
+19. 读 `check_c41`：确认 `src is None` → `*_SOURCE_READ_FAILED`，与 `not src` →
+    `*_SOURCE_UNAVAILABLE` 分开。
+
+## 六、第 6 条：重验全部 70 条 + 独立旁证
+
+20. 读 `step4_parent_scan.py:152-215` 的 `targets()`：确认**并入上一轮已登记的 70 个键**、
+    按键去重 → 87 条。确认 `step4_parent_scan.csv` 是 87 行。
+21. 读 `step4_column_witness.py`（新文件）：确认它**不调用** `column_of_amount_aligned*`，
+    走「数字右边界聚类 → 列范围 → 表头行 → 表头词先并单元格再按中心落列 → 指标名换行带」。
+    **请判断这条路径是否真的独立**（不是把同一套假设换个写法）。
+22. 读 `step4_apply_parents.py:82-100`：确认登记闸门是 `EVIDENCE_OK` **且** `WITNESS_OK`。
+23. 核实 `parent_verifications.csv` 是 **64 行 / 27 列**、`step4_column_witness.csv` 是 64 行
+    全 `WITNESS_OK`、两侧 `OK:AGREE`。**随机抽 3–5 行回读原件**，核对引文是否真的落在登记页、
+    是否含「期间列名 + 指标名 + 父数」、栏目是否真的是该金额所在列。
+24. 核实撤下的 9 条确实没进登记表（`step4_parent_scan.csv` 中 `verdict=BLOCKED`）。
+    其中 8 条是 `NO_LABEL_ROW`/`NO_HEADER_ROW`/`NO_AMOUNT`，1 条是
+    `SH:688800 FIN.OCF.SQ@20251231` 的 `COLUMN_NOT_CONTIGUOUS(2025年度)`。
+    **如果你认为其中某条其实能取到，请点名，我按你的口径重跑。**
+
+## 七、我主动披露的、需要你判定的两件事
+
+25. **`SH:600143 金发科技` 脱离 HOLD**：L2 从 44/231/320/81/378 变成 **43/231/321/81/378**。
+    原因是本轮新登记 `FIN.REV.SQ@20250630`，闭合了它锚定期唯一的争议维度 `GROWTH`
+    （`SG02=M03=FIN.REV.SQ@20250630`）。该行过完整 `gap()`、过 C41、旁证 `WITNESS_OK`。
+    **这不是我主动放行，是判据自动结果**，但属名单级后果。请判断是否接受；
+    若不接受，请指出应在哪一层拦住（是 `l2_core` 的维度映射、还是 `PARENT_COMPATIBILITY` 的适用范围）。
+    另外：`M08` 依赖 `FIN.OCF.YTD`/`FIN.NPP.YTD`，**不含** `FIN.OCF.SQ`，
+    所以撤下的 `FIN.OCF.SQ@20260630` 不产生新争议——这个映射本身也请你确认是否合理。
+26. **计数口径**：`meta_diff` open = **8,611**；`summary.open_total_core` = **9,050**
+    （元数据 + 键 405 + 值 34）；`open_total_all` = **10,555**（含补充列 1,505）。
+    前几轮报告写的「核心未闭合 8,606」实际指 `meta_diff` open，与 `summary` 同名字段不同义。
+    请确认本轮口径写法是否清楚、是否还有别的同名字段被我混用。
+
+## 八、边界
+
+S04 第二轮与 S05 继续不放行；批次 C–E 与第 5 步未开始；43/231/378 未冻结；
+F32（26 份英文版年报）与 `_RE_POLICY` 裸「会计政策」未修。
+
+请按「是否放行批次 C」给结论。若不通过，请把要改的点写成可执行清单（文件 + 函数 + 判据方向）。

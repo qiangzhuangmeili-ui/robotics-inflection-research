@@ -36,6 +36,7 @@
 import csv
 import datetime
 import re
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 import evidence_scope as es
@@ -59,7 +60,7 @@ REVIEWER_PLACEHOLDERS = {"", "x", "xx", "xxx", "-", "--", "n/a", "na",
 # 金额字段允许的折算倍数（s00 的 unit_scale 实际取值：1 / 1000 / 10000，
 # 另有 pct / times 用于比率字段——那些不参与父输入相减）
 AMOUNT_UNITS = {"1", "1000", "10000"}
-_AMOUNT_TOKEN = re.compile(r"-?\d[\d,]*(?:\.\d+)?")
+_AMOUNT_TOKEN = re.compile(r"(?<![\d.,])-?\d[\d,]*(?:\.\d+)?")
 _MIN_QUOTE = 12
 _MIN_BASIS = 20
 
@@ -128,14 +129,24 @@ def ver_class(v):
     return None
 
 
-def _num_in_quote(quote, value, unit_scale="1"):
+def _num_in_quote(quote, value, unit_scale="1", exact=None):
     """引文里是否出现该父数本身（按 unit_scale 折算）。
 
     第九轮 C 项：只比父终值字段，登记可以把引文换成无关文档的通用标题片段。
     这里要求引文里真的写出这个数，`DOC-…` 之类的标题片段无法满足。
     第十轮 B1：`unit_scale` 必须是实际倍数（1/1000/10000），键名不得再写成
     `unit`——否则 187,875.40 万元永远对不上 1,878,754,000 元。
+
+    第十九轮 D3：改十进制比较；并新增 `exact`——调用方若已按**词**定位到金额
+    （`column_of_amount_aligned_ex` 返回的那个词），直接查该词文本是否在引文里。
+    这一条才是「逐位相等」的严格实现：引文是把词流去掉空白拼起来的，相邻两个数
+    会粘连（`61249,206,238.56` 是附注号 `61` 粘上 `249,206,238.56`），
+    在文本层面无论怎么写边界都无法可靠区分，只能回到词坐标。
     """
+    if isinstance(exact, (tuple, list)):
+        exact = exact[2] if len(exact) > 2 else None
+    if exact and _nz(exact) and _nz(exact) in _nz(quote):
+        return True
     try:
         target = float(value)
     except (TypeError, ValueError):
@@ -146,14 +157,37 @@ def _num_in_quote(quote, value, unit_scale="1"):
         mult = 1.0
     if mult <= 0:
         mult = 1.0
+    # 第十九轮 D3：引文里的数也必须**逐位相等**。原实现 `abs(v*mult-target)
+    # <= max(0.05, |target|*1e-9)` 在大额上有 5 分钱容差、在小额上也有 5 分钱，
+    # 且 float 本身会掉精度；改为十进制比较，按分位对齐后不等就是不等。
+    tgt = _dec(value)
+    mlt = _dec(unit_scale or "1")
+    if tgt is None:
+        return False
+    if mlt is None or mlt <= 0:
+        mlt = Decimal(1)
     for m in _AMOUNT_TOKEN.finditer(quote or ""):
-        raw = m.group(0).replace(",", "")
-        try:
-            v = float(raw)
-        except ValueError:
+        tok = m.group(0).replace(",", "")
+        v = _dec(tok)
+        if v is None:
             continue
-        if abs(v * mult - target) <= max(0.05, abs(target) * 1e-9):
+        if _same_amount(v * mlt, tgt):
             return True
+        # 引文是把词流去掉空白拼起来的，相邻两个数会粘成
+        # `684,956,197.48585,346,923.80`——此时 `684,956,197.48` 后面紧跟的是
+        # **另一个数**的开头，右边界不可能成立。这里退一步：允许把 tok 在某个
+        # 数字位切开，前半段等于父数、后半段是另一个数的开头（至少 5 个字符，
+        # 或自带小数点/千分位）。左边界仍由 `(?<![\d.,])` 保证；「这个数确实是
+        # 父数」由上游取列函数按**词**做十进制逐位相等来保证。
+        for i in range(1, len(tok)):
+            if not tok[i].isdigit():
+                continue
+            tail = tok[i:]
+            if len(tail) < 5 and "," not in tail and "." not in tail:
+                continue
+            head = _dec(tok[:i])
+            if head is not None and _same_amount(head * mlt, tgt):
+                return True
     return False
 
 
@@ -317,11 +351,14 @@ def _col_norm(s):
 # 「上年同期」（去年同期）与「上期」（紧邻上一期间）不是同一列；
 # 「本年累计」（年初至报告期末）与「本期数」（单季/本报告期）也不是同一列。
 # 故拆成 6 类，跨类一律不互认；同类内仍靠归一化子串兜住措辞差异。
-# 顺序有意义：先匹配更具体的（累计/年初至期末），再匹配宽的「本期」。
+# 顺序有意义：先匹配更具体的（上年累计/累计/年初至期末），再匹配宽的「本期」。
+# 第十九轮 D2：`PRIOR_YEAR_YTD` 必须排在 `CURRENT_YTD` **之前**——
+# `上年年初至报告期末` 同时含「年初至报告期末」，先判 CURRENT_YTD 会把它归成
+# 「本期累计」，于是「本期累计」与「上年累计」互认。
 _COL_CLASSES = [
+    ("PRIOR_YEAR_YTD", r"上年年初至报告期末|上年同期累计|上年累计"),
     ("CURRENT_YTD", r"年初至报告期末|年初至本报告期末|本年累计|本期累计|本年数|"
                     r"本报告期末累计|累计数"),
-    ("PRIOR_YEAR_YTD", r"上年年初至报告期末|上年同期累计|上年累计"),
     ("PRIOR_YEAR_SAME", r"上年同期|上年同期数|上年同期金额|同期数|比较期|上年同期发生额"),
     ("PRIOR_PERIOD", r"上期|上期数|上期发生额|上期金额|上一期"),
     ("YEAR_OPEN", r"年初|期初|上年年末|上年度末|年初数"),
@@ -341,8 +378,8 @@ def _col_class(s):
 # 第十五轮 B 项：`_date_span` 原来只认「年+月区间」「年+月+日」「年+月」，于是
 # `2026年上半年`、`2026Q2`、`1-6月`（不带年）全部解析成 None，退回语义类被判等价。
 # 解析不出来**不等于可以按语义类证明等价**——那正是 Codex 指出的漏网路径。
-_RE_SPAN_RANGE = re.compile(r"(\d{4})\s*年\s*(\d{1,2})\s*[—\-~～至]\s*(\d{1,2})\s*月")
-_RE_SPAN_RANGE_NY = re.compile(r"(?<!\d)(\d{1,2})\s*[—\-~～至]\s*(\d{1,2})\s*月")
+_RE_SPAN_RANGE = re.compile(r"(\d{4})\s*年\s*(\d{1,2})\s*[—–−－~～至\-]\s*(\d{1,2})\s*月")
+_RE_SPAN_RANGE_NY = re.compile(r"(?<!\d)(\d{1,2})\s*[—–−－~～至\-]\s*(\d{1,2})\s*月")
 _RE_SPAN_HALF = re.compile(r"(?:(\d{4})\s*年)?\s*(?:上半年|半年度|H1)")
 _RE_SPAN_HALF2 = re.compile(r"(?:(\d{4})\s*年)?\s*(?:下半年|H2)")
 _RE_SPAN_QUARTER = re.compile(r"(?:(\d{4})\s*年)?\s*(?:第)?\s*[Qq]([1-4])")
@@ -432,15 +469,68 @@ def cols_equivalent(registered, actual):
     return bool(na) and bool(nb) and (na in nb or nb in na)
 
 
-def _num_of(txt):
-    """把「57,296,869.60」这类词解析成数值；不是数值返回 None。"""
-    s = re.sub(r"[,\s元]", "", txt or "")
+def _dec(txt):
+    """把「57,296,869.60」解析成 Decimal；不是数值返回 None。
+
+    第十九轮 D3：原实现走 float，`abs(v - target) < 0.01` 这种容差会把
+    「目标 100.009、页面只有 100.00」判成命中。金额一律用十进制，比较按
+    **分位逐位相等**（`_same_amount`），不设浮点容差。
+    """
+    if txt is None:
+        return None
+    s = re.sub(r"[,\s元]", "", str(txt))
     if not s or not re.match(r"^-?\d+(\.\d+)?$", s):
         return None
     try:
-        return float(s)
-    except ValueError:
+        return Decimal(s)
+    except InvalidOperation:
         return None
+
+
+_CENT = Decimal("0.01")
+
+
+def _same_amount(a, b):
+    """两个金额是否**逐位相等**（都按分位对齐后比较）。
+
+    不用 `abs(a-b) < 0.01`：那个容差会把 100.009 与 100.00 判成相等，
+    也会让「页面写着 100.00、登记 100.004」蒙过去。按分位量化后不等就是不等。
+    """
+    if a is None or b is None:
+        return False
+    try:
+        return a.quantize(_CENT) == b.quantize(_CENT)
+    except (InvalidOperation, ValueError):
+        return False
+
+
+def _num_of(txt):
+    """兼容旧签名：返回 Decimal（旧调用方只做 `is not None` 判断）。"""
+    return _dec(txt)
+
+
+def amount_pattern(value):
+    """把 684956197.48 变成能匹配 `684,956,197.48` / `684956197.48` 的正则。
+
+    第十九轮 D3：原实现用 `"%f" % float(value)`（float 会掉精度，长金额直接错位），
+    正则也没有数字边界——`1100.00` 里能匹配出 `100.00`。这里改用 Decimal 生成，
+    并强制左右边界：左边不得紧邻数字/逗号/小数点，右边不得紧邻数字。
+    """
+    d = _dec(value)
+    if d is None:
+        return None
+    s = format(d.normalize(), "f")
+    neg = s.startswith("-")
+    if neg:
+        s = s[1:]
+    if "." in s:
+        ip, fp = s.split(".")
+    else:
+        ip, fp = s, ""
+    grp = "{:,}".format(int(ip)) if ip.isdigit() else ip
+    body = re.escape(grp) + (r"\." + re.escape(fp) if fp else "")
+    loose = r",?".join(re.escape(ch) for ch in ip) + (r"\." + re.escape(fp) if fp else "")
+    return re.compile(r"(?<![\d.,])(?:%s|%s)(?!\d)" % (body, loose))
 
 
 def page_words(pdf_path, page):
@@ -498,8 +588,8 @@ def column_of_amount_ex(words, value, label=None, x_tol=3.0, y_tol=4.0):
     cands = []
     for ri, (_y, cells) in enumerate(rows):
         for x0, x1, tx in cells:
-            v = _num_of(tx)
-            if v is not None and abs(v - target) < 0.01:
+            v = _dec(tx)
+            if v is not None and _same_amount(v, target):
                 cands.append((ri, x0, x1, tx))
     if not cands:
         return None, None, "NO_AMOUNT"
@@ -555,18 +645,124 @@ _COL_PERIOD_HINT = re.compile(r"\d{4}|本期|上期|上年|本年|年末|期末|
 # 页眉/标题行不是表头：它们同样含「2026」「年半年度」，但那是文档标题不是列名。
 # 不加这条排除，取到的「栏目」会变成「…股份有限公司2026年半年度报告」。
 _TITLE_ROW = re.compile(r"股份有限公司|年度报告|半年度报告|季度报告|单位[:：]")
-# 表头词与金额跨度的重叠判定：金额左侧留 20pt（表头通常比数字宽、且居中偏左），
-# 右侧留 edge_tol。放宽左侧会把左邻列的列名拉进来（如「上年同期」），
-# 收窄则会漏掉居中表头的左半部分。
-_BAND_PAD_LEFT = 20.0
+# 表头词与金额跨度的重叠判定：金额左侧留 8pt（表头通常比数字宽、且居中偏左），
+# 右侧留 edge_tol。
+# 第十九轮 D1：原值 20pt 比这更松，直接把左邻列的表头拉进来，再把两列列名拼成
+# `2025年半年度2026年半年度` 后择一——等于**允许把邻列表头认成本列**。
+# 现在先按「词并成单元格、单元格跨行成列」还原列结构，多列候选一律报歧义，
+# 不再靠这个 padding 去凑覆盖率，故收回 8pt。
+_BAND_PAD_LEFT = 8.0
 _HDR_MERGE_GAP = 50.0          # 表头跨行合并的最大行距（pt）
+_CELL_WORD_GAP = 6.0           # 同一表头单元格内相邻词的允许间隙（pt）
+_CELL_X_TOL = 3.0              # 跨行表头视为同一列的横向容差（pt）
+
+
+def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP):
+    """把每个表头行的词按横向间隙并成**单元格**：[(y, x0, x1, text)]。
+
+    表格里 `2026年` 与 `半年度` 常是两个词，中间只隔 1–2pt；而邻列的两个词
+    之间隔着列间距（通常 >20pt）。先并单元格，才能把「同一列的断词」与
+    「不同列的相邻列名」分开。
+
+    只靠间隙不够：紧排的表里两列列名也可能只隔 3–5pt。因此再加一条**语义**
+    保护——如果当前片段与下一个词**各自都已是一个完整列名**（`canon_column`
+    都非空），那它们是两列，不并。`2026年` + `半年度` 里前者不是完整列名，
+    照并；`2025年半年度` + `2026年半年度` 两边都完整，不并。
+    """
+    out = []
+    for rj in hdr_rows:
+        y, cells = rows[rj]
+        cur = None
+        for x0, x1, tx in sorted(cells, key=lambda c: c[0]):
+            joinable = (cur is not None and x0 - cur[1] <= gap
+                        and not (canon_column(cur[2]) and canon_column(tx)))
+            if joinable:
+                cur[1] = max(cur[1], x1)
+                cur[2] += tx
+            else:
+                if cur is not None:
+                    out.append((y, cur[0], cur[1], cur[2]))
+                cur = [x0, x1, tx]
+        if cur is not None:
+            out.append((y, cur[0], cur[1], cur[2]))
+    return out
+
+
+def _chain_cells(cells, x_tol=_CELL_X_TOL):
+    """把跨行的表头单元格按横向邻近并成「列」：[(x0, x1, text)]。
+
+    **同一行的两个单元格永不合并**——它们本来就是两列。跨行合并只在横向
+    重叠（或间隙 ≤ x_tol）时进行，即「`本报告期` 在上、`（1－6月）` 在下」。
+    """
+    groups = []
+    for y, x0, x1, tx in sorted(cells, key=lambda c: (c[0], c[1])):
+        placed = False
+        for g in groups:
+            if g["last_y"] == y:          # 同一行已有单元格，必是另一列
+                continue
+            if min(g["x1"], x1) - max(g["x0"], x0) >= -x_tol:
+                g["x0"] = min(g["x0"], x0)
+                g["x1"] = max(g["x1"], x1)
+                g["parts"].append((y, x0, tx))
+                g["last_y"] = y
+                placed = True
+                break
+        if not placed:
+            groups.append({"x0": x0, "x1": x1, "last_y": y,
+                           "parts": [(y, x0, tx)]})
+    out = []
+    for g in groups:
+        text = "".join(t for _y, _x, t in sorted(g["parts"], key=lambda p: (p[0], p[1])))
+        out.append((g["x0"], g["x1"], text))
+    return out
+
+
+def _label_band(rows, ri, max_rows=2, max_dy=40.0):
+    """指标名的取词带：金额行本身 + 紧邻的**无数字**行（上/下各至多 2 行）。
+
+    财务报表里的指标名经常换行：`归属于上市公司股东的扣除非经常性` 在金额行，
+    `损益的净利润` 在下一行；也有反过来的（金额行只有数字，指标名在上一行）。
+    只取「金额行文本」会让这些行被判成「指标行未命中」，而回退接受又不允许
+    （第十九轮 D3）。折中办法是把换行拼回来，但**只在紧邻行没有数字时**才拼——
+    有数字的行是另一条记录，拼进来就是换行串行。
+    """
+    parts = ["".join(c[2] for c in rows[ri][1])]
+    y0 = rows[ri][0]
+    j = ri - 1
+    while j >= 0 and ri - j <= max_rows:
+        y, cells = rows[j]
+        if y0 - y > max_dy or any(_dec(c[2]) is not None for c in cells):
+            break
+        parts.append("".join(c[2] for c in cells))
+        j -= 1
+    j = ri + 1
+    while j < len(rows) and j - ri <= max_rows:
+        y, cells = rows[j]
+        if y - y0 > max_dy or any(_dec(c[2]) is not None for c in cells):
+            break
+        parts.append("".join(c[2] for c in cells))
+        j += 1
+    return "".join(parts)
 
 
 def column_of_amount_aligned(words, value, label=None, y_tol=4.0, edge_tol=4.0):
+    """兼容签名：只要 (column_text, amount_text, status)。"""
+    col, amt, st, _w = column_of_amount_aligned_ex(
+        words, value, label=label, y_tol=y_tol, edge_tol=edge_tol)
+    return col, amt, st
+
+
+def column_of_amount_aligned_ex(words, value, label=None, y_tol=4.0, edge_tol=4.0):
     """按「金额自身的横向跨度」取表头，再取该列文字。
 
-    返回 (column_text, amount_text, status)，status 取值与
-    `column_of_amount_ex()` 一致，另加 `NO_HEADER_ROW`（找不到表头行）。
+    返回 (column_text, amount_text, status, amount_word)，status 取值与
+    `column_of_amount_ex()` 一致，另加 `NO_HEADER_ROW`（找不到表头行）与
+    `NO_LABEL_ROW`（指标行未命中）。
+
+    `amount_word` 是命中金额的**那个词** `(x0, y0, x1, y1, text)`，供调用方按
+    词坐标定位引文——第十九轮 D3 之后不再用正则去页面文本里捞金额：把空白去掉
+    以后 `684,956,197.48` 会和后一个数粘成 `684,956,197.48585,346,923.80`，
+    任何「数字边界」写法都会在这里误判。
 
     与 `column_of_amount_ex()` 的区别只有三点，都不放松判据：
 
@@ -582,34 +778,39 @@ def column_of_amount_aligned(words, value, label=None, y_tol=4.0, edge_tol=4.0):
     指标行绑定、金额唯一性、扫描页处理全部沿用原口径。
     """
     if not words:
-        return None, None, "NO_WORDS"
+        return None, None, "NO_WORDS", None
     target = _num_of(value)
     if target is None:
-        return None, None, "NO_AMOUNT"
+        return None, None, "NO_AMOUNT", None
     rows = rows_of_words(words, y_tol)
     cands = []
     for ri, (_y, cells) in enumerate(rows):
         for x0, x1, tx in cells:
-            v = _num_of(tx)
-            if v is not None and abs(v - target) < 0.01:
+            v = _dec(tx)
+            if v is not None and _same_amount(v, target):
                 cands.append((ri, x0, x1, tx))
     if not cands:
-        return None, None, "NO_AMOUNT"
+        return None, None, "NO_AMOUNT", None
     if label:
         want = [label] if isinstance(label, str) else [x for x in label if x]
         hit = []
         for ri, x0, x1, tx in cands:
-            row_txt = "".join(c[2] for c in rows[ri][1])
-            if any(w in row_txt for w in want):
+            if any(w in _label_band(rows, ri) for w in want):
                 hit.append((ri, x0, x1, tx))
-        if len(hit) > 1:
-            return None, hit[0][3], "AMBIGUOUS"
-        if hit:
-            cands = hit
-        elif len(cands) > 1:
-            return None, cands[0][3], "AMBIGUOUS"
+        if not hit:
+            # 第十九轮 D3：指标行未命中**不得回退接受**。原实现在「页面只有一个
+            # 候选金额」时继续往下走，于是「目标营业收入 100.009、页面只有营业成本
+            # 100.00」也能返回 OK——金额对不上、指标也不对，两处都靠回退蒙过。
+            return None, cands[0][3], "NO_LABEL_ROW", cands[0]
+        # 合计行与明细行同值（`一、营业总收入` 与 `其中：营业收入` 都是这个数）不算
+        # 歧义：本函数要定的是**列**，两行只要指向同一列，列就是确定的。
+        # 只有同一数值出现在**不同列**时才是真歧义。
+        spans = {(round(x0), round(x1)) for _ri, x0, x1, _tx in hit}
+        if len(spans) > 1:
+            return None, hit[0][3], "AMBIGUOUS", hit[0]
+        cands = hit
     elif len(cands) > 1:
-        return None, cands[0][3], "AMBIGUOUS"
+        return None, cands[0][3], "AMBIGUOUS", cands[0]
     ri, ax0, ax1, atxt = cands[0]
 
     # 表头行：金额行上方、含期间词、至少两个单元格、且不是页眉/标题的最近一行
@@ -626,7 +827,7 @@ def column_of_amount_aligned(words, value, label=None, y_tol=4.0, edge_tol=4.0):
         hdr = rj
         break
     if hdr is None:
-        return None, atxt, "NO_HEADER_ROW"
+        return None, atxt, "NO_HEADER_ROW", (ax0, ax1, atxt)
 
     # 表头可能跨两三行：`本报告期` 在一行、`（1－6月）` 在下一行，只取最近一行会
     # 拿到半截列名（`（1－6月）` 不含「本期」也无年份，`_PERIOD_COL` 判不过）。
@@ -642,46 +843,123 @@ def column_of_amount_aligned(words, value, label=None, y_tol=4.0, edge_tol=4.0):
             break
         hdr_rows.append(rj)
 
-    # 表头行里取「横向跨度与金额跨度重叠」的词。这里**不跳过数字词**——年份正是
-    # 表头的一部分（F33）；金额词本就不该出现在表头行。
+    # 表头里取「横向跨度与金额跨度重叠」的**列**。这里**不跳过数字词**——年份
+    # 正是表头的一部分（F33）；金额词本就不该出现在表头行。
+    #
+    # 第十九轮 D1：原实现把所有重叠的表头词**直接拼起来**再交给 `canon_column`
+    # 择一。左邻列的表头一旦落进 20pt 的 padding 就会被拼进去，`2025年半年度`
+    # 排在前面，归一后就成了「本列 = 2025年半年度」——邻列表头被认成本列。
+    # 现在先还原列结构，再按「几个期间列候选」决定：≥2 个一律报歧义。
     lo, hi = ax0 - _BAND_PAD_LEFT, ax1 + edge_tol
-    picked = []
-    for rj in reversed(hdr_rows):          # 从上到下
-        for x0, x1, tx in rows[rj][1]:
-            if x1 > lo and x0 < hi:
-                picked.append((rows[rj][0], x0, tx))
-    if not picked:
-        return None, atxt, "NO_COLUMN"
-    col = "".join(t for _y, _x, t in sorted(picked, key=lambda p: (p[0], p[1])))
-    return col, atxt, "OK"
+    chains = _chain_cells(_header_cells(rows, hdr_rows))
+    hit = [c for c in chains if c[1] > lo and c[0] < hi]
+    aw = (ax0, ax1, atxt)
+    if not hit:
+        return None, atxt, "NO_COLUMN", aw
+    period_hit = [c for c in hit if _COL_PERIOD_HINT.search(_nz(c[2]))]
+    if len(period_hit) > 1:
+        # 多个期间列同时与金额跨度重叠：不允许拼接后择一，交回人工/换页。
+        return None, atxt, "AMBIGUOUS", aw
+    if period_hit:
+        return period_hit[0][2], atxt, "OK", aw
+    if len(hit) == 1:
+        return hit[0][2], atxt, "OK", aw
+    return None, atxt, "NO_COLUMN", aw
 
 
-_YEAR_PERIOD = re.compile(r"(?:19|20)\d{2}年(?:半年度|年度|第一季度|第三季度|上半年|下半年)?")
-_PERIOD_WORDS = ("年初至报告期末", "本报告期末", "上年同期金额", "上年同期",
-                 "本报告期", "本期发生额", "本期金额", "本期数", "本期",
-                 "上期发生额", "上期金额", "上期数", "上期", "报告期",
-                 "上年年末", "上年度末", "年初数", "期末数", "年末数",
-                 "期初数", "年初", "期末", "年末")
+_RE_YEAR_ABS = re.compile(r"(?<!\d)(?:19|20)\d{2}(?!\d)")
+# 相对年：**先判上年/上期，再判本期**。顺序不能反：`上年年初至报告期末` 里同时
+# 含「年初」与「上年」，先判本期就会把它归成「本期」——正是第十九轮 D2 的第 4 例。
+_RE_REL_PRIOR_YEAR = re.compile(r"上年|去年同期|上年度|上年年末")
+_RE_REL_PRIOR = re.compile(r"上期|上一期")
+_RE_REL_CUR = re.compile(r"本期|本报告期|报告期|本年|年初至|本季度|当月")
+# 累计属性：从年初起算的口径。`1-6月`/`1-9月`/`1-12月`/上半年/年度 都是累计；
+# `4-6月` 这种单季不是。这一项决定「本期累计」与「本季度」不能互认。
+_RE_CUM = re.compile(r"年初至|累计|自年初|上半年|半年度|年度|全年|"
+                     r"(?<!\d)1\s*[—–−－~～至\-]\s*(?:3|6|9|12)\s*月")
 
 
 def canon_column(text):
-    """把表头文字归一成**一个列名**，供登记侧与实际侧用同一把尺子比较。
+    """把表头文字归一成**保留期间语义的结构化键**，供两侧用同一把尺子比较。
 
-    表头行里同一列的文字可能横跨多行（`本报告期` + `（1－6月）`），也可能因取词
-    窗口把邻列年份带进来（`2026年半年度2025`）。归一规则：
-    ① 有「年份+期间」的，取最长的那一段（`2026年半年度`）；
-    ② 否则取出现的最长期间词（`本报告期` / `本期数` / `年初至报告期末` …）；
-    ③ 都没有则返回空串——**没有期间语义的表头不能当列名**。
+    第十九轮 D2 否掉了旧实现（取最长年份段/最长期间词）：它把
+    `本期金额（2026年1-6月）` 与 `（2026年4-6月）` 都压成 `2026年`，
+    把 `上年年初至报告期末` 压成 `年初至报告期末`——那不是写法归一，是把
+    必须保留的**起止区间与相对年份语义删掉**，于是 6 个月与 3 个月可以互认。
+
+    键的格式：`相对年|区间|累计`，例如
+
+    - `本期金额（2026年1-6月）` → `本期|R-2026-1-6|累计`
+    - `本期金额（2026年4-6月）` → `本期|R-2026-4-6|`
+    - `本报告期（1－6月）`      → `本期|R0-1-6|累计`
+    - `上年年初至报告期末`      → `上年||累计`
+    - `本报告期`                → `本期||`
+
+    三段全空说明这个表头**没有任何期间语义**，返回空串——不能当列名。
+    """
+    t = _col_norm(text)
+    if not t:
+        return ""
+    span = _date_span(t)
+    rel = ""
+    if _RE_REL_PRIOR_YEAR.search(t):
+        rel = "上年"
+    elif _RE_REL_PRIOR.search(t):
+        rel = "上期"
+    elif _RE_REL_CUR.search(t):
+        rel = "本期"
+    cum = "累计" if _RE_CUM.search(t) else ""
+    if not span and not rel and not cum:
+        return ""
+    sp = ""
+    if span:
+        sp = "%s-%s" % (span[0], "-".join(str(x) for x in span[1:]))
+    return "%s|%s|%s" % (rel, sp, cum)
+
+
+# 表头里带期间语义的片段（用于把原文里的连续列名切出来）
+_COL_TOKEN = re.compile(
+    r"(?<!\d)(?:19|20)\d{2}\s*年(?:半年度|年度|第[一二三四1-4]季度|上半年|下半年)?"
+    r"|(?<!\d)\d{1,2}\s*[—–−－~～至\-]\s*\d{1,2}\s*月"
+    r"|（[^（）]{0,28}）|\([^()]{0,28}\)"
+    r"|年初至本?报告期末|本报告期末|本报告期|上年同期金额|上年同期|上年年末|上年度末"
+    r"|本期发生额|本期金额|本期数|本期|上期发生额|上期金额|上期数|上期"
+    r"|报告期|期末数|期末|年末数|年末|年初数|年初|期初数|期初"
+    r"|第[一二三四1-4]季度|上半年|下半年|半年度|年度|全年|累计"
+    r"|[Qq][1-4]")
+
+
+def clean_column_text(text):
+    """把表头串收敛成**原文里连续的一段**，且不丢期间语义。
+
+    取「第一个期间片段 → 最后一个期间片段」的连续区间，因此结果仍是原文的
+    子串（登记表要能在引文/原件里定位），但不会把整行表头（含邻列、含「附注」）
+    都吞进来。没有期间片段则返回空串。
     """
     t = _nz(text)
     if not t:
         return ""
-    ys = _YEAR_PERIOD.findall(t)
-    if ys:
-        return max(ys, key=len)
-    hits = [w for w in _PERIOD_WORDS if w in t]
-    if hits:
-        return max(hits, key=len)
+    ms = list(_COL_TOKEN.finditer(t))
+    if not ms:
+        return ""
+    return t[ms[0].start():ms[-1].end()]
+
+
+def registrable_column(header, page_txt):
+    """从表头串里取出**在正文中连续出现、且语义与整段一致**的列名。
+
+    第十九轮 D2：登记值必须同时满足两条——①是原件里的连续片段（否则引文里
+    找不到它）；②`canon_column` 与整段表头**完全相同**（否则等于用一个更短的、
+    丢了区间或相对年份的名字去登记）。两条都满足才返回。
+    """
+    want = canon_column(header)
+    if not want:
+        return ""
+    cands = [clean_column_text(header)]
+    cands += [m.group(0) for m in _COL_TOKEN.finditer(_nz(header))]
+    for c in cands:
+        if c and c in (page_txt or "") and canon_column(c) == want:
+            return c
     return ""
 
 
@@ -705,6 +983,7 @@ def gap(ent, expect, evidence_of, col_of=None):
         return "VERIFICATION_WITHOUT_DATE"
 
     # 绑定实际父输入：文档 / 期间 / 终值 / 栏目 / 页码 / 版本
+    aw_of = {}
     for side in ("p1", "p2"):
         exp = expect[side]
         if (ent.get("%s_doc" % side) or "").strip() != (exp.get("doc") or "").strip():
@@ -718,7 +997,10 @@ def gap(ent, expect, evidence_of, col_of=None):
             return "PARENT_COLUMN_EMPTY"
         if len(col) < 2:
             return "PARENT_COLUMN_TOO_SHORT"
-        if not _PERIOD_COL.search(col):
+        # 第十九轮 D2：改用 `canon_column` 判「是不是期间列名」。它要求表头带
+        # 年份/区间/相对年/累计属性之一，比 `_PERIOD_COL` 的裸子串更严——
+        # `_PERIOD_COL` 里「月」一个字的线索就能过。
+        if not canon_column(col):
             return "PARENT_COLUMN_NOT_PERIOD"
         if not _page_ok(ent.get("%s_page" % side)):
             return "PARENT_PAGE_INVALID"
@@ -727,10 +1009,12 @@ def gap(ent, expect, evidence_of, col_of=None):
         # 返回 (column_text, status)。第十二轮再收紧：绑定目标行、期间类比对、
         # 扫描页记「待回读」而不是「原件不可解」。
         if col_of is not None:
-            actual_col, st = col_of((ent.get("%s_doc" % side) or "").strip(),
-                                    (ent.get("%s_page" % side) or "").strip(),
-                                    exp.get("value"),
-                                    METRIC_ALIASES.get((expect.get("field") or "").strip()))
+            res = col_of((ent.get("%s_doc" % side) or "").strip(),
+                         (ent.get("%s_page" % side) or "").strip(),
+                         exp.get("value"),
+                         METRIC_ALIASES.get((expect.get("field") or "").strip()))
+            actual_col, st = res[0], res[1]
+            aw_of[side] = res[2] if len(res) > 2 else None
             if st == "NO_WORDS":
                 return "PARENT_COLUMN_NEEDS_REREAD"
             if st == "AMBIGUOUS":
@@ -793,6 +1077,7 @@ def gap(ent, expect, evidence_of, col_of=None):
             if any(mk in q for mk in _VER_MARK_FORBIDDEN_ORIGINAL):
                 return "PARENT_QUOTE_VERSION_CONFLICT"
         if not _num_in_quote(ent.get(fq), expect[side].get("value"),
-                             expect[side].get("unit_scale")):
+                             expect[side].get("unit_scale"),
+                             exact=aw_of.get(side)):
             return "PARENT_QUOTE_WITHOUT_PARENT_VALUE"
     return None

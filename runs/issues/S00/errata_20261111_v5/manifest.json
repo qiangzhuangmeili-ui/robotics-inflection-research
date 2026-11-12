@@ -1,24 +1,33 @@
 {
  "version": "ERRATA_V5",
- "self_check_version": "V16",
- "generated_at": "2026-11-12T00:50:00+08:00",
+ "self_check_version": "V17",
+ "generated_at": "2026-11-12T01:40:00+08:00",
  "issue": "S00",
  "stage": "ERRATA",
  "nature": "SELF_CHECK",
  "reproduce": [
+  "step4_parent_scan.py",
+  "step4_column_witness.py",
+  "step4_apply_parents.py",
   "build_errata_v5.py",
   "check_l2_v5.py",
   "sampling_v5.py",
   "replay_polarity_v5.py",
   "verify_v5.py"
  ],
+ "reproduce_note": "顺序不能换：旁证必须在登记之前跑，否则等于先登记后补证。",
  "upstream_ruling": [
   "codex_ruling_round5.md",
   "第十轮 RETURN_FOR_REWORK（_codex_out_round10.txt）",
   "第十一轮 RETURN_FOR_REWORK（_codex_out_round11.txt，H 通过 / A–G 不通过）",
   "第十二轮 RETURN_FOR_REWORK（_codex_out_round12.txt，G 通过 / A、B、C、D、E、F、H 不通过）",
   "第十三轮 RETURN_FOR_REWORK（_codex_out_round13.txt，D、E、G 通过 / A、B、C、F、H 不通过）",
-  "第十四轮 RETURN_FOR_REWORK（_codex_out_round14.txt，F 通过 / A、B、C、H 不通过）"
+  "第十四轮 RETURN_FOR_REWORK（_codex_out_round14.txt，F 通过 / A、B、C、H 不通过）",
+  "第十五轮 ACCEPTED_WITH_LIMITS（_codex_out_round15.txt，B、H 通过 / A、C、F 维持）",
+  "第十六轮 ACCEPTED_WITH_LIMITS（acceptance_round16.json，B、H、汇报一致性通过）",
+  "第十七轮 RETURN_FOR_REWORK（撤销 3,803 条事件闭合）",
+  "第十八轮 ACCEPTED_WITH_LIMITS（acceptance_round18.json，批次 A 四项通过）",
+  "第十九轮 RETURN_FOR_REWORK（rework_round19.json，D1–D5 + 6 条返工清单）"
  ],
  "files": [
   {
@@ -38,8 +47,8 @@
   },
   {
    "path": "parent_verify.py",
-   "bytes": 37764,
-   "sha256": "95a8c4f31e7d086b983c1d1b555e66806f04845fc94ae3fdef80ae3266e43bb1"
+   "bytes": 51059,
+   "sha256": "913026bdb164c0df3331aa613a8065edc9276a2021b1469a2d3dfe7c43f8dbc0"
   },
   {
    "path": "polarity_cases.py",
@@ -48,8 +57,8 @@
   },
   {
    "path": "build_errata_v5.py",
-   "bytes": 36038,
-   "sha256": "ceec6386221b864a70ec6937974dba1c0fb54cb728cb5700a668f2293b89eeb5"
+   "bytes": 36288,
+   "sha256": "4e43485462042e153d9b34b908bf4d5df19ef3d27d261fea1c50c66eb881c029"
   },
   {
    "path": "check_l2_v5.py",
@@ -68,8 +77,8 @@
   },
   {
    "path": "verify_v5.py",
-   "bytes": 195671,
-   "sha256": "7b36cf8c976697f678e746a5f1fb10dad1042db84a295a133ab7dbf5b3ca57c7"
+   "bytes": 208706,
+   "sha256": "c1312d59207e8b890c2e2648c7b6d21efb79e9c6ec2fbad87e1942af973e8897"
   },
   {
    "path": "step4_event_scan.py",
@@ -83,13 +92,23 @@
   },
   {
    "path": "step4_parent_scan.py",
-   "bytes": 9351,
-   "sha256": "57a4d6ab43a2a757b90907481885a152c6c7036a43940bd57edd81bda891d0e9"
+   "bytes": 10415,
+   "sha256": "c93880b0c632fbecb117cf644eb2e3f9711f87b5119c980188919cf78d83b4fc"
   },
   {
    "path": "step4_apply_parents.py",
-   "bytes": 4207,
-   "sha256": "ed4798e50005537e1a1256f473ba89391830ce5f1bbdb1163570e14a23c60eb5"
+   "bytes": 6282,
+   "sha256": "f7342abf3c7c91b3fd2a3a63b3959dd6025a0e2e0f1841f87e830f68dc9d8971"
+  },
+  {
+   "path": "step4_column_witness.py",
+   "bytes": 9797,
+   "sha256": "b2563e769fef4f9187b68c960e7a61c4b58b8937be1df58055e0225dc5b43fc2"
+  },
+  {
+   "path": "selftest_column_rules.py",
+   "bytes": 6395,
+   "sha256": "766b578ce7ca2d0cd3f03ad4c8a4bf9efe82837ebb0b45f8fdaaed74c4952a02"
   },
   {
    "path": "rulings_resolved.json",
@@ -108,8 +127,8 @@
   },
   {
    "path": "meta_diff.csv",
-   "bytes": 7689893,
-   "sha256": "0e96c2650e5b0102db2d4d20899a3d2de501e9ed983980c4efcc83d354cbb74f"
+   "bytes": 7689998,
+   "sha256": "5129b08e84d0f860771613d920902ca5c53baec7558b05cfbd4b1ee3d74c2bf7"
   },
   {
    "path": "extra_meta_diff.csv",
@@ -128,6 +147,11 @@
   },
   {
    "path": "parent_verifications.csv",
+   "bytes": 136107,
+   "sha256": "50d02decbe693be4042980474e30486bb57751f7f87d40bd161c2a046faf3fca"
+  },
+  {
+   "path": "parent_verifications_prev_round19.csv",
    "bytes": 111298,
    "sha256": "9c8d6364893e33ccc89f844c8265a7a07c88ff296fbdb06eaa1d6514833452da"
   },
@@ -153,23 +177,28 @@
   },
   {
    "path": "step4_parent_scan.csv",
-   "bytes": 86492,
-   "sha256": "dbff6f504d8b9d6e8b9afa70013a8b2ae88707946b4800f1811497c52e05d4c6"
+   "bytes": 106843,
+   "sha256": "532558bfa757df05915c24140f49a0c13b1cc325ad68e49cc197ce64a06f71a3"
+  },
+  {
+   "path": "step4_column_witness.csv",
+   "bytes": 8471,
+   "sha256": "b4fe83789c974cf9b174dd0b03d1bbd61001f25130da6f02334d63351588fb90"
   },
   {
    "path": "dispute_ledger.csv",
-   "bytes": 2843334,
-   "sha256": "80d74201e4ba5fcc8c21edfc2e7256d5b93cef05fc2d72160cb5e5ddb67007c3"
+   "bytes": 2844682,
+   "sha256": "5646ca34fe88a6a9e96723588bb300a4bdaafd7659cb93634bd99bd44b3f70e9"
   },
   {
    "path": "restricted_claims.csv",
-   "bytes": 281425,
-   "sha256": "1dbeaaf881cb11bed0945cf1d247c4bff0cb4be6b67f58d6ca8ee35a57459f9c"
+   "bytes": 280667,
+   "sha256": "ae466f39520fd0183e1f47319ef19d45fe20fe880f6661fd8a76d373eaaa5bcc"
   },
   {
    "path": "l2_dependency_check.csv",
-   "bytes": 94827,
-   "sha256": "c28bf5f6ef2ccde75c5116376910a2b184cc290d71196182b2aedd558d8c257b"
+   "bytes": 94786,
+   "sha256": "e290442b5c8a8aa9a7f10598f8f39b173b6c508337ed7957ea50061422d676eb"
   },
   {
    "path": "sampling_v5.csv",
@@ -178,8 +207,8 @@
   },
   {
    "path": "l2_dependency_summary.json",
-   "bytes": 14397,
-   "sha256": "b5be82e9bf79cd3f1ebb53673114c1337fde5aebb3beefe1b963ace11316d794"
+   "bytes": 14228,
+   "sha256": "d01b0614d444ba2404fabdeb4b50129f1037699fc2166998134298e737eef0af"
   },
   {
    "path": "sampling_v5.json",
@@ -204,22 +233,22 @@
   {
    "path": "summary.json",
    "bytes": 28248,
-   "sha256": "9dfb01ed3d040fa644b040d3f06d151756b7b525f7c7451fafe318565024720e"
+   "sha256": "708df05a22d70b176c06fec97c4da70c9cfed4389b1121d01262eb69c0760830"
   },
   {
    "path": "review.json",
-   "bytes": 52603,
-   "sha256": "03abab761624704cdf1b0ab7ccd8f9385558d4849ef49973b2d2eec4ab0e3135"
+   "bytes": 53694,
+   "sha256": "81eeea0eff3f355986328868189ed9d5c7db295ec9cf9f92e0ba866e08c60acc"
   },
   {
    "path": "REPORT.md",
-   "bytes": 95740,
-   "sha256": "4f821552bc3af2b1789995438e7387721275401c3102de83820de5e1257207ea"
+   "bytes": 106725,
+   "sha256": "ba3c3abee95f8e0a3ba5337e9ecfa9bb609972ac6665fae143e7e1aca7fec50b"
   },
   {
    "path": "handoff.md",
-   "bytes": 34039,
-   "sha256": "9d03e7b91cc7ff8955432c07d8fefefe8decabdf082f227e920dce2c7510935e"
+   "bytes": 39307,
+   "sha256": "67a3108b7492bf70e028228b48e33e556b8b6d940d6565c493292fc4a7cf2666"
   },
   {
    "path": "acceptance_round16.json",
@@ -277,6 +306,16 @@
    "sha256": "5ccf4a677058f8fa62c03eaa7e89cc75d58f5e3c377151594da61ee8655ea857"
   },
   {
+   "path": "report_to_codex_round20.md",
+   "bytes": 16383,
+   "sha256": "bfeb4e843ec7daa1d1d6e80c2d6b10f3e41542132feb20051172ac1b4832b907"
+  },
+  {
+   "path": "rework_round19_result.json",
+   "bytes": 13751,
+   "sha256": "a5090a6248e0fe81532bd6fad32dd8923aa570d1ad169be083ba278a62e09fca"
+  },
+  {
    "path": "_codex_prompt_round11.txt",
    "bytes": 13578,
    "sha256": "42eae2a5269ff29c842fb727ce2ed17c27e8a8b36f10f6e0e519ffe4decda0b5"
@@ -322,6 +361,11 @@
    "sha256": "4d3f399e4ccc53dcfcffc6fbacf8bd5b07e3732c43641d5798636d252af7761b"
   },
   {
+   "path": "_codex_prompt_round20.txt",
+   "bytes": 8959,
+   "sha256": "c11726699248a399090c84c9e2f3d1b888f8ebaaa41760727da02330b1bb6722"
+  },
+  {
    "path": "codex_ruling_round5.md",
    "bytes": 15319,
    "sha256": "303f3d8a599832aa366e1d38c8af951af0efe368cc89bac151262625e4d6e280"
@@ -360,6 +404,21 @@
    "path": "_codex_out_round16.txt",
    "bytes": 4888,
    "sha256": "a63b7c108124525cdb9a40d4ec23af51cbe1efb53eb95d8bd24d69959c8bec4a"
+  },
+  {
+   "path": "_codex_out_round17.txt",
+   "bytes": 9824,
+   "sha256": "4189425e7053c47ef5c8de67c56810d5fbe484882e4e3a7e9bace45a8cf6e71a"
+  },
+  {
+   "path": "_codex_out_round18.txt",
+   "bytes": 4952,
+   "sha256": "16a0d28942834ebb52090e425c24be7a83548d79fb4ae2010c791c3d6231cb0c"
+  },
+  {
+   "path": "_codex_out_round19.txt",
+   "bytes": 7207,
+   "sha256": "6943e2d1acaa44ffa74e23d6a2943d1d934b4ce481a13c78d48678e49321df5c"
   }
  ]
 }

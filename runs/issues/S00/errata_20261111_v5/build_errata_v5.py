@@ -93,20 +93,22 @@ def _col_of(sec):
     ① 用金额**中心点**去套表头，而数字右对齐、表头居中，实测 174 个父输入页面里
        97 页取不到表头；② 取表头行时把**年份**当金额丢掉，`2026年半年度` 只剩
        `年半年度`，而 `_PERIOD_COL` 要求含四位年份——正确登记也过不了。
-    改用 `column_of_amount_aligned()`（跨度重叠 + 保留年份 + 表头跨行合并），
-    并把两侧都归一到 `canon_column()` 再比：登记侧由 C41 强制已是规范形式。
+    改用 `column_of_amount_aligned()`（跨度重叠 + 保留年份 + 表头跨行合并）。
+    第十九轮 D2：返回 `clean_column_text()` 的原文连续片段而不是 `canon_column()`
+    的结构化键——键只用于比较，不能当列名写进登记表（原文里没有这个字符串，
+    引文就定位不到）。生产侧与自检侧（`verify_v5._col_of`）保持同一把尺子。
     """
     def f(doc, page, value, label=None):
         pdf = _pdf_path(sec, doc)
         if pdf is None:
-            return None, "NO_WORDS"
+            return None, "NO_WORDS", None
         words = pv.page_words(pdf, page)
         if not words:
-            return None, "NO_WORDS"
-        col, _amt, st = pv.column_of_amount_aligned(words, value, label=label)
+            return None, "NO_WORDS", None
+        col, _amt, st, aw = pv.column_of_amount_aligned_ex(words, value, label=label)
         if st != "OK":
-            return None, st
-        return pv.canon_column(col), "OK"
+            return None, st, None
+        return pv.clean_column_text(col), "OK", aw
     return f
 
 

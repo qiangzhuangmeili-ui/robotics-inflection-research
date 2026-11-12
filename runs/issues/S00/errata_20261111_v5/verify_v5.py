@@ -44,9 +44,9 @@ import polarity_cases as pc
 
 ROOT = core.ROOT
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
-SELF_CHECK_VERSION = "V16"
+SELF_CHECK_VERSION = "V17"
 # 待复核轮次：状态串与校验条件共用一处，避免两处字面各写一遍再漂移
-RECHECK_ROUND = 19
+RECHECK_ROUND = 20
 
 
 def _cn_num(n):
@@ -64,7 +64,7 @@ def _cn_num(n):
 # 每轮必漂。现在两处都由 RECHECK_ROUND 派生：
 # 本轮改的是「上一轮」的裁决 → 返工轮次 = RECHECK_ROUND − 1；
 # 汇报文件名与本轮待复核轮次同号 → round{RECHECK_ROUND}。
-ROUND_PHASE = "裁决后第 4 步批次 B 父输入核证"
+ROUND_PHASE = "裁决后第 4 步批次 B 取列返工与独立旁证"
 ROUND_LABEL = "第%s轮%s" % (_cn_num(RECHECK_ROUND - 1), ROUND_PHASE)
 REPORT_NAME = "report_to_codex_round%d.md" % RECHECK_ROUND
 # 复核结论：`None` = 仍在等第 RECHECK_ROUND 轮复核；给出字符串 = 已收到裁决。
@@ -408,20 +408,28 @@ def _col_of(sec):
     """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项，第十二轮绑定目标行）。
 
     第十八轮接受后自查（F33）：与生产侧同步改用 `column_of_amount_aligned()`
-    （跨度重叠 + 保留年份 + 表头跨行合并），并把结果归一到 `canon_column()`。
-    两侧必须同一把尺子，否则「自检说通过、生产说不行」会各说各话。
+    （跨度重叠 + 保留年份 + 表头跨行合并）。
+    第十九轮 D2：返回值改为 `clean_column_text()` 的**原文连续片段**，不再是
+    `canon_column()` 的结构化键——键是拿来比的，不是拿来当列名的；把键写回
+    登记表等于用一个原文里不存在的字符串登记，引文里也就定位不到它。
+    两侧（生产 / 自检）仍然同一把尺子：都走 `column_of_amount_aligned` +
+    `clean_column_text`，比较走 `cols_equivalent`。
+
+    第十九轮 D3：第三个返回值是命中的**金额词** `(x0, x1, text)`，供 C41 直接
+    核对「引文里有没有这个数」——引文是把词流去掉空白拼起来的，文本层面分不清
+    `61249,206,238.56` 是附注号 `61` 粘上 `249,206,238.56`，还是一个大数。
     """
     def f(doc, page, value, label=None):
         pdf = pdf_file(sec, doc)
         if pdf is None:
-            return None, "NO_WORDS"
+            return None, "NO_WORDS", None
         words = pv.page_words(pdf, page)
         if not words:
-            return None, "NO_WORDS"
-        col, _amt, st = pv.column_of_amount_aligned(words, value, label=label)
+            return None, "NO_WORDS", None
+        col, _amt, st, aw = pv.column_of_amount_aligned_ex(words, value, label=label)
         if st != "OK":
-            return None, st
-        return pv.canon_column(col), "OK"
+            return None, st, None
+        return pv.clean_column_text(col), "OK", aw
     return f
 
 
@@ -442,11 +450,17 @@ def pdf_pages(sec, doc):
 
     第九轮 D 项：C24 原来的定位源是 `results.csv.evidence`——那是上游核验记录里
     的摘录，不是原件；拿它自证「引文可定位」等于用同一来源自证。改为回读 PDF。
+
+    第十九轮 D5：**技术失败不能写成「该页没有文字」**。原实现把取词异常页写成
+    `""`，于是一整本取词全失败时得到 `['']`——既满足缓存条件被永久记住，又让
+    下游把「读不出来」当成「原件里没有这句话」。现在失败页记 `None`（与真正的
+    空页 `""` 区分），整本只要有一页失败就**不写缓存**，下次重试。
     """
     key = (sec, doc)
     if key in _PDF_CACHE:
         return _PDF_CACHE[key]
     pages = None
+    failed = 0
     code = (sec or "").split(":")[-1]
     pdf = None
     for p in (ORIG / code).rglob(doc + ".pdf"):
@@ -461,11 +475,13 @@ def pdf_pages(sec, doc):
                 try:
                     pages.append(_nz(d[i].get_text()))
                 except Exception:
-                    pages.append("")      # 单页取词失败只影响该页，不拖垮整本
+                    failed += 1
+                    pages.append(None)     # 技术失败：不是「该页无文本」
             d.close()
         except Exception:
             pages = None
-    if pages is not None:
+            failed += 1
+    if pages is not None and failed == 0:
         # 第十八轮接受后自查：原实现把 None 也写进缓存，一次瞬时失败（大文档
         # 整本读文本时的内存压力）会被永久记住，后面所有检查都读到「原件不可用」。
         _PDF_CACHE[key] = pages
@@ -473,20 +489,29 @@ def pdf_pages(sec, doc):
 
 
 def _pdf_ev(sec, doc, page):
-    """原件指定物理页文本（第十轮 B3 项：引文必须落在登记页上）。"""
+    """原件指定物理页文本（第十轮 B3 项：引文必须落在登记页上）。
+
+    返回 `None` 表示**技术失败**（该页取词异常），`""` 表示该页确实没有文字。
+    第十九轮 D5：两者必须分开——否则「读不出来」会被写成「原件里没有这句话」。
+    """
     try:
         n = int(str(page).strip())
     except (TypeError, ValueError):
         return ""
     pages = pdf_pages(sec, doc) or []
     if pages:
-        return pages[n - 1] if 1 <= n <= len(pages) else ""
+        if 1 <= n <= len(pages):
+            return pages[n - 1]        # 可能是 None（该页技术失败）
+        return ""
     # 回退：整本读取失败时按页取词。第十八轮后 C41 要逐行回读父输入登记，
     # 若这里静默返回空串，登记会被判成「原件不可用」——那是把技术失败说成证据缺失。
     pdf = pdf_file(sec, doc)
     if pdf is None:
-        return ""
-    return pv._nz("".join(w[4] for w in pv.page_words(pdf, page)))
+        return None
+    ws = pv.page_words(pdf, page)
+    if not ws:
+        return None                    # 取词返回空 = 读不出来，不是「空页」
+    return pv._nz("".join(w[4] for w in ws))
 
 
 def parent_gap(k, entries=None, col_of=None):
@@ -543,7 +568,12 @@ def facts(r):
     else:
         ex, af, sc, me = set(), set(), set(), set()
     cov = set(ex)
-    pok = parent_compatible(k)
+    # 第十九轮 D3：重算侧必须和生产侧走**同一条**判据。原实现这里不传 `col_of`，
+    # 于是「引文里有没有这个数」只能靠文本正则；而去掉空白后相邻两个数会粘连
+    # （附注号 `61` 粘上 `249,206,238.56`），4 条已登记的键因此被判成未闭合，
+    # 与生产台账对不上（C26/C29 各 4 条）。`col_of` 只有在该键确有登记记录时
+    # 才会被调用，绝大多数行在第一步就返回，不会拖慢重算。
+    pok = parent_compatible(k, col_of=_col_of(k[0]))
     if es.PARENT_COMPATIBILITY in req and pok is True:
         cov.add(es.PARENT_COMPATIBILITY)
     return {"k": k, "b": b, "doc": doc, "rec": rec, "status": status, "own": own,
@@ -2493,9 +2523,17 @@ def _real_parent_case():
             for pi, t in enumerate(pages, 1):
                 if want not in t:
                     continue
+                # 第十九轮 D2：阳性对照必须用**生产路径**构造，否则测的是一套、
+                # 跑的是另一套。旧实现在这里用 `column_of_amount`（中心点定列），
+                # 而 `gap()` 已改用 `column_of_amount_aligned`——两边栏目一旦不同，
+                # 「真实阳性」就会被自己的实现拒掉（REAL_ORIGINAL_POSITIVE_REJECTED）。
                 words = pv.page_words(pdf, pi)
-                col, _amt = pv.column_of_amount(words, b["val"])
-                if not col or not pv._PERIOD_COL.search(col):
+                col_raw, _amt, st, _aw = pv.column_of_amount_aligned_ex(
+                    words, b["val"], label=pv.METRIC_ALIASES.get(k1[1]))
+                if st != "OK":
+                    continue
+                col = pv.registrable_column(col_raw, pv._nz(t))
+                if not col or not pv.canon_column(col):
                     continue
                 j = t.find(want)
                 hidx = t.rfind(col, 0, j)
@@ -2694,6 +2732,61 @@ if _real_k is not None:
         _s_lb == "OK" and pv.cols_equivalent(_c_lb, "本期数"))
     if not chain["duplicate_amount_row_bound"]:
         c37.append("DUPLICATE_AMOUNT_ROW_NOT_BOUND:%s/%s" % (_s_lb, _c_lb))
+    # 第十九轮 D1/D2：取列与归一的**生产路径**反例（不再只测 `cols_equivalent`
+    # 或旧函数 `column_of_amount_ex`，那两条都绕过了真正的实现）。
+    # ① Codex 的邻列反例：左列 `2025年半年度` x[70,90]、本列 `2026年半年度`
+    #    x[100,130]、金额 100.00 x[100,110]。结果不得含 2025。
+    _w_nb = [
+        (0, 100, 40, 110, "营业收入"), (70, 80, 90, 90, "2025年半年度"),
+        (100, 80, 130, 90, "2026年半年度"), (100, 100, 110, 110, "100.00"),
+        (140, 100, 150, 110, "200.00"), (0, 60, 200, 70, "单位：元"),
+    ]
+    _c_nb, _a_nb, _s_nb = pv.column_of_amount_aligned(_w_nb, "100.00",
+                                                     label=("营业收入",))
+    chain["neighbor_header_not_taken"] = (
+        _s_nb == "OK" and "2025" not in pv._nz(_c_nb)
+        and pv.canon_column(_c_nb) == "|R-2026-1-6|累计")
+    if not chain["neighbor_header_not_taken"]:
+        c37.append("NEIGHBOR_HEADER_TAKEN:%s/%s" % (_s_nb, _c_nb))
+    # ② 两列期间列**同时**与金额跨度重叠 → 必须报歧义，不许拼接后择一
+    _w_nb2 = [
+        (0, 100, 40, 110, "营业收入"), (80, 80, 95, 90, "2025年半年度"),
+        (100, 80, 130, 90, "2026年半年度"), (100, 100, 110, 110, "100.00"),
+        (140, 100, 150, 110, "200.00"), (0, 60, 200, 70, "单位：元"),
+    ]
+    _c_nb2, _a_nb2, _s_nb2 = pv.column_of_amount_aligned(_w_nb2, "100.00",
+                                                        label=("营业收入",))
+    chain["overlapping_columns_ambiguous"] = (_s_nb2 == "AMBIGUOUS")
+    if not chain["overlapping_columns_ambiguous"]:
+        c37.append("OVERLAPPING_COLUMNS_NOT_AMBIGUOUS:%s/%s" % (_s_nb2, _c_nb2))
+    # ③ 金额必须逐位相等：100.009 不得命中页面上的 100.00
+    _w_amt = [
+        (0, 100, 40, 110, "营业成本"), (100, 80, 130, 90, "2026年半年度"),
+        (100, 100, 110, 110, "100.00"), (0, 60, 200, 70, "单位：元"),
+    ]
+    _c_amt, _a_amt, _s_amt = pv.column_of_amount_aligned(_w_amt, "100.009",
+                                                        label=("营业收入",))
+    chain["amount_exact_decimal"] = (_s_amt == "NO_AMOUNT")
+    if not chain["amount_exact_decimal"]:
+        c37.append("AMOUNT_TOLERANCE_STILL_LOOSE:%s/%s" % (_s_amt, _c_amt))
+    # ④ 指标行未命中不得回退接受
+    _c_lab, _a_lab, _s_lab2 = pv.column_of_amount_aligned(_w_amt, "100.00",
+                                                         label=("营业收入",))
+    chain["label_row_required"] = (_s_lab2 == "NO_LABEL_ROW")
+    if not chain["label_row_required"]:
+        c37.append("LABEL_ROW_FALLBACK_STILL_ALLOWED:%s/%s" % (_s_lab2, _c_lab))
+    # ⑤ canon 必须保留年份/区间/相对年/累计：这四对的两侧 canon 键必须不同
+    _CANON_DIFF = [("本期金额（2026年1-6月）", "本期金额（2026年4-6月）"),
+                   ("本报告期（1－6月）", "本报告期（4－6月）"),
+                   ("上年年初至报告期末", "年初至报告期末"),
+                   ("上年同期", "上期")]
+    chain["canon_keeps_semantics"] = all(
+        pv.canon_column(a) and pv.canon_column(b)
+        and pv.canon_column(a) != pv.canon_column(b) for a, b in _CANON_DIFF)
+    if not chain["canon_keeps_semantics"]:
+        c37.append("CANON_COLLAPSED:%s" % [
+            (a, b, pv.canon_column(a), pv.canon_column(b))
+            for a, b in _CANON_DIFF if pv.canon_column(a) == pv.canon_column(b)])
     # 期间列头语义类：同义须通、异义须拒（第十三轮 B 项扩到 4 组同义 + 4 组异义）
     # 第十四轮 B 项：「本报告期 / 本期金额」从同义表里**撤掉**——没有区间时把它当同义
     # 是惯例，不是可证事实（中报里两者可能分别是 6 个月与 3 个月）。它改到异义表，
@@ -2733,7 +2826,9 @@ reopened = sum(1 for r in meta if r["meta_field"] == "restatement_flag"
 if reopened < 1000:
     c37.append("REOPENED_PARENT_COMPAT_TOO_FEW:%d" % reopened)
 add("C37", "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开；"
-           "栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类",
+           "栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类；"
+           "取列反例必须走**生产路径**：邻列表头不得被认成本列、两列重叠须报歧义、"
+           "金额须逐位相等、指标行未命中不得回退、canon 不得把区间/相对年压掉",
     not c37,
     {"violations": c37, "auto_passes": len(auto_pass),
      "empty_scope_passes": len(empty_scope_pass),
@@ -3049,7 +3144,8 @@ def write_status(passed_n, total_n, decision):
     _claim = (
         "S00 勘误 V5 自检 %s 通过；条数与逐项结果只在 "
         "%s/review.json，此处不复述。"
-        "第 4 步批次 A 只取得证据、未据此闭合任何一条；批次 B–E 与第 5 步重算分层未做；"
+        "第 4 步批次 A 只取得证据、未据此闭合任何一条；批次 B 按新方法重验后只登记"
+        "两侧证据完整且独立列身份旁证一致的行，其余保留待核；批次 C–E 与第 5 步重算分层未做；"
         "锚定期回退与上游准入未冻结；"
         "S04 第二轮与 S05 不放行。"
         % (SELF_CHECK_VERSION, STATUS_REL))
@@ -3275,6 +3371,59 @@ if _P_PV.exists():
         _PV_ROWS = list(csv.DictReader(_f))
 
 
+def _filler_text(s):
+    """是不是「凑长度」的填充文本：单一字符占 40% 以上、或不同字符不足 6 个。
+
+    第十九轮 D4：`len(scope_basis) >= 20` 只能挡住空话，挡不住 300 个重复字符。
+    """
+    t = pv._nz(s)
+    if not t:
+        return True
+    if len(set(t)) < 6:
+        return True
+    top = max(t.count(ch) for ch in set(t))
+    return top / len(t) > 0.4
+
+
+# 口径依据必须点到的东西：合并范围、金额单位、币种、以及至少一个具体期间/文档标识
+_BASIS_SCOPE_TOKENS = ("合并", "母公司", "单体")
+_BASIS_UNIT_TOKENS = ("元", "千元", "万元", "亿元")
+_BASIS_CUR_TOKENS = ("人民币", "CNY", "RMB")
+# 版本依据必须点到的东西：两侧各自的版本归类
+_VER_BASIS_TOKENS = {
+    "ORIGINAL": ("原版", "原披露", "未调整", "调整前", "重述前", "ORIGINAL"),
+    "RESTATED": ("重述", "调整后", "更正后", "调整", "RESTATED"),
+}
+
+
+def _version_basis_ok(s, v1, v2):
+    """版本依据是否**真的说明了**两侧各自的版本，而不是一句套话。"""
+    t = pv._nz(s)
+    if len(t) < 12 or _filler_text(t):
+        return False
+    for v in {v1, v2}:
+        toks = _VER_BASIS_TOKENS.get(v) or ()
+        if not any(x in t for x in toks):
+            return False
+    return True
+
+
+def _scope_basis_ok(s, periods):
+    """口径依据是否点到合并范围、单位、币种，并至少给出一个具体期间。"""
+    t = pv._nz(s)
+    if len(t) < pv._MIN_BASIS or _filler_text(t):
+        return False
+    if not any(x in t for x in _BASIS_SCOPE_TOKENS):
+        return False
+    if not any(x in t for x in _BASIS_UNIT_TOKENS):
+        return False
+    if not any(x in t for x in _BASIS_CUR_TOKENS):
+        return False
+    if not any(p and p in t for p in periods):
+        return False
+    return True
+
+
 def check_c41(rows, page_of=None, col_of_for=None):
     """逐行回原件重推父输入登记。返回违例列表 [(sec, fld, pk, 原因)]。"""
     bad = []
@@ -3293,20 +3442,44 @@ def check_c41(rows, page_of=None, col_of_for=None):
         if not pv._reviewer_ok(r) or not pv._role_ok(r) or not pv._date_ok(r.get("reviewed_at")):
             bad.append(tag + ("REVIEW_TRACE_MISSING",))
             continue
-        if len(pv._nz(r.get("scope_basis"))) < pv._MIN_BASIS:
-            bad.append(tag + ("SCOPE_BASIS_MISSING",))
+        # 第十九轮 D4：依据不能只查长度。填 300 个同一字符也能过 `len>=20`。
+        if not _scope_basis_ok(r.get("scope_basis"), (pk, prev_quarter(pk))):
+            bad.append(tag + ("SCOPE_BASIS_UNSUBSTANTIATED",))
+            continue
+        # 第十九轮 D4：父期间必须绑定本行的两期，不能留空或写成别的期间。
+        if (r.get("p1_period") or "").strip() != pk:
+            bad.append(tag + ("P1_PERIOD_MISMATCH",))
+            continue
+        if (r.get("p2_period") or "").strip() != prev_quarter(pk):
+            bad.append(tag + ("P2_PERIOD_MISMATCH",))
             continue
         b1 = D10.get((sec, ytd, pk)) or {}
         b2 = D10.get((sec, ytd, prev_quarter(pk))) or {}
         if not b1 or not b2:
             bad.append(tag + ("PARENT_ABSENT",))
             continue
-        # 口径三项：非空且与实际父输入一致
+        # 口径三项：非空、与实际父输入一致、且**两侧父输入本身必须同口径**
         for f in ("consolidation_scope", "unit_scale", "currency"):
-            if (r.get(f) or "").strip() != (b1.get(f) or "").strip() or not (r.get(f) or "").strip():
-                bad.append(tag + ("SCOPE_MISMATCH_WITH_PARENT:%s" % f))
+            v = (r.get(f) or "").strip()
+            if not v:
+                bad.append(tag + ("SCOPE_FIELD_EMPTY:%s" % f,))
+                continue
+            if v != (b1.get(f) or "").strip() or v != (b2.get(f) or "").strip():
+                bad.append(tag + ("SCOPE_MISMATCH_WITH_PARENT:%s" % f,))
+        if (b1.get("consolidation_scope") or "").strip() != \
+                (b2.get("consolidation_scope") or "").strip():
+            bad.append(tag + ("SCOPE_NOT_SHARED_BETWEEN_PARENTS:consolidation_scope",))
+        if (b1.get("unit_scale") or "").strip() != (b2.get("unit_scale") or "").strip():
+            bad.append(tag + ("SCOPE_NOT_SHARED_BETWEEN_PARENTS:unit_scale",))
+        if (b1.get("currency") or "").strip() != (b2.get("currency") or "").strip():
+            bad.append(tag + ("SCOPE_NOT_SHARED_BETWEEN_PARENTS:currency",))
         if (r.get("unit_scale") or "").strip() not in pv.AMOUNT_UNITS:
             bad.append(tag + ("UNIT_NOT_AMOUNT",))
+        v1 = (r.get("p1_adjust_version") or "").strip()
+        v2 = (r.get("p2_adjust_version") or "").strip()
+        # 第十九轮 D4：版本依据必须写出两侧各自的版本归类，不能只留一句套话。
+        if not _version_basis_ok(r.get("version_basis"), v1, v2):
+            bad.append(tag + ("VERSION_BASIS_UNSUBSTANTIATED",))
         colf = col_of_for(sec) if col_of_for else None
         for side, b in (("p1", b1), ("p2", b2)):
             doc = (r.get(side + "_doc") or "").strip()
@@ -3323,14 +3496,27 @@ def check_c41(rows, page_of=None, col_of_for=None):
             if not pv._page_ok(pg):
                 bad.append(tag + ("%s_PAGE_INVALID" % side.upper(),))
                 continue
-            if not col or col != pv.canon_column(col):
+            # 先把「该金额在原件里落在哪一列」重推一遍：`actual/st` 用于栏目比对，
+            # `aw` 是命中的金额词，用于核对引文里确实有这个数（第十九轮 D3）。
+            names = pv.METRIC_ALIASES.get(ytd) or ()
+            actual = st = aw = None
+            if colf is not None:
+                res = colf(doc, pg, val, names)
+                actual, st = res[0], res[1]
+                aw = res[2] if len(res) > 2 else None
+            # 第十九轮 D2/D4：登记栏目必须是**原文连续片段**且带期间语义，
+            # 不能再拿 `canon_column` 的结构化键当列名（那是比较用的键，不是原文）。
+            if not col or col != pv.clean_column_text(col) or not pv.canon_column(col):
                 bad.append(tag + ("%s_COLUMN_NOT_CANONICAL" % side.upper(),))
                 continue
             ver = (r.get(side + "_adjust_version") or "").strip()
             if ver != pv.ver_class(b.get("version_used")):
                 bad.append(tag + ("%s_ADJUST_VERSION_MISMATCH" % side.upper(),))
                 continue
-            src = pv._nz(page_of(sec, doc, pg)) if page_of else ""
+            src = page_of(sec, doc, pg) if page_of else ""
+            if src is None:
+                bad.append(tag + ("%s_SOURCE_READ_FAILED" % side.upper(),))
+                continue
             if not src:
                 bad.append(tag + ("%s_SOURCE_UNAVAILABLE" % side.upper(),))
                 continue
@@ -3345,7 +3531,8 @@ def check_c41(rows, page_of=None, col_of_for=None):
             if names and not any(n in nq for n in names):
                 bad.append(tag + ("%s_QUOTE_WITHOUT_TARGET_METRIC" % side.upper(),))
                 continue
-            if not pv._num_in_quote(q, val, b.get("unit_scale")):
+            if not pv._num_in_quote(q, val, b.get("unit_scale"),
+                                    exact=(aw if aw else None)):
                 bad.append(tag + ("%s_QUOTE_WITHOUT_PARENT_VALUE" % side.upper(),))
                 continue
             if ver == "RESTATED" and not any(mk in nq for mk in pv._VER_MARK_RESTATED):
@@ -3355,43 +3542,72 @@ def check_c41(rows, page_of=None, col_of_for=None):
                 bad.append(tag + ("%s_QUOTE_VERSION_CONFLICT" % side.upper(),))
                 continue
             if colf is not None:
-                actual, st = colf(doc, pg, val, names)
                 if st != "OK" or not actual:
                     bad.append(tag + ("%s_COLUMN_UNRESOLVED:%s" % (side.upper(), st),))
                     continue
-                if actual != col:
+                if not pv.cols_equivalent(col, actual):
                     bad.append(tag + ("%s_COLUMN_MISMATCH:%s≠%s"
                                       % (side.upper(), col, actual),))
     return bad
 
 
 def _c41_inject():
-    """六类注入：假引文 / 错栏目 / 错父数 / 错页 / 版本反写 / 短依据，必须各自被拦住。"""
+    """注入必须**逐行**做，并报出实际拦住的条数。
+
+    第十九轮 D4：原实现每类只改首行，`review.json` 里记 1，而汇报文字写「各 70」——
+    自检产物与汇报不一致。现在每类对**每一行**都注入，要求拦住条数等于行数；
+    汇报侧直接读这里的数字，不再手写。
+    """
     base = [dict(r) for r in _PV_ROWS if r.get("p1_quote")]
     out = {}
     if not base:
         return False, out
+
+    def _flip_ver(r):
+        r["p1_adjust_version"] = ("ORIGINAL" if
+                                  (r.get("p1_adjust_version") or "").strip() == "RESTATED"
+                                  else "RESTATED")
+
     cases = [
-        ("fake_quote", lambda r: r.update(p1_quote="营业收入100.00元")),
-        ("wrong_column", lambda r: r.update(p1_column="上年同期")),
-        ("wrong_value", lambda r: r.update(p1_value="1.00")),
-        ("wrong_page", lambda r: r.update(p1_page="9999")),
-        ("version_flip", lambda r: r.update(p1_adjust_version="RESTATED")),
-        ("short_basis", lambda r: r.update(scope_basis="已核")),
+        ("fake_quote", lambda r: r.update(p1_quote="营业收入100.00元"), None),
+        ("wrong_column", lambda r: r.update(p1_column="上年同期"), None),
+        ("wrong_value", lambda r: r.update(p1_value="1.00"), None),
+        ("wrong_page", lambda r: r.update(p1_page="9999"), None),
+        ("version_flip", _flip_ver, None),
+        ("short_basis", lambda r: r.update(scope_basis="已核"), None),
+        # 第十九轮新增：父期间、版本依据、依据填充、两列互换
+        ("wrong_period", lambda r: r.update(p1_period="20200101"), None),
+        ("empty_version_basis", lambda r: r.update(version_basis=""), None),
+        ("repeat_version_basis", lambda r: r.update(version_basis="同" * 40), None),
+        ("repeat_scope_basis", lambda r: r.update(scope_basis="合" * 300), None),
+        # 两列互换：只有两列**不是同一列**时才是有效注入。`本报告期` 与
+        # `本报告期（1－6月）` 在半年报里指同一列（`cols_equivalent` 判等价），
+        # 互换后什么都没变，拦不住不是缺陷。分母因此是子集，逐类记
+        # `_rows_<name>`，判据是「拦住数 == 该类的实际注入行数」。
+        ("swap_column", lambda r: r.update(p1_column=r.get("p2_column") or "本期"),
+         lambda r: not pv.cols_equivalent(r.get("p1_column") or "",
+                                          r.get("p2_column") or "")),
     ]
-    for name, mut in cases:
-        rows = [dict(x) for x in base]
-        mut(rows[0])
+    for name, mut, pick in cases:
+        rows = [dict(x) for x in base if (pick is None or pick(x))]
+        out["_rows_" + name] = len(rows)
+        for x in rows:
+            mut(x)
         out[name] = len(check_c41(rows, page_of=_pdf_ev, col_of_for=_col_of))
-    return all(v > 0 for v in out.values()), out
+    out["_rows"] = len(base)
+    ok = all(out[k] == out["_rows_" + k] for k in out if not k.startswith("_"))
+    return ok, out
 
 
 _c41 = check_c41(_PV_ROWS, page_of=_pdf_ev, col_of_for=_col_of)
 _c41_inj_ok, _c41_inj = _c41_inject()
 add("C41", "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、"
-    "栏目须是规范列名且等于该金额在原件中的实际列、页码须合法、调整版本须等于 "
-    "s00_v10 的 version_used 归类、范围/单位/币种须与实际父输入相符、依据不得是空话；"
-    "假引文/错栏目/错父数/错页/版本反写/短依据六类注入必须各自被拦住",
+    "父期间须绑定本行两期、栏目须是原文连续片段且等于该金额在原件中的实际列、"
+    "页码须合法、调整版本须等于 s00_v10 的 version_used 归类、"
+    "范围/单位/币种须与实际两期父输入同时相符、口径依据须点到合并范围/单位/币种/期间、"
+    "版本依据须写出两侧各自的版本归类；假引文/错栏目/错父数/错页/版本反写/短依据/"
+    "错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换十一类注入"
+    "必须**逐行**全部被拦住",
     (not _c41) and _c41_inj_ok,
     {"violations": _c41[:5], "violation_count": len(_c41),
      "registered": len(_PV_ROWS), "injections": _c41_inj})

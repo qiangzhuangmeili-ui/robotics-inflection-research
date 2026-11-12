@@ -1,41 +1,89 @@
-# S00 勘误 V5 交接说明（自检 V16；第 4 步批次 B 父输入核证后，待第 19 轮复核）
+# S00 勘误 V5 交接说明（自检 V17；批次 B 取列返工与独立旁证后，待第 20 轮复核）
 
-> 版本：`ERRATA_V5`，自检 `V16`，43/43 PASS（新增 C41）。
-> 复核：Codex 第十八轮 **ACCEPTED_WITH_LIMITS**（批次 A 四项修订通过）→ `acceptance_round18.json`。
-> 第 4 步批次 B 已完成：87 条父输入待核里 **70 条登记、68 条闭合**；L2 仍 44/231/320/81/378（未变）。
+> 版本：`ERRATA_V5`，自检 `V17`，43/43 PASS。
+> 复核：Codex 第十九轮 **RETURN_FOR_REWORK**（D1–D5 五项缺陷 + 6 条返工清单）→ `rework_round19.json`；
+> 本轮返工结果逐条对照见 `rework_round19_result.json`。
+> 第 4 步批次 B **重验 87 条 → 登记 64 条**（旧 70 条中 9 条撤下、3 条新增），
+> 新增独立列身份旁证 `step4_column_witness.py`（64/64 两侧 `OK:AGREE`）；L2 仍 44/231/320/81/378（未变）。
 > 第 4 步批次 C–E 与第 5 步未开始；44/231/378 未冻结；S04 第二轮与 S05 不放行。
 > 性质：**SELF_CHECK**。自检通过 ≠ 独立验收通过。
 > 上一版 V4 保留在 `runs/issues/S00/errata_20261111_v4/`，未删除。
-> 复现：`step4_parent_scan.py` → `step4_apply_parents.py` → `build_errata_v5.py` →
-> `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`（顺序不能换）。
+> 复现：`step4_parent_scan.py` → `step4_column_witness.py` → `step4_apply_parents.py` →
+> `build_errata_v5.py` → `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`
+> （顺序不能换；旁证必须在登记之前跑，否则等于先登记后补证）。
 
-## 0-b. 第 4 步批次 B：父输入核证（本轮）
+## 0-b. 第 4 步批次 B 返工：取列结构还原 + 独立旁证（本轮）
 
-| 项 | 结果 |
-|---|---|
-| 目标（HOLD 中仅缺 `PARENT_COMPATIBILITY`） | **87 条 / 22 家** |
-| 两侧证据齐备 → 登记 `COMPATIBLE` | **70 条** |
-| 通过完整 `gap()` 并闭合 | **68 条** |
-| 受阻保留待核 | **17 条**（原因逐条在 `step4_parent_scan.csv` 的 `p1_note`/`p2_note`） |
-| `PENDING_PARENT_COMPATIBILITY` | 1,277 → **1,209** |
-| 核心未闭合 | 8,674 → **8,606** |
-| L2 | **44 / 231 / 320 / 81 / 378（未变）** |
+第十九轮裁决原文：**「本裁决不宣告这 70 条全部为假，但不接受据当前方法将批次 B 核证验收通过。」**
+所以本轮不改「哪些键应当闭合」，只改**判定方法**，再按新方法把 87 条全部重推。
 
-**没有一家公司因此脱离 HOLD**：20/22 家还卡在 `PENDING_SCOPE_LIMITED_METHOD`
-（批次 A 被否掉的「栏目不适用」方法）与 `UNRESOLVED_FIELD_NOT_IN_RECORD`。
-父输入是必要不充分条件。
+| 项 | 上一轮 | 本轮 |
+|---|---|---|
+| 目标 | 87 | **87**（并入上一轮已登记键后重推，去重仍 87） |
+| `EVIDENCE_OK` | 70 | **64** |
+| `BLOCKED`（保留待核） | 17 | **23** |
+| 登记 `parent_verifications.csv` | 70 行 | **64 行 / 27 列**（全 `SELF_CHECK` / `WorkBuddy-Agent`） |
+| 独立旁证 `WITNESS_OK` | 无 | **64 / 64**，p1/p2 均 `OK:AGREE`，不一致 **0** |
+| `PENDING_PARENT_COMPATIBILITY` | 1,209 | **1,214** |
+| 元数据差异未闭合 | 8,606 | **8,611** |
+| 合计核心未闭合（`open_total_core`） | 9,045 | **9,050** |
+| L2 | 44/231/**320**/81/378 | **43/231/321/81/378** |
 
-### 本轮修掉的缺陷
+**计数口径必须写清，不要混用**：`meta_diff` open（8,611）≠ `summary.open_total_core`（9,050
+= 元数据 + 键 405 + 值 34）≠ `open_total_all`（10,555，含补充列 1,505）。
+前几轮报告里的「核心未闭合 8,606」实际指 `meta_diff` open，与 `summary` 字段同名不同义。
 
-- **F33 栏目取词**：原实现把表头里的年份当金额丢掉（`2026`+`年半年度`→`年半年度`），
-  且用金额中心点套表头（数字右对齐、表头居中）→ 174 个父输入页面 97 页取不到表头。
-  新增 `column_of_amount_aligned()`（跨度重叠 + 保留年份 + 表头跨行合并 + 排除页眉标题），
-  `NO_COLUMN` 97 → 2；新增 `canon_column()` 统一两侧列名。
-- **`_nz()` 定义顺序**：`pdf_pages()` 前移后 `NameError` 被逐页 `try/except` 吞成
-  「整本页面空串」，表现为「原件不可用」——技术失败被写成证据缺失。已前移并加注释。
-- **`pdf_pages()` 缓存**：失败结果不再写入缓存（一次瞬时失败会被永久记住）。
-- **C37 假阳性**：判「自动捷径」改为用**空登记表**试（`parent_compatible(k, entries={})`），
-  原先会把 70 条真实核证误报成捷径。
+**有一家脱离 HOLD，必须点名**：`SH:600143 金发科技` `HOLD_PENDING_ERRATA` → `NOT_AFFECTED`。
+它在锚定期 20260630 只有 1 个争议维度 `GROWTH`（`SG02=M03=FIN.REV.SQ@20250630`），
+本轮新登记该键（p1 `2025年半年度` / p2 `2025年第一季度`，两期均 `ORIGINAL`、合并、元、CNY），
+缺口补齐 → 唯一争议维度清空 → `NOT_AFFECTED`。该行过完整 `gap()`、过 C41 逐行重推、
+独立旁证 `WITNESS_OK`。**这不是我主动放行，是判据自动结果**，但属名单级后果
+（`44/231/320` → `43/231/321`），请复核方独立判定。其余 21 家未脱离 HOLD。
+
+### 六条清单怎么落地的
+
+1. **多列候选报歧义**：取列拆成「词 → 单元格 → 列链」三段（`_header_cells` / `_chain_cells`），
+   期间列候选 >1 一律 `AMBIGUOUS`，禁止拼接后择一；`_BAND_PAD_LEFT` 20→8pt。
+2. **归一保留语义**：`canon_column()` 产出 `相对年｜区间｜累计` 结构化键
+   （`本期｜R-2026-1-6｜累计`）；`clean_column_text()` 给原文连续列名；
+   `registrable_column()` 要求候选在正文连续出现且归一后与整段表头完全相同。
+3. **精确十进制**：全链 `Decimal`；`_AMOUNT_TOKEN` 右侧去掉 `(?!\d)`（会切断粘连数字）；
+   金额定位改回**词坐标**（`amount_word`），不再用去空白正则在拼接文本里捞；
+   指标行未命中直接 `NO_LABEL_ROW`，不回退。
+4. **C41 补强**：父期间绑定、两侧口径互检、口径/版本依据**内容**校验（防填充、须逐侧写版本归类）；
+   注入改**逐行**并记分母 `_rows_*`，十一类全拦住（`swap_column` 分母 32，为「两侧列不等价」子集）。
+5. **失败不缓存**：`pdf_pages()` 失败页记 `None`（≠ 真空页 `""`），整本有失败即不写缓存；
+   C41 报 `*_SOURCE_READ_FAILED`。
+6. **重验 + 旁证**：`targets()` 并入旧键；`step4_column_witness.py` 用**另一条路径**
+   （数字右边界聚类 + 表头先并单元格再按中心落列）证交点；登记须 `EVIDENCE_OK` 且 `WITNESS_OK`。
+
+### 撤下的 9 条（保留待核，不用旧证据凑数）
+
+`SH:600143 FIN.OCF.SQ@20260630`、`SH:600320 FIN.NPDEDT.SQ@20260630`、
+`SH:600862 FIN.NPDEDT.SQ@20260630`、`SH:688248 FIN.NPDEDT.SQ@20260630`、
+`SH:603350 FIN.NPDEDT.SQ@20260630`、`SH:600960 FIN.OCF.SQ@20250630`、
+`SH:605365 FIN.OCF.SQ@20260630`、`SH:600590 FIN.NPP.SQ@20251231`、
+`SH:688800 FIN.OCF.SQ@20251231`（后者为 `COLUMN_NOT_CONTIGUOUS(2025年度)`，其余为
+`NO_LABEL_ROW` / `NO_HEADER_ROW` / `NO_AMOUNT`）。
+
+**新增 3 条**：`SH:600143 FIN.REV.SQ@20250630`、`SH:600143 FIN.REV.SQ@20251231`、
+`SH:688320 FIN.REV.SQ@20260630`。
+
+### 本轮修掉的自查缺陷
+
+- **`facts()` 未传 `col_of`**：`gap()` 用新取列函数判 YES、重算侧仍用旧判据判 NO →
+  C26/C29/C14/C22 各报 4 条**假违例**（603273/603380/688248/688400 的 `FIN.REV.SQ@20260630`）。
+  改为生产侧与重算侧同一条判据。
+- **C37 阳性对照用旧函数**：`_loc()` 仍走 `column_of_amount`，报
+  `REAL_ORIGINAL_POSITIVE_REJECTED:PARENT_COLUMN_UNRESOLVED`。改走生产路径。
+- **`_nz()` 定义顺序**（上一轮遗留）：`pdf_pages()` 前移后 `NameError` 被逐页 `try/except`
+  吞成「整本空串」，表现为「原件不可用」。已前移。
+
+## 0-prev. 第十九轮：第 4 步批次 B 初版（已被本轮取代）
+
+> 保留原貌以便对照：当时「70 条登记、68 条闭合」，F33 用「金额中心点 ±3pt 套表头」
+> 的跨度法取列。该法已被 `_header_cells/_chain_cells` 结构还原取代，
+> 70 条已被 64 条取代。以下为当时记录。
 
 
 ## 0-prev. 第十八轮裁决：批次 A 收尾
@@ -283,7 +331,7 @@ V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖�
   指出上一轮把 600143（实为 `ONE`）写成「两父均定位」，已改；`SH:600060@20260630`
   本轮已不在样本内（退出归因 `RANK_CUT`）。
 
-核心待处置 **8,309**（重述差异）/ 全表核心未闭合 **9,113**、含补充列 **10,618**。
+核心待处置 **8,246**（重述差异）/ 全表核心未闭合 **9,050**、含补充列 **10,555**。
 
 ## 2. 数字（均与台账一致，可复算）
 
@@ -291,9 +339,9 @@ V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖�
 
 | 处置 | 条数 |
 |---|---:|
-| `RESOLVED_SCOPE_COVERED` | 8,699 |
+| `RESOLVED_SCOPE_COVERED` | 8,762 |
 | `PENDING_SCOPE_LIMITED_METHOD` | 6,373 |
-| `PENDING_PARENT_COMPATIBILITY` | **1,277**（全部待核，无自动放行） |
+| `PENDING_PARENT_COMPATIBILITY` | **1,214**（全部待核，无自动放行） |
 | `PENDING_WEAK_ASSUMPTION` | 515 |
 | `PENDING_SOURCE_PROVENANCE` | 47 |
 | `PENDING_CAUSE_UNCOVERED` | 43 |
@@ -306,8 +354,8 @@ V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖�
 | **合计** | **17,009** |
 
 自身期间 / 非自身期间 = **15,769 / 1,240**；非自身期间处置 = **1,239 待核 + 1 条裁决解除**（大豪科技）。
-待处置（`PENDING_*` + `UNRESOLVED_*`）合计 **8,309**（= 17,009 − 8,699 − 1）。
-父输入兼容性：重述差异 17,009 → YES **0** / NO **3,679** / NA 13,330。
+待处置（`PENDING_*` + `UNRESOLVED_*`）合计 **8,246**（= 17,009 − 8,762 − 1）。
+父输入兼容性：重述差异 17,009 → YES **64** / NO **3,615** / NA 13,330。
 
 ### 2.1b 其余四列（`status` 555 / `document_id` 83 / `pit_status` 48 / `consolidation_scope` 33）
 
@@ -315,7 +363,7 @@ V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖�
 `UNRESOLVED_FIELD_NOT_IN_RECORD` 116 / `UNRESOLVED_EVIDENCE_MISMATCH` 16 /
 `UNRESOLVED_RECORD_IS_REMOVE` 8，合计 **719**，未闭合 **365**。
 
-两表相加 = 17,728 行 / 未闭合 **8,674** 行，与 `summary.json:meta_diff.open` 一致。
+两表相加 = 17,728 行 / 未闭合 **8,611** 行，与 `summary.json:meta_diff.open` 一致。
 
 ### 2.2 全表
 
@@ -323,19 +371,20 @@ V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖�
 |---|---:|---:|
 | 值差异 | 240 | 34 |
 | 键差异 | 2,056 | 405 |
-| 元数据（核心 5 列） | 17,728 | 8,674 |
+| 元数据（核心 5 列） | 17,728 | 8,611 |
 | 元数据（补充 19 列） | 1,505 | 1,505 |
-| **核心合计** | — | **9,113** |
-| **含补充合计** | — | **10,618** |
+| **核心合计** | — | **9,050** |
+| **含补充合计** | — | **10,555** |
 
 ### 2.3 全池影响（1,054 家）
 
-`HOLD_PENDING_ERRATA` **44**、`R2_MAY_CHANGE` **231**、`R1_NO_LINK` **378**、
-`NOT_AFFECTED` **320**、`STILL_PASSES_WITHOUT` **81**。
-受限表 **407 行 / 401 个唯一差异 ID**；重述差异按「方法 × 覆盖签名 × 极性 × 来源 × 自身期间」分 **89 组**。
-全量 17,728 的父输入兼容性：YES **0** / NO **3,768** / NA 13,960。
+`HOLD_PENDING_ERRATA` **43**、`R2_MAY_CHANGE` **231**、`R1_NO_LINK` **378**、
+`NOT_AFFECTED` **321**、`STILL_PASSES_WITHOUT` **81**。
+受限表 **385 行 / 377 个唯一差异 ID**；重述差异按「方法 × 覆盖签名 × 极性 × 来源 × 自身期间」分 **89 组**。
+全量 17,728 的父输入兼容性：YES **67** / NO **3,701** / NA 13,960。
 
-**44 / 231 / 378 均未冻结**，本版不锁定任何名单数字。
+**43 / 231 / 378 均未冻结**，本版不锁定任何名单数字。上一版为 44 / 231 / 320，
+差额来自 `SH:600143` 脱离 HOLD（见 §0-b）。
 
 ## 3. 文件
 
@@ -345,20 +394,24 @@ V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖�
 | `meta_classes.py` | 元数据字段影响分类唯一来源（防止台账自报分类绕过） |
 | `l2_core.py` | 依赖引擎（按 B 实际 `status` 分支展开父键） |
 | `parent_verify.py` | 父输入兼容性与来源维度核证的判据（生产与自检共用，27 列登记表） |
-| `polarity_cases.py` | **38 条**极性反例的唯一来源（C34 与独立脚本共用） |
+| `polarity_cases.py` | **45 条**极性反例的唯一来源（C34 与独立脚本共用） |
 | `build_errata_v5.py` | 台账构建，含 `parent_compatible()` / `parent_gap()` / `_pdf_page()` |
 | `check_l2_v5.py` | 全池影响判定，含稳定 `dispute_id` 与逐表哈希 |
 | `sampling_v5.py` | 分层抽验（**37 行 / 20 类 / 27 键**，原件物理页回读 + 父数按词坐标定位） |
-| `verify_v5.py` | **41 项**自检（V12）；派生状态字段的唯一写者 |
+| `verify_v5.py` | **43 项**自检（V17）；派生状态字段的唯一写者 |
+| **`step4_parent_scan.py`** | 批次 B 父输入扫描：词坐标取金额 + 结构还原取列 + 指标行必须命中 |
+| **`step4_column_witness.py`** | **独立列身份旁证**：数字右边界聚类 + 表头先并单元格再按中心落列，**不调用取列函数** |
+| **`step4_column_witness.csv`** | 旁证结果：64 条 / `WITNESS_OK` 64，p1/p2 均 `OK:AGREE` |
+| **`step4_apply_parents.py`** | 登记闸门：须 `EVIDENCE_OK` **且** `WITNESS_OK`，否则 `skipped` |
 | `replay_polarity_v5.py` / `.json` | 极性 A/B 回放（旧判据 vs 新判据，1,007 份证据），C34 的 PASS 条件之一 |
 | `meta_diff.csv` | 17,728 行；含 `is_own_period` / `parent_compatible` / `parent_basis` / `polarity` / `scope_*` |
 | `extra_meta_diff.csv` | 1,505 格补充元数据（19 列），含 `content_review` / `content_review_ref` |
 | **`evidence_conflicts.csv`** | 15 行：上游 `verdict` 与原文极性冲突，含传播范围与修正动作 |
 | **`content_reviews.csv`** | 补充元数据放行所需的审查登记表（当前为空 → 0 条放行） |
-| **`parent_verifications.csv`** | 父输入兼容性核证登记表（**27 列**，当前为空 → YES = 0） |
+| **`parent_verifications.csv`** | 父输入兼容性核证登记表（**27 列 / 64 行**，重述差异 YES = 64） |
 | **`scope_verifications.csv`** | 比较范围 / 季度表来源核证登记表（当前为空） |
-| `dispute_ledger.csv` | **10,618 行 / 10,618 个唯一差异 ID**（含逐条源表哈希） |
-| `restricted_claims.csv` | 407 行受限声明，逐表差异 ID + 逐表哈希 |
+| `dispute_ledger.csv` | **10,555 行 / 10,555 个唯一差异 ID**（含逐条源表哈希） |
+| `restricted_claims.csv` | 385 行受限声明，逐表差异 ID + 逐表哈希 |
 | `sampling_v5.csv` / `.json` | 抽验明细与汇总（含 `locate_status`、`parent_p1_row`/`parent_p2_row`、两父输入核证、`locator_version`、`keys_diff`） |
 | **`sampling_keys_baseline.csv`** | 抽样键集基线（V10 冻结，含 `source_sha256`），供 diff 对照 |
 | **`sampling_keys_diff.csv`** | 键集变更留痕：KEPT 26 / ADDED 1 / REMOVED 1，逐键带样本 ID、原因、定位器版本、前后哈希 |
@@ -367,6 +420,10 @@ V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖�
 | `report_to_codex_round11.md` | 第十一轮汇报（含与裁决数字不一致之处的交代与待裁定问题） |
 | `report_to_codex_round12.md` | 第十二轮汇报（A–G 逐条落实 + H 维护意见） |
 | `report_to_codex_round13.md` | 第十三轮汇报（A–H 逐条落实，含「判据判错方向」的更正） |
+| `report_to_codex_round19.md` | 第十九轮汇报（批次 B 初版，70 条登记） |
+| **`report_to_codex_round20.md`** | **第二十轮汇报（本轮：六条清单逐条落实 + 70→64 + 独立旁证）** |
+| **`rework_round19.json`** | 第十九轮裁决原文与 6 条返工清单（机器可读） |
+| **`rework_round19_result.json`** | **本轮逐条对照：要求 / 改了什么 / 依据 / 结果** |
 
 ## 4. 能复现的故障注入
 
@@ -392,7 +449,11 @@ V5 换掉了「期间相等即闭合」这个错判据，改成「证据覆盖�
 - **1,505 格补充元数据**仅登记字段级核验要求，登记表为空，0 条放行。
 - **上游 `results.csv` 对 `DOC-E2BDEAB4F6274B6E` 的 `verdict=否` 与原文相反**，本版只登记为证据冲突，未改上游。
 - **未覆盖**锚定期回退与上游准入的间接依赖。
-- **第 4 步批量核证、第 5 步重算分层未做**；44 / 231 / 378 未锁定。
+- **第 4 步只做了批次 B 的父输入核证**（批次 C–E 未做）、**第 5 步重算分层未做**；43 / 231 / 378 未锁定。
+- **批次 B 有 9 条被新判据挡回待核**（§0-b 清单），不是被证伪，是取不到「指标行 × 完整期间列 × 逐位相等金额」的交点。
+- **`step4_column_witness.py` 是同一作者的第二条路径，不是独立第三方**：能证明两种实现互不矛盾，不能替代外部复核。
+- **`NO_LABEL_ROW` 的带窗是经验值**（上下各 ≤2 行、行距 ≤40pt），跨页断行或整行脚注会漏取——方向安全（漏取=待核），但覆盖率有上限。
+- **`SH:600143` 脱离 HOLD 属名单级后果**，请复核方独立判定是否接受；本文件不把它算作批次 B 成果。
 - **不给出最终未闭合数**；本文件不构成验收结论。
 
 ## 6. 表述纪律（历轮已撤回的四句）

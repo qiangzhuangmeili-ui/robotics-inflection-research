@@ -1,17 +1,144 @@
-# S00 勘误台账 V5 报告（第 4 步批次 B 父输入核证后，待第 19 轮复核）
+# S00 勘误台账 V5 报告（批次 B 取列返工与独立旁证后，待第 20 轮复核）
 
 - 目录：`runs/issues/S00/errata_20261111_v5/`
 - 性质：**SELF_CHECK**，不是独立验收
-- 自检版本：**V16**，43/43 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
-- 第十八轮裁决：`ACCEPTED_WITH_LIMITS`（批次 A 四项修订通过）→ `acceptance_round18.json`
-- **本轮（批次 B）**：修 F33 栏目取词缺陷；87 条父输入待核里 **70 条登记、68 条闭合**；新增 C41
-- 计数：`PENDING_PARENT_COMPATIBILITY` 1,277 → **1,209**；核心未闭合 8,674 → **8,606**；L2 仍 44/231/320/81/378
-- 复现顺序：`step4_parent_scan.py` → `step4_apply_parents.py` → `build_errata_v5.py` →
-  `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`
+- 自检版本：**V17**，43/43 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
+- 第十九轮裁决：`RETURN_FOR_REWORK`（5 项缺陷 D1–D5 + 6 条返工清单）→ `rework_round19.json`
+- **本轮**：按 6 条清单返工；批次 B **重验 87 条 → 登记 64 条**（旧 70 条中 9 条撤下、3 条新增），
+  新增**独立列身份旁证** `step4_column_witness.py`（64/64 两侧一致）
+- 计数（口径写明，勿混用）：
+  - 元数据差异未闭合（`meta_diff` open）= 8,606 → **8,611**
+  - 合计核心未闭合（`summary.open_total_core` = 元数据 + 键 + 值）= 9,045 → **9,050**
+  - 含补充列（`summary.open_total_all`）= 10,550 → **10,555**
+  - `PENDING_PARENT_COMPATIBILITY` 1,209 → **1,214**（净增 5：撤下 9 条覆盖的格、登记 3 条新键）
+  - L2 仍 **44 / 231 / 320 / 81 / 378（未变）**
+- 复现顺序：`step4_parent_scan.py` → `step4_column_witness.py` → `step4_apply_parents.py` →
+  `build_errata_v5.py` → `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`
 
 ---
 
-## 〇、第 4 步批次 B：父输入核证
+## 〇、第二十轮返工：取列结构还原 + 独立列身份旁证
+
+第十九轮裁决原文：**「本裁决不宣告这 70 条全部为假，但不接受据当前方法将批次 B 核证验收通过。」**
+因此本轮不改「哪些键应当闭合」，只改**判定方法**，然后按新方法把 87 条全部重推一遍。
+
+### 0.1 六条清单逐条落地
+
+| # | 裁决要求 | 本轮实现 | 位置 |
+|---|---|---|---|
+| 1 | 多个期间列候选必须报歧义，禁止拼接后择一；加邻列反例 | 取列改为三段式：**词 → 单元格（`_header_cells`）→ 列链（`_chain_cells`）**。期间列候选 >1 一律 `AMBIGUOUS`，不再拼接；`_BAND_PAD_LEFT` 20→8pt 防左邻表头被拉入；并单元格加语义保护「两侧各自已是完整列名则不并」 | `parent_verify.py:654-747, 755` |
+| 2 | 归一保留年份、完整起止区间、本期/上年/上期及累计属性；C37 反例走完整生产路径 | `canon_column()` 重写为结构化键 `相对年｜区间｜累计`（如 `本期｜R-2026-1-6｜累计`）；新增 `clean_column_text()` 给原文连续列名、`registrable_column()` 要求候选在正文连续出现且归一后与整段表头完全相同；`_COL_CLASSES` 把 `PRIOR_YEAR_YTD` 提到 `CURRENT_YTD` 之前 | `parent_verify.py:358-369, 873-964` |
+| 3 | 金额精确十进制 + 完整数字边界；指标行未命中不得回退 | 全链 `Decimal`（`_dec/_same_amount/_CENT`）；`amount_pattern()` 由 Decimal 生成；`_AMOUNT_TOKEN` 右侧去掉 `(?!\d)`（会切断粘连数字）；`_num_in_quote(exact=)` 先按金额词原文严格命中，再逐位相等，再按 token 切分兜底；指标名未命中直接 `NO_LABEL_ROW`，不再回退 | `parent_verify.py:63, 132-193, 472-535`；`step4_parent_scan.py:_quote()` |
+| 4 | 补 C41 的父期间、两侧口径、版本依据与依据内容；纠正注入次数与汇报不一致 | C41 新增父期间绑定（`P1/P2_PERIOD_MISMATCH`）、两侧口径互检（`SCOPE_NOT_SHARED_BETWEEN_PARENTS`）、口径/版本依据**内容**校验（`_filler_text` 防填充、`_version_basis_ok` 须逐侧写出版本归类、`_scope_basis_ok` 须点到合并口径/单位/币种/两期期间）；注入改**逐行**并记分母（`_rows_*`） | `verify_v5.py:3374-3426, 3554` |
+| 5 | 全页取词失败不得缓存为空白证据；保留技术失败状态 | `pdf_pages()` 失败页记 `None`（与真实空页 `""` 区分），**整本有任一失败即不写缓存**；`_pdf_ev()` 技术失败返回 `None`、空页返回 `""`；C41 报 `%s_SOURCE_READ_FAILED` | `verify_v5.py:448, 491` |
+| 6 | 重验全部 70 条，补独立列身份旁证，再重算闭合数 | `targets()` 并入上一轮已登记键 → 87 条全量重推；新增 `step4_column_witness.py`（**不调用**取列函数）；`step4_apply_parents.py` 须 `EVIDENCE_OK` **且** `WITNESS_OK` 才登记 | `step4_parent_scan.py:targets()`；`step4_column_witness.py`；`step4_apply_parents.py` |
+
+### 0.2 重验结果：70 → 64
+
+| 项 | 上一轮 | 本轮 |
+|---|---|---|
+| 目标 | 87 | **87**（并入旧键，去重后不变） |
+| `EVIDENCE_OK` | 70 | **64** |
+| `BLOCKED`（保留待核） | 17 | **23** |
+| 登记 `parent_verifications.csv` | 70 行 | **64 行**（27 列，全部 `SELF_CHECK` / `WorkBuddy-Agent`） |
+| 独立旁证 `WITNESS_OK` | 无 | **64/64**，p1/p2 均 `OK:AGREE`，不一致 **0** |
+
+**撤下 9 条**（全部落回 `BLOCKED`，保留待核，未强塞闭合）：
+
+| 键 | 受阻侧 | 原因 |
+|---|---|---|
+| `SH:600143 FIN.OCF.SQ 20260630` | p2 | `NO_LABEL_ROW` / `NO_AMOUNT` |
+| `SH:600320 FIN.NPDEDT.SQ 20260630` | p2 | `NO_LABEL_ROW` / `NO_AMOUNT` |
+| `SH:600862 FIN.NPDEDT.SQ 20260630` | p2 | `NO_LABEL_ROW` / `NO_AMOUNT` |
+| `SH:688248 FIN.NPDEDT.SQ 20260630` | p2 | `NO_LABEL_ROW` / `NO_AMOUNT` |
+| `SH:603350 FIN.NPDEDT.SQ 20260630` | p1+p2 | 两侧均 `NO_LABEL_ROW` |
+| `SH:600960 FIN.OCF.SQ 20250630` | p2 | `NO_HEADER_ROW` / `NO_LABEL_ROW` |
+| `SH:605365 FIN.OCF.SQ 20260630` | p1+p2 | `NO_HEADER_ROW` |
+| `SH:600590 FIN.NPP.SQ 20251231` | p1 | `NO_HEADER_ROW` |
+| `SH:688800 FIN.OCF.SQ 20251231` | p1 | `COLUMN_NOT_CONTIGUOUS(2025年度)` |
+
+**新增 3 条**：`SH:600143 FIN.REV.SQ 20250630`、`SH:600143 FIN.REV.SQ 20251231`、
+`SH:688320 FIN.REV.SQ 20260630`（旧方法在邻列/歧义上把它们挡在门外）。
+
+> 这 9 条**不是被证伪**，是「按新方法取不到**指标行 × 完整期间列 × 逐位相等金额**的交点」。
+> 按裁决第 6 条，一律保留待核，不用旧证据凑数。
+
+### 0.3 独立列身份旁证（新增）
+
+`step4_column_witness.py` 走一条**与生产完全不同的路径**证明交点，用来防止「自己证明自己」：
+
+1. **数字右边界格**：把页面上的数字按右边界聚类成列，记该列最左数字左边界与词数；
+2. **列范围**：`[该列最左数字左边界 − 12pt, 该列右边界 + 6pt]`，不用相邻列中点（短数字/宽列会错位）；
+3. **表头**：取金额行上方最近一行「≥2 格且含期间词、非标题」的行；
+4. **落列**：表头词**先并成单元格再按中心**落列（按词中心会把 `2026年第一季度` 削成 `年第一季度`）；
+5. **指标行**：指标名换行时上下各并至多 2 行无数字行。
+
+结果：64 条登记键中 **64 条 `WITNESS_OK`**，两侧 `registered` 与 `witness` 全部 `OK:AGREE`，不一致 0 条。
+旁证不通过的行不登记（`skipped` 中 `witness_fail` = 0，因为先跑旁证再登记）。
+
+### 0.4 C41 十一类注入：逐行，不再「各 1 条」
+
+上一轮 `_c41_inject()` 只改首行，`review.json` 六项各记 1，汇报却写「各 70」——
+**汇报与产物不符**。现在改逐行注入并同时记录该类**实际注入行数**（`_rows_*`），
+判据为「拦住数 == 该类注入行数」：
+
+| 注入类 | 注入行数 | 拦住 |
+|---|---|---|
+| `fake_quote` / `wrong_column` / `wrong_value` / `wrong_page` | 64 | 64 |
+| `version_flip` / `short_basis` / `wrong_period` | 64 | 64 |
+| `empty_version_basis` / `repeat_version_basis` / `repeat_scope_basis` | 64 | 64 |
+| `swap_column` | **32** | 32 |
+
+`swap_column` 分母为 32 而非 64：其中 32 行两侧登记的列名在半年报里**本就等价**
+（`本报告期（1－6月）` 与 `本报告期`），互换后什么都没变——这类行不能计入分母，
+否则等于用「拦不住」冒充「拦住了」。分母取「两侧列不等价」的子集。
+
+### 0.5 计数变化与「有一家脱离 HOLD」（必须单独说明）
+
+| 指标 | 上一轮 | 本轮 | 变化 |
+|---|---|---|---|
+| 元数据差异未闭合 | 8,606 | **8,611** | +5 |
+| 合计核心未闭合（`open_total_core`） | 9,045 | **9,050** | +5 |
+| 含补充列（`open_total_all`） | 10,550 | **10,555** | +5 |
+| `PENDING_PARENT_COMPATIBILITY` | 1,209 | **1,214** | +5 |
+| `RESOLVED_SCOPE_COVERED` | 8,767 | **8,762** | −5 |
+| L2 分层 | 44/231/**320**/81/378 | **43/231/321**/81/378 | HOLD −1、NOT_AFFECTED +1 |
+
+净 +5 是三件事叠加：撤下 9 条（其覆盖的格回到待核）、登记 3 条新键、4 条粘连数字键
+（`603273/603380/688248/688400` 的 `FIN.REV.SQ@20260630`）在新判据下由「判不出」变「可判」。
+
+**有一家公司脱离 HOLD，必须点名**：`SH:600143 金发科技` `HOLD_PENDING_ERRATA` → `NOT_AFFECTED`。
+
+- 它在锚定期 20260630 只有 **1 个**争议维度 `GROWTH`，来源是 `SG02=M03=FIN.REV.SQ@20250630`；
+  `CASH` 维度本来就干净（`M08` 用的是 `FIN.OCF.YTD` / `FIN.NPP.YTD`，不含 `FIN.OCF.SQ`）。
+- 本轮新登记 `SH:600143 FIN.REV.SQ@20250630`（p1 `2025年半年度` 31,636,077,814.20 /
+  p2 `2025年第一季度` 15,665,999,806.40，两期均 `ORIGINAL`、合并口径、元、CNY），
+  该键的唯一缺口 `PARENT_COMPATIBILITY` 补齐 → 争议闭合 → 唯一争议维度清空 → `NOT_AFFECTED`。
+- 该行通过 `gap()` 完整判据、C41 逐行重推，且独立旁证 `WITNESS_OK`（两侧 `OK:AGREE`）。
+
+**这不是我主动放行，而是判据自动结果**；但它使 `44/231/320` 变成 `43/231/321`，
+属于**名单级后果**，请复核方独立判定是否接受。本报告不把它当作「批次 B 的成果」计入。
+其余 21 家（父输入批次 B 范围内）均未脱离 HOLD：仍卡在 `PENDING_SCOPE_LIMITED_METHOD`
+与 `UNRESOLVED_FIELD_NOT_IN_RECORD`，父输入是必要不充分条件。
+
+### 0.6 本轮修掉的自查缺陷（不是裁决点，但会造假）
+
+- **`facts()` 未传 `col_of`**：`gap()` 用新取列函数判 YES，重算侧仍用旧判据判 NO →
+  C26/C29/C14/C22 各报 4 条假违例。改为 `parent_compatible(k, col_of=_col_of(k[0]))`，
+  生产侧与重算侧同一条判据。
+- **C37 阳性对照用了旧函数**：`_loc()` 仍走 `column_of_amount`，报
+  `REAL_ORIGINAL_POSITIVE_REJECTED:PARENT_COLUMN_UNRESOLVED`。改走生产路径
+  （`column_of_amount_aligned_ex` + `registrable_column`）。
+- **`_nz()` 定义顺序**（上一轮遗留）：`pdf_pages()` 前移后 `NameError` 被逐页 `try/except`
+  吞成「整本空串」。已前移并加注释。
+
+---
+
+## 〇-prev（第十九轮）：第 4 步批次 B 初版
+
+> 本节保留第十九轮原貌以便对照。其「70 条登记、68 条闭合」已被第二十轮
+> 「64 条登记」取代；F33 的取列方法已被 `_header_cells/_chain_cells` 结构还原取代。
+
 
 第十八轮裁决同意下一批优先父输入，并要求「引文须实际支持指定行、期间表头及数值」
 「单纯填满列不能替代核证；不满足时保留待核」。
@@ -1537,6 +1664,14 @@ V8 相对 V7 的变动：
 10. **`_date_span()` 只覆盖 7 种写法**（年+月区间 / 不带年的月区间 / 上半年·H1 / 下半年·H2 / Qn / 第n季度 / 年月日·年月）。
    两侧都写了期间、但都解析不出时仍会退到语义类（如「年初至报告期末」对「本期数」）；
    第十五轮只堵住「一侧解析出、另一侧写着期间线索却解不出」这一种，**不是全量覆盖**。
+11. **批次 B 有 9 条被本轮新判据挡回待核**（清单见 §0.2）。它们不是被证伪，是「按新方法取不到
+   指标行 × 完整期间列 × 逐位相等金额的交点」。其中 6 条卡在 `NO_LABEL_ROW`（同一侧在登记页及相邻页
+   找不到指标名），2 条卡在 `NO_HEADER_ROW`，1 条 `SH:688800 FIN.OCF.SQ@20251231` 卡在
+   `COLUMN_NOT_CONTIGUOUS(2025年度)`（登记列名在正文中不是连续片段）。**未用旧证据凑数**。
+12. **`step4_column_witness.py` 是「同一作者的第二条路径」，不是独立第三方**：它不调用取列函数、
+   不用同一套列聚类，但仍由本次工作编写。它只能证明「两种实现互不矛盾」，不能替代外部复核。
+13. **`NO_LABEL_ROW` 的带窗是经验值**（上下各至多 2 行、行距 ≤ 40pt）。指标名与金额之间若隔了
+   跨页断行或整行脚注，仍会漏取——表现为「保留待核」而不是错登记，方向安全，但覆盖率有上限。
 
 ---
 

@@ -26,39 +26,75 @@ OUT = HERE
 TODAY = datetime.date.today().isoformat()
 REVIEWER = "WorkBuddy-Agent"
 
-SCOPE_NOTE = ("两期父数均取自同一文档集的合并报表；单位与币种取自 s00_v10 的 "
-              "unit_scale/currency，两期相等；登记页为原件中「该数值与期间表头同页」"
-              "的那一页，数值与 s00_v10 采用值逐位相等，故可直接相减。")
+SCOPE_WORD = {"CONSOLIDATED": "合并", "PARENT": "母公司", "PARENT_ONLY": "母公司"}
+UNIT_WORD = {"1": "元", "1000": "千元", "10000": "万元"}
+CUR_WORD = {"CNY": "人民币", "RMB": "人民币", "USD": "美元", "HKD": "港元"}
 
 
 def _basis(rec):
-    """口径依据：把「为什么两期可比」写成可核对的句子，而不是一句「已核」。"""
-    return ("%s：两期均为 %s、币种 %s、unit_scale=%s；"
-            "p1 取 %s 第 %s 页「%s」列，值 %s；"
-            "p2 取 %s 第 %s 页「%s」列，值 %s。"
+    """口径依据：把「为什么两期可比」写成可核对的句子，而不是一句「已核」。
+
+    第十九轮 D4：C41 现在会验这句话的**内容**——必须点到合并范围、金额单位、
+    币种和至少一个具体期间。所以这里不能只写代码值（`CONSOLIDATED`/`1`/`CNY`），
+    要把它们连同中文口径名一起写出来。
+    """
+    scope = SCOPE_WORD.get(rec["p1_scope"], rec["p1_scope"])
+    unit = UNIT_WORD.get(rec["p1_unit"], rec["p1_unit"])
+    cur = CUR_WORD.get(rec["p1_cur"], rec["p1_cur"])
+    return ("%s：两期均为%s口径（%s）、币种 %s（%s）、金额单位 %s（unit_scale=%s）；"
+            "p1 取 %s 第 %s 页「%s」列，值 %s（期间 %s）；"
+            "p2 取 %s 第 %s 页「%s」列，值 %s（期间 %s）。"
             "两处数值分别等于 s00_v10 的采用值，故 %s 与 %s 两期累计同口径可直接相减。"
-            % (rec["stock_name"], rec["p1_scope"], rec["p1_cur"], rec["p1_unit"],
+            % (rec["stock_name"], scope, rec["p1_scope"], cur, rec["p1_cur"],
+               unit, rec["p1_unit"],
                rec["p1_doc"], rec["p1_evidence_page"], rec["p1_column"],
-               rec["p1_value"], rec["p2_doc"], rec["p2_evidence_page"],
-               rec["p2_column"], rec["p2_value"],
+               rec["p1_value"], rec["p1_period"],
+               rec["p2_doc"], rec["p2_evidence_page"],
+               rec["p2_column"], rec["p2_value"], rec["p2_period"],
                rec["p1_period"], rec["p2_period"]))
 
 
 def _version_basis(rec):
-    return ("p1/p2 的 s00_v10 version_used 均为 %s（ver_class=%s）；"
-            "两段引文均不含「调整后/重述后/更正后」，即两期都取原版列，"
-            "不存在跨版本相减。" % (rec["p1_ver"], pv.ver_class(rec["p1_ver"])))
+    """版本依据：必须写出**两侧各自的**版本归类，且句子内容与事实相符。
+
+    第十九轮 D4：原实现无论两侧是不是 RESTATED，都写「两段引文均不含
+    「调整后/重述后/更正后」，即两期都取原版列」——版本是 RESTATED 时这句话
+    本身是假的。C41 现在会验这句话的内容，写假话就过不了。
+    """
+    v1, v2 = pv.ver_class(rec["p1_ver"]), pv.ver_class(rec["p2_ver"])
+    seg = []
+    for side, v in (("p1", v1), ("p2", v2)):
+        if v == "RESTATED":
+            seg.append("%s 的 s00_v10 version_used 为 %s，取重述/调整后列"
+                       "（引文含「调整后/重述后/更正后」标记）" % (side, rec[side + "_ver"]))
+        else:
+            seg.append("%s 的 s00_v10 version_used 为 %s，取原版列"
+                       "（引文不含「调整后/重述后/更正后」）" % (side, rec[side + "_ver"]))
+    return "；".join(seg) + "。两期版本归类一致，不存在跨版本相减。"
 
 
 def main():
     rows = list(csv.DictReader(io.open(OUT / "step4_parent_scan.csv",
                                        encoding="utf-8-sig", newline="")))
+    # 第十九轮裁决：独立列身份旁证必须通过才登记。旁证走另一套几何
+    # （数字右边界格 + 中点分列），不调用取列函数。
+    wit = {}
+    p_wit = OUT / "step4_column_witness.csv"
+    if p_wit.exists():
+        for r in csv.DictReader(io.open(p_wit, encoding="utf-8-sig", newline="")):
+            wit[(r["security_id"], r["field_id"], r["period_key"])] = r["verdict"]
     out = []
+    skipped = {"not_evidence_ok": 0, "version_inconsistent": 0, "witness_fail": 0}
     for r in rows:
         if r["verdict"] != "EVIDENCE_OK":
+            skipped["not_evidence_ok"] += 1
+            continue
+        if wit.get((r["security_id"], r["field_id"], r["period_key"])) != "WITNESS_OK":
+            skipped["witness_fail"] += 1
             continue
         v1, v2 = pv.ver_class(r["p1_ver"]), pv.ver_class(r["p2_ver"])
         if v1 is None or v1 != v2:
+            skipped["version_inconsistent"] += 1
             continue
         out.append({
             "security_id": r["security_id"],
@@ -95,6 +131,7 @@ def main():
         w.writeheader()
         w.writerows(out)
     print("registered", len(out), "of", len(rows))
+    print("skipped", skipped)
     print("by field:", sorted({r["field_id"] for r in out}))
 
 
