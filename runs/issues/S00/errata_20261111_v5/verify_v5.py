@@ -44,12 +44,12 @@ import polarity_cases as pc
 
 ROOT = core.ROOT
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
-SELF_CHECK_VERSION = "V19"
+SELF_CHECK_VERSION = "V20"
 # 待复核轮次：状态串与校验条件共用一处，避免两处字面各写一遍再漂移
-RECHECK_ROUND = 22
+RECHECK_ROUND = 23
 # 第二十一轮自查：`reviewed_at` 原先在 review 字典里硬编码（每轮都要手改一次，
 # 必然漂移——与第十六轮 `round`/汇报指针同一类坑）。改为常量，只在这里写一次。
-REVIEWED_AT = "2026-11-12T23:58:00+08:00"
+REVIEWED_AT = "2026-11-13T23:40:00+08:00"
 
 
 def _cn_num(n):
@@ -67,7 +67,7 @@ def _cn_num(n):
 # 每轮必漂。现在两处都由 RECHECK_ROUND 派生：
 # 本轮改的是「上一轮」的裁决 → 返工轮次 = RECHECK_ROUND − 1；
 # 汇报文件名与本轮待复核轮次同号 → round{RECHECK_ROUND}。
-ROUND_PHASE = "裁决后取列列边界与同侧语义收紧"
+ROUND_PHASE = "裁决后列归属贯穿跨行合并与边界未知处置"
 ROUND_LABEL = "第%s轮%s" % (_cn_num(RECHECK_ROUND - 1), ROUND_PHASE)
 REPORT_NAME = "report_to_codex_round%d.md" % RECHECK_ROUND
 # 复核结论：`None` = 仍在等第 RECHECK_ROUND 轮复核；给出字符串 = 已收到裁决。
@@ -2881,6 +2881,48 @@ if _real_k is not None:
         _gap_sem2 != "PARENT_COLUMN_SEMANTICS_UNPROVEN")
     if not chain["same_side_more_detail_ok"]:
         c37.append("MORE_DETAIL_REJECTED:%s" % _gap_sem2)
+    # 第二十二轮裁决 1：列边界必须贯穿**跨行**合并。两段期间片段分处上下两行、
+    # 右邻有 200.00（右边界 135），上一版只在行内合并用边界，跨行那层只看
+    # 「跨度重叠 + 语义兼容」，拼成 `本报告期（4-6月）`。
+    _w_xr = [(0, 90, 45, 100, "营业收入"),
+             (0, 60, 40, 66, "项目"), (100, 60, 138, 66, "本报告期"),
+             (0, 70, 40, 76, "项目"), (134, 70, 165, 76, "（4-6月）"),
+             (100, 90, 130, 100, "100.00"),
+             (140, 90, 170, 100, "200.00"),
+             (0, 50, 40, 56, "单位：元")]
+    _c_xr, _a_xr, _s_xr = pv.column_of_amount_aligned(
+        _w_xr, "100.00", label=("营业收入",))
+    chain["cross_row_fragment_not_merged"] = (
+        _s_xr == "OK" and _c_xr == "本报告期")
+    if not chain["cross_row_fragment_not_merged"]:
+        c37.append("CROSS_ROW_FRAGMENT_MERGED:%s/%r" % (_s_xr, _c_xr))
+    # 第二十二轮裁决 2：删掉右邻数字后边界退化为 (-inf, inf)，上一版又把
+    # `（4-6月）` 并回 `本报告期`。边界未知**不等于**无约束：与金额跨度不相交
+    # 即判 `COLUMN_ATTRIBUTION_UNPROVEN`，不得按半截列名返回 OK。
+    _w_unk = [(0, 90, 45, 100, "营业收入"),
+              (100, 70, 130, 76, "本报告期"),
+              (134, 70, 165, 76, "（4-6月）"),
+              (100, 90, 130, 100, "100.00"),
+              (0, 50, 40, 56, "单位：元")]
+    _c_unk, _a_unk, _s_unk = pv.column_of_amount_aligned(
+        _w_unk, "100.00", label=("营业收入",))
+    chain["no_neighbor_fragment_pending"] = (
+        _s_unk == "COLUMN_ATTRIBUTION_UNPROVEN")
+    if not chain["no_neighbor_fragment_pending"]:
+        c37.append("NO_NEIGHBOR_FRAGMENT_MERGED:%s/%r" % (_s_unk, _c_unk))
+    # 反向：边界未知但片段与金额跨度相交（真实同列换行）仍须合并——
+    # 否则「一律判待核」也能过，那就成了退化实现。
+    _w_ov = [(0, 90, 45, 100, "营业收入"),
+             (0, 60, 40, 66, "项目"), (100, 60, 132, 66, "本报告期"),
+             (0, 70, 40, 76, "项目"), (105, 70, 128, 76, "（1-6月）"),
+             (100, 90, 130, 100, "100.00"),
+             (0, 50, 40, 56, "单位：元")]
+    _c_ov, _a_ov, _s_ov = pv.column_of_amount_aligned(
+        _w_ov, "100.00", label=("营业收入",))
+    chain["no_neighbor_overlap_merged"] = (
+        _s_ov == "OK" and _c_ov == "本报告期（1-6月）")
+    if not chain["no_neighbor_overlap_merged"]:
+        c37.append("NO_NEIGHBOR_OVERLAP_REJECTED:%s/%r" % (_s_ov, _c_ov))
     # 期间列头语义类：同义须通、异义须拒（第十三轮 B 项扩到 4 组同义 + 4 组异义）
     # 第十四轮 B 项：「本报告期 / 本期金额」从同义表里**撤掉**——没有区间时把它当同义
     # 是惯例，不是可证事实（中报里两者可能分别是 6 个月与 3 个月）。它改到异义表，
@@ -2925,6 +2967,10 @@ add("C37", "父输入兼容性只认核证登记表：撤去真实依据后必�
            "列链内冲突期间须报歧义、不得跨表借表头、金额须逐位相等（含分位以下尾数）、"
            "指标行未命中不得回退、canon 不得把区间/相对年/年度压掉、"
            "语义互补的邻列片段不得被并进本列（列边界取同一行相邻数字中点）、"
+           "列边界须贯穿**跨行**合并（不得靠拼后的整体跨度掩盖越界）、"
+           "边界未知（该行这一侧无相邻数字）不得当成无约束——与金额跨度不相交须报"
+           "`COLUMN_ATTRIBUTION_UNPROVEN`，而相交的同列换行仍须合并、"
+           "单数字行的单个片段不得因此判待核、"
            "同侧登记不得凭空增加实际列没有的期间语义且反向（实际更详细）不得被拒；"
            "以上新增项共同覆盖生产链，不是每一项都各自单独跑完整链——"
            "`cols_equivalent → gap` 的完整链由 `canon_keeps_semantics_via_equivalent`、"
@@ -3714,10 +3760,20 @@ def _c41_inject():
         ("empty_version_basis", lambda r: r.update(version_basis=""), None),
         ("repeat_version_basis", lambda r: r.update(version_basis="同" * 40), None),
         ("repeat_scope_basis", lambda r: r.update(scope_basis="合" * 300), None),
-        # 两列互换：只有两列**不是同一列**时才是有效注入。`本报告期` 与
-        # `本报告期（1－6月）` 在半年报里指同一列（`cols_equivalent` 判等价），
-        # 互换后什么都没变，拦不住不是缺陷。分母因此是子集，逐类记
-        # `_rows_<name>`，判据是「拦住数 == 该类的实际注入行数」。
+        # 两列互换：只有两列**不是同一列**时才是有效注入，分母因此是 32 条。
+        #
+        # 第二十二轮裁决 3：必须把两组 32 条分开说，上一轮把两组混成一句。
+        #   · 32 条**不等价**（`cols_equivalent(p1,p2)` 为 False）→ 实际注入分母。
+        #     互换后 `p1_column` 变成**另一份文档**的列名，与 p1 本文档金额所在列
+        #     无关；`check_c41` 比对的是「登记 vs 本文档实际列」，所以它会报
+        #     `<SIDE>_COLUMN_MISMATCH`——互换改变的是登记值，不改变实际列。
+        #   · 32 条**等价、被排除**：31 条是带区间名称对 `本报告期`
+        #     （`本报告期（1－6月）`×30 + `本报告期（1-6月）`×1），另 1 条是
+        #     `本期数` 对 `本报告期`。互换后登记变成 `本报告期`，而本文档实际列
+        #     本就是 `本报告期（1－6月）`——`cols_equivalent` 为真、
+        #     `_no_extra_semantics` 也为真（登记更弱，不是更细），**按设计放行**。
+        #     也就是说这 32 条互换后是一句「更弱但不错」的话，不构成有效注入，
+        #     不是「判据漏了」。
         ("swap_column", lambda r: r.update(p1_column=r.get("p2_column") or "本期"),
          lambda r: not pv.cols_equivalent(r.get("p1_column") or "",
                                           r.get("p2_column") or "")),
@@ -3747,6 +3803,13 @@ def _c41_inject():
         # （一行可能报出多条违例，那样「拦住数」会虚高）。
         out[name] = len({(b[0], b[1], b[2]) for b in bad})
     out["_rows"] = len(base)
+    # 第二十二轮裁决 3：两组 32 条分开记，汇报侧直接读这里的数字，不手写。
+    _eq = [r for r in base if pv.cols_equivalent(r.get("p1_column") or "",
+                                                 r.get("p2_column") or "")]
+    out["_swap_equivalent_excluded"] = len(_eq)
+    out["_swap_equivalent_kinds"] = sorted(
+        {"%s|%s" % ((r.get("p1_column") or "").strip(),
+                    (r.get("p2_column") or "").strip()) for r in _eq})
     ok = all(out[k] == out["_rows_" + k] for k in out if not k.startswith("_"))
     return ok, out
 
@@ -3787,7 +3850,9 @@ add("C41", "父输入登记必须能从原件重推：逐行回读登记页，�
     "假引文/错栏目/错父数/错页/版本反写/短依据/"
     "错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换/"
     "只解释 p1 的版本依据/只给一期的口径依据十三类注入"
-    "必须**逐行**全部被拦住，且分母按被拦住的唯一记录键数计；"
+    "必须**逐行**全部被拦住，且分母按被拦住的唯一记录键数计"
+    "（两列互换的分母只取两侧不等价的 32 条；另 32 条两侧等价、互换后登记更弱而非更细，"
+    "按设计放行，不计入分母）；"
     "同侧登记凭空增加实际列没有的区间/年份/累计语义时，须报 COLUMN_SEMANTICS_UNPROVEN",
     (not _c41) and _c41_inj_ok and "SEMANTICS_UNPROVEN" in (_c41_sem or ""),
     {"violations": _c41[:5], "violation_count": len(_c41),
@@ -4000,7 +4065,7 @@ review = {
         "NOTE_TRACE_NA 总量 9,954 条 / 631 份文档；其中已解除 8,655 条 / 630 份，剩余 1,299 条 / 1 份仍待核。第 4 步须按「文档版本+具体栏目+实际选项组+覆盖期间」核共同事实再映射成员键，已解除的 8,655 条同样复审",
         "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
         "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位，属上游核验记录问题",
-        "第 4 步只做了批次 A 的**证据采集**（272 份年报的文档级事件确认），**未据此闭合任何一条**：证据命题到采用对象的映射未建立，3,803 条已回退待核；字段级影响确认（`content_reviews`）、采用链确认（`parent_verifications`）、分季度表来源（`scope_verifications`）三张登记表仍为空",
+        "第 4 步只做了批次 A 的**证据采集**（272 份年报的文档级事件确认），**未据此闭合任何一条**：证据命题到采用对象的映射未建立，3,803 条已回退待核；字段级影响确认（`content_reviews`）、采用链确认（`parent_verifications`）、分季度表来源（`scope_verifications`）三张登记表——第二十三轮更正：`parent_verifications` 已有 64 行（批次 B 的父输入兼容登记，87 条固定键中 23 条仍 BLOCKED），`content_reviews` 与 `scope_verifications` 仍为空",
         "第 5 步重算分层与受限表未开始；43/231/378 未锁定（第二十轮 `SH:600143` 脱离 HOLD 后由 44/320 变为 43/321，仍未冻结）",
         "锚定期回退与上游准入的间接依赖未覆盖",
         "`_RE_POLICY` 是裸「会计政策」，正文里的「公司会计政策」也会被认成 POLICY_CHANGE 原因；本轮未改——收紧它会让 1,007 份存量证据的极性发生变化，需单独一轮并重做回放口径",
@@ -4008,7 +4073,8 @@ review = {
         "`_date_span()` 只能解析「年+月区间 / 上半年 / H1H2 / Qn / 第n季度 / 年月日 / 年月」这些写法；两侧都写了期间但都解析不出时仍会退到语义类（如「年初至报告期末」对「本期数」），第十五轮只堵住「一侧解析出、另一侧写着期间线索却解不出」这一种，不是全量覆盖",
         "第二十一轮新增的取列判据仍有一处放松，已在 `report_to_codex_round21.md` §0.4 披露：`TABLE_BOUNDARY_UNPROVEN` 收紧后，表头与数据之间夹「单位：元」或「续」的真实页面会退化为待核，覆盖率上限未量化",
         "第二十二轮更正上一轮的统计与推论：① 边界诊断的侧数是 **21 侧（p1=9 / p2=12）** 不是 12 侧——上一轮只数了「侧状态非 OK」的实例，漏掉 6 个「note 有边界诊断但最终侧状态 OK」的 p2（候选页失败、另一页成功）；全表（含 64 条 EVIDENCE_OK）共 **72 个侧实例**带边界诊断，故真实触发面远大于 12。② 「零新增 BLOCKED」**不能**推出「边界规则没有过度收紧」——`SH:600590` 第 9 页旧函数 `NO_HEADER_ROW`、新函数 `TABLE_BOUNDARY_UNPROVEN`，属失败原因细化。③ 上一轮「43 条靠空侧通过」的比较对象错了（拿 p1_column 与 p2_column 两个不同文档比），正确对象是同侧「登记 vs 实际」，按此重算为 **0/64**；且 `_compatible`（片段合并）与 `cols_equivalent`（列身份）不是一回事，`2026年半年度` 对 `本报告期` 前者 True、后者 False",
-        "第二十二轮新增判据的残余放松，均已在 `report_to_codex_round22.md` 披露：① 列边界只取「金额那一行」的相邻数字，窄表（该行只有一个数字）退化为 ±inf，等于没有约束；② 「邻列片段与本表头行同处」目前只做到「不并入」，没有升级为「整列待核」；③ `check_c41` 侧的同侧语义检查用**合成引文探针**证明，不是逐行注入（逐行注入会先被 `*_QUOTE_WITHOUT_COLUMN` 拦住，证明不了新判据）；④ 旁证现在直接调用 `pv._amount_bounds`，与生产共用同一个函数，独立性进一步下降",
+        "第二十二轮新增判据的残余放松（第二十三轮更新）：① 列边界只取「金额那一行」的相邻数字——已按裁决 2 处理：边界未知**不再当成无约束**，涉及期间片段合并时退化为「必须与金额跨度相交」，不相交判 `COLUMN_ATTRIBUTION_UNPROVEN`；② 「邻列片段与本表头行同处」已按裁决 1 处理：列边界贯穿行内合并、跨行合并与最终候选选择三层，不再靠拼后的整体跨度掩盖越界；③ `check_c41` 侧的同侧语义检查仍用**合成引文探针**证明，不是逐行注入（逐行注入会先被 `*_QUOTE_WITHOUT_COLUMN` 拦住，证明不了新判据）；④ 旁证仍直接调用 `pv._amount_bounds` / `pv._attribution`，与生产共用同一函数，独立性进一步下降",
+        "第二十三轮新判据的残余放松（已在本轮汇报披露）：① 边界未知时用「片段须与金额自身跨度相交」作归属证据——这是**必要而非充分**条件：真实窄列（数字很窄、表头很宽且整体偏右）会把同列换行片段判成待核，方向是**过严**而非过松；② 该分支只在「本次合并会拼起两段期间语义」时生效，单数字行的单个片段、普通标签列不受影响，故「不要求所有单数字行一律待核」成立；③ 87 条固定键上 `COLUMN_ATTRIBUTION_UNPROVEN` 触发 **0 次**，说明真实版面里没有裁决构造的那种退化情形——判据生效的证据仍只在构造反例与自测里",
         "`step4_column_witness.py` 与生产取列**共享「表头行 / 指标带 / 列边界函数」假设**（只有列聚类路径不同：右边界聚类 vs 词坐标三段还原），不能称为完全独立；`EVIDENCE_OK && WITNESS_OK` 只是双路径互不矛盾，不替代外部复核",
     ],
     "not_independent": "执行方自检，不构成独立验收；仅抽验 %d 行 / %d 类 / %d 键回读原件物理页"

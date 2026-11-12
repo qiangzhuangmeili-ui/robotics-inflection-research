@@ -1,10 +1,11 @@
-# S00 勘误 V5 交接说明（自检 V19；列边界与同侧语义收紧后，待第 22 轮复核）
+# S00 勘误 V5 交接说明（自检 V20；列归属贯穿跨行合并、边界未知判待核后，待第 23 轮复核）
 
-> 版本：`ERRATA_V5`，自检 `V19`，43/43 PASS。
-> 复核：Codex 第二十一轮 **RETURN_FOR_REWORK**（4 条返工项，暂不放行批次 C）→ `_codex_out_round21.txt`；
-> 本轮返工结果逐条对照见 `rework_round21_result.json`。
-> 第 4 步批次 B **重验 87 条 → 登记 64 条 / 待核 23 条**，与 `b4738b2` **逐格差异 0**
-> （`step4_parent_scan.csv` 87 行、`parent_verifications.csv` 64×27）。
+> 版本：`ERRATA_V5`，自检 `V20`，43/43 PASS。
+> 复核：Codex 第二十二轮 **RETURN_FOR_REWORK**（3 条返工项，暂不放行批次 C）→ `_codex_out_round22.txt`；
+> 本轮返工结果逐条对照见 `rework_round22_result.json`。
+> 第 4 步批次 B **重验 87 条 → 登记 64 条 / 待核 23 条**，与 `130eef1` **逐格差异 0**
+> （`step4_parent_scan.csv` 87 行、`step4_column_witness.csv` 64 行、`parent_verifications.csv` 64×27；
+> 唯一差异是 `reviewed_at` 64 格日期）。
 > **L2 维持 43/231/321/81/378**（`SH:600143` 已在第二十轮脱离 HOLD，见 §0-b）。
 > 第 4 步批次 C–E 与第 5 步未开始；43/231/378 未冻结；S04 第二轮与 S05 不放行。
 > 性质：**SELF_CHECK**。自检通过 ≠ 独立验收通过。
@@ -13,7 +14,23 @@
 > `build_errata_v5.py` → `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`
 > （顺序不能换；旁证必须在登记之前跑，否则等于先登记后补证）。
 
-## 0-a2. 第 4 步批次 B：列边界与同侧语义（本轮，V19）
+## 0-a3. 第 4 步批次 B：列归属贯穿跨行合并、边界未知判待核（本轮，V20）
+
+第二十二轮裁决 3 条，逐条落地：
+
+| 裁决项 | 本轮实现 | 位置 |
+|---|---|---|
+| 1 跨行合并仍绕过列边界 | 新增 `_attribution()` 三态（`OK`/`OTHER`/`UNPROVEN`）；`_chain_cells(bounds, core, drops)` 每次**跨行**合并重新过它，组内记 `attr`，一在列内一在列外不并；不再以拼后整体跨度为判据 | `parent_verify.py:714, 744, 803, 1032` |
+| 2 无邻数字不能当同列证明 | `UNPROVEN` 分支：边界未知且两侧都带期间语义时，要求片段与 `core=(ax0,ax1)`（金额**自身**跨度）相交；不相交 → 待核 `COLUMN_ATTRIBUTION_UNPROVEN`，不按半截列名返回 `OK`；旁证同一判据 | `parent_verify.py:714–742, 1020–1035`；`step4_column_witness.py:103, 276` |
+| 3 区分两组 32 条 | 生产函数重算 **32 不等价（分母）/ 32 等价被排除**（31 条带区间名称 + 1 条 `本期数`）；改汇报 §三、`rework_round21_result.json`、`_c41_inject` 注释；新增机器记录 `_swap_equivalent_excluded` / `_swap_equivalent_kinds` | `verify_v5.py::_c41_inject` |
+
+**结果**：87 / `EVIDENCE_OK` 64 / `BLOCKED` 23 / 登记 64×27 / 旁证 64/64 `WITNESS_OK`（两侧 `OK:AGREE`）；
+与 `130eef1` **逐格差异 0**；计数 `8611 / 9050 / 10555 / 1214 / 8762`、L2 `43/231/321/81/378` 全部不变。
+自测 **61 项 FAIL 0**（新增 D6 十一项）；C41 十二类 64/64 + `swap_column` 32/32 + 语义探针命中。
+**`COLUMN_ATTRIBUTION_UNPROVEN` 在 87 条真实键上触发 0 次**——判据生效的证据只在构造反例与自测里。
+**过严方向残余**：真实窄列（数字很窄、表头很宽且整体偏右）会被判待核；已写进 `open_findings` 第 13 条。
+
+## 0-a2. 第 4 步批次 B：列边界与同侧语义（第二十二轮，历史）
 
 第二十一轮裁决 4 条，逐条落地：
 

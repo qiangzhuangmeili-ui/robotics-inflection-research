@@ -1,0 +1,223 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V20",
+  "round": 23,
+  "nature": "REWORK_RESULT",
+  "answers_ruling": "runs/issues/S00/errata_20261111_v5/_codex_out_round22.txt",
+  "ruling_verdict": "RETURN_FOR_REWORK",
+  "ruling_scope_note": "裁决不认定现有 64 条登记错误；272 条已接受事件证据保留；暂不放行批次 C。",
+  "reworked_at": "2026-11-13T23:45:00+08:00",
+  "comparison_baselines": {
+    "round20": "4ac102d",
+    "round21": "b4738b2",
+    "round22": "130eef1",
+    "note": "本轮逐键比对对象是 130eef1（第二十二轮）；三处都写 SHA，不用 HEAD。"
+  },
+  "scope_discipline": {
+    "changed": "只改判据（列归属贯穿三层、边界未知判待核、汇报口径两组 32 条分开）",
+    "not_changed": [
+      "screen_rules_v2.json 未改",
+      "l2_core.py 依赖映射未改",
+      "S02 上游 results.csv 未改",
+      "43/231/378 仍未冻结",
+      "87 条目标键集与 64 条登记键集未改"
+    ]
+  },
+  "items": [
+    {
+      "id": "R1",
+      "requirement": "跨行合并仍绕过列边界：片段列归属约束须贯穿横向、纵向合并及最终候选选择；_chain_cells 不得只凭跨度重叠和语义兼容跨边界合并；保留片段归属，不能合并后用整体跨度掩盖越界；补该反例与真实同列换行正例",
+      "status": "DONE",
+      "root_cause": "上一轮把 bounds 只传给 _header_cells（行内合并）；_chain_cells 的跨行合并那层仍只判「跨度重叠 ≥ -3pt + _compatible」，并起来后整体跨度 [100,165] 让候选筛选（c[1] > ax0-8 且 c[0] < ax1+4）看不出越界",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_attribution（新增）",
+          "what": "三态 OK / OTHER / UNPROVEN；OTHER = 边界已知且中心越界（可证明是邻列），UNPROVEN = 边界未知且与 core 不相交（证明不了）"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_chain_cells",
+          "what": "新增 bounds / core / drops 参数；每次跨行合并重新过 _attribution；组内记 attr，一在列内一在列外不并；不再用拼后的整体跨度做判据"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_header_cells",
+          "what": "行内合并改用 _attribution；cur_attr = OTHER 时不再往里并"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C37",
+          "what": "新增 cross_row_fragment_not_merged 合成探针（走生产路径）"
+        },
+        {
+          "file": "selftest_column_rules.py",
+          "anchor": "d6()",
+          "what": "新增 D6 十一项，含该反例与真实同列换行正例"
+        }
+      ],
+      "evidence": {
+        "counterexample_before": "OK / 本报告期（4-6月）（旁证 OK / 本报告期）",
+        "counterexample_after": "OK / 本报告期（与旁证一致）",
+        "selftest": "D6 跨行合并不得绕过列边界 PASS st=OK col=本报告期",
+        "c37": "cross_row_fragment_not_merged = True"
+      }
+    },
+    {
+      "id": "R2",
+      "requirement": "无邻数字不能直接当同列证明：缺少邻数字应表示该方向边界未知；涉及多个期间片段合并时须有额外的同列表头结构证据，无法证明归属则待核；不能重新无条件使用整页数字聚类，也不要求所有单数字行一律待核；补该负例与有充分结构证据的正例",
+      "status": "DONE",
+      "root_cause": "上一轮把 _amount_bounds 的 ±inf 读成「这一侧无约束」，而它真实含义是「这一侧边界未知」",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_attribution",
+          "what": "UNPROVEN 分支：该侧边界未知且 need_core 时，要求片段与 core = (ax0, ax1) 相交，否则 UNPROVEN"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "column_of_amount_aligned_ex",
+          "what": "收集 drops；有期间片段因 UNPROVEN 被挡在列外时返回 COLUMN_ATTRIBUTION_UNPROVEN（待核），不按半截列名返回 OK"
+        },
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "_merge_header_cells / witness",
+          "what": "同一判据；UNPROVEN 直接返回 COLUMN_ATTRIBUTION_UNPROVEN，不再并成一格后靠宽格子中心落回列内"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C37",
+          "what": "新增 no_neighbor_fragment_pending 与 no_neighbor_overlap_merged（一负一正，防「一律判待核」的退化实现）"
+        }
+      ],
+      "evidence": {
+        "negative_before": "OK / 本报告期（4-6月）（生产与旁证都错）",
+        "negative_after": "COLUMN_ATTRIBUTION_UNPROVEN（生产与旁证一致）",
+        "positive_kept": "单数字行单片段 → OK / 2026年半年度；单数字行相交片段 → OK / 本报告期（1-6月）",
+        "why_not_ok_with_truncated_name": "本报告期 与 本报告期（4-6月）期间语义不同（后者是单季），截断即错判，只能待核",
+        "why_not_all_single_number_rows_pending": "need_core 只在两侧都带期间语义时置真；单个片段与普通标签列走不到该分支",
+        "real_key_hits": 0
+      }
+    },
+    {
+      "id": "R3",
+      "requirement": "区分两组 32 条：说明两个集合、注入方向和可能拒绝原因；不要把跨文档等价直接解释为同侧列身份；修 report_to_codex_round22.md §三、rework_round21_result.json、verify_v5.py::_c41_inject 注释",
+      "status": "DONE",
+      "root_cause": "上一轮把「32 条不等价（注入分母）」与「32 条等价（被排除）」混成一句，并给了两句不成立的解释",
+      "changes": [
+        {
+          "file": "report_to_codex_round22.md",
+          "anchor": "§三",
+          "what": "按两组重写：不等价 32 条为分母、等价 32 条不计入；撤回两句错话"
+        },
+        {
+          "file": "rework_round21_result.json",
+          "anchor": "items[3].evidence.corrections_round23",
+          "what": "补两组逐对计数、注入方向、拒绝原因、撤回的两句陈述"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "_c41_inject 注释",
+          "what": "按两组重写注释；并新增 _swap_equivalent_excluded / _swap_equivalent_kinds 机器记录"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C41 描述",
+          "what": "写明互换分母只取不等价的 32 条、另 32 条按设计放行"
+        }
+      ],
+      "evidence": {
+        "not_equivalent_32": {
+          "2026年半年度|2026年第一季度": 18,
+          "本报告期（1－6月）|2026年第一季度": 6,
+          "2026年半年度|本报告期": 4,
+          "2025年半年度|2025年第一季度": 2,
+          "本期数|（1-9月）": 1,
+          "本期数|2026年第一季度": 1
+        },
+        "equivalent_32": {
+          "本报告期（1－6月）|本报告期": 30,
+          "本报告期（1-6月）|本报告期": 1,
+          "本期数|本报告期": 1
+        },
+        "summary": "31 条带区间名称对 本报告期（全角 30 / ASCII 1）+ 1 条 本期数 对 本报告期，与裁决给的 31+1 一致",
+        "injection_direction": "p1_column := p2_column（另一份文档的列名）；不改变本文档金额的实际列",
+        "why_equivalent_32_not_caught": "互换后登记更弱（本报告期）而非更细，cols_equivalent 与 _no_extra_semantics 都判真，按已接受口径放行",
+        "machine_recorded": {
+          "_swap_equivalent_excluded": 32,
+          "_swap_equivalent_kinds": [
+            "本报告期（1-6月）|本报告期",
+            "本报告期（1－6月）|本报告期",
+            "本期数|本报告期"
+          ]
+        }
+      }
+    }
+  ],
+  "counts_after": {
+    "targets": 87,
+    "evidence_ok": 64,
+    "blocked": 23,
+    "registered": 64,
+    "witness_ok": 64,
+    "p1": {
+      "OK": 73,
+      "NOT_FOUND": 14
+    },
+    "p2": {
+      "OK": 70,
+      "NOT_FOUND": 17
+    },
+    "meta_diff_open": 8611,
+    "open_total_core": 9050,
+    "open_total_all": 10555,
+    "PENDING_PARENT_COMPATIBILITY": 1214,
+    "RESOLVED_SCOPE_COVERED": 8762,
+    "l2_verdicts": {
+      "R1_NO_LINK": 378,
+      "HOLD_PENDING_ERRATA": 43,
+      "R2_MAY_CHANGE": 231,
+      "NOT_AFFECTED": 321,
+      "STILL_PASSES_WITHOUT": 81
+    }
+  },
+  "zero_change_proof": {
+    "step4_parent_scan.csv": "87 行、键集相同、逐格差异 0",
+    "parent_verifications.csv": "64 行 × 27 列、键集相同、逐格差异 0（仅 reviewed_at 64 格由 2026-11-12 变 2026-11-13）",
+    "step4_column_witness.csv": "64 行、键集相同、逐格差异 0",
+    "COLUMN_ATTRIBUTION_UNPROVEN_on_real_keys": 0,
+    "note": "新判据在 87 条真实键上零触发；生效证据只在构造反例与自测里。未预设必须维持 64 条。"
+  },
+  "self_check": {
+    "version": "V20",
+    "checks_pass": 43,
+    "checks_total": 43,
+    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+    "nature": "SELF_CHECK_NOT_ACCEPTANCE",
+    "selftest_column_rules": "61 项 FAIL 0（上一轮 50 项，新增 D6 十一项）"
+  },
+  "regressions_found_and_fixed": [
+    "自测「正例」选错：把 （1-6月）放在 x[131,160]（与金额右边界 130 差 1pt）当真实同列换行正例，而负例是 [134,165]（差 4pt）——几何上无法区分，等于要求判据在 1pt 与 4pt 之间划线。已改成真正相交的 [120,160]",
+    "自测用例的表头行只放一个词，先触发 len(cells) < 2 的表头形状要求，用例本身报 TABLE_BOUNDARY_UNPROVEN，看起来像新判据失败。已补「项目」列",
+    "review.json:open_findings 有一条陈述过期（称三张登记表仍为空）；parent_verifications 自第 20 轮起已有 64 行，已更正"
+  ],
+  "still_blocked": {
+    "batch_C_D_E": "未开始（等第 23 轮裁决）",
+    "step5_recompute_strata": "未开始",
+    "S04_round2": "不放行",
+    "S05": "不放行",
+    "freeze_43_231_378": false,
+    "F32_language_dimension": "未修",
+    "bare_RE_POLICY": "未修"
+  },
+  "open_risks": [
+    "归属证据取「与金额自身跨度相交」是必要非充分：真实窄列（数字很窄、表头很宽且整体偏右）会被判待核，方向是过严不是过松",
+    "该分支只在「本次合并会拼起两段期间语义」时生效；单数字行的单个片段、普通标签列不受影响，故不构成「所有单数字行一律待核」",
+    "87 条真实键上 COLUMN_ATTRIBUTION_UNPROVEN 触发 0 次：判据在真实语料上没有可观测效果",
+    "旁证与生产共用 _amount_bounds 与 _attribution 两个函数，独立性再降一档（只剩列聚类路径不同）",
+    "check_c41 侧的同侧语义检查仍用合成引文探针证明，不是逐行注入",
+    "表格边界收紧的覆盖率上限仍未量化（全表 72 个侧实例带边界诊断，51 个换页成功）"
+  ]
+}

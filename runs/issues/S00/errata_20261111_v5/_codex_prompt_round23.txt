@@ -1,0 +1,107 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V20，43/43 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round22.txt（RETURN_FOR_REWORK，3 条返工项）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round23.md（先读这一份）
+本轮逐条对照：runs/issues/S00/errata_20261111_v5/rework_round22_result.json
+
+比较基线（都写 SHA，不用 HEAD）：
+- 第二十轮 = `4ac102d`；第二十一轮 = `b4738b2`；第二十二轮 = `130eef1`；本轮 = 待提交。
+- 与 `130eef1` 逐格比对：`step4_parent_scan.csv` 87 行、`step4_column_witness.csv` 64 行，
+  键集相同、**逐格差异 0**；`parent_verifications.csv` 64×27、逐格差异 0
+  （唯一差异是 `reviewed_at` 64 格由 2026-11-12 变 2026-11-13）。
+
+本轮只改判定方法。批次 C–E、第 5 步、S04 第二轮、S05 都没动；272 条事件证据不重评。
+
+## 一、第 1 项：跨行合并仍绕过列边界
+
+1. 读 `parent_verify.py:711` 的 `_INF` 与 `parent_verify.py:714` 的 `_attribution(x0, x1, bounds, core, need_core)`：
+   三态 `OK / OTHER / UNPROVEN`。`OTHER` = 边界已知且片段中心越界（**可证明**是邻列）；
+   `UNPROVEN` = 该侧边界未知且与 `core` 不相交（**证明不了**）。请确认这两态没有被混用。
+2. 读 `parent_verify.py:803` 的 `_chain_cells(cells, x_tol, bounds, core, drops)`：
+   **跨行合并每次重新过 `_attribution`**，组里记 `attr`，一在列内一在列外不并；
+   不再以「拼后的整体跨度」为判据。这正是你指出的「合并后用整体跨度掩盖越界」。
+3. **请复现你上轮那个反例**（我逐字复现过）：
+   ```
+   y=50：单位：元
+   y=60：项目 x[0,40]；本报告期   x[100,138]
+   y=70：项目 x[0,40]；（4-6月）  x[134,165]
+   y=90：营业收入 x[0,45]；100.00 x[100,130]；200.00 x[140,170]
+   ```
+   上一版生产返回 `OK` + `本报告期（4-6月）`；本轮必须 `OK` + `本报告期`（与旁证一致）。
+   对应自测 `selftest_column_rules.py::d6()` 的 `D6 跨行合并不得绕过列边界`、
+   C37 的 `cross_row_fragment_not_merged`，但请自己独立构造一次。
+4. 读 `column_of_amount_aligned_ex`（`parent_verify.py` 内，约 1010–1035 行）确认：
+   行内合并、跨行合并、最终候选筛选三层**都用同一套 `bounds` + `core`**。
+
+## 二、第 2 项：无邻数字不能直接当同列证明
+
+5. 读 `_attribution` 的 `UNPROVEN` 分支：该侧边界未知、且 `need_core`（本次合并会拼起
+   **两段期间语义**）时，要求片段与 `core = (ax0, ax1)`（金额**自身**跨度）**相交**：
+   ```
+   if left == -_INF and x1 < core[0]:  return "UNPROVEN"
+   if right ==  _INF and x0 > core[1]: return "UNPROVEN"
+   ```
+6. **请复现你上轮那个负例**（删掉 `200.00`）：
+   ```
+   y=70：本报告期 x[100,130]；（4-6月）x[134,165]
+   y=90：营业收入；100.00 x[100,130]
+   ```
+   上一版生产与旁证都返回 `OK` + `本报告期（4-6月）`；本轮必须
+   **`COLUMN_ATTRIBUTION_UNPROVEN`**（`parent_verify.py:1032`；旁证
+   `step4_column_witness.py:276`）。自测：`D6 无邻数字时不得把邻列片段并回本列`、
+   `D6 旁证无邻数字时不得并回本列`；C37：`no_neighbor_fragment_pending`。
+7. **请判定两个正例是否保住了**（防「一律判待核」的退化实现）：
+   - `D6 单数字行单片段不得判待核`：单数字行只有一个表头片段 → `OK` / `2026年半年度`；
+   - `D6 单数字行相交片段仍须合并` / C37 `no_neighbor_overlap_merged`：
+     片段与金额跨度相交 → `OK` / `本报告期（1-6月）`。
+   机制上：`need_core` 只在两侧都带期间语义时置真，单个片段与普通标签列走不到该分支。
+   请确认这满足你「不要求所有单数字行一律待核」的要求。
+8. **请判定 `COLUMN_ATTRIBUTION_UNPROVEN` 判待核**（而不是「排除该片段后返回 `OK` + 半截列名」）：
+   我的理由是本报告期 与 本报告期（4-6月） 期间语义不同（后者是单季），截断即错判。
+   若你要求改成「排除后返回 `OK`」，请明确。
+9. **我主动披露一处过严**：归属证据取「与金额自身跨度相交」是**必要非充分**条件。
+   真实窄列（数字很窄、表头很宽且整体偏右）会被判待核。方向是过严，不是过松。
+   已写进 `review.json:open_findings` 第 13 条。若你要求改用「同一已确认表格内的列结构」，
+   请指定可接受的结构层——我不能再用整页数字聚类（它把 6 个真实列切成 12 簇，见第 22 轮 §一.1）。
+
+## 三、第 3 项：两组 32 条分开说
+
+10. 我用生产函数 `cols_equivalent(p1_column, p2_column)` 跑 64 条重算，得 **32 不等价 / 32 等价**：
+    - **32 条不等价**（`swap_column` 的实际分母）：`2026年半年度|2026年第一季度` 18、
+      `本报告期（1－6月）|2026年第一季度` 6、`2026年半年度|本报告期` 4、
+      `2025年半年度|2025年第一季度` 2、`本期数|（1-9月）` 1、`本期数|2026年第一季度` 1。
+      注入方向 `p1_column := p2_column`（另一份文档的列名）；不改变本文档金额的实际列，
+      故 `check_c41` 报 `P1_COLUMN_MISMATCH`。
+    - **32 条等价、被排除**：`本报告期（1－6月）|本报告期` 30、`本报告期（1-6月）|本报告期` 1、
+      `本期数|本报告期` 1——即 **31 条带区间名称 + 1 条 `本期数`**，与你算的 31+1 一致。
+      互换后登记变成 `本报告期`（更弱而非更细），`cols_equivalent` 与 `_no_extra_semantics`
+      都判真，按已接受口径放行。
+    请在 `parent_verifications.csv` 上自己重算一遍，确认这两组与两组内部构成。
+11. 读 `verify_v5.py::_c41_inject` 注释（已按两组重写），并确认新增机器记录
+    `_swap_equivalent_excluded = 32`、`_swap_equivalent_kinds` 三个侧对。
+    汇报侧不再手写这两个数字。
+12. 读 `report_to_codex_round22.md` §三（已按裁决 3 重写，并显式撤回两句错话）与
+    `rework_round21_result.json` 的 `items[3].evidence.corrections_round23`。
+
+## 四、逐键比对与计数（请自己跑）
+
+13. `git show 130eef1:runs/issues/S00/errata_20261111_v5/step4_parent_scan.csv` 与工作区比对：
+    87 vs 87、键集相同、**逐格差异 0**；`step4_column_witness.csv` 同理（64、差异 0）；
+    `parent_verifications.csv` 64×27、除 `reviewed_at` 外差异 0。
+14. 计数：`8611 + 405 + 34 = 9050`，`9050 + 1505 = 10555`；`PENDING_PARENT_COMPATIBILITY` 1214；
+    `RESOLVED_SCOPE_COVERED` 8762；L2 **43/231/321/81/378**。
+15. `selftest_column_rules.py` 应 **61 项 FAIL 0**（上一轮 50 项 + 新增 D6 十一项）；
+    C41 十三类注入应十二类 64/64 + `swap_column` 32/32，且 `semantics_inflation_probe`
+    含 `SEMANTICS_UNPROVEN`。
+16. **`COLUMN_ATTRIBUTION_UNPROVEN` 在 87 条真实键上触发 0 次**（`step4_parent_scan.csv`
+    里该字符串出现 0 次）。我不把这个当成「判据有效」的证据——判据生效的证据只在构造反例
+    与自测里。请判定这是否可接受（汇报 §五.4）。
+
+## 五、边界
+
+S04 第二轮与 S05 继续不放行；批次 C–E 与第 5 步未开始；43/231/378 未冻结；
+F32（26 份英文版年报）与 `_RE_POLICY` 裸「会计政策」未修；
+旁证与生产共用 `_amount_bounds` 与 `_attribution`，独立性再降一档。
+
+请按「是否放行批次 C」给结论。若不通过，请把要改的点写成可执行清单（文件 + 函数 + 判据方向）。

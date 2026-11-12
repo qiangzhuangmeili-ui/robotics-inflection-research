@@ -1,13 +1,13 @@
-# S00 勘误台账 V5 报告（列边界与同侧语义收紧后，待第 22 轮复核）
+# S00 勘误台账 V5 报告（列归属贯穿跨行合并、边界未知判待核后，待第 23 轮复核）
 
 - 目录：`runs/issues/S00/errata_20261111_v5/`
 - 性质：**SELF_CHECK**，不是独立验收
-- 自检版本：**V19**，43/43 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
-- 第二十一轮裁决：`RETURN_FOR_REWORK`（4 条返工项，暂不放行批次 C）→ `_codex_out_round21.txt`
-- **本轮**：按 4 条返工项收紧判据（列边界归属、同侧语义单向包含、旁证合并前置判据、
-  汇报统计口径）；批次 B **重验 87 条 → 登记 64 条 / 待核 23 条**，
-  **与 `b4738b2` 逐格差异 0**（`step4_parent_scan.csv` 87 行、
-  `parent_verifications.csv` 64×27，键集相同、每格相同）
+- 自检版本：**V20**，43/43 PASS → `SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
+- 第二十二轮裁决：`RETURN_FOR_REWORK`（3 条返工项，暂不放行批次 C）→ `_codex_out_round22.txt`
+- **本轮**：按 3 条返工项修判据（列归属贯穿行内/跨行/最终候选三层、边界未知判待核、
+  两组 32 条分开说明）；批次 B **重验 87 条 → 登记 64 条 / 待核 23 条**，
+  **与 `130eef1` 逐格差异 0**（`step4_parent_scan.csv` 87 行、`step4_column_witness.csv` 64 行、
+  `parent_verifications.csv` 64×27；唯一差异是 `reviewed_at` 64 格日期）
 - 计数（口径写明，勿混用；本轮**全部不变**）：
   - 元数据差异未闭合（`meta_diff` open）= **8,611**
   - 合计核心未闭合（`summary.open_total_core` = 元数据 + 键 405 + 值 34）= **9,050**
@@ -19,7 +19,59 @@
 
 ---
 
-## 〇、第二十二轮返工：列边界与同侧语义
+## 〇、第二十三轮返工：列归属贯穿跨行合并、边界未知判待核
+
+第二十二轮裁决原文：**「裁决：`RETURN_FOR_REWORK`，暂不放行批次 C。」**
+边界：**「本裁决不认定现有 64 条登记错误；272 条事件证据保持原裁决。」**
+
+### 0.1 三项逐条落地
+
+| # | 裁决要求 | 本轮实现 | 位置 |
+|---|---|---|---|
+| 1 | 片段列归属约束贯穿横向、纵向合并及最终候选；`_chain_cells` 不得只凭跨度重叠 + 语义兼容跨边界；不得合并后用整体跨度掩盖越界 | 新增 `_attribution()` 三态（`OK`/`OTHER`/`UNPROVEN`）；`_chain_cells(bounds, core, drops)` 每次**跨行**合并重新过它，组内记 `attr`，一在列内一在列外不并；行内合并与最终候选筛选同用一套 `bounds`+`core` | `parent_verify.py:714, 744, 803, 1032` |
+| 2 | 缺邻数字 = 该侧边界未知，不得当无约束；多期间片段合并须有额外同列结构证据，证明不了则待核；不重新用整页数字聚类，也不要求所有单数字行待核 | `UNPROVEN` 分支：边界未知且 `need_core`（两侧都带期间语义）时，要求片段与 `core=(ax0,ax1)`（金额**自身**跨度）**相交**；不相交 → 不并 + 记 `drops` → 返回 `COLUMN_ATTRIBUTION_UNPROVEN`（待核），不按半截列名返回 `OK`；旁证同一判据 | `parent_verify.py:714–742, 1020–1035`；`step4_column_witness.py:103, 276` |
+| 3 | 区分两组 32 条；说明两个集合、注入方向与可能拒绝原因；不要把跨文档等价当同侧列身份 | 用生产函数重算：**32 不等价**（注入分母）/ **32 等价被排除**（31 条带区间名称 + 1 条 `本期数`）；改 `report_to_codex_round22.md` §三、`rework_round21_result.json` 的 `corrections_round23`、`_c41_inject` 注释；并新增机器记录 `_swap_equivalent_excluded` / `_swap_equivalent_kinds` | `verify_v5.py::_c41_inject`；`report_to_codex_round22.md` §三 |
+
+### 0.2 结果：逐格零变化
+
+| 项 | `4ac102d`（20 轮） | `b4738b2`（21 轮） | `130eef1`（22 轮） | 本轮 |
+|---|---|---|---|---|
+| 目标 | 87 | 87 | 87 | **87** |
+| `EVIDENCE_OK` | 64 | 64 | 64 | **64** |
+| `BLOCKED` | 23 | 23 | 23 | **23** |
+| 登记行 × 列 | 64×27 | 64×27 | 64×27 | **64×27** |
+| 旁证 `WITNESS_OK` | 64 | 64 | 64 | **64** |
+| 逐格差异 | — | 0 | 0 | **0** |
+
+`COLUMN_ATTRIBUTION_UNPROVEN` 在 87 条真实键上**触发 0 次**——判据生效的证据只在构造反例与自测里，
+不当成「判据有效」的证据。
+
+### 0.3 自测与注入
+
+- `selftest_column_rules.py`：**61 项，FAIL 0**（上一轮 50 项；新增 `d6()` 十一项：
+  `_attribution` 三态、跨行反例、无邻数字负例、三个正例、旁证三例）。
+- C37 新增 `cross_row_fragment_not_merged` / `no_neighbor_fragment_pending` /
+  `no_neighbor_overlap_merged`，`violations []`。
+- C41 十三类注入不变：十二类 64/64 + `swap_column` 32/32；
+  `semantics_inflation_probe = P1_COLUMN_SEMANTICS_UNPROVEN:本报告期（1-6月）⊄本报告期`。
+
+### 0.4 本轮自己修掉的三处（必须记）
+
+1. **自测的「正例」选错**：把 `（1-6月）` 放在 `x[131,160]`（与金额右边界 130 差 1pt）当
+   「真实同列换行」，而负例是 `x[134,165]`（差 4pt）——几何上无法区分，等于要求判据在
+   1pt 与 4pt 之间划线。已改成真正相交的 `x[120,160]`。
+2. **自测用例的表头行只放一个词**，先触发 `len(cells) < 2` 的表头形状要求，用例本身报
+   `TABLE_BOUNDARY_UNPROVEN`，看起来像新判据失败。已补「项目」列。
+3. **`open_findings` 一条陈述过期**（称三张登记表仍为空）：`parent_verifications` 自第 20 轮起已有 64 行。
+
+### 0.5 过严方向的残余放松（如实报）
+
+归属证据取「与金额自身跨度相交」是**必要非充分**：真实窄列（数字很窄、表头很宽且整体偏右）
+会被判待核。方向是**过严**，不是过松。已写进 `review.json:open_findings` 第 13 条。
+
+---
+
+## 〇-prev22（第二十二轮）：列边界与同侧语义
 
 第二十一轮裁决原文：**「裁决：`RETURN_FOR_REWORK`，暂不放行批次 C。」**
 边界：**「272 条已接受事件证据保留；本裁决不认定现有 64 条登记全部错误。」**

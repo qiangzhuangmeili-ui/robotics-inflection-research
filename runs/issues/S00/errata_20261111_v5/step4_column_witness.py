@@ -100,7 +100,7 @@ def _column_span(grid, x1):
     return idx, (left, right)
 
 
-def _merge_header_cells(rows, rj, bounds, gap=6.0):
+def _merge_header_cells(rows, rj, bounds, core=None, drops=None, gap=6.0):
     """把表头第 `rj` 行的词并成单元格：[(x0, x1, [原始片段...])]。
 
     第二十一轮裁决 3：合并**必须**带两条前置判据，不能先并无条件再回头检查——
@@ -110,19 +110,29 @@ def _merge_header_cells(rows, rj, bounds, gap=6.0):
     2. 列边界：两段必须落在本列左右边界内（`pv._amount_bounds`，即与同一行
        左右相邻数字的中点），否则是邻列。
 
+    第二十二轮裁决 2：边界退化（这一侧没有相邻数字）**不等于无约束**。
+    改用 `pv._attribution()`：与 `core`（金额自身跨度）不相交即 `UNPROVEN`，
+    不并并记 `drops`——上一版正是在这里把 `（4-6月）` 并回 `本报告期`，
+    拼出的宽格子中心又落回列范围内，旁证于是也返回 `OK`。
+
     返回的第三个元素保留**原始片段**，供调用方在合并后仍能追溯是哪两段冲突。
     """
     cells = sorted(rows[rj][1], key=lambda c: c[0])
     out = []
     cur = None
+    cur_attr = "OK"
     for x0, x1, tx in cells:
         joinable = (cur is not None and x0 - cur[1] <= gap
                     and pv._compatible(cur[2], tx))
+        attr = "OK"
         if joinable and bounds:
-            left, right = bounds
-            c1 = (cur[0] + cur[1]) / 2.0
-            c2 = (x0 + x1) / 2.0
-            if (c1 < left) != (c2 < left) or (c1 > right) != (c2 > right):
+            need_core = bool(_HEADER_HINT.search(cur[2]) and _HEADER_HINT.search(tx))
+            attr = pv._attribution(x0, x1, bounds, core, need_core)
+            if attr != "OK":
+                joinable = False
+                if attr == "UNPROVEN" and drops is not None:
+                    drops.append((attr, rows[rj][0], x0, x1, tx))
+            elif cur_attr == "OTHER":
                 joinable = False
         if joinable:
             cur[1] = max(cur[1], x1)
@@ -132,6 +142,7 @@ def _merge_header_cells(rows, rj, bounds, gap=6.0):
             if cur is not None:
                 out.append((cur[0], cur[1], cur[3]))
             cur = [x0, x1, tx, [tx]]
+            cur_attr = attr if bounds else "OK"
     if cur is not None:
         out.append((cur[0], cur[1], cur[3]))
     return out
@@ -255,7 +266,16 @@ def witness(pdf, page, value, aliases):
     #    现在合并前先过 `_compatible`，并按数字列格检查两段归属同一列；
     #    冲突则不并，交给下面保留的两两检查报歧义。
     bounds = pv._amount_bounds(rows, ri, ax0, ax1)
-    merged_rows = [_merge_header_cells(rows, j, bounds) for j in hdr]
+    drops = []
+    merged_rows = [_merge_header_cells(rows, j, bounds, (ax0, ax1), drops)
+                   for j in hdr]
+    # 第二十二轮裁决 2：有期间片段因归属无法证明被挡在列外时，列身份没有结论。
+    # 上一版在边界退化时把 `（4-6月）` 并回 `本报告期`，宽格子的中心又落回列
+    # 范围内，于是旁证也返回 `OK，本报告期（4-6月）`——旁证与生产一起错。
+    if [d for d in drops if _HEADER_HINT.search(pv._nz(d[4]))]:
+        return {"status": "COLUMN_ATTRIBUTION_UNPROVEN",
+                "why": "drop=%s" % (drops[0][4],)}
+
     # 第二十一轮裁决 3：同一表头行内**横向**冲突必须在合并那一刻拦住。
     # 上一版先无条件按间隙 ≤6pt 并词，之后的两两 `_compatible` 已经看不到被并进
     # 同一格的内部冲突（`2025年半年度` x[100,113] 与 `2026年半年度` x[114,130]

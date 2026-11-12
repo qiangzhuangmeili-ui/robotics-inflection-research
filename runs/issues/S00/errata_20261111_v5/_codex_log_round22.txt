@@ -1,0 +1,3791 @@
+OpenAI Codex v0.167.0-alpha.4.1
+--------
+workdir: C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1d08b-16c2-7b83-8d29-26baeb8fd076
+--------
+user
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V19，43/43 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round21.txt（RETURN_FOR_REWORK，4 条返工项）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round22.md（先读这一份）
+本轮逐条对照：runs/issues/S00/errata_20261111_v5/rework_round21_result.json
+
+比较基线（你上轮指出我把 HEAD 当上轮，这次两处都写 SHA）：
+- 第二十轮 = `4ac102d`；第二十一轮 = `b4738b2`；本轮 = 待提交。
+- 与 `b4738b2` 逐格比对：`step4_parent_scan.csv` 87 行、`parent_verifications.csv` 64×27，
+  键集相同、**逐格差异 0**。
+
+本轮只改判定方法。批次 C–E、第 5 步、S04 第二轮、S05 都没动；272 条事件证据不重评。
+
+## 一、第 1 项：互补语义不能单独证明同列
+
+1. 读 `parent_verify.py` 的 `_amount_bounds`（新增）：取「本列金额与**同一行**左右相邻
+   数字的中点」作列边界，无相邻则 ±inf。确认它**没有任何拍定的宽度阈值**（你否掉了
+   「金额宽度 + N pt」，也没接受「真实财报不会这样排」的推断）。
+2. 读 `_header_cells(..., bounds=)`：合并前比对两段**中心**是否同侧
+   （`(c1<left)!=(c2<left)` 或 `(c1>right)!=(c2>right)` 即不合并）。
+3. **请复现你上轮那个反例**：
+   ```
+   表头 y=70：本报告期 x[100,130]；（4-6月）x[134,165]
+   金额 y=90：100.00  x[100,130]；200.00   x[140,170]
+   ```
+   上一版第一列被认成 `本报告期（4-6月）`；本轮必须 `本报告期`。
+   对应 `selftest_column_rules.py` 的 `D5 邻列互补片段不得并进本列`，
+   但请自己独立构造一次。
+4. **请判定两件事**（汇报 §六 Q1/Q2）：
+   - 该反例现在返回 `OK` + `本报告期`，**不是 `AMBIGUOUS`**（邻列片段中心落在金额跨度之外）。
+     我理解你的要旨是「不得并入邻列片段」。若你要求「同表头行内有被列边界拒掉的片段
+     即整列待核」，我加一条即可——请指定。
+   - 窄表（金额那一行只有一个数字）时边界退化为 ±inf，等于没有约束。这个
+     「无相邻即不约束」是否可接受？
+5. **我主动披露一次自己造出来的回归**：我先试的是「整页数字列格切区」
+   （`_column_grid` 右边界聚类 + 相邻边界），被脚注编号/页码切碎——
+   `SH:603273` 的 p2 页里 6 个真实列被切成 12 个簇，把 `2026` 与 `年第一季度` 判成两列，
+   列名削成 `年第一季度`；`SH:600590 / 603082 / 603273 / 688067` 四条 p2 由
+   `OK:AGREE` 变 `OK:DISAGREE`。已回退为「只取金额那一行」，恢复 64/64。
+   日志：`_run_wit_r22b.log`（失败）/ `_run_wit_r22c.log`（修复后）。
+
+## 二、第 2 项：堵住同侧登记凭空增加期间语义
+
+6. 读 `parent_verify.py` 的 `_no_extra_semantics`（新增）：**同侧单向包含**——登记的每个
+   「已写」分量，实际列也必须写出；反向（实际更详细）放行。
+   确认 `_compatible`（片段合并）与 `cols_equivalent`（跨文档互认）**保留**「空 = 不约束」，
+   这正是你认可的部分。
+7. 读 `gap()`：`cols_equivalent` 通过后追加 `PARENT_COLUMN_SEMANTICS_UNPROVEN`。
+   读 `verify_v5.py` 的 `check_c41`：同位置追加 `<SIDE>_COLUMN_SEMANTICS_UNPROVEN`。
+8. **请复现你上轮那个反例**：目标金额实际表头 `本报告期`、邻列表头 `本报告期（1-6月）`，
+   把登记列名写成邻列长名称。现在 `gap()` 必须返回 `PARENT_COLUMN_SEMANTICS_UNPROVEN`。
+   对应自测 `D5 登记凭空加区间须被 gap 拒绝`。
+9. 读 `_c41_semantics_probe()`（新增）：这是**合成引文探针**，不是逐行注入。理由：
+   换成邻列长名称后，引文里本来就没有那串字，`*_QUOTE_WITHOUT_COLUMN` 会先拦住——
+   拦是拦住了但证明不了新判据。探针把这道前置检查让开，唯一可能拦住它的就是
+   「实际列没有这段语义」。当前输出：
+   `P1_COLUMN_SEMANTICS_UNPROVEN:本报告期（1-6月）⊄本报告期`。
+   **请判定这算不算「用合成数据替代真实路径」**（汇报 §六 Q4）。
+10. **Q2 统计对象——我上轮统计错了，请你核这一条**（汇报 §一.4 末段）：
+    - 我上轮的「43 条」是拿 `p1_column` 与 `p2_column`（两个不同文档）做 `_canon_parts`
+      比较、数「任一分量一侧有值一侧为空」，**对象错了**；
+    - 你按 p1/p2 比较得 63/32，对象同样是跨文档；
+    - 正确对象是**同侧「登记 vs 实际」**：64 条里 `_no_extra_semantics` 不成立的是 **0 条**
+      （登记列名就是生产取列的输出）；
+    - 你指出 `2026年半年度` 对 `本报告期` 为 `False` —— 对，我核过：
+      `cols_equivalent(...)` = False、`_compatible(...)` = True。我上轮把后者当成前者。
+    请确认这个更正成立，并指出还有没有别的同名字段被我混用。
+
+## 三、第 3 项：旁证横向合并前检查冲突
+
+11. 读 `step4_column_witness.py` 的 `_merge_header_cells`（由 `witness` 内联抽出）：
+    合并前过 `pv._compatible()` + `pv._amount_bounds()` 的列边界，返回**原始片段**
+    `[(x0, x1, [frag...])]`。读 `_hmerge_conflict`：按原始片段再查一遍（兜底）。
+12. **请复现你上轮那个反例**：同一表头行 `2025年半年度 x[100,113]`、`2026年半年度 x[114,130]`。
+    上一版旁证返回 `OK`、`column=2025年半年度2026年半年度`；本轮合并即被拒，
+    两两检查报 `AMBIGUOUS`。自测：`D5 旁证横向冲突不得并成一格`、`D5 旁证互补片段仍合并`、
+    `D5 旁证跨列片段不得合并`、`D5 旁证纵向两两检查能发现冲突`。
+13. **请判定**（汇报 §六 Q5）：旁证现在**直接调用** `pv._amount_bounds`，与生产共用同一个
+    函数——这会进一步削弱「独立」。这能否算「合并前检查冲突」？还是你要求旁证自己实现
+    一套边界算法？（我主动披露这一点，不辩解。）
+
+## 四、第 4 项：修正统计与解释
+
+14. **边界诊断侧数**：你说是 21 侧（p1=9、p2=12）。我重算确认：
+    ```
+    p1 NOT_FOUND 6 + p1 OK 3 + p2 NOT_FOUND 6 + p2 OK 6 = 21
+    ```
+    我上轮只数了「侧状态非 OK」，漏了 6 个 p2（候选页失败、另一页成功）。
+    另：全表（含 64 条 `EVIDENCE_OK`）还有 26 个 p1 + 25 个 p2 带边界诊断，
+    所以真实触发面是 **72 个侧实例**。请在 `step4_parent_scan.csv` 里核对这两组数。
+15. **「零新增 BLOCKED」的推论已撤回**：不再据此说边界规则没有过度收紧。
+    你抽查的 `SH:600590` 第 9 页，本轮 p1 `FIN.NPP.SQ@20251231` 仍是 `NOT_FOUND`，
+    note 为 `78:TABLE_BOUNDARY_UNPROVEN;1:NO_AMOUNT;2:NO_AMOUNT`。
+16. **C37 描述已改**：明确「以上新增项共同覆盖生产链，不是每一项都各自单独跑完整链」，
+    并点名 `cols_equivalent → gap` 的完整链由 `canon_keeps_semantics_via_equivalent`、
+    `rel_year_rejected_by_gap`、`annual_year_rejected_by_gap`、`same_side_semantics_unproven`
+    四项承担。读 `verify_v5.py` 的 `add("C37", ...)` 确认措辞。
+17. **`swap_column` 的解释已改**：那 32 行两侧列名**含区间省略**（`本报告期（1－6月）`
+    对 `本报告期`），互换后拦不住走的是「空 = 不约束」，不是「与区间判据无关」。
+    分母 32 用**生产函数** `cols_equivalent(p1_column, p2_column)` 重算，未变。
+
+## 五、逐键比对与计数（请自己跑）
+
+18. `git show b4738b2:runs/issues/S00/errata_20261111_v5/step4_parent_scan.csv` 与工作区比对：
+    87 vs 87、键集相同、**逐格差异 0**。`parent_verifications.csv` 同理（64×27、差异 0）。
+19. 计数：`8611 + 405 + 34 = 9050`，`9050 + 1505 = 10555`；`PENDING_PARENT_COMPATIBILITY` 1214；
+    `RESOLVED_SCOPE_COVERED` 8762；L2 **43/231/321/81/378**。
+20. `selftest_column_rules.py` 应 **50 项 FAIL 0**；C41 十三类注入应十二类 64/64 +
+    `swap_column` 32/32，且 `semantics_inflation_probe` 含 `SEMANTICS_UNPROVEN`。
+
+## 六、边界
+
+S04 第二轮与 S05 继续不放行；批次 C–E 与第 5 步未开始；43/231/378 未冻结；
+F32（26 份英文版年报）与 `_RE_POLICY` 裸「会计政策」未修。
+
+请按「是否放行批次 C」给结论。若不通过，请把要改的点写成可执行清单（文件 + 函数 + 判据方向）。
+
+ERROR: Reconnecting... 2/5
+ERROR: Reconnecting... 3/5
+ERROR: Reconnecting... 4/5
+ERROR: Reconnecting... 5/5
+warning: Falling back from WebSockets to HTTPS transport. request timed out
+codex
+我会先读本轮汇报和上一轮裁决，再独立复现反例、核对逐格差异与计数，最后按“是否放行批次 C”给出裁决。
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command 'Get-Content -Raw runs/issues/S00/errata_20261111_v5/report_to_codex_round22.md' in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 161ms:
+# S00 勘误 V5：列边界与同侧语义收紧（第二十二轮汇报）
+
+- 目录：`runs/issues/S00/errata_20261111_v5/`
+- 自检版本�?*V19**�?*43/43 PASS** �?`SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
+- 性质�?*SELF_CHECK**（同一执行 AI 自验，登记表 `review_role=SELF_CHECK`�?- 上一轮裁决：`RETURN_FOR_REWORK`�? 条返工项，暂不放行批�?C）→ `_codex_out_round21.txt`
+- 本轮逐条对照（机器可读）：`rework_round21_result.json`
+- **比较基线**：本�?逐键比对"的上轮对象是提交 **`b4738b2`**（第二十一轮）�?  上一份汇报里�?上一�?�?**`4ac102d`**（第二十轮）。你指出我把 `HEAD` 当成了上轮，
+  这是对的——本轮两处都写明 SHA�?- 复现顺序：`step4_parent_scan.py` �?`step4_column_witness.py` �?`step4_apply_parents.py` �?  `build_errata_v5.py` �?`check_l2_v5.py` �?`sampling_v5.py` �?`replay_polarity_v5.py` �?`verify_v5.py`
+
+结论先说�?*87 条键集�?4 条登记�?3 条待核、全部计数、L2 五档，与 `b4738b2` 逐位相同�?�?`4ac102d` 也逐位相同**（两轮都只是改判定方法，没有改名单）�?
+---
+
+## 一、四项逐条落实
+
+### 1. `_header_cells` / `_chain_cells`：语义互补不能单独证明同�?
+**你构造的反例**（我复现了，生产与旁证都返回 `OK` 且第一列被认成 `本报告期�?-6月）`）：
+
+```text
+表头 y=70：本报告�?x[100,130]；（4-6月）x[134,165]
+金额 y=90�?00.00  x[100,130]�?00.00   x[140,170]
+```
+
+**改法**：新�?`_amount_bounds(rows, ri, ax0, ax1)`（`parent_verify.py:683`），
+按你说的口径—�?*相邻列边�?*——取「本列金额与**同一�?*左右相邻数字的中点」：
+
+```python
+left  = (max(左侧数字的右边界) + ax0) / 2      # 无左邻则 -inf
+right = (min(右侧数字的左边界) + ax1) / 2      # 无右邻则 +inf
+```
+
+`_header_cells(rows, hdr_rows, bounds=...)` �?*合并�?*比对两段�?*中心**是否同侧�?`(c1 < left) != (c2 < left)` �?`(c1 > right) != (c2 > right)` �?不合并�?`_chain_cells` 的跨行合并仍只过 `_compatible`（上下两行同一 x，不存在跨列问题）�?
+**没有采用你否掉的两种口径**�?- 不采用「真实财报不会这样排」的推断�?- 不采用「金额宽�?+ N pt」——`_amount_bounds` 的边界由数字位置算出�?*没有任何拍定的阈�?*�?
+**为什么不用整页数字列�?*（我试过，退回来了）：`_column_grid` 用右边界聚类�?在真实页面上会被脚注编号、页码切碎。`SH:603273 FIN.REV.SQ@20260630` �?p2 �?（`DOC-…` �?1 页）里，6 个真实列被切�?12 个簇，据此切区把 `2026` �?`年第一季度`
+判成两列，列名被削成 `年第一季度` —�?4 条真实记录从 `OK:AGREE` �?`OK:DISAGREE`�?改回「只取金额那一行」后恢复 64/64 一致�?*这是本轮唯一一次自己造出来的回归，如实报�?*
+
+**实测**（`selftest_column_rules.py`）：
+
+```
+D5 邻列互补片段不得并进本列   PASS  st=OK  col='本报告期'   （上一版是 本报告期�?-6月）�?D5 列边界取相邻数字中点       PASS  bounds=(-inf, 135.0)
+D5 旁证跨列片段不得合并       PASS  merged=[(100,130,['本报告期']), (134,165,['�?-6月）'])]
+C37 neighbor_fragment_not_merged = True
+```
+
+**一处必须讲清的口径差异**：该反例现在返回 `OK` + `本报告期`�?*不是 `AMBIGUOUS`**�?因为 `�?-6月）` 的中心落在金额跨度之外，该金额所在列只有一个候选�?你的验收方向写的是「片段分属不同列或无法证明同列时，返回歧义／待核」—�?我理解其要旨�?*不得把邻列片段并进来**（上一版的错），而不是「凡邻列有片段就报歧义」�?如果你要求这种情况也�?`AMBIGUOUS`，我加一条「被列边界拒掉的片段若与本列同处一�?表头行，则整列留待核」即可，请指定�?
+### 2. `cols_equivalent` / `gap` / `check_c41`：堵住同侧登记凭空增加期间语�?
+**你构造的反例**（我复现了，`gap()` 返回 `None`、`check_c41` 返回 `[]`）：
+
+```text
+目标金额实际表头 本报告期，邻列表�?本报告期�?-6月）
+登记列名写成邻列的长名称 �?生产取列�?本报告期，仍放行
+```
+
+**改法**：把两件事分开—�?
+- `_compatible()`（片段合并）�?`cols_equivalent()`（跨文档名称互认�?*保留**「空 = 不约束」，
+  这正是你认可的部分（"允许缺省信息用于片段兼容"�?无需强迫 p1、p2 两份文档的列名完全一�?）；
+- 新增 `_no_extra_semantics(registered, actual)`（`parent_verify.py:1035`）：**同侧**单向包含—�?  登记的每个「已写」分量，实际列也必须写出来；反向（实际更详细）允许�?- `gap()` �?`cols_equivalent` 通过后追加一�?`PARENT_COLUMN_SEMANTICS_UNPROVEN`�?  `check_c41` 在同一位置追加 `<SIDE>_COLUMN_SEMANTICS_UNPROVEN`�?
+**实测**�?
+```
+D5 登记凭空加区间须�?gap 拒绝   PASS  gap='PARENT_COLUMN_SEMANTICS_UNPROVEN'
+D5 登记与实际一致时 gap 不报此项 PASS  gap='PARENT_QUOTE_TOO_SHORT'（说明这一道已过）
+C37 same_side_semantics_unproven = True
+C37 same_side_more_detail_ok     = True   （登�?本报告期、实�?本报告期�?-6月）�?不拒�?C41 semantics_inflation_probe = P1_COLUMN_SEMANTICS_UNPROVEN:本报告期�?-6月）⊄本报告�?```
+
+`C41` 那一条是**合成引文探针**（`_c41_semantics_probe()`），不是逐行注入。理由：
+把登记列名换成邻列长名称后，引文里本来就没有那串字，`*_QUOTE_WITHOUT_COLUMN` 会先拦住—�?拦是拦住了，但证明不了新判据。合成引文把这道前置检查让开，于是唯一可能拦住它的
+就是「实际列没有这段语义」。这不是放宽：`_c41` 的真实逐行重推仍是零违例�?
+### 3. `step4_column_witness.witness`：横向合并前检查冲�?
+**你构造的反例**（我复现了，旁证返回 `OK` + `column=2025年半年度2026年半年度`）：
+根因是旁证先**无条�?*按间�?�?pt 并词，之后的两两 `_compatible` 已经看不到被并进
+同一格的内部冲突�?
+**改法**：把合并抽成 `_merge_header_cells(rows, rj, bounds)`（`step4_column_witness.py:103`），
+合并前过两道：`pv._compatible()` �?`pv._amount_bounds()` 的列边界�?返回**原始片段** `[(x0, x1, [frag...])]`，合并后仍能追溯是哪两段�?新增 `_hmerge_conflict(merged_rows)` 按原始片段再查一遍（兜底，防止将来合并判据被放宽）�?
+**实测**�?
+```
+D5 旁证横向冲突不得并成一�? PASS  merged=[(100,113,['2025年半年度']), (114,130,['2026年半年度'])]
+D5 旁证互补片段仍合�?       PASS  merged=[(100,165,['本报告期','�?�?月）'])]
+D5 旁证纵向两两检查能发现冲突 PASS
+真实数据�?4/64 WITNESS_OK，两侧全 OK:AGREE，不一�?0
+```
+
+纵向冲突仍由 `witness()` 里保留的两两 `_compatible` 承担（同列范围内落进两个冲突片段 �?`AMBIGUOUS`）�?**旁证与生产共享「表头行 / 指标带」假设这件事没有�?*，我不辩解；`EVIDENCE_OK && WITNESS_OK`
+只证明两条路径互不矛盾�?
+### 4. 汇报统计与解释的更正
+
+你点的三处，逐条改：
+
+**(a) 边界诊断的侧数：21 侧（p1=9、p2=12），不是 12 侧�?* 我上轮只数了「侧状态非 OK�?的侧实例，漏�?6 个「note 有边界诊断但最终侧状�?OK」的 p2。重算（23 �?`BLOCKED` 内）�?
+| �?| 侧状�?| 侧实�?|
+|---|---|---:|
+| p1 | `NOT_FOUND` | 6 |
+| p1 | `OK` | 3 |
+| p2 | `NOT_FOUND` | 6 |
+| p2 | `OK` | 6 |
+| 合计 | | **21** |
+
+�?6 �?p2 �?*候选页失败、另一页成�?*（同一侧扫多页，某页被标题行挡住）�?最终侧状�?`OK`。全表（�?64 �?`EVIDENCE_OK`）还�?26 �?p1 + 25 �?p2 带边界诊断，
+同样是「候选页失败、换页成功」�?*所以边界规则的真实触发面是 72 个侧实例，不�?12 个�?*
+
+**(b)「零新增 BLOCKED」不能推出「边界规则没有过度收紧」�?* 我上轮这么写是错的�?你抽查泰豪科技 `SH:600590` �?9 页：旧函�?`NO_HEADER_ROW`、新函数
+`TABLE_BOUNDARY_UNPROVEN`，属**失败原因细化**（同为待核，但原因更准确）�?本轮该行�?p1 `FIN.NPP.SQ@20251231` 仍是 `NOT_FOUND`，note `78:TABLE_BOUNDARY_UNPROVEN;1:NO_AMOUNT;2:NO_AMOUNT`�?覆盖率上限仍未量化，这一点保留在 `open_findings`�?
+**(c) C37 是新增检查共同覆盖生产链，不是四项各自跑完整链�?* 已改描述（见 `review.json` C37），
+明确「`cols_equivalent �?gap` 的完整链由四项承担」，其余新增项只证明生产函数本身被接住�?
+**关于 Q2 的统计对象——我上轮统计错了，你的数是另一件事�?*
+
+我上轮说的�?3 条」是�?**`p1_column` �?`p2_column` 两个不同文档的列�?*�?`_canon_parts`
+比较、数「任一分量一侧有值一侧为空」的行数�?*这是错误的比较对�?*：两侧本来就�?两份文档的不同写法，不构成「同侧列身份」�?
+- 你按 p1/p2 比较得到 63 行不一�?/ 32 行等价，与我�?43 不是同一个口径，但你的对象也仍是跨文档；
+- 你指�?`2026年半年度` �?`本报告期` 实际�?`False` —�?**这是对的**。我核过�?  `cols_equivalent('2026年半年度','本报告期')` = `False`，�?`_compatible(...)` = `True`�?  我上轮把 `_compatible`（片段合并）的结果当成了 `cols_equivalent`（身份）的结果，两者不是一回事�?- **正确的对象是同侧「登�?vs 实际�?*。按这个对象重算�?4 条登记里�?  `_no_extra_semantics` 不成立的�?**0 �?*（登记列名就是生产取列的输出，天然一致）�?  也就是说，「空 = 不约束」这�?*从来没有**在同侧身份上被用到过——它只在片段合并�?  跨文档互认上起作用。你构造的反例之所以能过，是因为同侧压根没有「不得增加语义」这道判据，
+  不是因为「空 = 不约束」被滥用�?
+---
+
+## 二、结果：键集与名单零变化
+
+| �?| `4ac102d`（第二十轮） | `b4738b2`（第二十一轮） | 本轮 |
+|---|---|---|---|
+| 目标（固定基线） | 87 | 87 | **87** |
+| `EVIDENCE_OK` | 64 | 64 | **64** |
+| `BLOCKED` | 23 | 23 | **23** |
+| 登记 | 64 �?/ 27 �?| 64 �?/ 27 �?| **64 �?/ 27 �?* |
+| 独立旁证 | 64/64 `WITNESS_OK` | 64/64 `WITNESS_OK` | **64/64 `WITNESS_OK`**，两侧全 `OK:AGREE` |
+| 两侧状�?| p1 73/14、p2 70/17 | 同左 | **p1 73/14、p2 70/17** |
+
+逐键比对 `b4738b2` �?本轮�?*双向差集为空、verdict 变化 0、侧状态变�?0、列名变�?0�?*
+登记表逐格比对�?*27 列全部逐字相同**（本轮只改判据，�?`version_basis` 都没动）�?
+计数（与 `4ac102d`、`b4738b2` 均相同）�?`meta_diff` open **8,611**；`open_total_core` **9,050**�? 8,611 + �?405 + �?34）；
+`open_total_all` **10,555**�? 补充�?1,505）；`PENDING_PARENT_COMPATIBILITY` **1,214**�?`RESOLVED_SCOPE_COVERED` **8,762**；L2 **43 / 231 / 321 / 81 / 378**�?
+**新判据在 87 条真实数据上零变�?*——这不是「没生效」，是「真实版面里没有你构造的那种
+邻列互补片段」。判据生效的证据只在构造反例与自测里，这一点我不粉饰�?
+---
+
+## 三、`swap_column` 的解释更�?
+你说「与区间判据无关」的解释不准确，对。那 32 行两侧列名本�?*含区间省�?*
+（`本报告期�?�?月）` �?`本报告期`），互换�?`cols_equivalent` 仍判等价是因�?**登记侧本来就有区间、实际侧没有**，走的是「空 = 不约束」那条。正确说法：
+
+- 分母 32 = �?*生产函数** `cols_equivalent(p1_column, p2_column)` 重算出的「两侧不等价」子集；
+- 互换后拦不住的那 32 行，两侧在区间维度上是一侧有值一侧为空—�?*不是「无关」，是「单向缺省�?*�?- 本轮修好�?2 项后，这 32 行的**同侧**身份已由 `_no_extra_semantics` 另行约束
+  （登�?`本报告期�?�?月）` 时，实际列必须也写区间），但**互换注入**仍是 32 行分母，
+  因为互换后登记值变成了实际侧的真实列名，同侧检查不会报�?
+`swap_column` 仍是 32/32，分母未变�?
+---
+
+## 四、本轮自查发现并修掉的缺陷（不是裁决点，但会造假�?
+1. **整页数字列格切区把真实列切碎**（见 §一.1）：`SH:600590 / SH:603082 / SH:603273 / SH:688067`
+   �?4 条的 p2 �?`OK:AGREE` �?`OK:DISAGREE`，列名被削成 `年第一季度`�?   改回「只取金额那一行」后恢复 64/64。这是本轮唯一一次回归，
+   保留在日�?`_run_wit_r22b.log`（失败）�?`_run_wit_r22c.log`（修复后）�?2. **`_band()` �?def 行被误并**（编辑时�?docstring 接到 `def` 同行）：语法仍合法但可读性差，已复原�?3. **`_c41_semantics_probe` �?stub 签名**：`page_of(sec, doc, pg)`、`col_of_for(sec) -> callable`�?   首版�?`(doc, page)` 写，`TypeError`。已按实际签名改�?
+---
+
+## 五、边界（本轮不动�?
+- **批次 C、D、E 与第 5 步未开�?*（等你本轮裁决）�?- **S04 第二轮、S05 不放�?*�?*43 / 231 / 378 未冻�?*�?- **F32 未修**�?6 份英文版年报仍在池内�?- **`_RE_POLICY` 仍是裸「会计政策�?*�?- **`step4_column_witness.py` 仍与生产共享表头�?指标带假�?*�?- **`NO_LABEL_ROW` 带窗仍是经验�?*（上下各 �? 行、行�?�?0pt）�?- **表格边界收紧的覆盖率上限未量�?*（你�?4 �?(b) 的批评成立，已写�?`open_findings`）�?
+---
+
+## 六、请你明确表�?
+1. �?1 项：反例现在返回 `OK` + `本报告期`（不�?`AMBIGUOUS`）。我认为要旨是「不得并入邻列片段」，
+   你若要「凡邻列片段与本列同处一个表头行即整列待核」，我按此改——请指定�?2. �?1 项：列边界只�?*金额那一�?*的相邻数字。若该行只有一个数字（窄表），
+   边界退化为 `±inf`，等于没有约束。这个「无相邻即不约束」是否可接受�?3. �?2 项：`_no_extra_semantics` �?*单向**包含（登�?�?实际）。反向（实际更详细）放行�?   因为实际列的写法不受我们控制。是否认可这个方向？
+4. �?2 项：`check_c41` 侧我�?*合成引文探针**而不是逐行注入（理由见 §一.2）�?   这是否构成「用合成数据替代真实路径」？若你要求逐行注入，我需要另造一�?   「引文里本来就含长列名」的注入方式，请指定�?5. �?3 项：旁证现在两道前置判据（语�?+ 列边界）都在合并前生效，并保留原始片段�?   这能否算「合并前检查冲突」？还是你要求旁证也必须走生产的 `_amount_bounds`�?   （现在是**调用** `pv._amount_bounds`，即与生产共用同一个函数——这可能进一步削弱独立性，
+   我主动披露。）
+6. �?4 �?(b)：泰豪科技那类「失败原因细化」现在有 72 个侧实例。要不要我在
+   `step4_parent_scan.csv` 里把「边界诊断」与「最终结论」拆成两列，避免再被混算�?7. **批次 C 是否放行�?* 若不通过，请把要改的点写成可执行清单（文�?+ 函数 + 判据方向）�?
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command 'Get-Content -Raw runs/issues/S00/errata_20261111_v5/_codex_out_round21.txt; Get-Content -Raw runs/issues/S00/errata_20261111_v5/rework_round21_result.json' in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 120ms:
+**裁决：`RETURN_FOR_REWORK`，暂不放行批�?C�?*
+
+本轮六项修复已有实质进展，但独立夹具仍复现出错误列名通过生产检查的路径�?72 条已接受事件证据保留；本裁决不认定现�?64 条登记全部错误�?
+已确认：
+
+- 指定的上下两行冲突期间返�?`AMBIGUOUS`；横排互补片段正确合并，canon �?`本期|R0-1-6|累计`�?- 两组相对期间冲突均判 False�?025�?026 年度保留年份。指定金额、引文反例及两个 `gap()` 拒绝状态映射均通过；独立运�?`selftest_column_rules.py` 为零失败�?- 单侧版本依据、单期间口径依据均被拒绝。C41 产物中十二类�?**64/64**、`swap_column` **32/32**，对应分母一致�?- 实际调用 `targets()` �?**87 个唯一�?*，包含金发科技指定 OCF 键，`MISSING_FROM_SCOPE=[]`，覆盖旧 70 键�?- 汇总计数和 L2 **43�?31�?21�?1�?78** 均吻合；两份历史报告已就地勘误�?
+**逐键比对也成立，但须纠正比较基线�?*当前 `HEAD=b4738b2` 已是本轮提交，与工作区零差异。以真正上轮 `4ac102d` 比较�?7 键双向差集为空、verdict 变化 0、侧状态恰好变�?1 条；登记表为 **64×27**，唯一变化字段确为全部 64 行的 `version_basis`。这证明登记结论未改，不能单独证明判定方法充分�?
+需要完成以下四项返工，文件均在被复核目录内�?
+1. **`parent_verify.py::_header_cells / _chain_cells`：互补语义不能单独证明属于同一列�?*
+
+   我独立构造两列数字：
+
+   ```text
+   表头 y=70：本报告�?x[100,130]；（4-6月）x[134,165]
+   金额 y=90�?00.00  x[100,130]�?00.00   x[140,170]
+   ```
+
+   生产和旁证均返回 `OK`，并把第一列认�?`本报告期�?-6月）`�?
+   **验收方向�?*合并前利用数字列格、相邻列边界检查片段归属；片段分属不同列或无法证明同列时，返回歧义／待核。保留真实同列断词的正例�?
+   �?**Q1**：不接受“真实财报不会这样排”的推断；也不指定未经校准的“金额宽度＋N pt”。短数字与宽表头并不支持统一宽度阈值，应按相邻列边界约束�?
+2. **`parent_verify.py::cols_equivalent / gap`、`verify_v5.py::check_c41`：堵住同侧登记凭空增加期间语义�?*
+
+   独立夹具中，目标金额实际表头�?`本报告期`，邻列表头为 `本报告期�?-6月）`。把登记列名写成邻列的长名称后：
+
+   ```text
+   生产取列：本报告期，OK
+   gap()：None
+   check_c41()：[]
+   ```
+
+   长名称确实在同页连续出现，但属于邻列，现有检查仍放行�?
+   **验收方向�?*将“跨文档名称兼容”和“同页实际金额列身份”分开。同侧登记不得增加实际列尚未证明的区间、年份或累计语义；补充信息必须绑定该金额所在列的表头／上下文。增加上述反例，经真�?`gap �?C41` 检验拒绝�?
+   �?**Q2**：允许缺省信息用于片段兼容，不能把它当作同侧列身份已经证明。无需强迫 p1、p2 两份文档的列名完全一致。�?3 条全灭”尚无可复算依据；我�?p1/p2 比较得到空／非空分量不一�?**63 �?*，等�?**32 �?*，�?`2026年半年度` �?`本报告期` 实际�?False。请明确原统计的比较对象，逐侧重算影响�?
+3. **`step4_column_witness.py::witness`：在横向合并前检查冲突�?*
+
+   同一表头行放置：
+
+   ```text
+   2025年半年度 x[100,113]
+   2026年半年度 x[114,130]
+   ```
+
+   生产返回 `AMBIGUOUS`，旁证却返回�?
+   ```text
+   OK，column=2025年半年度2026年半年度
+   ```
+
+   原因是旁证先无条件合并间�?�?pt 的词，之后两�?`_compatible` 已看不到内部冲突�?
+   **验收方向�?*合并前检查原始片段语义，保留可追溯片段；内部冲突必须报歧义。补横向冲突、纵向冲突及互补正例。旁证仍与生产共享表头行和指标带假设，不能称完全独立�?
+4. **`report_to_codex_round21.md`、`rework_round20_result.json`：修正统计和解释�?*
+
+   - 23 �?BLOCKED 中，note 含边界状态的�?**21 侧：p1=9、p2=12**，不�?12 侧。其中六�?p2 �?note 只有边界诊断，但最终侧状态为 `OK`，须区分候选页失败与另页成功�?   - “本轮零新增 BLOCKED”由逐键比较支持；不能据此推导边界规则没有过度收紧。我抽查泰豪科技该原件第 9 页，旧函数为 `NO_HEADER_ROW`，新函数�?`TABLE_BOUNDARY_UNPROVEN`，属于失败原因细化�?codex-file-citation{path="D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals/600590/q3_2025/DOC-56CFBDE8A1EFBB18.pdf" purpose="source"}
+   - 比较基线写明提交 SHA；重算并说明 Q2 的统计对象。C37 是新增检查共同覆盖生产链，并非四项各自都经过完整链�?
+其余问题的裁定：
+
+- **Q3：接受�?*`AMOUNT_PRECISION_INVALID` 直接拒绝取列，属于上轮允许的取严分支�?- **Q4：接受�?*把既有文档号、期间追加到派生依据中属于显式绑定；须继续保留原引文，追加文字本身不构成新证据�?- **`swap_column`：接受重算后仍为 32�?*但“与区间判据无关”的解释不准确，这些名称本身包含区间省略；应以生产函数重算结果为依据�?- **Q6：接�?append-only�?*新增批次登记新增键及冻结时间／版本，旧行不覆盖；旧键更正另留版本追溯�?
+完成上述修复后重验固�?87 键，如实报告结果，不预设必须维持 64 条�?*S04 第二轮、S05 继续不放行；43�?31�?78 不冻结�?*本轮只读复核，未修改仓库，也未重跑会写入产物的整套脚本�
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V19",
+  "round": 22,
+  "nature": "REWORK_RESULT",
+  "answers_ruling": "runs/issues/S00/errata_20261111_v5/_codex_out_round21.txt",
+  "ruling_verdict": "RETURN_FOR_REWORK",
+  "ruling_scope_note": "本裁决不认定 64 条登记全部错误，272 条事件证据保留；暂不放行批次 C�?,
+  "reworked_at": "2026-11-12T23:59:00+08:00",
+  "comparison_baselines": {
+    "round20": "4ac102d",
+    "round21": "b4738b2",
+    "note": "上一份汇报把 HEAD 当成上轮（HEAD 已是本轮提交），裁决指出后本轮两处都写明 SHA�?
+  },
+  "scope_discipline": {
+    "changed": "只改判据（列边界归属、同侧语义单向包含、旁证合并前置判据、汇报统计口径）",
+    "not_changed": [
+      "screen_rules_v2.json 未改",
+      "l2_core.py 依赖映射未改",
+      "S02 上游 results.csv 未改",
+      "43/231/378 仍未冻结",
+      "87 条目标键集与 64 条登记键集未�?
+    ]
+  },
+  "items": [
+    {
+      "id": "R1",
+      "requirement": "互补语义不能单独证明属于同一列；合并前用数字列格/相邻列边界检查片段归属；片段分属不同列或无法证明同列时返回歧义／待核；保留真实同列断词正�?,
+      "status": "DONE",
+      "root_cause": "上一�?`_compatible()` 只证明「两段语义不冲突」，不能证明「两段属于同一列」。`本报告期` 与右邻列 `�?-6月）` 互补且间�?4pt，于是被并成一列，生产与旁证都把第一列认�?`本报告期�?-6月）`",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_amount_bounds（新增）",
+          "what": "取「本列金额与同一行左右相邻数字的中点」作列边界；无相邻则 ±inf。无任何拍定阈�?
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "_header_cells(bounds=)",
+          "what": "合并前比对两段中心是否同侧：(c1<left)!=(c2<left) �?(c1>right)!=(c2>right) 即不合并"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "column_of_amount_aligned_ex",
+          "what": "�?bounds 传入 _header_cells；不再用整页数字列格切区"
+        }
+      ],
+      "evidence": {
+        "selftest": [
+          "D5 邻列互补片段不得并进本列 PASS st=OK col='本报告期'（上一�?本报告期�?-6月）�?,
+          "D5 列边界取相邻数字中点 PASS bounds=(-inf, 135.0)"
+        ],
+        "c37": "neighbor_fragment_not_merged = True",
+        "rejected_approach": "整页数字列格（_column_grid）切区：被脚注编�?页码切碎�? 个真实列切成 12 簇，SH:600590/603082/603273/688067 �?p2 �?OK:AGREE �?OK:DISAGREE（列名削�?年第一季度），已回退"
+      },
+      "open_question": "该反例现在返�?OK + 本报告期，不�?AMBIGUOUS（邻列片段中心落在金额跨度之外）。若要求「同表头行内有被列边界拒掉的片段即整列待核」，请指定�?
+    },
+    {
+      "id": "R2",
+      "requirement": "把「跨文档名称兼容」与「同页实际金额列身份」分开；同侧登记不得增加实际列尚未证明的区�?年份/累计语义；补充信息须绑定该金额所在列；经真实 gap �?C41 检验拒绝；说明 Q2 统计对象并逐侧重算",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_no_extra_semantics（新增）",
+          "what": "同侧单向包含：登记的每个「已写」分量，实际列也必须写出；反向（实际更详细）放行"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "gap",
+          "what": "cols_equivalent 通过后追�?PARENT_COLUMN_SEMANTICS_UNPROVEN"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "check_c41",
+          "what": "同位置追�?<SIDE>_COLUMN_SEMANTICS_UNPROVEN"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "_c41_semantics_probe（新增）",
+          "what": "合成引文探针：让开「引文里没有该列名」的前置检查，使唯一可能拦住它的就是「实际列没有这段语义�?
+        }
+      ],
+      "evidence": {
+        "before": "登记 本报告期�?-6月）、实�?本报告期 �?生产取列 OK、gap() None、check_c41 []",
+        "after": "gap() = PARENT_COLUMN_SEMANTICS_UNPROVEN；check_c41 = P1_COLUMN_SEMANTICS_UNPROVEN:本报告期�?-6月）⊄本报告�?,
+        "reverse_case": "登记 本报告期、实�?本报告期�?-6月）�?不报此项（same_side_more_detail_ok = True�?,
+        "q2_statistic_correction": {
+          "wrong_object": "上一轮把 p1_column �?p2_column（两个不同文档）�?_canon_parts 比较，得 43 行；这是跨文档比较，不构成同侧列身份",
+          "codex_object": "裁决�?p1/p2 比较�?63 行不一�?/ 32 行等价，对象同样是跨文档",
+          "correct_object": "同侧「登�?vs 实际」：64 条里 _no_extra_semantics 不成立的�?0 条（登记列名就是生产取列的输出）",
+          "conflation_admitted": "上一轮把 _compatible（片段合并，2026年半年度 �?本报告期 = True）当�?cols_equivalent（身份，同一�?= False）的结果；裁决指出后者为 False，正�?
+        }
+      }
+    },
+    {
+      "id": "R3",
+      "requirement": "旁证在横向合并前检查冲突；保留可追溯片段；内部冲突必须报歧义；补横向冲突、纵向冲突及互补正例",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "_merge_header_cells（由 witness 内联抽出�?,
+          "what": "合并前过 _compatible + 列边界；返回原始片段 [(x0,x1,[frag...])]"
+        },
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "_hmerge_conflict（新增）",
+          "what": "按原始片段再查一遍内部冲突，兜住将来合并判据被放�?
+        }
+      ],
+      "evidence": {
+        "before": "2025年半年度 x[100,113] + 2026年半年度 x[114,130] �?旁证 OK，column=2025年半年度2026年半年度",
+        "after": "merged=[(100,113,['2025年半年度']), (114,130,['2026年半年度'])]，两两检�?�?AMBIGUOUS",
+        "selftest": [
+          "D5 旁证横向冲突不得并成一�?PASS",
+          "D5 旁证互补片段仍合�?PASS",
+          "D5 旁证跨列片段不得合并 PASS",
+          "D5 旁证纵向两两检查能发现冲突 PASS"
+        ],
+        "real_data": "64/64 WITNESS_OK，两侧全 OK:AGREE"
+      },
+      "disclosed_weakness": "旁证现在直接调用 pv._amount_bounds，与生产共用同一个函数——这会进一步削弱「独立」。裁决已认定旁证与生产共享表头行/指标带假设，本项不辩解�?
+    },
+    {
+      "id": "R4",
+      "requirement": "修正统计与解释：边界诊断侧数、零新增 BLOCKED 的推论、比较基�?SHA、Q2 统计对象、C37 不是四项各自跑完整链",
+      "status": "DONE",
+      "changes": [
+        {
+          "file": "report_to_codex_round22.md",
+          "anchor": "§一.4",
+          "what": "边界诊断侧数改为 21 侧（p1=9 / p2=12），并列�?6 �?p2 为「候选页失败、另一页成功�?
+        },
+        {
+          "file": "report_to_codex_round22.md",
+          "anchor": "§一.4(b)",
+          "what": "撤回「零新增 BLOCKED 可推出边界规则没有过度收紧」；引用 SH:600590 �?9 �?NO_HEADER_ROW �?TABLE_BOUNDARY_UNPROVEN 属失败原因细�?
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C37 描述",
+          "what": "改为「以上新增项共同覆盖生产链，不是每一项都各自单独跑完整链」，并点名四项承担完整链"
+        },
+        {
+          "file": "report_to_codex_round22.md",
+          "anchor": "头部�?§�?,
+          "what": "写明比较基线 SHA�?ac102d / b4738b2）；swap_column �?32 行解释改为「单向缺省」而不是「与区间判据无关�?
+        }
+      ],
+      "evidence": {
+        "boundary_sides_in_23_blocked": {"p1_NOT_FOUND": 6, "p1_OK": 3, "p2_NOT_FOUND": 6, "p2_OK": 6, "total": 21},
+        "boundary_sides_all_rows": 72,
+        "note": "全表还有 26 �?p1 + 25 �?p2 带边界诊断但换页成功，故真实触发面是 72 个侧实例"
+      }
+    }
+  ],
+  "counts_after": {
+    "targets": 87,
+    "evidence_ok": 64,
+    "blocked": 23,
+    "registered": 64,
+    "registered_cols": 27,
+    "witness_ok": "64/64（两�?OK:AGREE，不一�?0�?,
+    "p1": {"OK": 73, "NOT_FOUND": 14},
+    "p2": {"OK": 70, "NOT_FOUND": 17},
+    "meta_diff_open": 8611,
+    "open_total_core": 9050,
+    "open_total_all": 10555,
+    "PENDING_PARENT_COMPATIBILITY": 1214,
+    "RESOLVED_SCOPE_COVERED": 8762,
+    "l2_verdicts": {
+      "HOLD_PENDING_ERRATA": 43,
+      "R2_MAY_CHANGE": 231,
+      "R1_NO_LINK": 378,
+      "NOT_AFFECTED": 321,
+      "STILL_PASSES_WITHOUT": 81
+    }
+  },
+  "zero_change_proof": {
+    "step4_parent_scan.csv": "87 行、键集相同、逐格差异 0",
+    "parent_verifications.csv": "64 �?× 27 列、键集相同、逐格差异 0",
+    "note": "本轮只改判据；新判据�?87 条真实数据上零变化，生效证据只在构造反例与自测里�?
+  },
+  "self_check": {
+    "version": "V19",
+    "checks_pass": 43,
+    "checks_total": 43,
+    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+    "nature": "SELF_CHECK_NOT_ACCEPTANCE",
+    "selftest_column_rules": "50 �?FAIL 0"
+  },
+  "regressions_found_and_fixed": [
+    "整页数字列格切区把真实列切碎�? �?p2 �?OK:AGREE �?OK:DISAGREE），已回退为「只取金额那一行�?,
+    "_band() �?def 行被误并 docstring（语法合法但可读性差），已复�?,
+    "_c41_semantics_probe �?stub 签名首版写错（page_of(sec,doc,pg) / col_of_for(sec)->callable），TypeError，已�?
+  ],
+  "still_blocked": {
+    "batch_C_D_E": "未开始（等第 22 轮裁决）",
+    "step5_recompute_strata": "未开�?,
+    "S04_round2": "不放�?,
+    "S05": "不放�?,
+    "freeze_43_231_378": false,
+    "F32_language_dimension": "未修",
+    "bare_RE_POLICY": "未修"
+  },
+  "open_risks": [
+    "列边界只取金额那一行的相邻数字：窄表（该行只有一个数字）退化为 ±inf，等于没有约�?,
+    "「邻列片段与本列同处一个表头行」目前只做到「不并入」，没有升级为「整列待核」；若裁决要求后者，需再加一�?,
+    "check_c41 侧的同侧语义检查用合成引文探针证明，不是逐行注入（逐行注入会先�?QUOTE_WITHOUT_COLUMN 拦住，证明不了新判据�?,
+    "旁证与生产共�?_amount_bounds，独立性进一步下�?,
+    "表格边界收紧的覆盖率上限仍未量化：全�?72 个侧实例带边界诊断，其中 51 个换页成�?
+  ]
+}
+
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command 'Get-Content -Encoding utf8 README.md -TotalCount 90; Get-Content -Encoding utf8 docs/Issue执行总计划.md -TotalCount 90; Get-Content -Encoding utf8 PROJECT_STATE.json -TotalCount 100; Get-Content -Encoding utf8 data/active_issue.json; Get-Content -Encoding utf8 data/issue_execution_plan.csv -TotalCount 10' in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 173ms:
+# ��������ҵ��ҵ�յ��о�
+
+> �������Ӳ��䣨2026-11-07����[��ͬ��ծ�����ֶ������ڽ����̵Ľ׶ηֹ�](docs/��������ָ��ֹ�_20261107.md)��S04 ������Ӳ�ż���S06 �����������и����۲죻ɸ��˶�������ܡ�
+
+
+**2026-10-26����˳��ȫ�������ռ��������� �� ���ּ��в�ȱ �� ָ���ɸ�������ս� �� ������ҵ������� �� ��ҵ/��˾�յ� �� ��ֵ���**
+
+��һ�ֲ���ҹ�˾������Ҳ��ÿȱһ�Ҿʹ��㲹����PDF/�����Drive��GitHub������������֤�ݺͽ��ӡ�
+
+## �ȴ�����
+
+1. [������·�� #1](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1)����ǰ�׶�����һ����
+2. [Issueִ���ܼƻ�](docs/Issueִ���ܼƻ�.md)��39��������ķ�Χ�����������ա�
+3. [#11 P00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)����ǰ����ִ�п���������������Χ��ʱ��ھ���
+
+## ��ô���
+
+|�׶�|�¿���|����|�߽�|
+|---|---:|---|---|
+|׼��|8|P00��P07����Χ���������ݡ����ʲ������ӡ������ֶΡ��ɼ�����������10�Ҳɼ�У׼|P07�ɼ�У׼ͨ�����������ȫ������|
+|�ɼ�����|11|M00_01��M00_11��100�ҹ�˾��10��+54�ң����⸲��1054|ֻ�ռ��ļ�/���ݣ������ҵ�����|
+|��β��ȱ|5|A00��A04�����ǻ��ܡ����ԡ�һ���˹���ȱ���������������|A04ͨ����ŷ���ָ����|
+|ָ��ɸѡ|9|S00��S08����׼��������Ԥ�Ǽǡ����㡢��ɸ���ս��������������۲졢��顢��������|S08����ɸ���������������˾���|
+|�ص��о�|6|R00��R05��ҵ�񡢲��������ҵ����˾�յ㡢����ֵ��������ƫ|ÿ5��ҵ��/����ÿ3�ҹյ�/��ֵ����ʵ����issue|
+
+��#2��#9��ԭ�й�˾���ϰ�������ʷ�ɹ�������ʹ�ã���ǰ���ٰ���C00������������ʵ���о���鵵������PROJECT_STATE.jsonΪ׼������issue����ʾ������ɡ�
+
+## ���ʱ������
+
+�����ɼ����Ǽǡ�ָ�����ͼ���������AI����Ȩ�ƽ����Զ����������Ժ�[#32 A02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/32)�Ÿ���һ�ݰ���վ/�����������ں����η�����嵥������δ�������ȫ�����ӹ���ת������ֲ���
+
+## �������
+
+- [����ִ���ֲ�](docs/����ִ���ֲ�.md)��[AI����ָ��](docs/��AI������ָ��.md)��
+- [�����ռ���Χ](docs/��һ�ֻ������������ռ�.md)��[�׶�����](docs/�׶�������.md)��[ִ�й���](docs/ִ�й���.md)��
+- [Drive�鵵����](docs/Google%20Drive���Ϲ鵵����.md)��[�ֶ�������ָ��](docs/�ֶ�������ָ��.md)��[����λ�õ�ͼ](data/resource_map.csv)��
+- [Drive��ĿĿ¼](https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ)��[ԭ������](data/document_registry.csv)��[ʵ��Ŀ¼](data/drive_folders.csv)��
+- [��ѡ�ܱ�](data/company_master.csv)��[�ɼ�����](data/intake_batch_index.csv)��[ȫ��issue����](data/issue_execution_plan.csv)��[��ǰռ������һ��](data/active_issue.json)��
+
+1054���Ǹ����ѡ��������ȷ�ϻ�������ҵ��Ҳ��֤��ȫ�г����ǡ�ȱ���ϱ���δ֪���ɲ�����ʵ�����Ƽ�����Ч��
+# Issueִ���ܼƻ��������ϣ�������ɸѡ
+
+�ƻ��汾`20261026_collection_first_v2`��������2026-10-26����ǰ�о���ֹ������PROJECT_STATE.json��Ŀǰ2026-10-25����P00���𶳽ᣬ�ɼ��������ǡ�
+
+���Ǳ���Ψһִ��·�ߡ�������39��issue����#2��#9�����ɹ������ơ���������ʾ�ɼ����о���ִ�С�
+
+## �����￪ʼ
+
+�ȿ�[������·�� #1](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1)����ǰ����ִ�������� [#11 P00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)��һ��ִֻ��һ�����������յĿ�����������ҵ���С�
+
+## �׶������
+
+|�׶�|�¿���|����|�߽�|
+|---|---:|---|---|
+|׼��|8|P00��P07����Χ���������ݡ����ʲ������ӡ������ֶΡ��ɼ�����������10�Ҳɼ�У׼|P07�ɼ�У׼ͨ�����������ȫ������|
+|�ɼ�����|11|M00_01��M00_11��100�ҹ�˾��10��+54�ң����⸲��1054|ֻ�ռ��ļ�/���ݣ������ҵ�����|
+|��β��ȱ|5|A00��A04�����ǻ��ܡ����ԡ�һ���˹���ȱ���������������|A04ͨ����ŷ���ָ����|
+|ָ��ɸѡ|9|S00��S08����׼��������Ԥ�Ǽǡ����㡢��ɸ���ս��������������۲졢��顢��������|S08����ɸ���������������˾���|
+|�ص��о�|6|R00��R05��ҵ�񡢲��������ҵ����˾�յ㡢����ֵ��������ƫ|ÿ5��ҵ��/����ÿ3�ҹյ�/��ֵ����ʵ����issue|
+
+1054��6=6324ֻ�Ǻ��ı�����Ͻ磬����ʵ��/Ӧ���ļ���������ǰ�������á�δ��¶��ʧ�ֱܷ�Ǽǡ�10�Ҳɼ�У׼��������ʽ�����ݵȸ��ã�֤ȯ������Ϊ1054�������ټ�10�ҡ�
+
+## ����ƫ����
+
+- **��ڹ̶�**��README �� docs/Issueִ���ܼƻ�.md �� data/issue_execution_plan.csv �� ��ǰissue���ɡ���������C00���Ѻ��ơ�
+- **һ��ֻռһ��ִ�п�**����ȡǰ��data/active_issue.json����������ִ����ռ��ʱ����ռ�������������ļ��汾����ͻ���ض���
+- **��Χд��**��ÿ���̶���Χ�����������롢�����������ֹͣ�������ɼ��̶�������intake_batches/<��ID>/assignment.csv��100�Ҽ������β���100�����С�
+- **��ɲ����ڷ���**��runs/issues/<key>/����ʵ��ר�ý����manifest.json��handoff.md��review.json����issue����������գ��ƻ�·�������Ѵ��ڳɹ���
+- **���ղ�Ҫ�������û�**������/��ʽ�ɸ����Լ���ʵ��SELF_CHECK����ð�������ƣ�ҵ�����ղ���ά��ԭ��������Ҫ����������Ȩ���������ƽ�����ʵȱ��Ϣ��Ȩ�ޱ߽��ѯ�ʡ�
+- **�ֲ����ֻ���**�����Զ���������������/����Դ��A02�ż��и��û���ȫ��Դ���ϻ�P03��������1054������ֲ���δ���ԡ�δ��¶�������ò��ɲ�����
+- **����������**��S01�ȶ��ṫʽ����ֵ������/ȱʧ���򣻲���Ϊ��N�ҹ�˾����ֵ��������汾���㣬���ֹ��ӻ�ϲ���Ĺ�˾��
+- **δ֪����δ֪**��ȱʧ����0��ȡ��ʧ�ܲ�֤����ҵ�񡣹�˾�����벻ð����������룬������벻ȫ������ˡ�
+- **�ɳɹ�ֻ����**��C00/B00/D00��53������ʵ��������45�Һ�ѡ���Զ��ƹ�S08����ǰ����������׷���ҹ�˾��ͬ��Լ��
+- **���ܿ�����**��ÿ��д�����/ʧ��/δ����ʵ���ļ������ơ��ϵ㡢��һ�����飻���½����ȶ������ļ�����ƾ������䡣
+
+## ÿ�ſ���������
+
+ר�ý�����issue����ͬʹ��[����ģ��](../templates/issue_handoff.md)��[����ģ��](../templates/issue_review.json)��ִ���ߡ������ߡ�������ʵ���ļ�����Χ���ǡ�ʧ��/δ���ԡ����������Ʊ�����ȷ��ģ�岻�ܵ������ռ�¼�������Լ�ɷ�����Ӧ��������������ҵ���������ԭ����������飻�ⲻ�����û�����׼���̡�
+
+���Ͽ�������ҵ����Էֿ������ӡ����ء�Drive�鵵���ɶ�/����ȷ�ϡ�ҵ��֤�ݺ�ʵ�ֱ��¼����һ�ֲ���ݾ��������ڲ��ý�������ԭ�䡢����ҳ�������ʱ��߽硣
+
+## 39���¿�����
+
+|˳��|�׶�|����|����|�ƻ�״̬|
+|---|---|---|---|---|
+|1|׼��|[#11 P00���������Ϸ�Χ����ѡ�������о���ֹ��](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)|��|READY|
+|2|׼��|[#12 P01��ͳһ�ļ����ݡ���Դ�Ǽ���ȥ�ع���](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/12)|[#11 P00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)|WAITING_DEPENDENCIES|
+|3|׼��|[#13 P02���̵�����Drive����������о��⣬�����ظ��ռ�](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/13)|[#12 P01](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/12)|WAITING_DEPENDENCIES|
+|4|׼��|[#14 P03���ָ�����֤�ɼ����ӣ�������Դ�����۶�](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/14)|[#11 P00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)|WAITING_DEPENDENCIES|
+|5|׼��|[#15 P04����������ֶΡ���λ��������ʱ��ھ�](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/15)|[#11 P00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)|WAITING_DEPENDENCIES|
+|6|׼��|[#16 P05��ʵ�ֿɶϵ����ܵĲɼ���������У��](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/16)|[#12 P01](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/12)��[#14 P03](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/14)��[#15 P04](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/15)|WAITING_DEPENDENCIES|
+|7|׼��|[#17 P06��ȷ��������Ŀ¼���鵵�뽻�ӹ���](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/17)|[#11 P00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)��[#13 P02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/13)|WAITING_DEPENDENCIES|
+|8|׼��|[#18 P07��10�Ҳɼ�У׼��ֻ��ӿں����ϣ����о�ҵ��](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|[#13 P02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/13)��[#14 P03](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/14)��[#15 P04](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/15)��[#16 P05](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/16)��[#17 P06](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/17)|WAITING_DEPENDENCIES|
+|9|�ɼ�����|[#19 M00_01�����������Զ��ɼ���01�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/19)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|10|�ɼ�����|[#20 M00_02�����������Զ��ɼ���02�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/20)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|11|�ɼ�����|[#21 M00_03�����������Զ��ɼ���03�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/21)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|12|�ɼ�����|[#22 M00_04�����������Զ��ɼ���04�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/22)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|13|�ɼ�����|[#23 M00_05�����������Զ��ɼ���05�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/23)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|14|�ɼ�����|[#24 M00_06�����������Զ��ɼ���06�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/24)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|15|�ɼ�����|[#25 M00_07�����������Զ��ɼ���07�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/25)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|16|�ɼ�����|[#26 M00_08�����������Զ��ɼ���08�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/26)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|17|�ɼ�����|[#27 M00_09�����������Զ��ɼ���09�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/27)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|18|�ɼ�����|[#28 M00_10�����������Զ��ɼ���10�����̶�100�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/28)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|19|�ɼ�����|[#29 M00_11�����������Զ��ɼ���11�����̶�54�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/29)|[#18 P07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18)|WAITING_DEPENDENCIES|
+|20|��β��ȱ|[#30 A00������11�������ʣ��˶�ȫ�غ�ȫ�����ϲ�](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/30)|[#19 M00_01](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/19)��[#20 M00_02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/20)��[#21 M00_03](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/21)��[#22 M00_04](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/22)��[#23 M00_05](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/23)��[#24 M00_06](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/24)��[#25 M00_07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/25)��[#26 M00_08](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/26)��[#27 M00_09](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/27)��[#28 M00_10](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/28)��[#29 M00_11](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/29)|WAITING_DEPENDENCIES|
+|21|��β��ȱ|[#31 A01����������ʧ�����뱸�ùٷ���Դ](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/31)|[#30 A00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/30)|WAITING_DEPENDENCIES|
+|22|��β��ȱ|[#32 A02��ֻ��һ�Σ�����������վ�ͱ����ںϲ��˹���ȱ](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/32)|[#31 A01](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/31)|WAITING_DEPENDENCIES|
+|23|��β��ȱ|[#33 A03���˹��������ȥ����ȱ�ں���](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/33)|[#32 A02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/32)|WAITING_DEPENDENCIES|
+|24|��β��ȱ|[#34 A04�����������գ�����ָ����㣬��ȷ����ȱ��](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/34)|[#33 A03](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/33)|WAITING_DEPENDENCIES|
+|25|ָ��ɸѡ|[#35 S00����׼��ȫ�ز��񣬱���ԭֵ����λ�Ͱ汾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/35)|[#34 A04](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/34)|WAITING_DEPENDENCIES|
+|26|ָ��ɸѡ|[#36 S01��Ԥ�ȵǼ�ɸѡ��ʽ����ֵ��ȱʧ��������](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/36)|[#35 S00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/35)|ACCEPTED_WITH_LIMITS|
+|27|ָ��ɸѡ|[#37 S02������ȫ��ָ����ھ����](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37)|[#36 S01](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/36)|SELF_CHECK_PASS|
+|28|ָ��ɸѡ|[#38 S03����һ����ɸ����һ�����źţ������۲����](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/38)|[#37 S02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37)|WAITING_DEPENDENCIES|
+|29|ָ��ɸѡ|[#39 S04���ڶ����ս����˶�ָ�깲ͬ����](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/39)|[#38 S03](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/38)|WAITING_DEPENDENCIES|
+|30|ָ��ɸѡ|[#40 S05��������������飺�ֽ�����Ӧ�մ����ͻ���](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/40)|[#39 S04](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/39)|WAITING_DEPENDENCIES|
+|31|ָ��ɸѡ|[#41 S06���������ڴ�����ȱ���ݹ۲�����](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/41)|[#36 S01](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/36)��[#37 S02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37)|WAITING_DEPENDENCIES|
+|32|ָ��ɸѡ|[#42 S07�������ֵ�߽硢©ɸ��ȱ����ƫ��](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/42)|[#38 S03](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/38)��[#39 S04](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/39)��[#40 S05](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/40)��[#41 S06](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/41)|WAITING_DEPENDENCIES|
+|33|ָ��ɸѡ|[#43 S08������ɸѡ������������ҵ���������](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/43)|[#42 S07](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/42)|WAITING_DEPENDENCIES|
+|34|�ص��о�|[#44 R00������ҵ����飺ֻ��ɸ��˾��5��С��](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/44)|[#43 S08](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/43)|WAITING_DEPENDENCIES|
+|35|�ص��о�|[#45 R01��ɸ��˾������������뷶Χ����](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/45)|[#44 R00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/44)|WAITING_DEPENDENCIES|
+|36|�ص��о�|[#46 R02����ҵ�źź�����ͬ�ھ��Ƚ�](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/46)|[#43 S08](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/43)|WAITING_DEPENDENCIES|
+|37|�ص��о�|[#47 R03����˾����ҵ�յ��о���ÿ�����3�ҹ�˾](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/47)|[#45 R01](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/45)��[#46 R02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/46)|WAITING_DEPENDENCIES|
+|38|�ص��о�|[#48 R04���������ֵ�龰�����������](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/48)|[#47 R03](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/47)|WAITING_DEPENDENCIES|
+|39|�ص��о�|[#49 R05���������¡���������ƻ���ƫ���](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/49)|[#48 R04](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/48)|WAITING_DEPENDENCIES|
+
+## �ɿ��;����ϰ�
+
+��#2/#3Ϊ��ʷC00/B00ҵ���о�����#4�ʲ��̵���P02�нӣ�ҵ������Ժ���R00�˶ԣ���#5/#6��S08��R00�����幫˾�ɿ�����#7���ڹ�����R01�нӣ���������ھ�ǰ��P04/S00����#8��R02/R03����#9��R04��
+
+��data/package_index.csv����ִ���ż�����ɾ��ԭ״̬/֤�ݣ��������ǿ�����ڡ��ɼ����δ�data/intake_batch_index.csv���룬39����˳���data/issue_execution_plan.csv���롣ʵ�ʷ�����[��һ�������ռ�](��һ�ֻ������������ռ�.md)��
+{
+  "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
+  "organized_on": "2026-10-25",
+  "knowledge_as_of": "2026-10-25",
+  "status": "S03_SELF_CHECK_PASS_WITH_LIMITS_S04_READY",
+  "stats": {
+    "candidate_count": 1054,
+    "prior_adopted": 53,
+    "source_pending": 7,
+    "early_partial_samples": 10,
+    "new_coarse_screening": 984,
+    "pilot_count": 10,
+    "remaining_coarse_screening": 974,
+    "conditional_detail_count": 45,
+    "potential_observation_count": 8,
+    "local_financial_missing": 62,
+    "primary_packages": 58,
+    "conditional_detail_packages": 9,
+    "b00_source_reports_read": 7,
+    "b00_source_companies_with_candidate_decisions": 7,
+    "b00_independently_accepted": 0,
+    "b00_evidence_quote_exact_matches": 14,
+    "b00_proposed_advance": 2,
+    "b00_proposed_hold": 3,
+    "b00_proposed_defer": 2,
+    "b00_physical_page_verified": 14,
+    "b00_binary_pdf_hashed": 7,
+    "c00_pilot_companies_initial_screened": 10,
+    "c00_pilot_proposed_advance": 6,
+    "c00_pilot_proposed_hold": 3,
+    "c00_pilot_proposed_defer": 1,
+    "c00_pilot_independently_accepted": 0,
+    "c00_pilot_full_pdf_binary_reviewed": 15,
+    "c00_pilot_source_intake_pending_pdf": 0,
+    "c00_pilot_full_pdf_text_read_web": 8,
+    "c00_pilot_page_evidence_verified_web": 0,
+    "c00_pilot_h1_or_ir_text_excerpts": 4,
+    "c00_pilot_original_reports_not_archived_drive": 0,
+    "document_registry_rows": 100,
+    "manual_requests_rows": 28,
+    "c00_pilot_2026h1_reports_not_archived_drive": 0,
+    "c00_archive_pdf_uploaded_this_run": 14,
+    "c00_archive_company_folders_created_this_run": 9,
+    "c00_archive_period_folders_created_this_run": 16,
+    "b00_independent_review_companies_with_limits": 6,
+    "b00_review_pending_companies": 1,
+    "b00_physical_page_errors_corrected": 1,
+    "c00_pilot_drive_pdf_text_extracted": 15,
+    "c00_pilot_drive_pdf_identity_matched": 15,
+    "c00_pilot_drive_pdf_source_provenance_pending": 2,
+    "c00_pilot_drive_pdf_physical_page_visual_verified": 22,
+    "b00_h1_reports_text_reviewed": 3,
+    "b00_h1_originals_archived": 3,
+    "d00_business_screened_companies": 2,
+    "d00_source_archive_pending": 5,
+    "b00_h1_visual_page_verification_pending": 3,
+    "d00_h1_source_archive_pending": 0,
+    "d00_official_web_articles_not_archived": 4,
+    "d00_signed_robot_adjacent_contracts_found": 1,
+    "d00_tender_candidate_notice_read": 1,
+    "d00_contract_announcement_read": 1,
+    "d00_contract_announcement_original_pdf_archived": 1,
+    "d00_contract_actual_order_issue_verified": 0,
+    "d00_contract_project_revenue_verified": 0,
+    "d00_contract_performance_followup_found": 0,
+    "d00_contract_manual_upload_request_pending": 0,
+    "d00_award_announcement_transcript_crosscheck": 1,
+    "d00_contract_announcement_drive_binary_hashed": 1,
+    "d00_contract_announcement_physical_page_verified": 1,
+    "drive_pdf_file_count": 87,
+    "d00_contract_followup_public_search_checked": 1,
+    "d00_public_facility_demo_reported": 1,
+    "d00_reported_operator": 1,
+    "d00_planned_robot_count": 659,
+    "d00_actual_robot_count_verified": 0,
+    "d00_contract_order_issue_verified": 0,
+    "d00_unverified_market_claims_logged": 1,
+    "c00_pilot_self_check_completed": 10,
+    "c00_pilot_pdf_sha256_calculated": 15,
+    "c00_pilot_official_prospectus_binary_archive_pending": 1,
+    "c00_pilot_key_physical_pages_visual_verified": 22,
+    "d00_q3_report_watch_date": "2026-10-28",
+    "d00_contract_specific_followup_notice_found_as_of_20261025": 0,
+    "d00_unrelated_august_it_contract_amount_cny": 291665208
+  },
+  "first_actions": [
+    "����ȡP00 #11���������Ϸ�Χ����ѡ������ʱ��ھ���",
+    "��data/issue_execution_plan.csv��������һ��һ��issue������ʵ�ʽ��Ӻ����ա�",
+    "P07�ɼ�У׼ͨ����11�����������Ժ�A02�����˹���ȱ��",
+    "A04���ȶ�������ָ��ɸѡ��S08��R00��ɸ��˾С����"
+  ],
+  "legacy_R1_status": "REVIEW_PENDING",
+  "scheduling_change": "����˾���պ�ֲ��ƽ��������ƾ�R1��ȫ��ͨ��",
+  "storage_policy": {
+    "primary_originals_archive": "GOOGLE_DRIVE",
+    "github": "TEXT_RESULTS_AND_DOCUMENT_INDEX",
+    "local": "OPTIONAL_COLLECTION_AND_READ_CACHE",
+    "document_registry": "data/document_registry.csv",
+    "drive_root_folder_id": "1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+    "drive_root_folder_url": "https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ",
+{
+ "plan_version": "20261026_collection_first_v2",
+ "active_issue_number": 53,
+ "active_issue_key": "S00_ERRATA_REVIEW",
+ "executor": "WorkBuddy AI",
+ "started_at": "2026-11-11 22:10:00 +08:00",
+ "status": "S00_ERRATA_V5_SELF_CHECK_V19_PASS_AWAITING_RECHECK_22",
+ "claim_note": "S00 ���� V5 �Լ� V19 ͨ����������������ֻ�� runs/issues/S00/errata_20261111_v5/review.json���˴����������� 4 ������ A ֻȡ��֤�ݡ�δ�ݴ˱պ��κ�һ�������� B ���·��������ֻ�Ǽ�����֤�������Ҷ�����������֤һ�µ��У����ౣ�����ˣ����� C�CE ��� 5 ������ֲ�δ����ê���ڻ���������׼��δ���᣻S04 �ڶ����� S05 �����С�",
+ "last_completed": {
+  "issue_key": "S04",
+  "issue_number": 39,
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "review_file": "runs/issues/S04/review.json",
+  "review_nature": "SELF_CHECK",
+  "completed_at": "2026-11-10T21:10:00+08:00",
+  "coverage": 1054,
+  "external_review": "RETURN_FOR_REWORK_ADDRESSED_PENDING_RECHECK"
+ },
+ "input_baseline_after_p06": {
+  "PROJECT_STATE.json": "updated_by_p06",
+  "data/issue_execution_plan.csv": "updated_by_p06(P06=SELF_CHECK_PASS,P07=READY)",
+  "runs/issues/P06/storage_plan.json": "4abc6c929d05363c7f50a64e744bf265944ecfb88da163a46816e1228b21e7d1",
+  "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
+  "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
+ },
+ "next_recommended_issue_number": 39,
+ "next_recommended_issue_key": "S04",
+ "next_recommended_reason": "S00 ���� V5 �Լ� V10 �ѽ������ȵ�ʮһ�ֶ������ˣ�����ͨ���󰴵�ʮ�ֲ���ö��ھ����� 4 ��������֤�������ĵ��汾��������Ŀ��ʵ��ѡ���飫�����ڼ䡹��һ������ʽӳ���Ա�������ð��ĵ��򷽷����㲥���ѽ���� 8,655 ��ͬ�����󣩡��� 5 ������ֲ㣬�ٻص� #39 �� S04 �ڶ����ⲿ���ˡ�S05 ���� WAITING_DEPENDENCIES",
+ "open_followups_from_p06": [
+  "Drive �� API ƾ�ݣ�Ŀ¼ֻ�� RECORDED_NOT_REVERIFIED����� UNKNOWN��VERIFIED ·��δ��ͨ��ʵ�ջ���",
+  "���ȱ����ֽ��� UNMEASURED�����������գ�P07 ������ 1 �����Ȳۡ�",
+  "����Ϊ PRE_CALIBRATION_ESTIMATE_NOT_FACT���� P07 �� 10 ��У׼������λ����",
+  "listing_date 1054/1054 UNKNOWN��11594 ֻ�ǳ����Ͻ硣",
+  "�ǼǱ� 6 ���ö����ʷ״ֵ̬��16 �У�ֻ��ӳ��δִ�У��� P01 Ǩ����ء�"
+ ],
+ "note": "P06 δ�Ķ��κ�ԭʼ���루document_registry/company_master/intake ���� diff Ϊ�գ�������δ���ء�δ�ϴ��κ��ļ���",
+ "p07_drive_archive_followup": {
+  "issue_key": "P07",
+  "scope": "DRIVE_ARCHIVE_FOLLOWUP_ONLY",
+  "executor": "Codex",
+  "review_nature": "SELF_CHECK_FILE_ARCHIVE_ONLY",
+  "completed_at": "2026-10-26T12:26:47Z",
+  "files": 65,
+  "uploaded_new": 58,
+  "reused": 7,
+  "binary_sha256_matches": 65,
+  "listed_parent_matches": 65,
+  "bytes": 211077595,
+  "receipts_schema_pass": 65,
+  "registry_rows_before": 100,
+  "registry_rows_after": 158,
+  "registry_rows_added": 58,
+  "not_tried_slots_unchanged": 5,
+  "full_universe_started": false,
+  "business_adoption_added": 0,
+  "ai_read_confirmed_added": 0,
+  "cache_deleted": 0,
+  "receipt_file": "runs/issues/P07/drive_archive/receipts.json",
+  "limitations": [
+   "�����Drive�鵵���������϶�P07�����ֶ�У׼��ɼ����޸���",
+   "������ȫ�زɼ�������������M00���������ѽ�����ǼǱ����ݵ��Դ��ɼ���ʵ�֡�",
+   "��������/���������ݽ�������WorkBuddy������δ��ݾ������棬δ����ҵ��������ա�",
+   "��ԭ����Դ/�汾���Ʊ������ƶ˶�����һ�²����ڹٷ���Դ���������顣"
+  ],
+  "handoff_package": {
+   "scope": "P07_ARCHIVE_HANDOFF_PACKAGE",
+   "archive_status": "VERIFIED",
+   "folder": {
+    "success": true,
+    "id": "1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
+    "url": "https://drive.google.com/drive/folders/1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
+    "title": "P07_�ɼ�У׼��Drive�鵵_20261026",
+    "parent_id": "1uep8rD84ZuK-RIDvwBXhnhhw3px_obr5"
+   },
+   "file": {
+    "id": "1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP",
+    "url": "https://drive.google.com/file/d/1PgcLpJ5VH_YE1qUIrheGbJUzlrSHtiSP/view?usp=drivesdk"
+   },
+   "bytes": 122860,
+   "sha256": "54d2e48330ef6e53cf37ff60b73b5108b727a900af4f32ecc60673adbf0dbbbc",
+   "listed": true,
+   "binary_sha256_matches": true,
+   "readback_at": "2026-10-26T12:28:36.140Z",
+   "contains": "P07У׼�ı���65�ݻ�ִ���鵵���������º���ĵ��ǼǱ������ظ����PDF"
+  }
+ },
+ "current_drive_archive_status": "VERIFIED_65_FILES_BY_CODEX",
+ "a02_blocked_by": null,
+ "p03_neeq_recheck": {
+  "issue": "P03",
+  "scope": "NEEQ_RECHECK_20261027",
+  "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
+  "completed_at": "2026-10-27T07:04:41.079355+00:00",
+  "official_index_route": "AVAILABLE_POSITIVE_CONTROL_VERIFIED",
+  "issuer_mappings": 15,
+  "target_slots": 65,
+  "slots_with_current_official_links": 50,
+  "unresolved_applicability": 15,
+  "pre_current_listing_periods": 11,
+  "quarterly_slots": 4,
+  "sample_pdf_identity_verified": 5,
+  "sample_pdf_download_errors": 10,
+  "shared_ledger_modified": false,
+  "a02_ready": false,
+  "next_action": "A01 automatic recovery using validated old codes and parameter encoding; applicability checks and file transport diagnostics first. Do not dispatch 65 manual requests.",
+  "limits": [
+   "50 is candidate-link coverage, not 50 downloaded PDFs.",
+   "5 PDF samples are issuer identity checks, not 5 newly recovered target slots.",
+   "11 pre-listing periods are review candidates, not final NA decisions.",
+   "Quarter-specific positive controls failed; their zeros cannot prove absence.",
+   "No Drive upload, financial adoption or independent acceptance in this follow-up."
+  ],
+  "review_file": "runs/issues/P03/neeq_recheck_20261027/review.json"
+ },
+ "a03_open_items": [
+  "Drive ��ƾ�ݣ�7158 ���Ѻ��ĵ�ֻ�б���������archive_status δд VERIFIED��",
+  "document_registry δ��д��7162 ���Ѻ��ĵ���ֻ�� collection_index��",
+  "�ֶν������걨��3082 �ݣ������걨 3162 �ݡ����� 1054 ��δ�ܡ�",
+  "�����ֶ� 960 ����Ϊ�踴�ˣ�δӲ����/��",
+  "56 ��������λʧ�ܡ�1 ��ͼƬ���� OCR���Ǽ�Ϊ�ֶ�ȱ�ڡ�"
+ ],
+ "a03_key_findings": {
+  "same_file_two_ids": 71,
+  "registry_rows_not_in_ledger": 97,
+  "ledger_rows_not_in_registry": 7162,
+  "field_extracted_rate": 0.8697,
+  "crosscheck_match": 2813,
+  "crosscheck_mismatch": 119
+ },
+ "claim_basis": {
+  "issue_state": "OPEN",
+  "github_checked_at": "2026-10-27T20:54:25+08:00",
+  "released_issue": {
+   "issue_number": 34,
+   "issue_key": "A04",
+   "released_at": "2026-10-27T20:54:25+08:00",
+   "reason": "A04 ����������� A04R �ɼ���ִ���ڼ䲻˫ռ��",
+   "work_done_under_a04": [
+    "runs/issues/A04/rework/cutoff_hold_resolved.csv",
+    "runs/issues/A04/rework/audit_rework.py"
+   ]
+  },
+  "inputs_sha256": {
+   "data/issue_execution_plan.csv": "d4accf18538033b4b9b4aa7a32d3161b893729d60ee23161364c45deda2e4f9c",
+   "data/issue_execution_plan.json": "ed1994753025837f9546ed988c82026a93ea9584dd23aa611050d0b3bd48089d",
+   "PROJECT_STATE.json": "fd06fd265dc722c91f80b666a3a053cc087f325c7d7bc12baa67d8c81d0a6cc0",
+   "runs/issues/P00/collection_scope.json": "f5e31dc053b9d7a020ffd0db15fb8d7cad44e2c04f6baa76d396c41a519a4e3b",
+   "runs/issues/P00/coverage_acceptance_rules.json": "7b8fadc770b09cae094bdc67abd584f310db17a14cac2347d25bc803e070c196",
+   "runs/issues/A04/review.json": "6ca8ded33ea810ddac701c77ebe978c409f60ae4dba2cada2ba9d3667d07385d",
+   "runs/issues/A03/review.json": "5c142176aaf5d77aa47b18b5420f321fe840494fb1277083144ab9bb3bdcc63b",
+   "runs/collection/collection_index.csv": "31aea6f06e62ae1c8b88a8253e854223adf3eea8faa471324f492324f15fd4fe"
+  },
+  "config": "runs/issues/A01/collection_config_v2.json",
+  "config_sha256": "ba2c81d5502ff593176f70fea24b5d2bc9f15ccc12e6452c50ec85a5d9b5e5e2"
+ },
+ "paused_at": "2026-10-27T23:58:55+08:00",
+ "checkpoint_sha256": {
+  "runs/collection/collection_index.csv": "dbfbdd1106e45deae79de459dd9c54a7a20b73a7b874b1ad588ea304bd28ae31",
+  "runs/issues/A04R/progress.json": "7623e53ab56a88b061f16e586147b0ee126ff7d12297d49fafa7f0fc74bf35cf",
+  "runs/issues/A04R/progress_pass1.json": "ca37f8375c2e3756aca1b29dac0633b30e581f55750e3ef29baf69f1e671df99"
+ },
+ "resumed_at": "2026-10-28T12:27:24+08:00",
+ "resume_note": "�� PAUSE_STATE.md ���ܣ��Ȳ� 116 �� 565 �ۣ������������������ж������깫��/IR Ŀ¼��",
+ "a04r_result": {
+  "issue_number": 50,
+  "decision": "SELF_CHECK_PASS",
+  "review_file": "runs/issues/A04R/review.json",
+  "slot_pairs": 12648,
+  "verified": 11468,
+  "not_tried": 0,
+  "announcement_companies": 1054,
+  "keyword_originals": 264,
+  "revision_rows": 11183,
+  "financial_corrections": 192,
+  "correction_chain_pairs": 127,
+  "correction_chain_gaps": 0,
+  "neeq_listing_dates_from_local_annuals": 15,
+  "correction_chain_verified_ok": 127,
+  "correction_notice_originals": 55,
+  "correction_notice_only_chains": 4,
+  "correction_files_checked": 305,
+  "version_discovery_rule": "REP + (����|����|����|�޶�)���ų�Ԥ��/�ɶ����/˵����/��Ʊ���/��ʾ�Թ���/ժҪ",
+  "correction_discovery_rows": 223,
+  "correction_discovery_dispositions": {
+   "IN_SCOPE": 180,
+   "EXCLUDED_SUMMARY": 28,
+   "EXCLUDED_NON_FINANCIAL": 3,
+   "EXCLUDED_OUT_OF_FROZEN_SCOPE": 12
+  }
+ },
+ "history": {
+  "a04_first_review": {
+   "decision": "RETURN_FOR_REWORK",
+   "review_file": "runs/issues/A04/review.json",
+   "reviewed_at": "2026-10-27 12:33:58 UTC",
+   "release_S00": false,
+   "known_after_cutoff": 0,
+   "unknown_disclosure_dates": 7,
+   "missing_predeadline_quarter_dispositions": 4216,
+   "superseded": true,
+   "note": "�״����� RETURN_FOR_REWORK �����ϣ���ǰ������ current_acceptance Ϊ׼"
+  },
+  "a04r_day_end_pause_20261027": {
+   "issue_key": "A04R",
+   "issue_number": 50,
+   "state_file": "runs/issues/A04R/PAUSE_STATE.md",
+   "commands": [
+    "python tools/a04r_scope_backfill.py",
+    "python tools/a04r_bj_applicability.py --probe",
+    "python tools/a04r_bj_applicability.py --decide",
+    "python tools/a04r_announcement_index.py --resume",
+    "python tools/a04r_announcement_index.py --download-hits",
+    "python tools/a04r_finalize.py",
+    "python runs/issues/A04/rework/audit_rework.py",
+    "python runs/issues/A04/rework/finalize_rework.py"
+   ],
+   "pending": {
+    "not_tried_slots": 565,
+    "companies_with_pending": 116,
+    "announcement_index_companies": 1,
+    "announcement_index_target": 1054
+   },
+   "then": "A04R ͨ����� A04 #34 ���飻δͨ��ǰ S00 ���� WAITING_DEPENDENCIES",
+   "resolved": true,
+   "note": "2026-10-27 ͣ���ϵ����� 2026-10-28 ���꣬������Ҫ��������"
+  },
+  "s02_pre_acceptance_20261106": {
+   "status": "REPAIR_V2_APPLIED_AWAITING_EXTERNAL_RECHECK",
+   "last_completed": {
+    "issue_number": 37,
+    "issue_key": "S02",
+    "completed_at": "2026-10-29T20:45:55+08:00",
+    "review_file": "runs/issues/S02/remediation_20261029/review_workbuddy.md",
+    "decision": "REPAIR_APPLIED_PENDING_EXTERNAL_RECHECK",
+    "review_nature": "REPAIR_ACCEPTANCE_REVIEW",
+    "acceptance": "433/433 ��У�� + 12,648 ��������� 0 ���� + L0 664/387/3 һ��",
+    "summary": "�޸���ӹ�Ϊ S02 v2��21 �Ҵ��˱�����S03 δ����"
+   },
+   "claim_note": "�ѽ����޸�����433/433 �ļ�У��ͨ�����ð��� s00 �������� 12,648 ������� s02 ��� 0 ���죬״̬�ֲ��� L0 �ֲ�����һ�£�S03 ���������ⲿ���ˡ�",
+   "next_recommended_reason": "�� S02 �޸����ⲿ���ˣ�����ͨ���� S03 ���� v2 ���� + L0 addendum ����"
+  },
+  "s03_claim_and_completion_20261106": {
+   "started_at": "2026-11-06 10:45:54 UTC",
+   "completed_at": "2026-11-06T18:50:54+08:00",
+   "executor": "Codex",
+   "note": "Claim was recorded online before execution; see commit ad0634ea"
+  }
+ },
+ "current_acceptance": {
+  "issue_key": "A04",
+  "issue_number": 34,
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "release_S00": true,
+  "review_file": "runs/issues/A04/rework/review.json",
+  "reviewed_at": "2026-10-28T20:38:48+08:00",
+  "review_round": "REWORK_20261028_AFTER_CODEX_REVIEW",
+  "checks": "12/12 PASS��AC12������ 127 �顢����� 305 ���ļ���Υ�� 0��",
+  "prior_review_preserved": "runs/issues/A04/review.json",
+  "gate": "ȫ�� 12 ������� PASS �ŷ��У���һ FAIL/HOLD �����У�"
+ },
+ "open_followups_from_s00": [
+  "62 ��������ֵ��Ӣ�İ� 26��F32 �ɼ���δУ�����ԣ������ı��� 14����ȡä�� 20������ 2��",
+  "453 ���ĵ�������ժҪ����һ�£�1,326 ��� EXTRACTED_XCHECK_MISMATCH����S02 ��ǰ��˻��ų���",
+  "2,157 ���������Ϊ NEEDS_REVIEW���ؼ����оݣ�δ���ȷ�Ϲ�ѡ���",
+  "�ɿ��� 2021/2022 Ϊ��һ��Դ���޹ٷ� PDF ����У�顣",
+  "δ�������걨������ͬ�ڡ���������ʷ�ڣ�������˾����ھ����ܲ�һ�¡�",
+  "2026Q3 �� 190 ������¶������ 864 ��δ����¶�ڣ�NOT_YET_DISCLOSED�������ڽ��治������"
+ ],
+ "completed_at": "2026-11-06T18:50:54+08:00",
+ "methodology_handoffs": [
+  {
+   "decision_id": "METHOD_20261107_LEADING_INDICATORS",
+   "note_path": "docs/��������ָ��ֹ�_20261107.md",
+   "decision_file": "data/methodology_decision_20261107.json",
+   "applies_to": [
+    "S04",
+    "S06",
+    "R00",
+    "R01"
+   ],
+   "summary": "S04���ֶ�����򣻺�ͬ��ծ/�������ֶ�����S06�����۲죻�ڽ�����/����������ɸ����飻ȱ��¶����0����̭",
+   "workbuddy_receipt": "NOT_CONFIRMED"
+  }
+ ],
+ "s04_stage": {
+  "issue_key": "S04",
+  "issue_number": 39,
+  "plan_version": "20261026_collection_first_v2",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "reviewed_at": "2026-11-10T21:10:00+08:00",
+  "rule_layer": "L2",
+  "rules_version": "S01_SCREEN_RULES_V3",
+  "rules_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
+  "rules_supersedes": "S01_SCREEN_RULES_V2",
+  "knowledge_as_of": "2026-10-25",
+  "coverage": 1054,
+  "decisions": {
+   "L2_NOT_SHORTLISTED": 322,
+   "L2_NOT_IN_SCOPE": 273,
+   "L2_SHORTLIST_CANDIDATE": 445,
+   "L2_HOLD_FOR_DATA": 10,
+   "WATCH_AFTER_CUTOFF": 4
+  },
+  "evidence_channels": {
+   "A_RATIO_OK": 328,
+   "A_RATIO_OK;C_LOW_BASE_CONFIRMED": 33,
+   "A_RATIO_OK;B_ABS_CHANNEL": 83,
+   "A_RATIO_OK;B_ABS_CHANNEL;C_LOW_BASE_CONFIRMED": 1
+  },
+  "abs_dependency_critical": [
+   "SH:600184 ���ɷ�",
+   "SH:603296 ���ڼ���",
+   "SH:603338 �㽭����",
+   "SH:603416 �Žݵ���",
+   "SH:688711 ��΢�Ƽ�",
+   "SZ:000856 ����װ��",
+   "SZ:000948 ������Ϣ",
+   "SZ:002224 �� �� ʿ",
+   "SZ:002628 �ɶ�·��",
+   "SZ:002960 �����ǿ�",
+   "SZ:300213 ��Ѷ�ɺ�",
+   "SZ:300632 ���ιɷ�",
+   "SZ:300644 �Ͼ���¡",
+   "SZ:300793 �Ѻ�����",
+   "SZ:300971 ���Ǿ���",
+   "SZ:301459 ��ï�ɷ�"
+  ],
+  "low_base_confirmed_in_pass": [
+   "BJ:920066",
+   "BJ:920198",
+   "BJ:920249",
+   "BJ:920641",
+   "SH:600288",
+   "SH:600590",
+   "SH:603051",
+   "SH:603135",
+   "SH:603608",
+   "SH:605189",
+   "SH:605208",
+   "SH:688090",
+   "SH:688135",
+   "SH:688255",
+   "SH:688328",
+   "SH:688383",
+   "SH:688518",
+   "SH:688577",
+   "SH:688623",
+   "SH:688655",
+   "SZ:002132",
+   "SZ:002185",
+   "SZ:002265",
+   "SZ:002641",
+   "SZ:002845",
+   "SZ:300179",
+   "SZ:300410",
+   "SZ:300472",
+   "SZ:300527",
+   "SZ:300613",
+   "SZ:300687",
+   "SZ:300823",
+   "SZ:301179",
+   "SZ:301210"
+  ],
+  "changed_vs_v1": 2,
+  "authoritative_s00": {
+   "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+   "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+   "superseded": "runs/issues/S00/financial_normalized.csv",
+   "note": "�� S00 ��������ֹ�������θ���"
+  },
+  "outputs": [
+   "runs/issues/S04/tight_pass.csv",
+   "runs/issues/S04/tight_observe.csv",
+   "runs/issues/S04/tight_decision_log.csv",
+   "runs/issues/S04/review_100_qc.csv",
+   "runs/issues/S04/v1_v3_diff.csv"
+  ],
+  "checks": "9/9 PASS",
+  "tests": "16/16 PASS",
+  "rework": {
+   "trigger": "S04 �������� RETURN_FOR_REWORK��P1-01 �ͻ���δȷ�ϡ�P1-02 ָ���ʸ�δ��أ�",
+   "advisor_ruling": "runs/issues/S04/codex_ruling.md",
+   "fixed": [
+    "P1-01 �ͻ���ͬ�ھ����Զ�ȷ�ϣ�SG01/SG04/SG06/SG08/SG09��",
+    "P1-02 L2 ˫ͨ���ʸ񣨱���ͨ���� OK��SG06/SG08 �������п��ã�",
+    "C05/C07 �������Ƴ�����Ϊ��Ҫ�����뼯�ϲ�����",
+    "review.json �� active_issue ״̬ͳһ",
+    "����ָ�Ƹ�ָ��Ȩ�� s00_v10"
+   ],
+   "not_fixed_by_design": [
+    "SG02/SG03/SG05/SG07 �ͻ�����ȷ��ӳ�䣬�� NO_CONFIRM_RULE�����治����"
+   ]
+  },
+  "release_S05": false,
+  "release_note": "�Լ첻��ͬ�������ˣ���ڶ����ⲿ����ͨ����ŷ��� S05",
+  "limits": [
+   "�Լ첻��ͬ�������ˣ�S05 �����ⲿ����ͨ����ŷ���",
+   "δ�ض� PDF��δ����ҵ����ã���ѡ������Ͷ�ʺ�ѡ",
+   "SG02/SG03/SG05/SG07 �ͻ�����ȷ��ӳ�䣬�� NO_CONFIRM_RULE�����治����",
+   "���Զ�ͨ����SG06/SG08���ʸ񵥶��Ǽǣ�δ��д M05 �� UNDEFINED_BASE",
+   "δ�� S02 ���롢S03 �����S01 v2 �������������״̬"
+  ],
+  "report": "runs/issues/S04/REPORT.md",
+  "waiting_reason": "S00 ���� V5 ʶ�� 44 �������ڹ�˾�� L2 ͨ������δ�պϻ���˲��죬���֤�ݱպϣ����� 231 �������⹫˾��������ں�ѡ�����ڣ����֤�������Ƿ�©ɸ",
+  "s00_errata_ref": "runs/issues/S00/errata_20261111_v5/"
+ },
+ "s00_errata": {
+  "stage": "ERRATA",
+  "issue_key": "S00",
+  "directory": "runs/issues/S00/errata_20261111_v5/",
+  "v2_directory_preserved": "runs/issues/S00/errata_20261111/",
+  "v1_directory_preserved": "runs/issues/S00/errata_20261111/superseded_v1/",
+  "supersession": "runs/issues/S00/supersession.json",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+  "reviewed_at": "2026-11-12T23:40:00+08:00",
+  "trigger": "��ʮ���ָ��� RETURN_FOR_REWORK���¼�֤����ʵ�ɶ�λ�������ܾݴ˱պ� 3,803 ����������¶֤�����ǡ���Ŀ�����á���ȱ��֤����������ö���ӳ�䣻���ش����Ʋ��ܿ���ע���������ֳ���ȫ���¼��պϣ�RESOLVED_DOC_EVENT_CONFIRMED ���㣬Ԫ����δ�պϻص� 8,674����C40 �������оݣ������뺬��Ŀ�����뺬��ѡ���+�Ǽ�ѡ�����ע������ 4 �ࣻ���������㱨��ʵ��C17 ��δ�������㡢272 ��ȫ�����걨������һ������ B �������롣",
+  "authoritative_input": {
+   "path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+   "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+  },
+  "superseded_input": {
+   "path": "runs/issues/S00/financial_normalized.csv",
+   "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6",
+   "status": "SUPERSEDED_DO_NOT_CONSUME"
+  },
+  "lineage": "A(228,155) �� v7(229,393) �� v9(229,666) �� B(229,667)",
+  "diff_totals": {
+   "value": 240,
+   "key": 2056,
+   "meta_core": 17728,
+   "meta_extra_cells": 1505,
+   "resolved": 10926,
+   "unresolved_core": 9113,
+   "unresolved_with_extra": 10618,
+   "value_unresolved": 34,
+   "key_unresolved": 405,
+   "meta_unresolved": 8674,
+   "extra_unresolved": 1505,
+   "pending_scope_limited_method": 6373,
+   "pending_scope_limited_own_period": 5270,
+   "pending_weak": 515,
+   "pending_source_provenance": 47,
+   "pending_cause_uncovered": 43,
+   "doc_not_in_list": 26,
+   "field_not_in_record": 116,
+   "record_is_remove": 8,
+   "evidence_contradicts": 15,
+   "resolved_by_ruling": 1,
+   "sign_flip": 89,
+   "resolved_restatement_confirmed": 0,
+   "pending_parent_compatibility": 1277,
+   "pending_confirmed_event_field_open": 8,
+   "pending_confirmed_unsupported": 1,
+   "evidence_mismatch": 4,
+   "resolved_scope_covered": 8699,
+   "comparative_period_rows": 1240,
+   "parent_compatible_yes": 0,
+   "parent_compatible_no": 3768,
+   "dispute_unique_ids": 17728,
+   "restatement_pending": 8309,
+   "pending_weak_assumption": 515,
+   "comparative_pending": 1239,
+   "comparative_ruled": 1,
+   "parent_compatible_na": 13960
+  },
+  "key_change_vs_v2": "��������İ� document_id ƥ�䣨tools/s00_restatement_apply.py ��36/46��ֻ���ĵ�Ӧ�ã�1,007 �ĵ� 1:1����Ԫ�����оݸ�Ϊ�ֶξ�ȷ+��������+��ֵ���",
+  "downstream": {
+   "universe": 1054,
+   "not_affected": 320,
+   "still_passes_without": 81,
+   "hold_pending_errata": 44,
+   "r2_may_change": 231,
+   "r1_no_link": 378,
+   "restricted_claim_rows": 407,
+   "restricted_unique_disputes": 401,
+   "dispute_ledger": 10618,
+   "restatement_groups": 89
+  },
+  "checks": {
+   "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
+   "note": "���������/���/��ϸ/����һ�ɲ���״̬�ļ��������ɰ����ڴ�д����������ע����������ע���������� review.json Ư�ƣ�������ץ����"
+  },
+  "reproducible": true,
+  "limits": [
+   "δ�ض�ȫ�� PDF������ 37 �� / 20 �� / 27 ���������� 1,007 �ݺ����ĵ��е� 20 �ݣ��������� sampling_v5.json �� unique_keys ֱ�Ӹ�����������д�������һ�����棨V10���������ɾ�� sampling_keys_diff.csv��KEPT 26 / ADDED 1 / REMOVED 1��REMOVED ���˳�����Ϊ RANK_CUT����",
+   "NOTE_TRACE_NA ���� 9,954 �� / 631 ���ĵ��������ѽ�� 8,655 �� / 630 �ݣ�ʣ�� 1,299 �� / 1 ���Դ��ˡ��������������У����ܰ��ĵ��򷽷����㲥������� 4 ���밴���ĵ��汾+������Ŀ+ʵ��ѡ����+�����ڼ䡹�˹�ͬ��ʵ����ӳ���Ա�����ѽ���� 8,655 ��ͬ������",
+   "NOTE_RETAINED_ERRATA_ZERO 642 �������� 563 / ������ 79��42 ���ĵ���δ�����ض�ԭע",
+   "1,505 �񲹳�Ԫ���ݽ��Ǽ��ֶμ�����Ҫ��δ�������",
+   "δ����ê���ڻ���������׼��ļ������",
+   "�� 4 ��������֤���� 5 ������ֲ�δ����44/231/378 ��δ����",
+   "C26/C29 ������ͬԴ����ͬԴ���㣬�����������������֤",
+   "��Э��� 15 �����Ǽ�Ϊ֤�ݳ�ͻ������ results.csv �� verdict ��δ�������� S02 ������",
+   "����������δ�պ������Լ첻��ͬ��������"
+  ],
+  "report": "runs/issues/S00/errata_20261111_v5/REPORT.md",
+  "handoff": "runs/issues/S00/errata_20261111_v5/handoff.md",
+  "issue_number": 53,
+  "github_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/53",
+  "version": "ERRATA_V5",
+  "v2_defects_fixed": [
+   "Ԫ�����Ӵ��оݣ�changed_columns 1,425/2,022 Ϊȫ���嵥��",
+   "C13 δҪ���¼������ UPDATE",
+   "C14 ֻ��� evidence ���֡��� V1 ��ת",
+   "��������δչ���ۼƸ�����",
+   "19 �� 1,505 ��δ�Ǽ�",
+   "������ (��˾,�ڼ�) ƥ�䵼�� 5,073 ������δ����"
+  ],
+  "v3_directory_preserved": "runs/issues/S00/errata_20261111_v3/",
+  "v3_defects_fixed": [
+   "document_id �㲥�������̬��������Χ����",
+   "����չ��δʵ�֡�l2_core �ݹ�",
+   "C21 δ��֡�C21a/b/c",
+   "����Ԫ����ͬ�������PENDING_FIELD_LEVEL_CHECK",
+   "ɽ������ 4 �����С�PENDING_SCOPE_AUDIT",
+   "���� 4 �������SH:603298"
+  ],
+  "v4_directory_preserved": "runs/issues/S00/errata_20261111_v4/",
+  "key_change_vs_v4": "�պ��оݴӡ����ڼ�==�ĵ������ڼ䡹��Ϊ��֤�ݸ��Ƿ�Χ ? ���跶Χ�������޷���ǿ�ƴ��ˣ��������水 B �� status չ������������Ԫ��������ʵ���ֶ�ȫ���ֶμ�����",
+  "sampling": {
+   "canonical": "runs/issues/S00/errata_20261111_v5/sampling_v5.json",
+   "rows": "runs/issues/S00/errata_20261111_v5/sampling_v5.csv",
+   "keys_diff": "runs/issues/S00/errata_20261111_v5/sampling_keys_diff.csv",
+   "locator_version": "V14",
+   "note": "����/����������/����/page_reread �ֲ�/�����ɾһ�ɲ��������� canonical �� keys_diff��״̬�ļ�ֻ����λ���汾��ָ�룬�ž��ڶ�������Ư�ơ�"
+  },
+  "self_check": {
+   "version": "V19",
+   "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
+   "detail": "runs/issues/S00/errata_20261111_v5/review.json",
+   "note": "״̬�ļ��������κμ�������������������ע����ϸֻ�� review.json��"
+  },
+  "not_done": [
+   "�� 4 ��������֤����������֤",
+   "�� 5 ��������շֲ㼰���ޱ��ٱ�"
+  ],
+  "open_questions_for_codex": [
+   "���� results.csv �� DOC-E2BDEAB4F6274B6E �� verdict=�� ��ԭ���෴������������ S02 ���� S00 ����",
+   "�ۼƲ�֡�����ͬ�ھ�������ĳ�����ݣ�������ԭ�ĺ�֤���Ƿ񻹽��ܱ��֤����ʽ",
+   "PENDING_EVENT_CONFIRMED_SCOPE_LIMITED ����м�̬�Ƿ��Ҫ",
+   "�� 4 �����ĵ�����֤�ܷ���Ϊ�����ֶμ�����ı�Ҫ�������ǳ��������",
+   "�Ƿ���� S04 �ڶ����� S05"
+  ],
+  "self_check_version": "V19",
+  "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round22.md",
+  "fault_injection_v4_mapped": {
+   "C26": 7729,
+   "C14": 6617
+  },
+  "stats": {
+   "dispute_unique_ids": 10618
+  },
+  "round": "�ڶ�ʮһ�ֲþ���ȡ���б߽���ͬ�������ս�",
+  "claim_note": "S00 ���� V5 �Լ� V19 ͨ����������������ֻ�� runs/issues/S00/errata_20261111_v5/review.json���˴����������� 4 ������ A ֻȡ��֤�ݡ�δ�ݴ˱պ��κ�һ�������� B ���·��������ֻ�Ǽ�����֤�������Ҷ�����������֤һ�µ��У����ౣ�����ˣ����� C�CE ��� 5 ������ֲ�δ����ê���ڻ���������׼��δ���᣻S04 �ڶ����� S05 �����С�"
+ },
+ "self_check_version": "V19",
+ "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round22.md",
+ "updated_at": "2026-11-13T00:14:29+08:00",
+ "self_check": {
+  "version": "V19",
+  "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
+  "detail": "runs/issues/S00/errata_20261111_v5/review.json",
+  "note": "������ s00_errata ����ͬԴ������ verify_v5.py д�������ֹ�ά����"
+ }
+}
+order,key,issue_number,issue_url,title,phase,status,plan_version,output_directory,dependency_keys,dependency_issue_numbers,review_record
+1,P00,11,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11,P00���������Ϸ�Χ����ѡ�������о���ֹ��,׼��,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/P00/,,,runs/issues/P00/review.json
+2,P01,12,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/12,P01��ͳһ�ļ����ݡ���Դ�Ǽ���ȥ�ع���,׼��,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/P01/,P00,11,runs/issues/P01/review.json
+3,P02,13,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/13,P02���̵�����Drive����������о��⣬�����ظ��ռ�,׼��,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/P02/,P01,12,runs/issues/P02/review.json
+4,P03,14,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/14,P03���ָ�����֤�ɼ����ӣ�������Դ�����۶�,׼��,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/P03/,P00,11,runs/issues/P03/review.json
+5,P04,15,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/15,P04����������ֶΡ���λ��������ʱ��ھ�,׼��,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/P04/,P00,11,runs/issues/P04/review.json
+6,P05,16,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/16,P05��ʵ�ֿɶϵ����ܵĲɼ���������У��,׼��,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/P05/,P01|P03|P04,12|14|15,runs/issues/P05/review.json
+7,P06,17,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/17,P06��ȷ��������Ŀ¼���鵵�뽻�ӹ���,׼��,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/P06/,P00|P02,11|13,runs/issues/P06/review.json
+8,P07,18,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/18,P07��10�Ҳɼ�У׼��ֻ��ӿں����ϣ����о�ҵ��,׼��,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/P07/,P02|P03|P04|P05|P06,13|14|15|16|17,runs/issues/P07/review.json
+9,M00_01,19,https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/19,M00_01�����������Զ��ɼ���01�����̶�100�ҹ�˾,�ɼ�����,SELF_CHECK_PASS,20261026_collection_first_v2,runs/issues/M00_01/,P07,18,runs/issues/M00_01/review.json
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command 'rg -n "def (_amount_bounds|_header_cells|_chain_cells|_no_extra_semantics|gap|cols_equivalent|column_of_amount_aligned_ex)|C37|def (_c41_semantics_probe|check_c41)|def (_merge_header_cells|_hmerge_conflict|witness)" runs/issues/S00/errata_20261111_v5/*.py; git status --short' in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 283ms:
+rg : �޷�����rg����ʶ��Ϊ cmdlet���������ű��ļ�������г�������ơ��������Ƶ�ƴд���������·������ȷ��·����ȷ��Ȼ������
+һ�Ρ�
+����λ�� ��:2 �ַ�: 1
++ rg -n "def (_amount_bounds|_header_cells|_chain_cells|_no_extra_seman ...
++ ~~
+    + CategoryInfo          : ObjectNotFound: (rg:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+?? runs/collection/drive_sync_manifest.jsonl
+?? runs/issues/S00/errata_20261111_v5/_codex_log_round22.txt
+?? runs/issues/S00/errata_20261111_v5/_codex_out_round22.txt
+?? runs/issues/S00/errata_20261111_v5/_issue53_comment_r22.md
+?? runs/issues/S02/_obsolete_20261102_v7_based/
+?? runs/issues/S02/acceptance_20261106/build_acceptance.py
+?? runs/issues/S02/acceptance_20261106/control_baseline/
+?? runs/issues/S02/acceptance_20261106/replay/
+?? runs/issues/S02/gemini_adoption_v4_20261030/
+?? runs/issues/S02/gemini_review_20261030/
+?? runs/issues/S02/recovery18_20261029/integration/s02_replay_v3/
+?? runs/issues/S02/recovery18_20261029/integration/s02_replay_v3_run2/s02/
+?? runs/issues/S02/recovery18_20261029/ocr2/DOC-03B9B2A3EF9B491B/
+?? runs/issues/S02/recovery18_20261029/ocr2/DOC-12300C8149048B60/
+?? runs/issues/S02/recovery18_20261029/ocr2/DOC-18AEFAAE323DD39B/
+?? runs/issues/S02/recovery18_20261029/ocr2/DOC-3F5CD36F615E3BC4/
+?? runs/issues/S02/recovery18_20261029/ocr2/DOC-41A995E12934526B/
+?? runs/issues/S02/recovery18_20261029/ocr2/DOC-9DE6D7E8F6A6333C/
+?? runs/issues/S02/recovery18_20261029/ocr2/DOC-C69703F6242CCD8E/
+?? runs/issues/S02/recovery18_20261029/ocr2/DOC-D7F653B0C5C02C09/
+?? runs/issues/S02/remediation_20261029/collect_q3_2026/apply_summary.json
+?? runs/issues/S03/PUBLICATION_STATUS_20261106.md
+?? runs/issues/S03/finalize_20261106.py
+?? tools/drive_sync_originals.py
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$OutputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new(); @'"'
+from pathlib import Path
+p=Path('runs/issues/S00/errata_20261111_v5')
+for name,ranges in [('parent_verify.py',[(650,910),(995,1090)]),('step4_column_witness.py',[(1,290)]),('selftest_column_rules.py',[(1,100),(280,510)])]:
+ s=(p/name).read_text('utf-8-sig').splitlines(); print('\\nFILE',name)
+ for a,b in ranges:
+  print('\\n'.join(f'{i+1}: {s[i]}' for i in range(a-1,min(b,len(s)))))
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 413ms:
+�޷��������͡�������ģʽ��֧�ֺ������͡�
+����λ�� ��:2 �ַ�: 17
++ ... putEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) []��RuntimeException
+    + FullyQualifiedErrorId : CannotCreateTypeConstrainedLanguage
+ 
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+
+FILE parent_verify.py
+650:     return col, amt
+651: 
+652: 
+653: # 第十八轮接受后自查（F33）：`column_of_amount_ex()` 用「金额中心点 ±3pt」去套表头，
+654: # 而财务报表的数字是**右对齐**、表头文字通常**居中**——两者根本不是同一个坐标系。
+655: # 实测 87 条父输入缺口涉及的 174 个真实页面上，97 页因此取不到表头（NO_COLUMN），
+656: # 另有 52 页取到的是页眉标题（`…年半年度报告`）。
+657: # 同时 `if _num_of(tx) is not None: continue` 把表头里的**年份**当金额丢掉了
+658: # （`2026` + `年半年度` → 只剩 `年半年度`），而 `_PERIOD_COL` 要求栏目含四位年份，
+659: # 于是「2026年半年度」这种栏目**无论怎么正确登记都过不了**。
+660: # 本函数改用报表排版的稳定特征定列：**同一列的数字右边界相同**。
+661: _COL_PERIOD_HINT = re.compile(r"\d{4}|本期|上期|上年|本年|年末|期末|年初|期初|"
+662:                               r"报告期|季度|半年|月")
+663: # 页眉/标题行不是表头：它们同样含「2026」「年半年度」，但那是文档标题不是列名。
+664: # 不加这条排除，取到的「栏目」会变成「…股份有限公司2026年半年度报告」。
+665: _TITLE_ROW = re.compile(r"股份有限公司|年度报告|半年度报告|季度报告|单位[:：]|"
+666:                         r"合并资产负债表|合并利润表|合并现金流量表|合并所有者权益变动表|"
+667:                         r"合并股东权益变动表|母公司资产负债表|母公司利润表|"
+668:                         r"母公司现金流量表|母公司所有者权益变动表|"
+669:                         r"资产负债表|利润表|现金流量表|所有者权益变动表|股东权益变动表|"
+670:                         r"财务报表附注|报表附注")
+671: # 表头词与金额跨度的重叠判定：金额左侧留 8pt（表头通常比数字宽、且居中偏左），
+672: # 右侧留 edge_tol。
+673: # 第十九轮 D1：原值 20pt 比这更松，直接把左邻列的表头拉进来，再把两列列名拼成
+674: # `2025年半年度2026年半年度` 后择一——等于**允许把邻列表头认成本列**。
+675: # 现在先按「词并成单元格、单元格跨行成列」还原列结构，多列候选一律报歧义，
+676: # 不再靠这个 padding 去凑覆盖率，故收回 8pt。
+677: _BAND_PAD_LEFT = 8.0
+678: _HDR_MERGE_GAP = 50.0          # 表头跨行合并的最大行距（pt）
+679: _CELL_WORD_GAP = 6.0           # 同一表头单元格内相邻词的允许间隙（pt）
+680: _CELL_X_TOL = 3.0              # 跨行表头视为同一列的横向容差（pt）
+681: _EDGE_TOL = 4.0                # 数字右边界聚类容差（pt）
+682: 
+683: 
+684: def _amount_bounds(rows, ri, ax0, ax1):
+685:     """金额所在列的左右边界：与**同一行**左右相邻数字的中点（无相邻则 ±inf）。
+686: 
+687:     第二十一轮裁决 1 的根因：`_compatible()` 只能证明「两段语义互补」，不能证明
+688:     「两段属于同一列」。短表头 `本报告期` 与右邻列 `（4-6月）` 语义互补、间隙
+689:     只有 4pt，于是被并成一列——生产与旁证都把第一列认成 `本报告期（4-6月）`。
+690: 
+691:     裁决给的口径是「按**相邻列边界**约束」，并明确否掉「金额宽度 + N pt」这类
+692:     未校准的阈值。所以这里只用报表最硬的一条几何事实：**同一行的数字是分列的**，
+693:     取「本列数字与左右相邻数字的中点」作为边界。表头片段中心越界即判为邻列。
+694: 
+695:     只取金额**那一行**的数字，不取整页列格：整页列格会被脚注编号、页码切碎
+696:     （实测 6 个真实列被切成 12 个簇），据此切区反而把同列断词判成两列。
+697:     """
+698:     lefts, rights = [], []
+699:     for x0, x1, tx in rows[ri][1]:
+700:         if _dec(tx) is None:
+701:             continue
+702:         if x1 <= ax0 - 0.5:
+703:             lefts.append(x1)
+704:         elif x0 >= ax1 + 0.5:
+705:             rights.append(x0)
+706:     left = (max(lefts) + ax0) / 2.0 if lefts else float("-inf")
+707:     right = (min(rights) + ax1) / 2.0 if rights else float("inf")
+708:     return left, right
+709: 
+710: 
+711: def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP, bounds=None):
+712:     """把每个表头行的词按横向间隙并成**单元格**：[(y, x0, x1, text)]。
+713: 
+714:     表格里 `2026年` 与 `半年度` 常是两个词，中间只隔 1–2pt；而邻列的两个词
+715:     之间隔着列间距（通常 >20pt）。先并单元格，才能把「同一列的断词」与
+716:     「不同列的相邻列名」分开。
+717: 
+718:     只靠间隙不够：紧排的表里两列列名也可能只隔 3–5pt。因此再加一条**语义**
+719:     保护——用 `_compatible()` 判「这两段是不是同一列的不同维度」。
+720: 
+721:     第二十轮裁决 1：上一版用的是「两侧 canon 都非空就不并」，**过严**——
+722:     同一列横排的 `本报告期` 与 `（1-6月）` 两段 canon 都非空，被拆成两个单元格，
+723:     于是一个列变成两个候选，判成 `AMBIGUOUS`（正确登记被拒）。
+724:     正确的判据不是「完整不完整」，而是「**有没有互相冲突的维度**」：
+725:     `本报告期`(本期,-,-) 与 `（1-6月）`(-,R0-1-6,累计) 互补，照并；
+726:     `2025年半年度` 与 `2026年半年度` 区间冲突，不并。
+727: 
+728:     第二十一轮裁决 1：语义互补只是**必要**条件，不是充分条件。给了 `bounds`
+729:     （`_amount_bounds` 的左右边界）时还要求两段**在同一侧**——`本报告期` 与
+730:     右邻列的 `（4-6月）` 语义互补、间隙 4pt，但后者的中心已越出本列右边界。
+731:     """
+732:     out = []
+733:     for rj in hdr_rows:
+734:         y, cells = rows[rj]
+735:         cur = None
+736:         for x0, x1, tx in sorted(cells, key=lambda c: c[0]):
+737:             joinable = (cur is not None and x0 - cur[1] <= gap
+738:                         and _compatible(cur[2], tx))
+739:             if joinable and bounds:
+740:                 left, right = bounds
+741:                 c1 = (cur[0] + cur[1]) / 2.0
+742:                 c2 = (x0 + x1) / 2.0
+743:                 if (c1 < left) != (c2 < left) or (c1 > right) != (c2 > right):
+744:                     joinable = False
+745:             if joinable:
+746:                 cur[1] = max(cur[1], x1)
+747:                 cur[2] += tx
+748:             else:
+749:                 if cur is not None:
+750:                     out.append((y, cur[0], cur[1], cur[2]))
+751:                 cur = [x0, x1, tx]
+752:         if cur is not None:
+753:             out.append((y, cur[0], cur[1], cur[2]))
+754:     return out
+755: 
+756: 
+757: def _chain_cells(cells, x_tol=_CELL_X_TOL):
+758:     """把跨行的表头单元格按横向邻近并成「列」：[(x0, x1, text)]。
+759: 
+760:     **同一行的两个单元格永不合并**——它们本来就是两列。跨行合并只在横向
+761:     重叠（或间隙 ≤ x_tol）时进行，即「`本报告期` 在上、`（1－6月）` 在下」。
+762: 
+763:     第二十轮裁决 1：上一版只按几何合并，于是「x[100,130]、y=70 的
+764:     `2025年半年度`」与「y=80 的 `2026年半年度`」被并成一个候选，文本拼成
+765:     `2025年半年度2026年半年度`，`_date_span` 取第一个匹配 → 返回 `OK`。
+766:     现在合并前先过 `_compatible()`：区间/相对年/累计任一维度冲突就不并，
+767:     于是它们成为两个候选，调用方据「期间列候选 >1」判 `AMBIGUOUS`。
+768:     """
+769:     groups = []
+770:     for y, x0, x1, tx in sorted(cells, key=lambda c: (c[0], c[1])):
+771:         placed = False
+772:         for g in groups:
+773:             if g["last_y"] == y:          # 同一行已有单元格，必是另一列
+774:                 continue
+775:             if min(g["x1"], x1) - max(g["x0"], x0) < -x_tol:
+776:                 continue
+777:             if not _compatible("".join(t for _y, _x, t in g["parts"]), tx):
+778:                 continue                  # 期间冲突：不是同一列
+779:             g["x0"] = min(g["x0"], x0)
+780:             g["x1"] = max(g["x1"], x1)
+781:             g["parts"].append((y, x0, tx))
+782:             g["last_y"] = y
+783:             placed = True
+784:             break
+785:         if not placed:
+786:             groups.append({"x0": x0, "x1": x1, "last_y": y,
+787:                            "parts": [(y, x0, tx)]})
+788:     out = []
+789:     for g in groups:
+790:         text = "".join(t for _y, _x, t in sorted(g["parts"], key=lambda p: (p[0], p[1])))
+791:         out.append((g["x0"], g["x1"], text))
+792:     return out
+793: 
+794: 
+795: def _label_band(rows, ri, max_rows=2, max_dy=40.0):
+796:     """指标名的取词带：金额行本身 + 紧邻的**无数字**行（上/下各至多 2 行）。
+797: 
+798:     财务报表里的指标名经常换行：`归属于上市公司股东的扣除非经常性` 在金额行，
+799:     `损益的净利润` 在下一行；也有反过来的（金额行只有数字，指标名在上一行）。
+800:     只取「金额行文本」会让这些行被判成「指标行未命中」，而回退接受又不允许
+801:     （第十九轮 D3）。折中办法是把换行拼回来，但**只在紧邻行没有数字时**才拼——
+802:     有数字的行是另一条记录，拼进来就是换行串行。
+803:     """
+804:     parts = ["".join(c[2] for c in rows[ri][1])]
+805:     y0 = rows[ri][0]
+806:     j = ri - 1
+807:     while j >= 0 and ri - j <= max_rows:
+808:         y, cells = rows[j]
+809:         if y0 - y > max_dy or any(_dec(c[2]) is not None for c in cells):
+810:             break
+811:         parts.append("".join(c[2] for c in cells))
+812:         j -= 1
+813:     j = ri + 1
+814:     while j < len(rows) and j - ri <= max_rows:
+815:         y, cells = rows[j]
+816:         if y - y0 > max_dy or any(_dec(c[2]) is not None for c in cells):
+817:             break
+818:         parts.append("".join(c[2] for c in cells))
+819:         j += 1
+820:     return "".join(parts)
+821: 
+822: 
+823: def column_of_amount_aligned(words, value, label=None, y_tol=4.0, edge_tol=4.0):
+824:     """兼容签名：只要 (column_text, amount_text, status)。"""
+825:     col, amt, st, _w = column_of_amount_aligned_ex(
+826:         words, value, label=label, y_tol=y_tol, edge_tol=edge_tol)
+827:     return col, amt, st
+828: 
+829: 
+830: def column_of_amount_aligned_ex(words, value, label=None, y_tol=4.0, edge_tol=4.0):
+831:     """按「金额自身的横向跨度」取表头，再取该列文字。
+832: 
+833:     返回 (column_text, amount_text, status, amount_word)，status 取值与
+834:     `column_of_amount_ex()` 一致，另加 `NO_HEADER_ROW`（找不到表头行）与
+835:     `NO_LABEL_ROW`（指标行未命中）。
+836: 
+837:     `amount_word` 是命中金额的**那个词** `(x0, y0, x1, y1, text)`，供调用方按
+838:     词坐标定位引文——第十九轮 D3 之后不再用正则去页面文本里捞金额：把空白去掉
+839:     以后 `684,956,197.48` 会和后一个数粘成 `684,956,197.48585,346,923.80`，
+840:     任何「数字边界」写法都会在这里误判。
+841: 
+842:     与 `column_of_amount_ex()` 的区别只有三点，都不放松判据：
+843: 
+844:     1. **定列用跨度重叠而不是中心点 ±3pt**。财务报表的数字右对齐、表头居中，
+845:        两者不是同一坐标系：短数字（`0.00`）的中心会落到右邻列的表头上，长数字
+846:        的中心会落到列外。实测 174 个真实页面里 97 页因此取不到表头。
+847:     2. **表头行里的年份词保留**（F33）。原实现 `if _num_of(tx) is not None: continue`
+848:        把 `2026` 当金额丢掉，`2026年半年度` 只剩 `年半年度`，而 `_PERIOD_COL`
+849:        要求栏目含四位年份——正确登记也过不了。
+850:     3. **不设垂直距离上限**，改为排除页眉/标题行。财务报表一页可跨几百 pt，
+851:        设上限会把表头挡在门外（实测 64/174 页因此判 NO_HEADER_ROW）。
+852: 
+853:     指标行绑定、金额唯一性、扫描页处理全部沿用原口径。
+854:     """
+855:     if not words:
+856:         return None, None, "NO_WORDS", None
+857:     target = _num_of(value)
+858:     if target is None:
+859:         return None, None, "NO_AMOUNT", None
+860:     # 第二十轮裁决 3：分位以下还有非零尾数（如 100.004）的「金额」不是报表原样，
+861:     # 一律待核，不参与匹配——否则它会和页面上的 100.00 被舍成同一个数。
+862:     if _has_subcent(target):
+863:         return None, None, "AMOUNT_PRECISION_INVALID", None
+864:     rows = rows_of_words(words, y_tol)
+865:     cands = []
+866:     for ri, (_y, cells) in enumerate(rows):
+867:         for x0, x1, tx in cells:
+868:             v = _dec(tx)
+869:             if v is not None and _same_amount(v, target):
+870:                 cands.append((ri, x0, x1, tx))
+871:     if not cands:
+872:         return None, None, "NO_AMOUNT", None
+873:     if label:
+874:         want = [label] if isinstance(label, str) else [x for x in label if x]
+875:         hit = []
+876:         for ri, x0, x1, tx in cands:
+877:             if any(w in _label_band(rows, ri) for w in want):
+878:                 hit.append((ri, x0, x1, tx))
+879:         if not hit:
+880:             # 第十九轮 D3：指标行未命中**不得回退接受**。原实现在「页面只有一个
+881:             # 候选金额」时继续往下走，于是「目标营业收入 100.009、页面只有营业成本
+882:             # 100.00」也能返回 OK——金额对不上、指标也不对，两处都靠回退蒙过。
+883:             return None, cands[0][3], "NO_LABEL_ROW", cands[0]
+884:         # 合计行与明细行同值（`一、营业总收入` 与 `其中：营业收入` 都是这个数）不算
+885:         # 歧义：本函数要定的是**列**，两行只要指向同一列，列就是确定的。
+886:         # 只有同一数值出现在**不同列**时才是真歧义。
+887:         spans = {(round(x0), round(x1)) for _ri, x0, x1, _tx in hit}
+888:         if len(spans) > 1:
+889:             return None, hit[0][3], "AMBIGUOUS", hit[0]
+890:         cands = hit
+891:     elif len(cands) > 1:
+892:         return None, cands[0][3], "AMBIGUOUS", cands[0]
+893:     ri, ax0, ax1, atxt = cands[0]
+894: 
+895:     # 表头行：金额行上方、含期间词、至少两个单元格、且不是页眉/标题的最近一行。
+896:     #
+897:     # 第二十轮裁决 5：上一版遇到标题行**跳过继续往上找**，于是「上方一张有期间
+898:     # 表头的表 + 下方另一张无表头表」时，会把上面那张表的表头套到下面那张表的
+899:     # 金额上（两条路径都返回 OK）。现在标题行是**表格边界**：向上扫到标题行就停，
+900:     # 表头必须落在「本表标题 → 金额行」之间；扫不过去就记 `TABLE_BOUNDARY_UNPROVEN`
+901:     # 留待核，不再跨表借表头。
+902:     hdr = None
+903:     blocked_by_title = False
+904:     for rj in range(ri - 1, -1, -1):
+905:         cells = rows[rj][1]
+906:         row_txt = "".join(c[2] for c in cells)
+907:         if _TITLE_ROW.search(row_txt):
+908:             blocked_by_title = True
+909:             break
+910:         if len(cells) < 2:
+995:     if span:
+996:         sp = "%s-%s" % (span[0], "-".join(str(x) for x in span[1:]))
+997:     return (rel, sp, cum)
+998: 
+999: 
+1000: def _compatible(a, b):
+1001:     """两段表头能否并成**同一列**：任一维度两侧都写了、且写得不一样，就是冲突。
+1002: 
+1003:     - `本报告期`(本期,-,-) 与 `（1-6月）`(-,R0-1-6,累计)：无冲突维度 → 可并
+1004:     - `2025年半年度`(-,R-2025-1-6,累计) 与 `2026年半年度`(-,R-2026-1-6,累计)：
+1005:       区间两侧都写了且不同 → 冲突，不可并（第二十轮裁决 1 的复现用例）
+1006:     """
+1007:     pa, pb = _canon_parts(a), _canon_parts(b)
+1008:     for x, y in zip(pa, pb):
+1009:         if x and y and x != y:
+1010:             return False
+1011:     return True
+1012: 
+1013: 
+1014: def _no_extra_semantics(registered, actual):
+1015:     """**同侧**列身份：登记名不得断言实际列尚未证明的语义。
+1016: 
+1017:     第二十一轮裁决 2：`cols_equivalent()` 对「一侧有分量、另一侧为空」判等价，
+1018:     这条对「跨文档名称兼容」是对的（p1 写 `2026年半年度`、p2 写 `本报告期`
+1019:     本来就是两份文档的不同写法），但对**同一侧**的列身份是漏洞：
+1020: 
+1021:         目标金额实际表头 `本报告期`，邻列表头 `本报告期（1-6月）`；
+1022:         把登记列名写成邻列的长名称 → 取列得 `本报告期`、`cols_equivalent` 为真、
+1023:         `gap()` 返回 `None`、`check_c41` 零违例。
+1024: 
+1025:     长名称确实在同页连续出现，但属于邻列。所以同侧必须单向：登记的每个
+1026:     「已写」分量，实际列也必须写出来。反向（实际比登记更详细）允许——实际列
+1027:     带了额外写法不影响它是不是同一列。
+1028:     """
+1029:     pr, pa = _canon_parts(registered), _canon_parts(actual)
+1030:     for r, a in zip(pr, pa):
+1031:         if r and not a:
+1032:             return False
+1033:     return True
+1034: 
+1035: 
+1036: def canon_column(text):
+1037:     """把表头文字归一成**保留期间语义的结构化键**，供两侧用同一把尺子比较。
+1038: 
+1039:     第十九轮 D2 否掉了旧实现（取最长年份段/最长期间词）：它把
+1040:     `本期金额（2026年1-6月）` 与 `（2026年4-6月）` 都压成 `2026年`，
+1041:     把 `上年年初至报告期末` 压成 `年初至报告期末`——那不是写法归一，是把
+1042:     必须保留的**起止区间与相对年份语义删掉**，于是 6 个月与 3 个月可以互认。
+1043: 
+1044:     键的格式：`相对年|区间|累计`，例如
+1045: 
+1046:     - `本期金额（2026年1-6月）` → `本期|R-2026-1-6|累计`
+1047:     - `本期金额（2026年4-6月）` → `本期|R-2026-4-6|`
+1048:     - `本报告期（1－6月）`      → `本期|R0-1-6|累计`
+1049:     - `上年年初至报告期末`      → `上年||累计`
+1050:     - `本报告期`                → `本期||`
+1051: 
+1052:     三段全空说明这个表头**没有任何期间语义**，返回空串——不能当列名。
+1053:     """
+1054:     rel, sp, cum = _canon_parts(text)
+1055:     if not sp and not rel and not cum:
+1056:         return ""
+1057:     return "%s|%s|%s" % (rel, sp, cum)
+1058: 
+1059: 
+1060: # 表头里带期间语义的片段（用于把原文里的连续列名切出来）
+1061: _COL_TOKEN = re.compile(
+1062:     r"(?<!\d)(?:19|20)\d{2}\s*年(?:半年度|年度|第[一二三四1-4]季度|上半年|下半年)?"
+1063:     r"|(?<!\d)\d{1,2}\s*[—–−－~～至\-]\s*\d{1,2}\s*月"
+1064:     r"|（[^（）]{0,28}）|\([^()]{0,28}\)"
+1065:     r"|年初至本?报告期末|本报告期末|本报告期|上年同期金额|上年同期|上年年末|上年度末"
+1066:     r"|本期发生额|本期金额|本期数|本期|上期发生额|上期金额|上期数|上期"
+1067:     r"|报告期|期末数|期末|年末数|年末|年初数|年初|期初数|期初"
+1068:     r"|第[一二三四1-4]季度|上半年|下半年|半年度|年度|全年|累计"
+1069:     r"|[Qq][1-4]")
+1070: 
+1071: 
+1072: def clean_column_text(text):
+1073:     """把表头串收敛成**原文里连续的一段**，且不丢期间语义。
+1074: 
+1075:     取「第一个期间片段 → 最后一个期间片段」的连续区间，因此结果仍是原文的
+1076:     子串（登记表要能在引文/原件里定位），但不会把整行表头（含邻列、含「附注」）
+1077:     都吞进来。没有期间片段则返回空串。
+1078:     """
+1079:     t = _nz(text)
+1080:     if not t:
+1081:         return ""
+1082:     ms = list(_COL_TOKEN.finditer(t))
+1083:     if not ms:
+1084:         return ""
+1085:     return t[ms[0].start():ms[-1].end()]
+1086: 
+1087: 
+1088: def registrable_column(header, page_txt):
+1089:     """从表头串里取出**在正文中连续出现、且语义与整段一致**的列名。
+1090: 
+
+FILE step4_column_witness.py
+1: #!/usr/bin/env python
+2: # -*- coding: utf-8 -*-
+3: """第 4 步批次 B：父输入登记的**独立列身份旁证**（只读）。
+4: 
+5: Codex 第十九轮裁决：「是否还需独立旁证？**需要**。至少以不调用该取列函数的
+6: 单元格边界解析或原页目视核读，证明『指标行 × 完整期间列 × 金额』的交点。」
+7: 
+8: 本脚本**不调用** `parent_verify.column_of_amount_aligned()`，改用另一套几何：
+9: **数字右边界格 + 中点分列**。思路与取列函数完全不同：
+10: 
+11: - 取列函数：从金额的**横向跨度**出发，去找与之重叠的表头词（自下而上）。
+12: - 本脚本：先把整页所有**数字的右边界**聚类成列格（财务报表数字右对齐，同一列
+13:   的右边界几乎相同），再用相邻右边界的中点切出每一列的可视范围，最后按**表头词
+14:   的中心**落进哪一列来判断列身份（自左而右）。
+15: 
+16: 两条路都通过，才认为「这个金额确实位于这个期间列」。任一路判不出来或两者
+17: 不一致，该条退出登记表、保留待核。
+18: 
+19: 输出 `step4_column_witness.csv`：逐条、逐侧的独立判定结果与两侧列名。
+20: """
+21: import csv
+22: import io
+23: import sys
+24: from decimal import Decimal, InvalidOperation
+25: from pathlib import Path
+26: 
+27: HERE = Path(__file__).resolve().parent
+28: sys.path.insert(0, str(HERE))
+29: 
+30: import parent_verify as pv          # noqa: E402
+31: 
+32: OUT = HERE
+33: ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
+34: Y_TOL = 4.0
+35: EDGE_TOL = 1.5          # 右边界聚类容差（pt）
+36: _HEADER_HINT = pv._COL_PERIOD_HINT
+37: _TITLE = pv._TITLE_ROW
+38: 
+39: 
+40: def _pdf(sec, doc):
+41:     return next((p for p in (ORIG / sec.split(":")[-1]).rglob(doc + ".pdf")), None)
+42: 
+43: 
+44: def _dec(txt):
+45:     s = (txt or "").strip().replace(",", "")
+46:     if not s or not s.replace(".", "").replace("-", "").isdigit():
+47:         return None
+48:     try:
+49:         return Decimal(s)
+50:     except InvalidOperation:
+51:         return None
+52: 
+53: 
+54: def _rows(words, tol=Y_TOL):
+55:     """独立实现的行聚类：[(y, [(x0, x1, text)])]，按 y 升序。"""
+56:     rows = []
+57:     for x0, y0, x1, _y1, tx in sorted(words, key=lambda w: (round(w[1], 1), w[0])):
+58:         if rows and abs(y0 - rows[-1][0]) <= tol:
+59:             rows[-1][1].append((x0, x1, tx))
+60:         else:
+61:             rows.append([y0, [(x0, x1, tx)]])
+62:     return [(y, sorted(c)) for y, c in rows]
+63: 
+64: 
+65: def _column_grid(rows, skip_ys):
+66:     """整页数字的右边界格：[(右边界, 该列最左数字的左边界, 词数)]。
+67: 
+68:     财务报表的数字右对齐，同一列的数字右边界几乎相同。右边界相同的数字里
+69:     最靠左的那个，就是这一列数字实际占到的左边界——列的可视范围由此确定，
+70:     不需要假设列宽。
+71:     """
+72:     items = []
+73:     for y, cells in rows:
+74:         if any(abs(y - s) <= Y_TOL for s in skip_ys):
+75:             continue
+76:         for x0, x1, tx in cells:
+77:             if _dec(tx) is not None:
+78:                 items.append((x1, x0))
+79:     items.sort()
+80:     grid = []
+81:     for x1, x0 in items:
+82:         if grid and x1 - grid[-1][0] <= EDGE_TOL:
+83:             grid[-1][0] = max(grid[-1][0], x1)
+84:             grid[-1][1] = min(grid[-1][1], x0)
+85:             grid[-1][2] += 1
+86:         else:
+87:             grid.append([x1, x0, 1])
+88:     return grid
+89: 
+90: 
+91: def _column_span(grid, x1):
+92:     """金额右边界落在哪一列，以及该列的可视横向范围。"""
+93:     if not grid:
+94:         return None, None
+95:     idx = min(range(len(grid)), key=lambda i: abs(grid[i][0] - x1))
+96:     if abs(grid[idx][0] - x1) > EDGE_TOL * 2:
+97:         return None, None
+98:     left = grid[idx][1] - 12.0
+99:     right = grid[idx][0] + 6.0
+100:     return idx, (left, right)
+101: 
+102: 
+103: def _merge_header_cells(rows, rj, bounds, gap=6.0):
+104:     """把表头第 `rj` 行的词并成单元格：[(x0, x1, [原始片段...])]。
+105: 
+106:     第二十一轮裁决 3：合并**必须**带两条前置判据，不能先并无条件再回头检查——
+107:     并进同一格以后，两两比较再也看不到内部冲突。
+108: 
+109:     1. `pv._compatible()`：两段语义不得冲突（区间/相对年/累计）；
+110:     2. 列边界：两段必须落在本列左右边界内（`pv._amount_bounds`，即与同一行
+111:        左右相邻数字的中点），否则是邻列。
+112: 
+113:     返回的第三个元素保留**原始片段**，供调用方在合并后仍能追溯是哪两段冲突。
+114:     """
+115:     cells = sorted(rows[rj][1], key=lambda c: c[0])
+116:     out = []
+117:     cur = None
+118:     for x0, x1, tx in cells:
+119:         joinable = (cur is not None and x0 - cur[1] <= gap
+120:                     and pv._compatible(cur[2], tx))
+121:         if joinable and bounds:
+122:             left, right = bounds
+123:             c1 = (cur[0] + cur[1]) / 2.0
+124:             c2 = (x0 + x1) / 2.0
+125:             if (c1 < left) != (c2 < left) or (c1 > right) != (c2 > right):
+126:                 joinable = False
+127:         if joinable:
+128:             cur[1] = max(cur[1], x1)
+129:             cur[2] += tx
+130:             cur[3].append(tx)
+131:         else:
+132:             if cur is not None:
+133:                 out.append((cur[0], cur[1], cur[3]))
+134:             cur = [x0, x1, tx, [tx]]
+135:     if cur is not None:
+136:         out.append((cur[0], cur[1], cur[3]))
+137:     return out
+138: 
+139: 
+140: def _hmerge_conflict(merged_rows):
+141:     """横向合并后的**内部冲突**检查：返回 (原因, 拼好的列名) 或 None。
+142: 
+143:     合并时已用 `_compatible` 拦过一次；这里按**原始片段**再查一遍，是为了
+144:     兜住「合并判据被放宽」或「片段被后续处理重新拼起来」的路径——片段级证据
+145:     保留下来，才能证明这个格子内部没有互相矛盾的期间。
+146:     """
+147:     for cells in merged_rows:
+148:         for _x0, _x1, frags in cells:
+149:             for i in range(len(frags)):
+150:                 for j in range(i + 1, len(frags)):
+151:                     if not pv._compatible(frags[i], frags[j]):
+152:                         return ("hmerge:%s|%s" % (frags[i], frags[j]),
+153:                                 "".join(frags))
+154:     return None
+155: 
+156: 
+157: def _band(rows, ri, max_rows=2, max_dy=40.0):
+158:     """指标名取词带：金额行 + 紧邻的无数字行（指标名换行时拼回来）。"""
+159:     parts = ["".join(c[2] for c in rows[ri][1])]
+160:     y0 = rows[ri][0]
+161:     j = ri - 1
+162:     while j >= 0 and ri - j <= max_rows:
+163:         y, cells = rows[j]
+164:         if y0 - y > max_dy or any(_dec(c[2]) is not None for c in cells):
+165:             break
+166:         parts.append("".join(c[2] for c in cells))
+167:         j -= 1
+168:     j = ri + 1
+169:     while j < len(rows) and j - ri <= max_rows:
+170:         y, cells = rows[j]
+171:         if y - y0 > max_dy or any(_dec(c[2]) is not None for c in cells):
+172:             break
+173:         parts.append("".join(c[2] for c in cells))
+174:         j += 1
+175:     return "".join(parts)
+176: 
+177: 
+178: def _header_rows(rows, amt_ri):
+179:     """金额行上方最近的一行「≥2 格 + 含期间词 + 非页眉标题」，可再向上并一行。
+180: 
+181:     第二十轮裁决 5：标题行是**表格边界**，不是可以跳过的噪声。上一版
+182:     `continue` 会越过「合并现金流量表」这类标题，把上一张表的表头借给下一张
+183:     无表头的表。现在扫到标题行就停，返回 `blocked=True` 由调用方记待核。
+184:     返回 (行号列表, 是否被标题行挡住)。
+185:     """
+186:     hdr = None
+187:     blocked = False
+188:     for rj in range(amt_ri - 1, -1, -1):
+189:         _y, cells = rows[rj]
+190:         txt = "".join(c[2] for c in cells)
+191:         if _TITLE.search(txt):
+192:             blocked = True
+193:             break
+194:         if len(cells) < 2:
+195:             continue
+196:         if not any(_HEADER_HINT.search(c[2]) for c in cells):
+197:             continue
+198:         hdr = rj
+199:         break
+200:     if hdr is None:
+201:         return [], blocked
+202:     out = [hdr]
+203:     for rj in range(hdr - 1, -1, -1):
+204:         if rows[out[-1]][0] - rows[rj][0] > 50.0:
+205:             break
+206:         _y, cells = rows[rj]
+207:         if len(cells) < 2 or _TITLE.search("".join(c[2] for c in cells)):
+208:             break
+209:         out.append(rj)
+210:         break
+211:     return out, False
+212: 
+213: 
+214: def witness(pdf, page, value, aliases):
+215:     """返回 dict(status, column, amount, why)。不调用 column_of_amount_aligned。"""
+216:     words = pv.page_words(pdf, page)
+217:     if not words:
+218:         return {"status": "NO_WORDS"}
+219:     rows = _rows(words)
+220:     target = pv._dec(value)
+221:     if target is None:
+222:         return {"status": "NO_AMOUNT"}
+223:     # 1) 找「指标名 + 金额」同一行（指标名允许换行，拼紧邻无数字行）
+224:     hits = []
+225:     for ri, (_y, cells) in enumerate(rows):
+226:         if aliases and not any(a in _band(rows, ri) for a in aliases):
+227:             continue
+228:         for x0, x1, tx in cells:
+229:             v = _dec(tx)
+230:             if v is not None and pv._same_amount(v, target):
+231:                 hits.append((ri, x0, x1, tx))
+232:     if not hits:
+233:         return {"status": "NO_AMOUNT_ROW"}
+234:     # 合计行/明细行同值不算歧义：要定的是列，只要落在同一列就唯一
+235:     spans = {(round(h[2], 1)) for h in hits}
+236:     if len(spans) > 1:
+237:         return {"status": "AMBIGUOUS", "why": "same_row_cols=%d" % len(spans)}
+238:     ri, ax0, ax1, atxt = hits[0]
+239:     # 2) 独立列格：整页数字右边界
+240:     hdr, blocked = _header_rows(rows, ri)
+241:     if not hdr:
+242:         return {"status": "TABLE_BOUNDARY_UNPROVEN" if blocked else "NO_HEADER_ROW"}
+243:     edges = _column_grid(rows, [rows[j][0] for j in hdr])
+244:     idx, span = _column_span(edges, ax1)
+245:     if span is None:
+246:         return {"status": "NO_COLUMN_GRID", "why": "grid=%d" % len(edges)}
+247:     # 3) 该列的表头文字：先把表头行的词按间隙并成单元格，再按单元格**中心**
+248:     #    落进列范围（`2026` + `年第一季度` 是一个单元格的两个词，只取到后半个
+249:     #    会丢掉年份，`cols_equivalent` 会判成不同列）。
+250:     #
+251:     #    第二十一轮裁决 3：上一版**无条件**按间隙 ≤6pt 合并，之后的两两
+252:     #    `_compatible` 已经看不到被并进同一格的内部冲突——
+253:     #    `2025年半年度` x[100,113] 与 `2026年半年度` x[114,130] 被拼成
+254:     #    `2025年半年度2026年半年度` 后仍返回 `OK`（生产返回 `AMBIGUOUS`）。
+255:     #    现在合并前先过 `_compatible`，并按数字列格检查两段归属同一列；
+256:     #    冲突则不并，交给下面保留的两两检查报歧义。
+257:     bounds = pv._amount_bounds(rows, ri, ax0, ax1)
+258:     merged_rows = [_merge_header_cells(rows, j, bounds) for j in hdr]
+259:     # 第二十一轮裁决 3：同一表头行内**横向**冲突必须在合并那一刻拦住。
+260:     # 上一版先无条件按间隙 ≤6pt 并词，之后的两两 `_compatible` 已经看不到被并进
+261:     # 同一格的内部冲突（`2025年半年度` x[100,113] 与 `2026年半年度` x[114,130]
+262:     # 拼成 `2025年半年度2026年半年度` 后仍返回 `OK`，而生产返回 `AMBIGUOUS`）。
+263:     conf = _hmerge_conflict(merged_rows)
+264:     if conf is not None:
+265:         return {"status": "AMBIGUOUS", "column": conf[1], "why": conf[0]}
+266:     parts = []
+267:     for j, cells in zip(hdr, merged_rows):
+268:         for x0, x1, frags in cells:
+269:             c = (x0 + x1) / 2.0
+270:             if span[0] < c <= span[1]:
+271:                 parts.append((rows[j][0], x0, "".join(frags)))
+272:     if not parts:
+273:         return {"status": "NO_COLUMN_TEXT", "why": "span=%.1f-%.1f" % span}
+274:     # 第二十轮裁决 5：旁证列范围也要处理「多个期间候选」。同一列范围内若落进
+275:     # 两个**互相冲突**的期间片段（上一行 2025年半年度、下一行 2026年半年度），
+276:     # 不得拼起来择一，直接报歧义。
+277:     txts = [t for _y, _x, t in parts]
+278:     for i in range(len(txts)):
+279:         for j in range(i + 1, len(txts)):
+280:             if not pv._compatible(txts[i], txts[j]):
+281:                 return {"status": "AMBIGUOUS", "column": "".join(txts),
+282:                         "why": "conflict:%s|%s" % (txts[i], txts[j])}
+283:     col = "".join(t for _y, _x, t in sorted(parts, key=lambda p: (p[0], p[1])))
+284:     if not pv.canon_column(col):
+285:         return {"status": "COLUMN_NOT_PERIOD", "column": col}
+286:     return {"status": "OK", "column": col, "amount": atxt,
+287:             "grid_col": idx, "grid_n": len(edges)}
+288: 
+289: 
+290: def main():
+
+FILE selftest_column_rules.py
+1: #!/usr/bin/env python
+2: # -*- coding: utf-8 -*-
+3: """第十九轮 D1/D2/D3 反例的回归测试（不写任何交付物）。
+4: 
+5: D1：邻列表头不得被认成本列（多列候选必须报歧义）。
+6: D2：canon_column 必须保留年份/起止区间/本期-上年-上期/累计属性。
+7: D3：金额必须逐位相等，指标行未命中不得回退。
+8: """
+9: import sys
+10: from pathlib import Path
+11: 
+12: HERE = Path(__file__).resolve().parent
+13: sys.path.insert(0, str(HERE))
+14: import parent_verify as pv          # noqa: E402
+15: 
+16: FAIL = []
+17: 
+18: 
+19: def ck(name, cond, extra=""):
+20:     print("%-46s %s %s" % (name, "PASS" if cond else "FAIL", extra))
+21:     if not cond:
+22:         FAIL.append(name)
+23: 
+24: 
+25: def W(x0, y0, x1, y1, t):
+26:     return (x0, y0, x1, y1, t)
+27: 
+28: 
+29: # ---------------- D1：邻列表头 ----------------
+30: def d1():
+31:     # ① Codex 第十九轮 D1 原反例：左列 2025年半年度 x[70,90]、本列 2026年半年度
+32:     #    x[100,130]、金额 100.00 x[100,110]。**不得把左列表头拼进来择一**。
+33:     words = [
+34:         W(0, 100, 40, 110, "营业收入"),
+35:         W(70, 80, 90, 90, "2025年半年度"),
+36:         W(100, 80, 130, 90, "2026年半年度"),
+37:         W(100, 100, 110, 110, "100.00"),
+38:         W(140, 100, 150, 110, "200.00"),
+39:         W(0, 60, 200, 70, "单位：元"),
+40:     ]
+41:     col, _amt, st = pv.column_of_amount_aligned(words, "100.00", label=("营业收入",))
+42:     ck("D1 邻列表头不得被认成本列",
+43:        st == "OK" and "2025" not in col and pv.canon_column(col) == "|R-2026-1-6|累计",
+44:        "st=%s col=%r" % (st, col))
+45: 
+46:     # ② 两个期间列**同时**与金额跨度重叠（左列 x1 落进 padding）：必须报歧义，
+47:     #    不允许「拼起来再择一」。
+48:     words1b = [
+49:         W(0, 100, 40, 110, "营业收入"),
+50:         W(80, 80, 95, 90, "2025年半年度"),
+51:         W(100, 80, 130, 90, "2026年半年度"),
+52:         W(100, 100, 110, 110, "100.00"),
+53:         W(140, 100, 150, 110, "200.00"),
+54:         W(0, 60, 200, 70, "单位：元"),
+55:     ]
+56:     col, _amt, st = pv.column_of_amount_aligned(words1b, "100.00", label=("营业收入",))
+57:     ck("D1 多列候选必须报歧义", st == "AMBIGUOUS", "st=%s col=%r" % (st, col))
+58: 
+59:     # ③ 同一列的断词（2026年 + 半年度，间隙 1pt）仍须合并成一列
+60:     words2 = [
+61:         W(0, 100, 40, 110, "营业收入"),
+62:         W(70, 80, 90, 90, "2025年半年度"),
+63:         W(100, 80, 112, 90, "2026年"),
+64:         W(113, 80, 130, 90, "半年度"),
+65:         W(100, 100, 110, 110, "100.00"),
+66:         W(140, 100, 150, 110, "200.00"),
+67:         W(0, 60, 200, 70, "单位：元"),
+68:     ]
+69:     col, _amt, st = pv.column_of_amount_aligned(words2, "100.00", label=("营业收入",))
+70:     ck("D1 同列断词仍合并", st == "OK" and pv.canon_column(col) == "|R-2026-1-6|累计",
+71:        "st=%s col=%r" % (st, col))
+72: 
+73:     # ④ 表头跨两行（本报告期 / （1－6月））仍须成一列
+74:     words3 = [
+75:         W(0, 100, 40, 110, "营业收入"),
+76:         W(60, 70, 90, 80, "项目"),
+77:         W(100, 70, 130, 80, "本报告期"),
+78:         W(100, 88, 130, 98, "（1－6月）"),
+79:         W(140, 70, 170, 80, "上年同期"),
+80:         W(140, 88, 170, 98, "（1－6月）"),
+81:         W(100, 100, 110, 110, "100.00"),
+82:         W(140, 100, 150, 110, "200.00"),
+83:         W(0, 60, 200, 66, "单位：元"),
+84:     ]
+85:     col, _amt, st = pv.column_of_amount_aligned(words3, "100.00", label=("营业收入",))
+86:     ck("D1 跨行表头成一列", st == "OK" and pv.canon_column(col) == "本期|R0-1-6|累计",
+87:        "st=%s col=%r" % (st, col))
+88: 
+89: 
+90: # ---------------- D2：canon 语义 ----------------
+91: def d2():
+92:     cases = [
+93:         ("本期金额（2026年1-6月）", "本期|R-2026-1-6|累计"),
+94:         ("本期金额（2026年4-6月）", "本期|R-2026-4-6|"),
+95:         ("本报告期（1－6月）", "本期|R0-1-6|累计"),
+96:         ("本报告期（4－6月）", "本期|R0-4-6|"),
+97:         ("上年年初至报告期末", "上年||累计"),
+98:         ("年初至报告期末", "本期||累计"),
+99:         ("本报告期", "本期||"),
+100:         ("2026年半年度", "|R-2026-1-6|累计"),
+280:     # ④ 裁决 2 的完整链：登记写成邻列长名称、实际列只有 `本报告期`
+281:     #    → 必须穿不过 `gap()`（上一版返回 None）
+282:     def _side(doc, per, val):
+283:         return {"doc": doc, "period": per, "value": val,
+284:                 "consolidation_scope": "CONSOLIDATED", "unit_scale": "1",
+285:                 "currency": "CNY", "adjust_version": "ORIGINAL"}
+286:     ent = {"conclusion": "COMPATIBLE", "reviewer": "WorkBuddy-Agent",
+287:            "review_role": "SELF_CHECK", "reviewed_at": "2026-11-12",
+288:            "consolidation_scope": "CONSOLIDATED", "unit_scale": "1",
+289:            "currency": "CNY", "scope_basis": "合并范围：合并报表；单位：元；币种：人民币；"
+290:                                              "期间：20260630 与 20260331 两期均为合并口径。",
+291:            "p1_doc": "DOC-A", "p1_period": "20260630", "p1_value": "100.00",
+292:            "p1_page": "1", "p1_adjust_version": "ORIGINAL",
+293:            "p2_doc": "DOC-B", "p2_period": "20260331", "p2_value": "50.00",
+294:            "p2_page": "1", "p2_adjust_version": "ORIGINAL"}
+295:     expect = {"field": "FIN.REV.SQ", "p1": _side("DOC-A", "20260630", "100.00"),
+296:               "p2": _side("DOC-B", "20260331", "50.00")}
+297: 
+298:     def _mk(col):
+299:         e = dict(ent)
+300:         e["p1_column"] = col
+301:         e["p2_column"] = "本报告期"
+302:         return e
+303: 
+304:     def _col_of(_doc, _page, _val, _names):
+305:         return ("本报告期", "OK", None)      # 实际列只有 `本报告期`
+306: 
+307:     r1 = pv.gap(_mk("本报告期（1-6月）"), expect, lambda d, p: "", _col_of)
+308:     ck("D5 登记凭空加区间须被 gap 拒绝",
+309:        r1 == "PARENT_COLUMN_SEMANTICS_UNPROVEN", "gap=%r" % (r1,))
+310:     r2 = pv.gap(_mk("本报告期"), expect, lambda d, p: "", _col_of)
+311:     ck("D5 登记与实际一致时 gap 不报此项",
+312:        r2 != "PARENT_COLUMN_SEMANTICS_UNPROVEN", "gap=%r" % (r2,))
+313: 
+314: 
+315: d1()
+316: d2()
+317: d3()
+318: d4()
+319: d5()
+320: print("-" * 60)
+321: print("FAIL %d" % len(FAIL), FAIL)
+322: sys.exit(1 if FAIL else 0)
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+from pathlib import Path
+p=Path('runs/issues/S00/errata_20261111_v5')
+for name,a,b in [('parent_verify.py',910,978),('parent_verify.py',1045,1095),('parent_verify.py',1,65),('verify_v5.py',1,70)]:
+ s=(p/name).read_text('utf-8-sig').splitlines(); print(name); print('\\n'.join(f'{i+1}: {s[i]}' for i in range(a-1,min(b,len(s)))))
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 363ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+parent_verify.py
+910:         if len(cells) < 2:
+911:             continue
+912:         if not any(_COL_PERIOD_HINT.search(c[2]) for c in cells):
+913:             continue
+914:         hdr = rj
+915:         break
+916:     if hdr is None:
+917:         return (None, atxt,
+918:                 "TABLE_BOUNDARY_UNPROVEN" if blocked_by_title else "NO_HEADER_ROW",
+919:                 (ax0, ax1, atxt))
+920: 
+921:     # 表头可能跨两三行：`本报告期` 在一行、`（1－6月）` 在下一行，只取最近一行会
+922:     # 拿到半截列名（`（1－6月）` 不含「本期」也无年份，`_PERIOD_COL` 判不过）。
+923:     # 向上把相邻的表头行一起收进来，仍要求它们是表头形状（≥2 单元格、非标题）。
+924:     hdr_rows = [hdr]
+925:     for rj in range(hdr - 1, -1, -1):
+926:         if rows[hdr_rows[-1]][0] - rows[rj][0] > _HDR_MERGE_GAP:
+927:             break
+928:         cells = rows[rj][1]
+929:         if len(cells) < 2:
+930:             break
+931:         if _TITLE_ROW.search("".join(c[2] for c in cells)):
+932:             break
+933:         hdr_rows.append(rj)
+934: 
+935:     # 表头里取「横向跨度与金额跨度重叠」的**列**。这里**不跳过数字词**——年份
+936:     # 正是表头的一部分（F33）；金额词本就不该出现在表头行。
+937:     #
+938:     # 第十九轮 D1：原实现把所有重叠的表头词**直接拼起来**再交给 `canon_column`
+939:     # 择一。左邻列的表头一旦落进 20pt 的 padding 就会被拼进去，`2025年半年度`
+940:     # 排在前面，归一后就成了「本列 = 2025年半年度」——邻列表头被认成本列。
+941:     # 现在先还原列结构，再按「几个期间列候选」决定：≥2 个一律报歧义。
+942:     lo, hi = ax0 - _BAND_PAD_LEFT, ax1 + edge_tol
+943:     # 第二十一轮裁决 1：用「同一行左右相邻数字的中点」作列边界，
+944:     # 表头片段中心越界即判为邻列，不得并进本列。
+945:     bounds = _amount_bounds(rows, ri, ax0, ax1)
+946:     chains = _chain_cells(_header_cells(rows, hdr_rows, bounds=bounds))
+947:     hit = [c for c in chains if c[1] > lo and c[0] < hi]
+948:     aw = (ax0, ax1, atxt)
+949:     if not hit:
+950:         return None, atxt, "NO_COLUMN", aw
+951:     period_hit = [c for c in hit if _COL_PERIOD_HINT.search(_nz(c[2]))]
+952:     if len(period_hit) > 1:
+953:         # 多个期间列同时与金额跨度重叠：不允许拼接后择一，交回人工/换页。
+954:         return None, atxt, "AMBIGUOUS", aw
+955:     if period_hit:
+956:         return period_hit[0][2], atxt, "OK", aw
+957:     if len(hit) == 1:
+958:         return hit[0][2], atxt, "OK", aw
+959:     return None, atxt, "NO_COLUMN", aw
+960: 
+961: 
+962: _RE_YEAR_ABS = re.compile(r"(?<!\d)(?:19|20)\d{2}(?!\d)")
+963: # 相对年：**先判上年/上期，再判本期**。顺序不能反：`上年年初至报告期末` 里同时
+964: # 含「年初」与「上年」，先判本期就会把它归成「本期」——正是第十九轮 D2 的第 4 例。
+965: _RE_REL_PRIOR_YEAR = re.compile(r"上年|去年同期|上年度|上年年末")
+966: _RE_REL_PRIOR = re.compile(r"上期|上一期")
+967: _RE_REL_CUR = re.compile(r"本期|本报告期|报告期|本年|年初至|本季度|当月")
+968: # 累计属性：从年初起算的口径。`1-6月`/`1-9月`/`1-12月`/上半年/年度 都是累计；
+969: # `4-6月` 这种单季不是。这一项决定「本期累计」与「本季度」不能互认。
+970: _RE_CUM = re.compile(r"年初至|累计|自年初|上半年|半年度|年度|全年|"
+971:                      r"(?<!\d)1\s*[—–−－~～至\-]\s*(?:3|6|9|12)\s*月")
+972: 
+973: 
+974: def _canon_parts(text):
+975:     """把表头拆成三个**互相独立**的维度：(相对年, 区间, 累计属性)。
+976: 
+977:     第二十轮裁决 1/2 的根因就在这里：上一版只有一个字符串键，
+978:     「`本报告期` + `（1-6月）`」与「`2025年半年度` + `2026年半年度`」在字符串层面
+parent_verify.py
+1045: 
+1046:     - `本期金额（2026年1-6月）` → `本期|R-2026-1-6|累计`
+1047:     - `本期金额（2026年4-6月）` → `本期|R-2026-4-6|`
+1048:     - `本报告期（1－6月）`      → `本期|R0-1-6|累计`
+1049:     - `上年年初至报告期末`      → `上年||累计`
+1050:     - `本报告期`                → `本期||`
+1051: 
+1052:     三段全空说明这个表头**没有任何期间语义**，返回空串——不能当列名。
+1053:     """
+1054:     rel, sp, cum = _canon_parts(text)
+1055:     if not sp and not rel and not cum:
+1056:         return ""
+1057:     return "%s|%s|%s" % (rel, sp, cum)
+1058: 
+1059: 
+1060: # 表头里带期间语义的片段（用于把原文里的连续列名切出来）
+1061: _COL_TOKEN = re.compile(
+1062:     r"(?<!\d)(?:19|20)\d{2}\s*年(?:半年度|年度|第[一二三四1-4]季度|上半年|下半年)?"
+1063:     r"|(?<!\d)\d{1,2}\s*[—–−－~～至\-]\s*\d{1,2}\s*月"
+1064:     r"|（[^（）]{0,28}）|\([^()]{0,28}\)"
+1065:     r"|年初至本?报告期末|本报告期末|本报告期|上年同期金额|上年同期|上年年末|上年度末"
+1066:     r"|本期发生额|本期金额|本期数|本期|上期发生额|上期金额|上期数|上期"
+1067:     r"|报告期|期末数|期末|年末数|年末|年初数|年初|期初数|期初"
+1068:     r"|第[一二三四1-4]季度|上半年|下半年|半年度|年度|全年|累计"
+1069:     r"|[Qq][1-4]")
+1070: 
+1071: 
+1072: def clean_column_text(text):
+1073:     """把表头串收敛成**原文里连续的一段**，且不丢期间语义。
+1074: 
+1075:     取「第一个期间片段 → 最后一个期间片段」的连续区间，因此结果仍是原文的
+1076:     子串（登记表要能在引文/原件里定位），但不会把整行表头（含邻列、含「附注」）
+1077:     都吞进来。没有期间片段则返回空串。
+1078:     """
+1079:     t = _nz(text)
+1080:     if not t:
+1081:         return ""
+1082:     ms = list(_COL_TOKEN.finditer(t))
+1083:     if not ms:
+1084:         return ""
+1085:     return t[ms[0].start():ms[-1].end()]
+1086: 
+1087: 
+1088: def registrable_column(header, page_txt):
+1089:     """从表头串里取出**在正文中连续出现、且语义与整段一致**的列名。
+1090: 
+1091:     第十九轮 D2：登记值必须同时满足两条——①是原件里的连续片段（否则引文里
+1092:     找不到它）；②`canon_column` 与整段表头**完全相同**（否则等于用一个更短的、
+1093:     丢了区间或相对年份的名字去登记）。两条都满足才返回。
+1094:     """
+1095:     want = canon_column(header)
+parent_verify.py
+1: #!/usr/bin/env python
+2: # -*- coding: utf-8 -*-
+3: """父输入兼容性 / 来源维度的唯一依据：核证登记表（生产与自检共用）。
+4: 
+5: 第八轮裁决 C 项明确否掉两条自动判据：
+6: - **同文档不能自动证明兼容**——同一报告可能含调整前后列或混合来源；
+7: - **上游「双否」不能直接证明兼容**——三协电机已证明 verdict 可能与原文相反，
+8:   它只能作为待核线索。
+9: 同时澄清：正常同口径累计数相减，**不要求两期调整额相等**；只有主张
+10: 「调整影响相互抵消」时才须证明调整额相等。
+11: 
+12: 第九轮裁决 C 项又指出：只比对「父终值」不够——登记里把父文档换成无关文档、
+13: 把父期间和口径写错、审查人填 `x`、日期留空，仍能返回 VERIFIED。因此把
+14: 登记记录绑定到**实际父输入**（doc/period/value/口径三元组/版本）。
+15: 
+16: 第十轮裁决 B 项继续指出四处「只验形式」：
+17: 
+18: 1. **单位折算键名错误**。`_expect()` 提供 `unit_scale`，`gap()` 却读
+19:    `expect[side].get("unit")`，实际恒回退 1 倍——真实原件
+20:    `187,875.40 万元 = 1,878,754,000 元` 会被正确引文拒绝，反之 1 倍口径的
+21:    错误引文会被放行。V10 统一改读 `unit_scale`，并限定金额字段只接受
+22:    `1/1000/10000` 三档。
+23: 2. **栏目与版本只验形式**。`p1_column` 任意非空即过、`adjust_version` 只验枚举
+24:    与两父相等。V10 要求：栏目必须是**期间列头**且出现在引文中；版本必须等于
+25:    该父实际采用的 `version_used` 归类（ORIGINAL / RESTATED），并在引文里有
+26:    对应标记（重述后 / 无调整后列）。
+27: 3. **引文含同一个数字不证明是目标指标和目标期间**。V10 要求引文同时含
+28:    **指标名 + 期间列头 + 父数**，三者缺一不可。
+29: 4. **生产引文源仍是上游摘要**。V10 的 `evidence_of(doc, page)` 必须回读
+30:    **登记页**原件（生产侧由 `_pdf_page` 提供），不再是 `results.csv.evidence`。
+31: 
+32: 第十轮裁决 E 项：来源维度登记还须核对 `source_page`，引文须绑定具体表格／
+33: 期间列头／目标行列，不能只靠「全文命中 + 含年份」——`Ltd.年度报告——2025——`
+34: 这类封面片段曾同时取得 `COMPARATIVE_SCOPE` 与 `QUARTERLY_TABLE_PROVENANCE`。
+35: """
+36: import csv
+37: import datetime
+38: import re
+39: from decimal import Decimal, InvalidOperation
+40: from pathlib import Path
+41: 
+42: import evidence_scope as es
+43: 
+44: # ---------------- 父输入核证登记表 ----------------
+45: COLS = ["security_id", "field_id", "period_key", "ytd_field",
+46:         "p1_period", "p2_period", "p1_doc", "p2_doc",
+47:         "p1_value", "p2_value", "p1_page", "p2_page",
+48:         "p1_quote", "p2_quote",
+49:         "p1_column", "p2_column", "p1_adjust_version", "p2_adjust_version",
+50:         "consolidation_scope", "unit_scale", "currency", "scope_basis",
+51:         "version_basis", "conclusion", "review_role", "reviewer", "reviewed_at"]
+52: 
+53: # 调整前后版本：登记只能声明这两类，且必须等于该父实际 version_used 的归类。
+54: # 第十轮裁决 B2：不再允许 SAME_VERSION 作为免证标签——「两父同版本」由实际
+55: # version_used 相等直接判定，不需要登记者另立名目。
+56: ADJUST_VERSIONS = {"ORIGINAL", "RESTATED"}
+57: REVIEW_ROLES = {"INDEPENDENT_REVIEW", "SELF_CHECK"}
+58: REVIEWER_PLACEHOLDERS = {"", "x", "xx", "xxx", "-", "--", "n/a", "na",
+59:                          "none", "null", "test", "tbd", "todo", "self", "me"}
+60: # 金额字段允许的折算倍数（s00 的 unit_scale 实际取值：1 / 1000 / 10000，
+61: # 另有 pct / times 用于比率字段——那些不参与父输入相减）
+62: AMOUNT_UNITS = {"1", "1000", "10000"}
+63: _AMOUNT_TOKEN = re.compile(r"(?<![\d.,])-?\d[\d,]*(?:\.\d+)?")
+64: _MIN_QUOTE = 12
+65: _MIN_BASIS = 20
+verify_v5.py
+1: #!/usr/bin/env python
+2: # -*- coding: utf-8 -*-
+3: """S00 勘误 V5 自检 V8（SELF_CHECK）
+4: 
+5: 对 Codex 第六轮裁决（RETURN_FOR_REWORK）的逐条落实：
+6: 
+7: 第二节（方法实现错误）
+8: - C33 期间参数三态：is_own_period 显式返回 True/False/None，
+9:   非自身期间必须要求 COMPARATIVE_SCOPE，未知期间单列 DOC_PERIOD_UNKNOWN；
+10: - C26 撤销「同报告相减自动抵消」，改为 PARENT_COMPATIBILITY 证据维度，
+11:   并按 B 实际父输入逐行重算（含跨文档父输入）。
+12: 
+13: 第三节（极性）
+14: - C34 极性回归 44 条反例（polarity_cases.py，生产与自检共用）；
+15: - C37 父输入兼容性只认核证登记表并绑定实际父输入；C38 来源维度只认两类登记；
+16: - C14 确认类不再只看 B=是，须事件层确认 + 来源维度覆盖。
+17: 
+18: 第五、八节（自检与追溯）
+19: - C14 裁决类必须命中 rulings_resolved.json 且键一致；
+20: - C24 补充元数据放行必须命中 content_reviews.csv 登记记录（完整键含期间+终值+引文可定位）；
+21: - C26 全类别双向重算，裁决类与确认类不再跳过；
+22: - C28 差异 ID 稳定（不含处置状态）+ 引用同键 + 台账列一致；
+23: - C29 已解决项按重算结果判覆盖，不看台账自报；
+24: - C30 先把 V4 旧标签映射为当前可识别类别，再分别注入
+25:   「范围不足 / 肯定发生 / 父输入不兼容」三种实质反例；
+26: - C35 受限表逐表哈希 + dispute_ledger 逐条源表哈希。
+27: 
+28: 性质：SELF_CHECK，不是独立验收。未回读全部 PDF（抽样回读见 sampling_v5.csv）。
+29: """
+30: import csv
+31: import datetime
+32: import gzip
+33: import hashlib
+34: import json
+35: import re
+36: from collections import Counter, defaultdict
+37: from pathlib import Path
+38: 
+39: import evidence_scope as es
+40: import l2_core as core
+41: import meta_classes as mc
+42: import parent_verify as pv
+43: import polarity_cases as pc
+44: 
+45: ROOT = core.ROOT
+46: OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
+47: SELF_CHECK_VERSION = "V19"
+48: # 待复核轮次：状态串与校验条件共用一处，避免两处字面各写一遍再漂移
+49: RECHECK_ROUND = 22
+50: # 第二十一轮自查：`reviewed_at` 原先在 review 字典里硬编码（每轮都要手改一次，
+51: # 必然漂移——与第十六轮 `round`/汇报指针同一类坑）。改为常量，只在这里写一次。
+52: REVIEWED_AT = "2026-11-12T23:58:00+08:00"
+53: 
+54: 
+55: def _cn_num(n):
+56:     """阿拉伯数字转中文（只覆盖 1–99，够用到本项目结束）。"""
+57:     d = "零一二三四五六七八九"
+58:     if n <= 10:
+59:         return d[n]
+60:     if n < 20:
+61:         return "十" + d[n - 10]
+62:     return d[n // 10] + "十" + (d[n % 10] if n % 10 else "")
+63: 
+64: 
+65: # 第十六轮自查：状态文件里 `round` 与 `report_to_codex` 原先各自硬编码
+66: # （"第十二轮返工"、`report_to_codex_round13.md`），与 RECHECK_ROUND 不同源，
+67: # 每轮必漂。现在两处都由 RECHECK_ROUND 派生：
+68: # 本轮改的是「上一轮」的裁决 → 返工轮次 = RECHECK_ROUND − 1；
+69: # 汇报文件名与本轮待复核轮次同号 → round{RECHECK_ROUND}。
+70: ROUND_PHASE = "裁决后取列列边界与同侧语义收紧"
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command 'python -B -X utf8 runs/issues/S00/errata_20261111_v5/selftest_column_rules.py' in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 370ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+D1 邻列表头不得被认成本列                                 PASS st=OK col='2026年半年度'
+D1 多列候选必须报歧义                                   PASS st=AMBIGUOUS col=None
+D1 同列断词仍合并                                     PASS st=OK col='2026年半年度'
+D1 跨行表头成一列                                     PASS st=OK col='本报告期（1－6月）'
+D2 canon 本期金额（2026年1-6月）                       PASS got='本期|R-2026-1-6|累计' want='本期|R-2026-1-6|累计'
+D2 canon 本期金额（2026年4-6月）                       PASS got='本期|R-2026-4-6|' want='本期|R-2026-4-6|'
+D2 canon 本报告期（1－6月）                            PASS got='本期|R0-1-6|累计' want='本期|R0-1-6|累计'
+D2 canon 本报告期（4－6月）                            PASS got='本期|R0-4-6|' want='本期|R0-4-6|'
+D2 canon 上年年初至报告期末                             PASS got='上年||累计' want='上年||累计'
+D2 canon 年初至报告期末                               PASS got='本期||累计' want='本期||累计'
+D2 canon 本报告期                                  PASS got='本期||' want='本期||'
+D2 canon 2026年半年度                              PASS got='|R-2026-1-6|累计' want='|R-2026-1-6|累计'
+D2 不等价 本期金额（2026年1-6月） ≠ 本期金额（2026年4-6月）       PASS 
+D2 不等价 本报告期（1－6月） ≠ 本报告期（4－6月）                 PASS 
+D2 不等价 上年年初至报告期末 ≠ 年初至报告期末                     PASS 
+D2 不等价 上年同期 ≠ 上期                               PASS 
+D2 仍等价 本期数 = 本报告期                              PASS 
+D2 仍等价 本年累计 = 年初至报告期末                          PASS 
+D2 仍等价 2026年半年度 = 2026年1-6月                    PASS 
+D2 仍等价 上年同期 = 上年同期金额                           PASS 
+D2 registrable 保留区间                            PASS 
+D2 registrable 拒缩水                             PASS 
+D3 100.009 不得匹配 100.00                         PASS st=AMOUNT_PRECISION_INVALID col=None
+D3 100.004 不得匹配 100.00                         PASS _same_amount 退化成 quantize 就会把两者判成相等
+D3 指标行未命中不得回退                                  PASS st=NO_LABEL_ROW col=None
+D3 引文数值逐位相等                                    PASS 
+D3 正则数字边界                                      PASS 
+D3 正则长金额                                       PASS 
+D4 横排互补片段成一列                                   PASS st=OK col='本报告期（1-6月）'
+D4 列链冲突期间报歧义                                   PASS st=AMBIGUOUS col=None
+D4 不得跨表借表头                                     PASS st=TABLE_BOUNDARY_UNPROVEN col=None
+D4 相对年冲突 上年同期（1-6月） ≠ 本报告期（1-6月）               PASS 
+D4 相对年冲突 上期（2026年1-6月） ≠ 本期（2026年1-6月）         PASS 
+D4 年度保留年份                                      PASS got='|R-2025-1-12|累计'/'|R-2026-1-12|累计'
+D4 年度=1-12月                                    PASS got='|R-2026-1-12|累计'
+D4 exact 须核对数值                                 PASS 
+D4 取消任意数字位切分                                   PASS 
+D4 exact 正确时命中                                 PASS 
+D5 邻列互补片段不得并进本列                                PASS st=OK col='本报告期'（上一版是 本报告期（4-6月））
+D5 同侧不得增加区间                                    PASS 
+D5 实际更详细时允许                                    PASS 
+D5 同侧完全一致时允许                                   PASS 
+D5 同侧不得增加相对年                                   PASS 
+D5 旁证横向冲突不得并成一格                                PASS merged=[(100.0, 113.0, ['2025年半年度']), (114.0, 130.0, ['2026年半年度'])]
+D5 旁证互补片段仍合并                                   PASS merged=[(100.0, 165.0, ['本报告期', '（1－6月）'])]
+D5 旁证跨列片段不得合并                                  PASS merged=[(100.0, 130.0, ['本报告期']), (134.0, 165.0, ['（4-6月）'])]
+D5 列边界取相邻数字中点                                  PASS bounds=(-inf, 135.0)
+D5 旁证纵向两两检查能发现冲突                               PASS 
+D5 登记凭空加区间须被 gap 拒绝                            PASS gap='PARENT_COLUMN_SEMANTICS_UNPROVEN'
+D5 登记与实际一致时 gap 不报此项                           PASS gap='PARENT_QUOTE_TOO_SHORT'
+------------------------------------------------------------
+FAIL 0 []
+
+codex
+原定反例和 50 项自测均已通过。还需检查列边界能否在跨行合并中继续生效，以及金额行缺少邻列数字时是否会放行原有误合并；这两点会影响批次 C 的放行结论。
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+import sys, json, csv, io, subprocess, collections
+from pathlib import Path
+p=Path('runs/issues/S00/errata_20261111_v5'); sys.path.insert(0,str(p.resolve()))
+import parent_verify as pv
+import step4_column_witness as wit
+W=lambda x,y,z,t:(x,y,z,y+8,t)
+base=[W(0,50,200,'单位：元'),W(0,90,45,'营业收入'),W(100,90,130,'100.00'),W(140,90,170,'200.00')]
+cases={
+'original':base+[W(100,70,130,'本报告期'),W(134,70,165,'（4-6月）')],
+'vertical_neighbor':base+[W(100,60,138,'本报告期'),W(0,60,40,'项目'),W(134,70,165,'（4-6月）'),W(0,70,40,'项目')],
+'missing_neighbor':[w for w in base if w[4]"'!='"'200.00']+[W(100,70,130,'本报告期'),W(134,70,165,'（4-6月）')],
+'horizontal_conflict':base+[W(100,70,113,'2025年半年度'),W(114,70,130,'2026年半年度')]
+}
+orig=wit.pv.page_words
+for k,words in cases.items():
+ rows=pv.rows_of_words(words,4.0); ri=next(i for i,r in enumerate(rows) if any(c[2]=='100.00' for c in r[1]))
+ wit.pv.page_words=lambda *args:words
+ print(k,'bounds',pv._amount_bounds(rows,ri,100,130),'production',pv.column_of_amount_aligned(words,'100.00',label=['营业收入']),'witness',wit.witness(None,1,'100.00',['营业收入']))
+wit.pv.page_words=orig
+for name in ['step4_parent_scan.csv','parent_verifications.csv']:
+ cur=list(csv.DictReader((p/name).open(encoding='utf-8-sig',newline='')))
+ old=list(csv.DictReader(io.StringIO(subprocess.check_output(['git','show','b4738b2:'+p.as_posix()+'/'+name]).decode('utf-8-sig'))))
+ key=lambda r:tuple(r[k] for k in ['security_id','field_id','period_key'])
+ a={key(r):r for r in old}; b={key(r):r for r in cur}; dif=[(k,c) for k in a.keys()&b.keys() for c in a[k] if a[k][c]"'!=b[k].get(c)]
+ print('"'DIFF',name,len(old),len(cur),len(cur[0]),'unique',len(a),len(b),'sets',a.keys()==b.keys(),'cells',len(dif))
+ if name.startswith('step4'):
+  print('fields',list(cur[0])); print('verdict',collections.Counter(r['verdict'] for r in cur))
+  for scope,rs in [('BLOCKED',[r for r in cur if r['verdict']=='BLOCKED']),('ALL',cur)]:
+   print('BOUNDARY',scope,[(s,collections.Counter(r[s+'_status'] for r in rs if 'BOUNDARY' in r.get(s+'_note',''))) for s in ['p1','p2']])
+for name in ['review.json','summary.json','step4_column_witness.json']:
+ f=p/name
+ if f.exists():
+  obj=json.loads(f.read_text('utf-8-sig')); print(name,'KEYS',list(obj));
+  if name=='review.json':
+   for c in obj.get('checks',[]):
+    if isinstance(c,dict) and c.get('id',c.get('check','')) in ['C37','C41']: print(json.dumps(c,ensure_ascii=False))
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 427ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+original bounds (-inf, 135.0) production (None, '100.00', 'NO_HEADER_ROW') witness {'status': 'NO_HEADER_ROW'}
+vertical_neighbor bounds (-inf, 135.0) production (None, '100.00', 'NO_HEADER_ROW') witness {'status': 'NO_HEADER_ROW'}
+missing_neighbor bounds (-inf, inf) production (None, '100.00', 'NO_HEADER_ROW') witness {'status': 'NO_HEADER_ROW'}
+horizontal_conflict bounds (-inf, 135.0) production ('2025????2026????', '100.00', 'OK') witness {'status': 'COLUMN_NOT_PERIOD', 'column': '2025????2026????'}
+DIFF step4_parent_scan.csv 87 87 32 unique 87 87 sets True cells 0
+fields ['security_id', 'stock_name', 'field_id', 'period_key', 'ytd_field', 'p1_period', 'p2_period', 'p1_doc', 'p1_page', 'p1_value', 'p1_unit', 'p1_scope', 'p1_cur', 'p1_ver', 'p2_doc', 'p2_page', 'p2_value', 'p2_unit', 'p2_scope', 'p2_cur', 'p2_ver', 'p1_evidence_page', 'p1_column', 'p1_quote', 'p1_status', 'p1_note', 'p2_evidence_page', 'p2_column', 'p2_quote', 'p2_status', 'p2_note', 'verdict']
+verdict Counter({'EVIDENCE_OK': 64, 'BLOCKED': 23})
+BOUNDARY BLOCKED [('p1', Counter({'NOT_FOUND': 6, 'OK': 3})), ('p2', Counter({'OK': 6, 'NOT_FOUND': 6}))]
+BOUNDARY ALL [('p1', Counter({'OK': 29, 'NOT_FOUND': 6})), ('p2', Counter({'OK': 31, 'NOT_FOUND': 6}))]
+DIFF parent_verifications.csv 64 64 27 unique 64 64 sets True cells 0
+review.json KEYS ['issue_key', 'stage', 'version', 'self_check_version', 'review_nature', 'decision', 'reviewed_at', 'checks_pass', 'checks_total', 'checks', 'fault_injection', 'round10_fixes', 'interrupt_fixes_round11', 'round11_fixes', 'round12_fixes', 'round13_fixes', 'round14_fixes', 'round15_fixes', 'round16_fixes', 'open_findings', 'not_independent', 'release_S05']
+{"id": "C37", "name": "父输入兼容性只认核证登记表：撤去真实依据后必须变 NO，跨文档已解除项重开；栏目须为期间列头且在引文中、页码须为登记页、版本须等于实际 version_used 归类；取列反例必须走**生产路径**：邻列表头不得被认成本列、两列重叠须报歧义、列链内冲突期间须报歧义、不得跨表借表头、金额须逐位相等（含分位以下尾数）、指标行未命中不得回退、canon 不得把区间/相对年/年度压掉、语义互补的邻列片段不得被并进本列（列边界取同一行相邻数字中点）、同侧登记不得凭空增加实际列没有的期间语义且反向（实际更详细）不得被拒；以上新增项共同覆盖生产链，不是每一项都各自单独跑完整链——`cols_equivalent → gap` 的完整链由 `canon_keeps_semantics_via_equivalent`、`rel_year_rejected_by_gap`、`annual_year_rejected_by_gap`、`same_side_semantics_unproven` 四项承担", "result": "PASS", "detail": {"violations": [], "auto_passes": 0, "empty_scope_passes": 0, "verification_chain": {"with_record": true, "no_record": true, "quote_other_metric": true, "wrong_conclusion": true, "value_mismatch": true, "quote_not_located": true, "empty_scope": true, "no_reviewer": true, "p2_quote_missing": true, "doc_mismatch": true, "p2_doc_mismatch": true, "period_mismatch": true, "column_empty": true, "column_not_period": true, "column_not_in_quote": true, "page_invalid": true, "quote_on_wrong_page": true, "adjust_version_invalid": true, "adjust_version_mismatch": true, "adjust_version_other_side": true, "scope_mismatch": true, "scope_basis_missing": true, "reviewer_placeholder": true, "no_date": true, "role_unmarked": true, "quote_without_parent_value": true, "original_quote_with_restated_mark": true, "real_wrong_column": true, "real_column_unresolved": true, "real_column_needs_reread": true, "real_column_ambiguous": true, "duplicate_amount_ambiguous": true, "duplicate_amount_row_bound": true, "neighbor_header_not_taken": true, "overlapping_columns_ambiguous": true, "amount_exact_decimal": true, "amount_subcent_rejected": true, "amount_precision_status": true, "amount_precision_rejected_by_gap": true, "table_boundary_rejected_by_gap": true, "label_row_required": true, "canon_keeps_semantics": true, "canon_keeps_semantics_via_equivalent": true, "annual_year_kept": true, "rel_year_rejected_by_gap": true, "annual_year_rejected_by_gap": true, "neighbor_fragment_not_merged": true, "same_side_semantics_unproven": true, "same_side_more_detail_ok": true, "column_synonym_ok": true, "column_antonym_rejected": true, "column_synonym_pairs": [["本期发生额", "本期数"], ["期末", "年末"], ["期初", "年初数"], ["本期金额（2026年1-6月）", "本期金额（2026年上半年）"]], "column_antonym_pairs": [["本期", "上年同期"], ["上年同期", "上期"], ["本年累计", "本期数"], ["年初至报告期末", "本期数"], ["本期金额（2026年1—6月）", "本报告期金额（2026年4—6月）"], ["本期金额（2026年1-6月）", "本期金额（2026年4-6月）"], ["期末余额（2026年6月30日）", "年末余额（2025年12月31日）"], ["上年同期（2025年1—6月）", "上年同期（2025年4—6月）"], ["本期金额（2026年上半年）", "本期金额（2026Q2）"], ["本期金额（1-6月）", "本期金额（4-6月）"], ["本期金额（2026年上半年）", "本期金额（2026年4-6月）"]]}, "reject_reasons": {"quote_other_metric": "PARENT_QUOTE_WITHOUT_TARGET_METRIC", "wrong_conclusion": "VERIFICATION_NOT_COMPATIBLE", "value_mismatch": "PARENT_VALUE_MISMATCH", "quote_not_located": "PARENT_QUOTE_NOT_LOCATED", "empty_scope": "SCOPE_FIELD_EMPTY", "no_reviewer": "VERIFICATION_WITHOUT_REVIEWER", "p2_quote_missing": "PARENT_QUOTE_TOO_SHORT", "doc_mismatch": "PARENT_DOC_MISMATCH", "p2_doc_mismatch": "PARENT_DOC_MISMATCH", "period_mismatch": "PARENT_PERIOD_MISMATCH", "column_empty": "PARENT_COLUMN_EMPTY", "column_not_period": "PARENT_COLUMN_NOT_PERIOD", "column_not_in_quote": "PARENT_COLUMN_NOT_IN_QUOTE", "page_invalid": "PARENT_PAGE_INVALID", "quote_on_wrong_page": "PARENT_SOURCE_UNAVAILABLE", "adjust_version_invalid": "PARENT_ADJUST_VERSION_INVALID", "adjust_version_mismatch": "PARENT_ADJUST_VERSION_MISMATCH", "adjust_version_other_side": "PARENT_ADJUST_VERSION_MISMATCH", "scope_mismatch": "SCOPE_MISMATCH_WITH_PARENT", "scope_basis_missing": "SCOPE_BASIS_MISSING", "reviewer_placeholder": "VERIFICATION_WITHOUT_REVIEWER", "no_date": "VERIFICATION_WITHOUT_DATE", "role_unmarked": "VERIFICATION_WITHOUT_ROLE", "quote_without_parent_value": "PARENT_QUOTE_WITHOUT_TARGET_METRIC", "original_quote_with_restated_mark": "PARENT_QUOTE_NOT_LOCATED"}, "unit_paths_ok": true, "real_original_positive": true, "real_original_key": "BJ:920289|FIN.NPDEDT.SQ|20260630", "real_original_columns": {"p1": "本期", "p2": "年初至报告期末（2026年1-3月）"}, "real_wrong_column_reason": "PARENT_COLUMN_MISMATCH", "real_column_unresolved_reason": "PARENT_COLUMN_UNRESOLVED", "register_rows": 64, "reopened_pending": 1214, "cumulative_diff_rows": 1419}}
+{"id": "C41", "name": "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、父期间须绑定本行两期、栏目须是原文连续片段且等于该金额在原件中的实际列、页码须合法、调整版本须等于 s00_v10 的 version_used 归类、范围/单位/币种须与实际两期父输入同时相符、口径依据须点到合并范围/单位/币种/期间、版本依据须写出两侧各自的版本归类并逐侧绑定文档/期间、口径依据须给出两侧期间；假引文/错栏目/错父数/错页/版本反写/短依据/错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换/只解释 p1 的版本依据/只给一期的口径依据十三类注入必须**逐行**全部被拦住，且分母按被拦住的唯一记录键数计；同侧登记凭空增加实际列没有的区间/年份/累计语义时，须报 COLUMN_SEMANTICS_UNPROVEN", "result": "PASS", "detail": {"violations": [], "violation_count": 0, "registered": 64, "injections": {"_rows_fake_quote": 64, "fake_quote": 64, "_rows_wrong_column": 64, "wrong_column": 64, "_rows_wrong_value": 64, "wrong_value": 64, "_rows_wrong_page": 64, "wrong_page": 64, "_rows_version_flip": 64, "version_flip": 64, "_rows_short_basis": 64, "short_basis": 64, "_rows_wrong_period": 64, "wrong_period": 64, "_rows_empty_version_basis": 64, "empty_version_basis": 64, "_rows_repeat_version_basis": 64, "repeat_version_basis": 64, "_rows_repeat_scope_basis": 64, "repeat_scope_basis": 64, "_rows_swap_column": 32, "swap_column": 32, "_rows_version_basis_p1_only": 64, "version_basis_p1_only": 64, "_rows_scope_basis_one_period": 64, "scope_basis_one_period": 64, "_rows": 64}, "semantics_inflation_probe": "P1_COLUMN_SEMANTICS_UNPROVEN:本报告期（1-6月）⊄本报告期"}}
+summary.json KEYS ['generated_at', 'version', 'scope', 'nature', 'changes_from_v4', 'versions', 'value_diff', 'key_diff', 'meta_diff', 'extra_meta_diff', 'open_total_core', 'open_total_all', 'restatement_apply_summary', 'known_limits']
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+import sys
+from pathlib import Path
+p=Path('runs/issues/S00/errata_20261111_v5');sys.path.insert(0,str(p.resolve()))
+import parent_verify as pv
+import step4_column_witness as wit
+W=lambda x,y,z,t:(x,y,z,y+8,t)
+cur='\\u672c\\u62a5\\u544a\\u671f'; interval='\\uff084-6\\u6708\\uff09'; label='\\u8425\\u4e1a\\u6536\\u5165'; item='\\u9879\\u76ee'
+base=[W(0,50,200,'\\u5355\\u4f4d\\uff1a\\u5143'),W(0,90,45,label),W(100,90,130,'100.00'),W(140,90,170,'200.00')]
+cases={
+'original':base+[W(100,70,130,cur),W(134,70,165,interval)],
+'vertical_neighbor':base+[W(100,60,138,cur),W(0,60,40,item),W(134,70,165,interval),W(0,70,40,item)],
+'missing_neighbor':[w for w in base if w[4]"'!='"'200.00']+[W(100,70,130,cur),W(134,70,165,interval)],
+'horizontal_conflict':base+[W(100,70,113,'2025\\u5e74\\u534a\\u5e74\\u5ea6'),W(114,70,130,'2026\\u5e74\\u534a\\u5e74\\u5ea6')]
+}
+orig=wit.pv.page_words
+for k,words in cases.items():
+ wit.pv.page_words=lambda *args:words
+ print(k,'production',pv.column_of_amount_aligned(words,'100.00',label=[label]),'witness',wit.witness(None,1,'100.00',[label]))
+wit.pv.page_words=orig
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 378ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+original production ('本报告期', '100.00', 'OK') witness {'status': 'OK', 'column': '本报告期', 'amount': '100.00', 'grid_col': 0, 'grid_n': 2}
+vertical_neighbor production ('本报告期（4-6月）', '100.00', 'OK') witness {'status': 'OK', 'column': '本报告期', 'amount': '100.00', 'grid_col': 0, 'grid_n': 2}
+missing_neighbor production ('本报告期（4-6月）', '100.00', 'OK') witness {'status': 'OK', 'column': '本报告期（4-6月）', 'amount': '100.00', 'grid_col': 0, 'grid_n': 1}
+horizontal_conflict production (None, '100.00', 'AMBIGUOUS') witness {'status': 'AMBIGUOUS', 'column': '2025年半年度2026年半年度', 'why': 'conflict:2025年半年度|2026年半年度'}
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+from pathlib import Path
+p=Path('runs/issues/S00/errata_20261111_v5')
+s=(p/'verify_v5.py').read_text('utf-8-sig').splitlines()
+for a,b in [(1,1)]: pass
+for i,t in enumerate(s):
+ if t.startswith('def ') and ('c41' in t or 'parent' in t): print(i+1,t)
+for name in ['check_l2_v5.py','step4_parent_scan.py']:
+ t=(p/name).read_text('utf-8-sig').splitlines();print(name); print('\\n'.join(t[:65]))
+print('FILES',*[x.name for x in p.glob('*.csv')],sep='\\n')
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 355ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+341 def _parent_basis(kp):
+373 def parent_compatible(k, entries=None, ev_of=None, col_of=None):
+520 def parent_gap(k, entries=None, col_of=None):
+2419 def _fmt_parent(v, unit):
+2431 def _parent_sides(k):
+2452 def _inject_parent_chain():
+2494 def _real_parent_case():
+3551 def check_c41(rows, page_of=None, col_of_for=None):
+3688 def _c41_inject():
+3758 def _c41_semantics_probe():
+check_l2_v5.py
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""S00 勘误 V5 → 全池影响判定（1054 家）
+
+对 Codex 第五轮裁决的落实：
+- 依赖引擎改为「读实际行状态」：直接分季度表不加累计父键、Q1 不减上年年末、
+  累计差分才展开 YTD(t)/YTD(t−1q)；按公司注入真实 status。
+- 受限声明改为逐条绑定唯一源台账记录：dispute_id 由
+  sha1(台账版本|台账|公司|字段|期间|元数据字段|方向) 生成，稳定且可回溯；
+  一行可绑定多条，用 dispute_ids / dispute_count 表达，不再把多标签拼成一个 id。
+- 分层新增 R3_PENDING（有争议但不对应任何候选指标依赖），与 R1_NO_LINK 区分。
+"""
+import csv
+import gzip
+import hashlib
+import json
+from collections import Counter, defaultdict
+from pathlib import Path
+
+import l2_core as core
+
+ROOT = core.ROOT
+OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
+SNAPSHOT = ROOT / "runs/issues/S04/tight_pass.csv"
+SNAPSHOT_SHA = hashlib.sha256(SNAPSHOT.read_bytes()).hexdigest()
+P_B = ROOT / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz"
+
+LEDGER_VERSION = "ERRATA_V5"
+LEDGER_FILES = ["cell_diff.csv", "key_diff.csv", "meta_diff.csv", "extra_meta_diff.csv"]
+LEDGER_SHA = {f: hashlib.sha256((OUT / f).read_bytes()).hexdigest() for f in LEDGER_FILES}
+# 第六轮裁决第八节：ledger_sha256 之前全填 meta_diff.csv，引用键差异/补充元数据的行
+# 绑到了不相干的表。改为四表联合摘要，另设逐表列，任何一行都能定位到实际来源表。
+LEDGER_BUNDLE_SHA = hashlib.sha256(
+    "".join("%s:%s" % (f, LEDGER_SHA[f]) for f in LEDGER_FILES).encode("utf-8")).hexdigest()
+
+SG_METRIC, SG_DIM = core.load_rules(ROOT / "runs/issues/S01/screen_rules_v2.json")
+ALARM = ("HOLD", "MISMATCH", "PROVISIONAL", "CONFLICT", "MISSING", "ABSENT", "UNDEFINED")
+EXTRA_CLASSES = {"AFFECTS_VALUE", "AFFECTS_QUALIFICATION", "AFFECTS_TIMING_OR_PROVENANCE",
+                 "AFFECTS_TRACE_LOCATION", "AFFECTS_ADOPTION_EXPLANATION",
+                 "AFFECTS_PROVENANCE", "AFFECTS_QUALIFICATION_REASON"}
+
+
+def is_open(res):
+    return res.startswith("UNRESOLVED") or res.startswith("PENDING")
+
+
+def is_alarm(v):
+    return any(a in (v or "").upper() for a in ALARM)
+
+
+def dispute_id(ledger, sec, fld, pk, meta_field="", direction=""):
+    """稳定差异身份：不含 resolution / 处置状态，分类变化不会换 ID。
+
+    第六轮裁决第八节：旧实现把 resolution 当作方向的一部分，
+    处置标签一改 ID 就变，无法作为持久引用。
+    """
+    raw = "|".join([ledger, sec, fld, pk, meta_field or "", direction])
+    return "D-" + hashlib.sha1(raw.encode("utf-8")).hexdigest()[:12]
+
+
+# ---------- 争议台账：每条差异一个稳定 id ----------
+ledger = {}                 # dispute_id -> 描述
+ledger_rows = {}            # dispute_id -> 结构化字段（供自检重算）
+by_key = defaultdict(list)  # (sec, fld, pk) -> [dispute_id]
+by_ledger = defaultdict(list)  # (sec, fld, pk) -> [(ledger, dispute_id)]
+step4_parent_scan.py
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""第 4 步批次 B：父输入核证的**证据扫描**（只读，不做放行判定）。
+
+Codex 第十八轮裁决：下一批优先父输入，`parent_verifications.csv` 的 27 列可沿用，
+但「引文须实际支持指定行、期间表头及数值」「单纯填满列不能替代核证；不满足时保留待核」。
+
+本脚本只做一件事：对「HOLD 中仅缺 PARENT_COMPATIBILITY」的每一条待核行，
+把它两个实际累计父数在原件里的**可定位证据**找出来，写 `step4_parent_scan.csv`：
+登记页、表头、行标签、引文、以及取不到时的确切原因。是否登记为 COMPATIBLE
+由 `step4_apply_parents.py` 决定，且只在两侧证据都完整时写。
+
+两个关键口径（对应 F33 与「续页无表头」）：
+
+1. **表头取词按金额跨度重叠**，不是中心点。数字右对齐、表头居中，中心点对齐会
+   把短数字配到右邻列的表头上（实测 97/174 页取不到表头）。
+2. **登记页 = 证据所在页**。s00 的 `source_page` 常常是报表续页，该页没有表头，
+   无法证明「这个数是本期列」；此时在同一文档内找「该数值与期间表头同页出现」的
+   那一页（多为「主要会计数据」表）。两处数值必须逐位相等——不相等就不登记。
+"""
+import csv
+import gzip
+import io
+import json
+import re
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+
+import evidence_scope as es          # noqa: E402
+import l2_core as core               # noqa: E402
+import parent_verify as pv           # noqa: E402
+
+ROOT = core.ROOT
+OUT = HERE
+ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
+P_V10 = ROOT / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz"
+SCAN_PAGES = 40                      # 摘要表都在前 40 页；超过这个范围不再盲搜
+_NUM_IN_TEXT = None
+
+
+def load_v10():
+    idx = {}
+    with gzip.open(P_V10, "rt", encoding="utf-8-sig", newline="") as f:
+        for r in csv.DictReader(f):
+            idx[(r["security_id"], r["field_id"], r["period_key"])] = r
+    return idx
+
+
+def _pdf(sec, doc):
+    return next((p for p in (ORIG / sec.split(":")[-1]).rglob(doc + ".pdf")), None)
+
+
+def _num_pattern(value):
+    """兼容旧签名：金额正则统一由 `parent_verify.amount_pattern()` 生成。
+
+    第十九轮 D3：原实现 `("%f" % float(value))` 会掉精度，且正则没有数字边界
+    （`1100.00` 里能抠出 `100.00`）。现在只有一处实现，生产与自检共用。
+    """
+    return pv.amount_pattern(value)
+
+
+def find_evidence(sec, doc, value, field, prefer_page):
+FILES
+cell_diff.csv
+content_reviews.csv
+dispute_ledger.csv
+event_verifications.csv
+evidence_conflicts.csv
+extra_meta_diff.csv
+key_diff.csv
+l2_dependency_check.csv
+meta_diff.csv
+parent_verifications.csv
+parent_verifications_prev_round19.csv
+restricted_claims.csv
+ruling_scope.csv
+sampling_keys_baseline.csv
+sampling_keys_diff.csv
+sampling_v5.csv
+scope_verifications.csv
+step4_column_witness.csv
+step4_event_scan.csv
+step4_parent_scan.csv
+step4_parent_targets.csv
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+from pathlib import Path
+s=Path('runs/issues/S00/errata_20261111_v5/verify_v5.py').read_text('utf-8-sig').splitlines()
+print('\\n'.join(f'{i+1}: {s[i]}' for i in range(3550,3815)));print('\\nTAIL\\n'+'\\n'.join(s[-15:]))
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 354ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+3551: def check_c41(rows, page_of=None, col_of_for=None):
+3552:     """逐行回原件重推父输入登记。返回违例列表 [(sec, fld, pk, 原因)]。"""
+3553:     bad = []
+3554:     for r in rows:
+3555:         sec = (r.get("security_id") or "").strip()
+3556:         fld = (r.get("field_id") or "").strip()
+3557:         pk = (r.get("period_key") or "").strip()
+3558:         ytd = (r.get("ytd_field") or "").strip()
+3559:         tag = (sec, fld, pk)
+3560:         if not sec or not fld or not pk or ytd != fld[:-3] + ".YTD":
+3561:             bad.append(tag + ("BINDING_INCOMPLETE",))
+3562:             continue
+3563:         if (r.get("conclusion") or "").strip() != "COMPATIBLE":
+3564:             bad.append(tag + ("NOT_COMPATIBLE",))
+3565:             continue
+3566:         if not pv._reviewer_ok(r) or not pv._role_ok(r) or not pv._date_ok(r.get("reviewed_at")):
+3567:             bad.append(tag + ("REVIEW_TRACE_MISSING",))
+3568:             continue
+3569:         # 第十九轮 D4：依据不能只查长度。填 300 个同一字符也能过 `len>=20`。
+3570:         if not _scope_basis_ok(r.get("scope_basis"), (pk, prev_quarter(pk))):
+3571:             bad.append(tag + ("SCOPE_BASIS_UNSUBSTANTIATED",))
+3572:             continue
+3573:         # 第十九轮 D4：父期间必须绑定本行的两期，不能留空或写成别的期间。
+3574:         if (r.get("p1_period") or "").strip() != pk:
+3575:             bad.append(tag + ("P1_PERIOD_MISMATCH",))
+3576:             continue
+3577:         if (r.get("p2_period") or "").strip() != prev_quarter(pk):
+3578:             bad.append(tag + ("P2_PERIOD_MISMATCH",))
+3579:             continue
+3580:         b1 = D10.get((sec, ytd, pk)) or {}
+3581:         b2 = D10.get((sec, ytd, prev_quarter(pk))) or {}
+3582:         if not b1 or not b2:
+3583:             bad.append(tag + ("PARENT_ABSENT",))
+3584:             continue
+3585:         # 口径三项：非空、与实际父输入一致、且**两侧父输入本身必须同口径**
+3586:         v1 = (r.get("p1_adjust_version") or "").strip()
+3587:         v2 = (r.get("p2_adjust_version") or "").strip()
+3588:         for f in ("consolidation_scope", "unit_scale", "currency"):
+3589:             v = (r.get(f) or "").strip()
+3590:             if not v:
+3591:                 bad.append(tag + ("SCOPE_FIELD_EMPTY:%s" % f,))
+3592:                 continue
+3593:             if v != (b1.get(f) or "").strip() or v != (b2.get(f) or "").strip():
+3594:                 bad.append(tag + ("SCOPE_MISMATCH_WITH_PARENT:%s" % f,))
+3595:         if (b1.get("consolidation_scope") or "").strip() != \
+3596:                 (b2.get("consolidation_scope") or "").strip():
+3597:             bad.append(tag + ("SCOPE_NOT_SHARED_BETWEEN_PARENTS:consolidation_scope",))
+3598:         if (b1.get("unit_scale") or "").strip() != (b2.get("unit_scale") or "").strip():
+3599:             bad.append(tag + ("SCOPE_NOT_SHARED_BETWEEN_PARENTS:unit_scale",))
+3600:         if (b1.get("currency") or "").strip() != (b2.get("currency") or "").strip():
+3601:             bad.append(tag + ("SCOPE_NOT_SHARED_BETWEEN_PARENTS:currency",))
+3602:         if (r.get("unit_scale") or "").strip() not in pv.AMOUNT_UNITS:
+3603:             bad.append(tag + ("UNIT_NOT_AMOUNT",))
+3604:         # 第十九轮 D4：版本依据必须写出两侧各自的版本归类，不能只留一句套话。
+3605:         # 第二十轮裁决 4：还要**逐侧绑定**文档/期间，缺任一侧即拒绝。
+3606:         if not _version_basis_ok(
+3607:                 r.get("version_basis"),
+3608:                 [("p1", (r.get("p1_doc") or "").strip(), pk, v1),
+3609:                  ("p2", (r.get("p2_doc") or "").strip(), prev_quarter(pk), v2)]):
+3610:             bad.append(tag + ("VERSION_BASIS_UNSUBSTANTIATED",))
+3611:         colf = col_of_for(sec) if col_of_for else None
+3612:         for side, b in (("p1", b1), ("p2", b2)):
+3613:             doc = (r.get(side + "_doc") or "").strip()
+3614:             pg = (r.get(side + "_page") or "").strip()
+3615:             q = r.get(side + "_quote") or ""
+3616:             col = (r.get(side + "_column") or "").strip()
+3617:             val = (r.get(side + "_value") or "").strip()
+3618:             if doc != (b.get("document_id") or "").strip():
+3619:                 bad.append(tag + ("%s_DOC_MISMATCH" % side.upper(),))
+3620:                 continue
+3621:             if val != (b.get("value_cny") or "").strip():
+3622:                 bad.append(tag + ("%s_VALUE_MISMATCH" % side.upper(),))
+3623:                 continue
+3624:             if not pv._page_ok(pg):
+3625:                 bad.append(tag + ("%s_PAGE_INVALID" % side.upper(),))
+3626:                 continue
+3627:             # 先把「该金额在原件里落在哪一列」重推一遍：`actual/st` 用于栏目比对，
+3628:             # `aw` 是命中的金额词，用于核对引文里确实有这个数（第十九轮 D3）。
+3629:             names = pv.METRIC_ALIASES.get(ytd) or ()
+3630:             actual = st = aw = None
+3631:             if colf is not None:
+3632:                 res = colf(doc, pg, val, names)
+3633:                 actual, st = res[0], res[1]
+3634:                 aw = res[2] if len(res) > 2 else None
+3635:             # 第十九轮 D2/D4：登记栏目必须是**原文连续片段**且带期间语义，
+3636:             # 不能再拿 `canon_column` 的结构化键当列名（那是比较用的键，不是原文）。
+3637:             if not col or col != pv.clean_column_text(col) or not pv.canon_column(col):
+3638:                 bad.append(tag + ("%s_COLUMN_NOT_CANONICAL" % side.upper(),))
+3639:                 continue
+3640:             ver = (r.get(side + "_adjust_version") or "").strip()
+3641:             if ver != pv.ver_class(b.get("version_used")):
+3642:                 bad.append(tag + ("%s_ADJUST_VERSION_MISMATCH" % side.upper(),))
+3643:                 continue
+3644:             src = page_of(sec, doc, pg) if page_of else ""
+3645:             if src is None:
+3646:                 bad.append(tag + ("%s_SOURCE_READ_FAILED" % side.upper(),))
+3647:                 continue
+3648:             if not src:
+3649:                 bad.append(tag + ("%s_SOURCE_UNAVAILABLE" % side.upper(),))
+3650:                 continue
+3651:             nq = pv._nz(q)
+3652:             if len(nq) < pv._MIN_QUOTE or nq not in src:
+3653:                 bad.append(tag + ("%s_QUOTE_NOT_LOCATED" % side.upper(),))
+3654:                 continue
+3655:             if col not in nq:
+3656:                 bad.append(tag + ("%s_QUOTE_WITHOUT_COLUMN" % side.upper(),))
+3657:                 continue
+3658:             names = pv.METRIC_ALIASES.get(ytd) or ()
+3659:             if names and not any(n in nq for n in names):
+3660:                 bad.append(tag + ("%s_QUOTE_WITHOUT_TARGET_METRIC" % side.upper(),))
+3661:                 continue
+3662:             if not pv._num_in_quote(q, val, b.get("unit_scale"),
+3663:                                     exact=(aw if aw else None)):
+3664:                 bad.append(tag + ("%s_QUOTE_WITHOUT_PARENT_VALUE" % side.upper(),))
+3665:                 continue
+3666:             if ver == "RESTATED" and not any(mk in nq for mk in pv._VER_MARK_RESTATED):
+3667:                 bad.append(tag + ("%s_QUOTE_WITHOUT_VERSION_MARK" % side.upper(),))
+3668:                 continue
+3669:             if ver == "ORIGINAL" and any(mk in nq for mk in pv._VER_MARK_FORBIDDEN_ORIGINAL):
+3670:                 bad.append(tag + ("%s_QUOTE_VERSION_CONFLICT" % side.upper(),))
+3671:                 continue
+3672:             if colf is not None:
+3673:                 if st != "OK" or not actual:
+3674:                     bad.append(tag + ("%s_COLUMN_UNRESOLVED:%s" % (side.upper(), st),))
+3675:                     continue
+3676:                 if not pv.cols_equivalent(col, actual):
+3677:                     bad.append(tag + ("%s_COLUMN_MISMATCH:%s≠%s"
+3678:                                       % (side.upper(), col, actual),))
+3679:                     continue
+3680:                 # 第二十一轮裁决 2：同侧登记不得凭空增加实际列没有的语义
+3681:                 # （把邻列的长列名登记成该金额所在列，正是靠「空=不约束」蒙过的）。
+3682:                 if not pv._no_extra_semantics(col, actual):
+3683:                     bad.append(tag + ("%s_COLUMN_SEMANTICS_UNPROVEN:%s⊄%s"
+3684:                                       % (side.upper(), col, actual),))
+3685:     return bad
+3686: 
+3687: 
+3688: def _c41_inject():
+3689:     """注入必须**逐行**做，并报出实际拦住的条数。
+3690: 
+3691:     第十九轮 D4：原实现每类只改首行，`review.json` 里记 1，而汇报文字写「各 70」——
+3692:     自检产物与汇报不一致。现在每类对**每一行**都注入，要求拦住条数等于行数；
+3693:     汇报侧直接读这里的数字，不再手写。
+3694:     """
+3695:     base = [dict(r) for r in _PV_ROWS if r.get("p1_quote")]
+3696:     out = {}
+3697:     if not base:
+3698:         return False, out
+3699: 
+3700:     def _flip_ver(r):
+3701:         r["p1_adjust_version"] = ("ORIGINAL" if
+3702:                                   (r.get("p1_adjust_version") or "").strip() == "RESTATED"
+3703:                                   else "RESTATED")
+3704: 
+3705:     cases = [
+3706:         ("fake_quote", lambda r: r.update(p1_quote="营业收入100.00元"), None),
+3707:         ("wrong_column", lambda r: r.update(p1_column="上年同期"), None),
+3708:         ("wrong_value", lambda r: r.update(p1_value="1.00"), None),
+3709:         ("wrong_page", lambda r: r.update(p1_page="9999"), None),
+3710:         ("version_flip", _flip_ver, None),
+3711:         ("short_basis", lambda r: r.update(scope_basis="已核"), None),
+3712:         # 第十九轮新增：父期间、版本依据、依据填充、两列互换
+3713:         ("wrong_period", lambda r: r.update(p1_period="20200101"), None),
+3714:         ("empty_version_basis", lambda r: r.update(version_basis=""), None),
+3715:         ("repeat_version_basis", lambda r: r.update(version_basis="同" * 40), None),
+3716:         ("repeat_scope_basis", lambda r: r.update(scope_basis="合" * 300), None),
+3717:         # 两列互换：只有两列**不是同一列**时才是有效注入。`本报告期` 与
+3718:         # `本报告期（1－6月）` 在半年报里指同一列（`cols_equivalent` 判等价），
+3719:         # 互换后什么都没变，拦不住不是缺陷。分母因此是子集，逐类记
+3720:         # `_rows_<name>`，判据是「拦住数 == 该类的实际注入行数」。
+3721:         ("swap_column", lambda r: r.update(p1_column=r.get("p2_column") or "本期"),
+3722:          lambda r: not pv.cols_equivalent(r.get("p1_column") or "",
+3723:                                           r.get("p2_column") or "")),
+3724:         # 第二十轮裁决 4：只解释一侧的依据必须被拦住。
+3725:         # 这两条注入的文本**满足除「另一侧」以外的全部条件**，所以拦得住才说明
+3726:         # 判据真的在逐侧比对，而不是靠长度/关键词碰巧过不去。
+3727:         ("version_basis_p1_only",
+3728:          lambda r: r.update(version_basis=(
+3729:              "p1 的 s00_v10 version_used 为 %s，取该版本列（%s）"
+3730:              % ((r.get("p1_adjust_version") or "").strip(),
+3731:                 (r.get("p1_doc") or "").strip()))),
+3732:          None),
+3733:         ("scope_basis_one_period",
+3734:          lambda r: r.update(scope_basis=(
+3735:              "两期均为合并口径、币种人民币、金额单位元；p1 取 %s 第 %s 页（期间 %s）"
+3736:              % ((r.get("p1_doc") or "").strip(), (r.get("p1_page") or "").strip(),
+3737:                 (r.get("p1_period") or "").strip()))),
+3738:          None),
+3739:     ]
+3740:     for name, mut, pick in cases:
+3741:         rows = [dict(x) for x in base if (pick is None or pick(x))]
+3742:         out["_rows_" + name] = len(rows)
+3743:         for x in rows:
+3744:             mut(x)
+3745:         bad = check_c41(rows, page_of=_pdf_ev, col_of_for=_col_of)
+3746:         # 第二十轮裁决 4：分母按**被拦住的唯一记录键数**算，不用违例条数冒充行数
+3747:         # （一行可能报出多条违例，那样「拦住数」会虚高）。
+3748:         out[name] = len({(b[0], b[1], b[2]) for b in bad})
+3749:     out["_rows"] = len(base)
+3750:     ok = all(out[k] == out["_rows_" + k] for k in out if not k.startswith("_"))
+3751:     return ok, out
+3752: 
+3753: 
+3754: _c41 = check_c41(_PV_ROWS, page_of=_pdf_ev, col_of_for=_col_of)
+3755: _c41_inj_ok, _c41_inj = _c41_inject()
+3756: 
+3757: 
+3758: def _c41_semantics_probe():
+3759:     """第二十一轮裁决 2：同侧登记**凭空增加**期间语义，`check_c41` 必须拒。
+3760: 
+3761:     为什么不用逐行注入：把登记列名换成邻列的长名称后，引文里本来就没有那串字，
+3762:     `*_QUOTE_WITHOUT_COLUMN` 会先拦住——拦是拦住了，但证明不了新判据。
+3763: 
+3764:     这里用一行**合成引文**（页文与引文同源），把「引文里没有该列名」这道前置
+3765:     检查让开，于是唯一可能拦住它的就是「实际列没有这段语义」。返回拦住的理由，
+3766:     空串表示没拦住。
+3767:     """
+3768:     if not _PV_ROWS:
+3769:         return "NO_ROWS"
+3770:     r = dict(_PV_ROWS[0])
+3771:     names = pv.METRIC_ALIASES.get((r.get("ytd_field") or "").strip()) or ()
+3772:     r["p1_column"] = "本报告期（1-6月）"
+3773:     r["p1_quote"] = "本报告期（1-6月）" + (names[0] if names else "") + \
+3774:                     (r.get("p1_value") or "")
+3775:     bad = check_c41([r], page_of=lambda *a, **k: r["p1_quote"],
+3776:                     col_of_for=lambda sec: (lambda *a, **k: ("本报告期", "OK", None)))
+3777:     hit = [b[-1] for b in bad if "SEMANTICS_UNPROVEN" in (b[-1] or "")]
+3778:     return hit[0] if hit else (bad[0][-1] if bad else "")
+3779: 
+3780: 
+3781: _c41_sem = _c41_semantics_probe()
+3782: add("C41", "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、"
+3783:     "父期间须绑定本行两期、栏目须是原文连续片段且等于该金额在原件中的实际列、"
+3784:     "页码须合法、调整版本须等于 s00_v10 的 version_used 归类、"
+3785:     "范围/单位/币种须与实际两期父输入同时相符、口径依据须点到合并范围/单位/币种/期间、"
+3786:     "版本依据须写出两侧各自的版本归类并逐侧绑定文档/期间、口径依据须给出两侧期间；"
+3787:     "假引文/错栏目/错父数/错页/版本反写/短依据/"
+3788:     "错父期间/空版本依据/重复填充版本依据/重复填充分口径依据/两列互换/"
+3789:     "只解释 p1 的版本依据/只给一期的口径依据十三类注入"
+3790:     "必须**逐行**全部被拦住，且分母按被拦住的唯一记录键数计；"
+3791:     "同侧登记凭空增加实际列没有的区间/年份/累计语义时，须报 COLUMN_SEMANTICS_UNPROVEN",
+3792:     (not _c41) and _c41_inj_ok and "SEMANTICS_UNPROVEN" in (_c41_sem or ""),
+3793:     {"violations": _c41[:5], "violation_count": len(_c41),
+3794:      "registered": len(_PV_ROWS), "injections": _c41_inj,
+3795:      "semantics_inflation_probe": _c41_sem})
+3796: 
+3797: add("C39", "状态文件派生字段由自检单一写出：写前回退必须被报出、写后产出必须合规、"
+3798:     "检查函数须能拦住旧计数/旧 sampling 字段/旧版本",
+3799:     (not _pre_regressions) and (not _post_problems) and _inj_ok,
+3800:     {"pre_regressions": _pre_regressions, "pre_all": _pre_problems,
+3801:      "post_violations": _post_problems, "file": "data/active_issue.json",
+3802:      "injection": {"checks_legacy": _inj_checks,
+3803:                    "sampling_derived": _inj_sampling,
+3804:                    "self_check_version": _inj_version,
+3805:                    "checks_count": _inj_count_checks,
+3806:                    "self_check_count": _inj_count_self,
+3807:                    "top_claim_note": _inj_claim_note,
+3808:                    "all_caught": _inj_ok},
+3809:      "legacy_sampling_keys": list(_LEGACY_SAMPLING_KEYS),
+3810:      "locator_version": _SAMP_SUM.get("locator_version")})
+3811: 
+3812: passed = sum(1 for c in checks if c["result"] == "PASS")
+3813: review = {
+3814:     "issue_key": "S00", "stage": "ERRATA", "version": "ERRATA_V5",
+3815:     "self_check_version": SELF_CHECK_VERSION,
+
+TAIL
+                       "（计数取自 sampling_v5.json，不在此处另写一份）。"
+                       % (samp_sum.get("samples", 0), samp_sum.get("risk_types", 0),
+                          samp_sum.get("unique_keys", 0)),
+    "release_S05": False,
+}
+# 单一写者：把派生块按最终计数与最终裁决再写一次（含 C39 自身的结果）。
+write_status(passed, len(checks), review["decision"])
+(OUT / "review.json").write_text(
+    json.dumps(review, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+for c in checks:
+    print("%s %-6s %s" % (c["id"], c["result"], c["name"]))
+    if c["result"] == "FAIL":
+        print("      ", json.dumps(c["detail"], ensure_ascii=False)[:400])
+print("\n%d/%d PASS → %s" % (passed, len(checks), review["decision"]))
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+from pathlib import Path
+p=Path('runs/issues/S00/errata_20261111_v5')
+s=(p/'verify_v5.py').read_text('utf-8-sig').splitlines()
+for i,t in enumerate(s):
+ if t.startswith('def _') and any(n in t for n in ['pdf_ev','col_of','scope_basis_ok','version_basis_ok']):
+  print('\\n'.join(f'{j+1}: {s[j]}' for j in range(i,min(i+60,len(s)))))
+print('RESOURCE',Path('data/resource_map.csv').read_text('utf-8-sig')[:1700])
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 394ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+410: def _col_of(sec):
+411:     """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项，第十二轮绑定目标行）。
+412: 
+413:     第十八轮接受后自查（F33）：与生产侧同步改用 `column_of_amount_aligned()`
+414:     （跨度重叠 + 保留年份 + 表头跨行合并）。
+415:     第十九轮 D2：返回值改为 `clean_column_text()` 的**原文连续片段**，不再是
+416:     `canon_column()` 的结构化键——键是拿来比的，不是拿来当列名的；把键写回
+417:     登记表等于用一个原文里不存在的字符串登记，引文里也就定位不到它。
+418:     两侧（生产 / 自检）仍然同一把尺子：都走 `column_of_amount_aligned` +
+419:     `clean_column_text`，比较走 `cols_equivalent`。
+420: 
+421:     第十九轮 D3：第三个返回值是命中的**金额词** `(x0, x1, text)`，供 C41 直接
+422:     核对「引文里有没有这个数」——引文是把词流去掉空白拼起来的，文本层面分不清
+423:     `61249,206,238.56` 是附注号 `61` 粘上 `249,206,238.56`，还是一个大数。
+424:     """
+425:     def f(doc, page, value, label=None):
+426:         pdf = pdf_file(sec, doc)
+427:         if pdf is None:
+428:             return None, "NO_WORDS", None
+429:         words = pv.page_words(pdf, page)
+430:         if not words:
+431:             return None, "NO_WORDS", None
+432:         col, _amt, st, aw = pv.column_of_amount_aligned_ex(words, value, label=label)
+433:         if st != "OK":
+434:             return None, st, None
+435:         return pv.clean_column_text(col), "OK", aw
+436:     return f
+437: 
+438: 
+439: def _nz(s):
+440:     """去空白。**必须定义在 `pdf_pages()` 之前**：`pdf_pages` 在导入期就会被调用，
+441:     而它逐页取词时要用到这个函数；放在文件后半段会让 `NameError` 被逐页
+442:     `try/except` 吞成「整本页面都是空串」，看起来像原件不可读（实际是代码顺序错）。
+443:     """
+444:     return re.sub(r"\s+", "", s or "")
+445: 
+446: 
+447: ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
+448: _PDF_CACHE = {}
+449: 
+450: 
+451: def pdf_pages(sec, doc):
+452:     """回读原件物理页文本（按 document_id 缓存）。不可用时返回 None。
+453: 
+454:     第九轮 D 项：C24 原来的定位源是 `results.csv.evidence`——那是上游核验记录里
+455:     的摘录，不是原件；拿它自证「引文可定位」等于用同一来源自证。改为回读 PDF。
+456: 
+457:     第十九轮 D5：**技术失败不能写成「该页没有文字」**。原实现把取词异常页写成
+458:     `""`，于是一整本取词全失败时得到 `['']`——既满足缓存条件被永久记住，又让
+459:     下游把「读不出来」当成「原件里没有这句话」。现在失败页记 `None`（与真正的
+460:     空页 `""` 区分），整本只要有一页失败就**不写缓存**，下次重试。
+461:     """
+462:     key = (sec, doc)
+463:     if key in _PDF_CACHE:
+464:         return _PDF_CACHE[key]
+465:     pages = None
+466:     failed = 0
+467:     code = (sec or "").split(":")[-1]
+468:     pdf = None
+469:     for p in (ORIG / code).rglob(doc + ".pdf"):
+494: def _pdf_ev(sec, doc, page):
+495:     """原件指定物理页文本（第十轮 B3 项：引文必须落在登记页上）。
+496: 
+497:     返回 `None` 表示**技术失败**（该页取词异常），`""` 表示该页确实没有文字。
+498:     第十九轮 D5：两者必须分开——否则「读不出来」会被写成「原件里没有这句话」。
+499:     """
+500:     try:
+501:         n = int(str(page).strip())
+502:     except (TypeError, ValueError):
+503:         return ""
+504:     pages = pdf_pages(sec, doc) or []
+505:     if pages:
+506:         if 1 <= n <= len(pages):
+507:             return pages[n - 1]        # 可能是 None（该页技术失败）
+508:         return ""
+509:     # 回退：整本读取失败时按页取词。第十八轮后 C41 要逐行回读父输入登记，
+510:     # 若这里静默返回空串，登记会被判成「原件不可用」——那是把技术失败说成证据缺失。
+511:     pdf = pdf_file(sec, doc)
+512:     if pdf is None:
+513:         return None
+514:     ws = pv.page_words(pdf, page)
+515:     if not ws:
+516:         return None                    # 取词返回空 = 读不出来，不是「空页」
+517:     return pv._nz("".join(w[4] for w in ws))
+518: 
+519: 
+520: def parent_gap(k, entries=None, col_of=None):
+521:     """返回兼容性判定依据（供台账展示）：VERIFIED 或具体缺口原因。"""
+522:     sec, fld, pk = k
+523:     if fld not in es.SIMPLE_SQ or es.is_q1(pk):
+524:         return "NA"
+525:     ytd = fld[:-3] + ".YTD"
+526:     k1, k2 = (sec, ytd, pk), (sec, ytd, prev_quarter(pk))
+527:     b1, b2 = _parent_basis(k1), _parent_basis(k2)
+528:     if not b1 or not b2:
+529:         return "PARENT_MISSING"
+530:     for f in ("scope", "unit", "cur"):
+531:         if not b1[f] or b1[f] != b2[f]:
+532:             return "SCOPE_UNIT_CURRENCY_MISMATCH"
+533:     reg = PARENT_VERIFS if entries is None else entries
+534:     g = pv.gap(reg.get(k), _expect(k1, k2, b1, b2),
+535:                lambda d, p: _pdf_ev(sec, d, p), col_of=col_of)
+536:     return "VERIFIED" if g is None else g
+537: 
+538: 
+539: def read_dir(d):
+540:     def rd(n):
+541:         p = d / n
+542:         if not p.exists():
+543:             return []
+544:         with open(p, encoding="utf-8-sig", newline="") as f:
+545:             return list(csv.DictReader(f))
+546:     return rd("cell_diff.csv"), rd("key_diff.csv"), rd("meta_diff.csv")
+547: 
+548: 
+549: def read_extra(d):
+550:     p = d / "extra_meta_diff.csv"
+551:     if not p.exists():
+552:         return []
+553:     with open(p, encoding="utf-8-sig", newline="") as f:
+2578: def _pgap(k, ent, src, col_of=None):
+2579:     """直接取 gap() 的拒绝原因（第十轮 G 项：断言拦在哪一道）。"""
+2580:     sides = _parent_sides(k)
+2581:     if sides is None:
+2582:         return "PRECONDITION"
+2583:     k1, k2, b1, b2 = sides
+2584:     if isinstance(src, dict):
+2585:         _m = src
+2586:         src = lambda d, p: _m.get((d, str(p)), "")
+2587:     return pv.gap(ent, _expect(k1, k2, b1, b2), src, col_of=col_of)
+2588: 
+2589: 
+2590: _pk, _pent, _psrc = _inject_parent_chain()
+2591: _real_k, _real_ent = _real_parent_case()
+2592: # 单位路径直测（第十轮 B1 项）：1 / 1000 / 10000 三档都要正确折算
+2593: unit_paths_ok = (
+2594:     pv._num_in_quote("187,875.40", "1878754000", "10000")
+2595:     and pv._num_in_quote("1,878,754.00", "1878754000", "1000")
+2596:     and pv._num_in_quote("1,878,754,000.00", "1878754000", "1")
+2597:     and not pv._num_in_quote("187,875.40", "1878754000", "1")
+2598:     and not pv._num_in_quote("187,875.40", "1878754000", "1000")
+2599: )
+2600: if _pk is None:
+2601:     c37.append("NO_INJECTABLE_PARENT_CASE")
+2602:     chain, c37_reason = {}, {}
+2603: else:
+2604:     chain, c37_reason = {}, {}
+2605:     chain["with_record"] = parent_compatible(_pk, {_pk: _pent}, _psrc) is True
+2606:     chain["no_record"] = parent_compatible(_pk, {}, _psrc) is False
+2607: 
+2608:     EXPECT = [
+2609:         ("wrong_conclusion", {"conclusion": "NOT_COMPATIBLE"},
+2610:          "VERIFICATION_NOT_COMPATIBLE"),
+2611:         ("value_mismatch", {"p1_value": "0"}, "PARENT_VALUE_MISMATCH"),
+2612:         ("quote_not_located", {"p1_quote": "此引文在原文中并不存在用于测试定位失败"},
+2613:          "PARENT_QUOTE_NOT_LOCATED"),
+2614:         ("empty_scope", {"unit_scale": ""}, "SCOPE_FIELD_EMPTY"),
+2615:         ("no_reviewer", {"reviewer": ""}, "VERIFICATION_WITHOUT_REVIEWER"),
+2616:         ("p2_quote_missing", {"p2_quote": ""}, "PARENT_QUOTE_TOO_SHORT"),
+2617:         ("doc_mismatch", {"p1_doc": "DOC-01140151955D939E"}, "PARENT_DOC_MISMATCH"),
+2618:         ("p2_doc_mismatch", {"p2_doc": "DOC-01140151955D939E"}, "PARENT_DOC_MISMATCH"),
+2619:         ("period_mismatch", {"p1_period": "20250331"}, "PARENT_PERIOD_MISMATCH"),
+2620:         ("column_empty", {"p1_column": ""}, "PARENT_COLUMN_EMPTY"),
+2621:         # 第十轮 B2 项：栏目必须是期间列头，且须出现在引文里
+2622:         ("column_not_period", {"p1_column": "营业收入"}, "PARENT_COLUMN_NOT_PERIOD"),
+2623:         ("column_not_in_quote", {"p1_column": "2024年12月31日"},
+2624:          "PARENT_COLUMN_NOT_IN_QUOTE"),
+2625:         ("page_invalid", {"p1_page": ""}, "PARENT_PAGE_INVALID"),
+2626:         ("quote_on_wrong_page", {"p1_page": "7"}, "PARENT_SOURCE_UNAVAILABLE"),
+2627:         ("adjust_version_invalid", {"p1_adjust_version": "MIXED"},
+2628:          "PARENT_ADJUST_VERSION_INVALID"),
+2629:         ("adjust_version_mismatch",
+2630:          {"p1_adjust_version": "RESTATED" if _pent["p1_adjust_version"] == "ORIGINAL"
+2631:           else "ORIGINAL"}, "PARENT_ADJUST_VERSION_MISMATCH"),
+2632:         # 两父声明不同版本时，先被「该侧声明 != 该侧实际归类」拦住；
+2633:         # 声明一致性的检查只在两侧都能对上实际版本时才可达（此时必然一致）。
+2634:         ("adjust_version_other_side", {"p2_adjust_version": "RESTATED"
+2635:                                        if _pent["p1_adjust_version"] == "ORIGINAL"
+2636:                                        else "ORIGINAL"},
+2637:          "PARENT_ADJUST_VERSION_MISMATCH"),
+3505: def _version_basis_ok(s, sides):
+3506:     """版本依据是否**逐侧**说明了版本，且绑到该侧的文档或期间。
+3507: 
+3508:     第二十轮裁决 4：上一版把 `v1, v2` 收进一个 `set` 再查「两个版本词都出现过」，
+3509:     于是「只解释 p1 的原版」也能过——因为它既没绑定 p1/p2，也不要求两侧各有陈述。
+3510:     现在 `sides` 是 [(tag, doc, period, 版本归类)]，每一侧都必须找到**自己的子句**，
+3511:     该子句要同时含 tag、该侧的版本词、以及该侧的文档号或期间。缺任一侧即拒绝。
+3512:     """
+3513:     t = pv._nz(s)
+3514:     if len(t) < 12 or _filler_text(t):
+3515:         return False
+3516:     cl = _basis_clauses(t)
+3517:     for tag, doc, period, ver in sides:
+3518:         toks = _VER_BASIS_TOKENS.get(ver) or ()
+3519:         hit = None
+3520:         for c in cl:
+3521:             if tag in c and any(x in c for x in toks):
+3522:                 hit = c
+3523:                 break
+3524:         if hit is None:
+3525:             return False
+3526:         if not ((doc and doc in hit) or (period and period in hit)):
+3527:             return False
+3528:     return True
+3529: 
+3530: 
+3531: def _scope_basis_ok(s, periods):
+3532:     """口径依据是否点到合并范围、单位、币种，并**给出两侧各自的期间**。
+3533: 
+3534:     第二十轮裁决 4：上一版只要求「任一期出现」，于是「只写一个期间」也能过。
+3535:     两期口径是这条核证的全部意义（累计差分要两个父数同口径），缺一期即拒绝。
+3536:     """
+3537:     t = pv._nz(s)
+3538:     if len(t) < pv._MIN_BASIS or _filler_text(t):
+3539:         return False
+3540:     if not any(x in t for x in _BASIS_SCOPE_TOKENS):
+3541:         return False
+3542:     if not any(x in t for x in _BASIS_UNIT_TOKENS):
+3543:         return False
+3544:     if not any(x in t for x in _BASIS_CUR_TOKENS):
+3545:         return False
+3546:     if not all(p and p in t for p in periods):
+3547:         return False
+3548:     return True
+3549: 
+3550: 
+3551: def check_c41(rows, page_of=None, col_of_for=None):
+3552:     """逐行回原件重推父输入登记。返回违例列表 [(sec, fld, pk, 原因)]。"""
+3553:     bad = []
+3554:     for r in rows:
+3555:         sec = (r.get("security_id") or "").strip()
+3556:         fld = (r.get("field_id") or "").strip()
+3557:         pk = (r.get("period_key") or "").strip()
+3558:         ytd = (r.get("ytd_field") or "").strip()
+3559:         tag = (sec, fld, pk)
+3560:         if not sec or not fld or not pk or ytd != fld[:-3] + ".YTD":
+3561:             bad.append(tag + ("BINDING_INCOMPLETE",))
+3562:             continue
+3563:         if (r.get("conclusion") or "").strip() != "COMPATIBLE":
+3564:             bad.append(tag + ("NOT_COMPATIBLE",))
+3531: def _scope_basis_ok(s, periods):
+3532:     """口径依据是否点到合并范围、单位、币种，并**给出两侧各自的期间**。
+3533: 
+3534:     第二十轮裁决 4：上一版只要求「任一期出现」，于是「只写一个期间」也能过。
+3535:     两期口径是这条核证的全部意义（累计差分要两个父数同口径），缺一期即拒绝。
+3536:     """
+3537:     t = pv._nz(s)
+3538:     if len(t) < pv._MIN_BASIS or _filler_text(t):
+3539:         return False
+3540:     if not any(x in t for x in _BASIS_SCOPE_TOKENS):
+3541:         return False
+3542:     if not any(x in t for x in _BASIS_UNIT_TOKENS):
+3543:         return False
+3544:     if not any(x in t for x in _BASIS_CUR_TOKENS):
+3545:         return False
+3546:     if not all(p and p in t for p in periods):
+3547:         return False
+3548:     return True
+3549: 
+3550: 
+3551: def check_c41(rows, page_of=None, col_of_for=None):
+3552:     """逐行回原件重推父输入登记。返回违例列表 [(sec, fld, pk, 原因)]。"""
+3553:     bad = []
+3554:     for r in rows:
+3555:         sec = (r.get("security_id") or "").strip()
+3556:         fld = (r.get("field_id") or "").strip()
+3557:         pk = (r.get("period_key") or "").strip()
+3558:         ytd = (r.get("ytd_field") or "").strip()
+3559:         tag = (sec, fld, pk)
+3560:         if not sec or not fld or not pk or ytd != fld[:-3] + ".YTD":
+3561:             bad.append(tag + ("BINDING_INCOMPLETE",))
+3562:             continue
+3563:         if (r.get("conclusion") or "").strip() != "COMPATIBLE":
+3564:             bad.append(tag + ("NOT_COMPATIBLE",))
+3565:             continue
+3566:         if not pv._reviewer_ok(r) or not pv._role_ok(r) or not pv._date_ok(r.get("reviewed_at")):
+3567:             bad.append(tag + ("REVIEW_TRACE_MISSING",))
+3568:             continue
+3569:         # 第十九轮 D4：依据不能只查长度。填 300 个同一字符也能过 `len>=20`。
+3570:         if not _scope_basis_ok(r.get("scope_basis"), (pk, prev_quarter(pk))):
+3571:             bad.append(tag + ("SCOPE_BASIS_UNSUBSTANTIATED",))
+3572:             continue
+3573:         # 第十九轮 D4：父期间必须绑定本行的两期，不能留空或写成别的期间。
+3574:         if (r.get("p1_period") or "").strip() != pk:
+3575:             bad.append(tag + ("P1_PERIOD_MISMATCH",))
+3576:             continue
+3577:         if (r.get("p2_period") or "").strip() != prev_quarter(pk):
+3578:             bad.append(tag + ("P2_PERIOD_MISMATCH",))
+3579:             continue
+3580:         b1 = D10.get((sec, ytd, pk)) or {}
+3581:         b2 = D10.get((sec, ytd, prev_quarter(pk))) or {}
+3582:         if not b1 or not b2:
+3583:             bad.append(tag + ("PARENT_ABSENT",))
+3584:             continue
+3585:         # 口径三项：非空、与实际父输入一致、且**两侧父输入本身必须同口径**
+3586:         v1 = (r.get("p1_adjust_version") or "").strip()
+3587:         v2 = (r.get("p2_adjust_version") or "").strip()
+3588:         for f in ("consolidation_scope", "unit_scale", "currency"):
+3589:             v = (r.get(f) or "").strip()
+3590:             if not v:
+RESOURCE resource_id,repo_path,local_original_path,kind,availability,sha256,fallback
+RES-001,archive/latest_universe.csv,C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\R1_parallel_parent_reviewed_20261024\r1_universe_with_batch01_02A_02B_review.csv,可随GitHub访问的文本快照,COPIED,12f31c50c73dbee8fbb2eba5c3f039e1cb1de328b35a2d521651cecb0a6a6c33,仓库可直接打开；不要求访问原D盘
+RES-002,archive/latest_review.md,C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\R1_parallel_parent_reviewed_20261024\验收结论与下一步.md,可随GitHub访问的文本快照,COPIED,8617d1cd5423b974cc649ea160845e9ce2acb5028e8afaf4c4f649a0f1ca1f02,仓库可直接打开；不要求访问原D盘
+RES-003,archive/early_sample_proposals.csv,C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\R1样本分类待审_20261024.csv,可随GitHub访问的文本快照,COPIED,2db49a90fdf4eb4d0af6759c5e42c06dac04077f269778bd40359c882685e408,仓库可直接打开；不要求访问原D盘
+RES-004,archive/early_sample_evidence.csv,C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\R1证据登记_父代理复核_20261024.csv,可随GitHub访问的文本快照,COPIED,1b580a01663f3ad8bdbea0627856f7d5a719d5407feb53e1b2e8b88d2be9c65e,仓库可直接打开；不要求访问原D盘
+RES-005,archive/foundation_review.md,C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\R1独立验收记录_20261024.md,可随GitHub访问的文本快照,COPIED,2545b7ca8a6849413073ee1b20ac7e059ca87619e40d0f9b3ebd07deb381e1b8,仓库可直接打开；不要求访问原D盘
+RES-006,archive/robotics_taxonomy.json,C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\R1_parallel_20261024\robotics_taxonomy.json,可随GitHub访问的文本快照,COPIED,d1123edaf1965beba79c6249b4ef1351daccb2fbb12d3824e086b29200ecd760,仓库可直接打开；不要求访问原D盘
+RES-007,archive/legacy_execution_standard.md,C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\R1_parallel_20261024\EXECUTION_STANDARD_R1_V2.md,可随GitHub访问的文本快照,COPIED,65a94575cfc255837bda34fca83ccf6b1b12aece
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+from pathlib import Path
+import csv,json,collections,sys
+p=Path('runs/issues/S00/errata_20261111_v5');sys.path.insert(0,str(p.resolve()));import parent_verify as pv
+rd=lambda n:list(csv.DictReader((p/n).open(encoding='utf-8-sig',newline='')))
+meta=rd('meta_diff.csv'); print('META resolutions',collections.Counter(r['resolution'] for r in meta))
+for n in ['cell_diff.csv','key_diff.csv','extra_meta_diff.csv']:
+ rs=rd(n); print(n,len(rs),'open',sum(r.get('resolution','').startswith(('PENDING','UNRESOLVED')) for r in rs))
+l2=rd('l2_dependency_check.csv'); print('L2 fields',list(l2[0])); print('L2',collections.Counter(r.get('verdict') for r in l2))
+scan={tuple(r[k] for k in ['security_id','field_id','period_key']):r for r in rd('step4_parent_scan.csv')}; regs=rd('parent_verifications.csv')
+print('SEMANTICS vs stored scan',[(s,sum(not pv._no_extra_semantics(r[s+'_column'],scan[tuple(r[k] for k in ['security_id','field_id','period_key'])][s+'_column']) for r in regs)) for s in ['p1','p2']])
+print('SWAP denominator',sum(not pv.cols_equivalent(r['p1_column'],r['p2_column']) for r in regs))
+eq=[r for r in regs if pv.cols_equivalent(r['p1_column'],r['p2_column'])]; print('EQUIVALENT pairs',collections.Counter((r['p1_column'],r['p2_column']) for r in eq))
+print('SUMMARY',json.dumps(json.loads((p/'summary.json').read_text('utf-8-sig')),ensure_ascii=False)[:3800])
+print('WITNESS',collections.Counter(r.get('verdict') for r in rd('step4_column_witness.csv')))
+print('TH',[(r['field_id'],r['period_key'],r['p1_status'],r['p1_note']) for r in scan.values() if r['security_id']=='SH:600590'])
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 504ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+META resolutions Counter({'RESOLVED_SCOPE_COVERED': 8762, 'PENDING_SCOPE_LIMITED_METHOD': 6373, 'PENDING_PARENT_COMPATIBILITY': 1214, 'PENDING_WEAK_ASSUMPTION': 515, 'RESOLVED_NORMALIZED_DELTA': 354, 'UNRESOLVED_NO_EVIDENCE': 225, 'UNRESOLVED_FIELD_NOT_IN_RECORD': 116, 'PENDING_SOURCE_PROVENANCE': 47, 'PENDING_CAUSE_UNCOVERED': 43, 'UNRESOLVED_DOC_NEVER_VERIFIED': 26, 'UNRESOLVED_EVIDENCE_MISMATCH': 20, 'UNRESOLVED_EVIDENCE_CONTRADICTS': 15, 'PENDING_CONFIRMED_EVENT_FIELD_OPEN': 8, 'UNRESOLVED_RECORD_IS_REMOVE': 8, 'PENDING_CONFIRMED_UNSUPPORTED': 1, 'RESOLVED_BY_RULING': 1})
+cell_diff.csv 240 open 34
+key_diff.csv 2056 open 405
+extra_meta_diff.csv 1505 open 1505
+L2 fields ['security_id', 'stock_name', 'in_s04_pass', 'anchor_period', 'qualified_sg', 'qualified_dims', 'n_dims_undisputed', 'disputed_dims', 'dispute_detail', 'verdict']
+L2 Counter({'R1_NO_LINK': 378, 'NOT_AFFECTED': 321, 'R2_MAY_CHANGE': 231, 'STILL_PASSES_WITHOUT': 81, 'HOLD_PENDING_ERRATA': 43})
+SEMANTICS vs stored scan [('p1', 0), ('p2', 0)]
+SWAP denominator 32
+EQUIVALENT pairs Counter({('本报告期（1－6月）', '本报告期'): 30, ('本报告期（1-6月）', '本报告期'): 1, ('本期数', '本报告期'): 1})
+SUMMARY {"generated_at": "2026-11-12T00:40:00+08:00", "version": "ERRATA_V5", "scope": "A vs B 全量差异（含 24 个元数据列）；闭合判据改为证据覆盖断言", "nature": "SELF_CHECK", "changes_from_v4": ["取消「行期间 == 文档自身期间即闭合」：新增 evidence_scope.py，按证据正文实际排除的调整原因（ERRATA / MERGER_RETRO / POLICY_CHANGE）与按取值来源确定的必需范围求差集，差集写入 scope_missing", "IMPORTANT_MATTER_NA、NOTE_RETAINED_ERRATA_ZERO 两类结构性受限方法不再自动闭合，5,270 条转入 PENDING_SCOPE_LIMITED_METHOD", "累计差分（非 Q1）行须证父输入兼容（PARENT_COMPATIBILITY）；Q1 单季=Q1 累计，单父输入不套相减，分季度表行须覆盖 QUARTERLY_TABLE_PROVENANCE，比较列行须覆盖 COMPARATIVE_SCOPE", "232 格原「溯源/展示」桶清零：source_page→AFFECTS_TRACE_LOCATION、evidence_label→AFFECTS_ADOPTION_EXPLANATION、slot_id→AFFECTS_PROVENANCE、status_reason→AFFECTS_QUALIFICATION_REASON，全部转字段级待核", "meta_diff 增列 status_B / own_period / evidence_group / scope_required / scope_covered / scope_missing，供逐项追溯与同质分组", "保留 rulings_resolved.json：已裁决解除项恢复 RESOLVED_BY_RULING，不因新判据重开"], "versions": {"A": {"rows": 228155, "sha256": "a1f27f1ceacfba10d709101d24b819e8bf6a86dfdd546aa1c56ac53825ff1fc6"}, "v7": {"rows": 229393, "sha256": "c5ef89d1f58fd714165952ddc2bfb4c9d590730e9336c8388cab88b86583c479"}, "v9": {"rows": 229666, "sha256": "8c27f5fbcd9be1ba85bbb94f5face713540b127bb7b95f511b276f937e6f9a73"}, "B": {"rows": 229667, "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"}}, "value_diff": {"total": 240, "by_step": {"A_to_v7": 217, "v9_to_v10": 21, "cross_step": 2}, "by_bucket": {"量级差异": 154, "小幅差异": 53, "中间倍数": 33}, "sign_flip": 89, "by_resolution": {"RESOLVED_NORMALIZED_DELTA": 185, "UNRESOLVED_NO_EVIDENCE": 28, "RESOLVED_RESTATED_ADOPTION": 21, "UNRESOLVED_EVIDENCE_MISMATCH": 6}, "open": 34, "companies": 37}, "key_diff": {"total": 2056, "by_step": {"A_to_v7": 1786, "v7_to_v9": 269, "v9_to_v10": 1}, "by_side": {"ONLY_B": 1784, "ONLY_A": 272}, "by_resolution": {"RESOLVED_NORMALIZED_DELTA": 1381, "UNRESOLVED_UNBACKED_ADDITION": 364, "RESOLVED_M07_NPDEDT_OVERRIDE": 228, "RESOLVED_M07_REPAIR": 41, "UNRESOLVED_EVIDENCE_MISMATCH": 31, "UNRESOLVED_NO_EVIDENCE": 10, "RESOLVED_RESTATED_ADOPTION": 1}, "open": 405, "companies": 141}, "meta_diff": {"total": 17728, "by_field": {"restatement_flag": 17009, "status": 555, "document_id": 83, "pit_status": 48, "consolidation_scope": 33}, "by_resolution": {"RESOLVED_SCOPE_COVERED": 8762, "PENDING_SCOPE_LIMITED_METHOD": 6373, "PENDING_PARENT_COMPATIBILITY": 1214, "PENDING_WEAK_ASSUMPTION": 515, "RESOLVED_NORMALIZED_DELTA": 354, "UNRESOLVED_NO_EVIDENCE": 225, "UNRESOLVED_FIELD_NOT_IN_RECORD": 116, "PENDING_SOURCE_PROVENANCE": 47, "PENDING_CAUSE_UNCOVERED": 43, "UNRESOLVED_DOC_NEVER_VERIFIED": 26, "UNRESOLVED_EVIDENCE_MISMATCH": 20, "UNRESOLVED_EVIDENCE_CONTRADICTS": 15, "PENDING_CONFIRMED_EVENT_FIELD_OPEN": 8, "UNRESOLVED_RECORD_IS_REMOVE": 8, "PENDING_CONFIRMED_UNSUPPORTED": 1, "RESOLVED_BY_RULING": 1}, "open": 8611, "companies": 392, "restatement_groups": [{"group": "NOTE_TRACE_NA|ERRATA|NOAFF|EXTRACTED|OWN", "rows": 3321, "documents": 356, "companies": 258, "by_resolution": {"RESOLVED_SCOPE_COVERED": 3321}}, {"group": "IMPORTANT_MATTER_NA|ERRATA|NOAFF|EXTRACTED|OWN", "rows": 2355, "documents": 253, "companies": 253, "by_resolution": {"PENDING_SCOPE_LIMITED_METHOD": 2355}}, {"group": "NOTE_TRACE_NA|ERRATA+POLICY_CHANGE|NOAFF|EXTRACTED|OWN", "rows": 1627, "documents": 175, "companies": 139, "by_resolution": {"RESOLVED_SCOPE_COVERED": 1627}}, {"group": "NOTE_TRACE_NA|ERRATA|NOAFF|DERIVED|OWN", "rows": 1303, "documents": 346, "companies": 252, "by_resolution": {"RESOLVED_SCOPE_COVERED": 1303}}, {"group": "IMPORTANT_MATTER_NA|ERRATA|NOAFF|EXTRACTED_QUARTERLY_TABLE|COMPARATIVE", "rows": 982, "documents": 260, "companies": 260, "by_resolution": {"PENDING_SCOPE_LIMITED_METHOD": 981, "RESOLVED_BY_RULING": 1}}, {"group": "IMPORTANT_MATTER_NA|ERRATA|NOAFF|EXTRACTED_QUARTERLY_TABLE|OWN", "rows": 930
+WITNESS Counter({'WITNESS_OK': 64})
+TH [('FIN.NPDEDT.SQ', '20260630', 'OK', ''), ('FIN.NPP.SQ', '20250630', 'OK', '46:TABLE_BOUNDARY_UNPROVEN;1:NO_AMOUNT;2:NO_AMOUNT'), ('FIN.NPP.SQ', '20251231', 'NOT_FOUND', '78:TABLE_BOUNDARY_UNPROVEN;1:NO_AMOUNT;2:NO_AMOUNT'), ('FIN.NPP.SQ', '20260630', 'OK', '42:TABLE_BOUNDARY_UNPROVEN;1:NO_AMOUNT;2:NO_AMOUNT'), ('FIN.OCF.SQ', '20260630', 'OK', '45:TABLE_BOUNDARY_UNPROVEN;1:NO_AMOUNT;2:NO_AMOUNT'), ('FIN.REV.SQ', '20260630', 'OK', '')]
+
+codex
+已复现两个仍能错误返回 `OK` 的变体：跨行片段绕过了列边界检查；删去同一金额行的邻列数字后，原反例又被合并成长列名。两份结果表与 `b4738b2` 的逐格差异均为 0，边界诊断 21/72 侧和 L2 计数也已核对。
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+from pathlib import Path
+import ast
+p=Path('runs/issues/S00/errata_20261111_v5/verify_v5.py');t=ast.parse(p.read_text('utf-8-sig'))
+for n in t.body:
+ if isinstance(n,(ast.Assign,ast.AnnAssign)):
+  names=[x.id for x in n.targets if isinstance(x,ast.Name)] if isinstance(n,ast.Assign) else []
+  if any(x.startswith(('_BASIS','_VER_BASIS')) for x in names):print(ast.get_source_segment(p.read_text('utf-8-sig'),n))
+for n in t.body:
+ if isinstance(n,ast.FunctionDef) and n.name in ['prev_quarter','_filler_text','_basis_clauses','pdf_file']:print(ast.get_source_segment(p.read_text('utf-8-sig'),n))
+print('ORIGINAL_DIR_EXISTS',Path('D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals').exists())
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 408ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+_BASIS_SCOPE_TOKENS = ("合并", "母公司", "单体")
+_BASIS_UNIT_TOKENS = ("元", "千元", "万元", "亿元")
+_BASIS_CUR_TOKENS = ("人民币", "CNY", "RMB")
+_VER_BASIS_TOKENS = {
+    "ORIGINAL": ("原版", "原披露", "未调整", "调整前", "重述前", "ORIGINAL"),
+    "RESTATED": ("重述", "调整后", "更正后", "调整", "RESTATED"),
+}
+def prev_quarter(pk):
+    tail = pk[4:]
+    if tail == "0331":
+        return str(int(pk[:4]) - 1) + "1231"
+    return pk[:4] + QMAP[tail]
+def pdf_file(sec, doc):
+    """原件路径（第十一轮 B 项：按坐标核对栏目需要词坐标，不能再只读文本）。"""
+    code = (sec or "").split(":")[-1]
+    for p in (ORIG / code).rglob(doc + ".pdf"):
+        return p
+    return None
+def _filler_text(s):
+    """是不是「凑长度」的填充文本：单一字符占 40% 以上、或不同字符不足 6 个。
+
+    第十九轮 D4：`len(scope_basis) >= 20` 只能挡住空话，挡不住 300 个重复字符。
+    """
+    t = pv._nz(s)
+    if not t:
+        return True
+    if len(set(t)) < 6:
+        return True
+    top = max(t.count(ch) for ch in set(t))
+    return top / len(t) > 0.4
+def _basis_clauses(t):
+    """把依据文字切成子句：依据必须**逐侧**陈述，不能两句合并成一句套话。"""
+    return [c for c in re.split(r"[；;。\n]", t) if c.strip()]
+ORIGINAL_DIR_EXISTS True
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+from pathlib import Path
+p=Path('runs/issues/S00/errata_20261111_v5/parent_verify.py');s=p.read_text('utf-8-sig').splitlines()
+for i,t in enumerate(s):
+ if t.startswith('def page_words'):print('\\n'.join(s[i:i+55]))
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 370ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+def page_words(pdf_path, page):
+    """返回原件该物理页的词坐标 [(x0, y0, x1, y1, text)]；不可用返回 []。"""
+    try:
+        n = int(str(page).strip())
+    except (TypeError, ValueError):
+        return []
+    if n < 1 or not pdf_path:
+        return []
+    try:
+        import pymupdf
+        d = pymupdf.open(str(pdf_path))
+        if n > d.page_count:
+            d.close()
+            return []
+        ws = d[n - 1].get_text("words")
+        d.close()
+        return [(w[0], w[1], w[2], w[3], w[4]) for w in ws]
+    except Exception:
+        return []
+
+
+def rows_of_words(words, y_tol=4.0):
+    """按 y 聚成行：返回 [(y0, [(x0, x1, text), …])]，按 y 升序。"""
+    rows = []
+    for x0, y0, _x1, _y1, tx in sorted(words, key=lambda w: (w[1], w[0])):
+        if rows and abs(y0 - rows[-1][0]) <= y_tol:
+            rows[-1][1].append((x0, _x1, tx))
+        else:
+            rows.append([y0, [(x0, _x1, tx)]])
+    return [(y, sorted(cells)) for y, cells in rows]
+
+
+def column_of_amount_ex(words, value, label=None, x_tol=3.0, y_tol=4.0):
+    """返回 (column_text, amount_text, status)。
+
+    status ∈ {OK, NO_WORDS, NO_AMOUNT, AMBIGUOUS, NO_COLUMN}
+
+    第十二轮 B 项两条修正：
+
+    1. **必须绑定目标行**。同一页常有多笔相同金额（合计行与明细行、上年与本期），
+       原实现按 y 取第一笔，会把「上年同期」列头配给本期金额。现在用 `label`
+       （该行指标别名）限定「只有与指标名同一行的金额才是目标金额」；同页出现
+       多笔且无法唯一绑定时返回 `AMBIGUOUS`，交回人工，不猜。
+    2. **扫描页/无文本层** 返回 `NO_WORDS`，由调用方记为「待回读/OCR」，
+       不能表述成「原件不可解」——技术取词失败与原件本身不可读是两件事。
+    """
+    if not words:
+        return None, None, "NO_WORDS"
+    target = _num_of(value)
+    if target is None:
+        return None, None, "NO_AMOUNT"
+    rows = rows_of_words(words, y_tol)
+    cands = []
+    for ri, (_y, cells) in enumerate(rows):
+        for x0, x1, tx in cells:
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command "@'
+import ast,csv,gzip,re,sys,json
+from pathlib import Path
+from functools import lru_cache
+p=Path('runs/issues/S00/errata_20261111_v5');sys.path.insert(0,str(p.resolve()));import parent_verify as pv
+source=(p/'verify_v5.py').read_text('utf-8-sig');tree=ast.parse(source)
+names={'prev_quarter','pdf_file','_col_of','_filler_text','_basis_clauses','_version_basis_ok','_scope_basis_ok','check_c41','_c41_inject','_c41_semantics_probe'}
+ns={'pv':pv,'re':re,'ORIG':Path('D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals'),'QMAP':{'0630':'0331','0930':'0630','1231':'0930'}}
+for n in tree.body:
+ if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id.startswith(('_BASIS_','_VER_BASIS_')) for x in n.targets):exec(compile(ast.Module(body=[n],type_ignores=[]),'<constants>','exec'),ns)
+ elif isinstance(n,ast.FunctionDef) and n.name in names:exec(compile(ast.Module(body=[n],type_ignores=[]),'<real_functions>','exec'),ns)
+regs=list(csv.DictReader((p/'parent_verifications.csv').open(encoding='utf-8-sig',newline='')));ns['_PV_ROWS']=regs
+keys={(r['security_id'],r['ytd_field'],r[s+'_period']) for r in regs for s in ['p1','p2']}
+with gzip.open('runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz','rt',encoding='utf-8-sig',newline='') as f:ns['D10']={k:r for r in csv.DictReader(f) if (k:=(r['security_id'],r['field_id'],r['period_key'])) in keys}
+pv.page_words=lru_cache(None)(pv.page_words)
+ns['pdf_file']=lru_cache(None)(ns['pdf_file'])
+ns['_col_of']=lru_cache(None)(ns['_col_of'])
+@lru_cache(None)
+def page(sec,doc,pg):
+ path=ns['pdf_file'](sec,doc)
+ if not path:return None
+ words=pv.page_words(path,pg)
+ return pv._nz(''.join(w[4] for w in words)) if words else None
+ns['_pdf_ev']=page
+bad=ns['check_c41'](regs,page_of=page,col_of_for=ns['_col_of']); print('REAL_C41',len(bad),bad[:3],flush=True)
+ok,inj=ns['_c41_inject']();print('REAL_INJECTIONS',ok,inj,flush=True)
+print('SYNTHETIC_PROBE',ns['_c41_semantics_probe'](),flush=True)
+print('SIDES_READ',page.cache_info(),pv.page_words.cache_info(),flush=True)
+'@ | python -B -X utf8 -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 4395ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+REAL_C41 0 []
+REAL_INJECTIONS True {'_rows_fake_quote': 64, 'fake_quote': 64, '_rows_wrong_column': 64, 'wrong_column': 64, '_rows_wrong_value': 64, 'wrong_value': 64, '_rows_wrong_page': 64, 'wrong_page': 64, '_rows_version_flip': 64, 'version_flip': 64, '_rows_short_basis': 64, 'short_basis': 64, '_rows_wrong_period': 64, 'wrong_period': 64, '_rows_empty_version_basis': 64, 'empty_version_basis': 64, '_rows_repeat_version_basis': 64, 'repeat_version_basis': 64, '_rows_repeat_scope_basis': 64, 'repeat_scope_basis': 64, '_rows_swap_column': 32, 'swap_column': 32, '_rows_version_basis_p1_only': 64, 'version_basis_p1_only': 64, '_rows_scope_basis_one_period': 64, 'scope_basis_one_period': 64, '_rows': 64}
+SYNTHETIC_PROBE P1_COLUMN_SEMANTICS_UNPROVEN:本报告期（1-6月）⊄本报告期
+SIDES_READ CacheInfo(hits=973, misses=115, maxsize=None, currsize=115) CacheInfo(hits=1152, misses=115, maxsize=None, currsize=115)
+
+codex
+C41 的真实检查函数已完成只读重算：64 条登记零违例，十二类注入均为 64/64，`swap_column` 为 32/32，合成探针也命中 `SEMANTICS_UNPROVEN`。这些检查通过，但两个列归属变体仍需修复；另外，汇报把两组恰好都是 32 条的集合混为一谈，需更正解释。
+
+codex
+**裁决：`RETURN_FOR_REWORK`，暂不放行批次 C。**
+
+本轮四项修复有实质进展，但独立构造仍发现两个列归属漏洞。此裁决不认定现有 64 条登记错误；272 条事件证据保持原裁决。
+
+已独立核实：
+
+- 与 `b4738b2` 比较：扫描表 **87 行**、登记表 **64×27**，键集相同，逐格差异均为 **0**。
+- `selftest_column_rules.py`：**50 项，FAIL 0**。
+- 提取真实 C41 检查函数并回读登记页重算：64 条零违例；十二类注入 **64/64**，`swap_column` **32/32**；合成探针命中 `SEMANTICS_UNPROVEN`。未执行会写产物的整套脚本。
+- 边界诊断：23 条 BLOCKED 内 **21 侧（9＋12）**；全表 **72 侧（35＋37）**。
+- **8611＋405＋34＝9050；9050＋1505＝10555**，以及 1214、8762、L2 **43/231/321/81/378** 均吻合。
+
+需要完成以下三项返工，文件均位于被复核目录内。
+
+1. **`parent_verify.py::_chain_cells / column_of_amount_aligned_ex`：跨行合并仍绕过列边界。**
+
+   我独立构造：
+
+   ```text
+   y=50：单位：元
+   y=60：项目 x[0,40]；本报告期 x[100,138]
+   y=70：项目 x[0,40]；（4-6月）x[134,165]
+   y=90：营业收入 x[0,45]；100.00 x[100,130]；200.00 x[140,170]
+   ```
+
+   金额列右边界为 **135**；两个期间片段中心分别为 **119、149.5**，已分处边界两侧。但生产仍返回：
+
+   ```text
+   OK，column=本报告期（4-6月）
+   ```
+
+   旁证返回 `OK，本报告期`。
+
+   **修改方向：**将片段列归属约束贯穿横向、纵向合并及最终候选选择；`_chain_cells` 不得只凭跨度重叠和语义兼容跨边界合并。保留片段归属，不能合并后用整体跨度掩盖越界。增加上述反例，并保留真实同列换行正例。
+
+2. **`parent_verify.py::_amount_bounds / _header_cells`、`step4_column_witness.py::witness`：无邻数字不能直接当作同列证明。**
+
+   在你指定的原反例中，仅删去金额行的 `200.00`，保留两个表头片段：
+
+   ```text
+   y=70：本报告期 x[100,130]；（4-6月）x[134,165]
+   y=90：营业收入；100.00 x[100,130]
+   ```
+
+   此时边界退化为 `(-inf, inf)`，**生产和旁证均重新返回 `OK，本报告期（4-6月）`**。
+
+   **修改方向：**缺少邻数字应表示该方向边界未知。涉及多个期间片段合并时，须有额外的同列表头结构证据；无法证明归属则待核。可以采用同一已确认表格内的可靠列结构，但不能重新无条件使用整页数字聚类，也不要求所有单数字行一律待核。补充此负例和有充分结构证据的正例。
+
+3. **`report_to_codex_round22.md §三`、`rework_round21_result.json`，以及 `verify_v5.py::_c41_inject` 注释：区分两组 32 条。**
+
+   生产函数重算得到：
+
+   - **32 条不等价**：实际 `swap_column` 注入分母。
+   - **32 条等价、被排除**：其中 **31 条**是带区间名称对 `本报告期`；另 **1 条**是 `本期数` 对 `本报告期`。
+
+   因此，“那 32 行两侧均含区间省略”不准确。“互换后登记变成实际侧真实列名，所以同侧检查不会报”也不成立：修改登记名称不会改变该文档金额的实际列；带区间名称注入短实际列时，新判据正应拒绝。
+
+   **修改方向：**分别说明两个集合、注入方向和可能拒绝原因；不要把跨文档等价直接解释为同侧列身份。
+
+对你提出的问题，明确答复如下：
+
+- **原指定反例返回 `OK＋本报告期`：接受。**无需规定同一表头行存在被排除的邻列片段就整列待核。问题是列边界必须在后续处理持续生效。
+- **无邻数字即完全不约束：不能无条件接受。**具体要求见返工第 2 项。
+- **同侧单向语义约束：接受。**与先行 `cols_equivalent` 联用，方向正确；实际更详细可以放行。同侧登记对实际回推的零违例更正成立；先前跨文档统计不能回答这个问题。
+- **合成 C41 探针：接受为判据级测试。**它调用真实检查函数，使用合成页文和列回推输入；不能据此声称完成 PDF 解析到判定的端到端验证，无需强制改成 64 行同类注入。
+- **旁证合并前检查冲突：本项接受。**指定横向冲突已返回 `AMBIGUOUS`。共享 `_amount_bounds` 不要求为了形式独立而重写；须继续披露共同依赖，不能称完全独立。
+- **边界诊断拆列：本轮不强制。**当前按 note 与最终状态分别统计已可复算。
+
+修复后重验固定 87 键、登记与旁证，按实际结果报告，不预设维持 64 条。**批次 C–E、第 5 步继续等待；S04 第二轮、S05 不放行，43/231/378 不冻结。**本轮只读复核，未修改仓库。
+tokens used
+95,433
+**裁决：`RETURN_FOR_REWORK`，暂不放行批次 C。**
+
+本轮四项修复有实质进展，但独立构造仍发现两个列归属漏洞。此裁决不认定现有 64 条登记错误；272 条事件证据保持原裁决。
+
+已独立核实：
+
+- 与 `b4738b2` 比较：扫描表 **87 行**、登记表 **64×27**，键集相同，逐格差异均为 **0**。
+- `selftest_column_rules.py`：**50 项，FAIL 0**。
+- 提取真实 C41 检查函数并回读登记页重算：64 条零违例；十二类注入 **64/64**，`swap_column` **32/32**；合成探针命中 `SEMANTICS_UNPROVEN`。未执行会写产物的整套脚本。
+- 边界诊断：23 条 BLOCKED 内 **21 侧（9＋12）**；全表 **72 侧（35＋37）**。
+- **8611＋405＋34＝9050；9050＋1505＝10555**，以及 1214、8762、L2 **43/231/321/81/378** 均吻合。
+
+需要完成以下三项返工，文件均位于被复核目录内。
+
+1. **`parent_verify.py::_chain_cells / column_of_amount_aligned_ex`：跨行合并仍绕过列边界。**
+
+   我独立构造：
+
+   ```text
+   y=50：单位：元
+   y=60：项目 x[0,40]；本报告期 x[100,138]
+   y=70：项目 x[0,40]；（4-6月）x[134,165]
+   y=90：营业收入 x[0,45]；100.00 x[100,130]；200.00 x[140,170]
+   ```
+
+   金额列右边界为 **135**；两个期间片段中心分别为 **119、149.5**，已分处边界两侧。但生产仍返回：
+
+   ```text
+   OK，column=本报告期（4-6月）
+   ```
+
+   旁证返回 `OK，本报告期`。
+
+   **修改方向：**将片段列归属约束贯穿横向、纵向合并及最终候选选择；`_chain_cells` 不得只凭跨度重叠和语义兼容跨边界合并。保留片段归属，不能合并后用整体跨度掩盖越界。增加上述反例，并保留真实同列换行正例。
+
+2. **`parent_verify.py::_amount_bounds / _header_cells`、`step4_column_witness.py::witness`：无邻数字不能直接当作同列证明。**
+
+   在你指定的原反例中，仅删去金额行的 `200.00`，保留两个表头片段：
+
+   ```text
+   y=70：本报告期 x[100,130]；（4-6月）x[134,165]
+   y=90：营业收入；100.00 x[100,130]
+   ```
+
+   此时边界退化为 `(-inf, inf)`，**生产和旁证均重新返回 `OK，本报告期（4-6月）`**。
+
+   **修改方向：**缺少邻数字应表示该方向边界未知。涉及多个期间片段合并时，须有额外的同列表头结构证据；无法证明归属则待核。可以采用同一已确认表格内的可靠列结构，但不能重新无条件使用整页数字聚类，也不要求所有单数字行一律待核。补充此负例和有充分结构证据的正例。
+
+3. **`report_to_codex_round22.md §三`、`rework_round21_result.json`，以及 `verify_v5.py::_c41_inject` 注释：区分两组 32 条。**
+
+   生产函数重算得到：
+
+   - **32 条不等价**：实际 `swap_column` 注入分母。
+   - **32 条等价、被排除**：其中 **31 条**是带区间名称对 `本报告期`；另 **1 条**是 `本期数` 对 `本报告期`。
+
+   因此，“那 32 行两侧均含区间省略”不准确。“互换后登记变成实际侧真实列名，所以同侧检查不会报”也不成立：修改登记名称不会改变该文档金额的实际列；带区间名称注入短实际列时，新判据正应拒绝。
+
+   **修改方向：**分别说明两个集合、注入方向和可能拒绝原因；不要把跨文档等价直接解释为同侧列身份。
+
+对你提出的问题，明确答复如下：
+
+- **原指定反例返回 `OK＋本报告期`：接受。**无需规定同一表头行存在被排除的邻列片段就整列待核。问题是列边界必须在后续处理持续生效。
+- **无邻数字即完全不约束：不能无条件接受。**具体要求见返工第 2 项。
+- **同侧单向语义约束：接受。**与先行 `cols_equivalent` 联用，方向正确；实际更详细可以放行。同侧登记对实际回推的零违例更正成立；先前跨文档统计不能回答这个问题。
+- **合成 C41 探针：接受为判据级测试。**它调用真实检查函数，使用合成页文和列回推输入；不能据此声称完成 PDF 解析到判定的端到端验证，无需强制改成 64 行同类注入。
+- **旁证合并前检查冲突：本项接受。**指定横向冲突已返回 `AMBIGUOUS`。共享 `_amount_bounds` 不要求为了形式独立而重写；须继续披露共同依赖，不能称完全独立。
+- **边界诊断拆列：本轮不强制。**当前按 note 与最终状态分别统计已可复算。
+
+修复后重验固定 87 键、登记与旁证，按实际结果报告，不预设维持 64 条。**批次 C–E、第 5 步继续等待；S04 第二轮、S05 不放行，43/231/378 不冻结。**本轮只读复核，未修改仓库。

@@ -1,7 +1,7 @@
 {
  "version": "ERRATA_V5",
- "self_check_version": "V19",
- "generated_at": "2026-11-13T00:05:00+08:00",
+ "self_check_version": "V20",
+ "generated_at": "2026-11-13T23:55:00+08:00",
  "issue": "S00",
  "stage": "ERRATA",
  "nature": "SELF_CHECK",
@@ -29,7 +29,8 @@
   "第十八轮 ACCEPTED_WITH_LIMITS（acceptance_round18.json，批次 A 四项通过）",
   "第十九轮 RETURN_FOR_REWORK（rework_round19.json，D1–D5 + 6 条返工清单）",
   "第二十轮 RETURN_FOR_REWORK（_codex_out_round20.txt，6 条返工项，不放行批次 C）",
-  "第二十一轮 RETURN_FOR_REWORK（_codex_out_round21.txt，4 条返工项，暂不放行批次 C）"
+  "第二十一轮 RETURN_FOR_REWORK（_codex_out_round21.txt，4 条返工项，暂不放行批次 C）",
+  "第二十二轮 RETURN_FOR_REWORK（_codex_out_round22.txt，3 条返工项，暂不放行批次 C）"
  ],
  "files": [
   {
@@ -49,8 +50,8 @@
   },
   {
    "path": "parent_verify.py",
-   "bytes": 59251,
-   "sha256": "4703fb694731c656b92e21da76c0b8acec27098fee811adf4f447f6bf5e16e8e"
+   "bytes": 63612,
+   "sha256": "0ef74eae031ad207272110b6c83c3637455716985118108695da424731c02aaa"
   },
   {
    "path": "polarity_cases.py",
@@ -79,8 +80,8 @@
   },
   {
    "path": "verify_v5.py",
-   "bytes": 218282,
-   "sha256": "4df62df434705fce1ef93a1b0e0c071aa3b9a77e728b29721c3ec52fdde41880"
+   "bytes": 223876,
+   "sha256": "ad2145c4ac4b3bc71a7acaa8aa50fd9c24fe7b762c71761e4873504814f843cc"
   },
   {
    "path": "step4_event_scan.py",
@@ -104,13 +105,18 @@
   },
   {
    "path": "step4_column_witness.py",
-   "bytes": 13922,
-   "sha256": "1ee383d495fce9ad86c88397ea95b7c7fd61435452438e6b5c034166460f1e01"
+   "bytes": 15160,
+   "sha256": "b145b966488c11ddc35096a1141aa05e0cdce4fe888d2bb66aad1009483bfe2d"
   },
   {
    "path": "selftest_column_rules.py",
-   "bytes": 15653,
-   "sha256": "c7b28bdefbd14bc53d5547c0d7e7fc3ad3622bde4eb1f0b7366b1524a5341bf5"
+   "bytes": 21003,
+   "sha256": "f3da8b6361eae7891e637af0ea01c76a114b4c0294556147058950dd360bdbf3"
+  },
+  {
+   "path": "_probe_attr.py",
+   "bytes": 2236,
+   "sha256": "0d13248b5e9cf71cdf89ca403b670a744e72ad66b4a95c3dda04af8d0afebaca"
   },
   {
    "path": "rulings_resolved.json",
@@ -150,7 +156,7 @@
   {
    "path": "parent_verifications.csv",
    "bytes": 141739,
-   "sha256": "2de0c996f8a8fa9b659bd9aa2de0e9cd263323647d27c5b7387e08ec5b71dee5"
+   "sha256": "e059de6dfc25d748da527acc468787bb9459e25bc71cb793b0d0fef6c51c3001"
   },
   {
    "path": "parent_verifications_prev_round19.csv",
@@ -244,18 +250,18 @@
   },
   {
    "path": "review.json",
-   "bytes": 57577,
-   "sha256": "198a48ef2e258bd942db14ae5c1bdd00c9fca6297b1dc17c02839f7f0134fb28"
+   "bytes": 59524,
+   "sha256": "8a50e05f334f6d886a8a3accf282ce4292e9e0692a04d147a0989543fc410102"
   },
   {
    "path": "REPORT.md",
-   "bytes": 119778,
-   "sha256": "36f582f94f2fadbfcfcd48af62413774496b4ea985295c7d8f6b5e413739e2f6"
+   "bytes": 123986,
+   "sha256": "316a382f01a2704a0b351718b44675fb4b7078cf8d215d30d428897863b061f1"
   },
   {
    "path": "handoff.md",
-   "bytes": 44055,
-   "sha256": "3d93cff5c4427cffca725107d0964772b15c66cc84cd99bf606cfa46fb8df317"
+   "bytes": 45988,
+   "sha256": "58029df95c4c53d7bc25e98b47653c4a932145d36cb2626c49514dddaa7bcffa"
   },
   {
    "path": "acceptance_round16.json",
@@ -334,13 +340,23 @@
   },
   {
    "path": "report_to_codex_round22.md",
-   "bytes": 15571,
-   "sha256": "8373d66ffc36fa2bab8bfe171cd67ffc3bb497a9fcd18d9760c21f0d61d28373"
+   "bytes": 16893,
+   "sha256": "43c509ff270ca7bcc106454eedd2f5b25943a9f5487eb2f122c7928f8190d678"
   },
   {
    "path": "rework_round21_result.json",
-   "bytes": 11110,
-   "sha256": "5c0a2c439a8085265448125013776cf8fe37a4e0571e909cd25754cec5ed1339"
+   "bytes": 13769,
+   "sha256": "4f1d49d51da6ecdb9f442ff369335286bf7526d476bbf80be1af6d1eb7a61a74"
+  },
+  {
+   "path": "report_to_codex_round23.md",
+   "bytes": 14001,
+   "sha256": "c4180040a28f7b1a8898c7f2aa9ff16146351fa3ac34c1f8df0d637a2d37e036"
+  },
+  {
+   "path": "rework_round22_result.json",
+   "bytes": 11189,
+   "sha256": "bb8e607295bf8ee17ec22aba08c56552f5c43b9bf818d33f505ddedb4be82d78"
   },
   {
    "path": "_codex_prompt_round11.txt",
@@ -401,6 +417,11 @@
    "path": "_codex_prompt_round22.txt",
    "bytes": 8784,
    "sha256": "4771d93d7005f4546237e09034cb607c613d9927daffca9b34d7fffd0891ccc3"
+  },
+  {
+   "path": "_codex_prompt_round23.txt",
+   "bytes": 7888,
+   "sha256": "8a99525d1a206aeae1bd0528830883c1a89c61fdc9dd487d2a3ea9fb438dba17"
   },
   {
    "path": "codex_ruling_round5.md",
@@ -466,6 +487,11 @@
    "path": "_codex_out_round21.txt",
    "bytes": 5797,
    "sha256": "be58aea2d53e386353a0f8f257671ec9589bded5867c958fe01e9b5731f20033"
+  },
+  {
+   "path": "_codex_out_round22.txt",
+   "bytes": 4782,
+   "sha256": "3a3e9af0306880cc9b6652be3c8d742fa84572a8d682ac70795eac9812c91ade"
   }
  ]
 }
