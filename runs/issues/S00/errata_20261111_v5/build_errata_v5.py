@@ -87,7 +87,15 @@ def _pdf_path(sec, doc):
 
 
 def _col_of(sec):
-    """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项，第十二轮绑定目标行）。"""
+    """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项，第十二轮绑定目标行）。
+
+    第十八轮接受后自查（F33）：原实现用 `column_of_amount_ex()`，它有两个缺陷——
+    ① 用金额**中心点**去套表头，而数字右对齐、表头居中，实测 174 个父输入页面里
+       97 页取不到表头；② 取表头行时把**年份**当金额丢掉，`2026年半年度` 只剩
+       `年半年度`，而 `_PERIOD_COL` 要求含四位年份——正确登记也过不了。
+    改用 `column_of_amount_aligned()`（跨度重叠 + 保留年份 + 表头跨行合并），
+    并把两侧都归一到 `canon_column()` 再比：登记侧由 C41 强制已是规范形式。
+    """
     def f(doc, page, value, label=None):
         pdf = _pdf_path(sec, doc)
         if pdf is None:
@@ -95,8 +103,10 @@ def _col_of(sec):
         words = pv.page_words(pdf, page)
         if not words:
             return None, "NO_WORDS"
-        col, _amt, st = pv.column_of_amount_ex(words, value, label=label)
-        return col, st
+        col, _amt, st = pv.column_of_amount_aligned(words, value, label=label)
+        if st != "OK":
+            return None, st
+        return pv.canon_column(col), "OK"
     return f
 
 

@@ -1,12 +1,42 @@
-# S00 勘误 V5 交接说明（自检 V15；第 4 步批次 A 已接受，批次 B 未开始）
+# S00 勘误 V5 交接说明（自检 V16；第 4 步批次 B 父输入核证后，待第 19 轮复核）
 
-> 版本：`ERRATA_V5`，自检 `V15`，42/42 PASS（新增 C40）。
-> 复核：Codex 第十八轮 **ACCEPTED_WITH_LIMITS**（四项修订全部通过）→ `acceptance_round18.json`。
-> **该裁决范围仅限那四项**：批次 A 的 272 条事件证据保留但**未重新评估**；第 5 步未做、44/231/378 未冻结、S04 第二轮与 S05 不放行。
-> 第 4 步只做了批次 A 的**证据采集**，且**未据此闭合任何一条**；批次 B–E 与第 5 步未开始。
+> 版本：`ERRATA_V5`，自检 `V16`，43/43 PASS（新增 C41）。
+> 复核：Codex 第十八轮 **ACCEPTED_WITH_LIMITS**（批次 A 四项修订通过）→ `acceptance_round18.json`。
+> 第 4 步批次 B 已完成：87 条父输入待核里 **70 条登记、68 条闭合**；L2 仍 44/231/320/81/378（未变）。
+> 第 4 步批次 C–E 与第 5 步未开始；44/231/378 未冻结；S04 第二轮与 S05 不放行。
 > 性质：**SELF_CHECK**。自检通过 ≠ 独立验收通过。
 > 上一版 V4 保留在 `runs/issues/S00/errata_20261111_v4/`，未删除。
-> 复现：`build_errata_v5.py` → `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`（顺序不能换）。
+> 复现：`step4_parent_scan.py` → `step4_apply_parents.py` → `build_errata_v5.py` →
+> `check_l2_v5.py` → `sampling_v5.py` → `replay_polarity_v5.py` → `verify_v5.py`（顺序不能换）。
+
+## 0-b. 第 4 步批次 B：父输入核证（本轮）
+
+| 项 | 结果 |
+|---|---|
+| 目标（HOLD 中仅缺 `PARENT_COMPATIBILITY`） | **87 条 / 22 家** |
+| 两侧证据齐备 → 登记 `COMPATIBLE` | **70 条** |
+| 通过完整 `gap()` 并闭合 | **68 条** |
+| 受阻保留待核 | **17 条**（原因逐条在 `step4_parent_scan.csv` 的 `p1_note`/`p2_note`） |
+| `PENDING_PARENT_COMPATIBILITY` | 1,277 → **1,209** |
+| 核心未闭合 | 8,674 → **8,606** |
+| L2 | **44 / 231 / 320 / 81 / 378（未变）** |
+
+**没有一家公司因此脱离 HOLD**：20/22 家还卡在 `PENDING_SCOPE_LIMITED_METHOD`
+（批次 A 被否掉的「栏目不适用」方法）与 `UNRESOLVED_FIELD_NOT_IN_RECORD`。
+父输入是必要不充分条件。
+
+### 本轮修掉的缺陷
+
+- **F33 栏目取词**：原实现把表头里的年份当金额丢掉（`2026`+`年半年度`→`年半年度`），
+  且用金额中心点套表头（数字右对齐、表头居中）→ 174 个父输入页面 97 页取不到表头。
+  新增 `column_of_amount_aligned()`（跨度重叠 + 保留年份 + 表头跨行合并 + 排除页眉标题），
+  `NO_COLUMN` 97 → 2；新增 `canon_column()` 统一两侧列名。
+- **`_nz()` 定义顺序**：`pdf_pages()` 前移后 `NameError` 被逐页 `try/except` 吞成
+  「整本页面空串」，表现为「原件不可用」——技术失败被写成证据缺失。已前移并加注释。
+- **`pdf_pages()` 缓存**：失败结果不再写入缓存（一次瞬时失败会被永久记住）。
+- **C37 假阳性**：判「自动捷径」改为用**空登记表**试（`parent_compatible(k, entries={})`），
+  原先会把 70 条真实核证误报成捷径。
+
 
 ## 0-prev. 第十八轮裁决：批次 A 收尾
 

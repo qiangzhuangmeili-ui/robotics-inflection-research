@@ -44,9 +44,9 @@ import polarity_cases as pc
 
 ROOT = core.ROOT
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
-SELF_CHECK_VERSION = "V15"
+SELF_CHECK_VERSION = "V16"
 # 待复核轮次：状态串与校验条件共用一处，避免两处字面各写一遍再漂移
-RECHECK_ROUND = 18
+RECHECK_ROUND = 19
 
 
 def _cn_num(n):
@@ -64,12 +64,12 @@ def _cn_num(n):
 # 每轮必漂。现在两处都由 RECHECK_ROUND 派生：
 # 本轮改的是「上一轮」的裁决 → 返工轮次 = RECHECK_ROUND − 1；
 # 汇报文件名与本轮待复核轮次同号 → round{RECHECK_ROUND}。
-ROUND_PHASE = "裁决后第 4 步批次 A 返工"
+ROUND_PHASE = "裁决后第 4 步批次 B 父输入核证"
 ROUND_LABEL = "第%s轮%s" % (_cn_num(RECHECK_ROUND - 1), ROUND_PHASE)
 REPORT_NAME = "report_to_codex_round%d.md" % RECHECK_ROUND
 # 复核结论：`None` = 仍在等第 RECHECK_ROUND 轮复核；给出字符串 = 已收到裁决。
 # 状态串由它派生，C39 的期望串也从同一个函数取，不另写一份字面。
-RECHECK_VERDICT = "ACCEPTED_WITH_LIMITS"
+RECHECK_VERDICT = None
 
 
 def _status_string(ok):
@@ -405,7 +405,12 @@ def pdf_file(sec, doc):
 
 
 def _col_of(sec):
-    """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项，第十二轮绑定目标行）。"""
+    """按词坐标取「该金额所在列」的期间列头（第十一轮 B 项，第十二轮绑定目标行）。
+
+    第十八轮接受后自查（F33）：与生产侧同步改用 `column_of_amount_aligned()`
+    （跨度重叠 + 保留年份 + 表头跨行合并），并把结果归一到 `canon_column()`。
+    两侧必须同一把尺子，否则「自检说通过、生产说不行」会各说各话。
+    """
     def f(doc, page, value, label=None):
         pdf = pdf_file(sec, doc)
         if pdf is None:
@@ -413,9 +418,58 @@ def _col_of(sec):
         words = pv.page_words(pdf, page)
         if not words:
             return None, "NO_WORDS"
-        col, _amt, st = pv.column_of_amount_ex(words, value, label=label)
-        return col, st
+        col, _amt, st = pv.column_of_amount_aligned(words, value, label=label)
+        if st != "OK":
+            return None, st
+        return pv.canon_column(col), "OK"
     return f
+
+
+def _nz(s):
+    """去空白。**必须定义在 `pdf_pages()` 之前**：`pdf_pages` 在导入期就会被调用，
+    而它逐页取词时要用到这个函数；放在文件后半段会让 `NameError` 被逐页
+    `try/except` 吞成「整本页面都是空串」，看起来像原件不可读（实际是代码顺序错）。
+    """
+    return re.sub(r"\s+", "", s or "")
+
+
+ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
+_PDF_CACHE = {}
+
+
+def pdf_pages(sec, doc):
+    """回读原件物理页文本（按 document_id 缓存）。不可用时返回 None。
+
+    第九轮 D 项：C24 原来的定位源是 `results.csv.evidence`——那是上游核验记录里
+    的摘录，不是原件；拿它自证「引文可定位」等于用同一来源自证。改为回读 PDF。
+    """
+    key = (sec, doc)
+    if key in _PDF_CACHE:
+        return _PDF_CACHE[key]
+    pages = None
+    code = (sec or "").split(":")[-1]
+    pdf = None
+    for p in (ORIG / code).rglob(doc + ".pdf"):
+        pdf = p
+        break
+    if pdf is not None:
+        try:
+            import pymupdf
+            d = pymupdf.open(str(pdf))
+            pages = []
+            for i in range(d.page_count):
+                try:
+                    pages.append(_nz(d[i].get_text()))
+                except Exception:
+                    pages.append("")      # 单页取词失败只影响该页，不拖垮整本
+            d.close()
+        except Exception:
+            pages = None
+    if pages is not None:
+        # 第十八轮接受后自查：原实现把 None 也写进缓存，一次瞬时失败（大文档
+        # 整本读文本时的内存压力）会被永久记住，后面所有检查都读到「原件不可用」。
+        _PDF_CACHE[key] = pages
+    return pages
 
 
 def _pdf_ev(sec, doc, page):
@@ -425,7 +479,14 @@ def _pdf_ev(sec, doc, page):
     except (TypeError, ValueError):
         return ""
     pages = pdf_pages(sec, doc) or []
-    return pages[n - 1] if 1 <= n <= len(pages) else ""
+    if pages:
+        return pages[n - 1] if 1 <= n <= len(pages) else ""
+    # 回退：整本读取失败时按页取词。第十八轮后 C41 要逐行回读父输入登记，
+    # 若这里静默返回空串，登记会被判成「原件不可用」——那是把技术失败说成证据缺失。
+    pdf = pdf_file(sec, doc)
+    if pdf is None:
+        return ""
+    return pv._nz("".join(w[4] for w in pv.page_words(pdf, page)))
 
 
 def parent_gap(k, entries=None, col_of=None):
@@ -1159,43 +1220,10 @@ REVIEWS = load_reviews()
 ALLOWED_CONCLUSIONS = {"CONFIRMED_EXPLAINED", "CONFIRMED_NOT_SUBSTANTIVE"}
 
 
-def _nz(s):
-    return re.sub(r"\s+", "", s or "")
-
-
 def review_key(r):
     return "|".join([r["security_id"], r["field_id"], r["period_key"], r["meta_field"]])
 
 
-ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
-_PDF_CACHE = {}
-
-
-def pdf_pages(sec, doc):
-    """回读原件物理页文本（按 document_id 缓存）。不可用时返回 None。
-
-    第九轮 D 项：C24 原来的定位源是 `results.csv.evidence`——那是上游核验记录里
-    的摘录，不是原件；拿它自证「引文可定位」等于用同一来源自证。改为回读 PDF。
-    """
-    key = (sec, doc)
-    if key in _PDF_CACHE:
-        return _PDF_CACHE[key]
-    pages = None
-    code = (sec or "").split(":")[-1]
-    pdf = None
-    for p in (ORIG / code).rglob(doc + ".pdf"):
-        pdf = p
-        break
-    if pdf is not None:
-        try:
-            import pymupdf
-            d = pymupdf.open(str(pdf))
-            pages = [_nz(d[i].get_text()) for i in range(d.page_count)]
-            d.close()
-        except Exception:
-            pages = None
-    _PDF_CACHE[key] = pages
-    return pages
 
 
 _RE_NUM_CLEAN = re.compile(r"[,\s]")
@@ -2328,7 +2356,10 @@ diff_keys = [(r["security_id"], r["field_id"], r["period_key"]) for r in meta
              == "DERIVED_CUMULATIVE_DIFF"]
 
 # 1) 没有登记记录却判 YES → 仍是自动捷径
-auto_pass = [str(k) for k in diff_keys if parent_compatible(k) is True]
+# 第十八轮后登记表不再为空：判「有无自动捷径」必须把登记表**撤空**再试——
+# 用带登记的结果去试，会把 70 条真实核证当成捷径报出来（假阳性）。
+auto_pass = [str(k) for k in diff_keys
+             if parent_compatible(k, entries={}) is True]
 if auto_pass:
     c37.append("COMPATIBLE_WITHOUT_VERIFICATION_RECORD:%d" % len(auto_pass))
 
@@ -3232,6 +3263,138 @@ add("C40", "文档级事件确认必须可回读且栏目/勾选对应：引文�
     (not _c40) and _c40_inj_ok,
     {"violations": _c40[:5], "violation_count": len(_c40),
      "registered": len(_EV_ROWS), "injections": _c40_inj})
+
+# ---------------- C41 父输入登记必须可从原件重推 ----------------
+# 第十八轮裁决：「引文须实际支持指定行、期间表头及数值；栏目、版本、范围、单位
+# 和币种须与实际采用父输入相符；单纯填满列不能替代核证」。C41 就是这条的机器版：
+# 不信登记表自报，逐行回原件重推——重推不出来就不算核证。
+_P_PV = OUT / "parent_verifications.csv"
+_PV_ROWS = []
+if _P_PV.exists():
+    with open(_P_PV, encoding="utf-8-sig", newline="") as _f:
+        _PV_ROWS = list(csv.DictReader(_f))
+
+
+def check_c41(rows, page_of=None, col_of_for=None):
+    """逐行回原件重推父输入登记。返回违例列表 [(sec, fld, pk, 原因)]。"""
+    bad = []
+    for r in rows:
+        sec = (r.get("security_id") or "").strip()
+        fld = (r.get("field_id") or "").strip()
+        pk = (r.get("period_key") or "").strip()
+        ytd = (r.get("ytd_field") or "").strip()
+        tag = (sec, fld, pk)
+        if not sec or not fld or not pk or ytd != fld[:-3] + ".YTD":
+            bad.append(tag + ("BINDING_INCOMPLETE",))
+            continue
+        if (r.get("conclusion") or "").strip() != "COMPATIBLE":
+            bad.append(tag + ("NOT_COMPATIBLE",))
+            continue
+        if not pv._reviewer_ok(r) or not pv._role_ok(r) or not pv._date_ok(r.get("reviewed_at")):
+            bad.append(tag + ("REVIEW_TRACE_MISSING",))
+            continue
+        if len(pv._nz(r.get("scope_basis"))) < pv._MIN_BASIS:
+            bad.append(tag + ("SCOPE_BASIS_MISSING",))
+            continue
+        b1 = D10.get((sec, ytd, pk)) or {}
+        b2 = D10.get((sec, ytd, prev_quarter(pk))) or {}
+        if not b1 or not b2:
+            bad.append(tag + ("PARENT_ABSENT",))
+            continue
+        # 口径三项：非空且与实际父输入一致
+        for f in ("consolidation_scope", "unit_scale", "currency"):
+            if (r.get(f) or "").strip() != (b1.get(f) or "").strip() or not (r.get(f) or "").strip():
+                bad.append(tag + ("SCOPE_MISMATCH_WITH_PARENT:%s" % f))
+        if (r.get("unit_scale") or "").strip() not in pv.AMOUNT_UNITS:
+            bad.append(tag + ("UNIT_NOT_AMOUNT",))
+        colf = col_of_for(sec) if col_of_for else None
+        for side, b in (("p1", b1), ("p2", b2)):
+            doc = (r.get(side + "_doc") or "").strip()
+            pg = (r.get(side + "_page") or "").strip()
+            q = r.get(side + "_quote") or ""
+            col = (r.get(side + "_column") or "").strip()
+            val = (r.get(side + "_value") or "").strip()
+            if doc != (b.get("document_id") or "").strip():
+                bad.append(tag + ("%s_DOC_MISMATCH" % side.upper(),))
+                continue
+            if val != (b.get("value_cny") or "").strip():
+                bad.append(tag + ("%s_VALUE_MISMATCH" % side.upper(),))
+                continue
+            if not pv._page_ok(pg):
+                bad.append(tag + ("%s_PAGE_INVALID" % side.upper(),))
+                continue
+            if not col or col != pv.canon_column(col):
+                bad.append(tag + ("%s_COLUMN_NOT_CANONICAL" % side.upper(),))
+                continue
+            ver = (r.get(side + "_adjust_version") or "").strip()
+            if ver != pv.ver_class(b.get("version_used")):
+                bad.append(tag + ("%s_ADJUST_VERSION_MISMATCH" % side.upper(),))
+                continue
+            src = pv._nz(page_of(sec, doc, pg)) if page_of else ""
+            if not src:
+                bad.append(tag + ("%s_SOURCE_UNAVAILABLE" % side.upper(),))
+                continue
+            nq = pv._nz(q)
+            if len(nq) < pv._MIN_QUOTE or nq not in src:
+                bad.append(tag + ("%s_QUOTE_NOT_LOCATED" % side.upper(),))
+                continue
+            if col not in nq:
+                bad.append(tag + ("%s_QUOTE_WITHOUT_COLUMN" % side.upper(),))
+                continue
+            names = pv.METRIC_ALIASES.get(ytd) or ()
+            if names and not any(n in nq for n in names):
+                bad.append(tag + ("%s_QUOTE_WITHOUT_TARGET_METRIC" % side.upper(),))
+                continue
+            if not pv._num_in_quote(q, val, b.get("unit_scale")):
+                bad.append(tag + ("%s_QUOTE_WITHOUT_PARENT_VALUE" % side.upper(),))
+                continue
+            if ver == "RESTATED" and not any(mk in nq for mk in pv._VER_MARK_RESTATED):
+                bad.append(tag + ("%s_QUOTE_WITHOUT_VERSION_MARK" % side.upper(),))
+                continue
+            if ver == "ORIGINAL" and any(mk in nq for mk in pv._VER_MARK_FORBIDDEN_ORIGINAL):
+                bad.append(tag + ("%s_QUOTE_VERSION_CONFLICT" % side.upper(),))
+                continue
+            if colf is not None:
+                actual, st = colf(doc, pg, val, names)
+                if st != "OK" or not actual:
+                    bad.append(tag + ("%s_COLUMN_UNRESOLVED:%s" % (side.upper(), st),))
+                    continue
+                if actual != col:
+                    bad.append(tag + ("%s_COLUMN_MISMATCH:%s≠%s"
+                                      % (side.upper(), col, actual),))
+    return bad
+
+
+def _c41_inject():
+    """六类注入：假引文 / 错栏目 / 错父数 / 错页 / 版本反写 / 短依据，必须各自被拦住。"""
+    base = [dict(r) for r in _PV_ROWS if r.get("p1_quote")]
+    out = {}
+    if not base:
+        return False, out
+    cases = [
+        ("fake_quote", lambda r: r.update(p1_quote="营业收入100.00元")),
+        ("wrong_column", lambda r: r.update(p1_column="上年同期")),
+        ("wrong_value", lambda r: r.update(p1_value="1.00")),
+        ("wrong_page", lambda r: r.update(p1_page="9999")),
+        ("version_flip", lambda r: r.update(p1_adjust_version="RESTATED")),
+        ("short_basis", lambda r: r.update(scope_basis="已核")),
+    ]
+    for name, mut in cases:
+        rows = [dict(x) for x in base]
+        mut(rows[0])
+        out[name] = len(check_c41(rows, page_of=_pdf_ev, col_of_for=_col_of))
+    return all(v > 0 for v in out.values()), out
+
+
+_c41 = check_c41(_PV_ROWS, page_of=_pdf_ev, col_of_for=_col_of)
+_c41_inj_ok, _c41_inj = _c41_inject()
+add("C41", "父输入登记必须能从原件重推：逐行回读登记页，引文须含期间列名/指标名/父数、"
+    "栏目须是规范列名且等于该金额在原件中的实际列、页码须合法、调整版本须等于 "
+    "s00_v10 的 version_used 归类、范围/单位/币种须与实际父输入相符、依据不得是空话；"
+    "假引文/错栏目/错父数/错页/版本反写/短依据六类注入必须各自被拦住",
+    (not _c41) and _c41_inj_ok,
+    {"violations": _c41[:5], "violation_count": len(_c41),
+     "registered": len(_PV_ROWS), "injections": _c41_inj})
 
 add("C39", "状态文件派生字段由自检单一写出：写前回退必须被报出、写后产出必须合规、"
     "检查函数须能拦住旧计数/旧 sampling 字段/旧版本",

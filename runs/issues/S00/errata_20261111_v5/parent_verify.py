@@ -542,6 +542,149 @@ def column_of_amount(words, value, label=None, x_tol=3.0, y_tol=4.0):
     return col, amt
 
 
+# 第十八轮接受后自查（F33）：`column_of_amount_ex()` 用「金额中心点 ±3pt」去套表头，
+# 而财务报表的数字是**右对齐**、表头文字通常**居中**——两者根本不是同一个坐标系。
+# 实测 87 条父输入缺口涉及的 174 个真实页面上，97 页因此取不到表头（NO_COLUMN），
+# 另有 52 页取到的是页眉标题（`…年半年度报告`）。
+# 同时 `if _num_of(tx) is not None: continue` 把表头里的**年份**当金额丢掉了
+# （`2026` + `年半年度` → 只剩 `年半年度`），而 `_PERIOD_COL` 要求栏目含四位年份，
+# 于是「2026年半年度」这种栏目**无论怎么正确登记都过不了**。
+# 本函数改用报表排版的稳定特征定列：**同一列的数字右边界相同**。
+_COL_PERIOD_HINT = re.compile(r"\d{4}|本期|上期|上年|本年|年末|期末|年初|期初|"
+                              r"报告期|季度|半年|月")
+# 页眉/标题行不是表头：它们同样含「2026」「年半年度」，但那是文档标题不是列名。
+# 不加这条排除，取到的「栏目」会变成「…股份有限公司2026年半年度报告」。
+_TITLE_ROW = re.compile(r"股份有限公司|年度报告|半年度报告|季度报告|单位[:：]")
+# 表头词与金额跨度的重叠判定：金额左侧留 20pt（表头通常比数字宽、且居中偏左），
+# 右侧留 edge_tol。放宽左侧会把左邻列的列名拉进来（如「上年同期」），
+# 收窄则会漏掉居中表头的左半部分。
+_BAND_PAD_LEFT = 20.0
+_HDR_MERGE_GAP = 50.0          # 表头跨行合并的最大行距（pt）
+
+
+def column_of_amount_aligned(words, value, label=None, y_tol=4.0, edge_tol=4.0):
+    """按「金额自身的横向跨度」取表头，再取该列文字。
+
+    返回 (column_text, amount_text, status)，status 取值与
+    `column_of_amount_ex()` 一致，另加 `NO_HEADER_ROW`（找不到表头行）。
+
+    与 `column_of_amount_ex()` 的区别只有三点，都不放松判据：
+
+    1. **定列用跨度重叠而不是中心点 ±3pt**。财务报表的数字右对齐、表头居中，
+       两者不是同一坐标系：短数字（`0.00`）的中心会落到右邻列的表头上，长数字
+       的中心会落到列外。实测 174 个真实页面里 97 页因此取不到表头。
+    2. **表头行里的年份词保留**（F33）。原实现 `if _num_of(tx) is not None: continue`
+       把 `2026` 当金额丢掉，`2026年半年度` 只剩 `年半年度`，而 `_PERIOD_COL`
+       要求栏目含四位年份——正确登记也过不了。
+    3. **不设垂直距离上限**，改为排除页眉/标题行。财务报表一页可跨几百 pt，
+       设上限会把表头挡在门外（实测 64/174 页因此判 NO_HEADER_ROW）。
+
+    指标行绑定、金额唯一性、扫描页处理全部沿用原口径。
+    """
+    if not words:
+        return None, None, "NO_WORDS"
+    target = _num_of(value)
+    if target is None:
+        return None, None, "NO_AMOUNT"
+    rows = rows_of_words(words, y_tol)
+    cands = []
+    for ri, (_y, cells) in enumerate(rows):
+        for x0, x1, tx in cells:
+            v = _num_of(tx)
+            if v is not None and abs(v - target) < 0.01:
+                cands.append((ri, x0, x1, tx))
+    if not cands:
+        return None, None, "NO_AMOUNT"
+    if label:
+        want = [label] if isinstance(label, str) else [x for x in label if x]
+        hit = []
+        for ri, x0, x1, tx in cands:
+            row_txt = "".join(c[2] for c in rows[ri][1])
+            if any(w in row_txt for w in want):
+                hit.append((ri, x0, x1, tx))
+        if len(hit) > 1:
+            return None, hit[0][3], "AMBIGUOUS"
+        if hit:
+            cands = hit
+        elif len(cands) > 1:
+            return None, cands[0][3], "AMBIGUOUS"
+    elif len(cands) > 1:
+        return None, cands[0][3], "AMBIGUOUS"
+    ri, ax0, ax1, atxt = cands[0]
+
+    # 表头行：金额行上方、含期间词、至少两个单元格、且不是页眉/标题的最近一行
+    hdr = None
+    for rj in range(ri - 1, -1, -1):
+        cells = rows[rj][1]
+        if len(cells) < 2:
+            continue
+        row_txt = "".join(c[2] for c in cells)
+        if _TITLE_ROW.search(row_txt):
+            continue
+        if not any(_COL_PERIOD_HINT.search(c[2]) for c in cells):
+            continue
+        hdr = rj
+        break
+    if hdr is None:
+        return None, atxt, "NO_HEADER_ROW"
+
+    # 表头可能跨两三行：`本报告期` 在一行、`（1－6月）` 在下一行，只取最近一行会
+    # 拿到半截列名（`（1－6月）` 不含「本期」也无年份，`_PERIOD_COL` 判不过）。
+    # 向上把相邻的表头行一起收进来，仍要求它们是表头形状（≥2 单元格、非标题）。
+    hdr_rows = [hdr]
+    for rj in range(hdr - 1, -1, -1):
+        if rows[hdr_rows[-1]][0] - rows[rj][0] > _HDR_MERGE_GAP:
+            break
+        cells = rows[rj][1]
+        if len(cells) < 2:
+            break
+        if _TITLE_ROW.search("".join(c[2] for c in cells)):
+            break
+        hdr_rows.append(rj)
+
+    # 表头行里取「横向跨度与金额跨度重叠」的词。这里**不跳过数字词**——年份正是
+    # 表头的一部分（F33）；金额词本就不该出现在表头行。
+    lo, hi = ax0 - _BAND_PAD_LEFT, ax1 + edge_tol
+    picked = []
+    for rj in reversed(hdr_rows):          # 从上到下
+        for x0, x1, tx in rows[rj][1]:
+            if x1 > lo and x0 < hi:
+                picked.append((rows[rj][0], x0, tx))
+    if not picked:
+        return None, atxt, "NO_COLUMN"
+    col = "".join(t for _y, _x, t in sorted(picked, key=lambda p: (p[0], p[1])))
+    return col, atxt, "OK"
+
+
+_YEAR_PERIOD = re.compile(r"(?:19|20)\d{2}年(?:半年度|年度|第一季度|第三季度|上半年|下半年)?")
+_PERIOD_WORDS = ("年初至报告期末", "本报告期末", "上年同期金额", "上年同期",
+                 "本报告期", "本期发生额", "本期金额", "本期数", "本期",
+                 "上期发生额", "上期金额", "上期数", "上期", "报告期",
+                 "上年年末", "上年度末", "年初数", "期末数", "年末数",
+                 "期初数", "年初", "期末", "年末")
+
+
+def canon_column(text):
+    """把表头文字归一成**一个列名**，供登记侧与实际侧用同一把尺子比较。
+
+    表头行里同一列的文字可能横跨多行（`本报告期` + `（1－6月）`），也可能因取词
+    窗口把邻列年份带进来（`2026年半年度2025`）。归一规则：
+    ① 有「年份+期间」的，取最长的那一段（`2026年半年度`）；
+    ② 否则取出现的最长期间词（`本报告期` / `本期数` / `年初至报告期末` …）；
+    ③ 都没有则返回空串——**没有期间语义的表头不能当列名**。
+    """
+    t = _nz(text)
+    if not t:
+        return ""
+    ys = _YEAR_PERIOD.findall(t)
+    if ys:
+        return max(ys, key=len)
+    hits = [w for w in _PERIOD_WORDS if w in t]
+    if hits:
+        return max(hits, key=len)
+    return ""
+
+
 def gap(ent, expect, evidence_of, col_of=None):
     """返回该记录不足以证明兼容的原因；None 表示依据充分。
 

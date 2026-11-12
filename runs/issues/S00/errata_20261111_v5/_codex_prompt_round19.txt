@@ -1,0 +1,66 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V15，43/43 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round18.txt（ACCEPTED_WITH_LIMITS，同意下一批优先父输入）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round19.md（先读这一份）
+
+本轮只做批次 B（父输入），没有开批次 C–E、没有动第 5 步。
+请按「这批登记是否真的构成核证」审，不要重新评估已被你接受的事件证据（272 条你说保留）。
+
+## 一、先修的那个「正确登记也判死」的缺陷（F33）
+
+1. 读 `parent_verify.py` 的 `column_of_amount_ex()`：确认它取表头行时 `if _num_of(tx) is not None: continue`
+   会把年份 `2026` 当金额丢掉，且用金额中心点 ±3pt 套表头。
+2. 读新增的 `column_of_amount_aligned()`：确认它 ① 用金额跨度与表头词重叠定列；
+   ② 保留年份词；③ 表头跨行合并；④ 不设垂直距离上限而是排除页眉/标题行。
+   **如果发现它比原函数更松（例如允许把邻列的表头认成本列），直接判不通过。**
+3. 读 `canon_column()`：确认它只做「同一列名的不同写法归一」，且没有期间语义时返回空串。
+4. 核实 `build_errata_v5.py` 的 `_col_of()` 与 `verify_v5.py` 的 `_col_of()` 都改成了
+   `column_of_amount_aligned() + canon_column()`，两侧同一把尺子。
+
+## 二、批次 B 的登记是否成立
+
+5. 读 `step4_parent_scan.py`：确认它只做证据扫描、不写结论；确认它要求
+   「数值 + 期间表头同页出现」，且两处数值必须逐位相等。
+6. 读 `step4_apply_parents.py`：确认只对 `EVIDENCE_OK` 的行写登记，其余保留待核；
+   确认 `review_role=SELF_CHECK`、`reviewer` 不是占位符。
+7. 核实 `parent_verifications.csv` 是 **70 行 / 27 列**；随机抽 3–5 行，
+   按其 `p1_page` / `p2_page` 回读原件，核对 `p1_quote` / `p2_quote` 是否真的落在该页、
+   是否真的含「期间列名 + 指标名 + 父数」，`p1_column` / `p2_column` 是否真的是该金额所在列。
+   **任何一行引文在登记页找不到，或栏目不是该金额所在列，直接判不通过。**
+8. 核实计数：`PENDING_PARENT_COMPATIBILITY` 1,277 → **1,209**；核心未闭合 8,674 → **8,606**；
+   `l2_dependency_summary.json` 的 `verdicts` 仍是 **44/231/320/81/378**。
+9. 确认没有出现「为了凑数把 17 条受阻的也登记」：读 `step4_parent_scan.csv`，
+   看 `verdict=BLOCKED` 的 17 条是否确实没进 `parent_verifications.csv`。
+
+## 三、C41 是否真的有牙
+
+10. 读 `verify_v5.py` 的 `check_c41()`：确认它逐行回原件重推，且独立于登记表自报字段——
+    引文内容（列名+指标名+父数）、页码定位、版本标记、口径三项、依据文字。
+11. 核实六类注入（假引文 / 错栏目 / 错父数 / 错页 / 版本反写 / 短依据）各自被拦住。
+    **注意 C41 与 `gap()` 共用 `column_of_amount_aligned()`，存在同源风险**——
+    请判断除「栏目等于实际列」之外的五项独立判据是否足以支撑「可重推」，
+    若不足请指出还缺什么旁证。
+
+## 四、我主动披露的两个自查缺陷
+
+12. 核实 `_nz()` 现在定义在 `pdf_pages()` 之前；确认 `pdf_pages()` 不再把失败结果写入缓存。
+    这个缺陷是我前移 `pdf_pages()` 后引入的：`NameError` 被逐页 `try/except` 吞成
+    「整本页面都是空串」，表现为「原件不可用」。
+13. 核实 C37 判「有无自动捷径」已改为用**空登记表**试（`parent_compatible(k, entries={})`），
+    并确认这不是放松：用空表仍必须全部返回非 True。
+
+## 五、四个请你明确表态的问题
+
+14. **登记页可以是「主要会计数据」页而不是 s00 的 `source_page`**——因为续页没有表头。
+    两处数值逐位相等才登记。这是否可接受？若不接受，请给出替代口径
+    （按现口径，87 条里只有 3 条能靠续页本身证明列身份）。
+15. `canon_column()` 的归一是否算放松？
+16. 把 `_col_of()` 从中心点改成跨度重叠是否可接受？
+17. 还需要一条完全不依赖 `column_of_amount_aligned()` 的旁证吗？
+
+## 六、边界
+
+S04 第二轮与 S05 继续不放行；批次 C–E 与第 5 步未开始；44 / 231 / 378 未冻结；
+F32（26 份英文版年报）与 `_RE_POLICY` 裸「会计政策」未修。
+请按「是否放行批次 C」给结论；若不通过，请把要改的点写成可执行清单。
