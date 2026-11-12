@@ -34,7 +34,7 @@ FILES = [
     "report_to_codex_round13.md", "report_to_codex_round14.md",
     "report_to_codex_round15.md", "report_to_codex_round16.md",
     "report_to_codex_round17.md", "report_to_codex_round18.md",
-    "report_to_codex_round19.md",
+    "report_to_codex_round19.md", "rework_round19.json",
     "_codex_prompt_round11.txt", "_codex_prompt_round12.txt",
     "_codex_prompt_round13.txt", "_codex_prompt_round14.txt",
     "_codex_prompt_round15.txt", "_codex_prompt_round16.txt",

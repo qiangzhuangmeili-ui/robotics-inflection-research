@@ -1,0 +1,88 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V16",
+  "round": 19,
+  "review_nature": "INDEPENDENT_RECHECK",
+  "reviewer": "Codex CLI（gpt-6.1-sol, model_reasoning_effort=high, sandbox=read-only）",
+  "reviewed_at": "2026-11-12T21:49:00+08:00",
+  "review_output": "runs/issues/S00/errata_20261111_v5/_codex_out_round19.txt",
+  "review_prompt": "runs/issues/S00/errata_20261111_v5/_codex_prompt_round19.txt",
+  "verdict": "RETURN_FOR_REWORK",
+  "verdict_quote": "批次 B 的登记、计数和抽样原文有实质成果，但取列算法已复现你指定的否决条件：允许把邻列表头认成本列。",
+  "batch": "第 4 步批次 B（父输入核证）",
+  "confirmed_items": [
+    "parent_verifications.csv 为 70 行、27 列，全部 SELF_CHECK / WorkBuddy-Agent",
+    "扫描 70 条 EVIDENCE_OK、17 条 BLOCKED；17 条受阻记录均未进入登记表",
+    "PENDING_PARENT_COMPATIBILITY=1,209，核心未闭合 8,606，均较上一轮减少 68",
+    "L2 汇总与明细均为 44 / 231 / 320 / 81 / 378",
+    "生产侧与自检侧 _col_of() 均已改为 column_of_amount_aligned() + canon_column()",
+    "_nz() 已定义在 pdf_pages() 之前",
+    "C37 改用 entries={} 检查自动捷径合理，不算放松",
+    "固定种子 19 抽 5 条登记、回读 10 个原件页：引文均可定位，含登记列名/指标/父数，金额对应所登记列；北自科技第 6 页另做渲染目视确认",
+    "全部 140 个父输入登记页均能找到与登记父数精确相等的印刷金额"
+  ],
+  "defects": [
+    {
+      "id": "D1",
+      "title": "跨度算法比原函数更松，已复现邻列误认",
+      "where": "parent_verify.py:647",
+      "repro": "左列 2025年半年度 x[70,90]、本列 2026年半年度 x[100,130]、金额 100.00 x[100,110]；旧函数返回 2026年半年度，新函数返回 2025年半年度2026年半年度，归一后成 2025年半年度",
+      "cause": "金额范围左扩 20pt、右扩 4pt 后拼接所有重叠表头，没有多列歧义保护",
+      "required_fix": "多个期间列候选必须报歧义，禁止拼接后择一；加入该邻列反例"
+    },
+    {
+      "id": "D2",
+      "title": "canon_column() 损失期间语义，不能认定只是写法归一",
+      "where": "parent_verify.py:667",
+      "repro": "本期金额（2026年1-6月）→2026年；本期金额（2026年4-6月）→2026年；本报告期（1－6月）与（4－6月）→均本报告期；上年年初至报告期末→年初至报告期末",
+      "cause": "年份正则允许空后缀且按最长匹配取，抹掉起止区间与上年/本期属性",
+      "required_fix": "归一须保留年份、完整起止区间、本期/上年/上期及累计属性；C37 反例须走完整生产路径（含 canon_column）"
+    },
+    {
+      "id": "D3",
+      "title": "金额定位与引文正则不满足「逐位相等、指定指标行」",
+      "where": "step4_parent_scan.py / parent_verify.py",
+      "repro": "目标营业收入 100.009、页面只有营业成本 100.00，取列仍返回 OK",
+      "cause": "abs(v-target)<0.01 浮点容差；引文构造用浮点格式化与无完整数字边界的正则；指标名未命中时若页面只有一个候选金额仍继续接受",
+      "required_fix": "改精确十进制比较与完整数字边界；指标行未命中不得回退接受"
+    },
+    {
+      "id": "D4",
+      "title": "C41 独立覆盖不足，且汇报的注入次数不实",
+      "where": "verify_v5.py:3278",
+      "repro": "同时改错首行父期间、清空 version_basis、把 scope_basis 换成 300 个重复字符，C41 仍无违例",
+      "cause": "未检查登记父期间、未验证 version_basis、依据只查长度；_c41_inject() 只改首行，review.json 六项各为 1，汇报写「各 70」与自检产物不符",
+      "required_fix": "补父期间、两侧口径、版本依据与依据内容验证；纠正注入次数与 V15/V16 汇报不一致"
+    },
+    {
+      "id": "D5",
+      "title": "失败缓存只修了一部分",
+      "where": "verify_v5.py:440",
+      "repro": "逐页异常仍变成空串，整本结果 [''] 仍满足缓存条件并被缓存",
+      "cause": "只做到不缓存 None，未区分「技术失败」与「该页确实无文本」",
+      "required_fix": "全页取词失败不得缓存为空白证据，保留技术失败状态"
+    }
+  ],
+  "answers_to_my_questions": {
+    "登记页可否用主要会计数据页": "可以，不必强制等于 source_page；但须同时绑定同一文档、指标、精确金额、实际期间、单位币种及合并/版本口径，并保留原采用页与替代证据页的对应关系。金额相等本身不是全部充分条件。",
+    "canon 归一是否算放松": "算。它删去了必须保留的期间和相对年份语义。",
+    "中心点改跨度是否可接受": "方向可以，当前实现不可以。须解决跨列、多表及多行表头歧义。",
+    "是否还需独立旁证": "需要。至少以不调用该取列函数的单元格边界解析或原页目视核读，证明「指标行 × 完整期间列 × 金额」的交点；另给出口径和版本的原文定位。"
+  },
+  "rework_checklist": [
+    "多个期间列候选必须报歧义，禁止拼接后择一；加入邻列反例",
+    "归一保留年份、完整起止区间、本期/上年/上期及累计属性；让 C37 反例走完整生产路径",
+    "金额改用精确十进制比较及完整数字边界；指标行未命中不得回退接受",
+    "补齐 C41 的父期间、两侧口径、版本依据和依据内容验证；纠正注入次数及 V15/V16 汇报不一致",
+    "全页取词失败不得缓存为空白证据；保留技术失败状态",
+    "修复后重验全部 70 条，补独立列身份旁证，再重算闭合数；不满足者保留待核"
+  ],
+  "release": {
+    "release_batch_C": false,
+    "release_S04_round2": false,
+    "release_S05": false,
+    "freeze_44_231_378": false
+  }
+}
