@@ -1,0 +1,93 @@
+## 一、撤销 3,803 条事件闭合
+
+**核实方式：**检查 `judge()`、生产调用、`facts()`、`allowed_label()`、C14/C17；直接统计 CSV，并与 Git HEAD 的原分布比较。
+
+**结果：**
+
+- `judge()` 的 `event_ok` **参数已删除**；事件登记增加 `ERRATA` 覆盖及短路放行的分支均已撤回，也未发现替代入口。
+- 现存同名局部变量只服务原有“B=是”的肯定证据分支，不读取本批事件登记。
+- `EVENT_VERIFS` 仅装载和打印数量，不影响 `resolution`。
+- `facts()` 不计事件覆盖；`allowed_label()` 的 `ev` 参数及分支、C14 事件分支、C17 对应白名单均已删除。
+- `RESOLVED_DOC_EVENT_CONFIRMED`：**0 条**；元数据未闭合：**8,674 条**。
+- 当前全部 **16 个标签及计数与 Git HEAD 原分布完全一致**，没有统一换成新标签。主要待核项包括：`PENDING_SCOPE_LIMITED_METHOD=6373`、`PENDING_PARENT_COMPATIBILITY=1277`、`PENDING_WEAK_ASSUMPTION=515`。
+- L2 仍为 **44 / 231 / 320 / 81 / 378**。
+
+**判定：通过。**批次 A 的事件登记已退出闭合判定。
+
+## 二、重大性命题
+
+**核实方式：**核对实际判定路径，并统计全部登记的 `scope_note`。
+
+**结果：**
+
+272 条均保留原文：
+
+> **仅覆盖「重大」差错更正**，非重大更正不在该项披露范围
+
+当前处置是停止采用这批证据闭合，回应了上轮意见；不是改写脚注后继续使用。
+
+**判定：通过。**当前不要求额外增加 `limited_by_materiality=true` 列。既有明确限制加上停止参与闭合，已足够完成本轮修订；以后恢复采用仍须另审映射和适用范围。
+
+## 三、C40 反例与注入
+
+**核实方式：**检查 `verify_v5.py:3149–3219`；从现有代码提取函数，在内存中使用 `DOC-C54D5CF89C62F442` 登记复现，保留真实 PDF 回读函数。
+
+**结果：**原登记返回 `[]`。两项独立反例结果如下：
+
+| 具体输入 | 实测拒绝原因 |
+|---|---|
+| `quote="不适用"`、`option="否"` | `QUOTE_WITHOUT_STATEMENT_LABEL` |
+| 保留原引文及栏目名，仅改 `option="否"` | `QUOTE_WITHOUT_CHECKED_OPTION:否` |
+
+对该基线执行实际 `_c40_inject()`：
+
+| 注入 | 数量 | 拒绝原因 |
+|---|---:|---|
+| quote | 1 | `QUOTE_WITHOUT_STATEMENT_LABEL` |
+| option | 1 | `OPTION_NOT_NO:适用` |
+| period | 1 | `PERIOD_NE_REGISTRY` |
+| short | 1 | `QUOTE_WITHOUT_STATEMENT_LABEL` |
+
+保存的 `review.json` 同样记录四类计数均为 1、基线违例为 0。
+
+**判定：通过。**`short` 确实由新增判据拦截。本轮做的是定向复现，没有独立重跑完整 42 项自检。
+
+## 四、C17 汇报更正
+
+**核实方式：**核对 `review.json:1012–1019`、`REPORT.md:128–133`，检索相关 C17 表述，并检查 C17 实现。
+
+**结果：**
+
+- `round16_fixes` 明确写“四处重算同步接入事件”**不属实**，并明确 C17 只做结构检查，没有重算事件有效性。
+- `REPORT.md` 明确写“**C17 没接入**，只做标签白名单的结构检查”，并撤回接入说法。
+- 未发现当前汇报仍声称 C17 重算事件；历史统计表中的 C17 名称不构成此项主张。
+
+**判定：通过。**
+
+## 裁定
+
+**核实方式：**综合上述代码核对、实际计数及定向反例。
+
+**结果：本轮四项修订闭合第十七轮意见。272 条既有事件证据继续保留，本轮未重新评估其证据本身。**
+
+**裁决：ACCEPTED_WITH_LIMITS。**
+
+同意下一批优先做父输入，但固定名单需更正：
+
+- HOLD 中仅缺父输入：**87 条，核实一致**。
+- 全部未闭合记录中仅缺 `PARENT_COMPATIBILITY`：实算 **1,340 条**，由 **1,277 条 `PENDING_PARENT_COMPATIBILITY`＋63 条 `PENDING_SCOPE_LIMITED_METHOD`**组成。
+- 当前快照不支持 **1,346 条**。下一批应提交可复算名单；若坚持该数字，需列明额外 6 个键及纳入依据。这不影响本轮四项修订通过。
+
+`parent_verifications.csv` 现有 **27 列表头可以沿用**，最少应完整覆盖以下信息：
+
+| 用途 | 必要列 |
+|---|---|
+| 绑定待核行与实际父输入 | `security_id, field_id, period_key, ytd_field` |
+| 两期身份与实际累计值 | `p1_period, p2_period, p1_doc, p2_doc, p1_value, p2_value` |
+| 两期原文定位 | `p1_page, p2_page, p1_quote, p2_quote, p1_column, p2_column` |
+| 调整版本与共同口径 | `p1_adjust_version, p2_adjust_version, consolidation_scope, unit_scale, currency` |
+| 判断依据与复核追溯 | `scope_basis, version_basis, conclusion, review_role, reviewer, reviewed_at` |
+
+引文须实际支持**指定行、期间表头及数值**；栏目、版本、范围、单位和币种须与实际采用父输入相符。单纯填满列不能替代核证；不满足时保留待核。同一执行 AI 自验仍须写 `SELF_CHECK`。
+
+本裁决仅接受本轮四项修订，不放行 S04 第二轮或 S05，既有 A/C/F 限制继续有效。

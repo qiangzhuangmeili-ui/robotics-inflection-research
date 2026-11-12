@@ -194,6 +194,17 @@ print("父输入核证登记项:", len(PARENT_VERIFS))
 SCOPE_VERIFS = pv.load_scope(OUT / "scope_verifications.csv")
 print("来源维度核证登记项:", len(SCOPE_VERIFS))
 
+# 第 4 步批次 A 的文档级事件确认（`event_verifications.csv`）：本版**只登记、不闭合**。
+# 第十七轮裁决：该披露证明的是「本栏目不适用」，不能扩展为「该期全部成员字段未被
+# 任何差错更正改写」；证据命题 → 采用对象的映射补齐之前，3,803 条一律按原判据待核。
+EVENT_VERIFS = {}
+_p_ev = OUT / "event_verifications.csv"
+if _p_ev.exists():
+    with open(_p_ev, encoding="utf-8-sig", newline="") as f:
+        for _r in csv.DictReader(f):
+            EVENT_VERIFS[_r["document_id"]] = _r
+print("文档级事件确认登记项（只登记，不作闭合依据）:", len(EVENT_VERIFS))
+
 adopt = {}
 with open(P_ADOPT, encoding="utf-8-sig", newline="") as f:
     for r in csv.DictReader(f):

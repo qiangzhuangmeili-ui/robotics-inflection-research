@@ -1,0 +1,58 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V15，42/42 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round17.txt（RETURN_FOR_REWORK）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round18.md（先读这一份）
+
+本轮只做你列的四个修订项，没有开新批次、没有新增证据类。
+请按「这四项是否真的改到位」审，不要重新评估已被你接受的证据本身（那 272 条你说保留）。
+
+## 一、撤销 3,803 条事件闭合
+1. 读 `evidence_scope.py` 的 `judge()`：确认 `event_ok` 参数已删除，`covered.add(ERRATA)`
+   与事件放行分支都不存在；确认没有用另一种方式把 ERRATA 补进 `covered`。
+2. 读 `build_errata_v5.py` 的 restatement_flag 分支：确认 `judge()` 调用不再传 `event_ok`，
+   且没有任何地方用 `EVENT_VERIFS` 影响 `resolution`。
+3. 核实 `meta_diff.csv` 里 `RESOLVED_DOC_EVENT_CONFIRMED` 为 **0 条**，
+   元数据未闭合回到 **8,674**，且没有出现「把 3,803 条统一改成某个新标签」的情况
+   （对比各标签计数与你上一轮看到的分布是否一致）。
+4. 核实 `l2_dependency_summary.json` 的 `verdicts` 仍是 44/231/320/81/378。
+5. 读 `verify_v5.py` 的 `facts()` 与 `allowed_label()`：确认事件不计入覆盖、
+   `ev` 分支已删；确认 C14 的事件分支、C17 的白名单条目都已撤回。
+   **如果发现任何一处仍按事件闭合，直接判不通过。**
+
+## 二、重大性命题
+6. 判断本轮处置是否回应了你的意见：我的做法是「承认该限制不能被脚注消化，因此这批证据
+   完全不参与闭合」，而不是「换个说法继续闭合」。
+   如果你认为还要求别的（例如必须在登记表里显式标注 `limited_by_materiality=true`），请指出。
+7. 确认 `event_verifications.csv` 的 `scope_note` 仍保留重大性限制原文，没有被删改成中性表述。
+
+## 三、C40 是否拦住「短引文 + 不对应选项」
+8. 读 `verify_v5.py` 的 `check_c40()`：确认新增两条判据
+   （引文须含 `statement` 栏目名；引文须含「勾选标记 + 登记选项」）。
+9. **自己复现你的反例**：复制任一登记，`quote="不适用"`、`option="否"`，
+   调 `check_c40` 应返回非空（期望 `QUOTE_WITHOUT_STATEMENT_LABEL`）。
+   再试 `quote` 含栏目名但把 `option` 改成与勾选不符的值，应命中 `QUOTE_WITHOUT_CHECKED_OPTION`。
+10. 核实 `_c40_inject()` 的四类注入（quote/option/period/short）计数都 > 0，
+    且 `short` 这一类的失败原因确实是上面两条新判据之一，而不是被别的判据顺手拦下。
+
+## 四、C17 的汇报更正
+11. 确认 `review.json:round16_fixes` 与 `REPORT.md` 里已明确写「上一版称四处接入**不属实**，
+    C17 只做结构检查」，而不是含糊带过。
+12. 确认现在没有任何文字声称 C17 会重算事件（搜 `C17` 附近与 `round16_fixes` 全文）。
+
+## 五、请你裁定
+13. 本轮四项修订是否闭合第十七轮意见？
+14. 下一批做父输入（HOLD 里 87 条、纯父输入缺口 1,346 条）是否同意；
+    若同意，请指出 `parent_verifications.csv` 最少需要哪些列才能被接受
+    （我打算用现有表头：两期值/页码/引文/栏目/调整版本/合并范围/单位/币种/结论）。
+
+## 通用要求
+- 凡汇报里写「已删除」「已撤回」的，请到文件里核，不要只看汇报。
+- 给出裁决：ACCEPTED / ACCEPTED_WITH_LIMITS / RETURN_FOR_REWORK。
+- 若 RETURN_FOR_REWORK，请给**能区分改前改后的具体输入**。
+
+## 读取纪律（请遵守，避免超时）
+- 不要整文件读；用 grep 定位后只读相关行段，单次 ≤120 行。
+- 总读取量控制在 50 KB 以内。
+- 运行 python 时加 -B，不要生成 .pyc。
+- 回答控制在 200 行以内，按「一/二/三/四/裁定」分节，每节写「核实方式 / 结果 / 判定」。

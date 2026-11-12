@@ -1,0 +1,2545 @@
+OpenAI Codex v0.167.0-alpha.3.2
+--------
+workdir: C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1cb2c-4e05-7c21-abfc-3446ab03faf7
+--------
+user
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V12，41/41 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round12.txt（RETURN_FOR_REWORK，G 通过，A/B/C/D/E/F/H 不通过）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round13.md（先读这一份）
+
+任务：逐项核实 A–H 是否真的改到位，不要只看汇报的自述。每一项都要**自己动手验证**，
+不接受「代码里有这个函数」作为通过依据；必须构造或找到能区分「改前/改后」的输入。
+
+## A 极性「新主语」
+1. 用这四个句子直接跑 evidence_scope.analyse，看 polarity 是否与汇报一致：
+   - 「前期差错更正对期初未分配利润影响0.00元，其中营业总收入金额为100.00元」→ 不应有 ERRATA 肯定
+   - 「前期差错更正对期初未分配利润影响0.00元，其中营业总收入确认的金额100.00元」→ 同上
+   - 「前期差错更正对期初未分配利润影响0.00元，其中营业总收入合计100.00元」→ 同上
+   - 「前期差错更正对期初未分配利润影响0.00元，影响增加100.00元」→ 应有 ERRATA 肯定（续写）
+2. 再自己造 3–5 个同构但不同的句子（换项目名、换功能词、加空格/标点），看判据是否稳定；
+   重点找「中心语剥离表漏词」导致的错判。
+3. 检查 `tgt` 分支是否真的没有 `new_subj`，并判断这个设计取舍是否可接受（不是「与汇报一致」就算过）。
+4. 看 replay_polarity_v5.json 的 new_subject_calls / new_subject_true / head_nouns，
+   判断「中心语只有两种且都是原因短语」是否可信；若你认为回放样本不足以支撑结论，请直说。
+
+## B 父输入栏目
+5. 找到 parent_verify.column_of_amount_ex 与 cols_equivalent，核实：
+   - 同页两个相同金额时是否真的记 AMBIGUOUS 而不是取第一个（用 C37 的夹具或自己造）；
+   - 「本期发生额 vs 本期数」是否同列（期间语义类）；
+   - 扫描页（NO_WORDS）是否记 PARENT_COLUMN_NEEDS_REREAD 而不是 UNRESOLVED。
+6. 检查是否存在「语义类相同但实际是不同列」的反向风险（例如把「上年同期」与「上期」当同类是否合适）。
+
+## C C24 文本字段
+7. 核实 evidence_label 的数量判据与 _RE_PAGE_REF：自己造 3 条「页码/表号冒充金额」和 3 条合法数量，
+   看是否按预期收/拒。
+8. 核实 SELF_PAGE 的「目标行定位」是否真的绑定到目标行（构造页眉重复金额的版面）。
+9. 核实 CURRENCY_ALIASES 是否只在组内互认（例如 CNY 遇 HKD 应拒）。
+
+## D C14 裁决适用范围
+10. 核实 scope_row_ok 四道关：把 ruling_scope.csv 的哈希改成 64 个 0、把 ruling_file 指向不存在文件、
+    把登记条目的哈希改掉，三种是否分别按预期拒绝。
+11. 核实 scope_allowed_key_narrowed 这条注入是否真的证明了白名单起作用（不是绕过）。
+12. 判断「换另一个已登记 section 不可构造」这个解释是否成立；若不成立请给出可构造的输入。
+
+## E C38 窗口
+13. 核实 dim_window_ok 已下沉、scope_dims 与自检共用同一份（不要出现两套实现）。
+14. 自己造「载体词距离 200/500 字」与「载体词在页脚」的两种输入，看是否被拒。
+
+## F 抽样键集退出归因
+15. 打开 sampling_keys_diff.csv，核实 SH:600060|FIN.NPDEDT.SQ|20260630 的 exit_code 是否为 RANK_CUT，
+    并自己重算 _r6_pred 确认「判据仍成立」这一说法。
+16. 核实 sampling_v5.json:keys_diff.exit_code_selfcheck 的自证逻辑是否真能发现归因写错
+    （试着把某个 REMOVED 的 exit_code 改成 PREDICATE_FALSE，看 C31 是否 FAIL）。
+17. 核实 R6 样本说明与 parent_amount_located 字段逐字对应（BOTH/ONE/NONE）。
+
+## H 状态文件单一写者
+18. 核实 data/active_issue.json 的 s00_errata.checks / self_check / sampling 是否只剩指针与版本号，
+    旧计数（「条反例」「环」「种伪造」）是否已消失。
+19. 核实 write_status 是唯一写者：连跑两次 verify_v5.py，data/active_issue.json 与 review.json
+    是否逐字节相同（幂等）。
+20. 核实 C39 是否真能拦住回退：手工把 checks 改回一句话（含「30 条反例」），看 C39 是否 FAIL。
+
+## 通用要求
+- 先看 report_to_codex_round13.md 的「10. 与上一轮汇报口径不一致、本轮已改的地方」，
+  逐条判断这些更正是否诚实（有没有把「没改」说成「有意不改」）。
+- 特别核查：汇报里凡是写「有意不加」「不可构造」「只能说明无影响」这类**降级表述**的地方，
+  是真实的设计取舍，还是给没做找理由。这一点比数字对不对更重要。
+- 给出裁决：ACCEPTED / ACCEPTED_WITH_LIMITS / RETURN_FOR_REWORK，并逐项列 A–H 的通过/不通过。
+- 若 RETURN_FOR_REWORK，请给**能区分改前改后的具体输入**，不要只写「不够严」。
+
+## 读取纪律（请遵守，避免超时）
+- 不要整文件读；用 grep 定位后只读相关行段，单次 ≤120 行。
+- 总读取量控制在 60 KB 以内；verify_v5.py 有 2900+ 行，只读你需要的函数。
+- 运行 python 时加 -B，不要生成 .pyc。
+- 回答控制在 300 行以内，按 A–H 分节，每节写「核实方式 / 结果 / 判定」。
+
+ERROR: Reconnecting... 2/5
+ERROR: Reconnecting... 3/5
+ERROR: Reconnecting... 4/5
+ERROR: Reconnecting... 5/5
+warning: Falling back from WebSockets to HTTPS transport. request timed out
+codex
+我先读第 13 轮汇报中的口径更正，再用可区分改前/改后的输入逐项复核。当前文件系统权限为只读；涉及篡改文件和重复写入的测试，我会检查能否用内存注入验证，并明确标注无法实测的部分。
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command 'Get-Content runs/issues/S00/errata_20261111_v5/report_to_codex_round13.md -TotalCount 120' in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 207ms:
+# 第十三轮汇报：S00 勘误 V5 自检 V12（回应第十二�?`RETURN_FOR_REWORK`�?
+- 目录：`runs/issues/S00/errata_20261111_v5/`
+- 自检版本�?*V12**�?*41/41 PASS** �?`SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS`
+- 上一轮裁决：`_codex_out_round12.txt`�?74 行）**`RETURN_FOR_REWORK`**，G 通过，A/B/C/D/E/F/H 不通过
+- 本轮改动范围�?*只改判据与校验，不改数据**。全链重跑后 `meta_diff.csv`、`summary.json` �?md5 与改前逐字节相同（`c9063515…` / `027e063d…`�?- 复现：`build_errata_v5.py` �?`check_l2_v5.py` �?`sampling_v5.py` �?`replay_polarity_v5.py` �?`verify_v5.py`
+
+---
+
+## 0. 一句话
+
+上一轮七项不通过里有六项，问题不在「判据不够严」，而在**判据判错了方�?*�?词尾判主语、取第一个重复金额、页码当金额、清单自身不受检、窗口不设跨度、退出原因不归因�?本轮把六处判据换�?*结构性判�?*（中心语 / 目标行绑�?/ 期间语义�?/ 清单自证 / 跨度上限 / 四类归因），
+第七项（H）把「两处维护同一份摘要」改�?*单一写�?+ 结构检�?*�?
+---
+
+## 1. A 项：极性「新主语」改按中心语�?
+### 1.1 你给的四条反�?
+| 输入 | 上一轮判�?| 应为 | 原因 |
+|---|---|---|---|
+| `…其中营业总收入金额为100.00元` | 续写 | 新主�?| 词尾「为」被当功能词 |
+| `…其中营业总收入确认的金额100.00元` | 续写 | 新主�?| 词尾「金额」被当计量单�?|
+| `…其中营业总收入合�?00.00元` | 续写 | 新主�?| 词尾「合计」被当汇总词 |
+| `…影�?.00元，影响增加100.00元` | 新主�?| 续写 | 词尾「增加」被当动�?|
+
+### 1.2 改法：不再看词尾，取中心�?
+`evidence_scope._head_noun()`：用闭集功能�?动词/量词�?`_TAIL_STRIP` 从右往左反复剥�?（`�?�?�?�?�?�?�?�?�?�?�?合计/金额/影响/增加/减少/…` 加标点与数字），
+剩下的名词片段即中心语。`_new_subject()` 判据�?
+```
+中心语为�?                                 �?续写
+中心语含受影响权益项目（_RE_SCOPED_ITEM�?   �?续写
+中心语含原因短语（_CAUSE_ANY�?             �?续写
+中心语含治理/程序词（_RE_PROCEDURE�?        �?续写
+否则                                        �?新主语（且长�?�?2�?```
+
+四条反例记为 ⑯⑰⑱⑲，另�?�?守护「同分句原因就近命中时不�?`new_subj` 否定」�?`polarity_cases.py` 33 �?**38 �?*，C34 全过�?
+### 1.3 `tgt` 分支：上一轮汇报与代码不符，本轮说�?
+上一轮汇报写「已�?`tgt` 分支也加�?`new_subj`」，代码里没有�?*本轮确认不加，且这是有意�?*�?
+- `tgt` = 本分句内原因词就近命中。此时金额无论挂在哪个项目上，都能证明该事件确实发生�?  �?`new_subj` 会丢掉真肯定�?- `new_subj` 只约�?`single` / `prev_causes` 两条**跨分句继�?*分支，作用是防止把别�?  主语的金额算到上一分句的原因头上�?
+docstring �?6 条写明了这个区别。汇报从此与代码一致�?
+### 1.4 「从未触发」这句话撤回，改为给数字
+
+上一轮写「新判据在真实证据上从未触发」，你的插桩显示调用 88 次、判�?44 次——那句话无据�?本轮把计数器直接打进 `replay_polarity_v5.json`�?
+```
+documents 1007 / clause_changed 0 / polarity_changed 0
+new_subject_calls 88 / new_subject_true 0 / new_subject_true_nonzero 0
+head_nouns {"附注：由于重大会计差错更正影响期初未分配利润": 44, "同一控制合并范围变更": 44}
+```
+
+两点如实交代�?
+1. 中心语在 1,007 份存量证据里**只出现两�?*，且都是原因短语。补词表前那 44 次「判真�?   全部来自 `同一控制合并范围变更`——它是原因短语，只是没写成「同一控制下企业合并」，
+   被旧词表漏掉，于是被误判成新主语。该条不影响结论（同分句原因词就近命中，�?`tgt` 分支）�?   本轮�?`同一控制�?[^，。；]{0,4}合并`、`合并范围变更` 补进 `_CAUSE_ANY`，判真降�?0�?2. **正确说法是「对存量证据的极性结果无影响」，不是「判据从未触发」�?*
+   判据是否承重�?38 条反例证明，不由回放证明——回放只能证明「没改坏存量」�?
+---
+
+## 2. B 项：父输入栏�?
+### 2.1 你给的三�?
+1. 同页两个相同金额时取第一个，可能取到别的行；
+2. 登记「本期发生额」与原件「本期数」被判为不同列，属误拒；
+3. 扫描页（无文本层）应记「待回读」，不是「不可解」�?
+### 2.2 改法
+
+`parent_verify.column_of_amount_ex()` 返回 `(列头, 金额, 状�?`，状态五态：
+
+| 状�?| 含义 | 调用方处�?|
+|---|---|---|
+| `OK` | 目标�?+ 列头都定位到 | 比对列头 |
+| `NO_WORDS` | 该页无文本层（扫描页�?| `PARENT_COLUMN_NEEDS_REREAD`（待回读�?|
+| `NO_AMOUNT` | 目标行里找不到该金额 | `PARENT_COLUMN_UNRESOLVED` |
+| `AMBIGUOUS` | 同页/同行有多个相同金额，无法绑定 | `PARENT_COLUMN_AMBIGUOUS` |
+| `NO_COLUMN` | 金额上方无期间列�?| `PARENT_COLUMN_UNRESOLVED` |
+
+- `label` 参数把金�?*绑定到目标行**（`rows_of_words()` 先按 y 坐标分行，再取标签所在行），
+  同页重复金额�?`AMBIGUOUS`，不再「取第一个」；
+- `cols_equivalent()` 先按**期间语义�?*比对，再退回子串：
+
+```
+PRIOR_YEAR_SAME  上年同期/上期/上期�?上期发生�?上期金额/同期�?比较�?YEAR_OPEN        年初/期初/上年年末/上年度末/年初�?PERIOD_END       期末/期末�?年末/年末�?CURRENT          本期/本期�?本期发生�?本期金额/本报告期/报告�?本年累计/本期累计/本年�?```
+
+「本期发生额 vs 本期数」同�?`CURRENT`，不再误拒�?
+### 2.3 验证
+
+C37 注入�?29 �?**35 �?*，新�?6 环正是这三条�?`real_column_needs_reread`、`real_column_ambiguous`、`duplicate_amount_ambiguous`�?`duplicate_amount_row_bound`、`column_synonym_ok`、`column_antonym_rejected`�?逐环断言拒绝原因，`violations = []`�?
+---
+
+## 3. C 项：C24 文本字段与页�?
+### 3.1 你给的三�?
+1. 「见�?2页附表说明」里�?12 冒充金额�?2. `SELF_PAGE` 取「该金额最早出现的页」，页眉重复金额会把�?1 页当成答案；
+3. `currency='CNY'` 遇「记账本位币：人民币」被拒，属误拒�?
+### 3.2 改法
+
+**数量而非数字**：`evidence_label` 须「标�?+ 20 字内**数量**」，数量定义�?带单位（`�?万元/千元/亿元/%/％`）或带小数（`\d+\.\d{1,2}`）；命中页码/表号正则
+`_RE_PAGE_REF`（`第N�?�?�?�?�?条`、`见第N�?表`、`附表N`）一律记
+`REVIEW_LITERAL_NUMBER_IS_PAGE_REF`�?
+**目标行定�?*：`SELF_PAGE` 不再比两个自报页码，也不取「最早出现页」，而是�?词坐�?�?指标名同�?�?该金�?�?列头，四者同时成立才认这一页；
+无词坐标时退回「同页同时出现指标名与该金额」。`NO_AMOUNT / AMBIGUOUS / NO_COLUMN`
+各有独立拒绝原因�?
+**币种受控映射**：`CURRENCY_ALIASES = {CNY: {CNY, RMB, 人民�? 人民币元, 元}, HKD: {...}, USD: {...}}`�?只在组内互认，不做模糊匹配�?
+### 3.3 直测（写�?C38 �?`literal_path_ok`�?
+```
+�?025年上半年营业总收入见�?2页附表说明文字为索引�?�?拒（页码冒充金额�?�?025年上半年营业总收�?00.00元，较上年同期增长�?  �?收（带单位数量）
+currency=CNY /「金额单位：人民币元；记账本位币：人民币」→ 收（受控映射�?```
+
+`literal_path_ok = True`、`unit_path_ok = True`�?
+---
+
+## 4. D 项：裁决清单自身受检
+
+### 4.1 你给的两�?
+1. �?`ruling_scope.csv` 里的 `ruling_file_sha256` 改成 64 �?0，裁决照样生效；
+2. 清单只有一�?section，「改成另一个已登记 section」无法构造�?
+### 4.2 改法
+
+新增 `scope_row_ok(section, ent)`，四道关�?
+| 返回 | 触发条件 |
+|---|---|
+| `RULING_SCOPE_FILE_UNBOUND` | 清单行没�?`ruling_file` �?`ruling_file_sha256` |
+| `RULING_SCOPE_FILE_MISSING` | 清单里写的裁决文件不存在 |
+| `RULING_SCOPE_FILE_HASH_MISMATCH` | 文件实算 sha256 �?清单写的值（**这条挡住「改哈希�?*�?|
+| `RULING_SCOPE_FILE_DISAGREES` | 登记条目自报的裁决文�?哈希 �?清单�?|
+
+`ruling_gap()` 在「键在允许范围内」之后立刻调 `scope_row_ok(section, ent)`�?
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command 'Get-Content README.md -TotalCount 35; Get-Content docs/Issue执行总计划.md -TotalCount 35; Get-Content PROJECT_STATE.json -TotalCount 30; Get-Content data/active_issue.json -TotalCount 70' in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 144ms:
+# 机器人企业行业拐点研�?
+> 方法交接补充�?026-11-07）：[合同负债、在手订单与在建工程的阶段分工](docs/需求先行指标分工_20261107.md)。S04 不增加硬门槛；S06 增加需求先行辅助观察；筛后核订单与产能�?
+
+**2026-10-26最新顺序：全池批量收集基础资料 �?整轮集中补缺 �?指标宽筛并逐轮收紧 �?少量企业公告核验 �?行业/公司拐点 �?估值最后�?*
+
+第一轮不逐家公司精读，也不每缺一家就催你补件。PDF/大表存Drive，GitHub存任务、索引、证据和交接�?
+## 先打开三处
+
+1. [主控总路�?#1](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1)：当前阶段与下一步�?2. [Issue执行总计划](docs/Issue执行总计�?md)�?9张新任务的范围、依赖与验收�?3. [#11 P00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)：当前首张执行卡，先锁名单、范围和时间口径�?
+## 怎么拆分
+
+|阶段|新卡数|任务|边界|
+|---|---:|---|---|
+|准备|8|P00—P07：范围、资料身份、旧资产、连接、财务字段、采集器、容量�?0家采集校准|P07采集校准通过后才能启动全池批次|
+|采集批次|11|M00_01—M00_11�?00家公司�?0�?54家，互斥覆盖1054|只收集文�?数据，不逐家业务深读|
+|收尾补缺|5|A00—A04：覆盖汇总、重试、一次人工补缺、回填、资料轮验收|A04通过后才放行指标轮|
+|指标筛选|9|S00—S08：标准化、规则预登记、计算、宽筛、收紧、质量、储备观察、抽查、名单验收|S08冻结筛后名单后才新增公司深读|
+|重点研究|6|R00—R05：业务、财务归因、行业、公司拐点、最后估值、增量防偏|�?家业�?财务、每3家拐�?估值另建实际子issue|
+
+�?2�?9和原有公司资料包保留历史成果、后移使用，当前不再按旧C00开局逐家深读。实际研究与归档进度以PROJECT_STATE.json为准，创建issue不表示任务完成�?
+## 你何时补材料
+
+正常采集、登记、指标计算和技术核验由AI按授权推进。自动整轮与重试后，[#32 A02](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/32)才给你一份按网站/软件、报告期和批次分组的清单；不把未尝试项或全局连接故障转成逐家手补�?
+## 常用入口
+
+- [新手执行手册](docs/新手执行手册.md)、[AI启动指令](docs/给AI的启动指�?md)�?- [批量收集范围](docs/第一轮基础资料批量收集.md)、[阶段验收](docs/阶段与验�?md)、[执行规则](docs/执行规则.md)�?- [Drive归档流程](docs/Google%20Drive资料归档流程.md)、[手动补资料指南](docs/手动补资料指�?md)、[资料位置地图](data/resource_map.csv)�?- [Drive项目目录](https://drive.google.com/drive/folders/1v8RYlfohKcrGrulwCFq3fZSnGdjFxUYQ)、[原文索引](data/document_registry.csv)、[实际目录](data/drive_folders.csv)�?- [候选总表](data/company_master.csv)、[采集批次](data/intake_batch_index.csv)、[全部issue索引](data/issue_execution_plan.csv)、[当前占用与下一步](data/active_issue.json)�?
+1054家是概念候选，不是已确认机器人企业，也不证明全市场覆盖。缺资料保留未知，旧采用事实的限制继续有效�?
+# Issue执行总计划：先收料，再逐轮筛�?
+
+计划版本`20261026_collection_first_v2`，更新日2026-10-26。当前研究截止日沿用PROJECT_STATE.json（目�?026-10-25），P00负责冻结，采集日期另记�?
+
+这是本轮唯一执行路线。已新增39个issue，旧#2�?9保留成果并后移。建卡不表示采集或研究已执行�?
+
+## 从这里开�?
+
+先看[主控总路�?#1](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1)，当前首张执行任务是 [#11 P00](https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/11)。一次只执行一张依赖已验收的卡，不跳到企业深研�?
+
+## 阶段与放�?
+
+|阶段|新卡数|任务|边界|
+|---|---:|---|---|
+|准备|8|P00—P07：范围、资料身份、旧资产、连接、财务字段、采集器、容量�?0家采集校准|P07采集校准通过后才能启动全池批次|
+|采集批次|11|M00_01—M00_11�?00家公司�?0�?54家，互斥覆盖1054|只收集文�?数据，不逐家业务深读|
+|收尾补缺|5|A00—A04：覆盖汇总、重试、一次人工补缺、回填、资料轮验收|A04通过后才放行指标轮|
+|指标筛选|9|S00—S08：标准化、规则预登记、计算、宽筛、收紧、质量、储备观察、抽查、名单验收|S08冻结筛后名单后才新增公司深读|
+|重点研究|6|R00—R05：业务、财务归因、行业、公司拐点、最后估值、增量防偏|�?家业�?财务、每3家拐�?估值另建实际子issue|
+
+1054×6=6324只是核心报告槽上界，不是实际/应有文件数；上市前、不适用、未披露、失败分别登记�?0家采集校准产物在正式批次幂等复用，证券总数仍为1054，不能再�?0家�?
+
+## 防跑偏规�?
+
+- **入口固定**：README �?docs/Issue执行总计�?md �?data/issue_execution_plan.csv �?当前issue。旧“今天先领C00”已后移�?
+- **一次只占一张执行卡**：领取前读data/active_issue.json；已有其他执行者占用时不抢占，更新用最新文件版本，冲突先重读�?
+- **范围写死**：每卡固定范围、依赖、输入、输出、验收与停止条件。采集固定名单在intake_batches/<批ID>/assignment.csv�?00家技术批次不�?00家深研�?
+- **完成不等于放�?*：runs/issues/<key>/须有实际专用结果、manifest.json、handoff.md、review.json。关issue不能替代验收，计划路径不算已存在成果�?
+- **验收不要求逐卡问用�?*：技�?格式可复算自检如实标SELF_CHECK，不冒充独立审计；业务最终采用维持原独立复核要求。正常已授权工作自行推进，真实缺信息或权限边界才询问�?
+- **手补整轮汇�?*：先自动遍历、有限重�?备用源，A02才集中给用户；全局源故障回P03，不生成1054条逐家手补。未尝试、未披露、不适用不派补件�?
+- **规则先锁�?*：S01先冻结公式、阈值、亏�?缺失规则；不能为凑N家公司调阈值。变更另版本重算，不手工加回喜欢的公司�?
+- **未知保持未知**：缺失不�?，取件失败不证明无业务。公司总收入不冒充机器人收入，混合收入不全算机器人�?
+- **旧成果只复用**：C00/B00/D00�?3采用事实保留；旧45家候选不自动绕过S08，当前不继续无限追单家公司合同履约�?
+- **续跑靠交�?*：每次写清完�?失败/未做、实际文件、限制、断点、下一步建议；重新接手先读控制文件，不凭聊天记忆�?
+
+{
+  "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
+  "organized_on": "2026-10-25",
+  "knowledge_as_of": "2026-10-25",
+  "status": "S03_SELF_CHECK_PASS_WITH_LIMITS_S04_READY",
+  "stats": {
+    "candidate_count": 1054,
+    "prior_adopted": 53,
+    "source_pending": 7,
+    "early_partial_samples": 10,
+    "new_coarse_screening": 984,
+    "pilot_count": 10,
+    "remaining_coarse_screening": 974,
+    "conditional_detail_count": 45,
+    "potential_observation_count": 8,
+    "local_financial_missing": 62,
+    "primary_packages": 58,
+    "conditional_detail_packages": 9,
+    "b00_source_reports_read": 7,
+    "b00_source_companies_with_candidate_decisions": 7,
+    "b00_independently_accepted": 0,
+    "b00_evidence_quote_exact_matches": 14,
+    "b00_proposed_advance": 2,
+    "b00_proposed_hold": 3,
+    "b00_proposed_defer": 2,
+    "b00_physical_page_verified": 14,
+    "b00_binary_pdf_hashed": 7,
+    "c00_pilot_companies_initial_screened": 10,
+    "c00_pilot_proposed_advance": 6,
+    "c00_pilot_proposed_hold": 3,
+{
+ "plan_version": "20261026_collection_first_v2",
+ "active_issue_number": 53,
+ "active_issue_key": "S00_ERRATA_REVIEW",
+ "executor": "WorkBuddy AI",
+ "started_at": "2026-11-11 22:10:00 +08:00",
+ "status": "S00_ERRATA_V5_SELF_CHECK_V12_PASS_AWAITING_RECHECK_13",
+ "claim_note": "S00 勘误 V5（自检 V10�?0/40 PASS）：�?Codex 第十轮裁决修 10 处——①极性五条新绕过全修（单符号跨行合并、含符号原因标签仍作主语行、「适用」与「某原因未勾」并存判歧义、无关报表项目金额不再承接为主语肯定、单原因分句金额直绑），C34 增至 30 条反例，回放 1,007 份证据分�?极性变化均�?0；②父输入单位折算键名修正（gap 原读 expect['unit']，实际键�?unit_scale，折算恒�?1 倍）；③父输入栏目须为期间列头且出现在引文中，调整版本须等于该父实际 version_used 的归类；④父输入引文源改为回读原件登记页，不再用 results.csv.evidence；C37 注入 27 环（1 正例 + 26 反例�? 真实原件阳�?+ 单位三档 + 错误栏目 + 同数异义负例，逐项断言拒绝原因；⑤C24 数值先去千分位再比较，同页上年数冒充本期终值不再过关，并新�?REVIEW_KEY_MISMATCH；⑥C24 改为字段规则表（NUM/UNIT/DATE/LITERAL/SELF_PAGE），11 个无规则字段一律留待核；⑦C24 注入改以完整正例为基线、每次只改一个条件并断言拒绝原因；⑧C14 须绑定正式裁决表条目（引文行必须�?| Qn �?| 行、裁决项标题点名该键、ruled_key 须与待判键完全一致、结论须前缀匹配且不得是否定表述，注�?9 种）；⑨C38 核对 source_page 并绑定维度证据载体（封面片段不再同时取得两个维度）；⑩R6 按词坐标确认目标行与目标列，单位绑定该表表头，调整前后取原件列头标记。自�?YES 仍为 0，PENDING_PARENT_COMPATIBILITY 1,277；重述差异待处置 8,309；全表核心未闭合 9,113、含补充 10,618；全�?44 HOLD / 231 待核�?/ 378 无关联；受限�?407 行。第 4�? 步未做，S04 第二轮与 S05 不放�?,
+ "last_completed": {
+  "issue_key": "S04",
+  "issue_number": 39,
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "review_file": "runs/issues/S04/review.json",
+  "review_nature": "SELF_CHECK",
+  "completed_at": "2026-11-10T21:10:00+08:00",
+  "coverage": 1054,
+  "external_review": "RETURN_FOR_REWORK_ADDRESSED_PENDING_RECHECK"
+ },
+ "input_baseline_after_p06": {
+  "PROJECT_STATE.json": "updated_by_p06",
+  "data/issue_execution_plan.csv": "updated_by_p06(P06=SELF_CHECK_PASS,P07=READY)",
+  "runs/issues/P06/storage_plan.json": "4abc6c929d05363c7f50a64e744bf265944ecfb88da163a46816e1228b21e7d1",
+  "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
+  "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
+ },
+ "next_recommended_issue_number": 39,
+ "next_recommended_issue_key": "S04",
+ "next_recommended_reason": "S00 勘误 V5 自检 V10 已交付、等第十一轮独立复核；复核通过后按第十轮补充裁定口径做�?4 步批量核证（按「文档版本＋具体栏目＋实际选项组＋覆盖期间」核一次再显式映射成员键，不得按文档或方法名广播，已解除的 8,655 条同样复审）、第 5 步重算分层，再回�?#39 �?S04 第二轮外部复核。S05 保持 WAITING_DEPENDENCIES",
+ "open_followups_from_p06": [
+  "Drive �?API 凭据：目录只�?RECORDED_NOT_REVERIFIED、配�?UNKNOWN、VERIFIED 路径未跑通真实闭环�?,
+  "季度报告字节�?UNMEASURED，容量表留空；P07 至少�?1 个季度槽�?,
+  "容量�?PRE_CALIBRATION_ESTIMATE_NOT_FACT，须 P07 �?10 家校准重算中位数�?,
+  "listing_date 1054/1054 UNKNOWN�?1594 只是尝试上界�?,
+  "登记�?6 类非枚举历史状态值（16 行）只给映射未执行，�?P01 迁移落地�?
+ ],
+ "note": "P06 未改动任何原始输入（document_registry/company_master/intake 队列 diff 为空）；本次未下载、未上传任何文件�?,
+ "p07_drive_archive_followup": {
+  "issue_key": "P07",
+  "scope": "DRIVE_ARCHIVE_FOLLOWUP_ONLY",
+  "executor": "Codex",
+  "review_nature": "SELF_CHECK_FILE_ARCHIVE_ONLY",
+  "completed_at": "2026-10-26T12:26:47Z",
+  "files": 65,
+  "uploaded_new": 58,
+  "reused": 7,
+  "binary_sha256_matches": 65,
+  "listed_parent_matches": 65,
+  "bytes": 211077595,
+  "receipts_schema_pass": 65,
+  "registry_rows_before": 100,
+  "registry_rows_after": 158,
+  "registry_rows_added": 58,
+  "not_tried_slots_unchanged": 5,
+  "full_universe_started": false,
+  "business_adoption_added": 0,
+  "ai_read_confirmed_added": 0,
+  "cache_deleted": 0,
+  "receipt_file": "runs/issues/P07/drive_archive/receipts.json",
+  "limitations": [
+   "仅完成Drive归档，不重新认定P07财务字段校准或采集器修复�?,
+   "不声明全池采集已启动或所有M00技术问题已解决；登记表级幂等仍待采集器实现�?,
+   "正文主体/报告期身份结论沿用WorkBuddy；本次未逐份精读报告，未新增业务独立验收�?,
+   "旧原文来�?版本限制保留；云端二进制一致不等于官方来源链独立核验�?
+  ],
+  "handoff_package": {
+   "scope": "P07_ARCHIVE_HANDOFF_PACKAGE",
+   "archive_status": "VERIFIED",
+   "folder": {
+    "success": true,
+    "id": "1suZ_-fLFjsswUeb-eT_0Dbfp6vy6iBMs",
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+from pathlib import Path
+p=Path('runs/issues/S00/errata_20261111_v5/report_to_codex_round13.md')
+s=p.read_text(encoding='utf-8').splitlines()
+print('\\n'.join(s[120:235]))
+'@ | python -B -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 333ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+---
+
+## 3. C 项：C24 文本字段与页码
+
+### 3.1 你给的三条
+
+1. 「见第12页附表说明」里的 12 冒充金额；
+2. `SELF_PAGE` 取「该金额最早出现的页」，页眉重复金额会把第 1 页当成答案；
+3. `currency='CNY'` 遇「记账本位币：人民币」被拒，属误拒。
+
+### 3.2 改法
+
+**数量而非数字**：`evidence_label` 须「标签 + 20 字内**数量**」，数量定义为
+带单位（`元/万元/千元/亿元/%/％`）或带小数（`\d+\.\d{1,2}`）；命中页码/表号正则
+`_RE_PAGE_REF`（`第N页/表/行/节/项/条`、`见第N页/表`、`附表N`）一律记
+`REVIEW_LITERAL_NUMBER_IS_PAGE_REF`。
+
+**目标行定位**：`SELF_PAGE` 不再比两个自报页码，也不取「最早出现页」，而是：
+词坐标 → 指标名同行 → 该金额 → 列头，四者同时成立才认这一页；
+无词坐标时退回「同页同时出现指标名与该金额」。`NO_AMOUNT / AMBIGUOUS / NO_COLUMN`
+各有独立拒绝原因。
+
+**币种受控映射**：`CURRENCY_ALIASES = {CNY: {CNY, RMB, 人民币, 人民币元, 元}, HKD: {...}, USD: {...}}`，
+只在组内互认，不做模糊匹配。
+
+### 3.3 直测（写进 C38 的 `literal_path_ok`）
+
+```
+「2025年上半年营业总收入见第12页附表说明文字为索引」 → 拒（页码冒充金额）
+「2025年上半年营业总收入100.00元，较上年同期增长」   → 收（带单位数量）
+currency=CNY /「金额单位：人民币元；记账本位币：人民币」→ 收（受控映射）
+```
+
+`literal_path_ok = True`、`unit_path_ok = True`。
+
+---
+
+## 4. D 项：裁决清单自身受检
+
+### 4.1 你给的两条
+
+1. 把 `ruling_scope.csv` 里的 `ruling_file_sha256` 改成 64 个 0，裁决照样生效；
+2. 清单只有一个 section，「改成另一个已登记 section」无法构造。
+
+### 4.2 改法
+
+新增 `scope_row_ok(section, ent)`，四道关：
+
+| 返回 | 触发条件 |
+|---|---|
+| `RULING_SCOPE_FILE_UNBOUND` | 清单行没写 `ruling_file` 或 `ruling_file_sha256` |
+| `RULING_SCOPE_FILE_MISSING` | 清单里写的裁决文件不存在 |
+| `RULING_SCOPE_FILE_HASH_MISMATCH` | 文件实算 sha256 ≠ 清单写的值（**这条挡住「改哈希」**） |
+| `RULING_SCOPE_FILE_DISAGREES` | 登记条目自报的裁决文件/哈希 ≠ 清单行 |
+
+`ruling_gap()` 在「键在允许范围内」之后立刻调 `scope_row_ok(section, ent)`。
+
+### 4.3 关于「换另一个已登记 section」：说清为什么构造不出来，并给了等价测法
+
+真实清单只有 1 行（`Q2 大豪科技改判 → SH:603025|FIN.REV.SQ|20250331`）。
+把 section 换成另一个，裁决行文本就对不上，会**先**被 `RULING_SECTION_MISMATCH` 拦下，
+测不到白名单本身。所以这条攻击在真实数据上不可构造。
+
+本轮改为**直接改清单内容**：把该 section 的 `allowed_key` 换成同公司另一个已登记字段
+（`FIN.NPDEDT.SQ`），再单独调 `ruling_gap`，必须返回 `RULING_KEY_NOT_IN_SCOPE`。
+效果上等价于「允许范围被换成了别的条目」，且不依赖任何自报字段。
+
+C14 注入 10 → **13 种**：新增 `scope_file_sha_disagrees`、`scope_row_hash_tampered`、
+`scope_allowed_key_narrowed`。`reason_mismatch = {}`、`not_caught = []`、正例对照仍通过。
+
+---
+
+## 5. E 项：窗口规则下沉
+
+### 5.1 你给的两条
+
+1. 维度载体词放在 501 字之外，仍算同窗口；
+2. 页脚写「分季度见附表」，也算 `QUARTERLY_TABLE_PROVENANCE` 覆盖。
+
+### 5.2 改法
+
+上一轮的窗口规则只活在 `verify_v5._dim_window` 里，`scope_dims()` 用的是另一套三词检查——
+又是「同一规则两处实现」。本轮**下沉到 `parent_verify.dim_window_ok(q, key, dim)`**，
+`scope_dims()` 与自检共用同一份：
+
+- 三词（指标名 + 该行具体期间 + 维度载体）跨度 ≤ `_MAX_DIM_SPAN = 160`；
+- 载体词所在句不得是注释/页脚：`注：/附注/脚注/见附表/附表见/页脚/见附录/详见`；
+- `scope_dims()` 内原三词检查替换为 `if not dim_window_ok(q, key, dim): continue`。
+
+C38 注入 12 → **14 种**：新增 `rejected_quote_marker_too_far`、`rejected_quote_footnote_marker`，
+全部拦住。
+
+---
+
+## 6. F 项：抽样键集变更的退出归因
+
+### 6.1 你给的两条
+
+1. `SH:600060|FIN.NPDEDT.SQ|20260630` 仍满足 `_r6_pred`，退出原因是**排序/名额截取**，
+   不是「不再命中判据」；
+2. 汇报说「新增 600143 两父数均定位」，而 `parent_orig_verified` 实为 920289 ONE /
+   600143 ONE / 600008 NONE。
+
+### 6.2 改法一：判据单点定义
+
+入选判据原来是抽样循环里的匿名 lambda，diff 无法复用，只能笼统写一句。
+现在提为**具名谓词**：`_pred_r1` … `_pred_r10`、`_pred_r5a/_r5b/_r5c_conflict/_r5c_event`、`_r6_pred`；
+抽样用它，退出归因也用它——**同一个谓词**。
+
+### 6.3 改法二：`REMOVED` 必须归到四类之一
+
+| `exit_code` | 含义 |
+|---|---|
+| `LEDGER_KEY_GONE` | 台账里已没有这个键（键集本身变化） |
+| `PREDICATE_FALSE` | 键还在台账，但按当前定位器重算不再命中该风险类型的入选判据 |
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command 'rg -n "def (analyse|_head_noun|_new_subject|column_of_amount_ex|cols_equivalent|scope_row_ok|ruling_gap|dim_window_ok|scope_dims|_r6_pred|write_status)|C31|C39|scope_allowed_key_narrowed|_RE_PAGE_REF|SELF_PAGE|CURRENCY_ALIASES|exit_code_selfcheck" runs/issues/S00/errata_20261111_v5/*.py' in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ exited 1 in 231ms:
+rg : �޷�����rg����ʶ��Ϊ cmdlet���������ű��ļ�������г�������ơ��������Ƶ�ƴд���������·������ȷ��·����ȷ��Ȼ������
+һ�Ρ�
+����λ�� ��:2 �ַ�: 1
++ rg -n "def (analyse|_head_noun|_new_subject|column_of_amount_ex|cols_ ...
++ ~~
+    + CategoryInfo          : ObjectNotFound: (rg:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5')
+s=(b/'report_to_codex_round13.md').read_text(encoding='utf-8').splitlines();print('\\n'.join(s[235:345]))
+for p in b.glob('*.py'):
+ for i,l in enumerate(p.read_text(encoding='utf-8').splitlines(),1):
+  if any(t in l for t in ['def column_of_amount_ex','def cols_equivalent','def scope_row_ok','def ruling_gap','def dim_window_ok','def scope_dims','def _r6_pred','def write_status','C31','C39','scope_allowed_key_narrowed','_RE_PAGE_REF','CURRENCY_ALIASES','exit_code_selfcheck']):print(p.name,i,l[:180])
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 294ms:
+| `RANK_CUT` | 判据仍成立，被「同公司去重 / 候选池上限 14 / 评分取前 3」截掉 |
+| `UNKNOWN` | 判据未登记，须人工判定（**不得默认成前两类**） |
+
+并且**自证**：`RANK_CUT` 必须谓词为真、`PREDICATE_FALSE` 必须谓词为假、
+`LEDGER_KEY_GONE` 必须台账无该键。结果写进 `sampling_v5.json:keys_diff.exit_code_selfcheck`，
+由 **C31** 纳入 PASS 条件（`checked` 必须等于 REMOVED 行数，`bad` 必须为空）。
+
+当前值：
+
+```
+rows 28 / KEPT 26 / ADDED 1 / REMOVED 1
+removed_exit_code {"SH:600060|FIN.NPDEDT.SQ|20260630": "RANK_CUT"}
+exit_code_selfcheck {"checked": 1, "bad": [], "ok": true}
+reason: 判据仍成立（R6_CROSS_DOC_PARENT 谓词为真），但被名额规则截掉：
+        同公司去重 → 候选池上限 14 家 → 按定位结论 BOTH/ONE/NONE 排序取前 3
+```
+
+### 6.4 改法三：R6 说明按字段逐字对应
+
+`_LOCATED_TXT` 表：`BOTH` → 「两个实际累计父数均已按金额在原件定位」；
+`ONE` → 「仅一个实际累计父数在原件定位，另一个未定位（**不得记作两父均已定位**）」；
+`NONE` → 「两个均未在原件定位」。600143 现在写作 `ONE`。
+
+**关于 920289 / 600008 的定位结论**：本版如实照抄字段值，不另行描述。
+`parent_orig_verified` 的三个值（920289 ONE / 600143 ONE / 600008 NONE）与本轮汇报一致；
+`covered_requirements` 里「两父输入原件均已定位」一项因没有 `BOTH` 而为 `false`——
+这是事实，不是缺陷，写在这里以免下一轮又被当成「已完成」。
+
+---
+
+## 7. H 项：状态文件单一写者
+
+### 7.1 你给的两条
+
+1. `active_issue.json` 的 `s00_errata.checks` 仍是「V10：C34 30 条反例；C37 27 环；C14 9 项」；
+2. `sampling.unique_keys_note` 仍称「600060 新增、无删除」。
+
+### 7.2 改法：不是「再改一次」，是把写者收敛成一个
+
+根因是**同一份摘要有两个写者**（`verify_v5.py` 写 `review.json`，另一个人工/临时脚本写
+`active_issue.json`）。本轮：
+
+- 派生字段（`status` / `self_check_version` / `self_check` / `checks` / `sampling` /
+  `round` / `decision` / `report_to_codex`）改由 `verify_v5.write_status()` **唯一写出**；
+- 写出内容只含**指针与版本号**，不复述条数、环数、注入种数、键数、增删结论：
+
+```json
+"checks":   {"canonical": ".../review.json#checks", "count": 41, "note": "…不在状态文件复述…"}
+"self_check": {"version": "V12", "checks": 41, "pass": 41, "canonical": ".../review.json#checks"}
+"sampling": {"canonical": ".../sampling_v5.json", "rows": ".../sampling_v5.csv",
+             "keys_diff": ".../sampling_keys_diff.csv", "locator_version": "V12"}
+```
+
+- 新增 **C39**：旧计数口径必须消失（`条反例|环 =|种伪造|种绕过|PASS（V` 一律不许出现）、
+  版本必须等于本次、`locator_version` 必须与 `sampling_v5.json` 一致、
+  状态必须含 `AWAITING_RECHECK_13`。
+
+### 7.3 幂等性
+
+连跑两次 `verify_v5.py`：
+
+```
+active_issue.json md5 = 0e24ec3e5f31a854c82566491bad68b8（两次相同）
+review.json      md5 = 341c9723100867604532bf0b6ac767c6（两次相同）
+```
+
+即：`reviewed_at` 与 `generated_at` 都改成固定值，重跑不再产生「只差时间戳」的 diff。
+
+---
+
+## 8. G 项：保持通过，本轮未改
+
+G（C24 注入键集合与预期原因集合严格相等、`_leak_with` 显式决定登记表、`not_exercised` 判失败、
+枚举注入纳入 PASS 条件）本轮未动。当前状态：
+`injections` 13 键 + 枚举 1，`injection_keys_equal_expect = True`，`not_exercised = {}`。
+
+---
+
+## 9. 自检与数字（V11 → V12）
+
+| 项 | V11 | V12 |
+|---|---|---|
+| 自检 | 40/40 | **41/41**（新增 C39） |
+| C34 极性反例 | 33 条 | **38 条**（⑯–⑳） |
+| C37 注入链 | 29 环 | **35 环** |
+| C14 注入 | 10 种 | **13 种** |
+| C38 注入 | 12 种 | **14 种** |
+| C24 注入 | 13 键 + 枚举 1 | 13 键 + 枚举 1（未变） |
+| 抽样定位器 | V11 | **V12** |
+| 抽样键集 | 27 键 | 27 键（KEPT 26 / ADDED 1 / REMOVED 1） |
+| `meta_diff.csv` md5 | `c9063515…` | `c9063515…`（未变） |
+| `summary.json` md5 | `027e063d…` | `027e063d…`（未变） |
+
+数据结论也未变：核心未闭合 9,113 / 含补充 10,618；待处置 8,309；44 / 231 / 378 **仍未冻结**。
+
+---
+
+## 10. 与上一轮汇报口径不一致、本轮已改的地方
+
+| 上一轮说法 | 本轮更正 |
+|---|---|
+| 「`tgt` 分支也加了 `new_subj`」 | 代码没加，**有意不加**，已写进 docstring 第 6 条 |
+| 「新判据在真实证据上从未触发」 | 撤回。调用 88 次、判真（补词表后）0 次，中心语只有两种且都是原因短语 |
+| 「新增 600143 两父数均定位」 | 实为 `ONE`，已按 `BOTH/ONE/NONE` 逐字对应 |
+| 「600060 不再命中判据」 | 仍命中 `_r6_pred`，退出原因是 `RANK_CUT` |
+| 「C37 29 环 / C14 10 种 / C38 12 种」 | 本轮 35 环 / 13 种 / 14 种 |
+
+---
+
+## 11. 复现
+parent_verify.py 212 def dim_window_ok(q, key, dim):
+parent_verify.py 254 def scope_dims(entries, key, evidence_of, expect_doc=None):
+parent_verify.py 332 def cols_equivalent(registered, actual):
+parent_verify.py 384 def column_of_amount_ex(words, value, label=None, x_tol=3.0, y_tol=4.0):
+sampling_v5.py 772 def _r6_pred(x):
+sampling_v5.py 1095         "exit_code_selfcheck": {"checked": _exit_checked, "bad": _exit_bad,
+verify_v5.py 142 def scope_row_ok(section, ent=None):
+verify_v5.py 215 def ruling_gap(ent):
+verify_v5.py 941     c14_inj["scope_allowed_key_narrowed"] = {
+verify_v5.py 945     c14_inj["scope_allowed_key_narrowed"] = {
+verify_v5.py 1225 _RE_PAGE_REF = re.compile(r"第\s*\d+\s*[页表行节项条附]|见\s*第?\s*\d+\s*[页表]|附表\s*\d*")
+verify_v5.py 1228 CURRENCY_ALIASES = {
+verify_v5.py 1284         alts = (sorted(CURRENCY_ALIASES.get(v, {v})) if fld == "currency" else [v])
+verify_v5.py 1301             if _RE_PAGE_REF.search(seg):
+verify_v5.py 1956 # ---------------- C31/C32 分层抽验 ----------------
+verify_v5.py 1981 kd_exit = kd.get("exit_code_selfcheck") or {}
+verify_v5.py 1992 add("C31", "分层抽验覆盖 12 类必需风险 + 补充字段；原文定位须区分已核与未定位；"
+verify_v5.py 2006                    "exit_code_selfcheck_ok": bool(kd_exit.get("ok")),
+verify_v5.py 2786 # ---------------- C39 状态文件单一写者（第十二轮 H 项）----------------
+verify_v5.py 2801 def write_status(passed_n, total_n, decision):
+verify_v5.py 2887 # 先按「截至 C38 全过」乐观写一次（C39 自己是否过要读回文件才知道），
+verify_v5.py 2894 add("C39", "状态文件派生字段由自检单一写出：旧计数必须消失、版本与定位器版本必须本次一致",
+verify_v5.py 2999         "且不得是页码/表号（_RE_PAGE_REF），「见第12页附表说明」不再冒充金额；"
+verify_v5.py 3002         "新增 CURRENCY_ALIASES 受控映射，currency='CNY' 遇「记账本位币：人民币」不再误拒",
+verify_v5.py 3021         "「新增该键、无删除」）；新增 C39 检查旧字段必须消失、版本与定位器版本必须本次一致",
+verify_v5.py 3037 # 单一写者：把派生块按最终计数与最终裁决再写一次（含 C39 自身的结果）。
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5');p=b/'verify_v5.py';s=p.read_text(encoding='utf-8').splitlines()
+for a,z in [(1,42),(120,170),(215,260),(910,952),(1220,1335),(1970,2015),(2786,2910),(3030,3045)]:
+ print(f'=== {a}:{z}');print('\\n'.join(s[a-1:z]))
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 278ms:
+=== 1:42
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""S00 勘误 V5 自检 V8（SELF_CHECK）
+
+对 Codex 第六轮裁决（RETURN_FOR_REWORK）的逐条落实：
+
+第二节（方法实现错误）
+- C33 期间参数三态：is_own_period 显式返回 True/False/None，
+  非自身期间必须要求 COMPARATIVE_SCOPE，未知期间单列 DOC_PERIOD_UNKNOWN；
+- C26 撤销「同报告相减自动抵消」，改为 PARENT_COMPATIBILITY 证据维度，
+  并按 B 实际父输入逐行重算（含跨文档父输入）。
+
+第三节（极性）
+- C34 极性回归 17 条反例（polarity_cases.py，生产与自检共用）；
+- C37 父输入兼容性只认核证登记表并绑定实际父输入；C38 来源维度只认两类登记；
+- C14 确认类不再只看 B=是，须事件层确认 + 来源维度覆盖。
+
+第五、八节（自检与追溯）
+- C14 裁决类必须命中 rulings_resolved.json 且键一致；
+- C24 补充元数据放行必须命中 content_reviews.csv 登记记录（完整键含期间+终值+引文可定位）；
+- C26 全类别双向重算，裁决类与确认类不再跳过；
+- C28 差异 ID 稳定（不含处置状态）+ 引用同键 + 台账列一致；
+- C29 已解决项按重算结果判覆盖，不看台账自报；
+- C30 先把 V4 旧标签映射为当前可识别类别，再分别注入
+  「范围不足 / 肯定发生 / 父输入不兼容」三种实质反例；
+- C35 受限表逐表哈希 + dispute_ledger 逐条源表哈希。
+
+性质：SELF_CHECK，不是独立验收。未回读全部 PDF（抽样回读见 sampling_v5.csv）。
+"""
+import csv
+import datetime
+import gzip
+import hashlib
+import json
+import re
+from collections import Counter, defaultdict
+from pathlib import Path
+
+import evidence_scope as es
+import l2_core as core
+import meta_classes as mc
+import parent_verify as pv
+=== 120:170
+    _d = json.loads(P_RULED.read_text(encoding="utf-8"))
+    RULED = {e["key"]: e for e in _d.get("entries", [])}
+
+# 裁决的**适用范围**清单：独立于登记条目维护（第十一轮 D 项）。
+# 登记条目里的 `key` / `ruled_key` 都是自报字段，两处一起改写就能把裁决扩用到
+# 同公司的其他字段或期间；只有与这份清单（section → 允许的键）比对才挡得住。
+P_RULING_SCOPE = OUT / "ruling_scope.csv"
+RULING_SCOPE = {}
+# 清单行自己的「裁决文件 + 哈希」也必须绑定（第十二轮 D 项）：只读
+# `ruling_section / allowed_key` 时，把清单里的哈希改成 64 个 0 也照样生效——
+# 清单本身可被改写，等于授权范围可被改写。
+RULING_SCOPE_META = {}      # section → (ruling_file, sha256, 校验结果)
+if P_RULING_SCOPE.exists():
+    with P_RULING_SCOPE.open(encoding="utf-8-sig", newline="") as _f:
+        for _r in csv.DictReader(_f):
+            _sec = (_r.get("ruling_section") or "").strip()
+            RULING_SCOPE.setdefault(_sec, set()).add(
+                (_r.get("allowed_key") or "").strip())
+            RULING_SCOPE_META[_sec] = ((_r.get("ruling_file") or "").strip(),
+                                       (_r.get("ruling_file_sha256") or "").strip())
+
+
+def scope_row_ok(section, ent=None):
+    """清单行的裁决文件是否存在且哈希一致；给了登记条目还须与其一致。"""
+    rf, want = RULING_SCOPE_META.get(section, ("", ""))
+    if not rf or not want:
+        return "RULING_SCOPE_FILE_UNBOUND"
+    p = (ROOT / rf) if not Path(rf).is_absolute() else Path(rf)
+    if not p.exists():
+        return "RULING_SCOPE_FILE_MISSING"
+    if hashlib.sha256(p.read_bytes()).hexdigest() != want:
+        return "RULING_SCOPE_FILE_HASH_MISMATCH"
+    if ent is not None:
+        if (ent.get("ruling_file") or "").strip() != rf:
+            return "RULING_SCOPE_FILE_DISAGREES"
+        if (ent.get("ruling_file_sha256") or "").strip() != want:
+            return "RULING_SCOPE_FILE_DISAGREES"
+    return None
+
+# 父输入兼容性核证登记表：唯一的 YES 来源
+PARENT_VERIFS = pv.load(OUT / "parent_verifications.csv")
+
+
+def ruling_file_ok(ent):
+    """裁决必须绑定真实裁决文件：路径存在、sha256 与登记一致。
+
+    第七轮 E 项：原先只检查裁决 JSON 里出现过 "verdict" 字样，写任何占位文字都能过。
+    """
+    rf = (ent.get("ruling_file") or "").strip()
+    want = (ent.get("ruling_file_sha256") or "").strip()
+    if not rf or not want:
+=== 215:260
+def ruling_gap(ent):
+    """返回裁决依据不成立的原因；None 表示成立（第十轮 D 项）。"""
+    lines = _ruling_text(ent)
+    if lines is None:
+        return "RULING_FILE_MISSING"
+    quote = (ent.get("ruling_quote") or "").strip()
+    if len(quote) < _RULING_QUOTE_MIN:
+        return "RULING_QUOTE_TOO_SHORT"
+    try:
+        ln = int(ent.get("ruling_line") or 0)
+    except (TypeError, ValueError):
+        return "RULING_LINE_INVALID"
+    if not (1 <= ln <= len(lines)) or quote not in lines[ln - 1]:
+        return "RULING_QUOTE_NOT_AT_LINE"
+    if quote not in "\n".join(lines):
+        return "RULING_QUOTE_NOT_IN_FILE"
+
+    line = lines[ln - 1].strip()
+    m = _RE_RULING_ROW.match(line)
+    if not m:
+        return "RULING_LINE_NOT_A_RULING_ROW"
+    item_title = (m.group(1) + " " + m.group(2)).strip()
+    concl = m.group(3)
+
+    section = (ent.get("ruling_section") or "").strip()
+    verdict = (ent.get("ruling_verdict") or "").strip()
+    pat = (ent.get("ruling_key_pattern") or "").strip()
+    if len(section) < 4 or len(verdict) < 4 or len(pat) < 4:
+        return "RULING_FIELD_TOO_SHORT"
+    # 裁决只解除它裁定的那一个键：`ruled_key` 必须与待判键三元组完全一致。
+    # （第十一轮复核中断前暴露：原实现只在 check_c14 里比对 ruled_key，单独调 ruling_gap
+    #   时同一公司的其他字段也能过——判据本身必须自带绑定，不能靠调用方代劳。）
+    ruled_key = (ent.get("ruled_key") or "").strip()
+    if not ruled_key:
+        return "RULING_RULED_KEY_MISSING"
+    if ruled_key != (ent.get("key") or "").strip():
+        return "RULING_KEY_MISMATCH"
+    # 裁决条目必须是该行的裁决项名，结论必须来自该行结论单元格
+    if section != item_title:
+        return "RULING_SECTION_MISMATCH"
+    # 与独立维护的「裁决条目 → 允许键」清单比对：自报的 key/ruled_key 一起改写也没用
+    _scope = RULING_SCOPE.get(section)
+    if not _scope:
+        return "RULING_SCOPE_NOT_LISTED"
+    # 清单行本身必须绑定真实裁决文件：清单可被改写 = 授权范围可被改写
+    _bad = scope_row_ok(section, ent)
+=== 910:952
+_saved_scope_meta = RULING_SCOPE_META.get(_SECTION0)
+if _saved_scope_meta:
+    RULING_SCOPE_META[_SECTION0] = (_saved_scope_meta[0], "0" * 64)
+    try:
+        _ent0 = dict(RULED.get("SH:603025|FIN.REV.SQ|20250331") or {})
+        _w0 = ruling_gap(_ent0)
+        _got0 = check_c14(meta)
+    finally:
+        RULING_SCOPE_META[_SECTION0] = _saved_scope_meta
+    _kt0 = ("SH:603025", "FIN.REV.SQ", "20250331")
+    _hit0 = [x[1] for x in _got0 if x[0] == _kt0]
+    c14_inj["scope_row_hash_tampered"] = {
+        "caught": bool(_hit0), "reason": _w0,
+        "expect": "RULING_SCOPE_FILE_HASH_MISMATCH", "ledger_reasons": _hit0}
+else:
+    c14_inj["scope_row_hash_tampered"] = {
+        "caught": False, "reason": "NO_SCOPE_ROW", "expect": "NO_SCOPE_ROW",
+        "ledger_reasons": []}
+
+# 第十二轮 D 项补测：真实清单只有 1 个 section，所以「把 section 换成另一个已登记
+# section」在真实数据上构造不出来（换了 section，裁决行文本就对不上，会先被
+# RULING_SECTION_MISMATCH 拦下，测不到白名单本身）。改为直接改清单内容：
+# 把该 section 的 allowed_key 换成**同公司另一个已登记字段**，再单独调 ruling_gap。
+# 这等价于「允许范围被换成了别的条目」，能证明白名单是真起作用的，不靠自报字段。
+_saved_scope_keys = RULING_SCOPE.get(_SECTION0)
+if _saved_scope_keys is not None:
+    RULING_SCOPE[_SECTION0] = {"SH:603025|FIN.NPDEDT.SQ|20250331"}
+    try:
+        _w1 = ruling_gap(dict(RULED.get("SH:603025|FIN.REV.SQ|20250331") or {}))
+    finally:
+        RULING_SCOPE[_SECTION0] = _saved_scope_keys
+    c14_inj["scope_allowed_key_narrowed"] = {
+        "caught": _w1 is not None, "reason": _w1,
+        "expect": "RULING_KEY_NOT_IN_SCOPE", "ledger_reasons": []}
+else:
+    c14_inj["scope_allowed_key_narrowed"] = {
+        "caught": False, "reason": "NO_SCOPE_ROW", "expect": "NO_SCOPE_ROW",
+        "ledger_reasons": []}
+c14_reason_mismatch = {n: d["reason"] for n, d in c14_inj.items()
+                       if d["reason"] != d["expect"]}
+c14_not_caught = [n for n, d in c14_inj.items() if not d["caught"]]
+
+# 正例：未改动的既有裁决必须继续成立（证明门槛可满足）
+=== 1220:1335
+}
+# 数量：带单位，或带小数（小数可无单位）。裸整数不算——那多半是页码/表号。
+_QUANT = (r"[−-]?\d[\d,]*(?:\.\d{1,2}\s*(?:元|万元|千元|亿元|%|％)?"
+          r"|\s*(?:元|万元|千元|亿元|%|％))")
+# 页码/表号引用：第12页 / 见第3表 / 附表2 / 第 5 行
+_RE_PAGE_REF = re.compile(r"第\s*\d+\s*[页表行节项条附]|见\s*第?\s*\d+\s*[页表]|附表\s*\d*")
+# 币种的中文名 ↔ 代码映射（第十二轮 C 项）：只做字符串比对会把
+# 「记账本位币：人民币」当成不支持 `CNY`，属受控映射缺失造成的误拒。
+CURRENCY_ALIASES = {
+    "CNY": {"CNY", "RMB", "人民币", "人民币元", "元"},
+    "HKD": {"HKD", "HK$", "港币", "港元"},
+    "USD": {"USD", "US$", "美元"},
+}
+
+
+RULE_UNDEFINED_FIELDS = sorted({
+    "period_source", "slot_id", "source_kind", "status_reason",
+    "upstream_hold_fields", "low_base_flag", "quarterly_inputs",
+    "comparability_note", "version_used", "adoption_reason",
+    "original_document_id",
+})
+
+
+def _field_support(kind, printed, value_b, unit, frag, ent):
+    """按字段规则判「原文事实是否支撑该字段终值」。返回 (ok, 拒绝原因)。"""
+    if kind == "NUM":
+        p = _as_num(printed)
+        t = _as_num(value_b)
+        if t is None:
+            return False, "REVIEW_VALUE_NOT_NUMERIC"
+        if p is None:
+            return False, "REVIEW_PRINTED_VALUE_NOT_NUMERIC"
+        try:
+            mult = float(unit or "1")
+        except (TypeError, ValueError):
+            mult = 1.0
+        if mult <= 0:
+            mult = 1.0
+        if abs(p * mult - t) <= max(0.05, 0.5 * mult, abs(t) * 1e-9):
+            return True, None
+        return False, "REVIEW_PRINTED_VALUE_NOT_SUPPORT_VALUE"
+    if kind == "UNIT":
+        u = UNIT_MAP.get(_nz(printed))
+        if u is None:
+            return False, "REVIEW_UNIT_TEXT_UNMAPPED"
+        if u != (value_b or "").strip():
+            return False, "REVIEW_UNIT_MAPPING_MISMATCH"
+        return True, None
+    if kind == "DATE":
+        d = _as_date(printed)
+        if d is None:
+            return False, "REVIEW_PRINTED_DATE_UNPARSED"
+        if d != _as_date(value_b):
+            return False, "REVIEW_PRINTED_DATE_MISMATCH"
+        return True, None
+    if kind == "LITERAL":
+        v = (value_b or "").strip()
+        if not v:
+            return False, "REVIEW_VALUE_EMPTY"
+        # 第十一轮 C 项：字面出现 ≠ 它是该字段的值。年份 2025 在页面上到处都是，
+        # 不能因此证明它是单位/币种/证据标签。文本字段须**带自己的标签**出现。
+        # 第十二轮 C 项：币种须按受控映射接受中文名（CNY ↔ 人民币），
+        # 否则「记账本位币：人民币」会被当成不支持 CNY——那是误拒，不是核验。
+        fld = (ent.get("meta_field") or "").strip()
+        alts = (sorted(CURRENCY_ALIASES.get(v, {v})) if fld == "currency" else [v])
+        if not any(_nz(a) in _nz(frag) for a in alts):
+            return False, "REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT"
+        pat = _LITERAL_LABEL.get(fld)
+        if pat is not None:
+            if not any(re.search(pat % re.escape(a), frag) for a in alts):
+                return False, "REVIEW_LITERAL_NOT_BOUND_TO_FIELD"
+            return True, None
+        if fld == "evidence_label":
+            # 行/列标签必须与**紧随其后的数量**相邻，证明它是这个数的标签。
+            # 第十二轮 C 项：原来「标签后 20 字内出现数字」会被页码骗过——
+            # `营业总收入见第12页附表说明` 里的 12 是引用页码，不是金额。
+            # 现在要求出现的是**数量**（带单位或带小数），且该数字不是页码/表号。
+            m = re.search(re.escape(v) + r"[^\d]{0,20}?(" + _QUANT + ")", frag)
+            if not m:
+                return False, "REVIEW_LITERAL_NOT_BOUND_TO_FIELD"
+            seg = frag[max(0, m.start(1) - 6):m.end(1)]
+            if _RE_PAGE_REF.search(seg):
+                return False, "REVIEW_LITERAL_NUMBER_IS_PAGE_REF"
+            return True, None
+        return False, "REVIEW_FIELD_RULE_UNDEFINED"
+    if kind == "SELF_PAGE":
+        if (value_b or "").strip() != (ent.get("original_page") or "").strip():
+            return False, "REVIEW_SOURCE_PAGE_NE_REGISTERED_PAGE"
+        return True, None
+    return False, "REVIEW_FIELD_RULE_UNDEFINED"
+
+
+def _supports(printed, value, unit="1", basis=""):
+    """兼容旧接口：数值型按单位折算比对，文本型逐字包含。
+
+    `basis` 已**不再**参与判定（第十轮 C 项）：自述不能替代证据。
+    """
+    p = _as_num(printed)
+    t = _as_num(value)
+    if p is not None and t is not None:
+        try:
+            mult = float(unit or "1")
+        except (TypeError, ValueError):
+            mult = 1.0
+        return abs(p * mult - t) <= max(0.05, 0.5 * mult, abs(t) * 1e-9)
+    v = (value or "").strip()
+    if not v or not (printed or "").strip():
+        return False
+    return _nz(v) in _nz(printed) or _nz(printed) in _nz(v)
+
+
+def review_gap(r):
+    """放行一条补充元数据差异所缺的东西；None 表示审查记录齐备。
+
+    第九轮 D 项在第八轮基础上再补五道：
+    - `reviewed_at` 必须是真实日期，`review_role` 必须显式标注（自检也要标）；
+=== 1970:2015
+r7 = [s for s in samp if s["risk_type"].startswith("R7_")]
+# 第七轮 F 项：原先只要求 located_conclusion 非空，写「NOT_FOUND」也算通过。
+# 现在必须声明 locate_status，且「风险已发现」与「核证通过」分开计数。
+r7_bad = [s for s in r7
+          if (s.get("locate_status") or "") not in ("VERIFIED", "WEAK", "NOT_LOCATED")]
+r7_verified = [s for s in r7 if s.get("locate_status") == "VERIFIED"]
+r7_status = Counter(s.get("locate_status") for s in r7)
+# 第十二轮 F 项：抽样键集变更的退出归因必须可机器校验——RANK_CUT 得谓词为真，
+# PREDICATE_FALSE 得谓词为假，不能只写一句话了事。
+samp_sum = json.loads((OUT / "sampling_v5.json").read_text(encoding="utf-8"))
+kd = samp_sum.get("keys_diff") or {}
+kd_exit = kd.get("exit_code_selfcheck") or {}
+kd_rows = list(csv.DictReader(open(OUT / "sampling_keys_diff.csv",
+                                   encoding="utf-8-sig", newline="")))
+kd_removed = [r for r in kd_rows if r["status"] == "REMOVED"]
+kd_bad = ([r["key"] for r in kd_removed
+           if r.get("exit_code") not in ("LEDGER_KEY_GONE", "PREDICATE_FALSE",
+                                         "RANK_CUT", "UNKNOWN")]
+          + [b.get("key", "") for b in (kd_exit.get("bad") or [])]
+          + ([] if kd_exit.get("checked") == len(kd_removed)
+             else ["CHECKED_COUNT_MISMATCH:%s/%s" % (kd_exit.get("checked"),
+                                                     len(kd_removed))]))
+add("C31", "分层抽验覆盖 12 类必需风险 + 补充字段；原文定位须区分已核与未定位；"
+    "键集变更的退出归因须机器自证",
+    REQUIRED_RISK <= samp_risk and has_extra and not reread_bad and bool(r7)
+    and not r7_bad and len(r7_verified) >= 1 and not kd_bad,
+    {"samples": len(samp), "risk_types": len(samp_risk),
+     "unique_keys": len({(s["security_id"], s["field_id"], s["period_key"],
+                          s["meta_field"]) for s in samp}),
+     "missing": sorted(REQUIRED_RISK - samp_risk), "extra_covered": has_extra,
+     "reread_bad": len(reread_bad), "r7_undeclared": len(r7_bad),
+     "r7_verified": len(r7_verified), "r7_status": dict(r7_status),
+     "reread": dict(Counter(s["page_reread"] for s in samp)),
+     "keys_diff": {"rows": len(kd_rows), "removed": len(kd_removed),
+                   "by_status": kd.get("by_status"),
+                   "removed_exit_code": kd.get("removed_exit_code"),
+                   "exit_code_selfcheck_ok": bool(kd_exit.get("ok")),
+                   "bad": kd_bad},
+     "r7_conclusion": dict(Counter(s["located_conclusion"].split("：")[0] for s in r7))})
+
+dh_s = [s for s in samp if s["risk_type"] == "R9_DAHAO_RULED"]
+sd_s = [s for s in samp if s["risk_type"] == "R8_SHANDONG_POSITIVE"]
+hc_s = [s for s in samp if s["risk_type"] == "R10_HANGCHA_CROSS_SOURCE"]
+add("C32", "大豪科技保持解除、山东钢铁保持待核、杭叉样本带跨来源限制",
+    bool(dh_s) and all(s["resolution"] == "RESOLVED_BY_RULING" for s in dh_s)
+    and bool(sd_s) and all(not is_resolved(s["resolution"]) for s in sd_s)
+=== 2786:2910
+# ---------------- C39 状态文件单一写者（第十二轮 H 项）----------------
+# 复核连续两轮抓到 data/active_issue.json 里留着上一版的条数与结论
+# （「V10：C34 30 条反例；C37 27 环；C14 9 种」以及「新增该键，无删除」）。
+# 根因不是「忘改」，是同一份摘要有两个写者。现在：
+#   ① 派生字段只由本脚本写；② 只写指针与版本号，不复述任何计数口径；
+#   ③ 本项检查结构——旧字段必须消失、版本必须等于本次、定位器版本必须与 sampling 一致。
+_SAMP_SUM = json.loads((OUT / "sampling_v5.json").read_text(encoding="utf-8"))
+_LEGACY_SAMPLING_KEYS = ("samples", "risk_types", "unique_keys", "unique_keys_note",
+                         "page_reread", "r7_locate_status", "parent_orig_verified",
+                         "new_in_round7", "new_in_round8", "new_in_round10")
+# 旧版 checks 字段是一句话，里面写着「C34 30 条反例；C37 27 环；C14 9 种」。
+# 判据不看版本号字面（新版 note 里会提到历史），只看有没有这类计数口径。
+_RE_LEGACY_COUNT = re.compile(r"条反例|环 =|种伪造|种绕过|环，|PASS（V")
+
+
+def write_status(passed_n, total_n, decision):
+    """把派生块写进 data/active_issue.json。本函数是这些字段的唯一写者。"""
+    st = json.loads(STATUS_FILE.read_text(encoding="utf-8"))
+    e = st.setdefault("s00_errata", {})
+    ok = decision.endswith("PASS_WITH_UNRESOLVED_ITEMS")
+    st["status"] = "S00_ERRATA_V5_SELF_CHECK_%s_%s_AWAITING_RECHECK_13" % (
+        SELF_CHECK_VERSION, "PASS" if ok else "FAIL")
+    st["self_check_version"] = SELF_CHECK_VERSION
+    _sc = {"version": SELF_CHECK_VERSION, "checks": total_n, "pass": passed_n,
+           "canonical": "%s/review.json#checks" % STATUS_REL,
+           "detail": "%s/review.json" % STATUS_REL,
+           "note": "计数由 verify_v5.py 写出；逐项结果与注入明细只在 review.json。"}
+    st["self_check"] = dict(_sc, note="顶层与 s00_errata 两处同源，均由 verify_v5.py 写出，"
+                                      "不手工维护。")
+    e["self_check_version"] = SELF_CHECK_VERSION
+    e["self_check"] = _sc
+    e["checks"] = {"canonical": "%s/review.json#checks" % STATUS_REL,
+                   "count": total_n,
+                   "note": "检查项名称/结果/明细一律不在状态文件复述；旧版曾在此写死反例数、"
+                           "注入链环数与注入种数，与 review.json 漂移，被复核抓到。"}
+    e["sampling"] = {
+        "canonical": "%s/sampling_v5.json" % STATUS_REL,
+        "rows": "%s/sampling_v5.csv" % STATUS_REL,
+        "keys_diff": "%s/sampling_keys_diff.csv" % STATUS_REL,
+        "locator_version": _SAMP_SUM.get("locator_version"),
+        "note": "行数/风险类型数/键数/page_reread 分布/逐键增删一律不复述，见 canonical 与 "
+                "keys_diff；状态文件只留定位器版本与指针，杜绝第二份数字漂移。",
+        "finding": "SH:600936 FIN.REV.SQ@20250630 的核验证据未定位到，"
+                   "属上游核验记录异常，未放行",
+    }
+    e["round"] = "第十二轮返工"
+    e["decision"] = decision
+    # claim_note 原先是一段写死了条数与环数的长文（V10 的 40/40、30 条、27 环），
+    # 每次返工都要手改，必然漂移。改成短句 + 指针，数字只在 review.json。
+    e["claim_note"] = (
+        "S00 勘误 V5 自检 %s（%d/%d PASS）。逐项结果、注入明细与限制见 "
+        "%s/review.json 与 REPORT.md；此处不复述条数/环数/种数，避免与 review.json 漂移。"
+        "第 4 步批量核证与第 5 步重算分层未做；44/231/378 未冻结；"
+        "S04 第二轮与 S05 不放行。"
+        % (SELF_CHECK_VERSION, passed_n, total_n, STATUS_REL))
+    e["report_to_codex"] = "%s/report_to_codex_round13.md" % STATUS_REL
+    st["report_to_codex"] = e["report_to_codex"]
+    st["updated_at"] = "2026-11-13T09:20:00+08:00"
+    # EOL 与缩进必须与 HEAD 一致（CRLF + indent=1）：否则每次自检都把整个
+    # data/active_issue.json 重排一遍，diff 变成「全文件重写」，评审看不到真实改动。
+    STATUS_FILE.write_bytes(
+        (json.dumps(st, ensure_ascii=False, indent=1) + "\n")
+        .encode("utf-8").replace(b"\n", b"\r\n"))
+    return st
+
+
+def status_problems(st):
+    bad = []
+    e = st.get("s00_errata") or {}
+    if st.get("self_check_version") != SELF_CHECK_VERSION:
+        bad.append("TOP_VERSION_STALE:%s" % st.get("self_check_version"))
+    if e.get("self_check_version") != SELF_CHECK_VERSION:
+        bad.append("ERRATA_VERSION_STALE:%s" % e.get("self_check_version"))
+    if not isinstance(e.get("checks"), dict):
+        bad.append("CHECKS_NOT_POINTER")
+    elif _RE_LEGACY_COUNT.search(json.dumps(e["checks"], ensure_ascii=False)):
+        bad.append("CHECKS_STILL_QUOTES_LEGACY_COUNTS")
+    if not isinstance(e.get("self_check"), dict):
+        bad.append("SELF_CHECK_NOT_POINTER")
+    elif (e["self_check"].get("version") != SELF_CHECK_VERSION
+          or not e["self_check"].get("canonical")):
+        bad.append("SELF_CHECK_POINTER_INCOMPLETE")
+    _s = e.get("sampling")
+    if not isinstance(_s, dict):
+        bad.append("SAMPLING_NOT_POINTER")
+    else:
+        _legacy = [k for k in _LEGACY_SAMPLING_KEYS if k in _s]
+        if isinstance(_s.get("keys_diff"), dict):
+            _legacy.append("keys_diff(dict)")
+        if _legacy:
+            bad.append("SAMPLING_KEEPS_DERIVED:%s" % _legacy)
+        if _s.get("locator_version") != _SAMP_SUM.get("locator_version"):
+            bad.append("LOCATOR_VERSION_MISMATCH:%s≠%s"
+                       % (_s.get("locator_version"), _SAMP_SUM.get("locator_version")))
+        if not _s.get("canonical") or not _s.get("keys_diff"):
+            bad.append("SAMPLING_POINTER_INCOMPLETE")
+    if "AWAITING_RECHECK_13" not in (st.get("status") or ""):
+        bad.append("STATUS_NOT_CURRENT:%s" % st.get("status"))
+    return bad
+
+
+# 先按「截至 C38 全过」乐观写一次（C39 自己是否过要读回文件才知道），
+# 最终计数在 review 定稿后再写一次；两次都是同一个写者。
+_pre_pass = sum(1 for c in checks if c["result"] == "PASS")
+write_status(_pre_pass + (1 if _pre_pass == len(checks) else 0), len(checks) + 1,
+             "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS"
+             if _pre_pass == len(checks) else "SELF_CHECK_FAIL")
+_c39 = status_problems(json.loads(STATUS_FILE.read_text(encoding="utf-8")))
+add("C39", "状态文件派生字段由自检单一写出：旧计数必须消失、版本与定位器版本必须本次一致",
+    not _c39,
+    {"violations": _c39, "file": "data/active_issue.json",
+     "legacy_sampling_keys": list(_LEGACY_SAMPLING_KEYS),
+     "locator_version": _SAMP_SUM.get("locator_version")})
+
+passed = sum(1 for c in checks if c["result"] == "PASS")
+review = {
+    "issue_key": "S00", "stage": "ERRATA", "version": "ERRATA_V5",
+    "self_check_version": SELF_CHECK_VERSION,
+    "review_nature": "SELF_CHECK",
+    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS" if passed == len(checks)
+                else "SELF_CHECK_FAIL",
+    "reviewed_at": "2026-11-13T09:20:00+08:00",
+    "checks_pass": passed, "checks_total": len(checks),
+    "checks": checks,
+    "fault_injection": {
+=== 3030:3045
+    ],
+    "not_independent": "执行方自检，不构成独立验收；仅抽验 %d 行 / %d 类 / %d 键回读原件物理页"
+                       "（计数取自 sampling_v5.json，不在此处另写一份）。"
+                       % (samp_sum.get("samples", 0), samp_sum.get("risk_types", 0),
+                          samp_sum.get("unique_keys", 0)),
+    "release_S05": False,
+}
+# 单一写者：把派生块按最终计数与最终裁决再写一次（含 C39 自身的结果）。
+write_status(passed, len(checks), review["decision"])
+(OUT / "review.json").write_text(
+    json.dumps(review, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+for c in checks:
+    print("%s %-6s %s" % (c["id"], c["result"], c["name"]))
+    if c["result"] == "FAIL":
+        print("      ", json.dumps(c["detail"], ensure_ascii=False)[:400])
+
+codex
+已发现两处需要重点实测：C31 读取的是抽样脚本保存的归因自检摘要；C39 则先重写状态，再检查状态。接下来我会注入错误归因和旧版 checks，确认整条校验链能否报错。
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5')
+s=(b/'verify_v5.py').read_text(encoding='utf-8').splitlines()
+for i,l in enumerate(s,1):
+ if ('SELF_PAGE' in l or 'column_of_amount_ex' in l or 'REVIEW_PAGE' in l or 'import ' in l) and 1335<i<1560: print(i,l)
+s=(b/'sampling_v5.py').read_text(encoding='utf-8').splitlines()
+for a,z in [(28,60),(765,790),(1010,1055)]:print('\\n'.join(f'{i+1} {s[i]}' for i in range(a-1,min(z,len(s)))))
+print((b/'ruling_scope.csv').read_text(encoding='utf-8-sig'))
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 302ms:
+1410     if rule[0] == "SELF_PAGE":
+1424             _col, _atxt, _st = pv.column_of_amount_ex(_words, amt, label=_names)
+28 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
+29 ORIG = Path("D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals")
+30 P_V10 = ROOT / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz"
+31 P_VERIFY = ROOT / "runs/issues/S02/remediation_20261029/restatement_verify/results.csv"
+32 P_REGISTRY = ROOT / "runs/collection/collection_index.csv"
+33 PERIOD_LABEL_TO_KEY = {
+34     "2025Q1": "20250331", "2025H1": "20250630", "2025Q3": "20250930",
+35     "FY2025": "20251231", "2026Q1": "20260331", "2026H1": "20260630",
+36     "2026Q3": "20260930", "FY2024": "20241231", "2024FY": "20241231",
+37 }
+38 
+39 D10 = {}
+40 with gzip.open(P_V10, "rt", encoding="utf-8-sig", newline="") as f:
+41     for r in csv.DictReader(f):
+42         D10[(r["security_id"], r["field_id"], r["period_key"])] = r
+43 vrec = {}
+44 with open(P_VERIFY, encoding="utf-8-sig", newline="") as f:
+45     for r in csv.DictReader(f):
+46         vrec[r["document_id"]] = r
+47 
+48 # 采用审计：父输入是否采用同一修订文档（第七轮 C 项：不能只凭 version_used 相同）
+49 adopt = {}
+50 _p_adopt = ROOT / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10_adoption_audit.csv"
+51 if _p_adopt.exists():
+52     with open(_p_adopt, encoding="utf-8-sig", newline="") as f:
+53         for r in csv.DictReader(f):
+54             adopt[(r["security_id"], r["field_id"], r["period_key"])] = r
+55 doc_period = {}
+56 with open(P_REGISTRY, encoding="utf-8-sig", newline="") as f:
+57     for r in csv.DictReader(f):
+58         doc_period[r["document_id"]] = PERIOD_LABEL_TO_KEY.get(r.get("period_label", ""), "")
+59 
+60 meta = [r for r in csv.DictReader(open(OUT / "meta_diff.csv", encoding="utf-8-sig", newline=""))
+765     return pv.gap(PARENT_VERIFS.get(k), expect,
+766                   lambda d: (vrec.get(d) or {}).get("evidence", "")) is None
+767 
+768 
+769 # R6 跨文档父输入（第七轮 C 项：必须交付两父输入各自的核证结论）
+770 # 第八轮 C 项：同文档/双否不能自动证明兼容，须定位两个实际累计父数。
+771 # 抽样优先取「两父输入在原件中都能定位」的样本，定位不到就如实记 NONE/ONE。
+772 def _r6_pred(x):
+773     if x["status_B"] not in ("DERIVED_CUMULATIVE_DIFF", "DERIVED_QUARTERLY_SUM_OVERRIDE"):
+774         return False
+775     y = cross_doc_parent(x["security_id"], x["field_id"], x["period_key"])
+776     return y is not None and y[0]
+777 
+778 
+779 _r6_pool, _r6_seen = [], set()
+780 for r in meta:
+781     if not _r6_pred(r):
+782         continue
+783     if r["security_id"] in _r6_seen:
+784         continue
+785     _r6_seen.add(r["security_id"])
+786     _r6_pool.append(r)
+787     if len(_r6_pool) >= 14:
+788         break
+789 _r6_scored = []
+790 for r in _r6_pool:
+1010         _status = "REMOVED"
+1011         _exit_code, _reason = _exit_reason(_k, _b)
+1012     _diff_rows.append({
+1013         "status": _status,
+1014         "key": _k,
+1015         "security_id": _k.split("|")[0],
+1016         "field_id": _k.split("|")[1],
+1017         "period_key": _k.split("|")[2],
+1018         "baseline_version": _base_ver,
+1019         "baseline_sample_id": "/".join(sorted({x["sample_id"] for x in _b})),
+1020         "baseline_risk_type": "/".join(sorted({x["risk_type"] for x in _b})),
+1021         "current_sample_id": "/".join(sorted({x["sample_id"] for x in _c})),
+1022         "current_risk_type": "/".join(sorted({x["risk_type"] for x in _c})),
+1023         "exit_code": _exit_code,
+1024         "reason": _reason,
+1025         "locator_version": LOCATOR_VERSION,
+1026         "baseline_sha256": _base_sha,
+1027         "current_sha256": _SHA_SAMPLING,
+1028     })
+1029 with open(OUT / "sampling_keys_diff.csv", "w", encoding="utf-8-sig", newline="") as f:
+1030     w = csv.DictWriter(f, fieldnames=list(_diff_rows[0].keys()), lineterminator="\n")
+1031     w.writeheader()
+1032     w.writerows(_diff_rows)
+1033 _diff_cnt = Counter(r["status"] for r in _diff_rows)
+1034 
+1035 # 退出归因自证（第十二轮 F 项）：RANK_CUT 必须谓词为真、PREDICATE_FALSE 必须谓词为假、
+1036 # LEDGER_KEY_GONE 必须台账无该键。归因表与判据来自同一份谓词，这里只是防归因表写错。
+1037 _exit_bad, _exit_checked = [], 0
+1038 for _r in _diff_rows:
+1039     if _r["status"] != "REMOVED":
+1040         continue
+1041     _exit_checked += 1
+1042     if _r["key"] not in _ledger_keys:
+1043         _expect = "LEDGER_KEY_GONE"
+1044     else:
+1045         _ent = _PRED_OF_RISK.get(_r["baseline_risk_type"])
+1046         if _ent is None:
+1047             _expect = "UNKNOWN"
+1048         else:
+1049             _expect = ("RANK_CUT"
+1050                        if any(_ent[0](_row) for _row in _ledger_by_key.get(_r["key"], []))
+1051                        else "PREDICATE_FALSE")
+1052     if _r["exit_code"] != _expect:
+1053         _exit_bad.append({"key": _r["key"], "got": _r["exit_code"], "expect": _expect})
+1054 _exit_ok = not _exit_bad
+1055 
+ruling_section,allowed_key,ruling_file,ruling_file_sha256,note
+Q2 大豪科技改判,SH:603025|FIN.REV.SQ|20250331,runs\issues\S00\errata_20261111_v3\codex_ruling_round4.md,5e6b1d6ec70c2d7e49b0d0144134b942e83aa3c096d993bcda004c2634cc0ffd,裁决只解除该键；不得扩用到同公司其他字段或期间
+
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+from pathlib import Path
+import ast
+b=Path('runs/issues/S00/errata_20261111_v5');s=(b/'verify_v5.py').read_text(encoding='utf-8').splitlines()
+print('\\n'.join(s[1405:1447]))
+for fn in ['verify_v5.py','sampling_v5.py']:
+ t=ast.parse((b/fn).read_text(encoding='utf-8'))
+ print(fn,[(n.lineno,ast.unparse(n)[:140]) for n in ast.walk(t) if isinstance(n,ast.Call) and ((isinstance(n.func,ast.Attribute) and n.func.attr.startswith('write')) or (isinstance(n.func,ast.Name) and n.func.id=='open' and len(n.args)>1 and isinstance(n.args[1],ast.Constant) and 'w' in str(n.args[1].value)))])
+print('previous verdict');print((b/'_codex_out_round12.txt').read_text(encoding='utf-8')[:4500])
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 316ms:
+        return "REVIEW_VALUE_NOT_DECLARED"
+    rule = FIELD_RULES.get(r["meta_field"])
+    if rule is None:
+        return "REVIEW_FIELD_RULE_UNDEFINED"
+    if rule[0] == "SELF_PAGE":
+        # 第十一轮 C 项：两个**自报**页码相等不算证据。
+        # 第十二轮 C 项：「金额最早出现的页」也不对——页眉重复的金额会让第 1 页
+        # 抢走第 2 页的真实表格行。改为**目标行定位**：该页必须能用词坐标
+        # 定位到「指标名同一行 + 该金额 + 该金额所在列」；无词坐标（扫描页）时
+        # 退到「该页同时出现指标名与该金额」。
+        amt = _nz(_fmt_parent(b.get("value_cny") or "", b.get("unit_scale") or "1"))
+        if not amt:
+            return "REVIEW_SOURCE_PAGE_UNVERIFIABLE"
+        _names = pv.METRIC_ALIASES.get(r["field_id"]) or pv.METRIC_ALIASES.get(
+            r["field_id"][:-3] + ".YTD" if r["field_id"].endswith(".SQ") else r["field_id"])
+        _pdf = pdf_file(r["security_id"], doc)
+        _words = pv.page_words(_pdf, pg) if _pdf else []
+        if _words:
+            _col, _atxt, _st = pv.column_of_amount_ex(_words, amt, label=_names)
+            if _st == "NO_AMOUNT":
+                return "REVIEW_SOURCE_PAGE_NOT_LOCATED"
+            if _st == "AMBIGUOUS":
+                return "REVIEW_SOURCE_PAGE_AMBIGUOUS"
+            if _st == "NO_COLUMN":
+                return "REVIEW_SOURCE_COLUMN_NOT_LOCATED"
+        else:
+            _pt = _nz(pages[pg - 1])
+            if amt not in _pt:
+                return "REVIEW_SOURCE_PAGE_NOT_LOCATED"
+            if _names and not any(n in _pt for n in _names):
+                return "REVIEW_SOURCE_PAGE_NOT_LOCATED"
+    ok, why = _field_support(rule[0], printed, r.get("value_B"),
+                             b.get("unit_scale", "1"), frag, ent)
+    if not ok:
+        return why
+
+    # 引文仍保留（用于台账展示），但已不再作为唯一依据
+    q = _nz(ent.get("evidence_quote"))
+    if len(q) < 12:
+        return "REVIEW_QUOTE_TOO_SHORT"
+    return None
+
+verify_v5.py [(3039, "(OUT / 'review.json').write_text(json.dumps(review, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')"), (2846, "STATUS_FILE.write_bytes((json.dumps(st, ensure_ascii=False, indent=1) + '\\n').encode('utf-8').replace(b'\\n', b'\\r\\n'))")]
+sampling_v5.py [(1102, "(OUT / 'sampling_v5.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')"), (903, "open(OUT / 'sampling_v5.csv', 'w', encoding='utf-8-sig', newline='')"), (905, 'w.writeheader()'), (906, 'w.writerows(samples)'), (1029, "open(OUT / 'sampling_keys_diff.csv', 'w', encoding='utf-8-sig', newline='')"), (1031, 'w.writeheader()'), (1032, 'w.writerows(_diff_rows)')]
+previous verdict
+**裁决：`RETURN_FOR_REWORK`。**
+
+独立内存复跑确为 **40/40 PASS**，但仍复现了错误放行、正确证据被拒及状态文字冲突。自检通过不能支持本轮验收。全程只读，未覆盖 `review.json`、未提交、未操作 GitHub。
+
+| 项 | 结论 | 主要依据 |
+|---|---|---|
+| A 极性 | **不通过** | 原反例已挡住；加入“金额为／确认的金额”仍绕过，也存在过度拒绝 |
+| B 父输入栏目 | **不通过** | 已用坐标，但同页重复金额仍取第一个；同义列头匹配不完整 |
+| C C24 文本字段 | **不通过** | 页码数字仍可充当金额；SELF_PAGE 最早金额页不能证明目标行页码 |
+| D C14 裁决范围 | **不通过** | 独立清单有效，但清单自己的哈希列未校验 |
+| E C38 维度证据 | **不通过** | `scope_dims` 仍接受远距离拼接、页脚载体词 |
+| F R6／抽样 | **不通过，部分修复成立** | R7 两条状态可复现；600060 仍满足风险谓词，REMOVED 原因写错 |
+| G 注入断言 | **通过** | 键集合、原因、未执行项、枚举原因均已严格断言 |
+| H 文本与状态 | **不通过，指针修复成立** | 当前结构化计数一致，但 active 内仍保留冲突的旧摘要 |
+
+**以下是决定裁决的复现证据。**
+
+### A．原绕过已修，但结构判据仍不可靠
+
+调用 `evidence_scope.analyse()`，实测：
+
+| 输入 | 实测输出 | 期望 |
+|---|---|---|
+| `前期差错更正对期初未分配利润影响0.00元，其中营业总收入100.00元` | `affirmed=set()` | 正确 |
+| 同上，将“营业总收入”换成“营业收入” | `affirmed=set()` | 正确 |
+| `前期差错更正对期初未分配利润影响0.00元，未分配利润影响100.00元` | `affirmed={'ERRATA'}`、`scoped={'ERRATA'}` | 正确保留权益续写 |
+| `前期差错更正对期初未分配利润影响100.00元，其中10.00元为损益调整` | 两集合均含 `ERRATA` | 正确保留金额拆分 |
+
+但下列最小变体仍失败：
+
+```text
+前期差错更正对期初未分配利润影响0.00元，其中营业总收入金额为100.00元
+```
+
+- 实测：`affirmed={'ERRATA'}`。
+- 期望：`affirmed=set()`；无关营业总收入不能承接差错更正。
+- 将末段换成“其中营业总收入确认的金额100.00元”或“其中营业总收入合计100.00元”，同样错误肯定。
+
+反方向也有过度拒绝：
+
+```text
+前期差错更正对期初未分配利润影响0.00元，影响增加100.00元
+```
+
+- 实测：`affirmed=set()`，仅保留 `scoped={'ERRATA'}`。
+- 期望：保留非零影响的 `affirmed={'ERRATA'}`。
+
+根因是 `_RE_VERB_TAIL` 的末词匹配仍在决定主语关系：“金额为”放行无关项目，“影响增加”却被当作新主语。这仍是词尾启发式，不能视为结构性修复完成。另，`_bind_amount` 第 471–472 行的 `tgt` 分支并没有 `not new_subj`，与汇报“三个分支全部加”的描述不符。
+
+回放复算得到 **1,007／0／0**，但汇报对零变化的解释需要更正：
+
+- 插桩实测：`_new_subject` **调用 88 次，返回 True 44 次**。
+- 因此，“真实证据从未触发”不成立；准确表述是“触发后没有改变最终输出”。
+- `clause_changed=0` 本来就是预期，因为新判据不参与分句。
+- 此回放可证明这项开关在存量证据上未改变结果；不能证明完整 V10→V11 等价，也不能证明新判据正确。
+
+### B．坐标关联已经加入，但还没有绑定目标行
+
+两行表头夹具：
+
+```text
+同一列：
+y=0  2025年1-6月
+y=12 本期数
+y=40 100.00
+```
+
+`column_of_amount()` 返回“本期数”，此例正确。
+
+同义登记则存在方向性：
+
+```text
+实际列头：本期数
+登记：本期        → 匹配
+登记：本期数      → 匹配
+登记：本期发生额  → 不匹配
+```
+
+当前是归一化后的子串判断，并没有期间列头的语义映射。
+
+重复金额反例更关键，词坐标为：
+
+```text
+上年同期：x=190..260，y=0..10
+本期数：  x=90..160， y=0..10
+100.00：  x=200..250，y=30..40   # 较早的其他行
+100.00：  x=100..150，y=60..70   # 待核目标行
+```
+
+- 输入：`column_of_amount(words, '100')`。
+- 实测：`('上年同期', '100.00')`。
+- 期望：绑定目标行后得到“本期数”；无法唯一绑定时返回歧义待核。
+- 当前接口没有目标行定位参数，不能区分这两笔数。
+
+C37 新负例已复现：
+
+- `real_wrong_column` → `PARENT_COLUMN_MISMATCH`。
+- `real_column_unresolved` → `PARENT_COLUMN_UNRESOLVED`。
+
+扫描页返回空词坐标时，应登记为**待回读／OCR或人工坐标核验**。保留 HOLD 是合理的；不能把技术取词失败表述成原件本身“不可解”。
+
+### C．标签旁有数字仍不等于绑定金额
+
+以下拒绝成立：
+
+- `unit_raw='元'`，片段仅有“单位：万元” → `REVIEW_LITERAL_NOT_BOUND_TO_FIELD`。
+- `currency='CNY'`，片段为“记账本位币：人民币” → `REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT`。
+
+第二条是受控币种映射缺失造成的拒绝，应明确处理 `CNY ↔ 人民币`，不能称为已完成币种语义核验。
+
+决定性反例：
+
+```text
+meta_field = evidence_label
+value_B = 营业总收入
+original_fragment = 2025年上半年营业总收入见第12页附表说明文字为索引
+```
+
+在完整有效对照记录上仅替换该字段及相应原文片段，使用内存原文源测试：
+
+- `_field_support()`：`(True, None)`。
+- 完整 `review_gap()`：`None`，即接受。
+- 期望：拒绝；“12”是引用页码，不是目标金额。
+
+`SELF_PAGE` 也仍不成立：
+
+```text
+第1页：页眉重复100.00元
+第2页：目标指标及100.00元的真实表格行
+登记目标页：2
+```
+
+- 实测：`REVIEW_SOURCE_PAGE_NOT_FIRST_OCCURRENCE`。
+- 期望：允许通过目标行、列和金额定位确认第2页。
+- “金额最早出现页”不能替代“目标记录所在页”。
+
+已确认：**1,505 格全部仍为 `PENDING_FIELD_LEVEL_CHECK`；未定义字段仍为 11 个。**
+
+### D．范围清单有作用，但哈希绑定没有闭合
+
+现有同改 `key + ruled_key` 的注入确实被 `RULING_KEY_NOT_IN_SCOPE` 拦住。
+
+不过，清单目前**只有一个 section**，“同时改成另一个已登记 section”的场景无法在现有清单中构造，不能声称已经覆盖。
+
+最小复现：
+
+```text
+仅在内存中把 ruling_scope.csv 的 ruling_file_sha256 改为 64 个 0；
+其他字段、裁决原件及裁决登记记录均保持原样。
+```
+
+- 实测：重新加载清单后，`ruling_gap(original_entry) == None`。
+- 期望：清单行的原件哈希失配，应拒绝采用该范围授权。
+
+必须区分：
+
+- `verify_v5.py:135–147` 校验的是**裁决登记记录**中的文件哈希。
+- `verify_v5.py:125–129` 加载范围清单时只读取 `ruling_section / allowed_key`。
+- **清单自己的 `ruling_file / ruling_file_sha256` 没有参与该绑定。**
+
+归因改正成立：
+
+- `generic_ruling_item` 实际拦在 `RULING_SCOPE_NOT_LISTED`。
+- `key_pattern_other_company` 仍覆盖 `RULING_ITEM_DOES_NOT_NAME_KEY`。
+
+### E．三项词语出现，仍未证明三者属于同一证据关系
+
+完整合规登记字段不变，仅替换引文和内存页源：
+
+```text
+2025年上半年营业收入 + “甲”重复501次 + 比较
+```
+
+- 实测：`scope_dims()` 返回 `{'COMPARATIVE_SCOPE'}`。
+- 期望：拒绝；三项不在有效证据窗口内。
+
+另一反例：
+
+```text
+2025年上半年营业收入100.00元。
+[40字间隔]
+页脚注释：分季度见附表
+```
+
+- 实测：返回 `{'QUARTERLY_TABLE_PROVENANCE'}`。
+- 期望：拒绝；页脚的“分季度”不能证明该表来源。
+
+`_dim_window()` 的选取限制没有成为 `scope_dims()` 接受外部登记时的共同规则，且字符距离也不能证明属于同一表。
+
+“2025年本报告期营业收入与上年同期比较”实测不获维度。无具体月份的表述应结合已验证的报告期间解析，不能单凭这些字直接确认。
+
+新正例可复现：
+
+```text
+BJ:920100|FIN.REV.SQ|20250630
+dims_from_record == dims_required
+== {COMPARATIVE_SCOPE, QUARTERLY_TABLE_PROVENANCE}
+```
+
+登记证据页分别为 **149、10**。这证明当前正例满足程序规则，不能抵消上述接受入口绕过。
+
+### F．R7 修复可复现，R6 退出原因不准确
+
+先纠正期间：复跑中，R7 的 `SH:600053` **LOCATED／VERIFIED(p.168)** 对应的是
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+import sys,runpy,io,contextlib,json,hashlib,copy
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5').resolve();sys.path.insert(0,str(b));v={};rb=Path.read_bytes;rt=Path.read_text
+Path.write_bytes=lambda p,d:(v.__setitem__(str(p.resolve()),d) or len(d))
+Path.write_text=lambda p,d,encoding=None,**kw:(v.__setitem__(str(p.resolve()),d.encode(encoding or 'utf-8')) or len(d))
+Path.read_bytes=lambda p:v.get(str(p.resolve()),None) if str(p.resolve()) in v else rb(p)
+Path.read_text=lambda p,encoding=None,**kw:v[str(p.resolve())].decode(encoding or 'utf-8') if str(p.resolve()) in v else rt(p,encoding=encoding,**kw)
+with contextlib.redirect_stdout(io.StringIO()):g=runpy.run_path(str(b/'verify_v5.py'))
+print('BASE',g['review']['checks_pass'],g['review']['checks_total']);snap=dict(v)
+with contextlib.redirect_stdout(io.StringIO()):g2=runpy.run_path(str(b/'verify_v5.py'))
+print('IDEMPOTENCE',[(Path(k).name,d==v[k],hashlib.md5(d).hexdigest()) for k,d in snap.items()])
+st=json.loads(g['STATUS_FILE'].read_text(encoding='utf-8'));st['s00_errata']['checks']='V10：30 条反例';v[str(g['STATUS_FILE'].resolve())]=json.dumps(st,ensure_ascii=False).encode()
+print('H direct',g['status_problems'](st))
+with contextlib.redirect_stdout(io.StringIO()):h=runpy.run_path(str(b/'verify_v5.py'))
+print('H full',[(x['id'],x['result']) for x in h['checks'] if x['id']=='C39'])
+# corrupt diff CSV, leave json unchanged
+p=b/'sampling_keys_diff.csv';orig=rt(p,encoding='utf-8-sig');print('RANK count',orig.count('RANK_CUT'));v[str(p)]=orig.replace('RANK_CUT','PREDICATE_FALSE').encode('utf-8-sig')
+# builtin open is used for CSV
+import builtins
+op=builtins.open
+def readopen(file,mode='r',*a,**kw):
+ if str(Path(file).resolve())==str(p) and 'r' in mode:return io.StringIO(v[str(p)].decode('utf-8-sig'))
+ return op(file,mode,*a,**kw)
+builtins.open=readopen
+with contextlib.redirect_stdout(io.StringIO()):f=runpy.run_path(str(b/'verify_v5.py'))
+print('F corrupt full',[(x['id'],x['result'],x['detail'].get('keys_diff')) for x in f['checks'] if x['id']=='C31'])
+# D actual functions
+ent=next(iter(g['RULED'].values()));sec=ent['ruling_section'];old=g['RULING_SCOPE_META'][sec]
+for name,val,e in [('zero',(old[0],'0'*64),ent),('missing',('nonexistent-review-file.md',old[1]),ent),('entryhash',old,dict(ent,ruling_file_sha256='0'*64)),('unbound',('',old[1]),ent)]:
+ g['RULING_SCOPE_META'][sec]=val;print('D',name,g['scope_row_ok'](sec,e),g['ruling_gap'](e))
+g['RULING_SCOPE_META'][sec]=old
+oldkeys=g['RULING_SCOPE'][sec];g['RULING_SCOPE'][sec]={'SH:603025|FIN.NPDEDT.SQ|20250331'};print('D narrow',g['ruling_gap'](ent));g['RULING_SCOPE'][sec]=oldkeys
+# literal tests
+for text in ['营业总收入见第12页附表说明','营业总收入见第3表','营业总收入附表2','营业总收入100.00元','营业总收入100万元','营业总收入12.50%','营业总收入见第12.00页','营业总收入表12.00','营业总收入第12页100.00元']:
+ print('C label',text,g['_field_support']('LITERAL','','营业总收入','1',text,{'meta_field':'evidence_label'}))
+for text in ['记账本位币：港元','记账本位币：HKD','记账本位币：美元','记账本位币：人民币']:
+ print('C currency',text,g['_field_support']('LITERAL','','CNY','1',text,{'meta_field':'currency'}))
+'@ | python -B -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+import ast
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5');s=(b/'sampling_v5.py').read_text(encoding='utf-8');t=ast.parse(s)
+for n in t.body:
+ if isinstance(n,ast.FunctionDef) and n.name in ['cross_doc_parent','parent_keys','pkeys','_parents','pdf_file'] :print(ast.get_source_segment(s,n))
+print('C fixture vars')
+s=(b/'verify_v5.py').read_text(encoding='utf-8').splitlines()
+for i,l in enumerate(s,1):
+ if any(x in l for x in ['_rv0','_r0','_ent_good','_good_review','review_gap(', '_leak_with','injection_keys_equal_expect']):print(i,l[:160])
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 328ms:
+def cross_doc_parent(sec, fld, pk):
+    """累计差分行的两个父输入是否来自不同文档（第六轮裁决要求单独抽验的情形）。"""
+    if fld not in es.SIMPLE_SQ:
+        return None
+    ytd = fld[:-3] + ".YTD"
+    p1 = D10.get((sec, ytd, pk))
+    p2 = D10.get((sec, ytd, prev_quarter(pk)))
+    if not p1 or not p2:
+        return None
+    d1, d2 = p1.get("document_id", ""), p2.get("document_id", "")
+    return (d1 != d2, d1, d2)
+C fixture vars
+1331 def review_gap(r):
+1475         gap = review_gap(r)
+1517 def _leak_with(rel, ent):
+1551         why = review_gap(rel)
+1687         ctrl_ok = review_gap(_rel) is None
+1718     inj["no_review"] = _leak_with(dict(_rel, content_review_ref=""), None)
+1719     inj["unbound_digest"] = _leak_with(
+1820      "injection_keys_equal_expect": (not key_gap and not key_extra),
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+from pathlib import Path
+s=Path('runs/issues/S00/errata_20261111_v5/verify_v5.py').read_text(encoding='utf-8').splitlines()
+for a,z in [(1331,1407),(1590,1690),(1800,1828)]:print('\\n'.join(s[a-1:z]))
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 274ms:
+def review_gap(r):
+    """放行一条补充元数据差异所缺的东西；None 表示审查记录齐备。
+
+    第九轮 D 项在第八轮基础上再补五道：
+    - `reviewed_at` 必须是真实日期，`review_role` 必须显式标注（自检也要标）；
+    - `reviewer` 不得是 `x` 之类占位；
+    - `original_page` + `original_fragment` 必须能在**原件该页**逐字命中
+      （不再接受 `results.csv.evidence` 自证）；
+    - `original_value_text` 必须是该字段在原文里印出来的字面值，且出现在片段中；
+    - `judgement_basis` ≥40 字、点名该字段与终值。
+
+    第十轮 C/D 项再补三道：
+    - 登记记录必须属于该键（`REVIEW_KEY_MISMATCH`），不再靠「缺文档」偶然拦截；
+    - 印刷值 → 终值的支撑关系改按**字段规则**判定（`FIELD_RULES`），
+      `judgement_basis` 不再作为证据（原文本分支让自述同时写出两个数即可过关）；
+    - 没有可核验映射规则的字段一律 `REVIEW_FIELD_RULE_UNDEFINED`，留在待核。
+    """
+    ent = REVIEWS.get((r["security_id"], r["field_id"], r["period_key"], r["meta_field"]))
+    if ent is None:
+        return "RELEASE_WITHOUT_CONTENT_REVIEW"
+    if (r.get("content_review_ref") or "").strip() != review_key(r):
+        return "LEDGER_NOT_LINKED_TO_REVIEW"
+    # 第十轮 G 项：登记记录本身必须属于该键（原实现没有这一道，`period_key`
+    # 被换成别的期间时只能靠「缺文档」偶然拦住，属错误归因）。
+    for _f in ("security_id", "field_id", "period_key", "meta_field"):
+        if (ent.get(_f) or "").strip() != (r.get(_f) or "").strip():
+            return "REVIEW_KEY_MISMATCH"
+    if (ent.get("value_B") or "").strip() != (r.get("value_B") or "").strip():
+        return "REVIEW_VALUE_MISMATCH"
+    if (ent.get("conclusion") or "").strip() not in ALLOWED_CONCLUSIONS:
+        return "REVIEW_WITHOUT_CONCLUSION"
+    if not pv._reviewer_ok(ent):
+        return "REVIEW_WITHOUT_REVIEWER"
+    if (ent.get("review_role") or "").strip() not in pv.REVIEW_ROLES:
+        return "REVIEW_ROLE_UNMARKED"
+    if not pv._date_ok(ent.get("reviewed_at")):
+        return "REVIEW_WITHOUT_DATE"
+    b = D10.get((r["security_id"], r["field_id"], r["period_key"])) or {}
+    doc = (b.get("document_id") or "").strip()
+    if not doc or (ent.get("document_id") or "").strip() != doc:
+        return "REVIEW_DOCUMENT_MISMATCH"
+
+    # 针对该字段的判断依据
+    basis = _nz(ent.get("judgement_basis"))
+    if len(basis) < 40:
+        return "REVIEW_BASIS_TOO_SHORT"
+    if _nz(r["meta_field"]) not in basis or _nz(r.get("value_B")) not in basis:
+        return "REVIEW_BASIS_NOT_FIELD_SPECIFIC"
+
+    printed = (ent.get("original_value_text") or "").strip()
+    if not printed:
+        return "REVIEW_WITHOUT_ORIGINAL_VALUE"
+
+    # 原件定位：必须在 PDF 该页逐字命中
+    try:
+        pg = int(ent.get("original_page") or 0)
+    except (TypeError, ValueError):
+        pg = 0
+    if pg <= 0:
+        return "REVIEW_WITHOUT_ORIGINAL_PAGE"
+    frag = _nz(ent.get("original_fragment"))
+    if len(frag) < 20:
+        return "REVIEW_FRAGMENT_TOO_SHORT"
+    pages = pdf_pages(r["security_id"], doc)
+    if pages is None:
+        return "REVIEW_ORIGINAL_UNAVAILABLE"
+    if pg > len(pages):
+        return "REVIEW_ORIGINAL_PAGE_OUT_OF_RANGE"
+    if frag not in pages[pg - 1]:
+        return "REVIEW_FRAGMENT_NOT_IN_ORIGINAL_PAGE"
+    if _nz(printed) not in frag:
+        return "REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT"
+
+    # 终值支持：印刷值必须按**字段规则**支撑该字段终值
+    if (ent.get("value_in_quote") or "").strip() != (r.get("value_B") or "").strip():
+        return "REVIEW_VALUE_NOT_DECLARED"
+    rule = FIELD_RULES.get(r["meta_field"])
+                mult = float(unit or "1")
+            except (TypeError, ValueError):
+                mult = 1.0
+            if mult <= 0:
+                mult = 1.0
+            for m in re.finditer(r"-?\d[\d,]*(?:\.\d+)?", t):
+                p = _as_num(m.group(0))
+                if p is None:
+                    continue
+                if abs(p * mult - tgt) <= max(0.05, 0.5 * mult, abs(tgt) * 1e-9):
+                    printed, pos = m.group(0), m.start()
+                    break
+        elif kind == "UNIT":
+            for txt, sc in UNIT_MAP.items():
+                if sc == v and txt in t:
+                    printed, pos = txt, t.index(txt)
+                    break
+        elif kind == "DATE":
+            d = _as_date(v)
+            if d:
+                y, mo, da = d.split("-")
+                for pat in ("%s年%d月%d日" % (y, int(mo), int(da)), d):
+                    if pat in t:
+                        printed, pos = pat, t.index(pat)
+                        break
+        elif kind == "LITERAL":
+            if v in t:
+                printed, pos = v, t.index(v)
+        elif kind == "SELF_PAGE":
+            if v in t and v == str(pi + 1):
+                printed, pos = v, t.index(v)
+        if printed is None:
+            continue
+        frag = t[max(0, pos - 24):pos + len(printed) + 24]
+        if len(frag) < 20:
+            continue
+        return {"security_id": row["security_id"], "field_id": row["field_id"],
+                "period_key": row["period_key"], "meta_field": row["meta_field"],
+                "value_B": v, "document_id": doc, "source_page": str(pi + 1),
+                "evidence_quote": frag[:20], "original_page": str(pi + 1),
+                "original_fragment": frag, "original_value_text": printed,
+                "value_in_quote": v,
+                "judgement_basis": ("核对 %s 字段终值 %s：原件 p.%d 印出 %s，按字段规则"
+                                    "%s 判定与 B 的 %s 一致，不构成实质差异"
+                                    % (row["meta_field"], v, pi + 1, printed,
+                                       kind, v)),
+                "conclusion": "CONFIRMED_EXPLAINED",
+                "review_role": "SELF_CHECK", "reviewer": "self-check-agent",
+                "reviewed_at": "2026-11-12"}
+    return None
+
+
+_CTRL = None
+for _r in extra:
+    if _r["meta_field"] not in FIELD_RULES:
+        continue
+    _g = _genuine_review(_r)
+    if _g is not None:
+        _CTRL = (_r, _g)
+        break
+
+# 单位折算直测：第十轮 B1/C 项——`unit` / `unit_scale` 键名与千分位解析
+unit_path_ok = (_field_support("NUM", "187,875.40", "1878754000", "10000", "", {})[0]
+                and not _field_support("NUM", "187875.40", "1878754000", "1", "", {})[0]
+                and pv._num_in_quote("187,875.40", "1878754000", "10000"))
+
+# 第十二轮 C 项：文本字段「标签 + **数量**」直测。三条都是裁决点名的绕过/误拒。
+literal_path_ok = (
+    # ① 页码数字不得充当金额（`见第12页附表说明`）
+    not _field_support("LITERAL", "营业总收入", "营业总收入", "1",
+                       "2025年上半年营业总收入见第12页附表说明文字为索引",
+                       {"meta_field": "evidence_label"})[0]
+    # ② 数量紧随标签 → 必须通过
+    and _field_support("LITERAL", "营业总收入", "营业总收入", "1",
+                       "2025年上半年营业总收入100.00元，较上年同期增长",
+                       {"meta_field": "evidence_label"})[0]
+    # ③ 币种按受控映射接受中文名（CNY ↔ 人民币），不得误拒
+    and _field_support("LITERAL", "人民币", "CNY", "1",
+                       "金额单位：人民币元；记账本位币：人民币",
+                       {"meta_field": "currency"})[0]
+)
+
+inj = {}
+ctrl_row, ctrl_ent, ctrl_ok = None, None, None
+c24_reason = ""
+if _CTRL is None:
+    c24_reason = "NO_GENUINE_CONTROL_ROW"
+else:
+    ctrl_row, ctrl_ent = _CTRL
+    _rel = dict(ctrl_row)
+    _rel["resolution"] = "RESOLVED_FIELD_LEVEL_CHECK"
+    _rel["content_review_ref"] = review_key(_rel)
+    _k = (ctrl_row["security_id"], ctrl_row["field_id"],
+          ctrl_row["period_key"], ctrl_row["meta_field"])
+    _saved = REVIEWS.get(_k)
+    REVIEWS[_k] = ctrl_ent
+    try:
+        ctrl_ok = review_gap(_rel) is None
+    finally:
+        if _saved is None:
+            REVIEWS.pop(_k, None)
+    if _why not in (_exp if isinstance(_exp, tuple) else (_exp,)):
+        reason_mismatch[_k] = _why
+
+# 枚举注入：PASS 条件必须包含「拦在 REVIEW_FIELD_RULE_UNDEFINED」这一具体原因
+enum_reason = _enum_caught[1] if _enum_caught else "NO_ENUM_CONTROL"
+enum_ok = bool(_enum_caught) and _enum_caught[0] and enum_reason == "REVIEW_FIELD_RULE_UNDEFINED"
+
+add("C24", "补充元数据放行须有外部审查登记表记录：键+终值+原件页定位+印刷值+字段级映射规则；"
+           "审查角色显式标注（自检亦须标注）；无规则字段一律待核",
+    not leak and ctrl_ok and unit_path_ok and not reason_mismatch
+    and not key_gap and not key_extra and not not_exercised
+    and all(v[0] for v in inj.values() if v[0] is not None) and enum_ok,
+    {"leaked": len(leak), "sample": [str(x) for x in leak[:5]],
+     "reason": c24_reason,
+     "control_key": ("|".join([ctrl_row["security_id"], ctrl_row["field_id"],
+                               ctrl_row["period_key"], ctrl_row["meta_field"]])
+                     if ctrl_row else ""),
+     "control_accepted": ctrl_ok,
+     "unit_path_ok": unit_path_ok,
+     "injections": {k: {"caught": v[0], "reason": v[1]} for k, v in inj.items()},
+     "injection_keys_equal_expect": (not key_gap and not key_extra),
+     "expect_reason_keys": len(expect_keys),
+     "key_gap": key_gap,
+     "key_extra": key_extra,
+     "reason_mismatch": reason_mismatch,
+     "not_exercised": not_exercised,
+     "injection_enum_rule_undefined": enum_reason,
+     "injection_enum_ok": enum_ok,
+     "review_register_rows": len(REVIEWS),
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+import ast,csv,gzip,sys,json
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5').resolve();sys.path.insert(0,str(b))
+s=(b/'sampling_v5.py').read_text(encoding='utf-8');t=ast.parse(s)
+# Load just functions plus actual cumulative ledger, not sampling writer
+import evidence_scope as es
+ns={'es':es}
+for n in t.body:
+ if isinstance(n,ast.FunctionDef) and n.name in ['prev_quarter','cross_doc_parent','_r6_pred']:exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual-functions>','exec'),ns)
+p=Path('runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz')
+with gzip.open(p,'rt',encoding='utf-8-sig',newline='') as f:ns['D10']={(r['security_id'],r['field_id'],r['period_key']):r for r in csv.DictReader(f)}
+with (b/'meta_diff.csv').open(encoding='utf-8-sig',newline='') as f:rows=[r for r in csv.DictReader(f) if (r['security_id'],r['field_id'],r['period_key'])==('SH:600060','FIN.NPDEDT.SQ','20260630')]
+print('F recompute',[(r['meta_field'],r['status_B'],ns['_r6_pred'](r),ns['cross_doc_parent'](r['security_id'],r['field_id'],r['period_key'])) for r in rows])
+with (b/'sampling_keys_diff.csv').open(encoding='utf-8-sig',newline='') as f:print('F diff',[(r['key'],r['exit_code']) for r in csv.DictReader(f) if r['status']=='REMOVED'])
+with (b/'sampling_v5.csv').open(encoding='utf-8-sig',newline='') as f:
+ for r in csv.DictReader(f):
+  if r['risk_type'].startswith('R6'):print('F explanation',{k:v for k,v in r.items() if k in ['security_id','located_conclusion','parent_amount_located','parent_orig_verified','reason','finding'] or ('parent' in k)})
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ exited 1 in 2110ms:
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+  File "<actual-functions>", line 775, in _r6_pred
+  File "<actual-functions>", line 87, in cross_doc_parent
+  File "<actual-functions>", line 78, in prev_quarter
+NameError: name 'QMAP' is not defined
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+import ast,csv,gzip,sys,json
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5').resolve();sys.path.insert(0,str(b));import evidence_scope as es
+s=(b/'sampling_v5.py').read_text(encoding='utf-8');t=ast.parse(s);ns={'es':es}
+for n in t.body:
+ if (isinstance(n,ast.FunctionDef) and n.name in ['prev_quarter','cross_doc_parent','_r6_pred']) or (isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id=='QMAP' for x in n.targets)):exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual-functions>','exec'),ns)
+with gzip.open('runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz','rt',encoding='utf-8-sig',newline='') as f:ns['D10']={(r['security_id'],r['field_id'],r['period_key']):r for r in csv.DictReader(f)}
+with (b/'meta_diff.csv').open(encoding='utf-8-sig',newline='') as f:rows=[r for r in csv.DictReader(f) if (r['security_id'],r['field_id'],r['period_key'])==('SH:600060','FIN.NPDEDT.SQ','20260630')]
+print('F recompute',[(r['meta_field'],r['status_B'],ns['_r6_pred'](r),ns['cross_doc_parent'](r['security_id'],r['field_id'],r['period_key'])) for r in rows])
+with (b/'sampling_keys_diff.csv').open(encoding='utf-8-sig',newline='') as f:print('F diff',[(r['key'],r['exit_code']) for r in csv.DictReader(f) if r['status']=='REMOVED'])
+with (b/'sampling_v5.csv').open(encoding='utf-8-sig',newline='') as f:
+ for r in csv.DictReader(f):
+  if r['risk_type'].startswith('R6'):print('F explanation',{k:v for k,v in r.items() if k in ['security_id','located_conclusion','parent_amount_located','parent_orig_verified','reason','finding'] or ('parent' in k)})
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 2138ms:
+F recompute [('restatement_flag', 'DERIVED_CUMULATIVE_DIFF', True, (True, 'DOC-A3CDBBF8EBFAB948', 'DOC-A667940B7EECDA38'))]
+F diff [('SH:600060|FIN.NPDEDT.SQ|20260630', 'RANK_CUT')]
+F explanation {'security_id': 'BJ:920289', 'parent_cross_doc': 'YES', 'located_conclusion': '', 'parent_p1': 'FIN.NPDEDT.YTD@20260630', 'parent_p2': 'FIN.NPDEDT.YTD@20260331', 'parent_p1_doc': 'DOC-1F57F872802C1839', 'parent_p2_doc': 'DOC-4482EADF01B37A43', 'parent_p1_value': '57296869.6', 'parent_p2_value': '21920543.3', 'parent_p1_status': 'EXTRACTED_KEY_TABLE', 'parent_p2_status': 'EXTRACTED_KEY_TABLE', 'parent_scope_unit_cur': 'CONSOLIDATED/1/CNY | CONSOLIDATED/1/CNY', 'parent_doc_verdict': '否/NA', 'parent_compatible': 'NO', 'parent_p1_locate': 'LOCATED_OK', 'parent_p2_locate': 'LOCATED_ROW_MISMATCH', 'parent_p1_fragment': '扣除非经常性损益后的57,296,869.6050,579,630.7', 'parent_p2_fragment': '21,920,543.3020,456,231.2', 'parent_p1_column': '本期', 'parent_p2_column': '年初至报告期末', 'parent_p1_row': '扣除非经常性损益后的', 'parent_p2_row': '营业收入141,048,678.83归属于挂牌公司股东的净利润归属于挂牌公司股东的扣除非经', 'parent_p1_unit': '元(unit_scale=1)|原件表头=单位：元|AGREE', 'parent_p2_unit': '元(unit_scale=1)|原件表头=单位：元|AGREE', 'parent_p1_version': 'ORIGINAL(原件未见调整前后列标记)', 'parent_p2_version': 'ORIGINAL(原件未见调整前后列标记)', 'parent_same_version_used': 'YES', 'parent_same_adopted_doc': 'NO_RECORD', 'parent_compat_gap': 'NO_VERIFICATION_RECORD', 'parent_compat_conclusion': '两父实际累计父数已在原件按金额定位并确认目标行列（p.10 / p.3）；定位与行列确认都不构成兼容已证，兼容性仍须由 parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）', 'parent_scope_fields': 'PARENT_OK / PARENT_OK', 'parent_amount_located': 'ONE', 'parent_orig_verified': 'ONE'}
+F explanation {'security_id': 'SH:600143', 'parent_cross_doc': 'YES', 'located_conclusion': '', 'parent_p1': 'FIN.NPP.YTD@20260630', 'parent_p2': 'FIN.NPP.YTD@20260331', 'parent_p1_doc': 'DOC-C35D58ED7015A693', 'parent_p2_doc': 'DOC-0698A29C3D2FDCBC', 'parent_p1_value': '684956197.48', 'parent_p2_value': '305137598.84', 'parent_p1_status': 'EXTRACTED', 'parent_p2_status': 'EXTRACTED', 'parent_scope_unit_cur': 'CONSOLIDATED/1/CNY | CONSOLIDATED/1/CNY', 'parent_doc_verdict': '否/NA', 'parent_compatible': 'NO', 'parent_p1_locate': 'LOCATED_OK', 'parent_p2_locate': 'LOCATED_ROW_MISMATCH', 'parent_p1_fragment': '归属于上市公司股东的净利润684,956,197.48585,346,923.', 'parent_p2_fragment': '305,137,598.84246,635,742.', 'parent_p1_column': '本报告期', 'parent_p2_column': '本报告期', 'parent_p1_row': '归属于上市公司股东的净利润', 'parent_p2_row': '营业收入15,589,692,270.51利润总额归属于上市公司股东的', 'parent_p1_unit': '元(unit_scale=1)|原件表头=单位：元|AGREE', 'parent_p2_unit': '元(unit_scale=1)|原件表头=单位：元|AGREE', 'parent_p1_version': 'ORIGINAL(原件未见调整前后列标记)', 'parent_p2_version': 'ORIGINAL(原件未见调整前后列标记)', 'parent_same_version_used': 'YES', 'parent_same_adopted_doc': 'NO_RECORD', 'parent_compat_gap': 'NO_VERIFICATION_RECORD', 'parent_compat_conclusion': '两父实际累计父数已在原件按金额定位并确认目标行列（p.6 / p.1）；定位与行列确认都不构成兼容已证，兼容性仍须由 parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）', 'parent_scope_fields': 'PARENT_OK / PARENT_OK', 'parent_amount_located': 'ONE', 'parent_orig_verified': 'ONE'}
+F explanation {'security_id': 'SH:600008', 'parent_cross_doc': 'YES', 'located_conclusion': '', 'parent_p1': 'FIN.NPDEDT.YTD@20260630', 'parent_p2': 'FIN.NPDEDT.YTD@20260331', 'parent_p1_doc': 'DOC-475522DEF547BF6D', 'parent_p2_doc': 'DOC-122629CD621AAFCA', 'parent_p1_value': '818989707.54', 'parent_p2_value': '409721894.04', 'parent_p1_status': 'EXTRACTED_KEY_TABLE', 'parent_p2_status': 'EXTRACTED_KEY_TABLE', 'parent_scope_unit_cur': 'CONSOLIDATED/1/CNY | CONSOLIDATED/1/CNY', 'parent_doc_verdict': '否/NA', 'parent_compatible': 'NO', 'parent_p1_locate': 'LOCATED_ROW_MISMATCH', 'parent_p2_locate': 'LOCATED_ROW_MISMATCH', 'parent_p1_fragment': '818,989,707.54875,913,429.', 'parent_p2_fragment': '409,721,894.04377,255,987.', 'parent_p1_column': '本报告期', 'parent_p2_column': '本报告期', 'parent_p1_row': '利润总额归属于上市公司股东的净利润归属于上市公司股东的扣除非经常', 'parent_p2_row': '利润归属于上市公司股东的扣', 'parent_p1_unit': '元(unit_scale=1)|原件表头=单位：元|AGREE', 'parent_p2_unit': '元(unit_scale=1)|原件表头=单位：元|AGREE', 'parent_p1_version': 'ORIGINAL(原件未见调整前后列标记)', 'parent_p2_version': 'ORIGINAL(原件未见调整前后列标记)', 'parent_same_version_used': 'YES', 'parent_same_adopted_doc': 'NO_RECORD', 'parent_compat_gap': 'NO_VERIFICATION_RECORD', 'parent_compat_conclusion': '两父实际累计父数已在原件按金额定位并确认目标行列（p.6 / p.1）；定位与行列确认都不构成兼容已证，兼容性仍须由 parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）', 'parent_scope_fields': 'PARENT_OK / PARENT_OK', 'parent_amount_located': 'NONE', 'parent_orig_verified': 'NONE'}
+
+codex
+600060 的 `_r6_pred` 已独立重算为 True，`RANK_CUT` 归因成立。但抽样 CSV 中，三个 R6 样本的 `parent_compat_conclusion` 仍统一写着“两父实际累计父数已在原件按金额定位并确认目标行列”，与 ONE／ONE／NONE 字段冲突。这一处并未按汇报所称改到位。
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+import ast,sys,re
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5').resolve();sys.path.insert(0,str(b));import parent_verify as pv
+s=(b/'verify_v5.py').read_text(encoding='utf-8');t=ast.parse(s)
+ns={'pv':pv,'_nz':lambda x:re.sub(r'\\s+','',str(x or '')),'_fmt_parent':lambda a,u:a,'review_key':lambda r:'ref','ALLOWED_CONCLUSIONS':{'CONFIRMED_EXPLAINED'},'FIELD_RULES':{'source_page':('SELF_PAGE',)},'_field_support':lambda *a:(True,None)}
+exec(compile(ast.Module(body=[n for n in t.body if isinstance(n,ast.FunctionDef) and n.name=='review_gap'],type_ignores=[]),'<actual-review-gap>','exec'),ns)
+r=dict(security_id='X',field_id='FIN.REV.SQ',period_key='20250630',meta_field='source_page',value_B='2',content_review_ref='ref');ent=dict(r,document_id='DOC',conclusion='CONFIRMED_EXPLAINED',reviewer='independent-agent',review_role='SELF_CHECK',reviewed_at='2026-11-11',judgement_basis='source_page 2 原件核对目标行金额及栏目与目标记录一致，页码为第二页，逐项核查页面行列与数值。',original_value_text='2',original_page='2',value_in_quote='2',evidence_quote='第二页原始引文超过十二个字用于逐字核实')
+ns.update(REVIEWS={('X','FIN.REV.SQ','20250630','source_page'):ent},D10={('X','FIN.REV.SQ','20250630'):{'document_id':'DOC','value_cny':'100','unit_scale':'1'}},pdf_file=lambda *a:Path('mock.pdf'))
+def w(x,y,txt):return (x,y,x+60,y+10,txt,0,0,0)
+for name,words in [('target',[w(100,0,'本期数'),w(0,40,'营业总收入'),w(100,40,'100.00')]),('header',[w(100,0,'100.00'),w(100,20,'本期数'),w(0,60,'营业总收入'),w(100,60,'200.00')]),('no_words',[])]:
+ frag='第2页页眉100.00元。本期数。营业总收入'+('100.00元。' if name=='target' else '200.00元。')+'目标行校验说明'
+ ent['original_fragment']=ns['_nz'](frag);ns['pdf_pages']=lambda *a:['页眉100.00元',ent['original_fragment']];pv.page_words=lambda *a:words
+ print('SELF_PAGE',name,ns['review_gap'](r))
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ exited 1 in 336ms:
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+  File "<actual-review-gap>", line 1424, in review_gap
+  File "C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research\runs\issues\S00\errata_20261111_v5\parent_verify.py", line 403, in column_of_amount_ex
+    rows = rows_of_words(words, y_tol)
+  File "C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research\runs\issues\S00\errata_20261111_v5\parent_verify.py", line 376, in rows_of_words
+    for x0, y0, _x1, _y1, tx in sorted(words, key=lambda w: (w[1], w[0])):
+        ^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 5)
+
+ succeeded in 136057ms:
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+FileNotFoundError: [Errno 2] No usable temporary directory found in ['C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\ZHANGJ~1\\AppData\\Local\\Temp', 'C:\\Users\\zhangjianmei\\AppData\\Local\\Temp', 'C:\\Windows\\Temp', 'c:\\temp', 'c:\\tmp', '\\temp', '\\tmp', 'C:\\Users\\zhangjianmei\\Documents\\ChatGPT\\机器人企业行业拐点研究\\robotics-inflection-research']
+BASE 41 41
+IDEMPOTENCE [('active_issue.json', True, 'ae6f48dd7255734936eb3e610446cd76'), ('review.json', True, '77a678706cc8277ab467c407f8146983')]
+H direct ['CHECKS_NOT_POINTER']
+H full [('C39', 'PASS')]
+RANK count 1
+F corrupt full [('C31', 'PASS', {'rows': 28, 'removed': 1, 'by_status': {'KEPT': 26, 'REMOVED': 1, 'ADDED': 1}, 'removed_exit_code': {'SH:600060|FIN.NPDEDT.SQ|20260630': 'RANK_CUT'}, 'exit_code_selfcheck_ok': True, 'bad': []})]
+D zero RULING_SCOPE_FILE_HASH_MISMATCH RULING_SCOPE_FILE_HASH_MISMATCH
+D missing RULING_SCOPE_FILE_MISSING RULING_SCOPE_FILE_MISSING
+D entryhash RULING_SCOPE_FILE_DISAGREES RULING_SCOPE_FILE_DISAGREES
+D unbound RULING_SCOPE_FILE_UNBOUND RULING_SCOPE_FILE_UNBOUND
+D narrow RULING_KEY_NOT_IN_SCOPE
+C label ???????12????? (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+C label ???????3? (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+C label ???????2 (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+C label ?????100.00? (True, None)
+C label ?????100?? (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+C label ?????12.50% (True, None)
+C label ???????12.00? (True, None)
+C label ??????12.00 (True, None)
+C label ??????12?100.00? (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+C currency ???????? (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+C currency ??????HKD (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+C currency ???????? (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+C currency ????????? (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$OutputEncoding=[System.Text.UTF8Encoding]::new(); $env:PYTHONIOENCODING='"'utf-8'; @'
+import ast,sys,re
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5').resolve();sys.path.insert(0,str(b));import parent_verify as pv
+s=(b/'verify_v5.py').read_text(encoding='utf-8');t=ast.parse(s)
+ns={'pv':pv,'re':re,'_nz':lambda x:re.sub(r'\\s+','',str(x or '')),'_fmt_parent':lambda a,u:a,'review_key':lambda r:'ref','ALLOWED_CONCLUSIONS':{'CONFIRMED_EXPLAINED'},'FIELD_RULES':{'source_page':('SELF_PAGE',)}}
+for n in t.body:
+ if isinstance(n,ast.FunctionDef) and n.name in ['review_gap','_field_support','_as_num','_as_date']:exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual>','exec'),ns)
+for n in t.body:
+ if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id in ['_QUANT','_RE_PAGE_REF','CURRENCY_ALIASES','_LITERAL_LABEL'] for x in n.targets):exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual>','exec'),ns)
+for text in ['营业总收入见第12页附表说明','营业总收入见第3表','营业总收入附表2','营业总收入100.00元','营业总收入100万元','营业总收入12.50%','营业总收入见第12.00页','营业总收入表12.00','营业总收入第12页100.00元']:
+ print('LABEL',text,ns['_field_support']('LITERAL','','营业总收入','1',text,{'meta_field':'evidence_label'}))
+for text in ['记账本位币：港元','记账本位币：HKD','记账本位币：美元','记账本位币：人民币']:
+ print('CURRENCY',text,ns['_field_support']('LITERAL','','CNY','1',text,{'meta_field':'currency'}))
+r=dict(security_id='X',field_id='FIN.REV.SQ',period_key='20250630',meta_field='source_page',value_B='2',content_review_ref='ref');ent=dict(r,document_id='DOC',conclusion='CONFIRMED_EXPLAINED',reviewer='independent-agent',review_role='SELF_CHECK',reviewed_at='2026-11-11',judgement_basis='source_page 2 原件核对目标行金额及栏目与目标记录一致，页码为第二页，逐项核查页面行列与数值。',original_value_text='2',original_page='2',value_in_quote='2',evidence_quote='第二页原始引文超过十二个字用于逐字核实')
+ns.update(REVIEWS={('X','FIN.REV.SQ','20250630','source_page'):ent},D10={('X','FIN.REV.SQ','20250630'):{'document_id':'DOC','value_cny':'100','unit_scale':'1'}},pdf_file=lambda *a:Path('mock.pdf'))
+def w(x,y,txt):return (x,y,x+60,y+10,txt)
+for name,words in [('target',[w(100,0,'本期数'),w(0,40,'营业总收入'),w(100,40,'100.00')]),('header',[w(100,0,'100.00'),w(100,20,'本期数'),w(0,60,'营业总收入'),w(100,60,'200.00')]),('no_words',[])]:
+ frag='第2页页眉100.00元。本期数。营业总收入'+('100.00元。' if name=='target' else '200.00元。')+'目标行校验说明'
+ ent['original_fragment']=ns['_nz'](frag);ns['pdf_pages']=lambda *a:['页眉100.00元',ent['original_fragment']];pv.page_words=lambda *a:words
+ print('SELF_PAGE',name,ns['review_gap'](r))
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 408ms:
+�޷��������͡�������ģʽ��֧�ֺ������͡�
+����λ�� ��:2 �ַ�: 1
++ $OutputEncoding=[System.Text.UTF8Encoding]::new(); $env:PYTHONIOENCOD ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) []��RuntimeException
+    + FullyQualifiedErrorId : CannotCreateTypeConstrainedLanguage
+ 
+LABEL ???????12????? (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+LABEL ???????3? (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+LABEL ???????2 (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+LABEL ?????100.00? (True, None)
+LABEL ?????100?? (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+LABEL ?????12.50% (True, None)
+LABEL ???????12.00? (True, None)
+LABEL ??????12.00 (True, None)
+LABEL ??????12?100.00? (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+CURRENCY ???????? (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+CURRENCY ??????HKD (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+CURRENCY ???????? (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+CURRENCY ????????? (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+SELF_PAGE target None
+SELF_PAGE header REVIEW_SOURCE_COLUMN_NOT_LOCATED
+SELF_PAGE no_words REVIEW_SOURCE_PAGE_NOT_LOCATED
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+
+import ast,sys,re
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5').resolve();sys.path.insert(0,str(b));import parent_verify as pv
+s=(b/'verify_v5.py').read_text(encoding='utf-8');t=ast.parse(s)
+ns={'pv':pv,'re':re,'_nz':lambda x:re.sub(r'\\s+','',str(x or '')),'_fmt_parent':lambda a,u:a,'review_key':lambda r:'ref','ALLOWED_CONCLUSIONS':{'CONFIRMED_EXPLAINED'},'FIELD_RULES':{'source_page':('SELF_PAGE',)}}
+for n in t.body:
+ if isinstance(n,ast.FunctionDef) and n.name in ['review_gap','_field_support','_as_num','_as_date']:exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual>','exec'),ns)
+for n in t.body:
+ if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id in ['_QUANT','_RE_PAGE_REF','CURRENCY_ALIASES','_LITERAL_LABEL'] for x in n.targets):exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual>','exec'),ns)
+for text in ['\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u89c1\\u7b2c12\\u9875\\u9644\\u8868\\u8bf4\\u660e','\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u89c1\\u7b2c3\\u8868','\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u9644\\u88682','\\u8425\\u4e1a\\u603b\\u6536\\u5165100.00\\u5143','\\u8425\\u4e1a\\u603b\\u6536\\u5165100\\u4e07\\u5143','\\u8425\\u4e1a\\u603b\\u6536\\u516512.50%','\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u89c1\\u7b2c12.00\\u9875','\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u886812.00','\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u7b2c12\\u9875100.00\\u5143']:
+ print('LABEL',text,ns['_field_support']('LITERAL','','\\u8425\\u4e1a\\u603b\\u6536\\u5165','1',text,{'meta_field':'evidence_label'}))
+for text in ['\\u8bb0\\u8d26\\u672c\\u4f4d\\u5e01\\uff1a\\u6e2f\\u5143','\\u8bb0\\u8d26\\u672c\\u4f4d\\u5e01\\uff1aHKD','\\u8bb0\\u8d26\\u672c\\u4f4d\\u5e01\\uff1a\\u7f8e\\u5143','\\u8bb0\\u8d26\\u672c\\u4f4d\\u5e01\\uff1a\\u4eba\\u6c11\\u5e01']:
+ print('CURRENCY',text,ns['_field_support']('LITERAL','','CNY','1',text,{'meta_field':'currency'}))
+r=dict(security_id='X',field_id='FIN.REV.SQ',period_key='20250630',meta_field='source_page',value_B='2',content_review_ref='ref');ent=dict(r,document_id='DOC',conclusion='CONFIRMED_EXPLAINED',reviewer='independent-agent',review_role='SELF_CHECK',reviewed_at='2026-11-11',judgement_basis='source_page 2 \\u539f\\u4ef6\\u6838\\u5bf9\\u76ee\\u6807\\u884c\\u91d1\\u989d\\u53ca\\u680f\\u76ee\\u4e0e\\u76ee\\u6807\\u8bb0\\u5f55\\u4e00\\u81f4\\uff0c\\u9875\\u7801\\u4e3a\\u7b2c\\u4e8c\\u9875\\uff0c\\u9010\\u9879\\u6838\\u67e5\\u9875\\u9762\\u884c\\u5217\\u4e0e\\u6570\\u503c\\u3002',original_value_text='2',original_page='2',value_in_quote='2',evidence_quote='\\u7b2c\\u4e8c\\u9875\\u539f\\u59cb\\u5f15\\u6587\\u8d85\\u8fc7\\u5341\\u4e8c\\u4e2a\\u5b57\\u7528\\u4e8e\\u9010\\u5b57\\u6838\\u5b9e')
+ns.update(REVIEWS={('X','FIN.REV.SQ','20250630','source_page'):ent},D10={('X','FIN.REV.SQ','20250630'):{'document_id':'DOC','value_cny':'100','unit_scale':'1'}},pdf_file=lambda *a:Path('mock.pdf'))
+def w(x,y,txt):return (x,y,x+60,y+10,txt)
+for name,words in [('target',[w(100,0,'\\u672c\\u671f\\u6570'),w(0,40,'\\u8425\\u4e1a\\u603b\\u6536\\u5165'),w(100,40,'100.00')]),('header',[w(100,0,'100.00'),w(100,20,'\\u672c\\u671f\\u6570'),w(0,60,'\\u8425\\u4e1a\\u603b\\u6536\\u5165'),w(100,60,'200.00')]),('no_words',[])]:
+ frag='\\u7b2c2\\u9875\\u9875\\u7709100.00\\u5143\\u3002\\u672c\\u671f\\u6570\\u3002\\u8425\\u4e1a\\u603b\\u6536\\u5165'+('100.00\\u5143\\u3002' if name=='target' else '200.00\\u5143\\u3002')+'\\u76ee\\u6807\\u884c\\u6821\\u9a8c\\u8bf4\\u660e'
+ ent['original_fragment']=ns['_nz'](frag);ns['pdf_pages']=lambda *a:['\\u9875\\u7709100.00\\u5143',ent['original_fragment']];pv.page_words=lambda *a:words
+ print('SELF_PAGE',name,ns['review_gap'](r))
+
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 352ms:
+LABEL 营业总收入见第12页附表说明 (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+LABEL 营业总收入见第3表 (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+LABEL 营业总收入附表2 (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+LABEL 营业总收入100.00元 (True, None)
+LABEL 营业总收入100万元 (True, None)
+LABEL 营业总收入12.50% (True, None)
+LABEL 营业总收入见第12.00页 (True, None)
+LABEL 营业总收入表12.00 (True, None)
+LABEL 营业总收入第12页100.00元 (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+CURRENCY 记账本位币：港元 (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+CURRENCY 记账本位币：HKD (False, 'REVIEW_PRINTED_VALUE_NOT_IN_FRAGMENT')
+CURRENCY 记账本位币：美元 (False, 'REVIEW_LITERAL_NOT_BOUND_TO_FIELD')
+CURRENCY 记账本位币：人民币 (True, None)
+SELF_PAGE target None
+SELF_PAGE header REVIEW_SOURCE_COLUMN_NOT_LOCATED
+SELF_PAGE no_words None
+
+codex
+内存注入已确认两处校验漏检：把唯一 REMOVED 行的归因改成 `PREDICATE_FALSE` 后，完整自检的 C31 仍 PASS；把 checks 改回“30 条反例”后，完整自检会先覆盖它，C39 也仍 PASS。另外，SELF_PAGE 有坐标时能排除页眉重复金额，但无坐标时仍会把“页眉金额＋另一行指标名”当作有效定位。
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+
+import sys,json,ast,csv,re
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5').resolve();sys.path.insert(0,str(b));import evidence_scope as es
+base='\\u524d\\u671f\\u5dee\\u9519\\u66f4\\u6b63\\u5bf9\\u671f\\u521d\\u672a\\u5206\\u914d\\u5229\\u6da6\\u5f71\\u54cd0.00\\u5143'
+for tail in ['\\uff0c\\u5176\\u4e2d\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u91d1\\u989d\\u4e3a100.00\\u5143','\\uff0c\\u5176\\u4e2d\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u786e\\u8ba4\\u7684\\u91d1\\u989d100.00\\u5143','\\uff0c\\u5176\\u4e2d\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u5408\\u8ba1100.00\\u5143','\\uff0c\\u5f71\\u54cd\\u589e\\u52a0100.00\\u5143','\\uff0c\\u5176\\u4e2d\\u5e94\\u6536\\u8d26\\u6b3e\\u786e\\u8ba4\\u91d1\\u989d\\uff1a 300.00 \\u5143','\\uff0c\\u5176\\u4e2d\\u7814\\u53d1\\u8d39\\u7528\\u5408 \\u8ba1400.00\\u5143','\\uff0c\\u5f71\\u54cd\\u51c0\\u589e\\u52a0100.00\\u5143','\\uff0c\\u5f71\\u54cd\\u5171\\u8ba1100.00\\u5143','\\u5176\\u4e2d\\u8425\\u4e1a\\u603b\\u6536\\u5165100.00\\u5143']:
+ text=base+tail;a=es.analyse(text);print('A',text,repr(a))
+with (b/'sampling_v5.csv').open(encoding='utf-8-sig',newline='') as f:
+ rows=list(csv.DictReader(f))
+ print('R6 wording',[(r['security_id'],r['parent_amount_located'],{k:v for k,v in r.items() if any(w in k for w in ['reason','note','conclusion']) and v}) for r in rows if r['risk_type'].startswith('R6')])
+# Evaluate actual C24 gate with injected missing / unexpected / not exercised / enum failure.
+s=(b/'verify_v5.py').read_text(encoding='utf-8');t=ast.parse(s)
+gate=next(n.value.args[2] for n in t.body if isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Name) and n.value.func.id=='add' and n.value.args and isinstance(n.value.args[0],ast.Constant) and n.value.args[0].value=='C24')
+ns=dict(leak=[],ctrl_ok=True,unit_path_ok=True,reason_mismatch={},key_gap=[],key_extra=[],not_exercised={},inj={'x':(True,'expected')},enum_ok=True)
+expr=compile(ast.Expression(gate),'<C24-production-gate>','eval');print('G baseline',eval(expr,ns))
+for k,val in [('key_gap',['missing']),('key_extra',['extra']),('not_exercised',{'x':True}),('enum_ok',False),('reason_mismatch',{'x':'wrong'})]:
+ z=dict(ns);z[k]=val;print('G',k,eval(expr,z))
+
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 425ms:
+A 前期差错更正对期初未分配利润影响0.00元，其中营业总收入金额为100.00元 Polarity(excluded=set(), affirmed=set(), scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+A 前期差错更正对期初未分配利润影响0.00元，其中营业总收入确认的金额100.00元 Polarity(excluded=set(), affirmed=set(), scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+A 前期差错更正对期初未分配利润影响0.00元，其中营业总收入合计100.00元 Polarity(excluded=set(), affirmed=set(), scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+A 前期差错更正对期初未分配利润影响0.00元，影响增加100.00元 Polarity(excluded=set(), affirmed={'ERRATA'}, scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+A 前期差错更正对期初未分配利润影响0.00元，其中应收账款确认金额： 300.00 元 Polarity(excluded=set(), affirmed=set(), scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+A 前期差错更正对期初未分配利润影响0.00元，其中研发费用合 计400.00元 Polarity(excluded=set(), affirmed=set(), scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+A 前期差错更正对期初未分配利润影响0.00元，影响净增加100.00元 Polarity(excluded=set(), affirmed=set(), scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+A 前期差错更正对期初未分配利润影响0.00元，影响共计100.00元 Polarity(excluded=set(), affirmed={'ERRATA'}, scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+A 前期差错更正对期初未分配利润影响0.00元其中营业总收入100.00元 Polarity(excluded=set(), affirmed={'ERRATA'}, scoped={'ERRATA'}, mentioned={'ERRATA'}, conflict=set())
+R6 wording [('BJ:920289', 'ONE', {'parent_compat_conclusion': '两父实际累计父数已在原件按金额定位并确认目标行列（p.10 / p.3）；定位与行列确认都不构成兼容已证，兼容性仍须由 parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）'}), ('SH:600143', 'ONE', {'parent_compat_conclusion': '两父实际累计父数已在原件按金额定位并确认目标行列（p.6 / p.1）；定位与行列确认都不构成兼容已证，兼容性仍须由 parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）'}), ('SH:600008', 'NONE', {'parent_compat_conclusion': '两父实际累计父数已在原件按金额定位并确认目标行列（p.6 / p.1）；定位与行列确认都不构成兼容已证，兼容性仍须由 parent_verifications.csv 逐项登记（文档/期间/栏目/调整版本/口径/引文含父数）'})]
+G baseline True
+G key_gap False
+G key_extra False
+G not_exercised False
+G enum_ok False
+G reason_mismatch False
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+
+import ast,sys,re,json
+from pathlib import Path
+b=Path('runs/issues/S00/errata_20261111_v5').resolve();sys.path.insert(0,str(b));import parent_verify as pv
+key=('X','FIN.REV.SQ','20250630')
+for d in [200,500]:
+ prefix='2025\\u4e0a\\u534a\\u5e74\\u8425\\u4e1a\\u6536\\u5165100\\u5143\\uff0c';at=prefix.index('\\u8425\\u4e1a\\u6536\\u5165');q=prefix+'\\u7532'*(at+d-len(prefix))+'\\u5206\\u5b63\\u5ea6\\u4e3b\\u8981\\u6570\\u636e'
+ print('E exact distance',q.index('\\u5206\\u5b63\\u5ea6')-q.index('\\u8425\\u4e1a\\u6536\\u5165'),pv.dim_window_ok(q,key,'QUARTERLY_TABLE_PROVENANCE'))
+s=(b/'verify_v5.py').read_text(encoding='utf-8');t=ast.parse(s)
+ns={'json':json,'re':re}
+for n in t.body:
+ if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id in ['SELF_CHECK_VERSION','_LEGACY_SAMPLING_KEYS','_RE_LEGACY_COUNT'] for x in n.targets):exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual>','exec'),ns)
+ns['_SAMP_SUM']=json.loads((b/'sampling_v5.json').read_text(encoding='utf-8'))
+n=next(n for n in t.body if isinstance(n,ast.FunctionDef) and n.name=='status_problems');exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual>','exec'),ns)
+st=json.loads(Path('data/active_issue.json').read_text(encoding='utf-8'));print('H current',ns['status_problems'](st));st['s00_errata']['checks']='V10\\uff1a30 \\u6761\\u53cd\\u4f8b\\uff1bC37 27 \\u73af\\uff1bC14 9 \\u79cd';print('H exact injected',st['s00_errata']['checks'],ns['status_problems'](st))
+
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 342ms:
+E exact distance 200 False
+E exact distance 500 False
+H current []
+H exact injected V10：30 条反例；C37 27 环；C14 9 种 ['CHECKS_NOT_POINTER']
+
+exec
+"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$env:PYTHONIOENCODING='"'utf-8'; @'
+
+import ast,re
+from pathlib import Path
+s=Path('runs/issues/S00/errata_20261111_v5/verify_v5.py').read_text(encoding='utf-8');t=ast.parse(s);ns={'re':re,'_nz':lambda x:re.sub(r'\\s+','',str(x or ''))}
+for n in t.body:
+ if (isinstance(n,ast.FunctionDef) and n.name=='_field_support') or (isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id in ['_QUANT','_RE_PAGE_REF','CURRENCY_ALIASES','_LITERAL_LABEL'] for x in n.targets)):exec(compile(ast.Module(body=[n],type_ignores=[]),'<actual>','exec'),ns)
+for q in ['\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u89c1\\u88681.2','\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u53c2\\u89c1\\u88683.1','\\u8425\\u4e1a\\u603b\\u6536\\u5165\\u53c2\\u89c112.1\\u8282']:
+ print(q,ns['_field_support']('LITERAL','','\\u8425\\u4e1a\\u603b\\u6536\\u5165','1',q,{'meta_field':'evidence_label'}))
+
+'@ | python -B -S -" in C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+ succeeded in 303ms:
+营业总收入见表1.2 (True, None)
+营业总收入参见表3.1 (True, None)
+营业总收入参见12.1节 (True, None)
+
+codex
+**裁决：RETURN_FOR_REWORK。**
+
+本轮独立内存复跑为 **41/41 PASS**，但仍复现了漏判、错误放行和自检漏检。逐项结论：**A/B/C/F/H 不通过；D/E/G 通过。**
+
+全程未修改仓库。完整自检的写入均重定向到内存；幂等性结论限于该环境中的输出字节，不冒称完成了磁盘写入测试。
+
+**A．极性「新主语」——不通过**
+
+**核实方式：**直接调用 `evidence_scope.analyse()`，执行指定四句及五个变体，并检查 `tgt` 分支和回放记录。
+
+**结果：**
+
+- 指定前三句均无 `ERRATA` 肯定；第四句“影响增加100.00元”有肯定，原四条修复成立。
+- 自造末段“其中应收账款确认金额： 300.00 元”“其中研发费用合 计400.00元”均正确拒绝继承。
+- “影响共计100.00元”正确保留肯定。
+- 以下续写仍被错误拒绝：
+
+```text
+前期差错更正对期初未分配利润影响0.00元，影响净增加100.00元
+```
+
+实测 `affirmed=set()`；应包含 `ERRATA`。“净增加”仍暴露闭集剥词的漏词问题。
+
+另一个反例：
+
+```text
+前期差错更正对期初未分配利润影响0.00元其中营业总收入100.00元
+```
+
+实测 `affirmed={'ERRATA'}`。移除逗号后，无关项目金额又成为差错更正的肯定依据。
+
+`tgt` 确实没有 `new_subj`。保留同分句原因直绑可以是一种设计选择，但“同分句里金额无论属于哪个项目都能证明事件发生”的理由不成立；必须继续区分金额所属项目。
+
+回放记录为 **88 次调用、0 次判真、两种中心语各44次**，两者均为原因短语。记录内部一致，但没有覆盖真实“新主语”正判样本，只支持该开关对这批存量结果无影响。
+
+**判定：**四条原反例通过，整体仍不通过。“有意不加”如实描述了代码，却未解决其正确性问题。
+
+**B．父输入栏目——不通过**
+
+**核实方式：**构造重复金额词坐标、目标行标签、空词数组，并直接测试栏目等价关系。
+
+**结果：**
+
+- 无目标行标签、同页两个相同金额：返回 `AMBIGUOUS`，不再取第一个。
+- 加目标标签后，能绑定目标行。
+- 空词数组返回 `NO_WORDS`；完整自检中对应待回读分支通过。
+- “本期发生额／本期数”返回等价。
+
+但以下两组也返回等价：
+
+```text
+上年同期 ／ 上期
+本年累计 ／ 本期数
+```
+
+这会混同同比期间与紧邻上一期间，也可能混同累计数与单季度数。例如同一中报同时列出“本报告期”和“年初至报告期末”，不能仅凭归入 `CURRENT` 就互认。
+
+**判定：**重复金额和待回读修复成立；期间语义类过宽，仍可能错误放行不同列。
+
+**C．C24 文本字段与页码——不通过**
+
+**核实方式：**直接测试 `_field_support()`；用有效登记夹具调用实际 `review_gap()`，构造页眉重复金额、目标行金额不同的页面。
+
+**结果：**
+
+三条普通索引均拒绝：
+
+```text
+营业总收入见第12页附表说明
+营业总收入见第3表
+营业总收入附表2
+```
+
+三条合法数量均接受：
+
+```text
+营业总收入100.00元
+营业总收入100万元
+营业总收入12.50%
+```
+
+但以下索引全部被当作数量接受：
+
+```text
+营业总收入见表1.2
+营业总收入参见表3.1
+营业总收入参见12.1节
+```
+
+小数形式的表号、章节号仍绕过 `_RE_PAGE_REF`。
+
+SELF_PAGE 实测：
+
+| 页面构造 | 实际结果 |
+|---|---|
+| 第1页重复金额，第2页目标行正确金额及列头 | 接受，原问题已修 |
+| 登记页只有页眉100.00，目标行实际为200.00，有坐标 | 拒绝 |
+| 相同错误页面，但词坐标为空、页面文本仍可读 | **接受** |
+
+最后一种退化路径仅检查同页存在指标名和金额，仍未绑定目标行。取词失败不能成为降低定位要求的依据。
+
+币种测试中，CNY 对人民币接受，对 HKD、港元、美元均拒绝，受控映射修复成立。
+
+**判定：**币种通过；数量索引识别和无坐标 SELF_PAGE 路径仍不通过。
+
+**D．C14 裁决适用范围——通过**
+
+**核实方式：**在内存中分别修改真实清单元数据、登记条目及允许键，调用实际函数。
+
+**结果：**
+
+| 注入 | 实际拒绝原因 |
+|---|---|
+| 清单哈希改为64个0 | `RULING_SCOPE_FILE_HASH_MISMATCH` |
+| 清单文件指向不存在路径 | `RULING_SCOPE_FILE_MISSING` |
+| 登记条目哈希改掉 | `RULING_SCOPE_FILE_DISAGREES` |
+| 清单文件绑定留空 | `RULING_SCOPE_FILE_UNBOUND` |
+| 同 section 的允许键改为另一个字段 | `RULING_KEY_NOT_IN_SCOPE` |
+
+`scope_allowed_key_narrowed` 确实执行了白名单拒绝，没有绕过。
+
+当前清单只有一个 section，因此“换成另一个**现有已登记** section”在当前数据中不可构造，这个解释成立。缩窄允许键能证明白名单起作用，但不能声称已经覆盖未来多 section 的交叉错配。
+
+**判定：**当前要求通过，测试边界应保留。
+
+**E．C38 窗口——通过**
+
+**核实方式：**检查生产调用关系，并直接构造近距离、远距离及页脚输入。
+
+**结果：**
+
+- `scope_dims()` 实际调用共享的 `parent_verify.dim_window_ok()`，下沉属实。
+- 近距离“2025上半年营业收入100元，分季度主要数据”接受。
+- 将载体词与指标名起点距离精确设为 **200、500 字**，均拒绝。
+- “2025上半年营业收入100元。页脚注：分季度主要数据”拒绝。
+
+**判定：**本轮指定的跨度和页脚问题通过。
+
+**F．抽样键集退出归因——不通过**
+
+**核实方式：**读取实际 diff，加载实际累计台账并执行生产 `_r6_pred`；再篡改内存 CSV，完整复跑自检；逐字核对 R6 说明。
+
+**结果：**
+
+600060 的记录确为 `RANK_CUT`。独立重算：
+
+```text
+_r6_pred = True
+父文档：
+DOC-A3CDBBF8EBFAB948
+DOC-A667940B7EECDA38
+```
+
+原错误归因已改正。
+
+但仅将该 REMOVED 行的 `exit_code` 改为 `PREDICATE_FALSE`，保留 JSON 自检摘要，完整复跑结果仍是：
+
+```text
+C31 PASS
+exit_code_selfcheck_ok = True
+bad = []
+```
+
+生成阶段有重算逻辑，C31 却依赖先前保存的摘要，没有核验当前 CSV 的归因与谓词是否一致。
+
+R6 说明也未全部改完：
+
+| 公司 | `parent_amount_located` | `parent_compat_conclusion` |
+|---|---|---|
+| 920289 | ONE | 仍称两父均定位并确认目标行列 |
+| 600143 | ONE | 同上 |
+| 600008 | NONE | 同上 |
+
+**判定：**600060 归因修复成立；C31 防错和逐字对应均未完成。汇报“已按 BOTH/ONE/NONE 对应”的说法被实际 CSV 否定。
+
+**G．注入断言——通过**
+
+**核实方式：**完整自检复跑，并执行生产 C24 的实际 PASS 表达式，分别注入缺键、多键、未执行项、错误原因和枚举失败。
+
+**结果：**
+
+正常对照通过；上述五类修改均使 PASS 表达式返回 False。结合 `_leak_with` 的显式登记表控制，上一轮已通过的约束仍成立。
+
+**判定：**保持通过；这不代表新增的所有检查都已纳入有效防错链。
+
+**H．状态文件单一写者——不通过**
+
+**核实方式：**检查现状，连续两次完整内存复跑；注入旧 checks 字符串，分别运行检查函数和完整自检。
+
+**结果：**
+
+- 当前指定三个块已移除旧反例数、环数、伪造种数摘要；仍保留自检总数、通过数，并非字面上的“只有指针与版本号”。
+- 两次完整复跑生成的 `active_issue.json`、`review.json` 均逐字节相同，内存环境幂等性成立。
+- 精确注入：
+
+```text
+V10：30 条反例；C37 27 环；C14 9 种
+```
+
+直接调用 `status_problems()` 返回 `CHECKS_NOT_POINTER`。
+
+但完整自检会先执行 `write_status()` 覆盖错误，再运行 C39，结果仍为 **PASS**。因此，检查函数能识别坏输入，整条检查链却不能报告这次回退。
+
+**判定：**写入收敛和幂等修复成立；C39 未达到要求的回退拦截效果。
+
+**对第10节口径更正的结论：**撤回“从未触发”、修正600060归因、承认600143为ONE，均有事实依据；计数更新也能复现。“回放只能说明无影响”和“当前不存在另一个已登记section”属于合理限定。相反，`tgt` 的解释尚不能支持其设计正确，R6“说明已逐字对应”并未落实，C39“能防回退”也被完整复跑反例否定。
+tokens used
+85,518
+**裁决：RETURN_FOR_REWORK。**
+
+本轮独立内存复跑为 **41/41 PASS**，但仍复现了漏判、错误放行和自检漏检。逐项结论：**A/B/C/F/H 不通过；D/E/G 通过。**
+
+全程未修改仓库。完整自检的写入均重定向到内存；幂等性结论限于该环境中的输出字节，不冒称完成了磁盘写入测试。
+
+**A．极性「新主语」——不通过**
+
+**核实方式：**直接调用 `evidence_scope.analyse()`，执行指定四句及五个变体，并检查 `tgt` 分支和回放记录。
+
+**结果：**
+
+- 指定前三句均无 `ERRATA` 肯定；第四句“影响增加100.00元”有肯定，原四条修复成立。
+- 自造末段“其中应收账款确认金额： 300.00 元”“其中研发费用合 计400.00元”均正确拒绝继承。
+- “影响共计100.00元”正确保留肯定。
+- 以下续写仍被错误拒绝：
+
+```text
+前期差错更正对期初未分配利润影响0.00元，影响净增加100.00元
+```
+
+实测 `affirmed=set()`；应包含 `ERRATA`。“净增加”仍暴露闭集剥词的漏词问题。
+
+另一个反例：
+
+```text
+前期差错更正对期初未分配利润影响0.00元其中营业总收入100.00元
+```
+
+实测 `affirmed={'ERRATA'}`。移除逗号后，无关项目金额又成为差错更正的肯定依据。
+
+`tgt` 确实没有 `new_subj`。保留同分句原因直绑可以是一种设计选择，但“同分句里金额无论属于哪个项目都能证明事件发生”的理由不成立；必须继续区分金额所属项目。
+
+回放记录为 **88 次调用、0 次判真、两种中心语各44次**，两者均为原因短语。记录内部一致，但没有覆盖真实“新主语”正判样本，只支持该开关对这批存量结果无影响。
+
+**判定：**四条原反例通过，整体仍不通过。“有意不加”如实描述了代码，却未解决其正确性问题。
+
+**B．父输入栏目——不通过**
+
+**核实方式：**构造重复金额词坐标、目标行标签、空词数组，并直接测试栏目等价关系。
+
+**结果：**
+
+- 无目标行标签、同页两个相同金额：返回 `AMBIGUOUS`，不再取第一个。
+- 加目标标签后，能绑定目标行。
+- 空词数组返回 `NO_WORDS`；完整自检中对应待回读分支通过。
+- “本期发生额／本期数”返回等价。
+
+但以下两组也返回等价：
+
+```text
+上年同期 ／ 上期
+本年累计 ／ 本期数
+```
+
+这会混同同比期间与紧邻上一期间，也可能混同累计数与单季度数。例如同一中报同时列出“本报告期”和“年初至报告期末”，不能仅凭归入 `CURRENT` 就互认。
+
+**判定：**重复金额和待回读修复成立；期间语义类过宽，仍可能错误放行不同列。
+
+**C．C24 文本字段与页码——不通过**
+
+**核实方式：**直接测试 `_field_support()`；用有效登记夹具调用实际 `review_gap()`，构造页眉重复金额、目标行金额不同的页面。
+
+**结果：**
+
+三条普通索引均拒绝：
+
+```text
+营业总收入见第12页附表说明
+营业总收入见第3表
+营业总收入附表2
+```
+
+三条合法数量均接受：
+
+```text
+营业总收入100.00元
+营业总收入100万元
+营业总收入12.50%
+```
+
+但以下索引全部被当作数量接受：
+
+```text
+营业总收入见表1.2
+营业总收入参见表3.1
+营业总收入参见12.1节
+```
+
+小数形式的表号、章节号仍绕过 `_RE_PAGE_REF`。
+
+SELF_PAGE 实测：
+
+| 页面构造 | 实际结果 |
+|---|---|
+| 第1页重复金额，第2页目标行正确金额及列头 | 接受，原问题已修 |
+| 登记页只有页眉100.00，目标行实际为200.00，有坐标 | 拒绝 |
+| 相同错误页面，但词坐标为空、页面文本仍可读 | **接受** |
+
+最后一种退化路径仅检查同页存在指标名和金额，仍未绑定目标行。取词失败不能成为降低定位要求的依据。
+
+币种测试中，CNY 对人民币接受，对 HKD、港元、美元均拒绝，受控映射修复成立。
+
+**判定：**币种通过；数量索引识别和无坐标 SELF_PAGE 路径仍不通过。
+
+**D．C14 裁决适用范围——通过**
+
+**核实方式：**在内存中分别修改真实清单元数据、登记条目及允许键，调用实际函数。
+
+**结果：**
+
+| 注入 | 实际拒绝原因 |
+|---|---|
+| 清单哈希改为64个0 | `RULING_SCOPE_FILE_HASH_MISMATCH` |
+| 清单文件指向不存在路径 | `RULING_SCOPE_FILE_MISSING` |
+| 登记条目哈希改掉 | `RULING_SCOPE_FILE_DISAGREES` |
+| 清单文件绑定留空 | `RULING_SCOPE_FILE_UNBOUND` |
+| 同 section 的允许键改为另一个字段 | `RULING_KEY_NOT_IN_SCOPE` |
+
+`scope_allowed_key_narrowed` 确实执行了白名单拒绝，没有绕过。
+
+当前清单只有一个 section，因此“换成另一个**现有已登记** section”在当前数据中不可构造，这个解释成立。缩窄允许键能证明白名单起作用，但不能声称已经覆盖未来多 section 的交叉错配。
+
+**判定：**当前要求通过，测试边界应保留。
+
+**E．C38 窗口——通过**
+
+**核实方式：**检查生产调用关系，并直接构造近距离、远距离及页脚输入。
+
+**结果：**
+
+- `scope_dims()` 实际调用共享的 `parent_verify.dim_window_ok()`，下沉属实。
+- 近距离“2025上半年营业收入100元，分季度主要数据”接受。
+- 将载体词与指标名起点距离精确设为 **200、500 字**，均拒绝。
+- “2025上半年营业收入100元。页脚注：分季度主要数据”拒绝。
+
+**判定：**本轮指定的跨度和页脚问题通过。
+
+**F．抽样键集退出归因——不通过**
+
+**核实方式：**读取实际 diff，加载实际累计台账并执行生产 `_r6_pred`；再篡改内存 CSV，完整复跑自检；逐字核对 R6 说明。
+
+**结果：**
+
+600060 的记录确为 `RANK_CUT`。独立重算：
+
+```text
+_r6_pred = True
+父文档：
+DOC-A3CDBBF8EBFAB948
+DOC-A667940B7EECDA38
+```
+
+原错误归因已改正。
+
+但仅将该 REMOVED 行的 `exit_code` 改为 `PREDICATE_FALSE`，保留 JSON 自检摘要，完整复跑结果仍是：
+
+```text
+C31 PASS
+exit_code_selfcheck_ok = True
+bad = []
+```
+
+生成阶段有重算逻辑，C31 却依赖先前保存的摘要，没有核验当前 CSV 的归因与谓词是否一致。
+
+R6 说明也未全部改完：
+
+| 公司 | `parent_amount_located` | `parent_compat_conclusion` |
+|---|---|---|
+| 920289 | ONE | 仍称两父均定位并确认目标行列 |
+| 600143 | ONE | 同上 |
+| 600008 | NONE | 同上 |
+
+**判定：**600060 归因修复成立；C31 防错和逐字对应均未完成。汇报“已按 BOTH/ONE/NONE 对应”的说法被实际 CSV 否定。
+
+**G．注入断言——通过**
+
+**核实方式：**完整自检复跑，并执行生产 C24 的实际 PASS 表达式，分别注入缺键、多键、未执行项、错误原因和枚举失败。
+
+**结果：**
+
+正常对照通过；上述五类修改均使 PASS 表达式返回 False。结合 `_leak_with` 的显式登记表控制，上一轮已通过的约束仍成立。
+
+**判定：**保持通过；这不代表新增的所有检查都已纳入有效防错链。
+
+**H．状态文件单一写者——不通过**
+
+**核实方式：**检查现状，连续两次完整内存复跑；注入旧 checks 字符串，分别运行检查函数和完整自检。
+
+**结果：**
+
+- 当前指定三个块已移除旧反例数、环数、伪造种数摘要；仍保留自检总数、通过数，并非字面上的“只有指针与版本号”。
+- 两次完整复跑生成的 `active_issue.json`、`review.json` 均逐字节相同，内存环境幂等性成立。
+- 精确注入：
+
+```text
+V10：30 条反例；C37 27 环；C14 9 种
+```
+
+直接调用 `status_problems()` 返回 `CHECKS_NOT_POINTER`。
+
+但完整自检会先执行 `write_status()` 覆盖错误，再运行 C39，结果仍为 **PASS**。因此，检查函数能识别坏输入，整条检查链却不能报告这次回退。
+
+**判定：**写入收敛和幂等修复成立；C39 未达到要求的回退拦截效果。
+
+**对第10节口径更正的结论：**撤回“从未触发”、修正600060归因、承认600143为ONE，均有事实依据；计数更新也能复现。“回放只能说明无影响”和“当前不存在另一个已登记section”属于合理限定。相反，`tgt` 的解释尚不能支持其设计正确，R6“说明已逐字对应”并未落实，C39“能防回退”也被完整复跑反例否定。

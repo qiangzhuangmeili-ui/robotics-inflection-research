@@ -1,0 +1,103 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V15",
+  "round": 18,
+  "review_nature": "INDEPENDENT_RECHECK",
+  "reviewer": "Codex CLI（gpt-6.1-sol, model_reasoning_effort=high, sandbox=read-only）",
+  "reviewed_at": "2026-11-12T20:59:00+08:00",
+  "review_output": "runs/issues/S00/errata_20261111_v5/_codex_out_round18.txt",
+  "review_prompt": "runs/issues/S00/errata_20261111_v5/_codex_prompt_round18.txt",
+  "verdict": "ACCEPTED_WITH_LIMITS",
+  "verdict_quote": "裁决：ACCEPTED_WITH_LIMITS。本轮四项修订闭合第十七轮意见。272 条既有事件证据继续保留，本轮未重新评估其证据本身。",
+  "scope_of_this_verdict": [
+    "第十七轮裁决的四项指定修订（撤销事件闭合 / 重大性命题 / C40 反例 / C17 汇报更正）",
+    "第 4 步批次 A 的事件证据本身：保留但未重新评估"
+  ],
+  "not_covered_by_this_verdict": [
+    "第 4 步批次 B（父输入）未开始",
+    "第 4 步批次 C（分季度表来源 / 半年报权益变动表前期差错更正行）未开始",
+    "第 5 步重算分层与受限表未开始",
+    "44 / 231 / 378 未冻结",
+    "S04 第二轮与 S05 不放行",
+    "语言维度未修（F32）",
+    "_RE_POLICY 仍是裸「会计政策」",
+    "既有 A / C / F 限制继续有效"
+  ],
+  "items": {
+    "revoke_event_closure": {
+      "result": "PASS",
+      "evidence": [
+        "judge() 的 event_ok 参数已删除；ERRATA 覆盖分支与短路放行分支均已撤回，未发现替代入口",
+        "EVENT_VERIFS 仅装载与打印数量，不影响 resolution；facts() 不计事件覆盖；allowed_label() 的 ev 参数与分支、C14 事件分支、C17 白名单均已删除",
+        "RESOLVED_DOC_EVENT_CONFIRMED = 0 条；元数据未闭合 8,674 条",
+        "16 个标签及计数与 Git HEAD 原分布完全一致（未统一换成新标签）：PENDING_SCOPE_LIMITED_METHOD=6373、PENDING_PARENT_COMPATIBILITY=1277、PENDING_WEAK_ASSUMPTION=515",
+        "L2 仍为 44 / 231 / 320 / 81 / 378"
+      ]
+    },
+    "materiality_proposition": {
+      "result": "PASS",
+      "evidence": [
+        "272 条均保留原文：仅覆盖「重大」差错更正，非重大更正不在该项披露范围",
+        "当前处置是停止采用这批证据闭合，不是改写脚注后继续使用"
+      ],
+      "reviewer_ruling": "当前不要求额外增加 limited_by_materiality 列；既有明确限制加上停止参与闭合已足够完成本轮修订。以后恢复采用仍须另审映射和适用范围"
+    },
+    "c40_counterexample": {
+      "result": "PASS",
+      "evidence": [
+        "原登记在内存复现返回 []（无违例）",
+        "反例一 quote=不适用 / option=否 → QUOTE_WITHOUT_STATEMENT_LABEL",
+        "反例二 保留原引文与栏目名、仅改 option=否 → QUOTE_WITHOUT_CHECKED_OPTION:否",
+        "四类注入（quote / option / period / short）各 1 条，分别被 QUOTE_WITHOUT_STATEMENT_LABEL / OPTION_NOT_NO:适用 / PERIOD_NE_REGISTRY / QUOTE_WITHOUT_STATEMENT_LABEL 拒绝",
+        "review.json 记录四类计数均为 1、基线违例为 0"
+      ],
+      "limits": "本轮做的是定向复现，未独立重跑完整 42 项自检"
+    },
+    "c17_report_correction": {
+      "result": "PASS",
+      "evidence": [
+        "review.json round16_fixes 明确写「四处重算同步接入事件」不属实，并明确 C17 只做结构检查",
+        "REPORT.md 明确写 C17 没接入、只做标签白名单结构检查",
+        "未发现当前汇报仍声称 C17 重算事件"
+      ]
+    }
+  },
+  "next_batch_fixed_list": {
+    "nature": "下一批优先父输入；固定名单须按当前快照重建",
+    "hold_only_parent": {
+      "count": 87,
+      "companies": 22,
+      "verification": "本地复算一致：l2_dependency_check.csv 中 HOLD_PENDING_ERRATA（44 家）范围内，meta_diff.csv 的 scope_missing 恰为 PARENT_COMPATIBILITY 的行 = 87 条 / 22 家",
+      "field_mix": {"FIN.OCF.SQ": 25, "FIN.REV.SQ": 22, "FIN.NPP.SQ": 20, "FIN.NPDEDT.SQ": 20},
+      "period_mix": {"20260630": 76, "20250630": 7, "20251231": 4}
+    },
+    "all_unclosed_only_parent": {
+      "count": 1340,
+      "composition": {"PENDING_PARENT_COMPATIBILITY": 1277, "PENDING_SCOPE_LIMITED_METHOD": 63},
+      "correction": "此前汇报的 1,346 条当前快照不支持，已作废；如坚持该数字须列明额外 6 个键及纳入依据"
+    },
+    "schema": {
+      "columns": 27,
+      "reusable": true,
+      "required_groups": {
+        "绑定待核行与实际父输入": ["security_id", "field_id", "period_key", "ytd_field"],
+        "两期身份与实际累计值": ["p1_period", "p2_period", "p1_doc", "p2_doc", "p1_value", "p2_value"],
+        "两期原文定位": ["p1_page", "p2_page", "p1_quote", "p2_quote", "p1_column", "p2_column"],
+        "调整版本与共同口径": ["p1_adjust_version", "p2_adjust_version", "consolidation_scope", "unit_scale", "currency"],
+        "判断依据与复核追溯": ["scope_basis", "version_basis", "conclusion", "review_role", "reviewer", "reviewed_at"]
+      }
+    },
+    "acceptance_rule": [
+      "引文须实际支持指定行、期间表头及数值",
+      "栏目、版本、范围、单位和币种须与实际采用父输入相符",
+      "单纯填满列不能替代核证；不满足时保留待核",
+      "同一执行 AI 自验仍须写 SELF_CHECK"
+    ]
+  },
+  "release": {
+    "release_S04_round2": false,
+    "release_S05": false
+  }
+}

@@ -749,6 +749,12 @@ def judge(rec, doc, status, document_period, row_period, ruled=None, bval="",
     `scope_ok`：该行已取得结构化核证记录的来源维度集合（比较范围 / 季度表来源）。
     第八轮 C 项：这些维度不能靠「文档里提到过」自动覆盖，只能由核证登记表供给；
     未传或为空即视为未核，仍留在 scope_missing。
+
+    第 4 步批次 A 的文档级事件确认（`event_verifications.csv`）**不参与本函数判定**。
+    第十七轮裁决：那句话证明的是「该披露栏目不适用」，不能直接扩展为「该期全部成员
+    字段未被任何差错更正改写」；在证据命题 → 采用对象的映射补齐之前，不得据此闭合。
+    事件事实保留在登记表里，由 C40 单独校验可回读性。
+
     """
     def out(res, req=(), cov=(), mis=(), note="", pol="", lvl=""):
         return {"resolution": res,

@@ -1,0 +1,80 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V15，42/42 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round16.txt
+（ACCEPTED_WITH_LIMITS；B、H、汇报一致性通过；A/C/F 维持）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round17.md（先读这一份）
+
+本轮性质：**不是返工**。裁决放行后进入第 4 步，本轮做批次 A（文档级事件确认）。
+新增了一条**证据类**（`event_verifications.csv`）和一条新判据分支，因此这是方法变更，
+不是修 bug。请按「新方法能否成立」来审，不要只按「上一轮意见是否落实」来审。
+
+## 一、核心争议：文档级一句话能否覆盖字段
+1. 读 `evidence_scope.py` 的 `judge()`，特别是 `event_ok` 那段注释与三处门槛
+   （只覆盖 ERRATA / 只在本行期间 == 文档自身期间 / 不得压过 blocking 冲突）。
+   核实这三条**真的在代码里生效**，不是只写在注释里。
+2. 核实 `event_of()`（`verify_v5.py`）与 `judge()` 用的是同一条期间规则；
+   如果两边规则不一致，会出现「生产放行、自检重算不放行」或反向的假违例。
+3. 抽 3 条 `RESOLVED_DOC_EVENT_CONFIRMED` 记录，打开对应原件页（路径
+   `D:/StockResearchLab/IndustryInflectionLab/robotics_data/collection/originals/<代码>/<document_id>.pdf`），
+   确认 `event_verifications.csv` 里的 `quote` 真的在该页，且勾选项确实是「不适用」/「否」。
+   请自己挑，不要只用汇报里的 `SH:600114`。
+4. **反方向检查**：确认没有把「未定位」也登记成确认。
+   `step4_event_scan.csv` 里 `NOT_FOUND` 46 份、`NOTE_ONLY` 8 份、`NO_ORIGINAL` 3 份、
+   `DOC_HAS_ERRATA` 2 份，这些**不得**出现在 `event_verifications.csv` 里。
+   请逐条比对两张表的 document_id 集合。
+
+## 二、适用范围与残余限制
+5. 判断 `WHOLE_STATEMENT`（该文档该期全部财务报表项目）是否满足第五轮裁决 Q1 的
+   「字段或同质字段组」粒度。若你认为不满足，请指出缺哪一条绑定（表格/行列/金额），
+   并说明这批 3,803 条应该退回什么状态。
+6. 判断年报该项「重大」二字造成的限制是否可接受：
+   该项只披露**重大**会计差错更正，非重大更正不在披露范围。
+   我在 `scope_note` 里如实写了这条限制，并主张「非重大更正是否改写了数值」属于值维度、
+   不属于 `restatement_flag`。请判断这个切分是否成立。
+7. **覆盖范围只有年报**：核实 `event_verifications.csv` 里 272 条的 `period` 是否全部是 `20251231`；
+   核实半年报（50 份）/季报（1 份）确实一份都没登记，且汇报里已如实写明这一点
+   （上一轮抓的就是「说了但没做」的反面——这轮请抓「做了但没说清」）。
+   若你认为半年报那 50 份必须在本批次一并处理，请指出应该用什么证据（我目前认为只有
+   权益变动表的「前期差错更正 0.00」行可用，属表格级核验，应放批次 C）。
+8. 核实比较列/分季度表行确实**没有**被这条证据覆盖（`is_own_period(...) is not True` 时必须不覆盖）。
+   可构造：把某条记录的 `period` 改成与文档期间不同，确认该行不再放行。
+
+## 三、自检是否真有牙
+9. 读 C40（`verify_v5.py` 里 `check_c40` / `_c40_inject`），确认它查的是：
+   引文落在登记页、选项=不适用/否、原因=ERRATA、范围=WHOLE_STATEMENT、期间=登记表期间。
+   核实三类注入（改引文/改选项/改期间）各自被拦住，且 `injections` 三个计数都 > 0。
+10. **自己动手注入一次**：手工把 `event_verifications.csv` 里任意一条的 `quote` 改成
+   一句原文里不存在的话，跑 `python -B verify_v5.py`，确认 C40 FAIL、总数 41/42。
+   改完请还原（或说明你只读、由我复原）。
+11. 核实 C14 / C17 / C26 / C29 四处重算都接入了 `event_of()`：
+    若某一处没接，会出现「台账说已解决、重算说应待核」的假一致，这正是要防的。
+12. 核实「已解决」标签集合与 `allowed_label()` 的分支顺序同生产一致
+    （裁决 → 判定相反 → 极性冲突 → 事件确认 → 弱假设 → …）。
+    顺序不一致会产生假违例，请指出来。
+
+## 四、汇报一致性
+13. 汇报说「HOLD 仍 44 家、没有改善」。读 `l2_dependency_summary.json` 核实
+    `verdicts` 与 `hold_list`，确认这句话是真的，不是谦辞。
+14. 汇报说「未做的三张登记表全空」。读 `content_reviews.csv` / `parent_verifications.csv` /
+    `scope_verifications.csv`，确认都只有表头。
+15. 汇报说扫描器有两个实现错误已修（只看第一个选项、勾选窗口不截断）。
+    读 `step4_event_scan.py`，确认修法就是汇报写的那样；若仍有残留（例如窗口截断只处理
+    中文括号不处理英文括号），请指出。
+
+## 五、请你裁定
+16. **文档级事件确认能否作为 `ERRATA` 维度的覆盖依据**（限自身期间、限 `ERRATA`）？
+17. **「重大」限制**是否可接受为残余限制，还是必须只对「已证明无任何差错更正」的行放行？
+18. **批次顺序**：下一步做父输入（1,340 条）还是分季度表来源（934 + 1,208 条）？
+    我倾向父输入（HOLD 公司里有 87 条卡在这），请确认或纠正。
+
+## 通用要求
+- 凡汇报里写「已改为 X」「已写进 Y」的，请到文件里核。上一轮就是这类「说了没做」被抓。
+- 给出裁决：ACCEPTED / ACCEPTED_WITH_LIMITS / RETURN_FOR_REWORK，逐项列通过与否。
+- 若 RETURN_FOR_REWORK，请给**能区分改前改后的具体输入**（列头字符串、JSON 片段或记录 ID）。
+
+## 读取纪律（请遵守，避免超时）
+- 不要整文件读；用 grep 定位后只读相关行段，单次 ≤120 行。
+- 总读取量控制在 60 KB 以内；verify_v5.py 有 3480+ 行，只读你需要的函数。
+- 运行 python 时加 -B，不要生成 .pyc。
+- 回答控制在 300 行以内，按「一/二/三/四/裁定」分节，每节写「核实方式 / 结果 / 判定」。

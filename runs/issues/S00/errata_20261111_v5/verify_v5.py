@@ -44,9 +44,9 @@ import polarity_cases as pc
 
 ROOT = core.ROOT
 OUT = ROOT / "runs/issues/S00/errata_20261111_v5"
-SELF_CHECK_VERSION = "V14"
+SELF_CHECK_VERSION = "V15"
 # 待复核轮次：状态串与校验条件共用一处，避免两处字面各写一遍再漂移
-RECHECK_ROUND = 16
+RECHECK_ROUND = 18
 
 
 def _cn_num(n):
@@ -64,7 +64,8 @@ def _cn_num(n):
 # 每轮必漂。现在两处都由 RECHECK_ROUND 派生：
 # 本轮改的是「上一轮」的裁决 → 返工轮次 = RECHECK_ROUND − 1；
 # 汇报文件名与本轮待复核轮次同号 → round{RECHECK_ROUND}。
-ROUND_LABEL = "第%s轮返工" % _cn_num(RECHECK_ROUND - 1)
+ROUND_PHASE = "裁决后第 4 步批次 A 返工"
+ROUND_LABEL = "第%s轮%s" % (_cn_num(RECHECK_ROUND - 1), ROUND_PHASE)
 REPORT_NAME = "report_to_codex_round%d.md" % RECHECK_ROUND
 # 复核结论：`None` = 仍在等第 RECHECK_ROUND 轮复核；给出字符串 = 已收到裁决。
 # 状态串由它派生，C39 的期望串也从同一个函数取，不另写一份字面。
@@ -3017,14 +3018,19 @@ def write_status(passed_n, total_n, decision):
     _claim = (
         "S00 勘误 V5 自检 %s 通过；条数与逐项结果只在 "
         "%s/review.json，此处不复述。"
-        "第 4 步批量核证与第 5 步重算分层未做；锚定期回退与上游准入未冻结；"
+        "第 4 步批次 A 只取得证据、未据此闭合任何一条；批次 B–E 与第 5 步重算分层未做；"
+        "锚定期回退与上游准入未冻结；"
         "S04 第二轮与 S05 不放行。"
         % (SELF_CHECK_VERSION, STATUS_REL))
     e["claim_note"] = _claim
     st["claim_note"] = _claim
     e["report_to_codex"] = "%s/%s" % (STATUS_REL, REPORT_NAME)
     st["report_to_codex"] = e["report_to_codex"]
-    st["updated_at"] = "2026-11-13T09:20:00+08:00"
+    # 第十八轮接受后自查：这里原先写死 "2026-11-13T09:20:00+08:00"——一个**未来**日期，
+    # 与同一轮 acceptance_round16.json 里改掉的 reviewed_at 属同一类缺陷：
+    # 状态文件的「更新时间」不取自实际运行时刻，就永远在说谎。改为运行时生成。
+    st["updated_at"] = datetime.datetime.now(
+        datetime.timezone(datetime.timedelta(hours=8))).strftime("%Y-%m-%dT%H:%M:%S+08:00")
     # EOL 与缩进必须与 HEAD 一致（CRLF + indent=1）：否则每次自检都把整个
     # data/active_issue.json 重排一遍，diff 变成「全文件重写」，评审看不到真实改动。
     STATUS_FILE.write_bytes(
@@ -3133,6 +3139,100 @@ _inj_claim_note = status_problems(_inj6)
 _inj_ok = (bool(_inj_checks) and bool(_inj_sampling) and bool(_inj_version)
            and bool(_inj_count_checks) and bool(_inj_count_self)
            and bool(_inj_claim_note))
+# ---------------- C40 文档级事件确认必须可回读且栏目/勾选对应 ----------------
+_P_EV = OUT / "event_verifications.csv"
+_EV_ROWS = []
+if _P_EV.exists():
+    with open(_P_EV, encoding="utf-8-sig", newline="") as _f:
+        _EV_ROWS = list(csv.DictReader(_f))
+
+# 「勾选标记 + 选项词」：第十七轮裁决的反例是 quote="不适用"、option="否"——
+# 短引文既没绑定栏目、也没证明勾的是哪一项。必须要求引文里出现**被勾选的**那个词。
+_RE_CHECKED = re.compile(r"[√☑■✓●]\s*")
+
+
+def check_c40(rows):
+    """每条事件确认都要能回读，且引文本身必须证明「栏目 + 勾选项」。
+
+    只查「登记了什么」，不查「该不该登记」——后者由 C26 重算负责（本版不据事件闭合）。
+    """
+    bad = []
+    for r in rows:
+        doc = r.get("document_id") or ""
+        sec = r.get("security_id") or ""
+        pg = r.get("source_page") or ""
+        q = r.get("quote") or ""
+        stmt = r.get("statement") or ""
+        opt = r.get("option") or ""
+        if opt not in ("不适用", "否"):
+            bad.append((doc, "OPTION_NOT_NO:%s" % opt))
+            continue
+        if (r.get("cause") or "") != es.ERRATA:
+            bad.append((doc, "CAUSE_NOT_ERRATA"))
+            continue
+        if (r.get("scope") or "") != "WHOLE_STATEMENT":
+            bad.append((doc, "SCOPE_UNBOUND"))
+            continue
+        if (doc_period.get(doc) or "") != (r.get("period") or ""):
+            bad.append((doc, "PERIOD_NE_REGISTRY"))
+            continue
+        # 引文必须包含该披露项的栏目名：否则「不适用」三个字可以来自任何地方
+        if not stmt or stmt not in q:
+            bad.append((doc, "QUOTE_WITHOUT_STATEMENT_LABEL"))
+            continue
+        # 引文必须包含「勾选标记 + 登记的那个选项词」：证明勾的正是这一项
+        if not re.search(_RE_CHECKED.pattern + re.escape(opt), q):
+            bad.append((doc, "QUOTE_WITHOUT_CHECKED_OPTION:%s" % opt))
+            continue
+        try:
+            n = int(pg)
+        except (TypeError, ValueError):
+            bad.append((doc, "PAGE_NOT_INT"))
+            continue
+        pages = pdf_pages(sec, doc)
+        if not pages or n < 1 or n > len(pages):
+            bad.append((doc, "PAGE_UNAVAILABLE:%s" % pg))
+            continue
+        if q not in pages[n - 1]:
+            bad.append((doc, "QUOTE_NOT_ON_PAGE:p.%s" % pg))
+    return bad
+
+
+_c40 = check_c40(_EV_ROWS)
+
+
+def _c40_inject():
+    """四类伪造各注入一条，必须都被拦住。
+
+    `short` 是第十七轮裁决给出的实测绕过：只把引文换成「不适用」、选项改成「否」，
+    旧实现返回空违例。现在必须命中 `QUOTE_WITHOUT_STATEMENT_LABEL`。
+    """
+    if not _EV_ROWS:
+        return False, {}
+    base = [dict(r) for r in _EV_ROWS]
+    out = {}
+    cases = [
+        ("quote", lambda r: r.update(quote="本期不存在前期差错更正（注入）")),
+        ("option", lambda r: r.update(option="适用")),
+        ("period", lambda r: r.update(period="19991231")),
+        ("short", lambda r: r.update(quote="不适用", option="否")),
+    ]
+    for name, mut in cases:
+        rows = [dict(r) for r in base]
+        mut(rows[0])
+        out[name] = len(check_c40(rows))
+    return all(v > 0 for v in out.values()), out
+
+
+_c40_inj_ok, _c40_inj = _c40_inject()
+add("C40", "文档级事件确认必须可回读且栏目/勾选对应：引文须含该披露项栏目名、"
+    "须含「勾选标记+登记选项」、选项须为不适用/否、原因须为 ERRATA、范围须为 "
+    "WHOLE_STATEMENT、期间须等于登记表期间、引文须落在登记页；"
+    "改引文/改选项/改期间/短引文换选项四类注入必须各自被拦住",
+    (not _c40) and _c40_inj_ok,
+    {"violations": _c40[:5], "violation_count": len(_c40),
+     "registered": len(_EV_ROWS), "injections": _c40_inj})
+
 add("C39", "状态文件派生字段由自检单一写出：写前回退必须被报出、写后产出必须合规、"
     "检查函数须能拦住旧计数/旧 sampling 字段/旧版本",
     (not _pre_regressions) and (not _post_problems) and _inj_ok,
@@ -3310,11 +3410,36 @@ review = {
         "H｜顶层 `claim_note` 与 `s00_errata.claim_note` **同源**：上一轮把四处指定字段清了却漏了顶层那一份，根因是同一句话生成了两遍。现在 `_claim` 只生成一次、两处赋同一字符串对象；新增 `TOP_CLAIM_NOTE_MISSING` / `TOP_CLAIM_NOTE_KEEPS_COUNT` / `TOP_CLAIM_NOTE_DIVERGES`（第三条是**同源判据**：两处逐字相等），C39 注入 5 → 6 条（新增 `top_claim_note`），`all_caught: true`",
         "汇报一致性｜上一轮声称「窗口不限字数的残余风险已写进 `review.json:open_findings`」**不属实**——文件里仍写「span=24、本轮未改」。已改生成脚本（不是手改 JSON）：新文字承认残余风险方向反转（会多认不会漏认）、仍受上一笔金额结束位置约束、无真实语料检验；另新增一条 `_date_span()` 覆盖范围说明（两侧都解析不出时仍退语义类，只堵住一侧解析出的情形）",
     ],
+    "round16_fixes": [
+        "第 4 步批次 A **只产出证据，不产出闭合**：`event_verifications.csv` 272 条（全部为年报），"
+        "每条带 document_id / 物理页 / 原文片段 / 勾选项 / 原因 / 范围 / 期间，可回读",
+        "第十七轮裁决撤销 3,803 条自动闭合：`evidence_scope.judge()` 已删去事件覆盖与短路分支，"
+        "`build_errata_v5.py` 不再传 `event_ok`；3,803 条按**禁用事件证据后的原判据**逐条重算，"
+        "各自回到原本的待核标签（不统一强塞新标签，`RESOLVED_DOC_EVENT_CONFIRMED` 已不存在于台账）",
+        "撤销的理由：那句话证明的是「该披露栏目不适用」，不能扩展为「该期全部成员字段未被任何"
+        "差错更正改写」。缺的是**证据命题 → 采用对象的可验证映射**：成员字段到实际采用报表及口径"
+        "（合并/母公司、正文/关键指标表）的绑定、派生指标到实际输入字段的覆盖关系。"
+        "原放行集合里含 987 条 `DERIVED`、31 条 `DERIVED_HOLD_UPSTREAM`，不能按「全部财务报表项目」"
+        "认定同质",
+        "「重大」限制的切分不成立：非重大更正若重列了采用数，仍涉及重述元数据，不能统一归到值维度。"
+        "该限制只能作为**受限事件结论**保留，不能靠脚注继续闭合未限定重大性的 `ERRATA`；"
+        "若要缩窄 `restatement_flag` 定义，须单独版本化并重算",
+        "C40 强化：新增两条判据——引文须含该披露项栏目名（`QUOTE_WITHOUT_STATEMENT_LABEL`）、"
+        "须含「勾选标记 + 登记的那个选项词」（`QUOTE_WITHOUT_CHECKED_OPTION`）。注入由 3 类增至 **4 类**，"
+        "新增的 `short`（引文只写「不适用」、选项改「否」）正是裁决给出的实测绕过，旧实现返回空违例，"
+        "现在被拦住",
+        "汇报更正：上一版称「C14/C17/C26/C29 四处重算同步接入事件」**不属实**——C17 只做结构检查"
+        "（标签白名单），并未重算事件是否仍存在或有效。本版撤回该标签后 C17 恢复原状，不再声称接入",
+        "覆盖范围更正：272 条**全部是年报**；半年报 50 份 + 季报 1 份一份未登记——沪深半年报没有"
+        "这一项披露，只有所有者权益变动表的「前期差错更正 0.00」行，属表格级核验，留批次 C",
+        "下一步批次 B 做父输入：HOLD 公司里仅缺 `PARENT_COMPATIBILITY` 的 **87 条**；当前纯父输入"
+        "缺口 **1,346 条**（不再用旧 1,340），名单按当前快照重建",
+    ],
     "open_findings": [
         "NOTE_TRACE_NA 总量 9,954 条 / 631 份文档；其中已解除 8,655 条 / 630 份，剩余 1,299 条 / 1 份仍待核。第 4 步须按「文档版本+具体栏目+实际选项组+覆盖期间」核共同事实再映射成员键，已解除的 8,655 条同样复审",
         "NOTE_RETAINED_ERRATA_ZERO 642 条（自身 563 / 非自身 79）待核实，未凭注记批量放行",
         "SH:600936 FIN.REV.SQ@20250630 的核验证据在原件全文无法定位，属上游核验记录问题",
-        "第 4 步批量核证（文档级事件确认 / 字段级影响确认 / 采用链确认）未开始",
+        "第 4 步只做了批次 A 的**证据采集**（272 份年报的文档级事件确认），**未据此闭合任何一条**：证据命题到采用对象的映射未建立，3,803 条已回退待核；字段级影响确认（`content_reviews`）、采用链确认（`parent_verifications`）、分季度表来源（`scope_verifications`）三张登记表仍为空",
         "第 5 步重算分层与受限表未开始；44/231/378 未锁定",
         "锚定期回退与上游准入的间接依赖未覆盖",
         "`_RE_POLICY` 是裸「会计政策」，正文里的「公司会计政策」也会被认成 POLICY_CHANGE 原因；本轮未改——收紧它会让 1,007 份存量证据的极性发生变化，需单独一轮并重做回放口径",
