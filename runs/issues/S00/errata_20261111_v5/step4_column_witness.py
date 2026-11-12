@@ -101,7 +101,7 @@ def _column_span(grid, x1):
 
 
 def _merge_header_cells(rows, rj, bounds, core=None, drops=None, gap=6.0):
-    """把表头第 `rj` 行的词并成单元格：[(x0, x1, [原始片段...])]。
+    """把表头第 `rj` 行的词并成单元格：[(x0, x1, [原始片段...], attr)]。
 
     第二十一轮裁决 3：合并**必须**带两条前置判据，不能先并无条件再回头检查——
     并进同一格以后，两两比较再也看不到内部冲突。
@@ -115,24 +115,30 @@ def _merge_header_cells(rows, rj, bounds, core=None, drops=None, gap=6.0):
     不并并记 `drops`——上一版正是在这里把 `（4-6月）` 并回 `本报告期`，
     拼出的宽格子中心又落回列范围内，旁证于是也返回 `OK`。
 
-    返回的第三个元素保留**原始片段**，供调用方在合并后仍能追溯是哪两段冲突。
+    第二十三轮裁决 1：**首片段也要判归属**。上一版首片段从没被判过、`cur_attr`
+    默认 `OK`，越界的首片段（金额左邻列的 `（4-6月）`）被后来那段合法片段
+    带进同一格，拼成 `（4-6月）本报告期`。现在每个片段建格时即判 `base`。
+
+    返回的第三个元素保留**原始片段**，供调用方在合并后仍能追溯是哪两段冲突；
+    第四个元素是该格的归属（`OK`/`OTHER`），供 `witness` 在选列时过滤。
     """
     cells = sorted(rows[rj][1], key=lambda c: c[0])
     out = []
     cur = None
     cur_attr = "OK"
     for x0, x1, tx in cells:
+        base = pv._attribution(x0, x1, bounds, None, False) if bounds else "OK"
         joinable = (cur is not None and x0 - cur[1] <= gap
                     and pv._compatible(cur[2], tx))
-        attr = "OK"
+        attr = base
         if joinable and bounds:
             need_core = bool(_HEADER_HINT.search(cur[2]) and _HEADER_HINT.search(tx))
             attr = pv._attribution(x0, x1, bounds, core, need_core)
-            if attr != "OK":
+            if attr == "UNPROVEN":
                 joinable = False
-                if attr == "UNPROVEN" and drops is not None:
+                if drops is not None:
                     drops.append((attr, rows[rj][0], x0, x1, tx))
-            elif cur_attr == "OTHER":
+            elif attr != base or cur_attr != base:
                 joinable = False
         if joinable:
             cur[1] = max(cur[1], x1)
@@ -140,11 +146,11 @@ def _merge_header_cells(rows, rj, bounds, core=None, drops=None, gap=6.0):
             cur[3].append(tx)
         else:
             if cur is not None:
-                out.append((cur[0], cur[1], cur[3]))
+                out.append((cur[0], cur[1], cur[3], cur_attr))
             cur = [x0, x1, tx, [tx]]
-            cur_attr = attr if bounds else "OK"
+            cur_attr = base
     if cur is not None:
-        out.append((cur[0], cur[1], cur[3]))
+        out.append((cur[0], cur[1], cur[3], cur_attr))
     return out
 
 
@@ -156,7 +162,8 @@ def _hmerge_conflict(merged_rows):
     保留下来，才能证明这个格子内部没有互相矛盾的期间。
     """
     for cells in merged_rows:
-        for _x0, _x1, frags in cells:
+        for cell in cells:
+            frags = cell[2]
             for i in range(len(frags)):
                 for j in range(i + 1, len(frags)):
                     if not pv._compatible(frags[i], frags[j]):
@@ -285,7 +292,12 @@ def witness(pdf, page, value, aliases):
         return {"status": "AMBIGUOUS", "column": conf[1], "why": conf[0]}
     parts = []
     for j, cells in zip(hdr, merged_rows):
-        for x0, x1, frags in cells:
+        for cell in cells:
+            x0, x1, frags = cell[0], cell[1], cell[2]
+            # 第二十三轮裁决 3：已知越界（`OTHER`）的格子不得进候选——
+            # 上一版只按格子中心落进 `span` 选列，左邻列的表头照样被选上。
+            if len(cell) > 3 and cell[3] != "OK":
+                continue
             c = (x0 + x1) / 2.0
             if span[0] < c <= span[1]:
                 parts.append((rows[j][0], x0, "".join(frags)))

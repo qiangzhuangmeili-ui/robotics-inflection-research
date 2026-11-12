@@ -44,19 +44,20 @@ FILES = [
     "report_to_codex_round21.md", "rework_round20_result.json",
     "report_to_codex_round22.md", "rework_round21_result.json",
     "report_to_codex_round23.md", "rework_round22_result.json",
+    "report_to_codex_round24.md", "rework_round23_result.json",
     "_codex_prompt_round11.txt", "_codex_prompt_round12.txt",
     "_codex_prompt_round13.txt", "_codex_prompt_round14.txt",
     "_codex_prompt_round15.txt", "_codex_prompt_round16.txt",
     "_codex_prompt_round17.txt", "_codex_prompt_round18.txt",
     "_codex_prompt_round19.txt", "_codex_prompt_round20.txt",
     "_codex_prompt_round21.txt", "_codex_prompt_round22.txt",
-    "_codex_prompt_round23.txt",
+    "_codex_prompt_round23.txt", "_codex_prompt_round24.txt",
     "codex_ruling_round5.md",
     "_codex_out_round10.txt", "_codex_out_round11.txt", "_codex_out_round12.txt",
     "_codex_out_round13.txt", "_codex_out_round14.txt", "_codex_out_round15.txt",
     "_codex_out_round16.txt", "_codex_out_round17.txt", "_codex_out_round18.txt",
     "_codex_out_round19.txt", "_codex_out_round20.txt", "_codex_out_round21.txt",
-    "_codex_out_round22.txt",
+    "_codex_out_round22.txt", "_codex_out_round23.txt",
 ]
 
 rev = json.loads((OUT / "review.json").read_text(encoding="utf-8"))
@@ -67,7 +68,7 @@ if missing:
 man = {
     "version": "ERRATA_V5",
     "self_check_version": rev["self_check_version"],
-    "generated_at": "2026-11-13T23:55:00+08:00",
+    "generated_at": "2026-11-14T23:45:00+08:00",
     "issue": "S00",
     "stage": "ERRATA",
     "nature": "SELF_CHECK",
@@ -91,6 +92,7 @@ man = {
         "第二十轮 RETURN_FOR_REWORK（_codex_out_round20.txt，6 条返工项，不放行批次 C）",
         "第二十一轮 RETURN_FOR_REWORK（_codex_out_round21.txt，4 条返工项，暂不放行批次 C）",
         "第二十二轮 RETURN_FOR_REWORK（_codex_out_round22.txt，3 条返工项，暂不放行批次 C）",
+        "第二十三轮 RETURN_FOR_REWORK（_codex_out_round23.txt，3 条返工项，暂不放行批次 C）",
     ],
     "files": [],
 }

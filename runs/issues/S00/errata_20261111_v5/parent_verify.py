@@ -766,6 +766,12 @@ def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP, bounds=None,
     第二十二轮裁决 2：边界退化（该行这一侧没有相邻数字）时**不得当成无约束**。
     这时改用 `_attribution()` 的 `UNPROVEN` 分支——与 `core` 不相交即拒绝，
     并记进 `drops`，由 `column_of_amount_aligned_ex` 判 `COLUMN_ATTRIBUTION_UNPROVEN`。
+
+    第二十三轮裁决 1：**首片段也要判归属**。上一版只在「要并第二段」时才调
+    `_attribution`，首片段从没被判过、`cur_attr` 直接默认 `OK`，于是越界的首片段
+    （如金额左邻列的 `（4-6月）`）会被后来那段合法片段带进同一格，拼成
+    `（4-6月）本报告期`。现在每个片段（含首片段）建格时即判 `base`，
+    合并要求双方 `base` 与本次 `attr` 三者一致。
     """
     out = []
     for rj in hdr_rows:
@@ -773,19 +779,21 @@ def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP, bounds=None,
         cur = None
         cur_attr = "OK"
         for x0, x1, tx in sorted(cells, key=lambda c: c[0]):
+            # 每个片段先单独判一次归属（need_core=False：此时还没有合并对象）
+            base = _attribution(x0, x1, bounds, None, False) if bounds else "OK"
             joinable = (cur is not None and x0 - cur[1] <= gap
                         and _compatible(cur[2], tx))
-            attr = "OK"
+            attr = base
             if joinable and bounds:
                 need_core = bool(_COL_PERIOD_HINT.search(cur[2])
                                  and _COL_PERIOD_HINT.search(tx))
                 attr = _attribution(x0, x1, bounds, core, need_core)
-                if attr != "OK":
+                if attr == "UNPROVEN":
                     joinable = False
-                    if attr == "UNPROVEN" and drops is not None:
+                    if drops is not None:
                         drops.append((attr, y, x0, x1, tx))
-                elif cur_attr == "OTHER":
-                    # 左侧那段本身已判为邻列：再往里并就是跨列拼接。
+                elif attr != base or cur_attr != base:
+                    # 一在列内、一在列外（含**首片段**在列外）：不得跨列拼
                     joinable = False
             if joinable:
                 cur[1] = max(cur[1], x1)
@@ -794,7 +802,7 @@ def _header_cells(rows, hdr_rows, gap=_CELL_WORD_GAP, bounds=None,
                 if cur is not None:
                     out.append((y, cur[0], cur[1], cur[2]))
                 cur = [x0, x1, tx]
-                cur_attr = attr if bounds else "OK"
+                cur_attr = base
         if cur is not None:
             out.append((y, cur[0], cur[1], cur[2]))
     return out
@@ -817,11 +825,22 @@ def _chain_cells(cells, x_tol=_CELL_X_TOL, bounds=None, core=None, drops=None):
     `本报告期`(y=60) 与右邻列 `（4-6月）`(y=70) 照样被跨行并成一列，
     拼出的整体跨度再掩盖了越界。现在每次跨行合并都重新过 `_attribution()`：
     越界（`OTHER`）不并、边界未知且不相交（`UNPROVEN`）不并并记 `drops`。
+
+    第二十三轮裁决 2：**既有组也要重判**。上一版只在合并时检查「新片段」，
+    建组时的首片段用 `need_core=False` 记为 `OK`，之后即使两段期间语义合并、
+    首片段完全不与金额跨度相交，也照样拼上。现在两段期间语义合并时，
+    对**双方原始片段**逐段重新应用 `need_core=True`；任一段 `UNPROVEN` 即不并、
+    记 `drops`。
+
+    第二十三轮裁决 3：返回**四元组** `(x0, x1, text, attr)`，让最终候选筛选
+    也能看到归属——上一版只按整体跨度重叠筛，已知越界的 `OTHER` 链照样进候选。
+
+    返回：`[(x0, x1, text, attr)]`，`attr ∈ {OK, OTHER}`（组内一致）。
     """
     groups = []
     for y, x0, x1, tx in sorted(cells, key=lambda c: (c[0], c[1])):
         placed = False
-        attr = "OK" if bounds else "OK"
+        attr = "OK"
         if bounds:
             attr = _attribution(x0, x1, bounds, core, False)
         for g in groups:
@@ -829,7 +848,7 @@ def _chain_cells(cells, x_tol=_CELL_X_TOL, bounds=None, core=None, drops=None):
                 continue
             if min(g["x1"], x1) - max(g["x0"], x0) < -x_tol:
                 continue
-            if not _compatible("".join(t for _y, _x, t in g["parts"]), tx):
+            if not _compatible("".join(t for _y, _x, _x1, t in g["parts"]), tx):
                 continue                  # 期间冲突：不是同一列
             if bounds:
                 need_core = bool(_COL_PERIOD_HINT.search(g["text"])
@@ -841,20 +860,32 @@ def _chain_cells(cells, x_tol=_CELL_X_TOL, bounds=None, core=None, drops=None):
                     continue
                 if a2 != attr or (g["attr"] != attr):
                     continue              # 一在列内、一在列外：不得跨列拼
+                if need_core:
+                    # 对双方**原始片段**重判：首片段不能靠建组时的 OK 蒙过去
+                    bad = None
+                    for py, px0, px1, ptx in g["parts"] + [(y, x0, x1, tx)]:
+                        if _attribution(px0, px1, bounds, core, True) == "UNPROVEN":
+                            bad = (py, px0, px1, ptx)
+                            break
+                    if bad is not None:
+                        if drops is not None:
+                            drops.append(("UNPROVEN", bad[0], bad[1], bad[2], bad[3]))
+                        continue
             g["x0"] = min(g["x0"], x0)
             g["x1"] = max(g["x1"], x1)
-            g["parts"].append((y, x0, tx))
+            g["parts"].append((y, x0, x1, tx))
             g["text"] += tx
             g["last_y"] = y
             placed = True
             break
         if not placed:
             groups.append({"x0": x0, "x1": x1, "last_y": y, "attr": attr,
-                           "text": tx, "parts": [(y, x0, tx)]})
+                           "text": tx, "parts": [(y, x0, x1, tx)]})
     out = []
     for g in groups:
-        text = "".join(t for _y, _x, t in sorted(g["parts"], key=lambda p: (p[0], p[1])))
-        out.append((g["x0"], g["x1"], text))
+        text = "".join(t for _y, _x, _x1, t in sorted(g["parts"],
+                                                     key=lambda p: (p[0], p[1])))
+        out.append((g["x0"], g["x1"], text, g["attr"]))
     return out
 
 
@@ -1010,13 +1041,17 @@ def column_of_amount_aligned_ex(words, value, label=None, y_tol=4.0, edge_tol=4.
     # 表头片段中心越界即判为邻列，不得并进本列。
     # 第二十二轮裁决 1/2：`bounds` 与 `core` 一路传进行内合并与跨行合并，
     # `drops` 收集「边界未知、证明不了归属」的期间片段。
+    # 第二十三轮裁决 3：候选筛选还要看**归属**——`_chain_cells` 返回四元组，
+    # 已知越界（`OTHER`）的链不得进候选。上一版只按整体跨度重叠筛，
+    # 于是左邻列的表头（中心已在左边界之外、跨度仍与本列重叠）照样返回 `OK`。
     bounds = _amount_bounds(rows, ri, ax0, ax1)
     core = (ax0, ax1)
     drops = []
     chains = _chain_cells(_header_cells(rows, hdr_rows, bounds=bounds,
                                         core=core, drops=drops),
                           bounds=bounds, core=core, drops=drops)
-    hit = [c for c in chains if c[1] > lo and c[0] < hi]
+    hit = [c for c in chains
+           if c[1] > lo and c[0] < hi and (len(c) < 4 or c[3] == "OK")]
     aw = (ax0, ax1, atxt)
     if not hit:
         return None, atxt, "NO_COLUMN", aw
@@ -1025,11 +1060,14 @@ def column_of_amount_aligned_ex(words, value, label=None, y_tol=4.0, edge_tol=4.
     # 在期间语义上不是一回事，截断就是错判）。
     unproven = [d for d in drops if _COL_PERIOD_HINT.search(_nz(d[4]))]
     period_hit = [c for c in hit if _COL_PERIOD_HINT.search(_nz(c[2]))]
+    # 第二十三轮裁决 2：`UNPROVEN` 先于「多候选歧义」判。被挡下的那段期间片段
+    # 往往自己也在候选带内，两个状态都成立时，报出**原因**（归属证明不了）
+    # 比报 `AMBIGUOUS` 更有用；两者都不放行，但前者能定位到具体片段。
+    if unproven:
+        return None, atxt, "COLUMN_ATTRIBUTION_UNPROVEN", aw
     if len(period_hit) > 1:
         # 多个期间列同时与金额跨度重叠：不允许拼接后择一，交回人工/换页。
         return None, atxt, "AMBIGUOUS", aw
-    if unproven:
-        return None, atxt, "COLUMN_ATTRIBUTION_UNPROVEN", aw
     if period_hit:
         return period_hit[0][2], atxt, "OK", aw
     if len(hit) == 1:

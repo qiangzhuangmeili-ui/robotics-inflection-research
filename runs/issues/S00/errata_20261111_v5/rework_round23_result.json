@@ -1,0 +1,197 @@
+{
+  "issue_key": "S00",
+  "stage": "ERRATA",
+  "version": "ERRATA_V5",
+  "self_check_version": "V21",
+  "round": 24,
+  "nature": "REWORK_RESULT",
+  "answers_ruling": "runs/issues/S00/errata_20261111_v5/_codex_out_round23.txt",
+  "ruling_verdict": "RETURN_FOR_REWORK",
+  "ruling_scope_note": "裁决不认定现有 64 条登记错误；272 条事件证据保持原裁决；暂不放行批次 C。",
+  "reworked_at": "2026-11-14T23:35:00+08:00",
+  "comparison_baselines": {
+    "round20": "4ac102d",
+    "round21": "b4738b2",
+    "round22": "130eef1",
+    "round23": "87eecdd",
+    "note": "本轮逐键比对对象是 87eecdd（第二十三轮）；一律写 SHA，不用 HEAD。"
+  },
+  "scope_discipline": {
+    "changed": "只改判据（归属检查覆盖首片段、既有组、最终候选；状态判定顺序）",
+    "not_changed": [
+      "screen_rules_v2.json 未改",
+      "l2_core.py 依赖映射未改",
+      "S02 上游 results.csv 未改",
+      "43/231/378 仍未冻结",
+      "87 条目标键集与 64 条登记键集未改"
+    ]
+  },
+  "items": [
+    {
+      "id": "R1",
+      "requirement": "修复行内合并的首片段漏检：初始化每个片段即记录归属；合并时核对双方原始片段，不能只检查后来者。反例应排除已知邻列片段，返回 OK + 本报告期",
+      "status": "DONE",
+      "root_cause": "_header_cells 只在「要并第二段」时才调 _attribution；首片段走 cur=[x0,x1,tx] 分支，attr 仍是初值 OK，于是 cur_attr=OK，越界首片段从未被判过",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_header_cells（约 744–800 行）",
+          "what": "每个片段（含首片段）建格时先算 base=_attribution(...,None,False)；合并要求 attr/base/cur_attr 三者一致"
+        },
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "_merge_header_cells（约 103–156 行）",
+          "what": "同一修法；并返回四元组，带出该格归属"
+        },
+        {
+          "file": "selftest_column_rules.py",
+          "anchor": "d7()",
+          "what": "新增 D7 六项，含该反例与旁证同例"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C37",
+          "what": "新增 first_fragment_out_of_bounds 合成探针（走生产路径）"
+        }
+      ],
+      "evidence": {
+        "counterexample_before": "OK / （4-6月）本报告期（生产与旁证都错）",
+        "counterexample_after": "OK / 本报告期",
+        "witness_after": "merged=[(65,96,['（4-6月）'],'OTHER'), (100,138,['本报告期'],'OK')]",
+        "selftest": "D7 首片段越界不得被后一段带进本列 PASS",
+        "c37": "first_fragment_out_of_bounds = True"
+      }
+    },
+    {
+      "id": "R2",
+      "requirement": "修复边界未知时对既有组漏检：两段期间语义合并时，对双方原始片段重新应用 need_core。反例应返回 COLUMN_ATTRIBUTION_UNPROVEN；横向左右倒序也须补测",
+      "status": "DONE",
+      "root_cause": "_chain_cells 建组时用 need_core=False 判归属（首片段记 OK），合并时只重判新片段，旧组没有重新验证",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_chain_cells（约 811–889 行）",
+          "what": "need_core 时对 g['parts'] + 新片段逐段重判 need_core=True；任一段 UNPROVEN 即不并并记 drops；g['parts'] 由 (y,x0,tx) 改为 (y,x0,x1,tx) 以保留片段右边界"
+        },
+        {
+          "file": "parent_verify.py",
+          "anchor": "column_of_amount_aligned_ex（约 1058–1072 行）",
+          "what": "COLUMN_ATTRIBUTION_UNPROVEN 提到 AMBIGUOUS 之前判（两者都不放行，前者能定位片段）"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C37",
+          "what": "新增 existing_group_need_core 探针"
+        }
+      ],
+      "evidence": {
+        "counterexample_before": "OK / 本报告期（4-6月）",
+        "counterexample_after": "COLUMN_ATTRIBUTION_UNPROVEN",
+        "mirror_case": "无左邻数字、首片段 [65,98] 与下方 [100,130] 跨行重叠 2pt → 同样 COLUMN_ATTRIBUTION_UNPROVEN（D7 左右倒序同样不得拼）",
+        "selftest": "D7 既有组首片段也要按 need_core 重判 PASS",
+        "c37": "existing_group_need_core = True"
+      }
+    },
+    {
+      "id": "R3",
+      "requirement": "修复最终候选筛选未应用列归属：最终候选须保留并检查原始片段归属；已知 OTHER 不得返回目标列 OK；补入自测及 C37，并重跑固定 87 键",
+      "status": "DONE",
+      "root_cause": "hit 仍只判整体跨度重叠（c[1] > lo and c[0] < hi），链的归属没有带出来；上一轮汇报里「最终候选也使用同一套 bounds+core」不成立",
+      "changes": [
+        {
+          "file": "parent_verify.py",
+          "anchor": "_chain_cells 返回值 / column_of_amount_aligned_ex（约 1053 行）",
+          "what": "返回四元组 (x0, x1, text, attr)；hit 过滤增加 c[3] == 'OK'（len(c) < 4 仅为兼容旧三元组调用）"
+        },
+        {
+          "file": "step4_column_witness.py",
+          "anchor": "witness（约 299 行）",
+          "what": "选列时 cell[3] != 'OK' 即跳过"
+        },
+        {
+          "file": "verify_v5.py",
+          "anchor": "C37",
+          "what": "新增 final_candidate_filters_other 探针"
+        }
+      ],
+      "evidence": {
+        "counterexample_before": "OK / 2026年半年度（左边界 95，表头中心 87.5 应为 OTHER）",
+        "counterexample_after": "NO_COLUMN",
+        "selftest": "D7 最终候选须过滤越界链 PASS",
+        "c37": "final_candidate_filters_other = True"
+      }
+    }
+  ],
+  "counts_after": {
+    "targets": 87,
+    "evidence_ok": 64,
+    "blocked": 23,
+    "registered": 64,
+    "witness_ok": 64,
+    "p1": {
+      "OK": 73,
+      "NOT_FOUND": 14
+    },
+    "p2": {
+      "OK": 70,
+      "NOT_FOUND": 17
+    },
+    "meta_diff_open": 8611,
+    "open_total_core": 9050,
+    "open_total_all": 10555,
+    "PENDING_PARENT_COMPATIBILITY": 1214,
+    "RESOLVED_SCOPE_COVERED": 8762,
+    "l2_verdicts": {
+      "R1_NO_LINK": 378,
+      "HOLD_PENDING_ERRATA": 43,
+      "R2_MAY_CHANGE": 231,
+      "NOT_AFFECTED": 321,
+      "STILL_PASSES_WITHOUT": 81
+    }
+  },
+  "zero_change_proof": {
+    "step4_parent_scan.csv": "87 行、键集相同、逐格差异 0",
+    "step4_column_witness.csv": "64 行、键集相同、逐格差异 0",
+    "parent_verifications.csv": "64 行 × 27 列、键集相同、逐格差异 0（仅 reviewed_at 64 格日期）",
+    "COLUMN_ATTRIBUTION_UNPROVEN_on_real_keys": 0,
+    "note": "三条新反例全部是构造的，真实版面里没有出现；不预设必须维持 64 条。"
+  },
+  "self_check": {
+    "version": "V21",
+    "checks_pass": 43,
+    "checks_total": 43,
+    "decision": "SELF_CHECK_PASS_WITH_UNRESOLVED_ITEMS",
+    "nature": "SELF_CHECK_NOT_ACCEPTANCE",
+    "selftest_column_rules": "67 项 FAIL 0（上一轮 61 项，新增 D7 六项）"
+  },
+  "regressions_found_and_fixed": [
+    "drops 元组少一个元素：既有组重判分支最初写 ('UNPROVEN',) + bad[1:]（4 个元素），column_of_amount_aligned_ex 取 d[4] 时 IndexError。已改显式五元组。这类错误若只跑真实数据会静默跳过（该分支在 87 条上从不触发）",
+    "自测用例边界方向写反：D7 旁证首片段越界首版把 95 写成右边界 (-inf, 95)，片段中心落在边界内判 OK，用例「通过」但测的是错的东西；裁决原话是「左边界 95」，已改为 (95, +inf)"
+  ],
+  "structural_risk": {
+    "pattern": "三轮裁决命中同一模式：归属检查的某个调用点漏了",
+    "round22": "跨行合并整层没判归属",
+    "round23": "首片段（行内）、既有组（跨行）、最终候选筛选",
+    "round24": "上面三处都补了，但仍是四个分散调用点（行内合并、跨行新片段、跨行既有组、最终候选）",
+    "root": "归属目前是判据而不是数据结构属性；只要还有第五个消费 chains 的地方没调 _attribution，同类缺陷会再出现",
+    "not_done": "未做结构收敛（归属作为候选属性 + 唯一出口过滤）；本轮只做到「现有四个调用点都覆盖」",
+    "recorded_in": "review.json:open_findings 第 14 条"
+  },
+  "still_blocked": {
+    "batch_C_D_E": "未开始（等第 24 轮裁决）",
+    "step5_recompute_strata": "未开始",
+    "S04_round2": "不放行",
+    "S05": "不放行",
+    "freeze_43_231_378": false,
+    "F32_language_dimension": "未修",
+    "bare_RE_POLICY": "未修"
+  },
+  "open_risks": [
+    "归属检查仍是四个分散调用点，未做结构收敛；同类缺陷可能第五次出现",
+    "「与金额自身跨度相交」是必要非充分条件：真实窄列会被判待核（过严方向）",
+    "过松方向无法量化：87 条真实键上新状态触发 0 次，等于没有可观测证据",
+    "旁证与生产共用 _amount_bounds 与 _attribution，独立性进一步下降",
+    "check_c41 侧的同侧语义检查仍用合成引文探针证明，不是逐行注入",
+    "表格边界收紧的覆盖率上限仍未量化（全表 72 个侧实例带边界诊断，51 个换页成功）"
+  ]
+}

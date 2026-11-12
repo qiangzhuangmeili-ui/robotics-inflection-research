@@ -1,0 +1,96 @@
+你是独立复核方。仓库：C:\Users\zhangjianmei\Documents\ChatGPT\机器人企业行业拐点研究\robotics-inflection-research
+被复核对象：runs/issues/S00/errata_20261111_v5/（S00 勘误 V5，自检 V21，43/43 PASS）
+上一轮你的裁决：runs/issues/S00/errata_20261111_v5/_codex_out_round23.txt（RETURN_FOR_REWORK，3 条返工项）
+
+本轮汇报：runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md（先读这一份）
+本轮逐条对照：runs/issues/S00/errata_20261111_v5/rework_round23_result.json
+
+比较基线（都写 SHA，不用 HEAD）：
+- 第二十轮 `4ac102d`、第二十一轮 `b4738b2`、第二十二轮 `130eef1`、第二十三轮 `87eecdd`、本轮待提交。
+- 与 `87eecdd` 逐格比对：`step4_parent_scan.csv` 87 行、`step4_column_witness.csv` 64 行，
+  键集相同、逐格差异 0；`parent_verifications.csv` 64×27，除 `reviewed_at` 外差异 0。
+
+本轮只改判定方法。批次 C–E、第 5 步、S04 第二轮、S05 都没动；272 条事件证据不重评。
+
+## 一、第 1 项：行内合并的首片段漏检
+
+1. 读 `parent_verify.py:744` 的 `_header_cells`：每个片段（**含首片段**）建格时先算
+   `base = _attribution(x0, x1, bounds, None, False)`；合并要求 `attr`、`base`、`cur_attr`
+   三者一致。上一版首片段走 `cur=[x0,x1,tx]` 分支、`attr` 还是初值 `"OK"`，越界首片段从未被判过。
+2. **请复现你上轮那个反例**（我逐字复现过）：
+   ```
+   y=50：单位：元
+   y=70：（4-6月）x[65,96]；本报告期 x[100,138]
+   y=90：营业收入 x[0,45]；200.00 x[60,90]；100.00 x[100,130]
+   ```
+   左边界 95、首片段中心 80.5。上一版 `OK` + `（4-6月）本报告期`；本轮必须 `OK` + `本报告期`。
+   自测 `D7 首片段越界不得被后一段带进本列`；C37 `first_fragment_out_of_bounds`。
+3. 旁证同改（`step4_column_witness.py:103`）：`D7 旁证首片段越界不得并` 应得
+   `merged=[(65,96,['（4-6月）'],'OTHER'), (100,138,['本报告期'],'OK')]`。
+
+## 二、第 2 项：边界未知时对既有组漏检
+
+4. 读 `parent_verify.py:811` 的 `_chain_cells`：`need_core` 时对 `g["parts"] + 新片段`
+   **逐段重判** `need_core=True`；任一段 `UNPROVEN` 即不并并记 `drops`。
+   `g["parts"]` 已由 `(y,x0,tx)` 改为 `(y,x0,x1,tx)`（保留片段右边界，否则无法对片段重判）。
+5. **请复现你上轮那个反例**：
+   ```
+   y=60：项目 x[0,40]；本报告期  x[132,165]
+   y=70：项目 x[0,40]；（4-6月） x[100,130]
+   y=90：营业收入 x[0,45]；100.00 x[100,130]
+   ```
+   上一版 `OK` + `本报告期（4-6月）`；本轮必须 `COLUMN_ATTRIBUTION_UNPROVEN`。
+   自测 `D7 既有组首片段也要按 need_core 重判`；C37 `existing_group_need_core`。
+6. **左右倒序已补**：无左邻数字、首片段 `[65,98]`（与下方 `[100,130]` 跨行重叠 2pt，
+   真的会触发合并判定）→ 同样 `COLUMN_ATTRIBUTION_UNPROVEN`（`D7 左右倒序同样不得拼`）。
+   请确认这个倒序用例确实触发了合并判定、而不是靠「不重叠」蒙过去。
+7. **状态顺序也改了**：`COLUMN_ATTRIBUTION_UNPROVEN` 提到 `AMBIGUOUS` **之前**判
+   （`parent_verify.py:1061`）。两者都不放行，前者能定位到具体片段。请判定这个顺序。
+
+## 三、第 3 项：最终候选筛选未应用列归属
+
+8. 读 `_chain_cells` 的返回值：已改为**四元组** `(x0, x1, text, attr)`；
+   `parent_verify.py:1053` 的 `hit` 过滤增加 `c[3] == "OK"`（`len(c) < 4` 仅为兼容旧三元组调用）。
+   旁证同步：`step4_column_witness.py:299`，`cell[3] != "OK"` 即跳过。
+9. **请复现你上轮那个反例**：
+   ```
+   y=70：项目 x[0,40]；2026年半年度 x[65,110]
+   y=90：营业收入 x[0,45]；200.00 x[60,90]；100.00 x[100,130]
+   ```
+   左边界 95、表头中心 87.5。上一版 `OK` + `2026年半年度`；本轮必须 `NO_COLUMN`。
+   自测 `D7 最终候选须过滤越界链`；C37 `final_candidate_filters_other`。
+10. **我上轮汇报有一句不成立，已更正**：上轮写「最终候选也使用同一套 `bounds + core`」，
+    实际只用了跨度重叠。汇报 §一.3 已写明。
+
+## 四、结构性风险（我认为本轮最该说的一条）
+
+11. 三轮裁决命中同一模式：归属检查的**某个调用点漏了**——22 轮是跨行整层，
+    23 轮是首片段 / 既有组 / 最终候选，24 轮把这三处补齐后**仍是四个分散调用点**
+    （行内合并、跨行新片段、跨行既有组、最终候选）。归属目前是**判据**而不是
+    **数据结构属性**；只要还有第五个消费 `chains` 的地方没调 `_attribution`，同类缺陷会再出现。
+    彻底修法是把它做成候选属性 + **唯一出口**统一过滤。
+    **本轮只做到「现有四点全覆盖」，未做结构收敛**，已写进 `open_findings` 第 14 条。
+    请判定：现在就要结构收敛，还是接受「四点全覆盖 + 持续披露」（汇报 §六.1）。
+
+## 五、逐键比对与计数（请自己跑）
+
+12. `git show 87eecdd:runs/issues/S00/errata_20261111_v5/step4_parent_scan.csv` 与工作区比对：
+    87 vs 87、键集相同、**逐格差异 0**；`step4_column_witness.csv` 同理（64、差异 0）；
+    `parent_verifications.csv` 64×27、除 `reviewed_at` 外差异 0。
+13. 计数：`8611 + 405 + 34 = 9050`，`9050 + 1505 = 10555`；`PENDING_PARENT_COMPATIBILITY` 1214；
+    `RESOLVED_SCOPE_COVERED` 8762；L2 **43/231/321/81/378**。
+14. `selftest_column_rules.py` 应 **67 项 FAIL 0**（上一轮 61 + 新增 D7 六项）；
+    C41 十三类注入应十二类 64/64 + `swap_column` 32/32。
+15. `COLUMN_ATTRIBUTION_UNPROVEN` 在 87 条真实键上**仍触发 0 次**；三条新反例也全是构造的。
+    我按你的要求不预设维持 64 条——实际结果 64 条，但不是被保住的。
+16. **我主动披露两处自己的错误**：① `drops` 元组最初少一个元素（`('UNPROVEN',)+bad[1:]`），
+    该分支在 87 条上从不触发，只跑真实数据会静默跳过；② `D7 旁证首片段越界` 首版把 95
+    写成**右**边界 `(-inf,95)`，片段中心落在边界内判 `OK`，用例「通过」但测的是错的东西。
+
+## 六、边界
+
+S04 第二轮与 S05 继续不放行；批次 C–E 与第 5 步未开始；43/231/378 未冻结；
+F32（26 份英文版年报）与 `_RE_POLICY` 裸「会计政策」未修；
+旁证与生产共用 `_amount_bounds` 与 `_attribution`。
+
+请按「是否放行批次 C」给结论。若不通过，请把要改的点写成可执行清单（文件 + 函数 + 判据方向）。
