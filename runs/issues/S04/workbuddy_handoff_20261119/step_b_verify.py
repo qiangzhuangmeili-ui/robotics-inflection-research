@@ -340,6 +340,16 @@ def main():
           {"none": len(none_keys), "pending_missing_input": len(pmi_keys),
            "symmetric_difference": sorted(none_keys ^ pmi_keys)[:5]})
 
+    # ---- B15 交付物行尾统一为 LF（CSV 由 csv 模块按 RFC 输出 CRLF，不在本项范围） ----
+    crlf = []
+    for fn in sorted(os.listdir(HERE)):
+        if os.path.splitext(fn)[1] not in (".md", ".json", ".py"):
+            continue
+        if open(os.path.join(HERE, fn), "rb").read().count(b"\r\n"):
+            crlf.append(fn)
+    check("B15", "交付目录内 .md/.json/.py 一律 LF 行尾（哈希可复现，不受 autocrlf 影响）",
+          not crlf, {"files_with_crlf": crlf})
+
     ok = all(c["pass"] for c in CHECKS)
     out = {
         "artifact": "S05_STEP_B_SELF_CHECK",
@@ -361,7 +371,7 @@ def main():
             "待核按行计 15、按格计 13：四会富仕 SZ:300852 的 FIN.REV.YTD / FIN.COST.YTD@20250930 各被两个指标共用，引用时必须点明口径。",
         ],
     }
-    with open(os.path.join(HERE, "review.json"), "w", encoding="utf-8") as f:
+    with open(os.path.join(HERE, "review.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
     print(json.dumps({"checks_passed": out["checks_passed"], "decision": out["decision"],
                       "blocking": out["blocking_failures"]}, ensure_ascii=False))

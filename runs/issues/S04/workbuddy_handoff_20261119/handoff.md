@@ -72,5 +72,7 @@ Drive 实时下载在本机 **ACCESS_BLOCKED**：`uc?export=download` 返回 303
 ```bash
 python runs/issues/S04/workbuddy_handoff_20261119/step_a_verify.py   # 19/19
 python runs/issues/S04/workbuddy_handoff_20261119/step_b_build.py    # 重建 B 产物
-python runs/issues/S04/workbuddy_handoff_20261119/step_b_verify.py   # 20/20
+python runs/issues/S04/workbuddy_handoff_20261119/step_b_verify.py   # 21/21
 ```
+
+**行尾约定（复现须知）**：本目录 `.md` / `.json` / `.py` 一律 **LF**，脚本写 JSON 时显式 `newline="\n"`；CSV 由 csv 模块按 RFC 输出 CRLF。仓库 `.gitattributes` 为 `* -text`（禁止转换），所以这一条不守住，同一内容在 Windows 与 CI 上会算出不同 SHA256。B15 会拦截回退。若只看到本目录的 diff「每行都变」，那是 CRLF→LF 统一，不是内容改动。

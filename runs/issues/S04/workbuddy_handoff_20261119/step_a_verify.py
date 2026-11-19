@@ -290,7 +290,7 @@ def main():
             "未重新下载 Drive 二进制；归档核验建立在 11-16 已 VERIFIED 回执与本机逐字节回读副本之上。",
         ],
     }
-    with open(os.path.join(OUT, "takeover_receipt.json"), "w", encoding="utf-8") as f:
+    with open(os.path.join(OUT, "takeover_receipt.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(receipt, f, ensure_ascii=False, indent=2)
 
     baseline = {
@@ -329,7 +329,7 @@ def main():
             "runs/issues/S02/hangcha_restated_20261101/s00_v10/**",
         ],
     }
-    with open(os.path.join(OUT, "baseline_manifest.json"), "w", encoding="utf-8") as f:
+    with open(os.path.join(OUT, "baseline_manifest.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(baseline, f, ensure_ascii=False, indent=2)
 
     print(json.dumps({"checks_passed": receipt["checks_passed"],

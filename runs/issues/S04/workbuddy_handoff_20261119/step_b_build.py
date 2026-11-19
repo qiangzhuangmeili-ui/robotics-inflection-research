@@ -537,7 +537,7 @@ def main():
             "未改冻结阈值、截止日、B、S01 v3 规则或任何旧验收状态。",
         ],
     }
-    with open(os.path.join(out, "s05_input_contract_draft.json"), "w", encoding="utf-8") as f:
+    with open(os.path.join(out, "s05_input_contract_draft.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(contract, f, ensure_ascii=False, indent=2)
 
     print(json.dumps({
