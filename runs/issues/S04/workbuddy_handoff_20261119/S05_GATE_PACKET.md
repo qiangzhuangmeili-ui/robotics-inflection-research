@@ -21,7 +21,7 @@
 | B 目标分配 | `s05_target_assignment.csv` | 1054 家角色（278 主池 / 776 观察 / 6 守卫） |
 | B 结转 | `carryover_register.csv` | 33 条强制守卫与未采用项 |
 | B 有界队列 | `bounded_source_verification_queue.csv` | 13 个唯一待核格（对应差额表 15 行），限定范围 |
-| B 自检 | `review.json` | 19/19，SELF_CHECK（含文档表格数字与实算逐项比对） |
+| B 自检 | `review.json` | 20/20，SELF_CHECK（含文档表格数字与实算逐项比对、行≠格守恒） |
 | S04 正式指针 | `final_delivery_20261116/review.json`（ZIP 成员） | `ACCEPTED_WITH_LIMITS`，非 GitHub 路径 |
 | S04 peer | `final_peer_review_20261116/peer_review.json` | `ab249f18…`，`ACCEPTED_WITH_LIMITS_FOR_FROZEN_CURRENT_S04_USE` |
 | 来源补充 | `formal_gate_review_20261115/review.json` | `d906efff…`，`ACCEPTED_WITH_LIMITS_FOR_CURRENT_S04_USE` |

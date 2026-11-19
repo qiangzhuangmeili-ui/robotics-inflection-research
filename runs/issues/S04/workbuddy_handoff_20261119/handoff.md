@@ -72,5 +72,5 @@ Drive 实时下载在本机 **ACCESS_BLOCKED**：`uc?export=download` 返回 303
 ```bash
 python runs/issues/S04/workbuddy_handoff_20261119/step_a_verify.py   # 19/19
 python runs/issues/S04/workbuddy_handoff_20261119/step_b_build.py    # 重建 B 产物
-python runs/issues/S04/workbuddy_handoff_20261119/step_b_verify.py   # 19/19
+python runs/issues/S04/workbuddy_handoff_20261119/step_b_verify.py   # 20/20
 ```

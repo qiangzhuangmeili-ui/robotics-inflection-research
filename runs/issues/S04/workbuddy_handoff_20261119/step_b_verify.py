@@ -330,6 +330,16 @@ def main():
           not prose_bad and prose_seen["TOTAL"] == 2 and prose_seen["SIGNAL_L3"] == 2,
           {"violations": prose_bad, "table_rows_seen": dict(prose_seen)})
 
+    # ---- B14 门审包「无一行证据齐备却记 NONE」这句断言的机器核验 ----
+    none_keys = {(d["security_id"], d["metric_id"], d["field_id"], d["period_key"])
+                 for d in delta if d["page_evidence_mode"] == "NONE"}
+    pmi_keys = {(d["security_id"], d["metric_id"], d["field_id"], d["period_key"])
+                for d in delta if d["s05_use_class"] == "PENDING_MISSING_INPUT"}
+    check("B14", "页码证据 NONE 与 PENDING_MISSING_INPUT 完全重合（9=9，差集为空）",
+          none_keys == pmi_keys and len(none_keys) == 9,
+          {"none": len(none_keys), "pending_missing_input": len(pmi_keys),
+           "symmetric_difference": sorted(none_keys ^ pmi_keys)[:5]})
+
     ok = all(c["pass"] for c in CHECKS)
     out = {
         "artifact": "S05_STEP_B_SELF_CHECK",

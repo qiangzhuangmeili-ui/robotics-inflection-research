@@ -1,6 +1,6 @@
 {
   "artifact": "S05_STEP_B_SELF_CHECK",
-  "generated_at": "2026-11-19T20:36:09+08:00",
+  "generated_at": "2026-11-19T20:37:19+08:00",
   "plan_version": "20261026_collection_first_v2",
   "author": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
@@ -206,9 +206,19 @@
           "TOTAL": 2
         }
       }
+    },
+    {
+      "id": "B14",
+      "name": "页码证据 NONE 与 PENDING_MISSING_INPUT 完全重合（9=9，差集为空）",
+      "pass": true,
+      "detail": {
+        "none": 9,
+        "pending_missing_input": 9,
+        "symmetric_difference": []
+      }
     }
   ],
-  "checks_passed": "19/19",
+  "checks_passed": "20/20",
   "blocking_failures": [],
   "release_S05": false,
   "release_note": "自检不等同独立复核；S05 正式运行须新增明确 release_S05 记录。",
