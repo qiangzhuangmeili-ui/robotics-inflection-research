@@ -1,0 +1,47 @@
+{
+  "artifact": "WORKBUDDY_METHODOLOGY_READ_RECEIPT",
+  "decision_id": "METHOD_20261107_LEADING_INDICATORS",
+  "read_at": "2026-11-19T20:20:00+08:00",
+  "reader": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK_READ_RECEIPT",
+  "files_read": [
+    {
+      "path": "docs/需求先行指标分工_20261107.md",
+      "blob_sha_online": "0ce7f3b98e0e596536a9b69862e8f745c83525c1",
+      "read_from": "LOCAL_WORKTREE_MATCHING_ONLINE_MAIN"
+    },
+    {
+      "path": "data/methodology_decision_20261107.json",
+      "blob_sha_online": "973d2efe79b3f2b28b8fa37334699bac3c0ad1ec",
+      "read_from": "LOCAL_WORKTREE_MATCHING_ONLINE_MAIN"
+    }
+  ],
+  "prior_state": {
+    "workbuddy_receipt_in_control_files": "NOT_CONFIRMED",
+    "meaning": "控制文件与决策文件只登记了「已发布」，不能据此推定 WorkBuddy 已读过；本回执是独立登记。"
+  },
+  "understood_scope": {
+    "S04_39": "沿用冻结 L2 规则收紧；不把合同负债、在手订单、在建工程临时加入 L1/L2 硬门槛；不为此重跑已验收 S03。",
+    "S06_41": "用合同负债与可信在手订单做需求先行辅助观察；正式采用前先登记字段定义、来源、期间、适用业务模式、未知值与重进条件，另记辅助观察版本；不预设统一阈值。",
+    "R00_R01_44_45": "核订单质量、履约/交付、收入转化与盈利归属；核在建工程是否对应机器人产能；按原文、页码、主体、时间规则核实。",
+    "boundaries": [
+      "合同负债不等于全部订单或已实现收入，增减不自动判好坏。",
+      "在手订单须区分生效合同/框架意向/已履行/取消变更，并记统计时点、交付期、业务归属与金额口径。",
+      "在建工程是公司自身投入，不等于给客户履行的在手项目，不直接当改善信号。",
+      "公司合并口径不得冒充机器人分部口径；辅助线索不得绕过 S08 名单验收或作为投资结论。",
+      "未披露不是 0，不是无业务，不得据此淘汰。"
+    ]
+  },
+  "effect_on_this_work_unit": {
+    "S04_handoff_freeze": "不变更任何阈值；本单元只做只读对齐与 S05 资格准备。",
+    "S05_preparation": "S05 的 6 个风险提示（RH01–RH06）不含合同负债/在手订单/在建工程；这三项留在 S06 与筛后核验，本轮不纳入 S05 输入合同。",
+    "new_hard_filter_added": false,
+    "threshold_changed": false,
+    "cutoff_changed": false
+  },
+  "acknowledged_not_authorized": [
+    "领取 #39 / #53（Codex 持有 #53，无明确交接）",
+    "放行 S05",
+    "把辅助观察线索写成业务或投资结论"
+  ]
+}

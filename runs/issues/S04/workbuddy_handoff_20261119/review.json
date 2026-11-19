@@ -1,0 +1,184 @@
+{
+  "artifact": "S05_STEP_B_SELF_CHECK",
+  "generated_at": "2026-11-19T20:32:00+08:00",
+  "plan_version": "20261026_collection_first_v2",
+  "author": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "checks": [
+    {
+      "id": "B1a",
+      "name": "SIGNAL_L3 行数等于 S04 生效依赖行数 3738",
+      "pass": true,
+      "detail": {
+        "delta": 3738,
+        "expected": 3738
+      }
+    },
+    {
+      "id": "B1b",
+      "name": "SIGNAL_L3 每行都能在 S04 生效依赖表中找到对应成员",
+      "pass": true,
+      "detail": {
+        "missing": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "B2",
+      "name": "SIGNAL_L3 无开放争议（与 peer 记录的 0 一致）",
+      "pass": true,
+      "detail": {
+        "rows_with_dispute": 0
+      }
+    },
+    {
+      "id": "B3",
+      "name": "标为 ELIGIBLE_FOR_S05 的每行都能独立复核为可用",
+      "pass": true,
+      "detail": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "B4",
+      "name": "派生值经父键追溯的页码全部存在",
+      "pass": true,
+      "detail": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "B5a",
+      "name": "目标分配 1054 行且主键唯一",
+      "pass": true,
+      "detail": {
+        "rows": 1054,
+        "unique": 1054
+      }
+    },
+    {
+      "id": "B5b",
+      "name": "主检查池 278 家且与 tight_pass 完全一致",
+      "pass": true,
+      "detail": {
+        "primary": 278
+      }
+    },
+    {
+      "id": "B5c",
+      "name": "各角色之和等于 1054",
+      "pass": true,
+      "detail": {
+        "OBSERVE_NOT_SHORTLISTED": 171,
+        "OBSERVE_OUT_OF_SCOPE": 272,
+        "OBSERVE_HOLD_FOR_DATA": 328,
+        "PRIMARY_CHECK_POOL": 278,
+        "GUARD_CUTOFF_ISOLATED": 4,
+        "GUARD_ANCHOR_PENDING": 1
+      }
+    },
+    {
+      "id": "B6",
+      "name": "结转登记七类齐全且计数一致",
+      "pass": true,
+      "detail": {
+        "observed": {
+          "CE_QUALITY_SOURCE_PENDING": 15,
+          "HELD_PARENT_PROPOSAL_UNADOPTED": 8,
+          "HCC_NPP_DISPUTE_OPEN": 1,
+          "HCC_LIWIN_HOLD": 1,
+          "ANCHOR_RESELECTION_PENDING": 1,
+          "CUTOFF_AFTER_20261025": 4,
+          "PROJECT_MODE_UNKNOWN": 3
+        },
+        "expected": {
+          "CE_QUALITY_SOURCE_PENDING": 15,
+          "HELD_PARENT_PROPOSAL_UNADOPTED": 8,
+          "HCC_NPP_DISPUTE_OPEN": 1,
+          "HCC_LIWIN_HOLD": 1,
+          "ANCHOR_RESELECTION_PENDING": 1,
+          "CUTOFF_AFTER_20261025": 4,
+          "PROJECT_MODE_UNKNOWN": 3
+        }
+      }
+    },
+    {
+      "id": "B7a",
+      "name": "质量指标裁决总数 = 278 × 5",
+      "pass": true,
+      "detail": {
+        "verdicts": 1390
+      }
+    },
+    {
+      "id": "B7b",
+      "name": "质量依赖行按指标计数与合同一致",
+      "pass": true,
+      "detail": {
+        "cells": 4868,
+        "by_metric": {
+          "M04": 1668,
+          "M08": 484,
+          "M10": 1112,
+          "M11": 1064,
+          "M12": 540
+        }
+      }
+    },
+    {
+      "id": "B7c",
+      "name": "质量指标三分类之和 = 1390",
+      "pass": true,
+      "detail": {
+        "sum": 1390
+      }
+    },
+    {
+      "id": "B8",
+      "name": "冻结输入（peer/来源补充/资格manifest/B/v3规则）指纹未变",
+      "pass": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "B9",
+      "name": "差额表无重复 (公司, 消费类, 指标, 字段, 期间) 键",
+      "pass": true,
+      "detail": {
+        "duplicates": 0,
+        "sample": []
+      }
+    },
+    {
+      "id": "B10",
+      "name": "M08/M10 算术抽查与指标表一致（Decimal）",
+      "pass": true,
+      "detail": {
+        "checked": 116,
+        "mismatch": []
+      }
+    },
+    {
+      "id": "B11",
+      "name": "有界核证队列与待核行一一对应",
+      "pass": true,
+      "detail": {
+        "pending": 13,
+        "queue": 13
+      }
+    }
+  ],
+  "checks_passed": "16/16",
+  "blocking_failures": [],
+  "release_S05": false,
+  "release_note": "自检不等同独立复核；S05 正式运行须新增明确 release_S05 记录。",
+  "limits": [
+    "未回读 PDF 原文；ELIGIBLE_FOR_S05 只表示结构化证据链齐备。",
+    "S04 的 M08 依赖按 {t, t-1y} 冻结展开；S05 侧按公式取 t，差异已在合同登记并提交门审。",
+    "差额表只覆盖 278 家拟消费字段，不是全池来源验收。"
+  ]
+}

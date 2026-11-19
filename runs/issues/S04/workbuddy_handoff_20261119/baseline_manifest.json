@@ -1,0 +1,90 @@
+{
+  "artifact": "S04_HANDOFF_BASELINE_MANIFEST",
+  "generated_at": "2026-11-19T20:31:59+08:00",
+  "plan_version": "20261026_collection_first_v2",
+  "frozen_inputs": {
+    "runs/issues/S04/completion_20261114/final_peer_review_20261116/peer_review.json": {
+      "sha256": "ab249f1806e1997fb0f938b216aaeb17def7f460b03a08b694acafd7d2e7c924"
+    },
+    "runs/issues/S00/completion_20261114/formal_gate_review_20261115/review.json": {
+      "sha256": "d906efffa47321b68dec8e847c15122ca87cde17667cad59e75360396b42d2d1"
+    },
+    "runs/issues/S04/completion_20261114/qualification_v3_20261115/manifest.json": {
+      "sha256": "2be3081c47a634e960709bb16e9bf2327e109057bfbfd5509e5ce8fb27785144"
+    },
+    "runs/issues/S04/completion_20261114/qualification_v3_20261115/scope_contract.json": {
+      "sha256": "a856b9684458ac8461d28a399b422204b37c5a2726412096aa373ae868d33242"
+    },
+    "runs/issues/S04/completion_20261114/final_delivery_20261116/REPORT.md": {
+      "sha256": "494c59f686fcd73b193330d9e52205dcfad04206931fd4bbde89b0498e862adf"
+    },
+    "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz": {
+      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025"
+    }
+  },
+  "frozen_delivery": {
+    "tight_pass_rows": 278,
+    "tight_observe_rows": 776,
+    "decision_log_rows": 1054,
+    "decisions": {
+      "NOT_SHORTLISTED": 171,
+      "L2_NOT_IN_SCOPE": 272,
+      "HOLD_FOR_DATA": 328,
+      "SHORTLIST_CANDIDATE_LIMITED": 278,
+      "WATCH_AFTER_CUTOFF": 4,
+      "PENDING_ANCHOR_RESELECTION": 1
+    },
+    "reviewed_view_manifest_sha256": "2bf580f4f0328ab222421ade874af8e75d3172867bf76f177b94c74d4e5c7e08",
+    "final_delivery_review_sha256": "e5c02f971a58e92db39d6e4097673bdc1dd413c32d7b438ffc8f42ba1fe7d5d0",
+    "data_manifest_sha256": "811be451c0aa5672999fd73d2f89fbb178c77455d702fe79ccafe7769501fea5"
+  },
+  "rules": {
+    "effective_rules_version": "S01_SCREEN_RULES_V3_PROVENANCE_20261114",
+    "effective_rules_sha256": "fe029ffada77fff9c55dd41646905948002dfc177a5f3464f088676fd1975790",
+    "immutable_v3_sha256": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
+    "knowledge_as_of": "2026-10-25",
+    "thresholds_changed": false,
+    "cutoff_changed": false
+  },
+  "guards": {
+    "cutoff_isolated": [
+      "SH:603448",
+      "SH:688836",
+      "SZ:301348",
+      "SZ:301699"
+    ],
+    "anchor_reselection_pending": [
+      "SZ:002083"
+    ],
+    "project_mode_unknown": [
+      "SZ:000988",
+      "SZ:001208",
+      "SZ:002530"
+    ],
+    "quality_source_pending_ce": [
+      "SZ:000801",
+      "SZ:000967",
+      "SZ:000988",
+      "SZ:001208",
+      "SZ:001311",
+      "SZ:002035",
+      "SZ:002171",
+      "SZ:002245",
+      "SZ:002284",
+      "SZ:002530",
+      "SZ:002705",
+      "SZ:002765",
+      "SZ:002801",
+      "SZ:300611",
+      "SZ:301584"
+    ]
+  },
+  "not_modified": [
+    "PROJECT_STATE.json",
+    "data/active_issue.json",
+    "runs/issues/S04/completion_20261114/**",
+    "runs/issues/S00/**",
+    "runs/issues/S01/screen_rules_v3*.json",
+    "runs/issues/S02/hangcha_restated_20261101/s00_v10/**"
+  ]
+}

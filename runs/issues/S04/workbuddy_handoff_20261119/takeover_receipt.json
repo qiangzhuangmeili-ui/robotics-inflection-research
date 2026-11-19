@@ -1,0 +1,308 @@
+{
+  "artifact": "WORKBUDDY_S04_TAKEOVER_RECEIPT",
+  "generated_at": "2026-11-19T20:31:59+08:00",
+  "plan_version": "20261026_collection_first_v2",
+  "actor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "read_only_scope": true,
+  "issue_claim": "NOT_CLAIMED",
+  "lease_holder": "Codex / #53",
+  "handoff_status": "NO_EXPLICIT_HANDOFF_RECORDED_READ_ONLY_PREP_ONLY",
+  "online_control_read_at": "2026-11-19T20:31:59+08:00",
+  "online_control_blobs": {
+    "data/active_issue.json": "a8195c81d4ff2aab630c08bc843ef043eaf4350d",
+    "PROJECT_STATE.json": "a334c5693c0cd7a10f874b4efa33ab993288048a",
+    "data/issue_execution_plan.csv": "89aebf385b40bc92e932107110d01959ca84c264"
+  },
+  "online_main_commit": {
+    "sha": "a308fab19c17ea0184df0d730f2a5723760f2ef4",
+    "committed_at": "2026-11-16T02:43:15Z",
+    "message": "Point current issue plan to verified scoped S04 handoff"
+  },
+  "control_state": {
+    "active_issue_number": 53,
+    "active_issue_key": "S00_ERRATA_REVIEW",
+    "executor": "Codex",
+    "current_gate": "S04_FORMAL_REVIEW_ARCHIVED_WITH_LIMITS_S05_LOCKED",
+    "release_S04": true,
+    "release_S04_scope": "TECHNICAL_MULTIMETRIC_SCREEN_AND_TARGETED_QC_ONLY",
+    "release_S05": false,
+    "issue_39_state": "OPEN",
+    "issue_53_state": "OPEN"
+  },
+  "archive": {
+    "local_zip": "runs/issues/S04/completion_20261114/package_20261116/S04_completion_20261116_final_artifacts.zip",
+    "bytes": 24347716,
+    "sha256": "87f4f4ee8bb884cdfb9203a0e4958e53148b710681948e7957663bef9e9294d6",
+    "drive_file_id": "1VrpWyQct6xI5PpRdGNs6KFZmubbspYEA",
+    "drive_url": "https://drive.google.com/file/d/1VrpWyQct6xI5PpRdGNs6KFZmubbspYEA/view?usp=drivesdk",
+    "parent_folder_id": "13oqd9t1Lv2GgDIMUVZbzaDbmLuTa7CWa",
+    "live_drive_fetch": "ACCESS_BLOCKED",
+    "live_drive_probe": {
+      "uc_download": "303 -> drive.usercontent.google.com -> 200 text/html Google sign-in (971,576 bytes)",
+      "api_v3_files_get": "403",
+      "interpretation": "无 Drive 凭据，无法在本轮重新下载远端二进制；不使用任何绕过登录的方式"
+    },
+    "verification_mode": "OFFLINE_SNAPSHOT_MATCHING_VERIFIED_REMOTE_RECEIPT",
+    "remote_binary_evidence": "11-16 回执记录的 Drive 回读副本 drive_readback_20261116.zip 与本归档逐字节相同",
+    "members_verified": 344,
+    "members_expected": 344
+  },
+  "formal_records_read": [
+    "runs/issues/S04/completion_20261114/final_delivery_20261116/review.json",
+    "runs/issues/S04/completion_20261114/final_delivery_20261116/REPORT.md",
+    "runs/issues/S04/completion_20261114/final_delivery_20261116/reviewed_view/manifest.json",
+    "runs/issues/S04/completion_20261114/final_peer_review_20261116/peer_review.json",
+    "runs/issues/S00/completion_20261114/formal_gate_review_20261115/review.json",
+    "runs/issues/S04/completion_20261114/qualification_v3_20261115/scope_contract.json",
+    "runs/issues/S00/errata_20261111_v5/codex_ruling_round5.md"
+  ],
+  "checks": [
+    {
+      "id": "A1a",
+      "name": "归档ZIP字节数与11-16在线回执一致",
+      "pass": true,
+      "detail": {
+        "bytes": 24347716,
+        "expected": 24347716
+      }
+    },
+    {
+      "id": "A1b",
+      "name": "归档ZIP SHA256与11-16在线回执一致",
+      "pass": true,
+      "detail": {
+        "sha256": "87f4f4ee8bb884cdfb9203a0e4958e53148b710681948e7957663bef9e9294d6",
+        "expected": "87f4f4ee8bb884cdfb9203a0e4958e53148b710681948e7957663bef9e9294d6"
+      }
+    },
+    {
+      "id": "A1c",
+      "name": "11-16 Drive 回读副本与本地归档逐字节相同",
+      "pass": true,
+      "detail": {
+        "present": true,
+        "bytes": 24347716,
+        "sha256": "87f4f4ee8bb884cdfb9203a0e4958e53148b710681948e7957663bef9e9294d6"
+      }
+    },
+    {
+      "id": "A2a",
+      "name": "归档成员集合与清单一致（无缺失/无多余）",
+      "pass": true,
+      "detail": {
+        "members": 344,
+        "expected": 344,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "id": "A2b",
+      "name": "归档成员逐个SHA256与字节数匹配",
+      "pass": true,
+      "detail": {
+        "verified": 344,
+        "bad": []
+      }
+    },
+    {
+      "id": "A3a",
+      "name": "reviewed_view 三表哈希与自身manifest一致",
+      "pass": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "A3b",
+      "name": "reviewed_view manifest 指向11-16正式peer指纹",
+      "pass": true,
+      "detail": {
+        "formal_review_sha256": "ab249f1806e1997fb0f938b216aaeb17def7f460b03a08b694acafd7d2e7c924"
+      }
+    },
+    {
+      "id": "A4a",
+      "name": "tight_pass=278 / tight_observe=776 / decision_log=1054",
+      "pass": true,
+      "detail": {
+        "pass": 278,
+        "observe": 776,
+        "log": 1054
+      }
+    },
+    {
+      "id": "A4b",
+      "name": "1054 唯一主键",
+      "pass": true,
+      "detail": {
+        "unique": 1054
+      }
+    },
+    {
+      "id": "A4c",
+      "name": "两分区互斥且并集等于全表",
+      "pass": true,
+      "detail": {
+        "overlap": 0,
+        "union_eq_log": true
+      }
+    },
+    {
+      "id": "A5a",
+      "name": "六档决策计数与正式review.json一致",
+      "pass": true,
+      "detail": {
+        "observed": {
+          "NOT_SHORTLISTED": 171,
+          "L2_NOT_IN_SCOPE": 272,
+          "HOLD_FOR_DATA": 328,
+          "SHORTLIST_CANDIDATE_LIMITED": 278,
+          "WATCH_AFTER_CUTOFF": 4,
+          "PENDING_ANCHOR_RESELECTION": 1
+        },
+        "expected": {
+          "SHORTLIST_CANDIDATE_LIMITED": 278,
+          "HOLD_FOR_DATA": 328,
+          "NOT_SHORTLISTED": 171,
+          "L2_NOT_IN_SCOPE": 272,
+          "WATCH_AFTER_CUTOFF": 4,
+          "PENDING_ANCHOR_RESELECTION": 1
+        }
+      }
+    },
+    {
+      "id": "A5b",
+      "name": "review.json 记录的分档与重算一致",
+      "pass": true,
+      "detail": {
+        "review_decisions": {
+          "NOT_SHORTLISTED": 171,
+          "L2_NOT_IN_SCOPE": 272,
+          "HOLD_FOR_DATA": 328,
+          "SHORTLIST_CANDIDATE_LIMITED": 278,
+          "WATCH_AFTER_CUTOFF": 4,
+          "PENDING_ANCHOR_RESELECTION": 1
+        }
+      }
+    },
+    {
+      "id": "A6a",
+      "name": "4家截止日后隔离在位",
+      "pass": true,
+      "detail": {
+        "observed": [
+          "SH:603448",
+          "SH:688836",
+          "SZ:301348",
+          "SZ:301699"
+        ]
+      }
+    },
+    {
+      "id": "A6b",
+      "name": "1家锚点待重选在位（孚日股份）",
+      "pass": true,
+      "detail": {
+        "observed": [
+          "SZ:002083"
+        ]
+      }
+    },
+    {
+      "id": "A6c",
+      "name": "3家项目模式UNKNOWN在位",
+      "pass": true,
+      "detail": {
+        "observed": [
+          "SZ:000988",
+          "SZ:001208",
+          "SZ:002530"
+        ]
+      }
+    },
+    {
+      "id": "A6d",
+      "name": "15家CE质量未知在位且全部不在候选池",
+      "pass": true,
+      "detail": {
+        "observed": [
+          "SZ:000801",
+          "SZ:000967",
+          "SZ:000988",
+          "SZ:001208",
+          "SZ:001311",
+          "SZ:002035",
+          "SZ:002171",
+          "SZ:002245",
+          "SZ:002284",
+          "SZ:002530",
+          "SZ:002705",
+          "SZ:002765",
+          "SZ:002801",
+          "SZ:300611",
+          "SZ:301584"
+        ],
+        "in_pass": []
+      }
+    },
+    {
+      "id": "A7a",
+      "name": "六份正式文件/权威输入指纹全部匹配",
+      "pass": true,
+      "detail": {
+        "bad": [],
+        "verified": 6
+      }
+    },
+    {
+      "id": "A8a",
+      "name": "控制文件在本轮开始前即未被写入（mtime 早于本工作单元）",
+      "pass": true,
+      "detail": {
+        "mtimes": {
+          "PROJECT_STATE.json": "2026-11-16T10:44:20+08:00",
+          "data/active_issue.json": "2026-11-16T10:44:20+08:00"
+        },
+        "written_this_run": []
+      }
+    },
+    {
+      "id": "A8b",
+      "name": "工作区控制文件与在线 main 的差异已定位（以在线为准，不覆盖）",
+      "pass": true,
+      "detail": {
+        "diverged": {
+          "PROJECT_STATE.json": {
+            "only_local_keys": [],
+            "differing_keys": [
+              "issue_plan"
+            ]
+          },
+          "data/active_issue.json": {
+            "only_local_keys": [
+              "local_s04_formal_review"
+            ],
+            "differing_keys": [
+              "claim_note",
+              "next_recommended_reason",
+              "s00_errata"
+            ]
+          }
+        },
+        "authority": "ONLINE_MAIN_READ_THIS_RUN",
+        "action": "不写入、不覆盖；在线 blob 作为唯一控制依据"
+      }
+    }
+  ],
+  "checks_passed": "19/19",
+  "decision": "TAKEOVER_VERIFIED_READ_ONLY",
+  "blocking_failures": [],
+  "S05_release": false,
+  "notes": [
+    "本回执是自检，不是独立验收；不替代 11-16 正式审查与 peer 记录。",
+    "未领取 #39/#53，未改动 PROJECT_STATE.json 与 data/active_issue.json。",
+    "未重新下载 Drive 二进制；归档核验建立在 11-16 已 VERIFIED 回执与本机逐字节回读副本之上。"
+  ]
+}
