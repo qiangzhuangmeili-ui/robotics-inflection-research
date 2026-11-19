@@ -9,6 +9,7 @@ import gzip
 import hashlib
 import json
 import os
+import re
 import sys
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
@@ -164,9 +165,9 @@ def main():
     measured = contract["measured"]
     check("B7a", "质量指标裁决总数 = 278 × 5", measured["quality_metric_verdicts"] == 1390,
           {"verdicts": measured["quality_metric_verdicts"]})
-    check("B7b", "质量依赖行按指标计数与合同一致",
+    check("B7b", "质量依赖行按指标计数与差额表自洽（行口径）",
           sum(per_metric.values()) == len(qcells),
-          {"cells": len(qcells), "by_metric": dict(per_metric)})
+          {"rows": len(qcells), "by_metric": dict(per_metric)})
     tot = sum(measured["quality_metric_by_s05_class"].values())
     check("B7c", "质量指标三分类之和 = 1390", tot == 1390, {"sum": tot})
 
@@ -249,12 +250,85 @@ def main():
     check("B10", "M08/M10 算术抽查与指标表一致（Decimal）", not mismatch,
           {"checked": checked, "mismatch": mismatch[:5]})
 
-    # ---- B11 队列与待核行一一对应 ----
+    # ---- B11 队列与待核格一一对应；行与格的口径必须分开核 ----
+    pend_rows = [d for d in delta if d["s05_use_class"].startswith("PENDING")]
     pend_keys = {(d["security_id"], d["field_id"], d["period_key"], d["s05_use_class"])
-                 for d in delta if d["s05_use_class"].startswith("PENDING")}
+                 for d in pend_rows}
     q_keys = {(r["security_id"], r["field_id"], r["period_key"], r["s05_use_class"]) for r in queue}
-    check("B11", "有界核证队列与待核行一一对应", pend_keys == q_keys,
-          {"pending": len(pend_keys), "queue": len(q_keys)})
+    check("B11a", "有界核证队列与待核格一一对应", pend_keys == q_keys,
+          {"pending_cells": len(pend_keys), "queue": len(q_keys)})
+
+    per_cell = Counter((d["security_id"], d["field_id"], d["period_key"]) for d in pend_rows)
+    multi = {k: v for k, v in per_cell.items() if v > 1}
+    check("B11b", "待核行 = 待核格 + 双消费者重复行；可判行 + 待核行 = 8,638",
+          len(pend_rows) == len(pend_keys) + sum(v - 1 for v in multi.values()) == 15
+          and len(pend_keys) == 13
+          and sum(1 for d in delta if d["s05_use_class"] == "ELIGIBLE_FOR_S05") + len(pend_rows)
+          == len(delta) == 8638,
+          {"pending_rows": len(pend_rows), "pending_cells": len(pend_keys),
+           "multi_consumer_cells": {"%s|%s|%s" % k: v for k, v in multi.items()},
+           "eligible_rows": sum(1 for d in delta if d["s05_use_class"] == "ELIGIBLE_FOR_S05")})
+
+    # ---- B12 合同 measured 块与差额表实算逐项相等（防 JSON 与 CSV 漂移） ----
+    m = contract["measured"]
+    got = {
+        "delta_rows": len(delta),
+        "by_consumption_class": dict(Counter(d["consumption_class"] for d in delta)),
+        "by_use_class": dict(Counter(d["s05_use_class"] for d in delta)),
+        "by_page_evidence_mode": dict(Counter(d["page_evidence_mode"] for d in delta)),
+        "companies_with_any_pending_consumed_cell": len({d["security_id"] for d in pend_rows}),
+        "bounded_verification_queue_rows": len(queue),
+    }
+    drift = {k: {"contract": m.get(k), "recomputed": v}
+             for k, v in got.items() if m.get(k) != v}
+    check("B12", "输入合同的 measured 计数与差额表实算逐项相等", not drift, {"drift": drift})
+
+    # ---- B13 两份说明文档的表格数字与实算一致（防 prose 与数据漂移） ----
+    def cell_counts(consumption):
+        sub = [d for d in delta if d["consumption_class"] == consumption]
+        return (len(sub), sum(1 for d in sub if d["s05_use_class"] == "ELIGIBLE_FOR_S05"),
+                sum(1 for d in sub if d["s05_use_class"].startswith("PENDING")))
+
+    expect_tbl = {
+        "SIGNAL_L3": cell_counts("SIGNAL_L3"),
+        "QUALITY_RH": cell_counts("QUALITY_RH"),
+        "LOW_BASE_CONFIRM": cell_counts("LOW_BASE_CONFIRM"),
+        "TOTAL": (len(delta), sum(1 for d in delta if d["s05_use_class"] == "ELIGIBLE_FOR_S05"),
+                  len(pend_rows)),
+    }
+    hint_ready = m.get("risk_hints_ready_by_company", {})
+    hint_block = m.get("risk_hints_blocked_by_company", {})
+    pat = re.compile(r"^\|\s*([^|]+?)\s*\|\s*([\d,]+)\s*\|\s*([\d,]+)\s*\|\s*([\d,]+)\s*\|")
+    label_map = [("信号 L3", "SIGNAL_L3"), ("质量指标依赖", "QUALITY_RH"),
+                 ("低基数", "LOW_BASE_CONFIRM"), ("合计", "TOTAL")]
+    prose_bad, prose_seen = [], Counter()
+    for doc in ("S05_GATE_PACKET.md", "handoff.md"):
+        p = os.path.join(HERE, doc)
+        if not os.path.exists(p):
+            prose_bad.append((doc, "MISSING"))
+            continue
+        for line in open(p, encoding="utf-8"):
+            hit = pat.match(line.strip().replace("*", ""))
+            if not hit:
+                continue
+            label = hit.group(1).strip()
+            nums = tuple(int(hit.group(i).replace(",", "")) for i in (2, 3, 4))
+            for prefix, key in label_map:
+                if label.startswith(prefix):
+                    prose_seen[key] += 1
+                    if nums != expect_tbl[key]:
+                        prose_bad.append((doc, label, nums, expect_tbl[key]))
+                    break
+            else:
+                mm = re.match(r"^RH0(\d)", label)
+                if mm:
+                    hint = "RH0" + mm.group(1)
+                    if (nums[0], nums[2]) != (hint_ready.get(hint), hint_block.get(hint, 0)):
+                        prose_bad.append((doc, label, nums,
+                                          (hint_ready.get(hint), hint_block.get(hint, 0))))
+    check("B13", "两份说明文档的资格表/风险表数字与实算一致",
+          not prose_bad and prose_seen["TOTAL"] == 2 and prose_seen["SIGNAL_L3"] == 2,
+          {"violations": prose_bad, "table_rows_seen": dict(prose_seen)})
 
     ok = all(c["pass"] for c in CHECKS)
     out = {
@@ -273,6 +347,8 @@ def main():
             "未回读 PDF 原文；ELIGIBLE_FOR_S05 只表示结构化证据链齐备。",
             "S04 的 M08 依赖按 {t, t-1y} 冻结展开；S05 侧按公式取 t，差异已在合同登记并提交门审。",
             "差额表只覆盖 278 家拟消费字段，不是全池来源验收。",
+            "851 行派生毛利率按父键页码追溯（VIA_PARENT）：若门审要求派生值自身页码，M04 全线 HOLD、RH05 归零，且 148 家的 M04 信号依赖同时失效。",
+            "待核按行计 15、按格计 13：四会富仕 SZ:300852 的 FIN.REV.YTD / FIN.COST.YTD@20250930 各被两个指标共用，引用时必须点明口径。",
         ],
     }
     with open(os.path.join(HERE, "review.json"), "w", encoding="utf-8") as f:

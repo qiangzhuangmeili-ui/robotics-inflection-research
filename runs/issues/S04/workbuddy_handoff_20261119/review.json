@@ -1,6 +1,6 @@
 {
   "artifact": "S05_STEP_B_SELF_CHECK",
-  "generated_at": "2026-11-19T20:32:00+08:00",
+  "generated_at": "2026-11-19T20:36:09+08:00",
   "plan_version": "20261026_collection_first_v2",
   "author": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
@@ -115,10 +115,10 @@
     },
     {
       "id": "B7b",
-      "name": "质量依赖行按指标计数与合同一致",
+      "name": "质量依赖行按指标计数与差额表自洽（行口径）",
       "pass": true,
       "detail": {
-        "cells": 4868,
+        "rows": 4868,
         "by_metric": {
           "M04": 1668,
           "M08": 484,
@@ -163,22 +163,60 @@
       }
     },
     {
-      "id": "B11",
-      "name": "有界核证队列与待核行一一对应",
+      "id": "B11a",
+      "name": "有界核证队列与待核格一一对应",
       "pass": true,
       "detail": {
-        "pending": 13,
+        "pending_cells": 13,
         "queue": 13
+      }
+    },
+    {
+      "id": "B11b",
+      "name": "待核行 = 待核格 + 双消费者重复行；可判行 + 待核行 = 8,638",
+      "pass": true,
+      "detail": {
+        "pending_rows": 15,
+        "pending_cells": 13,
+        "multi_consumer_cells": {
+          "SZ:300852|FIN.COST.YTD|20250930": 2,
+          "SZ:300852|FIN.REV.YTD|20250930": 2
+        },
+        "eligible_rows": 8623
+      }
+    },
+    {
+      "id": "B12",
+      "name": "输入合同的 measured 计数与差额表实算逐项相等",
+      "pass": true,
+      "detail": {
+        "drift": {}
+      }
+    },
+    {
+      "id": "B13",
+      "name": "两份说明文档的资格表/风险表数字与实算一致",
+      "pass": true,
+      "detail": {
+        "violations": [],
+        "table_rows_seen": {
+          "SIGNAL_L3": 2,
+          "QUALITY_RH": 2,
+          "LOW_BASE_CONFIRM": 2,
+          "TOTAL": 2
+        }
       }
     }
   ],
-  "checks_passed": "16/16",
+  "checks_passed": "19/19",
   "blocking_failures": [],
   "release_S05": false,
   "release_note": "自检不等同独立复核；S05 正式运行须新增明确 release_S05 记录。",
   "limits": [
     "未回读 PDF 原文；ELIGIBLE_FOR_S05 只表示结构化证据链齐备。",
     "S04 的 M08 依赖按 {t, t-1y} 冻结展开；S05 侧按公式取 t，差异已在合同登记并提交门审。",
-    "差额表只覆盖 278 家拟消费字段，不是全池来源验收。"
+    "差额表只覆盖 278 家拟消费字段，不是全池来源验收。",
+    "851 行派生毛利率按父键页码追溯（VIA_PARENT）：若门审要求派生值自身页码，M04 全线 HOLD、RH05 归零，且 148 家的 M04 信号依赖同时失效。",
+    "待核按行计 15、按格计 13：四会富仕 SZ:300852 的 FIN.REV.YTD / FIN.COST.YTD@20250930 各被两个指标共用，引用时必须点明口径。"
   ]
 }

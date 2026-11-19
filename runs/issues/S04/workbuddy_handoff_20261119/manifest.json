@@ -1,6 +1,6 @@
 {
   "artifact": "WORKBUDDY_S04_HANDOFF_MANIFEST",
-  "generated_at": "2026-11-19T20:32:08+08:00",
+  "generated_at": "2026-11-19T20:36:20+08:00",
   "plan_version": "20261026_collection_first_v2",
   "unit": "S04_HANDOFF_AND_S05_SOURCE_QUALIFICATION_PREP",
   "author": "WorkBuddy AI",
@@ -16,7 +16,7 @@
     "B": {
       "status": "COMPLETE",
       "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-      "checks": "16/16"
+      "checks": "19/19"
     },
     "C": {
       "status": "PREPARED_NOT_SUBMITTED",
@@ -26,13 +26,13 @@
   "outputs": [
     {
       "path": "S05_GATE_PACKET.md",
-      "bytes": 7724,
-      "sha256": "fd62767f4cbab653ed2eba84592e7ac9c1b16f69abeda6f989d58e0999f0593c"
+      "bytes": 9440,
+      "sha256": "b6ca241d091a11bc93a059b9669c8b0fe31850ee9f0cb8b24fbf6dba42b06a04"
     },
     {
       "path": "baseline_manifest.json",
       "bytes": 3195,
-      "sha256": "fab79ea1468d12884d3723b1bf0817cf390d7ddb357c5f1b734b9524f21ba4c4"
+      "sha256": "6adf0366e3bd67a01b747db2a759117f93fbc1c0b8257379d3e6e859ce1e94ba"
     },
     {
       "path": "bounded_source_verification_queue.csv",
@@ -46,8 +46,8 @@
     },
     {
       "path": "handoff.md",
-      "bytes": 6409,
-      "sha256": "798ecb596327a5b67d75413d7fb0368d7f59c8a637b994220d8464c2a7416dc7"
+      "bytes": 7380,
+      "sha256": "3e4861aa9de9816b10f5e56f6ee90be177134ff386c2d78e02d98d2d9b45dda9"
     },
     {
       "path": "methodology_read_receipt.json",
@@ -56,13 +56,13 @@
     },
     {
       "path": "progress.json",
-      "bytes": 5070,
-      "sha256": "9297b4792a775bcd662819e33e807e7caba38d216ecda9fc6d4167bf7eed6eb2"
+      "bytes": 5606,
+      "sha256": "0da780270af91d06fe1cccd0a662f1acdb88184e91118b2633160528e3ce48a6"
     },
     {
       "path": "review.json",
-      "bytes": 4721,
-      "sha256": "ac3ab8b1eff03c25e63c249a38138617da06d014c2d0b3ee05c9d151f9093fb6"
+      "bytes": 6040,
+      "sha256": "a0865f40baedd17f35cf4e08508a1360bd1aacd3f421ce59fb7f92f6cccb56c7"
     },
     {
       "path": "s05_input_contract_draft.json",
@@ -96,13 +96,13 @@
     },
     {
       "path": "step_b_verify.py",
-      "bytes": 14683,
-      "sha256": "82dbc6ae92458138e36fd6c07103da25179d6c725818d74b06ca226591ad9d03"
+      "bytes": 19196,
+      "sha256": "70431430dc07f70c91e34bcf1bde9a81ec0e4b9de1802315f7fbde696a71a13f"
     },
     {
       "path": "takeover_receipt.json",
       "bytes": 9484,
-      "sha256": "c4d6ab724169c1762a82284783fb5e26e5b23615661fd0e713613975a83c50aa"
+      "sha256": "c26cf9f8c21d42c502f41721a6bbbc4879f273280b25c00bff4294aa0e93d8a0"
     }
   ],
   "inputs_fingerprints": {
@@ -125,6 +125,8 @@
   "notes": [
     "未推送远端；未领取 #39/#40/#53。",
     "Drive 实时下载 ACCESS_BLOCKED，归档核验为 OFFLINE_SNAPSHOT_MATCHING_VERIFIED_REMOTE_RECEIPT。",
-    "S05 正式运行须新增明确 release_S05 记录；本包自检不替代独立复核。"
+    "S05 正式运行须新增明确 release_S05 记录；本包自检不替代独立复核。",
+    "本轮修正交付物内部口径漂移：待核按行 15 / 按格 13 分开计；新增 B11b（行≠格守恒）、B12（合同 JSON 与 CSV 逐项相等）、B13（两份说明文档表格数字与实算相等）三项自检。分类结果与冻结输入未变。",
+    "takeover_receipt.json / baseline_manifest.json / review.json 由 step_a_verify.py 与 step_b_verify.py 重写并带 generated_at；本清单哈希对应本次提交的字节。复跑自检会刷新这三个文件的时间戳，属预期，不是输入漂移。"
   ]
 }

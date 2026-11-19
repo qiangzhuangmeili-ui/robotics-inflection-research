@@ -4,7 +4,7 @@
   "unit": "S04_HANDOFF_AND_S05_SOURCE_QUALIFICATION_PREP",
   "actor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
-  "updated_at": "2026-11-19T21:05:00+08:00",
+  "updated_at": "2026-11-19T20:36:01+08:00",
   "issue_claim": "NOT_CLAIMED",
   "lease": {
     "holder": "Codex",
@@ -33,28 +33,40 @@
         "未重新下载 Drive 二进制（ACCESS_BLOCKED：uc 303→Google 登录页 971,576 B；api/v3 403）",
         "未改归档状态为 VERIFIED（沿用 11-16 回执，本轮标 OFFLINE_SNAPSHOT_MATCHING_VERIFIED_REMOTE_RECEIPT）"
       ],
-      "outputs": ["takeover_receipt.json", "baseline_manifest.json", "status_reconciliation.md", "methodology_read_receipt.json"]
+      "outputs": [
+        "takeover_receipt.json",
+        "baseline_manifest.json",
+        "status_reconciliation.md",
+        "methodology_read_receipt.json"
+      ]
     },
     {
       "id": "B",
       "name": "拟定 S05 用途合同与采用差额",
       "status": "COMPLETE",
       "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-      "checks": "16/16 PASS",
+      "checks": "19/19 PASS",
       "done": [
         "以 278 受限候选为拟议主检查池，776 观察不增补；6 类强制守卫全部登记结转",
         "逐格生成来源采用链：公司/锚期/指标/字段/期间/文档/页码/采集槽/SHA/口径/状态/版本/争议 ID",
-        "8,638 行拟消费字段：8,623 可判、13 待核（5 家）；信号 L3 依赖 3,738 行零开放争议",
+        "8,638 行拟消费字段：8,623 可判、15 行待核（去重 13 个唯一格，5 家）；信号 L3 依赖 3,737 行零开放争议 + 1 行合并口径 UNKNOWN",
         "质量指标 1,390 格裁决：1,191 可判 / 191 不适用 / 8 待核；L3 口径 1,194 PASS / 191 NA / 5 HOLD",
         "低基数 32 行同口径绝对额确认行纳入差额表",
-        "有界核证队列收敛到 13 行，不扩成全池补件"
+        "有界核证队列收敛到 13 个唯一格（对应差额表 15 行），不扩成全池补件",
+        "新增 B11b/B12/B13 三项口径自检：行≠格守恒、合同 JSON 与 CSV 逐项相等、两份说明文档表格数字与实算相等"
       ],
       "not_done": [
         "未跑 S05 正式计算（须 release_S05）",
         "未回读 PDF 原文逐页复核",
         "未处理 776 家观察池的字段（只登记重进条件）"
       ],
-      "outputs": ["s05_input_contract_draft.json", "s05_source_eligibility_delta.csv", "s05_target_assignment.csv", "carryover_register.csv", "bounded_source_verification_queue.csv"]
+      "outputs": [
+        "s05_input_contract_draft.json",
+        "s05_source_eligibility_delta.csv",
+        "s05_target_assignment.csv",
+        "carryover_register.csv",
+        "bounded_source_verification_queue.csv"
+      ]
     },
     {
       "id": "C",
@@ -79,7 +91,7 @@
     }
   ],
   "open_items": [
-    "派生值页码口径（VIA_PARENT）是否满足 L3，需门审确认",
+    "派生值页码口径（VIA_PARENT）是否满足 L3，需门审确认；若否，M04 全线 HOLD 且 148 家的 M04 信号依赖同时失效，影响溢出到候选池本身",
     "M08 期间口径：冻结引擎 {t, t-1y} vs 公式 {t}，需门审统一",
     "冀东装备 SZ:000856 的有效信号依赖落在 UNKNOWN 合并口径行上，S05 是否沿用 Q12 从严",
     "三家候选（立昂微/振华新材/本川智能）RH05 被开放争议阻断，只能 QUALITY_HOLD",
