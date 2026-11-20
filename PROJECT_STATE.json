@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S03_SELF_CHECK_PASS_WITH_LIMITS_S04_READY",
+  "status": "S04_ACCEPTED_WITH_LIMITS_S05_IN_PROGRESS",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -220,16 +220,16 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/39",
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/40",
     "execution_started": true,
     "last_completed_issue": {
-      "issue_key": "S03",
-      "issue_number": 38,
-      "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-      "review_file": "runs/issues/S03/review.json",
-      "review_nature": "SELF_CHECK",
-      "completed_at": "2026-11-06T18:50:54+08:00",
-      "coverage": 1054
+      "issue_key": "S04",
+      "issue_number": 39,
+      "decision": "ACCEPTED_WITH_LIMITS_FOR_FROZEN_S04_USE",
+      "review_file": "runs/issues/S04/completion_20261114/final_peer_review_20261116/peer_review.json",
+      "review_availability": "VERIFIED_DRIVE_ARCHIVE_MEMBER",
+      "coverage": 1054,
+      "follow_on_release_record": "runs/issues/S05/release_20261120.json"
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -414,7 +414,7 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "S03_SELF_CHECK_PASS_WITH_LIMITS",
+    "current_gate": "S05_IN_PROGRESS",
     "release_S00": false,
     "last_review": {
       "issue_key": "S03",
@@ -517,7 +517,82 @@
       "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
     },
     "release_S03": true,
-    "release_S04": true
+    "release_S04": true,
+    "current_s04_formal_review": {
+      "recorded_at": "2026-11-16T02:42:08.497Z",
+      "decision": "ACCEPTED_WITH_LIMITS_FOR_FROZEN_CURRENT_S04_USE",
+      "review_nature": "PARENT_ADOPTION_OF_SEPARATE_AGENT_FORMAL_REVIEWS",
+      "source_use_scope": "Current frozen S04 screening only; not whole-pool S00 source closure, external human/vendor audit, robotics-business or investment adoption.",
+      "archive": {
+        "status": "VERIFIED",
+        "file_id": "1VrpWyQct6xI5PpRdGNs6KFZmubbspYEA",
+        "url": "https://drive.google.com/file/d/1VrpWyQct6xI5PpRdGNs6KFZmubbspYEA/view?usp=drivesdk",
+        "parent_folder_id": "13oqd9t1Lv2GgDIMUVZbzaDbmLuTa7CWa",
+        "bytes": 24347716,
+        "sha256": "87f4f4ee8bb884cdfb9203a0e4958e53148b710681948e7957663bef9e9294d6",
+        "binary_readback_sha256_matches": true,
+        "parent_matches": true,
+        "sharing_changed": false
+      },
+      "records_in_archive": {
+        "source_supplement": {
+          "archive_member": "runs/issues/S00/completion_20261114/formal_gate_review_20261115/review.json",
+          "sha256": "d906efffa47321b68dec8e847c15122ca87cde17667cad59e75360396b42d2d1",
+          "decision": "ACCEPTED_WITH_LIMITS_FOR_CURRENT_S04_USE"
+        },
+        "independent_second_round": {
+          "archive_member": "runs/issues/S04/completion_20261114/final_peer_review_20261116/peer_review.json",
+          "sha256": "ab249f1806e1997fb0f938b216aaeb17def7f460b03a08b694acafd7d2e7c924",
+          "decision": "ACCEPTED_WITH_LIMITS_FOR_FROZEN_CURRENT_S04_USE"
+        },
+        "qualification_manifest": {
+          "archive_member": "runs/issues/S04/completion_20261114/qualification_v3_20261115/manifest.json",
+          "sha256": "2be3081c47a634e960709bb16e9bf2327e109057bfbfd5509e5ce8fb27785144"
+        },
+        "parent_adoption": {
+          "archive_member": "runs/issues/S04/completion_20261114/final_delivery_20261116/review.json"
+        },
+        "report": {
+          "archive_member": "runs/issues/S04/completion_20261114/final_delivery_20261116/REPORT.md",
+          "sha256": "494c59f686fcd73b193330d9e52205dcfad04206931fd4bbde89b0498e862adf"
+        }
+      },
+      "scope_reconciliation": {
+        "ruling": "runs/issues/S00/errata_20261111_v5/codex_ruling_round5.md section 9 Q2",
+        "application": "Pending members block signals that actually depend on them; other sufficient source-qualified dimensions may qualify; evidenced nonconsumed members carry forward with explicit limits.",
+        "original_literal_whole_pool_source_requirement_complete": false,
+        "whole_pool_S00_source_complete": false,
+        "frozen_scope_carryover_accepted": true,
+        "quality_risk_unknowns_remain": true,
+        "S05_release": false,
+        "issue_closure_granted": false
+      },
+      "S05_release": true,
+      "remote_artifacts_available": true,
+      "archive_status": "VERIFIED",
+      "remote_lease_preserved": "Codex/#53",
+      "historical_archive_pending_wording": "Frozen archive documents retain execution-time status. This later verified record supersedes archive status only.",
+      "S05_release_at_archive": false,
+      "subsequent_S05_release_record": "runs/issues/S05/release_20261120.json"
+    },
+    "current_gate_before_s04_archive_20261116": "S03_SELF_CHECK_PASS_WITH_LIMITS",
+    "release_S05": true,
+    "s05_release": {
+      "decision": "APPROVED_TO_START_S05_WITH_LIMITS",
+      "technical_review": "runs/issues/S04/codex_ruling_s05_v22_20261120.md",
+      "release_record": "runs/issues/S05/release_20261120.json",
+      "approved_at": "2026-11-20T20:49:03+08:00",
+      "scope": "Frozen V2.2, 278 companies, S05 only"
+    },
+    "handoff_to_s05": {
+      "issue_number": 40,
+      "issue_key": "S05",
+      "status": "READY",
+      "recommended_executor": "WorkBuddy",
+      "claim_receipt": "PENDING",
+      "release_file": "runs/issues/S05/release_20261120.json",
+      "handoff_file": "runs/issues/S05/handoff_from_s04_20261120.md"
+    }
   },
   "pre_issue_breakdown_first_actions": [
     "M00：先复用现有Drive和本机资料，按1054家公司批量收集基础财务、定期报告和公告目录；暂不启动新的逐公司深读。",
@@ -1052,7 +1127,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S02_REPAIR_V2_EXTERNAL_RECHECK",
+  "current_gate": "S05_IN_PROGRESS",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1097,7 +1172,7 @@
     "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除摘要/非财报更正/冻结范围外期间",
     "correction_discovery_rows": 223
   },
-  "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/37",
+  "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/40",
   "s00_stage": {
     "issue": "S00 / #35",
     "decision": "ACCEPTED_WITH_LIMITS",
@@ -1194,9 +1269,9 @@
     }
   },
   "next_issue": {
-    "key": "S04",
-    "number": 39,
-    "reason": "从 S03/rerun_20261106 进入多指标收紧与100家定向核验；不得把443家预备状态当作已验收候选"
+    "key": "S05",
+    "number": 40,
+    "reason": "用户已批准 S05 限范围开工。#53 占用释放，残余勘误保持开放。#40 READY，等待接任执行者单卡领取，建议 WorkBuddy。"
   },
   "s01_stage": {
     "issue": "S01 / #36",
