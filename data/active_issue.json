@@ -1,20 +1,19 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 53,
-  "active_issue_key": "S00_ERRATA_REVIEW",
-  "executor": "Codex",
-  "started_at": "2026-11-11 22:10:00 +08:00",
-  "status": "S04_FORMAL_REVIEW_ARCHIVED_WITH_LIMITS_S05_LOCKED",
-  "claim_note": "Codex/#53 lease retained. S00 supplement and S04 second formal review accepted with limits for frozen current S04 use; delivery ZIP verified on restricted Drive. Whole-pool S00 source closure and S05 release are not granted.",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
+  "started_at": null,
+  "status": "S05_RELEASED_READY_FOR_CLAIM",
+  "claim_note": "用户已批准 S05 限范围开工。#53 占用释放，残余勘误保持开放。#40 READY，等待接任执行者单卡领取，建议 WorkBuddy。",
   "last_completed": {
     "issue_key": "S04",
     "issue_number": 39,
-    "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-    "review_file": "runs/issues/S04/review.json",
-    "review_nature": "SELF_CHECK",
-    "completed_at": "2026-11-10T21:10:00+08:00",
+    "decision": "ACCEPTED_WITH_LIMITS_FOR_FROZEN_S04_USE",
+    "review_file": "runs/issues/S04/completion_20261114/final_peer_review_20261116/peer_review.json",
+    "review_availability": "VERIFIED_DRIVE_ARCHIVE_MEMBER",
     "coverage": 1054,
-    "external_review": "RETURN_FOR_REWORK_ADDRESSED_PENDING_RECHECK"
+    "follow_on_release_record": "runs/issues/S05/release_20261120.json"
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -23,9 +22,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 39,
-  "next_recommended_issue_key": "S04",
-  "next_recommended_reason": "Verified archive is the current handoff. Preserve Q2 scope and unresolved source/quality limits; do not auto-release S05 or treat #39/#53 as globally closed.",
+  "next_recommended_issue_number": 40,
+  "next_recommended_issue_key": "S05",
+  "next_recommended_reason": "用户已批准 S05 限范围开工。#53 占用释放，残余勘误保持开放。#40 READY，等待接任执行者单卡领取，建议 WorkBuddy。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -244,6 +243,16 @@
       "completed_at": "2026-11-06T18:50:54+08:00",
       "executor": "Codex",
       "note": "Claim was recorded online before execution; see commit ad0634ea"
+    },
+    "s53_lease_release_for_s05_20261120": {
+      "issue_number": 53,
+      "issue_key": "S00_ERRATA_REVIEW",
+      "executor": "Codex",
+      "started_at": "2026-11-11 22:10:00 +08:00",
+      "released_at": "2026-11-20T20:49:03+08:00",
+      "issue_state": "OPEN",
+      "checkpoint_file": "runs/issues/S05/release_20261120.json",
+      "prior_controller_blob_sha": "a8195c81d4ff2aab630c08bc843ef043eaf4350d"
     }
   },
   "current_acceptance": {
@@ -558,7 +567,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-14T12:20:00+08:00",
+  "updated_at": "2026-11-20T20:49:03+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -622,10 +631,29 @@
       "S05_release": false,
       "issue_closure_granted": false
     },
-    "S05_release": false,
+    "S05_release": true,
     "remote_artifacts_available": true,
     "archive_status": "VERIFIED",
     "remote_lease_preserved": "Codex/#53",
-    "historical_archive_pending_wording": "Frozen archive documents retain execution-time status. This later verified record supersedes archive status only."
+    "historical_archive_pending_wording": "Frozen archive documents retain execution-time status. This later verified record supersedes archive status only.",
+    "S05_release_at_archive": false,
+    "subsequent_S05_release_record": "runs/issues/S05/release_20261120.json"
+  },
+  "release_S05": true,
+  "s05_release": {
+    "decision": "APPROVED_TO_START_S05_WITH_LIMITS",
+    "technical_review": "runs/issues/S04/codex_ruling_s05_v22_20261120.md",
+    "release_record": "runs/issues/S05/release_20261120.json",
+    "approved_at": "2026-11-20T20:49:03+08:00",
+    "scope": "Frozen V2.2, 278 companies, S05 only"
+  },
+  "handoff_to_s05": {
+    "issue_number": 40,
+    "issue_key": "S05",
+    "status": "READY",
+    "recommended_executor": "WorkBuddy",
+    "claim_receipt": "PENDING",
+    "release_file": "runs/issues/S05/release_20261120.json",
+    "handoff_file": "runs/issues/S05/handoff_from_s04_20261120.md"
   }
 }

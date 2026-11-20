@@ -1,0 +1,111 @@
+{
+  "artifact": "S05_SCOPED_RELEASE_AND_S53_HANDOFF",
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "APPROVED_TO_START_S05_WITH_LIMITS",
+  "release_S05": true,
+  "recorded_at": "2026-11-20T20:49:03+08:00",
+  "approval": {
+    "by": "USER",
+    "quote": "好的，批准放行并交接到#40。"
+  },
+  "prior_issue": {
+    "number": 53,
+    "key": "S00_ERRATA_REVIEW",
+    "executor": "Codex",
+    "lease": "RELEASED",
+    "issue_state": "OPEN",
+    "prior_main": "a308fab19c17ea0184df0d730f2a5723760f2ef4",
+    "prior_controller_blob_sha": "a8195c81d4ff2aab630c08bc843ef043eaf4350d",
+    "checkpoint": "Freeze the current S00 v5 and Q2-scoped S04 records, with all residual source disputes, eight unadopted parent proposals and quality unknowns preserved.",
+    "whole_pool_S00_source_complete": false
+  },
+  "target": {
+    "number": 40,
+    "key": "S05",
+    "status": "READY",
+    "recommended_executor": "WorkBuddy",
+    "receipt": "PENDING",
+    "claimed": false,
+    "handoff": "runs/issues/S05/handoff_from_s04_20261120.md"
+  },
+  "reviewed_input": {
+    "contract_id": "S05_INPUT_CONTRACT_20261120_V22",
+    "worktree_commit": "dae485f06cf88d167a7bc5a6d4105914db5068a3",
+    "worktree_branch": "s04/l2-tightening-20261108",
+    "path": "runs/issues/S04/workbuddy_handoff_20261119/v2_2_20261120",
+    "availability": "Verified local worktree. The release commit publishes pointers and review text only.",
+    "frozen_B": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+    "frozen_B_sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+    "files_sha256": {
+      "manifest.json": "98b835b77721b81392d56428ea0b7be726e3344ac199429893035d424528e54e",
+      "s05_input_contract_v22.json": "bb796b1ced9990a4d47e1be7bc7f6e64cdbd9ca1fa94e1242a22cd86d04f7532",
+      "s05_applicability_v22.csv": "ad06003d9503b74f4a828fe245e892c96e552080f0daf190f6492ea892205268",
+      "s05_source_eligibility_v22.csv": "129dbe9de4e3e9955f034c0874addeae17eb2d3e236ad162d0fd2a7f59b6b0e3",
+      "s05_ca_source_nonadmission_v22.csv": "6177055309bc869a90ac02aefb336e83702448c3fd2a2842f46f82a39101ec1c"
+    }
+  },
+  "technical_review": {
+    "decision": "ACCEPTED_WITH_LIMITS_FOR_FROZEN_S05_INPUT",
+    "path": "runs/issues/S04/codex_ruling_s05_v22_20261120.md",
+    "manifest_files_verified": 26,
+    "replayed_CSV_files_identical": 13,
+    "producer_self_checks": "39/39"
+  },
+  "scope": {
+    "universe": 1054,
+    "primary_candidates": 278,
+    "observe_or_guard_only": 776,
+    "knowledge_as_of": "2026-10-25",
+    "metrics": [
+      "M04",
+      "M08",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "additional_inputs": [
+      "frozen effective-signal L3 dependencies",
+      "low-base and absolute-channel source dependencies",
+      "applicability evidence",
+      "traceable existing RH06/Q09 flags"
+    ],
+    "deliverables": [
+      "quality_flags.csv",
+      "quality_pass.csv",
+      "quality_observe.csv",
+      "quality_decision_log.csv",
+      "source_eligibility.csv",
+      "input_contract.json",
+      "manifest.json",
+      "handoff.md",
+      "review.json"
+    ]
+  },
+  "guards": {
+    "rh02": {
+      "evaluable": 118,
+      "project_mode_not_applicable": 31,
+      "hold": 129
+    },
+    "rh03": {
+      "evaluable": 133,
+      "both_periods_no_usable_amount": 126,
+      "single_sided_gap": 18,
+      "unreadable_or_missing": 1
+    },
+    "existing_pending_consumer_rows": 15,
+    "existing_pending_unique_cells": 13,
+    "nonadmitted_CA_keys": 3,
+    "cutoff_guard": 4,
+    "anchor_hold": 1,
+    "quality_source_unknown_observe_companies": 15,
+    "held_parent_members": 8,
+    "Jidong": "M07/SG09 blocked for consolidation scope UNKNOWN; remaining CASH only; route to quality_observe"
+  },
+  "downstream": {
+    "S05_completed": false,
+    "S06_released_by_this_record": false,
+    "S07_released": false,
+    "S08_released": false
+  }
+}
