@@ -106,3 +106,32 @@ python runs/issues/S04/workbuddy_handoff_20261119/v2_20261120/step_v2_build.py  
 python runs/issues/S04/workbuddy_handoff_20261119/v2_20261120/step_v2_verify.py          # 21/21
 python runs/issues/S04/workbuddy_handoff_20261119/v2_20261120/step_v2_report_numcheck.py # 53/53
 ```
+
+## 9. V2.1 返修（2026-11-20，J1 否决后）
+
+裁决：`runs/issues/S04/codex_ruling_s05_v2_20261120.md`，**J1 否决、J2/J3 通过**，`release_S05` 仍 false。V2.1 在 `v2_1_20261120/`，V2 保留为被裁决对象不删不改。
+
+**J1 撤销**：合同资产空白不再补零，`REPORTED_ABSENT → 0` 的映射路径也删除。当期 151 家有金额、127 家空白；上年 136 有金额、141 空白、1 期无记录。只有原文明确写零（`value_raw = 0.00` 且有页码，共 14 家）可采用。
+
+**RH02 = 120 可判 / 31 项目制不适用 / 127 待核**，与裁决复算逐项相同。
+
+| 提示 | 可判 | 不适用 | 单边缺口 | 待核 |
+|---|---:|---:|---:|---:|
+| RH01 | 277 | 0 | 0 | 1 |
+| RH02 | **120** | **31** | 0 | **127** |
+| RH03 | 135 | 125 | **17** | 1 |
+| RH04 | 240 | 36 | 0 | 2 |
+| RH05 | 274 | 0 | 0 | 4 |
+
+**行级差额实际 517 行**，比裁决预估的 504 行多 13 行：504 行 M11（J1 撤销）+ 13 行 M04（V2 遗留缺陷——公司级 RH05 已判待核，行级却仍写 ELIGIBLE）。实际总数 **8,021 / 76 / 526 / 15**，预估为 8,034 / 76 / 513 / 15。差额已公开写入 `s05_v2_v21_diff.json`。
+
+Q10 规则抽到 `s05_q10_rule.py` 单一来源（阈值只此一处），两支独立成立：31 家项目制 = 只靠资产支 1 + 只靠营收支 19 + 两支都过 11。适用性表 M11 行另附 CA / 资产总计 / 营业收入 三个决策输入的来源，补齐裁决点名的 151 个资产键与 16 个当期合同资产键。
+
+自检 `v2_1_20261120/s05_v21_review.json` **31/31**（22 结构 + 8 反例 + 1 来源完整度）；汇报数字校验 **55/55**。
+
+```bash
+python runs/issues/S04/workbuddy_handoff_20261119/v2_1_20261120/step_v21_build.py           # 重建 V2.1
+python runs/issues/S04/workbuddy_handoff_20261119/v2_1_20261120/step_v21_verify.py          # 31/31
+python runs/issues/S04/workbuddy_handoff_20261119/v2_1_20261120/step_v21_report_numcheck.py # 55/55
+```
+

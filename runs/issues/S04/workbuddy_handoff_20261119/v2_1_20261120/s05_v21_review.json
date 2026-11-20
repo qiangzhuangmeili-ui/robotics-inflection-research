@@ -1,0 +1,350 @@
+{
+  "artifact": "S05_V21_SELF_CHECK",
+  "generated_at": "2026-11-20T20:10:08+08:00",
+  "plan_version": "20261026_collection_first_v2",
+  "ruling": "runs/issues/S04/codex_ruling_s05_v2_20261120.md",
+  "author": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "checks": [
+    {
+      "id": "V1",
+      "name": "适用性表 = 278 × 5 且每家每指标唯一",
+      "pass": true,
+      "detail": {
+        "rows": 1390,
+        "companies": 278,
+        "multiplicity": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "V2",
+      "name": "五个风险提示四态守恒（各和 = 278）",
+      "pass": true,
+      "detail": {
+        "bad": {}
+      }
+    },
+    {
+      "id": "V3",
+      "name": "RH02 = 120 可判 / 31 项目制不适用 / 127 待核（与裁决复算一致）",
+      "pass": true,
+      "detail": {
+        "待核": 127,
+        "可判": 120,
+        "不适用": 31
+      }
+    },
+    {
+      "id": "V3b",
+      "name": "RH02 判定明细 = 120 APPLICABLE + 31 项目制 + 127 未知",
+      "pass": true,
+      "detail": {
+        "UNKNOWN_CA_BLANK": 127,
+        "APPLICABLE": 120,
+        "NOT_APPLICABLE_PROJECT_MODE": 31
+      }
+    },
+    {
+      "id": "V4",
+      "name": "8,638 行 = 8,021 可用 + 76 不适用 + 526 待核 + 15 逐格待核",
+      "pass": true,
+      "detail": {
+        "ELIGIBLE_FOR_S05_USE": 8021,
+        "HOLD_APPLICABILITY_UNKNOWN": 526,
+        "NOT_APPLICABLE": 76,
+        "PENDING_OPEN_DISPUTE": 5,
+        "PENDING_MISSING_INPUT": 9,
+        "PENDING_SCOPE_NOT_CONSOLIDATED": 1
+      }
+    },
+    {
+      "id": "V5",
+      "name": "V2→V2.1 转移 = 504 行 M11 + 13 行 M04（合计 517，与 8,538-8,021 相符）",
+      "pass": true,
+      "detail": {
+        "m11": 504,
+        "m04": 13,
+        "total": 517
+      }
+    },
+    {
+      "id": "V6",
+      "name": "M11 影响表 508 行 / 127 家 / 504 行改变，并披露与裁决预估 504 的差额",
+      "pass": true,
+      "detail": {
+        "rows": 508,
+        "changed": 504
+      }
+    },
+    {
+      "id": "V7",
+      "name": "合同资产无金额的公司不得出现任何 Q10 比值（不补零、不计算）",
+      "pass": true,
+      "detail": {
+        "violations": [],
+        "count": 0
+      }
+    },
+    {
+      "id": "V8",
+      "name": "原文明确零（ca=0.00、有页码）可采用：两支均 0%，Q10 非项目制、RH02 适用，共 14 家",
+      "pass": true,
+      "detail": {
+        "count": 14,
+        "all_zero_non_project_applicable": true
+      }
+    },
+    {
+      "id": "V9",
+      "name": "决策输入来源齐备：278×3 键均有文档；278 个资产键正分母（含 151 个决定性）；16 个当期合同资产键补入适用性表",
+      "pass": true,
+      "detail": {
+        "missing_doc": 0,
+        "missing_page": 0,
+        "ca_with_value": 151,
+        "asset_positive": 278,
+        "asset_ok_for_151": true,
+        "ca_not_in_consumption_table": 16
+      }
+    },
+    {
+      "id": "V10",
+      "name": "31 家项目制 = 只靠资产支 1 + 只靠营收支 19 + 两支都过 11（OR 未写成 AND）",
+      "pass": true,
+      "detail": {
+        "only_branch1": 1,
+        "only_branch2": 19,
+        "both": 11
+      }
+    },
+    {
+      "id": "V11",
+      "name": "RH03 = 135 可判 / 125 双期无可采用金额 / 17 单边缺口 / 1 待核；反事实有向",
+      "pass": true,
+      "detail": {
+        "single_sided": 17,
+        "both_blank": 125,
+        "max_positive_pp": "0.819421",
+        "dabo": "-0.004709"
+      }
+    },
+    {
+      "id": "V12",
+      "name": "RH03 两侧抽取记录分别落到实际文档（125 双期空白 + 17 单边缺口）",
+      "pass": true,
+      "detail": {
+        "both_blank_missing": 0,
+        "single_sided_missing": 0
+      }
+    },
+    {
+      "id": "V13",
+      "name": "RH04 = 240 可判 / 36 不适用（35 负分母 + 1 正小分母）/ 2 待核",
+      "pass": true,
+      "detail": {
+        "NEGATIVE_DENOMINATOR": 35,
+        "ZERO_BASE_FLOOR_POSITIVE": 1
+      }
+    },
+    {
+      "id": "V14",
+      "name": "父链 851 行，0 缺项，851/851 同文档，最大复算差 < 2e-6 pp",
+      "pass": true,
+      "detail": {
+        "rows": 851,
+        "max_diff": "4.9821587725187871925E-7"
+      }
+    },
+    {
+      "id": "V15",
+      "name": "M08 804 行 = 484 RH04 输入 + 160 信号当期 + 160 继承 S04",
+      "pass": true,
+      "detail": {
+        "RH04_INPUT": 484,
+        "INHERITED_S04_SIGNAL_CHECK": 160,
+        "SIGNAL_DEP_AT_T": 160
+      }
+    },
+    {
+      "id": "V16",
+      "name": "Q4：839 项处置命中 0，且 317 家与 278 交集为空",
+      "pass": true,
+      "detail": {
+        "q4_rows": 0,
+        "dispositions": 839,
+        "intersection": 0
+      }
+    },
+    {
+      "id": "V17",
+      "name": "RH06 既有 Q09 标记 38 家已登记",
+      "pass": true,
+      "detail": {
+        "companies": 38
+      }
+    },
+    {
+      "id": "V18",
+      "name": "逐格待核 15 行 / 13 格 / 5 家；冀东装备阻断 SG09 后仅剩 CASH",
+      "pass": true,
+      "detail": {
+        "rows": 15,
+        "cells": 13,
+        "jiedong": "SG09"
+      }
+    },
+    {
+      "id": "V19",
+      "name": "判定为待核/不适用时，对应行不得仍是 ELIGIBLE",
+      "pass": true,
+      "detail": {
+        "conflicts": [],
+        "count": 0
+      }
+    },
+    {
+      "id": "V20",
+      "name": "契约：release_S05=false；J1 否决、J2/J3 通过；两个分支指针分别记录",
+      "pass": true,
+      "detail": {
+        "release_S05": false,
+        "judgments": {
+          "J1": "REVOKED_BY_GATE",
+          "J2": "PASSED_BY_GATE",
+          "J3": "PASSED_BY_GATE"
+        },
+        "online": "a308fab19c17ea0184df0d730f2a5723760f2ef4",
+        "local": "15dd324c2dcebc7a9e64192c42f69fe704abe652"
+      }
+    },
+    {
+      "id": "V21",
+      "name": "冻结输入指纹未变（peer/来源补充/资格manifest/B/v3规则）",
+      "pass": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "V22",
+      "name": ".md/.json/.py 一律 LF",
+      "pass": true,
+      "detail": {
+        "files_with_crlf": []
+      }
+    },
+    {
+      "id": "CE1",
+      "name": "合同资产空白 → UNKNOWN_CA_BLANK，不补零、不出比值",
+      "pass": true,
+      "detail": {
+        "verdict": "UNKNOWN_CA_BLANK",
+        "branch1_pct": "",
+        "branch2_pct": "",
+        "b1_status": "CA_NOT_USABLE",
+        "b2_status": "CA_NOT_USABLE",
+        "reason": "合同资产当期状态为 REPORTED_BLANK，无原文金额，按 J1 保留未知，不补零、不推定"
+      }
+    },
+    {
+      "id": "CE2",
+      "name": "合同资产未列示 → UNKNOWN_CA_NOT_USABLE（REPORTED_ABSENT 不映射为零）",
+      "pass": true,
+      "detail": {
+        "verdict": "UNKNOWN_CA_NOT_USABLE",
+        "branch1_pct": "",
+        "branch2_pct": "",
+        "b1_status": "CA_NOT_USABLE",
+        "b2_status": "CA_NOT_USABLE",
+        "reason": "合同资产当期状态为 REPORTED_ABSENT，无原文金额，按 J1 保留未知，不补零、不推定"
+      }
+    },
+    {
+      "id": "CE3",
+      "name": "原文明确零 → 可采用，0% / 0%，判 NON_PROJECT",
+      "pass": true,
+      "detail": {
+        "verdict": "NON_PROJECT",
+        "branch1_pct": "0",
+        "branch2_pct": "0",
+        "b1_status": "COMPUTED",
+        "b2_status": "COMPUTED",
+        "reason": "两支均有证据且未达门槛（资产支 0% ≤ 5%，营收支 0% ≤ 10%）"
+      }
+    },
+    {
+      "id": "CE4",
+      "name": "资产分母不可用不妨碍营收支独立确立 PROJECT_MODE",
+      "pass": true,
+      "detail": {
+        "verdict": "PROJECT_MODE",
+        "branch1_pct": "",
+        "branch2_pct": "20.0",
+        "b1_status": "DENOMINATOR_REPORTED_BLANK",
+        "b2_status": "COMPUTED",
+        "reason": "项目制：营收支 20% > 10%"
+      }
+    },
+    {
+      "id": "CE5",
+      "name": "营收分母不可用不妨碍资产支独立确立 PROJECT_MODE",
+      "pass": true,
+      "detail": {
+        "verdict": "PROJECT_MODE",
+        "branch1_pct": "20.0",
+        "branch2_pct": "",
+        "b1_status": "COMPUTED",
+        "b2_status": "DENOMINATOR_REPORTED_BLANK",
+        "reason": "项目制：资产支 20% > 5%"
+      }
+    },
+    {
+      "id": "CE6",
+      "name": "仅一支算出且未达门槛 → UNKNOWN_DENOMINATOR（不得判 NON_PROJECT）",
+      "pass": true,
+      "detail": {
+        "verdict": "UNKNOWN_DENOMINATOR",
+        "branch1_pct": "1.00",
+        "branch2_pct": "",
+        "b1_status": "COMPUTED",
+        "b2_status": "DENOMINATOR_REPORTED_BLANK",
+        "reason": "合同资产有金额，但两支分母均不可用（OK / OK），无法判定"
+      }
+    },
+    {
+      "id": "CE7",
+      "name": "资产总计非正 → 该支不可用，营收支仍可独立成立",
+      "pass": true,
+      "detail": {
+        "verdict": "PROJECT_MODE",
+        "branch1_pct": "",
+        "branch2_pct": "20.0",
+        "b1_status": "DENOMINATOR_NON_POSITIVE",
+        "b2_status": "COMPUTED",
+        "reason": "项目制：营收支 20% > 10%"
+      }
+    },
+    {
+      "id": "CE8",
+      "name": "单边缺口反事实按有向差：大博 -0.004709、瑞凌 +0.819421",
+      "pass": true,
+      "detail": {
+        "dabo": "-0.004709",
+        "ruiling": "0.819421"
+      }
+    }
+  ],
+  "checks_passed": "31/31",
+  "blocking_failures": [],
+  "release_S05": false,
+  "release_note": "自检不等同独立复核；V2.1 须经门审明确 release_S05 后才可开工。",
+  "limits": [
+    "未回读 PDF 原页：Q10 与 M12 的科目证据取自 A03 逐文档字段抽取记录，不是人工翻页。",
+    "RH02 待核 127 家的合同资产金额仍未取得；本轮只做隔离与依据补齐，不逐页核。",
+    "四会富仕 SZ:300852 同时缺上一期存货/营业成本，RH02 仍需另补两格。",
+    "冀东装备 SZ:000856 的 SG09 合并口径仍 UNKNOWN，S05 归观察，S04 资格不动。"
+  ]
+}
