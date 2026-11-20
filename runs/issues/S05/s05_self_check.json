@@ -1,0 +1,241 @@
+{
+  "artifact": "S05_SELF_CHECK",
+  "issue": "S05 / #40",
+  "executor": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "checks_passed": 46,
+  "checks_total": 46,
+  "verdict": "SELF_CHECK_PASS",
+  "results": [
+    {
+      "name": "V01 决策行 = 278",
+      "pass": true,
+      "detail": "278"
+    },
+    {
+      "name": "V02 主键无重复",
+      "pass": true,
+      "detail": "278"
+    },
+    {
+      "name": "V03 主键集合与 tight_pass 完全一致",
+      "pass": true,
+      "detail": "278"
+    },
+    {
+      "name": "V04 通过 + 观察 = 278",
+      "pass": true,
+      "detail": "277+1"
+    },
+    {
+      "name": "V05 通过/观察无交集且并集 = 278",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V06 标记行 = 278×5",
+      "pass": true,
+      "detail": "1390"
+    },
+    {
+      "name": "V07 标记行覆盖全部公司×指标组合",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V08 来源资格行 = 6076（仅五指标）",
+      "pass": true,
+      "detail": "6076"
+    },
+    {
+      "name": "V09 来源资格指标集合 = 五指标",
+      "pass": true,
+      "detail": "['M04', 'M08', 'M10', 'M11', 'M12']"
+    },
+    {
+      "name": "V10 指标状态词表封闭",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V11 RH 状态词表封闭",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V12 RH01 277 可判 / 1 待核",
+      "pass": true,
+      "detail": "277/1"
+    },
+    {
+      "name": "V13 RH02 118 可判 / 31 项目制不适用 / 129 待核",
+      "pass": true,
+      "detail": "118/31/129"
+    },
+    {
+      "name": "V14 RH03 133 可判 / 126 双期无金额 / 18 单边 / 1 待核",
+      "pass": true,
+      "detail": "133/126/18/1"
+    },
+    {
+      "name": "V15 RH04 240 可判 / 36 不适用（35 负分母 + 1 零基数）",
+      "pass": true,
+      "detail": "240/35/1"
+    },
+    {
+      "name": "V16 RH05 274 可判 / 4 待核",
+      "pass": true,
+      "detail": "274/3/1"
+    },
+    {
+      "name": "V17 Q09 一次性损益主导 = 38（与 V2.2 实测一致）",
+      "pass": true,
+      "detail": "38 vs 38"
+    },
+    {
+      "name": "V18 RH06 触发数 = Q09 标记数",
+      "pass": true,
+      "detail": "38"
+    },
+    {
+      "name": "V19 毛利率父键追溯行 = 851（与 V2.2 实测一致）",
+      "pass": true,
+      "detail": "851 vs 851"
+    },
+    {
+      "name": "V20 毛利率行 = 851 父键 + 1 行缺失 = 852",
+      "pass": true,
+      "detail": "852"
+    },
+    {
+      "name": "V21 来源不准入登记 = 3 格",
+      "pass": true,
+      "detail": "3"
+    },
+    {
+      "name": "V22 三格中无一被采用（银宝/胜蓝在表内 adopted=NO；卓翼未进消费登记）",
+      "pass": true,
+      "detail": "在表内 2/3，被采用 0"
+    },
+    {
+      "name": "V23 卓翼 M12 = 双期无可采用金额",
+      "pass": true,
+      "detail": "BOTH_BLANK_NO_USABLE_AMOUNT"
+    },
+    {
+      "name": "V24 银宝/胜蓝 M12 = 单边缺口",
+      "pass": true,
+      "detail": "SINGLE_SIDED_GAP/SINGLE_SIDED_GAP"
+    },
+    {
+      "name": "V25 待核行 = 15 / 唯一格 = 13 / 公司 = 5",
+      "pass": true,
+      "detail": "15/13/5"
+    },
+    {
+      "name": "V26 待核公司全部落在 278 主键内",
+      "pass": true,
+      "detail": "['SH:605358', 'SH:688707', 'SZ:000856', 'SZ:300852', 'SZ:300964']"
+    },
+    {
+      "name": "V27 冀东装备进入观察",
+      "pass": true,
+      "detail": "QUALITY_HOLD"
+    },
+    {
+      "name": "V28 冀东装备撤下 SG09 后仅剩 CASH",
+      "pass": true,
+      "detail": "SG09|CASH"
+    },
+    {
+      "name": "V29 通过名单每家公司撤维后仍 ≥ 2 维度",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V30 通过名单每家公司 L3 闸门 = EVIDENCE_OK",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V30b L3 闸门结果与决策词表互不混用",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V31 非 OK 状态一律无值；OK 状态一律有值",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V32 观察池 776 家原样携带",
+      "pass": true,
+      "detail": "776"
+    },
+    {
+      "name": "V33 776 家主键与 tight_observe 完全一致",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V34 776 家中 15 家 PENDING_CE_SOURCE 保留",
+      "pass": true,
+      "detail": "{'NO_ADDITIONAL_CE_FLAG': 761, 'PENDING_CE_SOURCE': 15}"
+    },
+    {
+      "name": "V35 时间隔离 4 家、锚点待核 1 家保留",
+      "pass": true,
+      "detail": "4/1"
+    },
+    {
+      "name": "V36 776 家未被本轮复核改写",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V37 超 valid_range 值全部登记且非阻断",
+      "pass": true,
+      "detail": "20"
+    },
+    {
+      "name": "V38 超范围指标分布 = M08 15 / M10 4 / M12 1",
+      "pass": true,
+      "detail": "{'M08': 15, 'M10': 4, 'M12': 1}"
+    },
+    {
+      "name": "X01 五指标可判值与 S01 掩码表逐格一致（容差 1e-6）",
+      "pass": true,
+      "detail": "比对 1042 格，不一致 0 格 []"
+    },
+    {
+      "name": "X02 比对格数 = 274+240+277+118+133 = 1042",
+      "pass": true,
+      "detail": "{'M04': 274, 'M08': 240, 'M10': 277, 'M11': 118, 'M12': 133}"
+    },
+    {
+      "name": "X03 V2.2 五份输入指纹 5/5 匹配放行记录",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "X04 冻结 B 指纹匹配放行记录",
+      "pass": true,
+      "detail": "fc312c52ace51feb"
+    },
+    {
+      "name": "X05 18 家单边缺口即使填零也不触发 RH03（J2）",
+      "pass": true,
+      "detail": "18 家，触发 0 家"
+    },
+    {
+      "name": "V39 CSV 为 CRLF",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V40 md/json/py 为 LF",
+      "pass": true,
+      "detail": "[]"
+    }
+  ]
+}

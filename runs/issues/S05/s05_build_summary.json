@@ -1,0 +1,149 @@
+{
+  "generated_at": "2026-11-20T21:48:24+08:00",
+  "issue": "S05 / #40",
+  "executor": "WorkBuddy AI",
+  "plan_version": "20261026_collection_first_v2",
+  "input_contract": "S05_INPUT_CONTRACT_20261120_V22",
+  "primary_pool": 278,
+  "decision_counts": {
+    "QUALITY_PASS": 277,
+    "QUALITY_HOLD": 1
+  },
+  "metric_status_counts": {
+    "M04": {
+      "OK": 274,
+      "HOLD_DECISIVE_CELL_PENDING": 3,
+      "UNKNOWN_INPUT_MISSING": 1
+    },
+    "M08": {
+      "OK": 240,
+      "NOT_APPLICABLE_NEGATIVE_DENOMINATOR": 35,
+      "UNKNOWN_INPUT_MISSING": 2,
+      "NOT_APPLICABLE_ZERO_BASE_FLOOR": 1
+    },
+    "M10": {
+      "OK": 277,
+      "UNKNOWN_INPUT_MISSING": 1
+    },
+    "M11": {
+      "UNKNOWN_CA_BLANK": 127,
+      "OK": 118,
+      "NOT_APPLICABLE_PROJECT_MODE": 31,
+      "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE": 2
+    },
+    "M12": {
+      "BOTH_BLANK_NO_USABLE_AMOUNT": 126,
+      "OK": 133,
+      "SINGLE_SIDED_GAP": 18,
+      "UNKNOWN_INPUT_UNREADABLE": 1
+    }
+  },
+  "rh_trigger_counts": {
+    "RH01": 13,
+    "RH02": 21,
+    "RH03": 7,
+    "RH04": 109,
+    "RH05": 44,
+    "RH06": 38
+  },
+  "rh_pending_counts": {
+    "RH01": 1,
+    "RH02": 129,
+    "RH03": 19,
+    "RH04": 2,
+    "RH05": 4
+  },
+  "rh_not_applicable_counts": {
+    "RH01": 0,
+    "RH02": 31,
+    "RH03": 126,
+    "RH04": 36,
+    "RH05": 0
+  },
+  "out_of_valid_range": 20,
+  "quality_flag_counts": {
+    "Q01": 5,
+    "Q02": 145,
+    "Q03": 35,
+    "Q04": 1,
+    "Q05": 34,
+    "Q06": 0,
+    "Q07": 0,
+    "Q08": 1,
+    "Q09": 38,
+    "Q10": 31,
+    "Q11": 0,
+    "Q12": 0
+  },
+  "source_rows": 6076,
+  "observe_pool_preserved": 776,
+  "checks": [
+    {
+      "name": "C01 主键守恒：决策行 = 278",
+      "pass": true,
+      "detail": "278"
+    },
+    {
+      "name": "C02 标记行 = 278×5",
+      "pass": true,
+      "detail": "1390"
+    },
+    {
+      "name": "C03 主键集合与 tight_pass 完全一致",
+      "pass": true,
+      "detail": "278"
+    },
+    {
+      "name": "C04 无重复主键",
+      "pass": true,
+      "detail": "278"
+    },
+    {
+      "name": "C05 RH02 118/31/129 与 guards 一致",
+      "pass": true,
+      "detail": "118/31/129"
+    },
+    {
+      "name": "C06 RH03 133/126/18/1 与 guards 一致",
+      "pass": true,
+      "detail": "133/126/18/1"
+    },
+    {
+      "name": "C07 五指标状态全部落在已知词表",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "C08 三格隔离按 V2.2 路由（银宝 M11 不准入/M12 单边；胜蓝 M12 单边；卓翼 M11 不准入）",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "C09 卓翼 M12 为双期无可采用金额",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "C10 冀东装备进入观察",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "C11 冀东装备撤下 SG09",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "C12 超出 valid_range 的值已全部登记（非阻断）",
+      "pass": true,
+      "detail": "20 个，已登记 20 个"
+    },
+    {
+      "name": "C13 Q10 两支判定可由表内值代数复现",
+      "pass": true,
+      "detail": "[]"
+    }
+  ],
+  "checks_passed": 13,
+  "checks_total": 13
+}

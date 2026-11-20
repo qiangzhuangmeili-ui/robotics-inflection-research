@@ -1,0 +1,100 @@
+{
+  "artifact": "S05_WORK_UNIT_REVIEW",
+  "issue": "S05 / #40",
+  "executor": "WorkBuddy AI",
+  "plan_version": "20261026_collection_first_v2",
+  "review_nature": "SELF_CHECK",
+  "verdict": "SELF_CHECK_PASS",
+  "verdict_basis": {
+    "self_check": "46/46",
+    "prose_numcheck": "43/43"
+  },
+  "scope_done": [
+    "按 V2.2 冻结输入完成 278 家公司层面质量检查",
+    "五个指标（M04/M08/M10/M11/M12）从冻结 B 独立重算，并与 S01 掩码表逐格比对",
+    "RH01–RH06 按冻结算子与阈值输出，RH02 的 129 家待核继续隔离",
+    "Q01–Q12 质量标记按冻结定义输出",
+    "L3 闸门按 document_id + source_page（或父键）+ 非 HOLD 判定",
+    "三格错列/错表隔离，无一被采用",
+    "776 家观察入口原样携带，未重算、未改写"
+  ],
+  "counts": {
+    "primary_pool": 278,
+    "quality_pass": 277,
+    "quality_observe": 1,
+    "metric_status": {
+      "M04": {
+        "OK": 274,
+        "HOLD_DECISIVE_CELL_PENDING": 3,
+        "UNKNOWN_INPUT_MISSING": 1
+      },
+      "M08": {
+        "OK": 240,
+        "NOT_APPLICABLE_NEGATIVE_DENOMINATOR": 35,
+        "UNKNOWN_INPUT_MISSING": 2,
+        "NOT_APPLICABLE_ZERO_BASE_FLOOR": 1
+      },
+      "M10": {
+        "OK": 277,
+        "UNKNOWN_INPUT_MISSING": 1
+      },
+      "M11": {
+        "UNKNOWN_CA_BLANK": 127,
+        "OK": 118,
+        "NOT_APPLICABLE_PROJECT_MODE": 31,
+        "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE": 2
+      },
+      "M12": {
+        "BOTH_BLANK_NO_USABLE_AMOUNT": 126,
+        "OK": 133,
+        "SINGLE_SIDED_GAP": 18,
+        "UNKNOWN_INPUT_UNREADABLE": 1
+      }
+    },
+    "rh_triggered": {
+      "RH01": 13,
+      "RH02": 21,
+      "RH03": 7,
+      "RH04": 109,
+      "RH05": 44,
+      "RH06": 38
+    },
+    "rh_pending": {
+      "RH01": 1,
+      "RH02": 129,
+      "RH03": 19,
+      "RH04": 2,
+      "RH05": 4
+    },
+    "source_rows": 6076,
+    "source_adopted": 5444,
+    "pending_rows": 15,
+    "out_of_valid_range": 20
+  },
+  "hold_company": {
+    "security_id": "SZ:000856",
+    "stock_name": "冀东装备",
+    "reason": "撤维后仅剩 1 个维度（CASH）；撤下信号 SG09；存活维度在 S04 即标 PROVISIONAL（CASH）"
+  },
+  "limitations": [
+    "只核对五指标与待核隔离涉及的原页证据，未回读其余空白原页，未复算 360 份 PDF 哈希。",
+    "valid_range 是合理性包络，冻结规则未给处置动作；20 个超范围值只登记不阻断。",
+    "V2.2 对卓翼同一事实用两个子标签（M11 来源不准入 / M12 双期无可采用金额），结论一致、计数不受影响，本轮不改 V2.2。",
+    "776 家观察池原样携带，其指标值不在本轮核对范围。",
+    "冀东装备存活维度 CASH 在 S04 即标 PROVISIONAL，观察结论有双重支撑。"
+  ],
+  "open_questions_for_codex": [
+    "277/1 的通过—观察切分是否成立，尤其冀东装备的撤维判断。",
+    "立昂微、振华新材、四会富仕、本川智能四家带待核项仍通过，是否接受。",
+    "20 个超出 valid_range 的值是否应按某种未写明的规则阻断。",
+    "卓翼 M11/M12 子标签不一致是否需要回改 V2.2。"
+  ],
+  "downstream": {
+    "S05_completed": true,
+    "S06_released_by_this_record": false,
+    "S07_released": false,
+    "S08_released": false,
+    "issue_53_touched": false,
+    "note": "本轮只完成 #40 的质量检查并交 Codex 复核；不释放后续阶段，不改 #53 的既有结论。"
+  }
+}
