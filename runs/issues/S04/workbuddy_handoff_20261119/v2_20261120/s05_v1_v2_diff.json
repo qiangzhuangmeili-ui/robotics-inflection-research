@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-11-20T19:19:27+08:00",
+  "v1": {
+    "rows": 8638,
+    "by_use_class": {
+      "ELIGIBLE_FOR_S05": 8623,
+      "PENDING_OPEN_DISPUTE": 5,
+      "PENDING_MISSING_INPUT": 9,
+      "PENDING_SCOPE_NOT_CONSOLIDATED": 1
+    },
+    "pending_rows": 15,
+    "pending_cells": 13
+  },
+  "v2": {
+    "rows": 8638,
+    "by_actual_use": {
+      "ELIGIBLE_FOR_S05_USE": 8538,
+      "NOT_APPLICABLE": 76,
+      "PENDING_OPEN_DISPUTE": 5,
+      "PENDING_MISSING_INPUT": 9,
+      "HOLD_APPLICABILITY_UNKNOWN": 9,
+      "PENDING_SCOPE_NOT_CONSOLIDATED": 1
+    },
+    "by_applicability": {
+      "": 2562,
+      "APPLICABLE": 5964,
+      "NOT_APPLICABLE_PROJECT_MODE": 76,
+      "HOLD_DECISIVE_CELL_PENDING": 18,
+      "UNKNOWN_INPUT_MISSING": 18
+    },
+    "pending_rows": 15,
+    "pending_cells": 13
+  },
+  "rh_by_company": {
+    "RH01": {
+      "可判": 277,
+      "待核": 1
+    },
+    "RH02": {
+      "可判": 246,
+      "不适用": 31,
+      "待核": 1
+    },
+    "RH03": {
+      "不适用": 125,
+      "可判": 135,
+      "单边缺口": 17,
+      "待核": 1
+    },
+    "RH04": {
+      "可判": 240,
+      "不适用": 36,
+      "待核": 2
+    },
+    "RH05": {
+      "可判": 274,
+      "待核": 4
+    }
+  },
+  "q10_engine_diff": {
+    "OLD_OK_NOW_PROJECT_MODE": 19,
+    "OLD_OTHER_NOW_UNKNOWN_INPUT_MISSING": 1
+  },
+  "q4_hits": {},
+  "notes": [
+    "V2 只改用途资格与适用性分支，不改 V1 的页码/状态/争议判定。",
+    "Q10 按冻结文本两支 OR；旧引擎遇非零资产只查第一支，故 19 家 M11=OK 实为项目制。",
+    "M12 单边缺口不填零，单列；两期科目均无金额记 NOT_APPLICABLE_NOT_REPORTED_BOTH。",
+    "M08 只用 t；t-1y 行标 INHERITED_S04_SIGNAL_CHECK，不计入 RH04 输入。"
+  ]
+}

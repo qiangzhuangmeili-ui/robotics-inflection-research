@@ -1,0 +1,312 @@
+{
+  "artifact": "S05_V2_SELF_CHECK",
+  "generated_at": "2026-11-20T19:19:30+08:00",
+  "plan_version": "20261026_collection_first_v2",
+  "ruling": "runs/issues/S04/codex_ruling_s05_20261120.md",
+  "author": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "checks": [
+    {
+      "id": "V1",
+      "name": "适用性表 = 278 × 5 且每家每指标唯一",
+      "pass": true,
+      "detail": {
+        "rows": 1390,
+        "companies": 278,
+        "multiplicity": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "V2",
+      "name": "每个风险提示的可判/不适用/单边/待核四态之和 = 278",
+      "pass": true,
+      "detail": {
+        "violations": {},
+        "by_rh": {
+          "RH01": {
+            "可判": 277,
+            "待核": 1
+          },
+          "RH02": {
+            "可判": 246,
+            "不适用": 31,
+            "待核": 1
+          },
+          "RH03": {
+            "不适用": 125,
+            "可判": 135,
+            "单边缺口": 17,
+            "待核": 1
+          },
+          "RH04": {
+            "可判": 240,
+            "不适用": 36,
+            "待核": 2
+          },
+          "RH05": {
+            "可判": 274,
+            "待核": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "V3",
+      "name": "差额表 8,638 行；待核 15 行 / 13 格；实际采用分类之和 = 8,638",
+      "pass": true,
+      "detail": {
+        "rows": 8638,
+        "pending_rows": 15,
+        "pending_cells": 13,
+        "by_actual_use": {
+          "ELIGIBLE_FOR_S05_USE": 8538,
+          "NOT_APPLICABLE": 76,
+          "PENDING_OPEN_DISPUTE": 5,
+          "PENDING_MISSING_INPUT": 9,
+          "HOLD_APPLICABILITY_UNKNOWN": 9,
+          "PENDING_SCOPE_NOT_CONSOLIDATED": 1
+        }
+      }
+    },
+    {
+      "id": "V4",
+      "name": "标 NOT_APPLICABLE 的 76 行全部属于 19 家 Q10 项目制公司、且均为 M11",
+      "pass": true,
+      "detail": {
+        "rows": 76,
+        "companies": 19,
+        "q10_companies": 19,
+        "metrics": [
+          "M11"
+        ]
+      }
+    },
+    {
+      "id": "V5",
+      "name": "M08 三分类闭合：RH04 输入与信号当期依赖都在 t；t-1y 全部为继承项",
+      "pass": true,
+      "detail": {
+        "m08_rows": 804,
+        "rh04_input": 484,
+        "signal_at_t": 160,
+        "inherited": 160
+      }
+    },
+    {
+      "id": "V6",
+      "name": "851 行父链逐行具备两父键的文档/页/版本/币种/口径/指纹，复算差 ≤ 0.000002pp",
+      "pass": true,
+      "detail": {
+        "via_parent": 851,
+        "violations": 0,
+        "sample": [],
+        "max_recompute_abs_diff": "4.9821587725187871925E-7",
+        "same_document_rows": 851
+      }
+    },
+    {
+      "id": "V7",
+      "name": "Q10 差异 19 家项目制 + 1 家输入缺失；殷图网联 2.81%/30.06% 复现",
+      "pass": true,
+      "detail": {
+        "kinds": {
+          "OLD_OK_NOW_PROJECT_MODE": 19,
+          "OLD_OTHER_NOW_UNKNOWN_INPUT_MISSING": 1
+        },
+        "yintu": [
+          "2.8149",
+          "30.059"
+        ]
+      }
+    },
+    {
+      "id": "V8",
+      "name": "RH03 单边缺口 17 家单列、全部不填零，且填零也不会触发 RH03",
+      "pass": true,
+      "detail": {
+        "rows": 17,
+        "trigger_if_zero": {
+          "NO": 17
+        }
+      }
+    },
+    {
+      "id": "V9",
+      "name": "RH04 分母不适用 35 家为负 + 1 家正但低于零基数下限（荣旗科技 246,598.23）",
+      "pass": true,
+      "detail": {
+        "negative": 35,
+        "floor": 1,
+        "floor_company": "荣旗科技"
+      }
+    },
+    {
+      "id": "V10",
+      "name": "839 项处置与 278 家交集为 0（结构性零命中）；F32 文档 26 个；连接命中 0",
+      "pass": true,
+      "detail": {
+        "dispositions": 839,
+        "in_278": 0,
+        "f32_docs": 26,
+        "join_hits": 0
+      }
+    },
+    {
+      "id": "V11",
+      "name": "13 格待核全部写明阻断范围；冀东装备的 M07/SG09 被隔离",
+      "pass": true,
+      "detail": {
+        "isolation_rows": 15,
+        "without_blocked_scope": 0,
+        "jindong": {
+          "security_id": "SZ:000856",
+          "stock_name": "冀东装备",
+          "field_id": "FIN.NPDEDT.YTD",
+          "period_key": "20260331",
+          "s05_use_class": "PENDING_SCOPE_NOT_CONSOLIDATED",
+          "blocking_reason": "非合并口径，不得混比",
+          "blocked_metric_ids": "M07",
+          "blocked_signal_ids": "SG09",
+          "unaffected_applicable_metrics": "M04;M08;M10;M12",
+          "isolation_ok": "YES"
+        }
+      }
+    },
+    {
+      "id": "V12",
+      "name": "RH06 既有 Q09 标记 38 家已登记（不自动等同已排查）",
+      "pass": true,
+      "detail": {
+        "companies": 38
+      }
+    },
+    {
+      "id": "V13",
+      "name": ".md/.json/.py 一律 LF",
+      "pass": true,
+      "detail": {
+        "files_with_crlf": []
+      }
+    },
+    {
+      "id": "V14",
+      "name": "冻结输入指纹未变（peer/来源补充/资格manifest/B/v3规则）",
+      "pass": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "V15",
+      "name": "判定所需格未闭合时适用性不得写 APPLICABLE（RH05 三家 HOLD）",
+      "pass": true,
+      "detail": {
+        "conflicts": [],
+        "hold_decisive_cell_pending": 3,
+        "companies": [
+          "SH:605358",
+          "SH:688707",
+          "SZ:300964"
+        ]
+      }
+    },
+    {
+      "id": "CE1",
+      "name": "Q10 两支门槛各一支单独成立（OR 未被写成 AND）",
+      "pass": true,
+      "detail": {
+        "branch1_only": 1,
+        "branch2_only": 19,
+        "both": 11,
+        "branch1_only_sample": [
+          "SH:600335"
+        ],
+        "branch2_only_sample": [
+          "BJ:920508",
+          "BJ:920541",
+          "BJ:920870"
+        ]
+      }
+    },
+    {
+      "id": "CE2",
+      "name": "单边缺口 17 家未进入可判（不填零）",
+      "pass": true,
+      "detail": {
+        "single_sided": 17,
+        "leaked_eligible": 0
+      }
+    },
+    {
+      "id": "CE3",
+      "name": "正的小分母归零基数下限，不归负分母",
+      "pass": true,
+      "detail": {
+        "security_id": "SZ:301360",
+        "stock_name": "荣旗科技",
+        "anchor_period": "20260630",
+        "npp_ytd_t": "246598.23",
+        "reason": "ZERO_BASE_FLOOR_POSITIVE"
+      }
+    },
+    {
+      "id": "CE4",
+      "name": "父页齐备但争议未清的格子仍为待核（父页不等于通过）",
+      "pass": true,
+      "detail": {
+        "gm_rows": 6,
+        "disputed_rows": 5,
+        "leaked": 0,
+        "companies_covered": [
+          "SH:605358",
+          "SH:688707",
+          "SZ:300964"
+        ]
+      }
+    },
+    {
+      "id": "CE5",
+      "name": "注入一条 S04 限用处置命中 → 判 RECHECK_PAGE_REQUIRED（不自动沿用）",
+      "pass": true,
+      "detail": {
+        "probe": "BJ:920066",
+        "injected_decision": "RECHECK_PAGE_REQUIRED",
+        "real_hits": 0
+      }
+    },
+    {
+      "id": "CE6",
+      "name": "冀东装备去掉 SG09 后只剩 CASH 单一维度 → 归入观察",
+      "pass": true,
+      "detail": {
+        "signals": [
+          "SG08",
+          "SG09"
+        ],
+        "dimensions": [
+          "PROFIT",
+          "CASH"
+        ],
+        "blocked": [
+          "SG09"
+        ],
+        "remaining": [
+          "CASH"
+        ]
+      }
+    }
+  ],
+  "checks_passed": "21/21",
+  "blocking_failures": [],
+  "release_S05": false,
+  "release_note": "自检不等同独立复核；V2 须经门审明确 release_S05 后才可开工。",
+  "limits": [
+    "未回读 PDF 原页；Q10 与 M12 的科目证据取自 A03 逐文档字段抽取记录，非人工翻页。",
+    "Q10 把「科目在表内但无金额」按 0 计入比值，这是判据解释，已单列供门审确认；若改判 UNKNOWN，RH02 可判数会下降。",
+    "M12 单边缺口 17 家不填零，全部不影响 RH03 判定（填零也不触发）。",
+    "M08 只用 t；S04 冻结的 SG07 t-1y 依赖作为继承项单列，不计入 RH04。"
+  ]
+}

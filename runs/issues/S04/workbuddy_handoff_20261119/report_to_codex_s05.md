@@ -4,7 +4,7 @@
 日期：2026-11-19（北京时间）
 计划版本：`20261026_collection_first_v2`
 分支与提交：`s04/l2-tightening-20261108`，本轮提交 `657a4b7` → `4be9592` → `76d3393` → `c075e05`（**均未推送**）
-产物目录：`runs/issues/S04/workbuddy_handoff_20261119/`（17 个文件，`manifest.json` 记 16 项哈希）
+产物目录：`runs/issues/S04/workbuddy_handoff_20261119/`（**更正**：当时写「17 个文件、16 项哈希」有误，实为目录 18 个文件、`manifest.json` 登记 17 项输出；V2 已在 `report_to_codex_s05_v2.md` §0 更正）
 
 先读这一份。逐格数据在 `s05_source_eligibility_delta.csv`（8,638 行），门审材料在 `S05_GATE_PACKET.md`，自检在 `review.json`。
 

@@ -1,0 +1,98 @@
+{
+  "artifact": "S05_V2_MANIFEST",
+  "generated_at": "2026-11-20T19:19:37+08:00",
+  "plan_version": "20261026_collection_first_v2",
+  "ruling": "runs/issues/S04/codex_ruling_s05_20261120.md",
+  "author": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "release_S05": false,
+  "files": [
+    {
+      "path": "report_to_codex_s05_v2.md",
+      "bytes": 10085,
+      "sha256": "f54f95b8f58cac2d6d81c241d117354131d01ddc25ba784e64a2041848cab387"
+    },
+    {
+      "path": "s05_applicability_v2.csv",
+      "bytes": 179320,
+      "sha256": "77fae8505263bfd7438ec2c8547bdbf16d233d910a8d6e72b1e97de2e18c9fa3"
+    },
+    {
+      "path": "s05_input_contract_v2.json",
+      "bytes": 6130,
+      "sha256": "0ff28dcba3f949c8df2cea155655d7032e95bb6988aa020cb81d05493c2b0274"
+    },
+    {
+      "path": "s05_pending_isolation_v2.csv",
+      "bytes": 2077,
+      "sha256": "26bf908d8e00a998a88de23e1af8eb38384d119d49bcc41d0836643c99bcae27"
+    },
+    {
+      "path": "s05_q10_engine_diff_v2.csv",
+      "bytes": 5248,
+      "sha256": "7b7463e97749ed3dc8433b95eac78b3c0722c1c12b5e29496d75beda300e03e3"
+    },
+    {
+      "path": "s05_q4_disposition_match_v2.csv",
+      "bytes": 150,
+      "sha256": "bbc1f908fe79b9cd4276dc5d40b04b68a10d061c8beda51317982210fe6c6545"
+    },
+    {
+      "path": "s05_rh03_single_sided_v2.csv",
+      "bytes": 2584,
+      "sha256": "c5ee5950f5a875aa09f9cda3d6dcccb5fa03bc45c5b96d9edbdebf07996b8b1f"
+    },
+    {
+      "path": "s05_rh04_denominator_v2.csv",
+      "bytes": 2433,
+      "sha256": "cb2a8108af82f2909fa40c03a60ccc3ee35a55fdeaa92fda5bb196133c51d0a8"
+    },
+    {
+      "path": "s05_rh06_q09_registry_v2.csv",
+      "bytes": 3568,
+      "sha256": "883bb6fe91d84a58f7d0ab6c28de1801c9cbd0d6488ebe64ff8bd2af96c221fd"
+    },
+    {
+      "path": "s05_source_eligibility_v2.csv",
+      "bytes": 3549976,
+      "sha256": "26447bef3502c351aac734f347cc90d9cdc61c9657ec4f3b67d1ddb095b4a11b"
+    },
+    {
+      "path": "s05_v1_v2_diff.json",
+      "bytes": 1781,
+      "sha256": "a304bf8bd0123b0e242818e47fbfd1b618d783e43319a9f545334594bf8882f2"
+    },
+    {
+      "path": "s05_v2_review.json",
+      "bytes": 8225,
+      "sha256": "0c141b7c0638c911e34685ee9e7f4bd9903c561462f20c299a9f4d118eedfb09"
+    },
+    {
+      "path": "step_v2_build.py",
+      "bytes": 35395,
+      "sha256": "6702419eafc8c24e36235cc8a64f7a0463e1eb1d6148c3e3248db563f5f5198b"
+    },
+    {
+      "path": "step_v2_report_numcheck.py",
+      "bytes": 8001,
+      "sha256": "2a04b63985b42d085caee6f356194a43f45b3d3f02b582d6aa36a39f23cac3be"
+    },
+    {
+      "path": "step_v2_verify.py",
+      "bytes": 18540,
+      "sha256": "01f8bb8062925f595b0293c7a07e1a3d0cb03ddd21882cf01fe5908095f321a7"
+    }
+  ],
+  "inputs_fingerprints": {
+    "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+    "runs/issues/S01/screen_rules_v3.json": "6c474d1fc58ea6d484a428e8203792e3c0cf427756413860b85e17c16b1e4d45",
+    "runs/issues/S04/completion_20261114/final_peer_review_20261116/peer_review.json": "ab249f1806e1997fb0f938b216aaeb17def7f460b03a08b694acafd7d2e7c924"
+  },
+  "notes": [
+    "V1 保留为被裁决对象，不删不改（仅就地加更正标注）。",
+    "V2 只改用途资格与适用性分支，未改 S02/S04 冻结结果。",
+    "自检 21/21（15 结构 + 6 反例）；汇报数字校验 53/53；release_S05 仍 false。",
+    "RH05 三家（立昂微/振华新材/本川智能）判定所需毛利率格未闭合，已由 APPLICABLE 改判 HOLD_DECISIVE_CELL_PENDING。"
+  ],
+  "hash_note": "files[] 的哈希在最后一次自检与数字校验之后计算；自检会重写 s05_v2_review.json 的 generated_at，故顺序必须是 先构建→自检→数字校验→哈希。"
+}

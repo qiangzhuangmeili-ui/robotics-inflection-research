@@ -298,7 +298,7 @@ def main():
     }
     hint_ready = m.get("risk_hints_ready_by_company", {})
     hint_block = m.get("risk_hints_blocked_by_company", {})
-    pat = re.compile(r"^\|\s*([^|]+?)\s*\|\s*([\d,]+)\s*\|\s*([\d,]+)\s*\|\s*([\d,]+)\s*\|")
+    pat = re.compile(r"^\|\s*([^|]+?)\s*\|\s*([\d,]+)\s*\|\s*([\d,]+)\s*\|\s*([\d,]+)\s*\|\s*$")
     label_map = [("信号 L3", "SIGNAL_L3"), ("质量指标依赖", "QUALITY_RH"),
                  ("低基数", "LOW_BASE_CONFIRM"), ("合计", "TOTAL")]
     prose_bad, prose_seen = [], Counter()
