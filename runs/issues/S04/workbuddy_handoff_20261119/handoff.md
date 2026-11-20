@@ -81,7 +81,7 @@ python runs/issues/S04/workbuddy_handoff_20261119/step_b_verify.py   # 21/21
 
 ## 8. V2 返修（2026-11-20，按门审裁决）
 
-裁决：`runs/issues/S04/codex_ruling_s05_20261120.md`，`RETURN_FOR_REWORK`，S05 不放行。V2 产物在 `v2_20261120/`（14 个文件，含自己的 `manifest.json`），V1 保留为被裁决对象、不删不改（仅就地加更正标注）。
+裁决：`runs/issues/S04/codex_ruling_s05_20261120.md`，`RETURN_FOR_REWORK`，S05 不放行。V2 产物在 `v2_20261120/`（15 个文件，含自己的 `manifest.json`），V1 保留为被裁决对象、不删不改（仅就地加更正标注）。
 
 **V1 → V2 差额（可对账）**：`8,623 可判 = 8,538 可用于 S05 + 76 不适用 + 9 适用性待核`；待核仍 15 行 / 13 格 / 5 家。
 
@@ -95,11 +95,14 @@ python runs/issues/S04/workbuddy_handoff_20261119/step_b_verify.py   # 21/21
 
 三处实算差异已修：**RH02** 按 Q10 两支 OR 重算，单列 19 家旧引擎漏判（殷图网联 2.81%/30.06% 复现）；**RH03** 用 A03 逐文档字段记录把 143 家拆成 125 已证实无金额 + 17 单边缺口 + 1 抽取待核，17 家不填零且填零也不触发；**RH04** 36 家拆成 35 家负分母 + 1 家荣旗科技 246,598.23 元低于零基数下限。
 
+**RH05 的 4 家待核分两种原因**：四会富仕缺上一期输入（`UNKNOWN_INPUT_MISSING`）；立昂微/振华新材/本川智能的毛利率格带未闭合争议（`HOLD_DECISIVE_CELL_PENDING`，5 个格）。这三家原先被写成 `APPLICABLE`，与逐格表的 `PENDING_OPEN_DISPUTE` 自相矛盾，本轮已改判；新增 V15 守卫：判定所需格未闭合而写 `APPLICABLE` 直接 FAIL。
+
 **三项自定判断（需门审裁决）**：J1 合同资产「科目在表内但空」按 0 计入 Q10——若否决，RH02 可判从 246 降到 120；J2 单边缺口不填零；J3 冀东装备去掉 SG09 后只剩 CASH，S05 归入观察。
 
-自检 `v2_20261120/s05_v2_review.json` **20/20**（14 项结构守恒 + 6 项反例）。`release_S05` 仍 false；未写控制文件、未领 #40、未登记 #53 断点。
+自检 `v2_20261120/s05_v2_review.json` **21/21**（15 项结构守恒 + 6 项反例）；汇报数字校验 `step_v2_report_numcheck.py` **53/53**（把汇报里 53 个数字逐条与产物实算比对，防 prose 漂移）。`release_S05` 仍 false；未写控制文件、未领 #40、未登记 #53 断点。
 
 ```bash
-python runs/issues/S04/workbuddy_handoff_20261119/v2_20261120/step_v2_build.py    # 重建 V2
-python runs/issues/S04/workbuddy_handoff_20261119/v2_20261120/step_v2_verify.py   # 20/20
+python runs/issues/S04/workbuddy_handoff_20261119/v2_20261120/step_v2_build.py           # 重建 V2
+python runs/issues/S04/workbuddy_handoff_20261119/v2_20261120/step_v2_verify.py          # 21/21
+python runs/issues/S04/workbuddy_handoff_20261119/v2_20261120/step_v2_report_numcheck.py # 53/53
 ```

@@ -4,7 +4,7 @@
   "unit": "S04_HANDOFF_AND_S05_SOURCE_QUALIFICATION_PREP",
   "actor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
-  "updated_at": "2026-11-20T19:13:53+08:00",
+  "updated_at": "2026-11-20T19:20:32+08:00",
   "issue_claim": "NOT_CLAIMED",
   "lease": {
     "holder": "Codex",
@@ -95,7 +95,7 @@
       "name": "按门审裁决修订 V2（Q10 双支 / M12 缺值分型 / M08 分母与继承分列 / Q4 重连 / Q5 隔离）",
       "status": "COMPLETE",
       "decision": "SELF_CHECK_PASS_WITH_LIMITS",
-      "checks": "20/20 PASS",
+      "checks": "21/21 PASS",
       "done": [
         "M11/RH02 按 Q10 两支 OR 重算，单列 19 家旧引擎漏判 + 1 家输入缺失；RH02 246 可判 / 31 不适用 / 1 待核",
         "M12/RH03 用 A03 逐文档字段记录拆成 125 已证实无金额 + 17 单边缺口 + 1 抽取待核；17 家不填零，填零也不触发",
@@ -103,6 +103,8 @@
         "Q4 用完整 839 项处置表重连：与 278 家交集为 0（覆盖 317 家，结构性零命中）；26 个 F32 文档同样 0 命中",
         "Q5 15 行/13 格逐格写阻断范围；冀东装备 SG09 隔离后只剩 CASH，归入观察",
         "Q2 851 行父链逐行绑两父键 6 项 + 复算差（最大 4.98e-7 pp，851/851 同文档）",
+        "RH05 三家（立昂微/振华新材/本川智能）判定与逐格表矛盾已改判 APPLICABLE → HOLD_DECISIVE_CELL_PENDING；新增 V15 守卫：判定所需格未闭合不得写 APPLICABLE",
+        "新增 step_v2_report_numcheck.py：把汇报 53 个数字逐条与产物实算比对（53/53），防 prose 与数据漂移",
         "6 项反例全部可 FAIL 并通过；V1→V2 差额闭合 8,623 = 8,538 + 76 + 9"
       ],
       "not_done": [
