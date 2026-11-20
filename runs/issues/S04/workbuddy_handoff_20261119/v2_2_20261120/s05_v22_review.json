@@ -1,0 +1,454 @@
+{
+  "artifact": "S05_V22_SELF_CHECK",
+  "generated_at": "2026-11-20T20:33:31+08:00",
+  "plan_version": "20261026_collection_first_v2",
+  "ruling": "runs/issues/S04/codex_ruling_s05_v21_20261120.md",
+  "author": "WorkBuddy AI",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "checks": [
+    {
+      "id": "V1",
+      "name": "适用性表 = 278 × 5 且每家每指标唯一",
+      "pass": true,
+      "detail": {
+        "rows": 1390,
+        "companies": 278,
+        "multiplicity": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "V2",
+      "name": "五个风险提示四态守恒（各和 = 278）",
+      "pass": true,
+      "detail": {
+        "bad": {}
+      }
+    },
+    {
+      "id": "V3",
+      "name": "RH02 = 118 可判 / 31 项目制不适用 / 129 待核（与裁决复算一致）",
+      "pass": true,
+      "detail": {
+        "待核": 129,
+        "可判": 118,
+        "不适用": 31
+      }
+    },
+    {
+      "id": "V3b",
+      "name": "RH02 判定明细 = 118 APPLICABLE + 31 项目制 + 129 未知（127 空白 + 2 来源不准入）",
+      "pass": true,
+      "detail": {
+        "UNKNOWN_CA_BLANK": 127,
+        "APPLICABLE": 118,
+        "NOT_APPLICABLE_PROJECT_MODE": 31,
+        "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE": 2
+      }
+    },
+    {
+      "id": "V4",
+      "name": "8,638 行 = 8,005 可用 + 76 不适用 + 534 适用性待核 + 15 逐格待核",
+      "pass": true,
+      "detail": {
+        "ELIGIBLE_FOR_S05_USE": 8005,
+        "HOLD_APPLICABILITY_UNKNOWN": 534,
+        "NOT_APPLICABLE": 76,
+        "PENDING_OPEN_DISPUTE": 5,
+        "PENDING_MISSING_INPUT": 9,
+        "PENDING_SCOPE_NOT_CONSOLIDATED": 1,
+        "HOLD_SINGLE_SIDED_GAP": 8
+      }
+    },
+    {
+      "id": "V5",
+      "name": "V2.1→V2.2 转移 = 8 行 M11 + 8 行 M12（合计 16，与 8,021-8,005 相符）",
+      "pass": true,
+      "detail": {
+        "m11": 8,
+        "m12": 8,
+        "total": 16
+      }
+    },
+    {
+      "id": "V6",
+      "name": "行级转移 16 行仅涉卓翼/银宝/胜蓝三家，不扩散到其他公司",
+      "pass": true,
+      "detail": {
+        "rows": 16,
+        "companies": [
+          "SZ:002369",
+          "SZ:002786",
+          "SZ:300843"
+        ]
+      }
+    },
+    {
+      "id": "V7",
+      "name": "合同资产无金额或来源不准入的公司不得出现任何 Q10 比值（不补零、不计算）",
+      "pass": true,
+      "detail": {
+        "violations": [],
+        "count": 0
+      }
+    },
+    {
+      "id": "V8",
+      "name": "原文期末栏明确零可采用：两支均 0%、Q10 非项目制、RH02 适用，共 13 家（原 14 减卓翼 1）",
+      "pass": true,
+      "detail": {
+        "count": 13,
+        "all_zero_non_project_applicable": true
+      }
+    },
+    {
+      "id": "V9",
+      "name": "决策输入来源齐备：278×3 键均有文档；278 个资产键正分母；149 个可用合同资产键有页，15 个补入适用性表",
+      "pass": true,
+      "detail": {
+        "missing_doc": 0,
+        "missing_page": 0,
+        "ca_with_value": 149,
+        "asset_positive": 278,
+        "asset_ok_for_all": true,
+        "ca_not_in_consumption_table": 15
+      }
+    },
+    {
+      "id": "V10",
+      "name": "31 家项目制 = 只靠资产支 1 + 只靠营收支 19 + 两支都过 11（OR 未写成 AND）",
+      "pass": true,
+      "detail": {
+        "only_branch1": 1,
+        "only_branch2": 19,
+        "both": 11
+      }
+    },
+    {
+      "id": "V11",
+      "name": "RH03 = 133 可判 / 126 双期无可采用金额 / 18 单边缺口 / 1 待核；反事实有向",
+      "pass": true,
+      "detail": {
+        "single_sided": 18,
+        "both_blank": 126,
+        "max_positive_pp": "0.819421",
+        "dabo": "-0.004709"
+      }
+    },
+    {
+      "id": "V12",
+      "name": "RH03 两侧抽取记录分别落到实际文档（126 双期无可采用金额 + 18 单边缺口）",
+      "pass": true,
+      "detail": {
+        "both_blank_missing": 0,
+        "single_sided_missing": 0
+      }
+    },
+    {
+      "id": "V13",
+      "name": "RH04 = 240 可判 / 36 不适用（35 负分母 + 1 正小分母）/ 2 待核",
+      "pass": true,
+      "detail": {
+        "NEGATIVE_DENOMINATOR": 35,
+        "ZERO_BASE_FLOOR_POSITIVE": 1
+      }
+    },
+    {
+      "id": "V14",
+      "name": "父链 851 行，0 缺项，851/851 同文档，最大复算差 < 2e-6 pp",
+      "pass": true,
+      "detail": {
+        "rows": 851,
+        "max_diff": "4.9821587725187871925E-7"
+      }
+    },
+    {
+      "id": "V15",
+      "name": "M08 804 行 = 484 RH04 输入 + 160 信号当期 + 160 继承 S04",
+      "pass": true,
+      "detail": {
+        "RH04_INPUT": 484,
+        "INHERITED_S04_SIGNAL_CHECK": 160,
+        "SIGNAL_DEP_AT_T": 160
+      }
+    },
+    {
+      "id": "V16",
+      "name": "Q4：839 项处置命中 0，且 317 家与 278 交集为空",
+      "pass": true,
+      "detail": {
+        "q4_rows": 0,
+        "dispositions": 839,
+        "intersection": 0
+      }
+    },
+    {
+      "id": "V17",
+      "name": "RH06 既有 Q09 标记 38 家已登记",
+      "pass": true,
+      "detail": {
+        "companies": 38
+      }
+    },
+    {
+      "id": "V18",
+      "name": "逐格待核 15 行 / 13 格 / 5 家；冀东装备阻断 SG09 后仅剩 CASH",
+      "pass": true,
+      "detail": {
+        "rows": 15,
+        "cells": 13,
+        "jiedong": "SG09"
+      }
+    },
+    {
+      "id": "V19",
+      "name": "判定为待核/不适用时，对应行不得仍是 ELIGIBLE",
+      "pass": true,
+      "detail": {
+        "conflicts": [],
+        "count": 0
+      }
+    },
+    {
+      "id": "V20",
+      "name": "契约：release_S05=false；J1 否决、J2/J3 通过、J4 本轮采用；两个分支指针分别记录",
+      "pass": true,
+      "detail": {
+        "release_S05": false,
+        "judgments": {
+          "J1": "REVOKED_BY_GATE",
+          "J4": "ADOPTED_BY_THIS_ROUND",
+          "J2": "PASSED_BY_GATE",
+          "J3": "PASSED_BY_GATE"
+        },
+        "online": "a308fab19c17ea0184df0d730f2a5723760f2ef4",
+        "local": "15dd324c2dcebc7a9e64192c42f69fe704abe652"
+      }
+    },
+    {
+      "id": "V21",
+      "name": "冻结输入指纹未变（peer/来源补充/资格manifest/B/v3规则）",
+      "pass": true,
+      "detail": {
+        "bad": []
+      }
+    },
+    {
+      "id": "V22",
+      "name": ".md/.json/.py 一律 LF",
+      "pass": true,
+      "detail": {
+        "files_with_crlf": []
+      }
+    },
+    {
+      "id": "V23",
+      "name": "登记表 3 格：文档 SHA-256 与 collection_index 一致、底表未覆盖、四元组键齐备",
+      "pass": true,
+      "detail": {
+        "rows": 3,
+        "sha_ok": true,
+        "defects": [
+          "PERIOD_END_BLANK_VALUE_IN_OPENING",
+          "PERIOD_END_BLANK_VALUE_IN_OPENING",
+          "WRONG_TABLE_AND_WRONG_COLUMN"
+        ]
+      }
+    },
+    {
+      "id": "V24",
+      "name": "回归 6 例（四类 + 一正例 + 并排两期）：列归属 6/6、准入 6/6、规则落到输出 6/6",
+      "pass": true,
+      "detail": {
+        "cases": 6,
+        "column_agrees": 6,
+        "rule_applied": 6
+      }
+    },
+    {
+      "id": "V25",
+      "name": "三格后果：卓翼 Q10 未知+RH03 双期无可采用金额；银宝 Q10 未知+RH03 单边；胜蓝当期保留、基期转单边",
+      "pass": true,
+      "detail": {
+        "zhuoyi": [
+          "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE",
+          "BOTH_BLANK_NO_USABLE_AMOUNT"
+        ],
+        "yinbao": [
+          "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE",
+          "SINGLE_SIDED_GAP"
+        ],
+        "shenglan": [
+          "APPLICABLE",
+          "SINGLE_SIDED_GAP"
+        ]
+      }
+    },
+    {
+      "id": "CE1",
+      "name": "合同资产空白 → UNKNOWN_CA_BLANK，不补零、不出比值",
+      "pass": true,
+      "detail": {
+        "verdict": "UNKNOWN_CA_BLANK",
+        "branch1_pct": "",
+        "branch2_pct": "",
+        "b1_status": "CA_NOT_USABLE",
+        "b2_status": "CA_NOT_USABLE",
+        "reason": "合同资产当期状态为 REPORTED_BLANK，无原文金额，按 J1 保留未知，不补零、不推定"
+      }
+    },
+    {
+      "id": "CE2",
+      "name": "合同资产未列示 → UNKNOWN_CA_NOT_USABLE（REPORTED_ABSENT 不映射为零）",
+      "pass": true,
+      "detail": {
+        "verdict": "UNKNOWN_CA_NOT_USABLE",
+        "branch1_pct": "",
+        "branch2_pct": "",
+        "b1_status": "CA_NOT_USABLE",
+        "b2_status": "CA_NOT_USABLE",
+        "reason": "合同资产当期状态为 REPORTED_ABSENT，无原文金额，保留未知，不补零、不推定"
+      }
+    },
+    {
+      "id": "CE3",
+      "name": "原文明确零 → 可采用，0% / 0%，判 NON_PROJECT",
+      "pass": true,
+      "detail": {
+        "verdict": "NON_PROJECT",
+        "branch1_pct": "0",
+        "branch2_pct": "0",
+        "b1_status": "COMPUTED",
+        "b2_status": "COMPUTED",
+        "reason": "两支均有证据且未达门槛（资产支 0% ≤ 5%，营收支 0% ≤ 10%）"
+      }
+    },
+    {
+      "id": "CE4",
+      "name": "资产分母不可用不妨碍营收支独立确立 PROJECT_MODE",
+      "pass": true,
+      "detail": {
+        "verdict": "PROJECT_MODE",
+        "branch1_pct": "",
+        "branch2_pct": "20.0",
+        "b1_status": "DENOMINATOR_REPORTED_BLANK",
+        "b2_status": "COMPUTED",
+        "reason": "项目制：营收支 20% > 10%"
+      }
+    },
+    {
+      "id": "CE5",
+      "name": "营收分母不可用不妨碍资产支独立确立 PROJECT_MODE",
+      "pass": true,
+      "detail": {
+        "verdict": "PROJECT_MODE",
+        "branch1_pct": "20.0",
+        "branch2_pct": "",
+        "b1_status": "COMPUTED",
+        "b2_status": "DENOMINATOR_REPORTED_BLANK",
+        "reason": "项目制：资产支 20% > 5%"
+      }
+    },
+    {
+      "id": "CE6",
+      "name": "仅一支算出且未达门槛 → UNKNOWN_DENOMINATOR（不得判 NON_PROJECT）",
+      "pass": true,
+      "detail": {
+        "verdict": "UNKNOWN_DENOMINATOR",
+        "branch1_pct": "1.00",
+        "branch2_pct": "",
+        "b1_status": "COMPUTED",
+        "b2_status": "DENOMINATOR_REPORTED_BLANK",
+        "reason": "合同资产有金额，但两支分母均不可用（OK / OK），无法判定"
+      }
+    },
+    {
+      "id": "CE7",
+      "name": "资产总计非正 → 该支不可用，营收支仍可独立成立",
+      "pass": true,
+      "detail": {
+        "verdict": "PROJECT_MODE",
+        "branch1_pct": "",
+        "branch2_pct": "20.0",
+        "b1_status": "DENOMINATOR_NON_POSITIVE",
+        "b2_status": "COMPUTED",
+        "reason": "项目制：营收支 20% > 10%"
+      }
+    },
+    {
+      "id": "CE8",
+      "name": "单边缺口反事实按有向差：大博 -0.004709、瑞凌 +0.819421",
+      "pass": true,
+      "detail": {
+        "dabo": "-0.004709",
+        "ruiling": "0.819421"
+      }
+    },
+    {
+      "id": "CE9",
+      "name": "三格按四元组命中登记表 → 来源不准入",
+      "pass": true,
+      "detail": {
+        "blocked": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "id": "CE10",
+      "name": "换 SHA 或换期间即不再命中（登记是版本与期间绑定的，不泛化）",
+      "pass": true,
+      "detail": {
+        "other_sha": true,
+        "other_period": true
+      }
+    },
+    {
+      "id": "CE11",
+      "name": "列归属判定：期末空期初零/期初非零 → BEGIN；期末栏零 → END；并排左列 → END",
+      "pass": true,
+      "detail": {
+        "end_zero": "END",
+        "opening": "BEGIN"
+      }
+    },
+    {
+      "id": "CE12",
+      "name": "来源不准入 → UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE，两支都不出数",
+      "pass": true,
+      "detail": {
+        "verdict": "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE",
+        "branch1_pct": "",
+        "branch2_pct": "",
+        "b1_status": "CA_NOT_USABLE",
+        "b2_status": "CA_NOT_USABLE",
+        "reason": "合同资产取数经原页复核不成立（错列/错表），来源不准入，不补零、不推定"
+      }
+    },
+    {
+      "id": "CE13",
+      "name": "胜蓝当期期末栏 0.00 保留：Q10 判非项目制、RH03 当期侧仍是可采值，只有基期被撤销",
+      "pass": true,
+      "detail": {
+        "q10": "NON_PROJECT",
+        "t": "HAS_VALUE",
+        "t1y": "SOURCE_NOT_ADMISSIBLE"
+      }
+    }
+  ],
+  "checks_passed": "39/39",
+  "blocking_failures": [],
+  "release_S05": false,
+  "release_note": "自检不等同独立复核；V2.2 须经门审明确 release_S05 后才可开工。",
+  "limits": [
+    "本轮只回读三格原页（卓翼 p39、银宝 p38、胜蓝 p50/p47），其余 127 家空白原页未核。",
+    "胜蓝的错表结论依赖页标题识别（母公司 vs 合并），未逐行比对两张表全部科目。",
+    "RH02 待核 129 家的合同资产金额仍未取得，只做隔离与依据补齐。",
+    "四会富仕 SZ:300852 同时缺上一期存货/营业成本，RH02 仍需另补两格。",
+    "冀东装备 SZ:000856 的 SG09 合并口径仍 UNKNOWN，S05 归观察，S04 资格不动。"
+  ]
+}

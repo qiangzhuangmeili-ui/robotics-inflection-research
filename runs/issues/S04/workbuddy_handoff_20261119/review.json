@@ -1,6 +1,6 @@
 {
   "artifact": "S05_STEP_B_SELF_CHECK",
-  "generated_at": "2026-11-20T20:09:32+08:00",
+  "generated_at": "2026-11-20T20:47:00+08:00",
   "plan_version": "20261026_collection_first_v2",
   "author": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
@@ -236,5 +236,38 @@
     "差额表只覆盖 278 家拟消费字段，不是全池来源验收。",
     "851 行派生毛利率按父键页码追溯（VIA_PARENT）：若门审要求派生值自身页码，M04 全线 HOLD、RH05 归零，且 148 家的 M04 信号依赖同时失效。",
     "待核按行计 15、按格计 13：四会富仕 SZ:300852 的 FIN.REV.YTD / FIN.COST.YTD@20250930 各被两个指标共用，引用时必须点明口径。"
+  ],
+  "current_version": "V2.2",
+  "version_chain": [
+    {
+      "version": "V1",
+      "scope": "步骤A/B 接手与用途合同",
+      "self_check": "21/21",
+      "path": "review.json#checks"
+    },
+    {
+      "version": "V2",
+      "scope": "第一次门审返修（Q10 两支 / RH03 分型 / M08 分母）",
+      "self_check": "21/21",
+      "path": "v2_20261120/"
+    },
+    {
+      "version": "V2.1",
+      "scope": "J1 否决后返修（空白不补零 / 依据补齐）",
+      "self_check": "31/31",
+      "path": "v2_1_20261120/s05_v21_review.json"
+    },
+    {
+      "version": "V2.2",
+      "scope": "三格合同资产来源隔离（Q10 与 RH03 共用来源资格）",
+      "self_check": "39/39",
+      "path": "v2_2_20261120/s05_v22_review.json"
+    }
+  ],
+  "latest_limits": [
+    "本轮只回读三格原页（卓翼 p39、银宝 p38、胜蓝 p50/p47），其余 127 家空白原页未核。",
+    "胜蓝错表判定依据页标题，未逐行比对两张表全部科目。",
+    "RH02 待核 129 家（127 空白 + 2 来源不准入）的合同资产金额仍未取得。",
+    "四会富仕 SZ:300852 另缺上一期存货/营业成本两格，RH02 仍需另补。"
   ]
 }

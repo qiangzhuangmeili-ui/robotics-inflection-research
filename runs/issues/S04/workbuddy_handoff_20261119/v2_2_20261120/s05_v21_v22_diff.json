@@ -1,0 +1,125 @@
+{
+  "generated_at": "2026-11-20T20:30:25+08:00",
+  "ruling": "runs/issues/S04/codex_ruling_s05_v21_20261120.md",
+  "prior_ruling": "runs/issues/S04/codex_ruling_s05_v2_20261120.md",
+  "v2": {
+    "rows": 8638,
+    "by_actual_use": {
+      "ELIGIBLE_FOR_S05_USE": 8538,
+      "NOT_APPLICABLE": 76,
+      "PENDING_OPEN_DISPUTE": 5,
+      "PENDING_MISSING_INPUT": 9,
+      "HOLD_APPLICABILITY_UNKNOWN": 9,
+      "PENDING_SCOPE_NOT_CONSOLIDATED": 1
+    }
+  },
+  "v21": {
+    "rows": 8638,
+    "by_actual_use": {
+      "ELIGIBLE_FOR_S05_USE": 8021,
+      "HOLD_APPLICABILITY_UNKNOWN": 526,
+      "NOT_APPLICABLE": 76,
+      "PENDING_OPEN_DISPUTE": 5,
+      "PENDING_MISSING_INPUT": 9,
+      "PENDING_SCOPE_NOT_CONSOLIDATED": 1
+    }
+  },
+  "v22": {
+    "rows": 8638,
+    "by_actual_use": {
+      "ELIGIBLE_FOR_S05_USE": 8005,
+      "HOLD_APPLICABILITY_UNKNOWN": 534,
+      "NOT_APPLICABLE": 76,
+      "PENDING_OPEN_DISPUTE": 5,
+      "PENDING_MISSING_INPUT": 9,
+      "PENDING_SCOPE_NOT_CONSOLIDATED": 1,
+      "HOLD_SINGLE_SIDED_GAP": 8
+    },
+    "by_applicability": {
+      "": 2562,
+      "APPLICABLE": 5444,
+      "UNKNOWN_CA_BLANK": 508,
+      "NOT_APPLICABLE_PROJECT_MODE": 76,
+      "HOLD_DECISIVE_CELL_PENDING": 18,
+      "UNKNOWN_INPUT_MISSING": 14,
+      "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE": 8,
+      "SINGLE_SIDED_GAP": 8
+    },
+    "by_applicability_family": {
+      "": 2562,
+      "可判": 5444,
+      "待核": 548,
+      "不适用": 76,
+      "单边缺口": 8
+    },
+    "pending_rows": 15,
+    "pending_cells": 13
+  },
+  "isolated_cells": {
+    "registered": 3,
+    "documents": [
+      "DOC-8CCAA8F91C8043AF",
+      "DOC-CED1573B6156692D",
+      "DOC-F1CA96F4BB5E007E"
+    ],
+    "rows_flipped": 16,
+    "rows_by_metric": {
+      "M11": 8,
+      "M12": 8
+    },
+    "companies": [
+      "SZ:002369",
+      "SZ:002786",
+      "SZ:300843"
+    ]
+  },
+  "regression": {
+    "cases": 6,
+    "column_agrees": 6,
+    "admission_agrees": 6,
+    "rule_applied_to_output": 6
+  },
+  "row_level_transition": {
+    "M11|ELIGIBLE_FOR_S05_USE->HOLD_APPLICABILITY_UNKNOWN": 8,
+    "M12|ELIGIBLE_FOR_S05_USE->HOLD_SINGLE_SIDED_GAP": 8
+  },
+  "row_level_flipped_total": 16,
+  "transition_note": "本轮只隔离三个合同资产格，预期行级变动集中在这些公司：卓翼 M11（Q10→UNKNOWN）、银宝 M11（Q10→UNKNOWN）与两家/胜蓝的 M12。实际行数与分布以本文件 rows_by_metric 为准，不套用预估。",
+  "rh_by_company": {
+    "RH01": {
+      "可判": 277,
+      "待核": 1
+    },
+    "RH02": {
+      "待核": 129,
+      "可判": 118,
+      "不适用": 31
+    },
+    "RH03": {
+      "不适用": 126,
+      "可判": 133,
+      "单边缺口": 18,
+      "待核": 1
+    },
+    "RH04": {
+      "可判": 240,
+      "不适用": 36,
+      "待核": 2
+    },
+    "RH05": {
+      "可判": 274,
+      "待核": 4
+    }
+  },
+  "q10_engine_diff": {
+    "OLD_OK_NOW_PROJECT_MODE": 19,
+    "OLD_OTHER_NOW_UNKNOWN_CA_BLANK": 1
+  },
+  "q4_hits": {},
+  "notes": [
+    "来源不准入按「公司+字段+期间+文档 SHA-256」登记；SHA 变化则不自动适用。",
+    "Q10 与 RH03 共用同一份合同资产来源资格结论，均要求合并表 + 合同资产行 + 期末列。",
+    "空白与来源不准入同属「无可采用金额」，不补零；不可读/无记录仍单列抽取待核。",
+    "M08 只用 t；t-1y 行标 INHERITED_S04_SIGNAL_CHECK，不计入 RH04 输入。"
+  ]
+}
