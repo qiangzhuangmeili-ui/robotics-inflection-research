@@ -26,6 +26,7 @@ MASK = (REPO / "runs/issues/S00/completion_20261114/remaining_scope_review_20261
         / "classification_v2/CE_admission_projection/execution/all_pool_metrics_source_aware_mask.csv")
 FROZEN_B = REPO / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz"
 RELEASE = REPO / "runs/issues/S05/release_20261120.json"
+RULES_PATH = REPO / "runs/issues/S01/screen_rules_v3_provenance_20261114.json"
 
 METRICS = ("M04", "M08", "M10", "M11", "M12")
 KNOWN_STATUS = {
@@ -36,7 +37,8 @@ KNOWN_STATUS = {
     "SINGLE_SIDED_GAP",
 }
 KNOWN_RH = {"TRIGGERED", "NOT_TRIGGERED", "NOT_APPLICABLE",
-            "PENDING_HOLD", "PENDING_APPLICABILITY", "PENDING_SINGLE_SIDED"}
+            "PENDING_HOLD", "PENDING_APPLICABILITY", "PENDING_SINGLE_SIDED",
+            "PENDING_EXISTING_HINT", "PENDING_INPUT_GAP"}
 
 results = []
 
@@ -130,10 +132,16 @@ def main():
     # ---------------- V：上游计数
     contract = json.load(open(V22 / "s05_input_contract_v22.json", encoding="utf-8"))
     meas = contract["measured"]
+    rh06 = read(HERE / "rh06_adoption.csv")
+    rh06_by = {r["security_id"]: r for r in rh06}
     q09 = sum(1 for r in decision if "Q09" in (r["quality_flags"] or "").split(";"))
-    check("V17 Q09 一次性损益主导 = 38（与 V2.2 实测一致）",
-          q09 == meas["rh06_q09_marked"], f"{q09} vs {meas['rh06_q09_marked']}")
-    check("V18 RH06 触发数 = Q09 标记数",
+    rh06_triggered = [r for r in rh06 if r["adoption_status"] == "QUALIFIED_TRIGGERED"]
+    rh06_pending = [r for r in rh06 if r["adopted"] == "NO"]
+    check("V17 Q09 断言数 = RH06 有资格已触发 = 37（V2.2 数据触发 38，差 1 为待核）",
+          q09 == len(rh06_triggered) == 37
+          and sum(1 for r in rh06 if r["data_trigger"] == "YES") == meas["rh06_q09_marked"],
+          f"断言 {q09}，有资格触发 {len(rh06_triggered)}，数据触发 {meas['rh06_q09_marked']}")
+    check("V18 RH06 触发数 = Q09 标记数（同一采用口径）",
           sum(1 for r in decision if "RH06" in (r["rh_triggered"] or "").split(";")) == q09, q09)
     via = sum(1 for r in source if r["page_evidence_mode"] == "VIA_PARENT")
     check("V19 毛利率父键追溯行 = 851（与 V2.2 实测一致）",
@@ -222,6 +230,103 @@ def main():
     check("V38 超范围指标分布 = M08 15 / M10 4 / M12 1",
           Counter(r["metric_id"] for r in oor) == Counter({"M08": 15, "M10": 4, "M12": 1}),
           dict(Counter(r["metric_id"] for r in oor)))
+
+    # ---------------- V：RH06 采用台账（Codex 2026-11-21 返修项）
+    rh06_status = Counter(r["adoption_status"] for r in rh06)
+    check("V41 RH06 台账 278 家、一家一行、状态四类",
+          len(rh06) == 278 and len(rh06_by) == 278
+          and set(rh06_status) <= {"QUALIFIED_TRIGGERED", "QUALIFIED_NOT_TRIGGERED",
+                                   "PENDING_EXISTING_HINT", "PENDING_INPUT_GAP"},
+          dict(rh06_status))
+    check("V42 RH06 待核 7 家 = 1 既有提示 + 2 缺归母 + 4 扣非争议",
+          len(rh06_pending) == 7
+          and Counter(r["gap_type"] for r in rh06_pending)
+          == Counter({"MISSING_NPP": 2, "OPEN_DISPUTE": 5})
+          and sum(1 for r in rh06_pending if r["adoption_status"] == "PENDING_EXISTING_HINT") == 1,
+          f"{len(rh06_pending)} 家 {dict(Counter(r['gap_type'] for r in rh06_pending))}")
+    adopted_rh06 = [r for r in rh06 if r["adopted"] == "YES"]
+    bad_rh06_ev = [r["security_id"] for r in adopted_rh06
+                   if not (r["npp_document_id"] and r["npdedt_document_id"]
+                           and r["npp_source_page"] and r["npdedt_source_page"]
+                           and r["same_period"] == "YES" and r["same_scope"] == "YES"
+                           and r["npp_scope"] == "CONSOLIDATED" and r["npdedt_scope"] == "CONSOLIDATED"
+                           and r["npp_currency"] == "CNY" and r["npdedt_currency"] == "CNY")]
+    check("V43 RH06 已采用行均登记同期间/同口径/文档/页码/人民币",
+          not bad_rh06_ev, bad_rh06_ev[:5])
+    check("V44 五洋自控 RH06 降为既有提示待核（D-6863cfbe7055）",
+          rh06_by.get("SZ:300420", {}).get("adoption_status") == "PENDING_EXISTING_HINT"
+          and "D-6863cfbe7055" in rh06_by.get("SZ:300420", {}).get("open_dispute_ids", ""), "")
+    check("V45 RH06 待核家不再断言 Q09",
+          not [r["security_id"] for r in decision
+               if r["security_id"] in {x["security_id"] for x in rh06_pending}
+               and "Q09" in (r["quality_flags"] or "").split(";")], "")
+
+    # ---------------- V：RH 算子（按冻结算子独立复算）
+    with open(RULES_PATH, encoding="utf-8") as f:
+        rules = json.load(f)
+    rh_rules = {h["id"]: h for h in rules["risk_hints"]}
+    metric_rh = {"M04": "RH05", "M08": "RH04", "M10": "RH01", "M11": "RH02", "M12": "RH03"}
+
+    def hit(v, op, t):
+        return {">=": v >= t, "<=": v <= t, ">": v > t, "<": v < t}[op]
+
+    op_bad, boundary = [], []
+    for r in decision:
+        for m, rhid in metric_rh.items():
+            h = rh_rules[rhid]
+            op, thr = h["operator"], D(str(h["threshold"]))
+            if op not in (">=", "<=", ">", "<"):
+                op_bad.append((rhid, op))
+                continue
+            v = r[f"{m.lower()}_value"]
+            if v == "":
+                continue
+            expect = hit(D(v), op, thr)
+            got = rhid in (r["rh_triggered"] or "").split(";")
+            if expect != got:
+                op_bad.append((r["security_id"], rhid, v, op, str(thr), expect, got))
+            if D(v) == thr:
+                boundary.append((r["security_id"], rhid, op, str(thr), got))
+    check("V46 五指标 RH 触发按冻结算子独立复算一致", not op_bad, op_bad[:5])
+    check("V47 RH05 恰好等于 -2.0 的边界值按 <= 判为触发",
+          all(b[4] for b in boundary), boundary)
+
+    # ---------------- V：陈旧期与锚定期间分列
+    anchor_ct = Counter(r["anchor_period"] for r in decision)
+    check("V48 锚定期间 200×20260630 + 78×20260930 分列登记",
+          anchor_ct.get("20260630") == 200 and anchor_ct.get("20260930") == 78, dict(anchor_ct))
+    check("V49 冻结 Q11 陈旧期标记单独成列（不写成“全部为最新期”）",
+          all(r["stale_period_flag"] in ("YES", "NO") for r in decision),
+          dict(Counter(r["stale_period_flag"] for r in decision)))
+
+    # ---------------- V：冀东装备理由更正
+    check("V50 冀东装备观察理由不再声称存活维度为 PROVISIONAL",
+          jd and "PROVISIONAL" not in (jd[0]["decision_reason"] or "")
+          and jd[0]["dimension_basis"] == "CASH=SG08:QUALIFIED_ABSOLUTE_CHANNEL",
+          f"{jd[0]['decision_reason'] if jd else ''} | {jd[0]['dimension_basis'] if jd else ''}")
+    check("V51 冀东装备理由只依据维度不足 + 撤维",
+          jd and "1 个维度" in (jd[0]["decision_reason"] or "")
+          and "SG09" in (jd[0]["decision_reason"] or ""), "")
+
+    # ---------------- V：四家待核通过 + 通过口径
+    four = ("SH:605358", "SH:688707", "SZ:300852", "SZ:300964")
+    four_ok = [r for r in decision if r["security_id"] in four]
+    check("V52 四家带待核公司仍通过且保留 RH 待核",
+          len(four_ok) == 4 and all(r["decision"] == "QUALITY_PASS" for r in four_ok)
+          and all(r["rh_pending"] for r in four_ok),
+          [(r["security_id"], r["rh_pending"]) for r in four_ok])
+    check("V53 通过口径显式标注只表示本轮质量闸门",
+          all(r["pass_scope"] == "S05_QUALITY_GATE_ONLY" for r in decision)
+          and all(r["l3_gate_scope"] == "FIVE_METRICS_ONLY" for r in decision), "")
+
+    # ---------------- V：卓翼两个子标签并存
+    zhuo11 = [r for r in flags if r["security_id"] == "SZ:002369" and r["metric_id"] == "M11"]
+    zhuo12 = [r for r in flags if r["security_id"] == "SZ:002369" and r["metric_id"] == "M12"]
+    check("V54 卓翼 M11 记当期合同资产来源不准入、M12 记双期无可采用金额（并存）",
+          zhuo11 and zhuo11[0]["metric_status"] == "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE"
+          and zhuo12 and zhuo12[0]["metric_status"] == "BOTH_BLANK_NO_USABLE_AMOUNT",
+          f"{zhuo11[0]['metric_status'] if zhuo11 else ''}/"
+          f"{zhuo12[0]['metric_status'] if zhuo12 else ''}")
 
     # ---------------- X：与掩码表独立复算比对
     mask = {}

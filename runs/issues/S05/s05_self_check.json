@@ -3,8 +3,8 @@
   "issue": "S05 / #40",
   "executor": "WorkBuddy AI",
   "review_nature": "SELF_CHECK",
-  "checks_passed": 46,
-  "checks_total": 46,
+  "checks_passed": 60,
+  "checks_total": 60,
   "verdict": "SELF_CHECK_PASS",
   "results": [
     {
@@ -88,14 +88,14 @@
       "detail": "274/3/1"
     },
     {
-      "name": "V17 Q09 一次性损益主导 = 38（与 V2.2 实测一致）",
+      "name": "V17 Q09 断言数 = RH06 有资格已触发 = 37（V2.2 数据触发 38，差 1 为待核）",
       "pass": true,
-      "detail": "38 vs 38"
+      "detail": "断言 37，有资格触发 37，数据触发 38"
     },
     {
-      "name": "V18 RH06 触发数 = Q09 标记数",
+      "name": "V18 RH06 触发数 = Q09 标记数（同一采用口径）",
       "pass": true,
-      "detail": "38"
+      "detail": "37"
     },
     {
       "name": "V19 毛利率父键追溯行 = 851（与 V2.2 实测一致）",
@@ -201,6 +201,76 @@
       "name": "V38 超范围指标分布 = M08 15 / M10 4 / M12 1",
       "pass": true,
       "detail": "{'M08': 15, 'M10': 4, 'M12': 1}"
+    },
+    {
+      "name": "V41 RH06 台账 278 家、一家一行、状态四类",
+      "pass": true,
+      "detail": "{'QUALIFIED_NOT_TRIGGERED': 234, 'QUALIFIED_TRIGGERED': 37, 'PENDING_INPUT_GAP': 6, 'PENDING_EXISTING_HINT': 1}"
+    },
+    {
+      "name": "V42 RH06 待核 7 家 = 1 既有提示 + 2 缺归母 + 4 扣非争议",
+      "pass": true,
+      "detail": "7 家 {'MISSING_NPP': 2, 'OPEN_DISPUTE': 5}"
+    },
+    {
+      "name": "V43 RH06 已采用行均登记同期间/同口径/文档/页码/人民币",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V44 五洋自控 RH06 降为既有提示待核（D-6863cfbe7055）",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V45 RH06 待核家不再断言 Q09",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V46 五指标 RH 触发按冻结算子独立复算一致",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V47 RH05 恰好等于 -2.0 的边界值按 <= 判为触发",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "V48 锚定期间 200×20260630 + 78×20260930 分列登记",
+      "pass": true,
+      "detail": "{'20260630': 200, '20260930': 78}"
+    },
+    {
+      "name": "V49 冻结 Q11 陈旧期标记单独成列（不写成“全部为最新期”）",
+      "pass": true,
+      "detail": "{'NO': 278}"
+    },
+    {
+      "name": "V50 冀东装备观察理由不再声称存活维度为 PROVISIONAL",
+      "pass": true,
+      "detail": "撤维后仅剩 1 个维度（CASH）；撤下信号 SG09 | CASH=SG08:QUALIFIED_ABSOLUTE_CHANNEL"
+    },
+    {
+      "name": "V51 冀东装备理由只依据维度不足 + 撤维",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V52 四家带待核公司仍通过且保留 RH 待核",
+      "pass": true,
+      "detail": "[('SH:605358', 'RH02;RH04;RH05;RH06'), ('SH:688707', 'RH02;RH04;RH05;RH06'), ('SZ:300852', 'RH01;RH02;RH03;RH05'), ('SZ:300964', 'RH02;RH05')]"
+    },
+    {
+      "name": "V53 通过口径显式标注只表示本轮质量闸门",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "V54 卓翼 M11 记当期合同资产来源不准入、M12 记双期无可采用金额（并存）",
+      "pass": true,
+      "detail": "UNKNOWN_CA_SOURCE_NOT_ADMISSIBLE/BOTH_BLANK_NO_USABLE_AMOUNT"
     },
     {
       "name": "X01 五指标可判值与 S01 掩码表逐格一致（容差 1e-6）",

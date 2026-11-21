@@ -18,6 +18,7 @@ REVIEWED = REPO / "runs/issues/S04/completion_20261114/final_delivery_20261116/r
 RULES = REPO / "runs/issues/S01/screen_rules_v3_provenance_20261114.json"
 FROZEN_B = REPO / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz"
 RELEASE = REPO / "runs/issues/S05/release_20261120.json"
+DISPUTE_LEDGER = REPO / "runs/issues/S00/errata_20261111_v5/dispute_ledger.csv"
 
 METRICS = ("M04", "M08", "M10", "M11", "M12")
 
@@ -43,6 +44,7 @@ def main():
     preserved = read(HERE / "observe_pool_preserved_776.csv")
     source = read(HERE / "source_eligibility.csv")
     oor = read(HERE / "s05_out_of_valid_range.csv")
+    rh06 = read(HERE / "rh06_adoption.csv")
     pending = read(V22 / "s05_pending_isolation_v22.csv")
     nonadmit = read(V22 / "s05_ca_source_nonadmission_v22.csv")
     rules = json.load(open(RULES, encoding="utf-8"))
@@ -76,7 +78,8 @@ def main():
                 "冻结有效信号的 L3 依赖（15 行待核消费行）",
                 "低基数与绝对额通道的来源依赖",
                 "适用性证据（V2.2 适用性表）",
-                "既有 RH06/Q09 提示（可追溯，不重算口径）",
+                "既有 RH06/Q09 提示（V2.2 登记 38 家，逐家建立采用依据）",
+                "扣非/归母格在锚定期的开放争议（S00 errata V5 争议台账）",
             ],
             "not_consumed": [
                 "M01/M02/M03/M05/M06/M07/M09 的指标值（仅取其待核隔离记录）",
@@ -103,6 +106,10 @@ def main():
              "sha256": sha256(V22 / "s05_ca_source_nonadmission_v22.csv")},
             {"role": "V2.2 规则模块（阈值唯一来源）", "path": "runs/issues/S04/workbuddy_handoff_20261119/v2_2_20261120/s05_ca_source_rule.py",
              "sha256": sha256(V22 / "s05_ca_source_rule.py")},
+            {"role": "V2.2 RH06/Q09 既有提示登记", "path": "runs/issues/S04/workbuddy_handoff_20261119/v2_2_20261120/s05_rh06_q09_registry_v22.csv",
+             "sha256": sha256(V22 / "s05_rh06_q09_registry_v22.csv")},
+            {"role": "开放争议台账（S00 errata V5）", "path": str(DISPUTE_LEDGER.relative_to(REPO)),
+             "sha256": sha256(DISPUTE_LEDGER)},
         ],
         "rules_applied": {
             "M04": {"formula": "GM(t) - GM(t-1y)", "unit": "pp",
@@ -119,6 +126,15 @@ def main():
                     "ca_source_requirement": "期间 + 合并资产负债表 + 合同资产行 + 期末列，四者同时绑定"},
             "days_in_period": "period_end - period_start + 1，取自 B，不按 365 硬编码",
             "rh_thresholds": rh_rules,
+            "rh_operator_dispatch": "按冻结文件实际算子分派（>= / <= / > / <），不把非 >= 一律当 <；RH05 为 <=",
+            "rh06_rule": {
+                "formula": "|NPP.YTD(t) - NPDEDT.YTD(t)| / max(|NPP.YTD(t)|, 1) > 0.5",
+                "period": "t（锚定期间），两项同期间、同口径（CONSOLIDATED/CNY）",
+                "adoption_gate": "两项输入须各有 document_id + source_page，且在争议台账中无开放争议；否则记待核，不落入未触发",
+                "status_set": ["QUALIFIED_TRIGGERED", "QUALIFIED_NOT_TRIGGERED",
+                               "PENDING_EXISTING_HINT", "PENDING_INPUT_GAP"],
+                "registry_basis": "V2.2 s05_rh06_q09_registry_v22.csv（38 家既有提示，状态 EXISTING_HINT_SOURCE_ELIGIBILITY_TO_BE_CONFIRMED_IN_S05）",
+            },
             "rh_threshold_source": "screen_rules_v3_provenance_20261114.json / risk_hints（唯一来源）",
             "q10_thresholds": {
                 "asset_pct_gt": 5, "rev_pct_gt": 10, "logic": "两支 OR，各自独立成立",
@@ -146,6 +162,8 @@ def main():
             "PENDING_HOLD": "待核（含来源不准入）",
             "PENDING_APPLICABILITY": "待核（适用性未定）",
             "PENDING_SINGLE_SIDED": "单边缺口，不判变动",
+            "PENDING_EXISTING_HINT": "V2.2 既有提示，输入有开放争议，降为待核",
+            "PENDING_INPUT_GAP": "输入缺失或有开放争议，不足以判定",
         },
         "ca_source_nonadmission": [
             {
@@ -171,9 +189,19 @@ def main():
             "rh_triggered": {k: sum(1 for r in decision if k in (r["rh_triggered"] or "").split(";"))
                              for k in ("RH01", "RH02", "RH03", "RH04", "RH05", "RH06")},
             "rh_pending": {k: sum(1 for r in decision if k in (r["rh_pending"] or "").split(";"))
-                           for k in ("RH01", "RH02", "RH03", "RH04", "RH05")},
+                           for k in ("RH01", "RH02", "RH03", "RH04", "RH05", "RH06")},
             "rh_not_applicable": {k: sum(1 for r in decision if k in (r["rh_not_applicable"] or "").split(";"))
-                                  for k in ("RH01", "RH02", "RH03", "RH04", "RH05")},
+                                  for k in ("RH01", "RH02", "RH03", "RH04", "RH05", "RH06")},
+            "rh06_adoption": dict(Counter(r["adoption_status"] for r in rh06)),
+            "rh06_data_trigger": sum(1 for r in rh06 if r["data_trigger"] == "YES"),
+            "rh06_pending_companies": [
+                {"security_id": r["security_id"], "stock_name": r["stock_name"],
+                 "status": r["adoption_status"], "gap_type": r["gap_type"],
+                 "open_dispute_ids": r["open_dispute_ids"], "basis": r["basis"]}
+                for r in rh06 if r["adopted"] == "NO"
+            ],
+            "anchor_period": dict(Counter(r["anchor_period"] for r in decision)),
+            "stale_period_flag": dict(Counter(r["stale_period_flag"] for r in decision)),
             "quality_flags": {f"Q{i:02d}": sum(1 for r in decision if f"Q{i:02d}" in (r["quality_flags"] or "").split(";"))
                               for i in range(1, 13)},
             "source_eligibility_rows": len(source),
@@ -198,6 +226,7 @@ def main():
             {"file": "source_eligibility.csv", "rows": len(source), "sha256": sha256(HERE / "source_eligibility.csv")},
             {"file": "observe_pool_preserved_776.csv", "rows": len(preserved), "sha256": sha256(HERE / "observe_pool_preserved_776.csv")},
             {"file": "s05_out_of_valid_range.csv", "rows": len(oor), "sha256": sha256(HERE / "s05_out_of_valid_range.csv")},
+            {"file": "rh06_adoption.csv", "rows": len(rh06), "sha256": sha256(HERE / "rh06_adoption.csv")},
         ],
         "downstream": {
             "S05_completed": True,

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-20T21:48:24+08:00",
+  "generated_at": "2026-11-21T12:58:32+08:00",
   "issue": "S05 / #40",
   "executor": "WorkBuddy AI",
   "plan_version": "20261026_collection_first_v2",
@@ -44,21 +44,41 @@
     "RH03": 7,
     "RH04": 109,
     "RH05": 44,
-    "RH06": 38
+    "RH06": 37
   },
   "rh_pending_counts": {
     "RH01": 1,
     "RH02": 129,
     "RH03": 19,
     "RH04": 2,
-    "RH05": 4
+    "RH05": 4,
+    "RH06": 7
   },
   "rh_not_applicable_counts": {
     "RH01": 0,
     "RH02": 31,
     "RH03": 126,
     "RH04": 36,
-    "RH05": 0
+    "RH05": 0,
+    "RH06": 0
+  },
+  "rh06_adoption_counts": {
+    "PENDING_EXISTING_HINT": 1,
+    "PENDING_INPUT_GAP": 6,
+    "QUALIFIED_NOT_TRIGGERED": 234,
+    "QUALIFIED_TRIGGERED": 37
+  },
+  "rh06_gap_counts": {
+    "MISSING_NPP": 2,
+    "OPEN_DISPUTE": 5
+  },
+  "rh06_data_trigger": 38,
+  "anchor_period_counts": {
+    "20260630": 200,
+    "20260930": 78
+  },
+  "stale_period_counts": {
+    "NO": 278
   },
   "out_of_valid_range": 20,
   "quality_flag_counts": {
@@ -70,7 +90,7 @@
     "Q06": 0,
     "Q07": 0,
     "Q08": 1,
-    "Q09": 38,
+    "Q09": 37,
     "Q10": 31,
     "Q11": 0,
     "Q12": 0
@@ -142,8 +162,53 @@
       "name": "C13 Q10 两支判定可由表内值代数复现",
       "pass": true,
       "detail": "[]"
+    },
+    {
+      "name": "C14 冻结数值算子全部在分派表内（含 RH05 的 <=）",
+      "pass": true,
+      "detail": "numeric=['<', '<=', '>='] flag=['FLAG']"
+    },
+    {
+      "name": "C15 恰好等于门槛的值按算子语义判定",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "C16 RH06 台账覆盖 278 家且一家一行",
+      "pass": true,
+      "detail": "278"
+    },
+    {
+      "name": "C17 RH06 采用状态全部落在四个已知类别",
+      "pass": true,
+      "detail": "{'QUALIFIED_NOT_TRIGGERED': 234, 'QUALIFIED_TRIGGERED': 37, 'PENDING_INPUT_GAP': 6, 'PENDING_EXISTING_HINT': 1}"
+    },
+    {
+      "name": "C18 RH06 采用行均登记两项值的文档+页码+同期间+同口径",
+      "pass": true,
+      "detail": "271"
+    },
+    {
+      "name": "C19 RH06 触发集合 = V2.2 既有提示集合去掉待核项",
+      "pass": true,
+      "detail": "触发 37，V2.2 38，待核 7"
+    },
+    {
+      "name": "C20 五洋自控 RH06 降为既有提示待核（开放争议 D-6863cfbe7055）",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "C21 Q09 断言数 = RH06 有资格已触发数",
+      "pass": true,
+      "detail": "37"
+    },
+    {
+      "name": "C22 陈旧期标记与锚定期间分列登记（200×20260630 + 78×20260930）",
+      "pass": true,
+      "detail": "anchor={'20260630': 200, '20260930': 78} stale={'NO': 278}"
     }
   ],
-  "checks_passed": 13,
-  "checks_total": 13
+  "checks_passed": 22,
+  "checks_total": 22
 }

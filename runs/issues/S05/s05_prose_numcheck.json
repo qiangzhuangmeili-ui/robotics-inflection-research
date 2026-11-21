@@ -1,7 +1,7 @@
 {
   "artifact": "S05_PROSE_NUMBER_CHECK",
-  "checks_passed": 43,
-  "checks_total": 43,
+  "checks_passed": 48,
+  "checks_total": 48,
   "verdict": "NUMCHECK_PASS",
   "results": [
     {
@@ -25,12 +25,12 @@
       "detail": "166"
     },
     {
-      "name": "N05 145 家带待核项",
+      "name": "N05 148 家带待核项",
       "pass": true,
-      "detail": "145"
+      "detail": "148"
     },
     {
-      "name": "N06 正文写了 166 与 145",
+      "name": "N06 正文写了 166 / 148 / 111",
       "pass": true,
       "detail": ""
     },
@@ -97,17 +97,42 @@
     {
       "name": "N10 RH06 表行数字与实算一致",
       "pass": true,
-      "detail": "文中 (38, 0, 0) vs 实算 (38, 0, 0)"
+      "detail": "文中 (37, 7, 0) vs 实算 (37, 7, 0)"
     },
     {
       "name": "N11 Q01–Q12 十二个数字与实算一致",
       "pass": true,
-      "detail": "文中 [5, 145, 35, 1, 34, 0, 0, 1, 38, 31, 0, 0] vs 实算 [5, 145, 35, 1, 34, 0, 0, 1, 38, 31, 0, 0]"
+      "detail": "文中 [5, 145, 35, 1, 34, 0, 0, 1, 37, 31, 0, 0] vs 实算 [5, 145, 35, 1, 34, 0, 0, 1, 37, 31, 0, 0]"
     },
     {
-      "name": "N12 Q09 = 38 且与 V2.2 实测一致",
+      "name": "N12 Q09 = 37 = RH06 有资格已触发（数据触发 38，差 1 为待核）",
       "pass": true,
-      "detail": "38"
+      "detail": "37"
+    },
+    {
+      "name": "N12b RH06 四类状态 37 / 234 / 1 / 6",
+      "pass": true,
+      "detail": "{'QUALIFIED_NOT_TRIGGERED': 234, 'QUALIFIED_TRIGGERED': 37, 'PENDING_INPUT_GAP': 6, 'PENDING_EXISTING_HINT': 1}"
+    },
+    {
+      "name": "N12c 正文的 RH06 四类数字与实算一致",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "N12d RH06 待核 7 家且逐家登记",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "N12e 五洋自控 RH06 既有提示待核 + 争议号",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "N12f 锚定期间 200×20260630 + 78×20260930 与文中一致",
+      "pass": true,
+      "detail": "{'20260630': 200, '20260930': 78}"
     },
     {
       "name": "N13 Q06/Q07/Q11/Q12 均为 0",
@@ -192,17 +217,17 @@
     {
       "name": "N29 交付物行数与实算一致",
       "pass": true,
-      "detail": "文中 [1390, 278, 277, 1, 776, 6076, 20] vs 实算 [1390, 278, 277, 1, 776, 6076, 20]"
+      "detail": "文中 [1390, 278, 277, 1, 278, 776, 6076, 20] vs 实算 [1390, 278, 277, 1, 278, 776, 6076, 20]"
     },
     {
       "name": "N30 自检全项通过",
       "pass": true,
-      "detail": "46/46"
+      "detail": "60/60"
     },
     {
       "name": "N31 正文写的自检分数与自检文件一致",
       "pass": true,
-      "detail": "46/46"
+      "detail": "60/60"
     },
     {
       "name": "N32 776 家原样携带",

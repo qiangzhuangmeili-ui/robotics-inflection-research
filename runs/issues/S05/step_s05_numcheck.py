@@ -74,9 +74,10 @@ def main():
     n_no_rh = sum(1 for r in passed if not (r["rh_triggered"] or ""))
     n_pending = sum(1 for r in passed if r["rh_pending"])
     check("N04 166 家至少一条已触发风险提示", len(passed) - n_no_rh == 166, len(passed) - n_no_rh)
-    check("N05 145 家带待核项", n_pending == 145, n_pending)
-    check("N06 正文写了 166 与 145",
-          "166 家至少带一条已触发的风险提示" in md and "145 家带待核项" in md, "")
+    check("N05 148 家带待核项", n_pending == 148, n_pending)
+    check("N06 正文写了 166 / 148 / 111",
+          "166 家至少带一条已触发的风险提示" in md and "148 家带待核项" in md
+          and "111 家无已触发提示" in md, "")
 
     # ---- 三、五指标表
     expect = {
@@ -118,7 +119,9 @@ def main():
         "RH05": (sum(1 for r in decision if "RH05" in (r["rh_triggered"] or "").split(";")),
                  sum(1 for r in decision if "RH05" in (r["rh_pending"] or "").split(";")),
                  sum(1 for r in decision if "RH05" in (r["rh_not_applicable"] or "").split(";"))),
-        "RH06": (sum(1 for r in decision if "RH06" in (r["rh_triggered"] or "").split(";")), 0, 0),
+        "RH06": (sum(1 for r in decision if "RH06" in (r["rh_triggered"] or "").split(";")),
+                 sum(1 for r in decision if "RH06" in (r["rh_pending"] or "").split(";")),
+                 sum(1 for r in decision if "RH06" in (r["rh_not_applicable"] or "").split(";"))),
     }
     for k, exp in rh_exp.items():
         row = find_row(md, f"| {k} ")
@@ -133,7 +136,29 @@ def main():
     got_q = [int(x) for x in m.groups()] if m else []
     exp_q = [q_actual[f"Q{i:02d}"] for i in range(1, 13)]
     check("N11 Q01–Q12 十二个数字与实算一致", got_q == exp_q, f"文中 {got_q} vs 实算 {exp_q}")
-    check("N12 Q09 = 38 且与 V2.2 实测一致", q_actual["Q09"] == 38, q_actual["Q09"])
+    rh06 = read(HERE / "rh06_adoption.csv")
+    rh06_triggered = sum(1 for r in rh06 if r["adoption_status"] == "QUALIFIED_TRIGGERED")
+    check("N12 Q09 = 37 = RH06 有资格已触发（数据触发 38，差 1 为待核）",
+          q_actual["Q09"] == 37 == rh06_triggered
+          and sum(1 for r in rh06 if r["data_trigger"] == "YES") == 38, q_actual["Q09"])
+    ad = Counter(r["adoption_status"] for r in rh06)
+    check("N12b RH06 四类状态 37 / 234 / 1 / 6",
+          ad.get("QUALIFIED_TRIGGERED") == 37 and ad.get("QUALIFIED_NOT_TRIGGERED") == 234
+          and ad.get("PENDING_EXISTING_HINT") == 1 and ad.get("PENDING_INPUT_GAP") == 6, dict(ad))
+    check("N12c 正文的 RH06 四类数字与实算一致",
+          "| 有资格已触发 | 37 |" in md and "| 有资格未达阈值 | 234 |" in md
+          and "| 既有提示待核 | 1 |" in md and "| 缺来源 | 6 |" in md, "")
+    check("N12d RH06 待核 7 家且逐家登记",
+          sum(1 for r in rh06 if r["adopted"] == "NO") == 7
+          and sum(1 for r in rh06 if r["gap_type"] == "MISSING_NPP") == 2
+          and sum(1 for r in rh06 if r["gap_type"] == "OPEN_DISPUTE") == 5, "")
+    check("N12e 五洋自控 RH06 既有提示待核 + 争议号",
+          any(r["security_id"] == "SZ:300420" and r["adoption_status"] == "PENDING_EXISTING_HINT"
+              and "D-6863cfbe7055" in r["open_dispute_ids"] for r in rh06), "")
+    anc = Counter(r["anchor_period"] for r in decision)
+    check("N12f 锚定期间 200×20260630 + 78×20260930 与文中一致",
+          anc.get("20260630") == 200 and anc.get("20260930") == 78
+          and "200 家锚 `20260630`" in md and "78 家锚 `20260930`" in md, dict(anc))
     check("N13 Q06/Q07/Q11/Q12 均为 0",
           all(q_actual[k] == 0 for k in ("Q06", "Q07", "Q11", "Q12")),
           {k: q_actual[k] for k in ("Q06", "Q07", "Q11", "Q12")})
@@ -189,16 +214,19 @@ def main():
     rows = {
         "quality_flags.csv": len(flags), "quality_decision_log.csv": len(decision),
         "quality_pass.csv": len(passed), "quality_observe.csv": len(observe),
+        "rh06_adoption.csv": len(rh06),
         "observe_pool_preserved_776.csv": len(preserved),
         "source_eligibility.csv": len(source), "s05_out_of_valid_range.csv": len(oor),
     }
     m2 = re.search(r"`quality_flags.csv`（([\d,]+) 行）、`quality_decision_log.csv`（([\d,]+) 行）、"
                    r"`quality_pass.csv`（([\d,]+) 行）、`quality_observe.csv`（([\d,]+) 行）、"
+                   r"`rh06_adoption.csv`（([\d,]+) 行）、"
                    r"`observe_pool_preserved_776.csv`（([\d,]+) 行）、`source_eligibility.csv`（([\d,]+) 行）、"
                    r"`s05_out_of_valid_range.csv`（([\d,]+) 行）", md)
     got_rows = [int(x.replace(",", "")) for x in m2.groups()] if m2 else []
     exp_rows = [rows[k] for k in ("quality_flags.csv", "quality_decision_log.csv", "quality_pass.csv",
-                                  "quality_observe.csv", "observe_pool_preserved_776.csv",
+                                  "quality_observe.csv", "rh06_adoption.csv",
+                                  "observe_pool_preserved_776.csv",
                                   "source_eligibility.csv", "s05_out_of_valid_range.csv")]
     check("N29 交付物行数与实算一致", got_rows == exp_rows, f"文中 {got_rows} vs 实算 {exp_rows}")
     frac = f"{selfcheck['checks_passed']}/{selfcheck['checks_total']}"

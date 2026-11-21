@@ -6,8 +6,8 @@
   "review_nature": "SELF_CHECK",
   "verdict": "SELF_CHECK_PASS",
   "verdict_basis": {
-    "self_check": "46/46",
-    "prose_numcheck": "43/43"
+    "self_check": "60/60",
+    "prose_numcheck": "48/48"
   },
   "scope_done": [
     "按 V2.2 冻结输入完成 278 家公司层面质量检查",
@@ -57,14 +57,29 @@
       "RH03": 7,
       "RH04": 109,
       "RH05": 44,
-      "RH06": 38
+      "RH06": 37
     },
     "rh_pending": {
       "RH01": 1,
       "RH02": 129,
       "RH03": 19,
       "RH04": 2,
-      "RH05": 4
+      "RH05": 4,
+      "RH06": 7
+    },
+    "rh06_adoption": {
+      "QUALIFIED_NOT_TRIGGERED": 234,
+      "QUALIFIED_TRIGGERED": 37,
+      "PENDING_INPUT_GAP": 6,
+      "PENDING_EXISTING_HINT": 1
+    },
+    "rh06_data_trigger": 38,
+    "anchor_period": {
+      "20260630": 200,
+      "20260930": 78
+    },
+    "stale_period_flag": {
+      "NO": 278
     },
     "source_rows": 6076,
     "source_adopted": 5444,
@@ -74,20 +89,35 @@
   "hold_company": {
     "security_id": "SZ:000856",
     "stock_name": "冀东装备",
-    "reason": "撤维后仅剩 1 个维度（CASH）；撤下信号 SG09；存活维度在 S04 即标 PROVISIONAL（CASH）"
+    "reason": "撤维后仅剩 1 个维度（CASH）；撤下信号 SG09"
   },
   "limitations": [
     "只核对五指标与待核隔离涉及的原页证据，未回读其余空白原页，未复算 360 份 PDF 哈希。",
     "valid_range 是合理性包络，冻结规则未给处置动作；20 个超范围值只登记不阻断。",
     "V2.2 对卓翼同一事实用两个子标签（M11 来源不准入 / M12 双期无可采用金额），结论一致、计数不受影响，本轮不改 V2.2。",
     "776 家观察池原样携带，其指标值不在本轮核对范围。",
-    "冀东装备存活维度 CASH 在 S04 即标 PROVISIONAL，观察结论有双重支撑。"
+    "维度级 provisional_dimensions 会同维度兄弟信号连坐（冀东装备 CASH 的 SG07 为 PROVISIONAL_ONLY，但存活信号 SG08 为 QUALIFIED_ABSOLUTE_CHANNEL），不能读成存活信号是临时值；本轮改为按存活信号自身状态判维度并输出 dimension_basis。",
+    "l3_gate_result 只覆盖本轮五个指标；SG08 使用的 M09 来源沿用 S04 已核依赖，不在本轮重核范围。",
+    "RH06 待核 7 家（既有提示 1 + 缺归母 2 + 扣非争议 4）继续隔离，不清零、不推定。"
   ],
+  "codex_review_20261121": {
+    "path": "runs/issues/S05/codex_review_s05_20261121.md",
+    "verdict": "核心名单切分与五指标复算通过；RH06 定向返修后再验收",
+    "items_fixed": [
+      "冀东装备理由删除“CASH 在 S04 是 PROVISIONAL”的错误表述，改为只依据维度不足；新增 dimension_basis",
+      "四家带待核通过显式标注 pass_scope = S05_QUALITY_GATE_ONLY",
+      "20 个超 valid_range 值保留登记、不自动阻断，作为抽查入口",
+      "卓翼 M11（当期来源不准入）与 M12（双期无可采用金额）两个子标签并存，不回改 V2.2",
+      "RH06 改为逐公司采用台账 rh06_adoption.csv，四类状态，7 家待核逐家登记",
+      "RH06 报告数字按实算改为 37 触发 / 234 未达阈值 / 7 待核；Q09 同步 37",
+      "RH 触发改为按冻结算子分派（RH05 为 <=）并新增边界核验",
+      "“全部为最新期”改为沿用冻结 Q11 标记，锚定期间分列 200×20260630 + 78×20260930"
+    ],
+    "still_open": "Codex 需复核本轮指纹与差额（RH06 采用台账、两处表述、RH05 边界）。"
+  },
   "open_questions_for_codex": [
-    "277/1 的通过—观察切分是否成立，尤其冀东装备的撤维判断。",
-    "立昂微、振华新材、四会富仕、本川智能四家带待核项仍通过，是否接受。",
-    "20 个超出 valid_range 的值是否应按某种未写明的规则阻断。",
-    "卓翼 M11/M12 子标签不一致是否需要回改 V2.2。"
+    "RH06 采用台账的四类划分与 7 家待核是否接受。",
+    "RH05 改为按 <= 分派后，274 个可判 M04 中无等于 -2 的值，故触发数不变，是否认可该边界处理。"
   ],
   "downstream": {
     "S05_completed": true,

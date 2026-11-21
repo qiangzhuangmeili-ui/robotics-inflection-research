@@ -38,6 +38,8 @@ REVIEWED = REPO / "runs/issues/S04/completion_20261114/final_delivery_20261116/r
 RULES_PATH = REPO / "runs/issues/S01/screen_rules_v3_provenance_20261114.json"
 FROZEN_B = REPO / "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz"
 RELEASE = REPO / "runs/issues/S05/release_20261120.json"
+DISPUTE_LEDGER = REPO / "runs/issues/S00/errata_20261111_v5/dispute_ledger.csv"
+RH06_REGISTRY = V22 / "s05_rh06_q09_registry_v22.csv"
 
 sys.path.insert(0, str(V22))
 from s05_ca_source_rule import (  # noqa: E402
@@ -157,6 +159,23 @@ def load_rules():
         return json.load(f)
 
 
+# RH 算子：按冻结文件里实际写的算子分派，不把非 ">=" 一律当 "<"。
+# 冻结集：RH01 ">="、RH02 ">="、RH03 ">="、RH04 "<"、RH05 "<="。
+RH_OPERATORS = (">=", "<=", ">", "<")
+
+
+def rh_hit(value, operator, threshold):
+    if operator == ">=":
+        return value >= threshold
+    if operator == "<=":
+        return value <= threshold
+    if operator == ">":
+        return value > threshold
+    if operator == "<":
+        return value < threshold
+    raise ValueError(f"冻结文件出现未支持的算子：{operator}")
+
+
 # ---------------------------------------------------------------- B 索引
 
 NEEDED_FIELDS = {
@@ -222,13 +241,27 @@ def main():
     both_blank = read_csv(V22 / "s05_rh03_both_blank_v22.csv")
     single_sided = read_csv(V22 / "s05_rh03_single_sided_v22.csv")
     q10_unknown = read_csv(V22 / "s05_q10_unknown_v22.csv")
+    disputes = read_csv(DISPUTE_LEDGER)
+    rh06_registry = {r["security_id"]: r for r in read_csv(RH06_REGISTRY)}
 
     assert len(pool) == 278, len(pool)
     assert len(observe_pool) == 776, len(observe_pool)
 
     # --- 索引
+    pool_index = {r["security_id"]: r for r in pool}
     app = {(r["security_id"], r["metric_id"]): r for r in applicability}
     assert len(app) == 278 * 5, len(app)
+
+    # RH06/Q09 输入（NPP.YTD / NPDEDT.YTD）在锚定期的开放争议。
+    # 争议台账是全池台账，这里只取本轮 278 家、锚定期、RH06 实际使用的两个字段。
+    RH06_FIELDS = ("FIN.NPP.YTD", "FIN.NPDEDT.YTD")
+    dispute_at_anchor = defaultdict(list)
+    for r in disputes:
+        p = pool_index.get(r["security_id"])
+        if not p:
+            continue
+        if r["field_id"] in RH06_FIELDS and r["period_key"] == p["anchor_period"]:
+            dispute_at_anchor[r["security_id"]].append(r)
 
     elig = defaultdict(list)
     for r in eligibility:
@@ -256,6 +289,7 @@ def main():
     decision_rows = []
     source_rows = []
     oor_rows = []
+    rh06_rows = []
     dim_after = {}
     checks = []
 
@@ -462,13 +496,79 @@ def main():
         )
         if pre_listing or rev_1 is None:
             qflags.add("Q08")
-        # Q09 一次性损益主导
-        one_off = False
+        # --- RH06 / Q09 采用台账：逐公司登记两个输入值、原文位置与开放争议，
+        #     采用状态由来源资格决定，不用"集合与 V2.2 相同"替代采用判断。
+        dsp = dispute_at_anchor.get(sid, [])
+        dsp_ids = ";".join(sorted(r["dispute_id"] for r in dsp))
+        dsp_fields = ";".join(sorted({r["field_id"] for r in dsp}))
+        rh06_ratio = None
+        rh06_data_trigger = None
         if npp_t is not None and npd_t is not None:
-            denom = max(abs(npp_t), D("1"))
-            if abs(npp_t - npd_t) / denom > D("0.5"):
-                one_off = True
-                qflags.add("Q09")
+            rh06_ratio = abs(npp_t - npd_t) / max(abs(npp_t), D("1"))
+            rh06_data_trigger = rh06_ratio > D("0.5")
+        npp_ok = npp_t_row is not None
+        npd_ok = npd_t_row is not None
+        inputs_ok = (
+            npp_ok and npd_ok
+            and npp_t_row.get("consolidation_scope") == "CONSOLIDATED"
+            and npd_t_row.get("consolidation_scope") == "CONSOLIDATED"
+            and npp_t_row.get("currency") == "CNY"
+            and npd_t_row.get("currency") == "CNY"
+            and bool(npp_t_row.get("document_id")) and bool(npd_t_row.get("document_id"))
+            and bool(npp_t_row.get("source_page")) and bool(npd_t_row.get("source_page"))
+        )
+        in_registry = sid in rh06_registry
+        if not inputs_ok:
+            rh06_status = "PENDING_INPUT_GAP"
+            rh06_gap = "MISSING_" + ("NPP" if not npp_ok else ("NPDEDT" if not npd_ok else "SOURCE"))
+            if not (npp_ok and npd_ok):
+                missing_cn = "当期归母净利润" if not npp_ok else "当期扣非归母净利润"
+                rh06_reason = f"RH06 必要输入缺失：{missing_cn}在冻结 B 中无来源行"
+            else:
+                rh06_reason = "RH06 输入未同时满足合并口径/人民币/文档+页码"
+        elif dsp:
+            rh06_status = "PENDING_EXISTING_HINT" if in_registry else "PENDING_INPUT_GAP"
+            rh06_gap = "OPEN_DISPUTE"
+            rh06_reason = f"当期扣非/归母格存在未采用处置的开放争议 {dsp_ids}（{dsp_fields}）"
+        else:
+            rh06_status = "QUALIFIED_TRIGGERED" if rh06_data_trigger else "QUALIFIED_NOT_TRIGGERED"
+            rh06_gap = ""
+            rel = ">" if rh06_data_trigger else "≤"
+            rh06_reason = f"两项输入均可采用，比值 {q(rh06_ratio)} {rel} 0.5"
+        one_off = rh06_status == "QUALIFIED_TRIGGERED"
+        if one_off:
+            qflags.add("Q09")
+        rh06_rows.append({
+            "security_id": sid,
+            "stock_name": name,
+            "anchor_period": ap,
+            "anchor_period_label": r.get("anchor_period_type", "") or "",
+            "npp_value": q(npp_t),
+            "npp_document_id": (npp_t_row or {}).get("document_id", ""),
+            "npp_source_page": (npp_t_row or {}).get("source_page", ""),
+            "npp_status": (npp_t_row or {}).get("status", ""),
+            "npp_scope": (npp_t_row or {}).get("consolidation_scope", ""),
+            "npp_currency": (npp_t_row or {}).get("currency", ""),
+            "npdedt_value": q(npd_t),
+            "npdedt_document_id": (npd_t_row or {}).get("document_id", ""),
+            "npdedt_source_page": (npd_t_row or {}).get("source_page", ""),
+            "npdedt_status": (npd_t_row or {}).get("status", ""),
+            "npdedt_scope": (npd_t_row or {}).get("consolidation_scope", ""),
+            "npdedt_currency": (npd_t_row or {}).get("currency", ""),
+            "same_period": "YES" if (npp_ok and npd_ok) else "NO",
+            "same_scope": "YES" if (npp_ok and npd_ok
+                                    and npp_t_row.get("consolidation_scope") == npd_t_row.get("consolidation_scope")) else "NO",
+            "ratio": q(rh06_ratio),
+            "threshold": "0.5",
+            "data_trigger": ("YES" if rh06_data_trigger else "NO") if rh06_data_trigger is not None else "UNKNOWN",
+            "in_v22_registry": "YES" if in_registry else "NO",
+            "open_dispute_ids": dsp_ids,
+            "open_dispute_fields": dsp_fields,
+            "adoption_status": rh06_status,
+            "gap_type": rh06_gap,
+            "adopted": "YES" if rh06_status.startswith("QUALIFIED") else "NO",
+            "basis": rh06_reason,
+        })
         # Q10 项目制
         q10v = (app.get((sid, "M11")) or {}).get("q10_verdict", "")
         if q10v == "PROJECT_MODE":
@@ -495,7 +595,7 @@ def main():
             family = (app.get((sid, mid)) or {}).get("state_family", "")
             if family == "可判" and st == "OK" and val is not None:
                 op, thr = h["operator"], D(str(h["threshold"]))
-                hit = (val >= thr) if op == ">=" else (val < thr)
+                hit = rh_hit(val, op, thr)
                 rh_out[METRIC_RH[mid]] = "TRIGGERED" if hit else "NOT_TRIGGERED"
             elif family == "不适用":
                 rh_out[METRIC_RH[mid]] = "NOT_APPLICABLE"
@@ -507,7 +607,12 @@ def main():
                 rh_out[METRIC_RH[mid]] = "PENDING_APPLICABILITY"
             else:
                 rh_out[METRIC_RH[mid]] = "NOT_APPLICABLE"
-        rh_out["RH06"] = "TRIGGERED" if one_off else "NOT_TRIGGERED"
+        rh_out["RH06"] = {
+            "QUALIFIED_TRIGGERED": "TRIGGERED",
+            "QUALIFIED_NOT_TRIGGERED": "NOT_TRIGGERED",
+            "PENDING_EXISTING_HINT": "PENDING_EXISTING_HINT",
+            "PENDING_INPUT_GAP": "PENDING_INPUT_GAP",
+        }[rh06_status]
 
         # --- 维度存活：待核隔离里明确 blocked_signal_ids 的才撤信号
         qualified = [s for s in (r.get("qualified_signal_ids") or "").split(";") if s]
@@ -520,6 +625,27 @@ def main():
         dims_before = {SIGNAL_DIMENSION[s] for s in qualified}
         dims_after = {SIGNAL_DIMENSION[s] for s in surviving}
         dim_after[sid] = len(dims_after)
+
+        # 维度层面的 PROVISIONAL 只在"该维度的全部合格信号都是 PROVISIONAL_ONLY"时成立。
+        # S04 的 provisional_dimensions 是维度级标签，会同维度兄弟信号连坐
+        # （冀东装备 CASH：SG07=PROVISIONAL_ONLY、SG08=QUALIFIED_ABSOLUTE_CHANNEL），
+        # 不能直接当作"存活信号是临时值"。
+        sig_status = {}
+        for chunk in (r.get("signal_statuses") or "").split(";"):
+            if "=" in chunk:
+                k, v = chunk.split("=", 1)
+                sig_status[k] = v
+        dim_signals = defaultdict(list)
+        for s in surviving:
+            dim_signals[SIGNAL_DIMENSION[s]].append(s)
+        prov_dims = {
+            d for d, sigs in dim_signals.items()
+            if sigs and all(sig_status.get(s) == "PROVISIONAL_ONLY" for s in sigs)
+        }
+        dimension_basis = ";".join(
+            f"{d}=" + "+".join(f"{s}:{sig_status.get(s, 'UNKNOWN')}" for s in sorted(dim_signals[d]))
+            for d in sorted(dim_signals)
+        )
 
         # --- L3 闸门：仅对"决定性"指标（存活信号所用指标）施加
         decisive_metrics = {SIGNAL_METRIC[s] for s in surviving}
@@ -550,15 +676,19 @@ def main():
                     bits.append("撤下信号 " + ";".join(sorted(withdrawn)))
             if l3_fail:
                 bits.append("决定性指标缺证据 " + ";".join(l3_fail))
-            prov_dims = {x for x in (r.get("provisional_dimensions") or "").split(";") if x}
             if dims_after and dims_after <= prov_dims:
-                bits.append("存活维度在 S04 即标 PROVISIONAL（" + ";".join(sorted(dims_after)) + "）")
+                bits.append("存活维度的全部合格信号在 S04 即标 PROVISIONAL_ONLY（"
+                            + ";".join(sorted(dims_after)) + "）")
             reason = "；".join(bits)
 
         # --- 超冻结 valid_range 的观测（冻结文件未给处置规则，只登记不阻断）
         vr = {"M04": (D("-100"), D("100")), "M08": (D("-10"), D("10")),
               "M10": (D("-365"), D("3650")), "M11": (D("-365"), D("3650")), "M12": (D("-100"), D("500"))}
         observations = []
+        if rh06_status.startswith("PENDING"):
+            observations.append("RH06_PENDING:" + rh06_gap + (f"({dsp_ids})" if dsp_ids else ""))
+            if rh06_data_trigger:
+                observations.append("Q09_DATA_TRIGGER_BUT_SOURCE_PENDING")
         for mid in METRICS:
             v = metric[mid]["value"]
             if v is None:
@@ -588,6 +718,7 @@ def main():
             "withdrawn_signals": ";".join(sorted(withdrawn)),
             "dimension_count_after": len(dims_after),
             "surviving_dimensions": ";".join(sorted(dims_after)),
+            "dimension_basis": dimension_basis,
             "s04_provisional_dimensions": r.get("provisional_dimensions", ""),
             "s04_upstream_hold_dimensions": r.get("upstream_hold_dimensions", ""),
             "m04_status": metric["M04"]["status"],
@@ -606,6 +737,11 @@ def main():
             "rh_pending": ";".join(k for k, v in sorted(rh_out.items()) if v.startswith("PENDING")),
             "rh_not_applicable": ";".join(k for k, v in sorted(rh_out.items()) if v == "NOT_APPLICABLE"),
             "l3_gate_result": "EVIDENCE_OK" if not l3_fail else "EVIDENCE_HOLD",
+            "l3_gate_scope": "FIVE_METRICS_ONLY",
+            "stale_period_flag": r.get("stale_period", ""),
+            "q09_data_trigger": ("YES" if rh06_data_trigger else "NO") if rh06_data_trigger is not None else "UNKNOWN",
+            "q09_adoption_status": rh06_status,
+            "pass_scope": "S05_QUALITY_GATE_ONLY",
             "decision": decision,
             "decision_reason": reason,
             "s04_l2_decision": r.get("l2_decision", ""),
@@ -729,6 +865,67 @@ def main():
             q10_bad.append((sid, f"{b1}/{b2} -> {expect} != {v}"))
     checks.append(("C13 Q10 两支判定可由表内值代数复现", not q10_bad, q10_bad[:5]))
 
+    # RH 算子分派：数值型风险提示的算子必须在支持集内；RH06 是 FLAG 型（Q09 标记），不是比较算子
+    numeric_ops = sorted({h["operator"] for h in rules["risk_hints"]
+                          if h.get("operator") and h["id"] != "RH06"})
+    flag_ops = sorted({h["operator"] for h in rules["risk_hints"]
+                       if h.get("operator") and h["id"] == "RH06"})
+    checks.append(("C14 冻结数值算子全部在分派表内（含 RH05 的 <=）",
+                   all(o in RH_OPERATORS for o in numeric_ops) and flag_ops == ["FLAG"],
+                   f"numeric={numeric_ops} flag={flag_ops}"))
+    boundary = []
+    for row in decision_rows:
+        for mid in METRICS:
+            h = rh_rules[METRIC_RH[mid]]
+            thr = D(str(h["threshold"]))
+            v = row[f"{mid.lower()}_value"]
+            if v == "" or D(v) != thr:
+                continue
+            # 恰好等于门槛：按算子语义，">=" 与 "<=" 应触发，">" 与 "<" 不应触发
+            expect_hit = h["operator"] in (">=", "<=")
+            got_hit = METRIC_RH[mid] in (row["rh_triggered"] or "").split(";")
+            boundary.append((row["security_id"], METRIC_RH[mid], str(thr), h["operator"],
+                             "OK" if expect_hit == got_hit else "MISMATCH"))
+    checks.append(("C15 恰好等于门槛的值按算子语义判定",
+                   all(b[4] == "OK" for b in boundary), boundary))
+
+    # RH06 采用台账
+    rh06_status_counter = Counter(r["adoption_status"] for r in rh06_rows)
+    checks.append(("C16 RH06 台账覆盖 278 家且一家一行",
+                   len(rh06_rows) == 278 and len({r["security_id"] for r in rh06_rows}) == 278,
+                   len(rh06_rows)))
+    rh06_known = {"QUALIFIED_TRIGGERED", "QUALIFIED_NOT_TRIGGERED",
+                  "PENDING_EXISTING_HINT", "PENDING_INPUT_GAP"}
+    checks.append(("C17 RH06 采用状态全部落在四个已知类别",
+                   set(rh06_status_counter) <= rh06_known, dict(rh06_status_counter)))
+    adopted_rh06 = [r for r in rh06_rows if r["adopted"] == "YES"]
+    checks.append(("C18 RH06 采用行均登记两项值的文档+页码+同期间+同口径",
+                   all(r["npp_document_id"] and r["npdedt_document_id"]
+                       and r["npp_source_page"] and r["npdedt_source_page"]
+                       and r["same_period"] == "YES" and r["same_scope"] == "YES"
+                       and r["npp_scope"] == "CONSOLIDATED" and r["npdedt_scope"] == "CONSOLIDATED"
+                       and r["npp_currency"] == "CNY" and r["npdedt_currency"] == "CNY"
+                       for r in adopted_rh06), len(adopted_rh06)))
+    rh06_trigger_set = {r["security_id"] for r in rh06_rows if r["adoption_status"] == "QUALIFIED_TRIGGERED"}
+    rh06_pending_set = {r["security_id"] for r in rh06_rows if r["adopted"] == "NO"}
+    checks.append(("C19 RH06 触发集合 = V2.2 既有提示集合去掉待核项",
+                   rh06_trigger_set == (set(rh06_registry) - rh06_pending_set),
+                   f"触发 {len(rh06_trigger_set)}，V2.2 {len(rh06_registry)}，待核 {len(rh06_pending_set)}"))
+    checks.append(("C20 五洋自控 RH06 降为既有提示待核（开放争议 D-6863cfbe7055）",
+                   any(r["security_id"] == "SZ:300420"
+                       and r["adoption_status"] == "PENDING_EXISTING_HINT"
+                       and "D-6863cfbe7055" in r["open_dispute_ids"] for r in rh06_rows), ""))
+    checks.append(("C21 Q09 断言数 = RH06 有资格已触发数",
+                   sum(1 for r in decision_rows if "Q09" in (r["quality_flags"] or "").split(";"))
+                   == rh06_status_counter.get("QUALIFIED_TRIGGERED", 0),
+                   rh06_status_counter.get("QUALIFIED_TRIGGERED", 0)))
+    # 陈旧期标记与实际锚定期间分列
+    stale_counter = Counter(r["stale_period_flag"] for r in decision_rows)
+    anchor_counter = Counter(r["anchor_period"] for r in decision_rows)
+    checks.append(("C22 陈旧期标记与锚定期间分列登记（200×20260630 + 78×20260930）",
+                   anchor_counter.get("20260630") == 200 and anchor_counter.get("20260930") == 78,
+                   f"anchor={dict(anchor_counter)} stale={dict(stale_counter)}"))
+
     # ------------------------------------------------------------ 写出
 
     def write_csv(path, rows, fields):
@@ -750,11 +947,14 @@ def main():
         "security_id", "stock_name", "anchor_period", "pool_role",
         "qualified_signal_ids", "qualified_dimensions", "dimension_count_before",
         "withdrawn_signals", "dimension_count_after", "surviving_dimensions",
+        "dimension_basis",
         "s04_provisional_dimensions", "s04_upstream_hold_dimensions",
         "m04_status", "m08_status", "m10_status", "m11_status", "m12_status",
         "m04_value", "m08_value", "m10_value", "m11_value", "m12_value",
         "quality_flags", "s05_observations", "rh_triggered", "rh_pending",
-        "rh_not_applicable", "l3_gate_result", "decision", "decision_reason",
+        "rh_not_applicable", "l3_gate_result", "l3_gate_scope",
+        "stale_period_flag", "q09_data_trigger", "q09_adoption_status",
+        "pass_scope", "decision", "decision_reason",
         "s04_l2_decision", "limitations", "q10_verdict", "one_off",
     ])
 
@@ -762,15 +962,28 @@ def main():
     hold_rows = [r for r in decision_rows if r["decision"] == "QUALITY_HOLD"]
     write_csv(HERE / "quality_pass.csv", pass_rows, [
         "security_id", "stock_name", "anchor_period", "surviving_dimensions",
-        "dimension_count_after", "rh_triggered", "rh_pending", "rh_not_applicable",
-        "quality_flags", "s05_observations", "l3_gate_result", "decision",
+        "dimension_count_after", "dimension_basis", "rh_triggered", "rh_pending",
+        "rh_not_applicable", "quality_flags", "s05_observations", "l3_gate_result",
+        "l3_gate_scope", "stale_period_flag", "pass_scope", "decision",
         "decision_reason", "s04_l2_decision",
     ])
     write_csv(HERE / "quality_observe.csv", hold_rows, [
         "security_id", "stock_name", "anchor_period", "surviving_dimensions",
-        "dimension_count_after", "withdrawn_signals", "rh_triggered", "rh_pending",
-        "rh_not_applicable", "quality_flags", "s05_observations", "l3_gate_result",
-        "decision", "decision_reason", "s04_l2_decision",
+        "dimension_count_after", "dimension_basis", "withdrawn_signals",
+        "rh_triggered", "rh_pending", "rh_not_applicable", "quality_flags",
+        "s05_observations", "l3_gate_result", "l3_gate_scope", "stale_period_flag",
+        "pass_scope", "decision", "decision_reason", "s04_l2_decision",
+    ])
+
+    write_csv(HERE / "rh06_adoption.csv", rh06_rows, [
+        "security_id", "stock_name", "anchor_period", "anchor_period_label",
+        "npp_value", "npp_document_id", "npp_source_page", "npp_status",
+        "npp_scope", "npp_currency",
+        "npdedt_value", "npdedt_document_id", "npdedt_source_page", "npdedt_status",
+        "npdedt_scope", "npdedt_currency",
+        "same_period", "same_scope", "ratio", "threshold", "data_trigger",
+        "in_v22_registry", "open_dispute_ids", "open_dispute_fields",
+        "adoption_status", "gap_type", "adopted", "basis",
     ])
 
     write_csv(HERE / "s05_out_of_valid_range.csv", oor_rows, [
@@ -825,12 +1038,17 @@ def main():
         },
         "rh_pending_counts": {
             k: sum(1 for r in decision_rows if k in (r["rh_pending"] or "").split(";"))
-            for k in ("RH01", "RH02", "RH03", "RH04", "RH05")
+            for k in ("RH01", "RH02", "RH03", "RH04", "RH05", "RH06")
         },
         "rh_not_applicable_counts": {
             k: sum(1 for r in decision_rows if k in (r["rh_not_applicable"] or "").split(";"))
-            for k in ("RH01", "RH02", "RH03", "RH04", "RH05")
+            for k in ("RH01", "RH02", "RH03", "RH04", "RH05", "RH06")
         },
+        "rh06_adoption_counts": dict(sorted(rh06_status_counter.items())),
+        "rh06_gap_counts": dict(sorted(Counter(r["gap_type"] for r in rh06_rows if r["gap_type"]).items())),
+        "rh06_data_trigger": sum(1 for r in rh06_rows if r["data_trigger"] == "YES"),
+        "anchor_period_counts": dict(sorted(Counter(r["anchor_period"] for r in decision_rows).items())),
+        "stale_period_counts": dict(sorted(Counter(r["stale_period_flag"] for r in decision_rows).items())),
         "out_of_valid_range": len(oor_rows),
         "quality_flag_counts": {
             f"Q{i:02d}": sum(1 for r in decision_rows if f"Q{i:02d}" in (r["quality_flags"] or "").split(";"))
