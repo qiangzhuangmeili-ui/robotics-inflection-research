@@ -1,0 +1,89 @@
+{
+  "result": "FAIL",
+  "summary": {
+    "master_companies": 1054,
+    "starting_partition_counts": {
+      "NOT_SCREENED": 984,
+      "REUSE_WITH_LIMITS": 53,
+      "SOURCE_PENDING": 7,
+      "SAMPLE_PARTIAL_REVIEW": 10
+    },
+    "primary_packages": 59,
+    "conditional_detail_packages": 9,
+    "detail_candidates": 45,
+    "detail_reserve": 8,
+    "financial_missing": 62,
+    "group_count": 10,
+    "package_index_rows": 68,
+    "local_zip_count": 67,
+    "copied_resource_hashes_checked": 24,
+    "checks_passed": 106,
+    "checks_failed": 5
+  },
+  "blocking_issues": [
+    {
+      "name": "package_index_count",
+      "status": "FAIL",
+      "expected": 67,
+      "actual": 68
+    },
+    {
+      "name": "primary_package_count",
+      "status": "FAIL",
+      "expected": 58,
+      "actual": 59
+    },
+    {
+      "name": "primary_packages_cover_master_once",
+      "status": "FAIL",
+      "expected": {
+        "companies": 1054,
+        "duplicates": 0
+      },
+      "actual": {
+        "companies": 1056,
+        "unique": 1054,
+        "duplicate_ids": [
+          "BJ:920207",
+          "BJ:920578"
+        ],
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "master_primary_package_matches_assignment",
+      "status": "FAIL",
+      "expected": "same package per company",
+      "actual": [
+        {
+          "security_id": "BJ:920578",
+          "assignment_package": "D00_B00_ADVANCE_01",
+          "master_package": "B00_SOURCE_02"
+        },
+        {
+          "security_id": "BJ:920207",
+          "assignment_package": "D00_B00_ADVANCE_01",
+          "master_package": "B00_SOURCE_01"
+        }
+      ]
+    },
+    {
+      "name": "all_local_package_zips_match_index",
+      "status": "FAIL",
+      "expected": {
+        "zip_count": 67,
+        "all text-only and package-scoped": true
+      },
+      "actual": {
+        "zip_count": 67,
+        "errors": [
+          {
+            "package_id": "D00_B00_ADVANCE_01",
+            "issue": "missing ZIP"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S04_ACCEPTED_WITH_LIMITS_S05_IN_PROGRESS",
+  "status": "S05_ACCEPTED_WITH_LIMITS_S06_LOCKED",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -220,16 +220,17 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/40",
+    "next_recommended_issue": null,
     "execution_started": true,
     "last_completed_issue": {
-      "issue_key": "S04",
-      "issue_number": 39,
-      "decision": "ACCEPTED_WITH_LIMITS_FOR_FROZEN_S04_USE",
-      "review_file": "runs/issues/S04/completion_20261114/final_peer_review_20261116/peer_review.json",
-      "review_availability": "VERIFIED_DRIVE_ARCHIVE_MEMBER",
-      "coverage": 1054,
-      "follow_on_release_record": "runs/issues/S05/release_20261120.json"
+      "issue_key": "S05",
+      "issue_number": 40,
+      "decision": "ACCEPTED_WITH_LIMITS",
+      "review_file": "runs/issues/S05/acceptance_s05_r1_20261121.json",
+      "reviewer": "Codex",
+      "reviewed_commit": "4682a1129ac89d39e5038a98864bbec9eb2de367",
+      "manifest_root_digest": "b6485ea7ceda1bd3bb8e927b16a8dbb5059460f5891fbec61aec2e3e4a1ccc85",
+      "coverage": 278
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -414,7 +415,7 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "S05_IN_PROGRESS",
+    "current_gate": "S05_ACCEPTED_WITH_LIMITS_S06_LOCKED",
     "release_S00": false,
     "last_review": {
       "issue_key": "S03",
@@ -1127,7 +1128,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S05_IN_PROGRESS",
+  "current_gate": "S05_ACCEPTED_WITH_LIMITS_S06_LOCKED",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1172,7 +1173,7 @@
     "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除摘要/非财报更正/冻结范围外期间",
     "correction_discovery_rows": 223
   },
-  "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/40",
+  "next_recommended_issue": null,
   "s00_stage": {
     "issue": "S00 / #35",
     "decision": "ACCEPTED_WITH_LIMITS",
@@ -1701,5 +1702,64 @@
     ],
     "source_acceptance": "runs/issues/S02/acceptance_20261106/review.json",
     "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
+  },
+  "release_S06": false,
+  "release_S07": false,
+  "release_S08": false,
+  "s05_stage": {
+    "issue_key": "S05",
+    "issue_number": 40,
+    "plan_version": "20261026_collection_first_v2",
+    "executor": "WorkBuddy AI",
+    "reviewer": "Codex",
+    "review_method": "Independent read-only arithmetic, source identity and open-dispute reconciliation, plus partition and boundary tests.",
+    "review_nature": "INDEPENDENT_REVIEW",
+    "reviewed_at": "2026-11-21",
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "review_file": "runs/issues/S05/acceptance_s05_r1_20261121.json",
+    "reviewed_commit": "4682a1129ac89d39e5038a98864bbec9eb2de367",
+    "manifest_root_digest": "b6485ea7ceda1bd3bb8e927b16a8dbb5059460f5891fbec61aec2e3e4a1ccc85",
+    "manifest_files": "25/25 bytes and SHA-256 match",
+    "counts": {
+      "primary_pool": 278,
+      "quality_pass": 277,
+      "quality_observe": 1
+    },
+    "rh06": {
+      "cases_recomputed": 278,
+      "triggered": 37,
+      "not_triggered_with_qualified_inputs": 234,
+      "pending": 7,
+      "pending_existing_hint": [
+        "SZ:300420"
+      ],
+      "missing_npp": [
+        "SH:605358",
+        "SH:688707"
+      ],
+      "other_open_deduction_disputes": [
+        "SZ:002420",
+        "SZ:002460",
+        "SZ:003032",
+        "SZ:301041"
+      ],
+      "all_271_adopted_pairs_match_frozen_values_and_same_document": true,
+      "unresolved_disputes_adopted": 0,
+      "applied_in_decision_log": true,
+      "Q09_total": 37
+    },
+    "actual_output_directory": "runs/issues/S05",
+    "allows_next_stage": false,
+    "release_S06": false,
+    "release_S07": false,
+    "release_S08": false,
+    "limitations": [
+      "Jidong SG09 is withdrawn for consolidation scope UNKNOWN; surviving SG08 remains qualified, alone in its CASH dimension. Jidong remains QUALITY_HOLD.",
+      "FIVE_METRICS_ONLY limits the S05 evidence gate. Inherited S04 signal dependencies are tracked separately.",
+      "Keep all pending RH06, RH02 and RH03 cases, the 20 range observations, and non-admitted sources in their existing guarded routes. The range flag is an inspection aid.",
+      "The reviewed candidate pool consists of 200 H1 anchors and 78 Q3 anchors. Frozen Q11 markers are inherited.",
+      "This accepts the S05 technical quality check; business confirmation and later-stage screening retain their project gates."
+    ],
+    "prior_review": "runs/issues/S05/codex_review_s05_20261121.md"
   }
 }

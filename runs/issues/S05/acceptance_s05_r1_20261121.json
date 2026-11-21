@@ -1,0 +1,79 @@
+{
+  "artifact": "S05_R1_INDEPENDENT_ACCEPTANCE",
+  "issue_key": "S05",
+  "issue_number": 40,
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-21",
+  "timezone": "Asia/Shanghai",
+  "reviewer": "Codex",
+  "review_method": "Independent read-only arithmetic, source identity and open-dispute reconciliation, plus partition and boundary tests.",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "S05_completed": true,
+  "reviewed_version": {
+    "round": "R1",
+    "commit": "4682a1129ac89d39e5038a98864bbec9eb2de367",
+    "online_main_at_review": "4682a1129ac89d39e5038a98864bbec9eb2de367",
+    "active_issue_blob_at_review": "430fac0108c7bb1b61913a0f15d11a19f573d7b4",
+    "manifest_root_digest": "b6485ea7ceda1bd3bb8e927b16a8dbb5059460f5891fbec61aec2e3e4a1ccc85",
+    "manifest_sha256": "a3bbc8aef6d73b2cc330bf01eba6998b722b3465365bbcd625ab99cbc16ddd48",
+    "producer_handoff": "runs/issues/S05/handoff.md",
+    "prior_review": "runs/issues/S05/codex_review_s05_20261121.md"
+  },
+  "scope": "Frozen 278-company S05 overall-company quality screen on V2.2; flags, partitions and reasons only.",
+  "verified": {
+    "manifest_files": "25/25 bytes and SHA-256 match",
+    "contract_inputs": "11/11 SHA-256 match",
+    "five_metrics": "1,042 comparable values and corresponding RH01–RH05 results independently recomputed in the prior review; quality_flags.csv is byte-identical to that base",
+    "partition_unchanged_from_fc8cb17": true,
+    "observe_pool_776_byte_identical": true,
+    "primary_decision_keys": 278,
+    "quality_pass": 277,
+    "quality_observe": 1,
+    "passed_with_at_least_one_trigger": 166,
+    "passed_with_pending_item": 148,
+    "passed_without_any_trigger": 111,
+    "these_company_counts_can_overlap": true,
+    "comparison_boundary_cases_passed": 7,
+    "out_of_valid_range_unchanged": 20
+  },
+  "RH06": {
+    "cases_recomputed": 278,
+    "triggered": 37,
+    "not_triggered_with_qualified_inputs": 234,
+    "pending": 7,
+    "pending_existing_hint": [
+      "SZ:300420"
+    ],
+    "missing_npp": [
+      "SH:605358",
+      "SH:688707"
+    ],
+    "other_open_deduction_disputes": [
+      "SZ:002420",
+      "SZ:002460",
+      "SZ:003032",
+      "SZ:301041"
+    ],
+    "all_271_adopted_pairs_match_frozen_values_and_same_document": true,
+    "unresolved_disputes_adopted": 0,
+    "applied_in_decision_log": true,
+    "Q09_total": 37
+  },
+  "limits": [
+    "Jidong SG09 is withdrawn for consolidation scope UNKNOWN; surviving SG08 remains qualified, alone in its CASH dimension. Jidong remains QUALITY_HOLD.",
+    "FIVE_METRICS_ONLY limits the S05 evidence gate. Inherited S04 signal dependencies are tracked separately.",
+    "Keep all pending RH06, RH02 and RH03 cases, the 20 range observations, and non-admitted sources in their existing guarded routes. The range flag is an inspection aid.",
+    "The reviewed candidate pool consists of 200 H1 anchors and 78 Q3 anchors. Frozen Q11 markers are inherited.",
+    "This accepts the S05 technical quality check; business confirmation and later-stage screening retain their project gates."
+  ],
+  "online_control": {
+    "status_when_checked": "IN_PROGRESS",
+    "active_issue_number": 40,
+    "executor": "WorkBuddy AI",
+    "state_updated_by_this_record": false,
+    "release_S06_by_this_record": false,
+    "release_S07_by_this_record": false,
+    "release_S08_by_this_record": false
+  }
+}
+
