@@ -2,13 +2,15 @@
   "artifact": "S06_SELF_CHECK_REVIEW",
   "issue_key": "S06",
   "issue_number": 41,
+  "rework_round": "R1",
+  "rework_basis": "runs/issues/S06/codex_review_s06_20261122.md",
   "plan_version": "20261026_collection_first_v2",
   "knowledge_as_of": "2026-10-25",
   "executor": "Antigravity",
   "reviewer_assigned": "Codex",
   "review_nature": "SELF_CHECK",
   "independent_review_complete": false,
-  "reviewed_at": "2026-11-22T23:45:00+08:00",
+  "reviewed_at": "2026-11-23T00:02:31+08:00",
   "decision": "SELF_CHECK_PASS_WITH_LIMITS",
   "release_basis": {
     "release_file": "runs/issues/S06/release_20261122.json",
@@ -16,6 +18,16 @@
     "method_decision": "data/methodology_decision_20261107.json",
     "aux_method_version": "S06_AUX_LEAD_V1"
   },
+  "r1_fixes_applied": [
+    "SH:605555 德昌股份移出 S3/EARLY_PILOT_SMALL_BATCH，改归 EVIDENCED_PRODUCT_STAGE_UNKNOWN，采用 C00-EV-605555-03 物理第 12 页",
+    "SH:600366 宁波韵升同步采用 C00-EV-600366-03 物理第 11 页长期协议与供货事实，保持客户/规模/收入/毛利与在手订单金额 UNKNOWN",
+    "SH:603296/SH:603583/SH:688165/SZ:002527 及全部多线公司新增 all_recorded_product_lines、other_verified_stages、bucket_selection_rule 与 entity_scope_and_ownership",
+    "SH:603219 富佳股份按主体分离：上市母公司 ODM(UNKNOWN)归入 EVIDENCED_PRODUCT_STAGE_UNKNOWN，参股芯禾 S1/S3 仅作间接观察",
+    "修复 page_physical 读取逻辑，补回全部 24 家物理页码；新增 primary_evidence_binding",
+    "BJ:920124 南特科技移出 DO_NOT_ADOPT 旧镜像 R1A02-E001，仅采用官方原文 R1A02S-E001(物理第 41 页)",
+    "manifest.json 完整登记实际读取与辅助对照引用的全部 33 份输入文件并移除未使用读取",
+    "重进条件分列【主线重进】与【业务核证目标】；4 家截止日后隔离公司新增 s02_gap_diagnostic_scope 隔离期诊断标签"
+  ],
   "counts": {
     "universe": 1054,
     "s05_mainline_pass": 277,
@@ -23,10 +35,10 @@
     "s05_carryover_776": 776,
     "early_stage_watch_total": 54,
     "early_stage_by_bucket": {
-      "EARLY_RD_PROTOTYPE_SAMPLING": 16,
-      "EARLY_PILOT_SMALL_BATCH": 7,
+      "EARLY_RD_PROTOTYPE_SAMPLING": 15,
+      "EARLY_PILOT_SMALL_BATCH": 6,
       "COMMERCIAL_NON_MAINLINE_RESERVE": 11,
-      "EVIDENCED_PRODUCT_STAGE_UNKNOWN": 20
+      "EVIDENCED_PRODUCT_STAGE_UNKNOWN": 22
     },
     "missing_data_watch_total": 379,
     "missing_data_non_mainline_776": 378,
@@ -55,7 +67,7 @@
     "s00_errata_issue_53": "OPEN",
     "historical_44_231_378": "NON_AUTHORITATIVE_HISTORY"
   },
-  "checks_summary": "16/16 PASS",
+  "checks_summary": "23/23 PASS",
   "checks": [
     {
       "id": "C01",
@@ -95,7 +107,7 @@
     },
     {
       "id": "C07",
-      "name": "4 家截止日后隔离守卫完整保留",
+      "name": "4 家截止日后隔离守卫完整保留且 s02_gap_diagnostic_scope 显式标为隔离期诊断",
       "result": "PASS",
       "detail": "cutoff_ids=['SH:603448', 'SH:688836', 'SZ:301348', 'SZ:301699']"
     },
@@ -125,7 +137,7 @@
     },
     {
       "id": "C12",
-      "name": "early_stage_watch 每行具备观察理由、来源定位、重进条件且辅助观察缺披露记 UNKNOWN 不填零",
+      "name": "early_stage_watch 每行具备完整证据绑定、分离式重进条件且辅助观察记 UNKNOWN 不填零",
       "result": "PASS",
       "detail": "checked=54 rows"
     },
@@ -137,29 +149,71 @@
     },
     {
       "id": "C14",
-      "name": "early_stage_watch 所有 evidence_id 均可在权威源登记表解析",
+      "name": "early_stage_watch 所有采用 evidence_id 可解析、同公司主键且零 DO_NOT_ADOPT 混入",
       "result": "PASS",
-      "detail": "unresolved=[]"
+      "detail": "unresolved=0, wrong_sid=0, do_not_adopt=[]"
     },
     {
       "id": "C15",
+      "name": "源登记含物理页码的观察行零漏读（physical_page_or_section 无误标 UNKNOWN）",
+      "result": "PASS",
+      "detail": "missed_pages=[], remaining_unknown_pages=0"
+    },
+    {
+      "id": "C16",
+      "name": "Codex 1.1 德昌股份 SH:605555 移出 S3 并采用 C00-EV-605555-03 物理第 12 页",
+      "result": "PASS",
+      "detail": "bucket=EVIDENCED_PRODUCT_STAGE_UNKNOWN, tier=PRODUCT_RAMP_DELIVERY_STAGE_UNKNOWN, page=物理第12页"
+    },
+    {
+      "id": "C17",
+      "name": "Codex 1.1 宁波韵升 SH:600366 同步采用第 11 页 C00-EV-600366-03 长期协议与供货事实且不推定在手订单金额",
+      "result": "PASS",
+      "detail": "tier=SAMPLING_AND_SUPPLY_SCALE_UNKNOWN, page=物理第11页;物理第9页, eids=C00-EV-600366-03;C00-EV-600366-02"
+    },
+    {
+      "id": "C18",
+      "name": "Codex 1.1 富佳股份 SH:603219 严格分离上市母公司(UNKNOWN)与非并表参股公司芯禾(S1/S3间接观察)",
+      "result": "PASS",
+      "detail": "bucket=EVIDENCED_PRODUCT_STAGE_UNKNOWN, other_stages=ASSOCIATE_ONLY:S3;ASSOCIATE_ONLY:S1"
+    },
+    {
+      "id": "C19",
+      "name": "Codex 1.1 华勤/捷昌/埃夫特/新时达完整保留较高阶段产品线(R1B02-PL041/R1A02-PL013/R1B1-PL001/R1B1-PL006/007)",
+      "result": "PASS",
+      "detail": "hq=S4, jc=S4, ef=S4, xs=S3"
+    },
+    {
+      "id": "C20",
+      "name": "Codex 1.2 南特科技 BJ:920124 仅采用官方原文 R1A02S-E001(物理第41页)，旧镜像 R1A02-E001 降格为历史定位",
+      "result": "PASS",
+      "detail": "eids=R1A02S-E001, non_adopted=R1A02-E001(OFFICIAL_ORIGINAL_PENDING_DO_NOT_ADOPT), page=物理第41页"
+    },
+    {
+      "id": "C21",
       "name": "两表交集标记 in_early_stage_watch 与实际主键交集完全一致",
       "result": "PASS",
       "detail": "overlap=33"
     },
     {
-      "id": "C16",
-      "name": "watch_reentry_rules.md 与 handoff.md 核心计数与口径版本和 CSV 实算一致",
+      "id": "C22",
+      "name": "manifest 登记的全部实际读取输入文件均存在且与构建器 READ_INPUTS 1:1 一致",
       "result": "PASS",
-      "detail": "early=54, missing=379"
+      "detail": "total_inputs=33, missing=[]"
+    },
+    {
+      "id": "C23",
+      "name": "watch_reentry_rules.md 与 handoff.md 核心计数、R1 分桶及口径版本与 CSV 实算一致",
+      "result": "PASS",
+      "detail": "buckets={'EARLY_RD_PROTOTYPE_SAMPLING': 15, 'EARLY_PILOT_SMALL_BATCH': 6, 'COMMERCIAL_NON_MAINLINE_RESERVE': 11, 'EVIDENCED_PRODUCT_STAGE_UNKNOWN': 22}"
     }
   ],
   "limits": [
-    "执行方自检（SELF_CHECK）不等同独立验收，须由 Codex 独立复核后决定是否验收与放行 S07。",
-    "仅复用已有可追溯证据（archive 53 家旧采用附限制、10 家早期样本局部断言、B00/C00/D00）与 S02/S05 冻结快照，未扩大全池采集或逐家企业深研。",
+    "执行方自检（SELF_CHECK）不等同独立验收，须由 Codex 独立复核 R1 后决定是否验收与放行 S07。",
+    "仅复用已有可追溯证据与 S02/S05 冻结快照，未扩大全池采集或逐家企业深研。",
     "合同负债不在 P04/S00 冻结标准化字段内，且无全池结构化在手订单台账；非主线观察行在 S06_AUX_LEAD_V1 中统一记 UNKNOWN，不填 0、不据此淘汰。",
     "观察名单不是买入推荐、投资候选或已商业化认定，不得跳过 S07/S08 进入估值。",
-    "S00 勘误 #53 与 8 项未采用父链提议、15 家质量来源未知、4 家截止日后隔离、1 家锚点待重选及 S05 专门待核均原样结转，本次未闭合 #53。"
+    "S00 勘误 #53 与既有守卫全部原样结转，本次未闭合 #53。"
   ],
   "release_S07": false,
   "release_S08": false,
