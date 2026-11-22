@@ -1,13 +1,13 @@
-# S06 观察名单准入、去重、辅助观察口径与重进规则（返修轮 R1）
+# S06 观察名单准入、去重、辅助观察口径与重进规则（返修轮 R2）
 
 - 任务编号：S06（GitHub #41）
 - 计划版本：`20261026_collection_first_v2`
 - 知识截止日：`2026-10-25`（冻结不变）
 - 放行依据：`runs/issues/S06/release_20261122.json`、`runs/issues/S06/handoff_from_s05_20261122.md`
-- 返修依据：`runs/issues/S06/codex_review_s06_20261122.md`
+- 返修依据：`runs/issues/S06/codex_review_s06_20261122.md`、`runs/issues/S06/codex_review_s06_r1_20261123.md`（本地复核溯源引用，非运行必需输入）
 - 需求先行指标方法依据：`METHOD_20261107_LEADING_INDICATORS`（`docs/需求先行指标分工_20261107.md`、`data/methodology_decision_20261107.json`）
 - 辅助观察版本：`S06_AUX_LEAD_V1`
-- 生成时间：`2026-11-23T00:02:30+08:00`
+- 生成时间：`2026-11-23T00:22:20+08:00`
 
 ---
 

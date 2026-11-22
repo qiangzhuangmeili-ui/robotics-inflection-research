@@ -2,15 +2,18 @@
   "artifact": "S06_SELF_CHECK_REVIEW",
   "issue_key": "S06",
   "issue_number": 41,
-  "rework_round": "R1",
-  "rework_basis": "runs/issues/S06/codex_review_s06_20261122.md",
+  "rework_round": "R2",
+  "review_provenance_refs": [
+    "runs/issues/S06/codex_review_s06_20261122.md",
+    "runs/issues/S06/codex_review_s06_r1_20261123.md"
+  ],
   "plan_version": "20261026_collection_first_v2",
   "knowledge_as_of": "2026-10-25",
   "executor": "Antigravity",
   "reviewer_assigned": "Codex",
   "review_nature": "SELF_CHECK",
   "independent_review_complete": false,
-  "reviewed_at": "2026-11-23T00:02:31+08:00",
+  "reviewed_at": "2026-11-23T00:22:20+08:00",
   "decision": "SELF_CHECK_PASS_WITH_LIMITS",
   "release_basis": {
     "release_file": "runs/issues/S06/release_20261122.json",
@@ -18,15 +21,10 @@
     "method_decision": "data/methodology_decision_20261107.json",
     "aux_method_version": "S06_AUX_LEAD_V1"
   },
-  "r1_fixes_applied": [
-    "SH:605555 德昌股份移出 S3/EARLY_PILOT_SMALL_BATCH，改归 EVIDENCED_PRODUCT_STAGE_UNKNOWN，采用 C00-EV-605555-03 物理第 12 页",
-    "SH:600366 宁波韵升同步采用 C00-EV-600366-03 物理第 11 页长期协议与供货事实，保持客户/规模/收入/毛利与在手订单金额 UNKNOWN",
-    "SH:603296/SH:603583/SH:688165/SZ:002527 及全部多线公司新增 all_recorded_product_lines、other_verified_stages、bucket_selection_rule 与 entity_scope_and_ownership",
-    "SH:603219 富佳股份按主体分离：上市母公司 ODM(UNKNOWN)归入 EVIDENCED_PRODUCT_STAGE_UNKNOWN，参股芯禾 S1/S3 仅作间接观察",
-    "修复 page_physical 读取逻辑，补回全部 24 家物理页码；新增 primary_evidence_binding",
-    "BJ:920124 南特科技移出 DO_NOT_ADOPT 旧镜像 R1A02-E001，仅采用官方原文 R1A02S-E001(物理第 41 页)",
-    "manifest.json 完整登记实际读取与辅助对照引用的全部 33 份输入文件并移除未使用读取",
-    "重进条件分列【主线重进】与【业务核证目标】；4 家截止日后隔离公司新增 s02_gap_diagnostic_scope 隔离期诊断标签"
+  "r2_fixes_applied": [
+    "将未入库本地复核记录移出运行必需输入清单，转登记于 review_provenance_refs；manifest 全部 33 份输入均位于目标 Git 提交树内",
+    "manifest 输入哈希显式采用 CANONICAL_LF_BYTES（对文本统一按 LF 规范化计算字节数与 SHA-256，消除 Git blob 与 Windows CRLF 差异），交付采用 EXACT_BYTES_LF，支持从干净提交独立重放逐字节复现",
+    "埃夫特 SH:688165 直接核读 DOC-586ED2C18DB28CDE(SHA-256 586ed2c1...) 物理/印刷第 32 页(Yobot R1/W1 发布，S1 决定性原页)、第 25 页(获奖)与第 19 页(R1B1-E001 量产边界)"
   ],
   "counts": {
     "universe": 1054,
@@ -67,11 +65,11 @@
     "s00_errata_issue_53": "OPEN",
     "historical_44_231_378": "NON_AUTHORITATIVE_HISTORY"
   },
-  "checks_summary": "23/23 PASS",
+  "checks_summary": "25/25 PASS",
   "checks": [
     {
       "id": "C01",
-      "name": "S02 all_pool_metrics.csv SHA-256 与放行记录一致",
+      "name": "S02 all_pool_metrics.csv SHA-256（LF 规范化/Git blob 口径）与放行记录一致",
       "result": "PASS",
       "detail": "actual=3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953"
     },
@@ -155,7 +153,7 @@
     },
     {
       "id": "C15",
-      "name": "源登记含物理页码的观察行零漏读（physical_page_or_section 无误标 UNKNOWN）",
+      "name": "源登记含物理页码的观察行零漏读（54/54 无 UNKNOWN 物理页）",
       "result": "PASS",
       "detail": "missed_pages=[], remaining_unknown_pages=0"
     },
@@ -197,20 +195,32 @@
     },
     {
       "id": "C22",
-      "name": "manifest 登记的全部实际读取输入文件均存在且与构建器 READ_INPUTS 1:1 一致",
+      "name": "manifest 登记的 33 份运行必需输入均存在且不含本地未提交复核文件",
       "result": "PASS",
-      "detail": "total_inputs=33, missing=[]"
+      "detail": "total_inputs=33, missing=[], no_local_only=True"
     },
     {
       "id": "C23",
-      "name": "watch_reentry_rules.md 与 handoff.md 核心计数、R1 分桶及口径版本与 CSV 实算一致",
+      "name": "watch_reentry_rules.md 与 handoff.md 核心计数、R2 分桶及口径版本与 CSV 实算一致",
       "result": "PASS",
       "detail": "buckets={'EARLY_RD_PROTOTYPE_SAMPLING': 15, 'EARLY_PILOT_SMALL_BATCH': 6, 'COMMERCIAL_NON_MAINLINE_RESERVE': 11, 'EVIDENCED_PRODUCT_STAGE_UNKNOWN': 22}"
+    },
+    {
+      "id": "C24",
+      "name": "Codex R1-2 埃夫特 SH:688165 绑定 DOC-586ED2C18DB28CDE 物理第 32 页(S1发布)、第 25 页(获奖)与第 19 页(量产边界)",
+      "result": "PASS",
+      "detail": "page=物理/印刷第32页(S1发布决定性原页);物理/印刷第25页(获奖);物理/印刷第19页(R1B1-E001量产边界)"
+    },
+    {
+      "id": "C25",
+      "name": "全部 S06 交付文件与脚本均为纯 LF 换行（工作区字节与 Git blob 逐字节一致）",
+      "result": "PASS",
+      "detail": "crlf_files=[]"
     }
   ],
   "limits": [
-    "执行方自检（SELF_CHECK）不等同独立验收，须由 Codex 独立复核 R1 后决定是否验收与放行 S07。",
-    "仅复用已有可追溯证据与 S02/S05 冻结快照，未扩大全池采集或逐家企业深研。",
+    "执行方自检（SELF_CHECK）不等同独立验收，须由 Codex 独立复核 R2 后决定是否验收与放行 S07。",
+    "仅复用已有可追溯证据与 S02/S05 冻结快照（另定向核读埃夫特 2025 年报已归档原页 P19/P25/P32），未扩大全池采集或逐家企业深研。",
     "合同负债不在 P04/S00 冻结标准化字段内，且无全池结构化在手订单台账；非主线观察行在 S06_AUX_LEAD_V1 中统一记 UNKNOWN，不填 0、不据此淘汰。",
     "观察名单不是买入推荐、投资候选或已商业化认定，不得跳过 S07/S08 进入估值。",
     "S00 勘误 #53 与既有守卫全部原样结转，本次未闭合 #53。"

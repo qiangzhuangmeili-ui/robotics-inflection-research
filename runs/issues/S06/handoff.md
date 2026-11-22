@@ -1,35 +1,30 @@
-# S06 早期储备与缺数据观察交接（#41，返修轮 R1）
+# S06 早期储备与缺数据观察交接（#41，返修轮 R2）
 
 - 执行者：Antigravity
-- 复核方：Codex（待第二轮独立复核）
+- 复核方：Codex（待 R2 独立复核）
 - 计划版本：`20261026_collection_first_v2`
 - 知识截止日：`2026-10-25`
 - 放行依据：`runs/issues/S06/release_20261122.json`、`runs/issues/S06/handoff_from_s05_20261122.md`
-- 返修依据：`runs/issues/S06/codex_review_s06_20261122.md`
+- 返修依据：`runs/issues/S06/codex_review_s06_20261122.md`、`runs/issues/S06/codex_review_s06_r1_20261123.md`（本地复核溯源引用，非运行必需输入）
 - 性质：执行方自检（`SELF_CHECK`），**不等同独立验收**；待 Codex 复核通过后再决定是否验收与放行 S07。
 
 ---
 
-## 一、本轮针对 Codex 复核意见的逐项修订（R1）
+## 一、本轮针对 Codex 复核意见的逐项修订（R1 + R2）
 
-1. **阶段、事实与主体修正（对应 1.1）**：
-   - **德昌股份 `SH:605555`**：移出 `EARLY_PILOT_SMALL_BATCH`（移出 S3 计数），改归 `EVIDENCED_PRODUCT_STAGE_UNKNOWN`（`PRODUCT_RAMP_DELIVERY_STAGE_UNKNOWN`）；采用 `C00-EV-605555-03` 物理第 12 页原文定位，不再沿用已纠正的第 11 页。
-   - **宁波韵升 `SH:600366`**：同步采用 2026H1 物理第 11 页 `C00-EV-600366-03`（人形机器人领域与头部企业绑定、签订长期协议、完成样品交付与供货），显式保留客户/供货规模/收入/毛利 `UNKNOWN` 边界，不推定 S3/S4 或量化在手订单金额；阶段更新为 `SAMPLING_AND_SUPPLY_SCALE_UNKNOWN`，优先级 `P1_HIGH`。
-   - **多产品线保留（华勤技术 `SH:603296`、捷昌驱动 `SH:603583`、埃夫特 `SH:688165`、新时达 `SZ:002527` 等）**：保持每家一行主键去重，新增 `bucket_selection_rule`、`other_verified_stages`、`entity_scope_and_ownership` 与 `all_recorded_product_lines` 四列，完整保留华勤 `R1B02-PL041`(S4)、捷昌 `R1A02-PL013`(S4)、埃夫特 `R1B1-PL001`(S4)、新时达 `R1B1-PL006/007`(S3) 等全部已核产品线、阶段、主体和来源。
-   - **富佳股份 `SH:603219`**：按主体分离口径——上市母公司扫地机器人 ODM（`R1B1-PL046`，`stage=UNKNOWN`）归入 `EVIDENCED_PRODUCT_STAGE_UNKNOWN`（`LISTED_PARENT_STAGE_UNKNOWN_WITH_ASSOCIATE_EARLY_OBSERVE`），未并表参股公司芯禾机器人（`R1B1-PL047` S3 / `R1B1-PL048` S1）仅作非并表间接观察保留，不再混入上市主体 S1 计数。
-2. **来源定位与采用边界修正（对应 1.2）**：
-   - 修复归档登记页码读取逻辑（兼容 `page_physical` 与 `page_or_section`），补回此前为 `UNKNOWN` 的全部 24 家物理页码（包括三协电机物理第 2 页、宇树科技物理第 139 页等）。
-   - **南特科技 `BJ:920124`**：将 `OFFICIAL_ORIGINAL_PENDING_DO_NOT_ADOPT` 的旧镜像 `R1A02-E001` 移出采用 `evidence_ids`，降格记录在 `non_adopted_historical_locators`；采用证据仅保留已核官方原文 `R1A02S-E001`（物理第 41 页）。
-   - 新增 `primary_evidence_binding` 列，将核心主张与证据 ID、文档/URL、披露日期、物理页和采用状态 1 对 1 绑定；升级 `step_s06_verify.py` 逐项校验同主键、物理页非漏读与零 `DO_NOT_ADOPT` 混入。
-3. **输入清单补全（对应 1.3）**：
-   - 移除 `step_s06_build.py` 中未使用的 `s04_log` 与 `b00_ev` 读取；在 `manifest.json` 中完整登记脚本实际读取与辅助对照引用的全部 **33 份输入文件**的字节数与 SHA-256。
-4. **重进条件与截止日诊断澄清（对应 1.4）**：
-   - `early_stage_watch.csv` 将【主线重进（按冻结规则）】与【业务核证目标】分开表述，取消一刀切“单列机器人收入与毛利”模板。
-   - `missing_data_watch.csv` 新增 `s02_gap_diagnostic_scope` 列，将 4 家截止日后隔离公司的 S02 裸缺口显式标为 `AFTER_CUTOFF_ISOLATED_DIAGNOSTIC_ONLY_NOT_ADMISSIBLE_BEFORE_R05`。
+1. **R2 发布复现与哈希口径修正（对应 R1 复核第 1 节）**：
+   - 将未进入 Git 提交的本地复核记录移出运行必需输入清单，转入 `manifest.json` 的 `review_provenance_refs`；运行时实际读取的全部 **33 份输入文件**（含 `data/document_registry.csv`）100% 位于目标 Git 提交树内。
+   - `manifest.json` 显式采用 `input_hash_basis = CANONICAL_LF_BYTES`（对文本输入统一按 `
+ -> 
+` 规范化字节计算字节数与 SHA-256，消除 Git blob 与 Windows CRLF 检出换行差异），全部交付文件以纯 LF 写入（`deliverable_hash_basis = EXACT_BYTES_LF`），支持从干净 Git 提交独立重放 `step_s06_build.py` 与 `step_s06_verify.py` 逐字节复现全部交付、清单与根摘要。
+2. **R2 埃夫特 `SH:688165` Yobot R1 原页绑定修正（对应 R1 复核第 2 节）**：
+   - 直接核读本地归档 2025 年报原文 `DOC-586ED2C18DB28CDE`（277 页，SHA-256 `586ed2c18db28cdeb8b2df23bc9dc8ff995ec33bc37895c885b5e9aa8e426517`，与 `data/document_registry.csv` 一致）：绑定**物理/印刷第 32 页**（2025 年 2 月发布第一款人形机器人 Yobot R1 和 Yobot W1 并配具名产品图）为 S1 样机观察的决定性原页；绑定**物理/印刷第 25 页**支撑安徽省第十二届工业设计大赛金奖事实；保留**物理/印刷第 19 页（`R1B1-E001`）**作为截至 2025-12-31 尚未量产的状态边界（不支持外部试点、销售或该型号量产）；工业机器人整机 S4（`R1B1-PL001`）继续作为单独已核产品线保留。
+3. **沿用已复核通过的 R1 修订（1.1–1.4）**：
+   - 德昌股份 `SH:605555`（移出 S3，采用物理第 12 页 `C00-EV-605555-03`）、宁波韵升 `SH:600366`（同步采用物理第 11 页 `C00-EV-600366-03`，规模/收入/订单金额留 `UNKNOWN`）、富佳股份 `SH:603219`（上市母公司 ODM 与参股芯禾分离）、华勤/捷昌/埃夫特/新时达多产品线全量保留、24 家物理页码补齐、南特科技 `BJ:920124` 仅采用官方原文 `R1A02S-E001`（物理第 41 页）、重进条件分列主线重进与业务核证目标、4 家截止日后隔离公司显式标明隔离期诊断。
 
 ---
 
-## 二、R1 重算结果汇总
+## 二、R2 重算结果汇总
 
 1. **全池 1,054 家主键守恒与去重**：
    - S05 主线对照 **278 家** = `quality_pass.csv` **277 家** + `quality_observe.csv` **1 家**（`SZ:000856` 冀东装备）。

@@ -36,25 +36,25 @@ Targeted fixes applied in R1 per runs/issues/S06/codex_review_s06_20261122.md:
 import csv
 import hashlib
 import json
+import os
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[3]
 OUT = REPO / "runs" / "issues" / "S06"
-NOW = datetime.now(timezone(timedelta(hours=8))).isoformat(timespec="seconds")
+NOW = os.environ.get("S06_FIXED_NOW") or datetime.now(timezone(timedelta(hours=8))).isoformat(timespec="seconds")
 
 KNOWLEDGE_AS_OF = "2026-10-25"
 PLAN_VERSION = "20261026_collection_first_v2"
 AUX_METHOD_VERSION = "S06_AUX_LEAD_V1"
-REWORK_ROUND = "R1"
+REWORK_ROUND = "R2"
 
-# Exact, exhaustive list of every file read or referenced as auxiliary对照 by S06
+# Exact, exhaustive list of every Git-tracked file read or referenced at runtime by S06 (33 files, all in Git tree)
 READ_INPUTS = [
     # Control, release & methodology
     "runs/issues/S06/release_20261122.json",
     "runs/issues/S06/handoff_from_s05_20261122.md",
-    "runs/issues/S06/codex_review_s06_20261122.md",
     "runs/issues/S01/acceptance_20261029.json",
     "runs/issues/S02/acceptance_20261106/review.json",
     "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
@@ -64,6 +64,7 @@ READ_INPUTS = [
     "runs/issues/S05/quality_observe.csv",
     "runs/issues/S05/observe_pool_preserved_776.csv",
     "data/company_master.csv",
+    "data/document_registry.csv",
     "data/methodology_decision_20261107.json",
     # Archive 53 adopted + 10 early samples (14 CSVs)
     "archive/R1_batch01_parent_reviewed_20261024/classification_reviewed.csv",
@@ -90,9 +91,21 @@ READ_INPUTS = [
     "runs/issues/A04R/keyword_originals.jsonl",
 ]
 
+# Local-only independent review records (provenance references, NOT runtime inputs required for clean-commit replay)
+REVIEW_PROVENANCE_REFS = [
+    "runs/issues/S06/codex_review_s06_20261122.md",
+    "runs/issues/S06/codex_review_s06_r1_20261123.md",
+]
+
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def sha256_canonical_lf(path: Path) -> tuple[int, str]:
+    """Canonical LF-normalized byte length & SHA-256 matching Git blob bytes across OS line endings."""
+    data = path.read_bytes().replace(b"\r\n", b"\n")
+    return len(data), hashlib.sha256(data).hexdigest()
 
 
 def load_csv(rel: str):
@@ -150,10 +163,16 @@ def main():
     assert not (s05_mainline_278 & set(s05_776))
     assert (s05_mainline_278 | set(s05_776)) == set(master)
 
-    # Verify S02 metrics SHA-256
+    # Verify S02 metrics SHA-256 (canonical LF bytes matching Git blob)
     s02_rel = "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv"
-    s02_sha = sha256_file(REPO / s02_rel)
+    _, s02_sha = sha256_canonical_lf(REPO / s02_rel)
     assert s02_sha == "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953"
+
+    # Load document_registry for verified original PDF SHA-256 binding (e.g. SH:688165 DOC-586ED2C18DB28CDE)
+    doc_reg = {r["document_id"]: r for r in load_csv("data/document_registry.csv")}
+    efort_doc = doc_reg["DOC-586ED2C18DB28CDE"]
+    assert efort_doc["security_id"] == "SH:688165"
+    assert efort_doc["sha256"] == "586ed2c18db28cdeb8b2df23bc9dc8ff995ec33bc37895c885b5e9aa8e426517"
 
     s02_rows = load_csv(s02_rel)
     assert len(s02_rows) == 12648
@@ -514,6 +533,34 @@ def main():
             rev_status = "ARCHIVE_ADOPTED_WITH_LIMITS"
             limits = "沿用archive旧分类附限制采用（53家口径）；非投资建议，不代表已商业化或已通过S05主线"
 
+            if sid == "SH:688165":
+                # Codex R1 item 2: bind Efort Yobot R1 decisive S1 release page 32, award page 25,
+                # and R1B1-E001 page 19 non-mass-production boundary from DOC-586ED2C18DB28CDE
+                ef_url = clean_str(efort_doc["primary_url"])
+                ef_pub = clean_str(efort_doc["published_on"])
+                fact_sum = (
+                    "早期主观察线：[S1]人形机器人Yobot R1（控股子公司启智机器人）—2025年报(DOC-586ED2C18DB28CDE)物理/印刷第32页记载"
+                    "2025年2月发布第一款人形机器人Yobot R1和Yobot W1并配具名产品图（S1决定性原页）；第25页记载获安徽省第十二届工业设计大赛金奖；"
+                    "第19页(R1B1-E001)界定截至2025-12-31尚未量产（不支持外部试点、销售或量产）。同公司另存较高阶段产品线：R1B1-PL001:工业机器人整机[S4]"
+                )
+                urls = f"DOC-586ED2C18DB28CDE;{ef_url}"
+                dates = ef_pub
+                pages = "物理/印刷第32页(S1发布决定性原页);物理/印刷第25页(获奖);物理/印刷第19页(R1B1-E001量产边界)"
+                quotes = (
+                    "[P32] 2025年2月，公司发布了第一款人形机器人Yobot R1和Yobot W1，在此基础上进行迭代和研发（配具名产品图） | "
+                    "[P25] 双足人形机器人Yobot R1均荣获安徽省第十二届工业设计大赛金奖 | "
+                    "[P19/R1B1-E001] 注：截至2025年12月31日，智能机器人通用技术底座、复合机器人、人形机器人、智能机器人解决方案及工作站尚未量产。"
+                )
+                binding_str = (
+                    f"DOC-586ED2C18DB28CDE(P32_S1_DECISIVE)|{ef_url}|{ef_pub}|物理/印刷第32页|S06_DIRECT_PDF_READ_SHA256_586ed2c1 || "
+                    f"DOC-586ED2C18DB28CDE(P25_AWARD)|{ef_url}|{ef_pub}|物理/印刷第25页|S06_DIRECT_PDF_READ_SHA256_586ed2c1 || "
+                    f"R1B1-E001(P19_MASS_PROD_BOUNDARY)|{ef_url}|{ef_pub}|物理/印刷第19页|ARCHIVE_ADOPTED_WITH_LIMITS"
+                )
+                limits = (
+                    "Yobot R1的S1样机发布由2025年报DOC-586ED2C18DB28CDE(SHA-256 586ed2c1...)物理/印刷第32页支撑、获奖见第25页、"
+                    "第19页(R1B1-E001)界定截至2025-12-31尚未量产；该证据不支持外部试点、销售或该型号量产；工业机器人整机S4另行保留；非投资建议"
+                )
+
         elif sid in c00_scr:
             pkg_tag = "C00_PILOT_01"
             r = c00_scr[sid]
@@ -857,7 +904,7 @@ def main():
 - 计划版本：`{PLAN_VERSION}`
 - 知识截止日：`{KNOWLEDGE_AS_OF}`（冻结不变）
 - 放行依据：`runs/issues/S06/release_20261122.json`、`runs/issues/S06/handoff_from_s05_20261122.md`
-- 返修依据：`runs/issues/S06/codex_review_s06_20261122.md`
+- 返修依据：`runs/issues/S06/codex_review_s06_20261122.md`、`runs/issues/S06/codex_review_s06_r1_20261123.md`（本地复核溯源引用，非运行必需输入）
 - 需求先行指标方法依据：`METHOD_20261107_LEADING_INDICATORS`（`docs/需求先行指标分工_20261107.md`、`data/methodology_decision_20261107.json`）
 - 辅助观察版本：`{AUX_METHOD_VERSION}`
 - 生成时间：`{NOW}`
@@ -932,7 +979,7 @@ def main():
 1. **【主线重进】**：严格按冻结 S01/S04/S05/R05 规则执行（截止日隔离→R05 增量重算；`HOLD_FOR_DATA`→闭合财务/来源/重述缺口后重算 L2；未入围→后续定期报告出现至少 2 个干净维度改善信号并通过 S05），禁止手工加回。
 2. **【业务核证目标】**：按各自 `fact_tier` 与主体范围写明具体可验证节点（`S0`→`S1`/`S2`、`S1`→`S2`/`S3`、`S2`→`S3`、`S3`→`S4`、宁波韵升→核供货规模与收入归属、德昌股份→核外部交付、富佳股份→母公司与参股分核），不强行套用“必须单列独立分部毛利”的一刀切模板。
 """
-    (OUT / "watch_reentry_rules.md").write_text(reentry_md, encoding="utf-8")
+    (OUT / "watch_reentry_rules.md").write_bytes(reentry_md.replace("\r\n", "\n").encode("utf-8"))
 
     # ------------------------------------------------------------------
     # 7. Write handoff.md (R1)
@@ -949,35 +996,28 @@ def main():
     handoff_md = f"""# S06 早期储备与缺数据观察交接（#41，返修轮 {REWORK_ROUND}）
 
 - 执行者：Antigravity
-- 复核方：Codex（待第二轮独立复核）
+- 复核方：Codex（待 R2 独立复核）
 - 计划版本：`{PLAN_VERSION}`
 - 知识截止日：`{KNOWLEDGE_AS_OF}`
 - 放行依据：`runs/issues/S06/release_20261122.json`、`runs/issues/S06/handoff_from_s05_20261122.md`
-- 返修依据：`runs/issues/S06/codex_review_s06_20261122.md`
+- 返修依据：`runs/issues/S06/codex_review_s06_20261122.md`、`runs/issues/S06/codex_review_s06_r1_20261123.md`（本地复核溯源引用，非运行必需输入）
 - 性质：执行方自检（`SELF_CHECK`），**不等同独立验收**；待 Codex 复核通过后再决定是否验收与放行 S07。
 
 ---
 
-## 一、本轮针对 Codex 复核意见的逐项修订（R1）
+## 一、本轮针对 Codex 复核意见的逐项修订（R1 + R2）
 
-1. **阶段、事实与主体修正（对应 1.1）**：
-   - **德昌股份 `SH:605555`**：移出 `EARLY_PILOT_SMALL_BATCH`（移出 S3 计数），改归 `EVIDENCED_PRODUCT_STAGE_UNKNOWN`（`PRODUCT_RAMP_DELIVERY_STAGE_UNKNOWN`）；采用 `C00-EV-605555-03` 物理第 12 页原文定位，不再沿用已纠正的第 11 页。
-   - **宁波韵升 `SH:600366`**：同步采用 2026H1 物理第 11 页 `C00-EV-600366-03`（人形机器人领域与头部企业绑定、签订长期协议、完成样品交付与供货），显式保留客户/供货规模/收入/毛利 `UNKNOWN` 边界，不推定 S3/S4 或量化在手订单金额；阶段更新为 `SAMPLING_AND_SUPPLY_SCALE_UNKNOWN`，优先级 `P1_HIGH`。
-   - **多产品线保留（华勤技术 `SH:603296`、捷昌驱动 `SH:603583`、埃夫特 `SH:688165`、新时达 `SZ:002527` 等）**：保持每家一行主键去重，新增 `bucket_selection_rule`、`other_verified_stages`、`entity_scope_and_ownership` 与 `all_recorded_product_lines` 四列，完整保留华勤 `R1B02-PL041`(S4)、捷昌 `R1A02-PL013`(S4)、埃夫特 `R1B1-PL001`(S4)、新时达 `R1B1-PL006/007`(S3) 等全部已核产品线、阶段、主体和来源。
-   - **富佳股份 `SH:603219`**：按主体分离口径——上市母公司扫地机器人 ODM（`R1B1-PL046`，`stage=UNKNOWN`）归入 `EVIDENCED_PRODUCT_STAGE_UNKNOWN`（`LISTED_PARENT_STAGE_UNKNOWN_WITH_ASSOCIATE_EARLY_OBSERVE`），未并表参股公司芯禾机器人（`R1B1-PL047` S3 / `R1B1-PL048` S1）仅作非并表间接观察保留，不再混入上市主体 S1 计数。
-2. **来源定位与采用边界修正（对应 1.2）**：
-   - 修复归档登记页码读取逻辑（兼容 `page_physical` 与 `page_or_section`），补回此前为 `UNKNOWN` 的全部 24 家物理页码（包括三协电机物理第 2 页、宇树科技物理第 139 页等）。
-   - **南特科技 `BJ:920124`**：将 `OFFICIAL_ORIGINAL_PENDING_DO_NOT_ADOPT` 的旧镜像 `R1A02-E001` 移出采用 `evidence_ids`，降格记录在 `non_adopted_historical_locators`；采用证据仅保留已核官方原文 `R1A02S-E001`（物理第 41 页）。
-   - 新增 `primary_evidence_binding` 列，将核心主张与证据 ID、文档/URL、披露日期、物理页和采用状态 1 对 1 绑定；升级 `step_s06_verify.py` 逐项校验同主键、物理页非漏读与零 `DO_NOT_ADOPT` 混入。
-3. **输入清单补全（对应 1.3）**：
-   - 移除 `step_s06_build.py` 中未使用的 `s04_log` 与 `b00_ev` 读取；在 `manifest.json` 中完整登记脚本实际读取与辅助对照引用的全部 **{len(READ_INPUTS)} 份输入文件**的字节数与 SHA-256。
-4. **重进条件与截止日诊断澄清（对应 1.4）**：
-   - `early_stage_watch.csv` 将【主线重进（按冻结规则）】与【业务核证目标】分开表述，取消一刀切“单列机器人收入与毛利”模板。
-   - `missing_data_watch.csv` 新增 `s02_gap_diagnostic_scope` 列，将 4 家截止日后隔离公司的 S02 裸缺口显式标为 `AFTER_CUTOFF_ISOLATED_DIAGNOSTIC_ONLY_NOT_ADMISSIBLE_BEFORE_R05`。
+1. **R2 发布复现与哈希口径修正（对应 R1 复核第 1 节）**：
+   - 将未进入 Git 提交的本地复核记录移出运行必需输入清单，转入 `manifest.json` 的 `review_provenance_refs`；运行时实际读取的全部 **{len(READ_INPUTS)} 份输入文件**（含 `data/document_registry.csv`）100% 位于目标 Git 提交树内。
+   - `manifest.json` 显式采用 `input_hash_basis = CANONICAL_LF_BYTES`（对文本输入统一按 `\r\n -> \n` 规范化字节计算字节数与 SHA-256，消除 Git blob 与 Windows CRLF 检出换行差异），全部交付文件以纯 LF 写入（`deliverable_hash_basis = EXACT_BYTES_LF`），支持从干净 Git 提交独立重放 `step_s06_build.py` 与 `step_s06_verify.py` 逐字节复现全部交付、清单与根摘要。
+2. **R2 埃夫特 `SH:688165` Yobot R1 原页绑定修正（对应 R1 复核第 2 节）**：
+   - 直接核读本地归档 2025 年报原文 `DOC-586ED2C18DB28CDE`（277 页，SHA-256 `586ed2c18db28cdeb8b2df23bc9dc8ff995ec33bc37895c885b5e9aa8e426517`，与 `data/document_registry.csv` 一致）：绑定**物理/印刷第 32 页**（2025 年 2 月发布第一款人形机器人 Yobot R1 和 Yobot W1 并配具名产品图）为 S1 样机观察的决定性原页；绑定**物理/印刷第 25 页**支撑安徽省第十二届工业设计大赛金奖事实；保留**物理/印刷第 19 页（`R1B1-E001`）**作为截至 2025-12-31 尚未量产的状态边界（不支持外部试点、销售或该型号量产）；工业机器人整机 S4（`R1B1-PL001`）继续作为单独已核产品线保留。
+3. **沿用已复核通过的 R1 修订（1.1–1.4）**：
+   - 德昌股份 `SH:605555`（移出 S3，采用物理第 12 页 `C00-EV-605555-03`）、宁波韵升 `SH:600366`（同步采用物理第 11 页 `C00-EV-600366-03`，规模/收入/订单金额留 `UNKNOWN`）、富佳股份 `SH:603219`（上市母公司 ODM 与参股芯禾分离）、华勤/捷昌/埃夫特/新时达多产品线全量保留、24 家物理页码补齐、南特科技 `BJ:920124` 仅采用官方原文 `R1A02S-E001`（物理第 41 页）、重进条件分列主线重进与业务核证目标、4 家截止日后隔离公司显式标明隔离期诊断。
 
 ---
 
-## 二、R1 重算结果汇总
+## 二、R2 重算结果汇总
 
 1. **全池 1,054 家主键守恒与去重**：
    - S05 主线对照 **278 家** = `quality_pass.csv` **277 家** + `quality_observe.csv` **1 家**（`SZ:000856` {master['SZ:000856']['stock_name']}）。
@@ -1018,7 +1058,7 @@ def main():
 - 合同负债与可信在手订单按 `S06_AUX_LEAD_V1` 保持 `UNKNOWN`，不填 0，合同资产分列。
 - 下一步：提交 Codex 进行 R1 独立复核。
 """
-    (OUT / "handoff.md").write_text(handoff_md, encoding="utf-8")
+    (OUT / "handoff.md").write_bytes(handoff_md.replace("\r\n", "\n").encode("utf-8"))
 
     print(json.dumps({
         "rework_round": REWORK_ROUND,

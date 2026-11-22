@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-S06 (#41) Independent Self-Check, Manifest & Review Generator (Rework Round R1).
-Verifies all S06 deliverables against frozen S01/S02/S05 inputs and Codex R1 rulings,
+S06 (#41) Independent Self-Check, Manifest & Review Generator (Rework Round R2).
+Verifies all S06 deliverables against frozen S01/S02/S05 inputs and Codex R1/R2 rulings,
+computes canonical LF input hashes (matching Git blob bytes), enforces pure-LF deliverables,
 and writes runs/issues/S06/manifest.json and runs/issues/S06/review.json.
 """
 import csv
 import hashlib
 import json
+import os
 import sys
 from collections import Counter
 from datetime import datetime, timedelta, timezone
@@ -14,14 +16,21 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[3]
 OUT = REPO / "runs" / "issues" / "S06"
-NOW = datetime.now(timezone(timedelta(hours=8))).isoformat(timespec="seconds")
+NOW = os.environ.get("S06_FIXED_NOW") or datetime.now(timezone(timedelta(hours=8))).isoformat(timespec="seconds")
 
 sys.path.insert(0, str(OUT))
-from step_s06_build import READ_INPUTS, extract_page, is_non_adopted_evidence
+from step_s06_build import (
+    READ_INPUTS,
+    REVIEW_PROVENANCE_REFS,
+    extract_page,
+    is_non_adopted_evidence,
+    sha256_canonical_lf,
+)
 
 
-def sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def sha256_exact(path: Path) -> tuple[int, str]:
+    raw = path.read_bytes()
+    return len(raw), hashlib.sha256(raw).hexdigest()
 
 
 def load_csv(rel: str):
@@ -42,14 +51,15 @@ def main():
 
     # Load frozen baselines
     master = {r["security_id"]: r for r in load_csv("data/company_master.csv")}
+    doc_reg = {r["document_id"]: r for r in load_csv("data/document_registry.csv")}
     s05_pass = {r["security_id"]: r for r in load_csv("runs/issues/S05/quality_pass.csv")}
     s05_obs = {r["security_id"]: r for r in load_csv("runs/issues/S05/quality_observe.csv")}
     s05_776 = {r["security_id"]: r for r in load_csv("runs/issues/S05/observe_pool_preserved_776.csv")}
     s05_278 = set(s05_pass) | set(s05_obs)
 
     s02_path = "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv"
-    s02_sha = sha256_file(REPO / s02_path)
-    rec("C01", "S02 all_pool_metrics.csv SHA-256 与放行记录一致",
+    _, s02_sha = sha256_canonical_lf(REPO / s02_path)
+    rec("C01", "S02 all_pool_metrics.csv SHA-256（LF 规范化/Git blob 口径）与放行记录一致",
         s02_sha == "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
         f"actual={s02_sha}")
 
@@ -63,7 +73,6 @@ def main():
     early = load_csv("runs/issues/S06/early_stage_watch.csv")
     missing = load_csv("runs/issues/S06/missing_data_watch.csv")
     early_by_sid = {r["security_id"]: r for r in early}
-    missing_by_sid = {r["security_id"]: r for r in missing}
     early_sids = [r["security_id"] for r in early]
     missing_sids = [r["security_id"] for r in missing]
 
@@ -134,7 +143,6 @@ def main():
         missing_fields_ok,
         f"checked={len(missing)} rows")
 
-    # Authoritative evidence registry lookup: check same security_id, zero DO_NOT_ADOPT, and physical page coverage
     ev_index = {}
     for rel in [
         "archive/R1_batch01_parent_reviewed_20261024/evidence_register.csv",
@@ -147,10 +155,7 @@ def main():
         for r in load_csv(rel):
             ev_index[r["evidence_id"].strip()] = r
 
-    unresolved = []
-    wrong_sid = []
-    adopted_do_not_adopt = []
-    missed_pages = []
+    unresolved, wrong_sid, adopted_do_not_adopt, missed_pages = [], [], [], []
     for r in early:
         sid = r["security_id"]
         eids = [e.strip() for e in r["evidence_ids"].split(";") if e.strip()]
@@ -163,7 +168,7 @@ def main():
             if eo["security_id"].strip() != sid:
                 wrong_sid.append((sid, eid, eo["security_id"]))
             if is_non_adopted_evidence(eo):
-                adopted_do_not_adopt.append((sid, eid, eo.get("review_status")))
+                adopted_do_not_adopt.append((sid, eid, eo.get("parent_source_review") or eo.get("review_status")))
             if extract_page(eo) != "UNKNOWN":
                 has_src_page = True
         if has_src_page and r["physical_page_or_section"] == "UNKNOWN":
@@ -173,11 +178,10 @@ def main():
         not unresolved and not wrong_sid and not adopted_do_not_adopt,
         f"unresolved={len(unresolved)}, wrong_sid={len(wrong_sid)}, do_not_adopt={adopted_do_not_adopt}")
 
-    rec("C15", "源登记含物理页码的观察行零漏读（physical_page_or_section 无误标 UNKNOWN）",
-        len(missed_pages) == 0,
+    rec("C15", "源登记含物理页码的观察行零漏读（54/54 无 UNKNOWN 物理页）",
+        len(missed_pages) == 0 and sum(1 for r in early if r["physical_page_or_section"] == "UNKNOWN") == 0,
         f"missed_pages={missed_pages}, remaining_unknown_pages={sum(1 for r in early if r['physical_page_or_section'] == 'UNKNOWN')}")
 
-    # Codex 1.1 & 1.2 targeted item verifications
     r_dc = early_by_sid["SH:605555"]
     r_ys = early_by_sid["SH:600366"]
     r_fj = early_by_sid["SH:603219"]
@@ -229,11 +233,11 @@ def main():
         marked_in_early == actual_overlap,
         f"overlap={len(actual_overlap)}")
 
-    # Verify all READ_INPUTS exist on disk
     missing_inputs = [p for p in READ_INPUTS if not (REPO / p).exists()]
-    rec("C22", "manifest 登记的全部实际读取输入文件均存在且与构建器 READ_INPUTS 1:1 一致",
-        len(missing_inputs) == 0 and len(READ_INPUTS) == len(set(READ_INPUTS)),
-        f"total_inputs={len(READ_INPUTS)}, missing={missing_inputs}")
+    no_local_only = all(p not in READ_INPUTS for p in REVIEW_PROVENANCE_REFS)
+    rec("C22", "manifest 登记的 33 份运行必需输入均存在且不含本地未提交复核文件",
+        len(missing_inputs) == 0 and len(READ_INPUTS) == len(set(READ_INPUTS)) and no_local_only,
+        f"total_inputs={len(READ_INPUTS)}, missing={missing_inputs}, no_local_only={no_local_only}")
 
     rules_txt = (OUT / "watch_reentry_rules.md").read_text(encoding="utf-8")
     handoff_txt = (OUT / "handoff.md").read_text(encoding="utf-8")
@@ -249,15 +253,40 @@ def main():
         and f"共 {len(missing)} 家" in handoff_txt
         and "SELF_CHECK" in handoff_txt
     )
-    rec("C23", "watch_reentry_rules.md 与 handoff.md 核心计数、R1 分桶及口径版本与 CSV 实算一致",
+    rec("C23", "watch_reentry_rules.md 与 handoff.md 核心计数、R2 分桶及口径版本与 CSV 实算一致",
         prose_ok,
         f"buckets={dict(early_bucket_cnt)}")
+
+    ef_doc = doc_reg.get("DOC-586ED2C18DB28CDE", {})
+    rec("C24", "Codex R1-2 埃夫特 SH:688165 绑定 DOC-586ED2C18DB28CDE 物理第 32 页(S1发布)、第 25 页(获奖)与第 19 页(量产边界)",
+        ef_doc.get("sha256") == "586ed2c18db28cdeb8b2df23bc9dc8ff995ec33bc37895c885b5e9aa8e426517"
+        and "DOC-586ED2C18DB28CDE" in r_ef["document_id_or_url"]
+        and "第32页" in r_ef["physical_page_or_section"]
+        and "第25页" in r_ef["physical_page_or_section"]
+        and "第19页" in r_ef["physical_page_or_section"]
+        and "P32_S1_DECISIVE" in r_ef["primary_evidence_binding"]
+        and "P19_MASS_PROD_BOUNDARY" in r_ef["primary_evidence_binding"],
+        f"page={r_ef['physical_page_or_section']}")
+
+    # Pre-check LF purity on already-generated deliverables (review.json & manifest.json will also be written pure LF)
+    pre_delivs = [
+        "runs/issues/S06/early_stage_watch.csv",
+        "runs/issues/S06/missing_data_watch.csv",
+        "runs/issues/S06/watch_reentry_rules.md",
+        "runs/issues/S06/handoff.md",
+        "runs/issues/S06/step_s06_build.py",
+        "runs/issues/S06/step_s06_verify.py",
+    ]
+    crlf_files = [p for p in pre_delivs if b"\r\n" in (REPO / p).read_bytes()]
+    rec("C25", "全部 S06 交付文件与脚本均为纯 LF 换行（工作区字节与 Git blob 逐字节一致）",
+        len(crlf_files) == 0,
+        f"crlf_files={crlf_files}")
 
     passed_cnt = sum(1 for c in checks if c["result"] == "PASS")
     all_pass = (passed_cnt == len(checks))
 
     # ------------------------------------------------------------------
-    # Write review.json (SELF_CHECK, R1)
+    # Write review.json (SELF_CHECK, R2, pure LF)
     # ------------------------------------------------------------------
     missing_cat_cnt = Counter(r["missing_data_category"] for r in missing)
     non_mainline_missing = sum(1 for r in missing if r["mainline_dedup_status"] == "NON_MAINLINE_776")
@@ -266,8 +295,8 @@ def main():
         "artifact": "S06_SELF_CHECK_REVIEW",
         "issue_key": "S06",
         "issue_number": 41,
-        "rework_round": "R1",
-        "rework_basis": "runs/issues/S06/codex_review_s06_20261122.md",
+        "rework_round": "R2",
+        "review_provenance_refs": REVIEW_PROVENANCE_REFS,
         "plan_version": "20261026_collection_first_v2",
         "knowledge_as_of": "2026-10-25",
         "executor": "Antigravity",
@@ -282,15 +311,10 @@ def main():
             "method_decision": "data/methodology_decision_20261107.json",
             "aux_method_version": "S06_AUX_LEAD_V1",
         },
-        "r1_fixes_applied": [
-            "SH:605555 德昌股份移出 S3/EARLY_PILOT_SMALL_BATCH，改归 EVIDENCED_PRODUCT_STAGE_UNKNOWN，采用 C00-EV-605555-03 物理第 12 页",
-            "SH:600366 宁波韵升同步采用 C00-EV-600366-03 物理第 11 页长期协议与供货事实，保持客户/规模/收入/毛利与在手订单金额 UNKNOWN",
-            "SH:603296/SH:603583/SH:688165/SZ:002527 及全部多线公司新增 all_recorded_product_lines、other_verified_stages、bucket_selection_rule 与 entity_scope_and_ownership",
-            "SH:603219 富佳股份按主体分离：上市母公司 ODM(UNKNOWN)归入 EVIDENCED_PRODUCT_STAGE_UNKNOWN，参股芯禾 S1/S3 仅作间接观察",
-            "修复 page_physical 读取逻辑，补回全部 24 家物理页码；新增 primary_evidence_binding",
-            "BJ:920124 南特科技移出 DO_NOT_ADOPT 旧镜像 R1A02-E001，仅采用官方原文 R1A02S-E001(物理第 41 页)",
-            "manifest.json 完整登记实际读取与辅助对照引用的全部 33 份输入文件并移除未使用读取",
-            "重进条件分列【主线重进】与【业务核证目标】；4 家截止日后隔离公司新增 s02_gap_diagnostic_scope 隔离期诊断标签",
+        "r2_fixes_applied": [
+            "将未入库本地复核记录移出运行必需输入清单，转登记于 review_provenance_refs；manifest 全部 33 份输入均位于目标 Git 提交树内",
+            "manifest 输入哈希显式采用 CANONICAL_LF_BYTES（对文本统一按 LF 规范化计算字节数与 SHA-256，消除 Git blob 与 Windows CRLF 差异），交付采用 EXACT_BYTES_LF，支持从干净提交独立重放逐字节复现",
+            "埃夫特 SH:688165 直接核读 DOC-586ED2C18DB28CDE(SHA-256 586ed2c1...) 物理/印刷第 32 页(Yobot R1/W1 发布，S1 决定性原页)、第 25 页(获奖)与第 19 页(R1B1-E001 量产边界)",
         ],
         "counts": {
             "universe": 1054,
@@ -321,8 +345,8 @@ def main():
         "checks_summary": f"{passed_cnt}/{len(checks)} PASS",
         "checks": checks,
         "limits": [
-            "执行方自检（SELF_CHECK）不等同独立验收，须由 Codex 独立复核 R1 后决定是否验收与放行 S07。",
-            "仅复用已有可追溯证据与 S02/S05 冻结快照，未扩大全池采集或逐家企业深研。",
+            "执行方自检（SELF_CHECK）不等同独立验收，须由 Codex 独立复核 R2 后决定是否验收与放行 S07。",
+            "仅复用已有可追溯证据与 S02/S05 冻结快照（另定向核读埃夫特 2025 年报已归档原页 P19/P25/P32），未扩大全池采集或逐家企业深研。",
             "合同负债不在 P04/S00 冻结标准化字段内，且无全池结构化在手订单台账；非主线观察行在 S06_AUX_LEAD_V1 中统一记 UNKNOWN，不填 0、不据此淘汰。",
             "观察名单不是买入推荐、投资候选或已商业化认定，不得跳过 S07/S08 进入估值。",
             "S00 勘误 #53 与既有守卫全部原样结转，本次未闭合 #53。",
@@ -331,10 +355,10 @@ def main():
         "release_S08": False,
         "issue_53_touched": False,
     }
-    (OUT / "review.json").write_text(json.dumps(review_obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (OUT / "review.json").write_bytes((json.dumps(review_obj, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
 
     # ------------------------------------------------------------------
-    # Write manifest.json (ALL 33 READ_INPUTS + deliverables + root digest)
+    # Write manifest.json (ALL 33 Git-tracked READ_INPUTS using canonical LF bytes)
     # ------------------------------------------------------------------
     deliverable_paths = [
         "runs/issues/S06/early_stage_watch.csv",
@@ -346,14 +370,17 @@ def main():
         "runs/issues/S06/step_s06_verify.py",
     ]
 
-    inputs_meta = [
-        {"path": p, "bytes": (REPO / p).stat().st_size, "sha256": sha256_file(REPO / p)}
-        for p in READ_INPUTS
-    ]
-    deliv_meta = [
-        {"path": p, "bytes": (REPO / p).stat().st_size, "sha256": sha256_file(REPO / p)}
-        for p in deliverable_paths
-    ]
+    inputs_meta = []
+    for p in READ_INPUTS:
+        nbytes, digest = sha256_canonical_lf(REPO / p)
+        inputs_meta.append({"path": p, "bytes": nbytes, "sha256": digest})
+
+    deliv_meta = []
+    for p in deliverable_paths:
+        nbytes, digest = sha256_exact(REPO / p)
+        assert b"\r\n" not in (REPO / p).read_bytes(), f"CRLF detected in deliverable {p}"
+        deliv_meta.append({"path": p, "bytes": nbytes, "sha256": digest})
+
     root_digest_src = "\n".join(f"{d['path']}:{d['sha256']}" for d in sorted(deliv_meta, key=lambda x: x["path"]))
     root_digest = hashlib.sha256(root_digest_src.encode("utf-8")).hexdigest()
 
@@ -361,22 +388,27 @@ def main():
         "artifact": "S06_DELIVERY_MANIFEST",
         "issue_key": "S06",
         "issue_number": 41,
-        "rework_round": "R1",
+        "rework_round": "R2",
         "plan_version": "20261026_collection_first_v2",
         "knowledge_as_of": "2026-10-25",
         "aux_method_version": "S06_AUX_LEAD_V1",
         "executor": "Antigravity",
         "review_nature": "SELF_CHECK",
         "generated_at": NOW,
+        "input_hash_basis": "CANONICAL_LF_BYTES",
+        "input_hash_basis_note": "全部 33 份文本输入统一执行 CRLF->LF 规范化后计算字节数与 SHA-256（含 6 份 Git blob 本身为 CRLF 与 15 份 Windows 检出转 CRLF 的输入），确保干净提交树重放与本地工作区逐字节一致。",
+        "deliverable_hash_basis": "EXACT_BYTES_LF",
+        "replay_note": "在任意干净提交树内以 S06_FIXED_NOW=<generated_at> 顺序运行 step_s06_build.py 与 step_s06_verify.py，可逐字节复现全部交付、review.json 与 manifest.json。",
+        "review_provenance_refs": REVIEW_PROVENANCE_REFS,
         "manifest_root_digest": root_digest,
         "input_count": len(inputs_meta),
         "deliverable_count": len(deliv_meta),
         "inputs": inputs_meta,
         "deliverables": deliv_meta,
     }
-    (OUT / "manifest.json").write_text(json.dumps(manifest_obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (OUT / "manifest.json").write_bytes((json.dumps(manifest_obj, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
 
-    print(f"R1 SELF_CHECK: {passed_cnt}/{len(checks)} PASS | inputs={len(inputs_meta)} | root_digest={root_digest}")
+    print(f"R2 SELF_CHECK: {passed_cnt}/{len(checks)} PASS | inputs={len(inputs_meta)} | root_digest={root_digest}")
     if not all_pass:
         for c in checks:
             if c["result"] != "PASS":
