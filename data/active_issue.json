@@ -568,7 +568,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-22T23:35:03+08:00",
+  "updated_at": "2026-11-22T23:45:32+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -899,5 +899,54 @@
       ]
     },
     "environment_note": "本机 git 默认代理 127.0.0.1:7890 未启动，执行 git fetch/push 时临时清代理直连；gh api 正常。"
+  },
+  "s06_delivery": {
+    "delivered_at": "2026-11-22T23:45:32+08:00",
+    "issue_number": 41,
+    "issue_key": "S06",
+    "executor": "Antigravity",
+    "reviewer_assigned": "Codex",
+    "review_nature": "SELF_CHECK",
+    "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+    "path": "runs/issues/S06/",
+    "manifest_root_digest": "9fe8980bfe77be076e7235ac25faddc71947d4277c4d505eaba107c323dabc1a",
+    "deliverable_count": 7,
+    "self_check": "16/16 PASS",
+    "counts": {
+      "universe": 1054,
+      "s05_mainline_pass": 277,
+      "s05_mainline_observe": 1,
+      "s05_carryover_776": 776,
+      "early_stage_watch_total": 54,
+      "early_stage_by_bucket": {
+        "EARLY_RD_PROTOTYPE_SAMPLING": 16,
+        "EARLY_PILOT_SMALL_BATCH": 7,
+        "COMMERCIAL_NON_MAINLINE_RESERVE": 11,
+        "EVIDENCED_PRODUCT_STAGE_UNKNOWN": 20
+      },
+      "missing_data_watch_total": 379,
+      "missing_data_non_mainline_776": 378,
+      "missing_data_mainline_observe_carryover": 1,
+      "missing_data_by_category": {
+        "S05_QUALITY_HOLD_CONSOLIDATION_SCOPE_UNKNOWN": 1,
+        "AFTER_CUTOFF_ISOLATED": 4,
+        "PENDING_ANCHOR_RESELECTION": 1,
+        "S04_HOLD_FOR_DATA_AND_QUALITY_SOURCE_UNKNOWN": 9,
+        "QUALITY_SOURCE_UNKNOWN_NON_MAINLINE": 6,
+        "S04_HOLD_FOR_DATA": 319,
+        "S02_METRIC_HOLD_OR_MISSING_NON_MAINLINE": 39
+      },
+      "overlap_early_and_missing": 33,
+      "union_non_mainline_watch": 399,
+      "overlap_with_s05_quality_pass": 0,
+      "overlap_early_with_s05_278": 0,
+      "reviewed_concept_or_insufficient_excluded": 6
+    },
+    "aux_method_version": "S06_AUX_LEAD_V1",
+    "awaiting": "Codex 独立复核（主键去重、证据定位与事实分层、时间隔离、未决项结转、辅助观察口径登记及每家重进条件）",
+    "status_unchanged": "IN_PROGRESS（交付不等于验收；本轮不释放 S07/S08，不改 #53 结论）",
+    "release_S07": false,
+    "release_S08": false,
+    "issue_53_touched": false
   }
 }

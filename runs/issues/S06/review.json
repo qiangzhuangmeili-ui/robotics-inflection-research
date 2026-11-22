@@ -1,0 +1,167 @@
+{
+  "artifact": "S06_SELF_CHECK_REVIEW",
+  "issue_key": "S06",
+  "issue_number": 41,
+  "plan_version": "20261026_collection_first_v2",
+  "knowledge_as_of": "2026-10-25",
+  "executor": "Antigravity",
+  "reviewer_assigned": "Codex",
+  "review_nature": "SELF_CHECK",
+  "independent_review_complete": false,
+  "reviewed_at": "2026-11-22T23:45:00+08:00",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "release_basis": {
+    "release_file": "runs/issues/S06/release_20261122.json",
+    "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md",
+    "method_decision": "data/methodology_decision_20261107.json",
+    "aux_method_version": "S06_AUX_LEAD_V1"
+  },
+  "counts": {
+    "universe": 1054,
+    "s05_mainline_pass": 277,
+    "s05_mainline_observe": 1,
+    "s05_carryover_776": 776,
+    "early_stage_watch_total": 54,
+    "early_stage_by_bucket": {
+      "EARLY_RD_PROTOTYPE_SAMPLING": 16,
+      "EARLY_PILOT_SMALL_BATCH": 7,
+      "COMMERCIAL_NON_MAINLINE_RESERVE": 11,
+      "EVIDENCED_PRODUCT_STAGE_UNKNOWN": 20
+    },
+    "missing_data_watch_total": 379,
+    "missing_data_non_mainline_776": 378,
+    "missing_data_mainline_observe_carryover": 1,
+    "missing_data_by_category": {
+      "S05_QUALITY_HOLD_CONSOLIDATION_SCOPE_UNKNOWN": 1,
+      "AFTER_CUTOFF_ISOLATED": 4,
+      "PENDING_ANCHOR_RESELECTION": 1,
+      "S04_HOLD_FOR_DATA_AND_QUALITY_SOURCE_UNKNOWN": 9,
+      "QUALITY_SOURCE_UNKNOWN_NON_MAINLINE": 6,
+      "S04_HOLD_FOR_DATA": 319,
+      "S02_METRIC_HOLD_OR_MISSING_NON_MAINLINE": 39
+    },
+    "overlap_early_and_missing": 33,
+    "union_non_mainline_watch": 399,
+    "overlap_with_s05_quality_pass": 0,
+    "overlap_early_with_s05_278": 0,
+    "reviewed_concept_or_insufficient_excluded": 6
+  },
+  "guards_preserved": {
+    "after_cutoff_companies": 4,
+    "anchor_reselection_pending": 1,
+    "quality_source_unknown_companies": 15,
+    "unadopted_parent_members": 8,
+    "s05_quality_observe_jidong": 1,
+    "s00_errata_issue_53": "OPEN",
+    "historical_44_231_378": "NON_AUTHORITATIVE_HISTORY"
+  },
+  "checks_summary": "16/16 PASS",
+  "checks": [
+    {
+      "id": "C01",
+      "name": "S02 all_pool_metrics.csv SHA-256 与放行记录一致",
+      "result": "PASS",
+      "detail": "actual=3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953"
+    },
+    {
+      "id": "C02",
+      "name": "全池 1,054 主键守恒 (277+1+776=1,054 且互斥)",
+      "result": "PASS",
+      "detail": "master=1054, pass=277, obs=1, 776=776"
+    },
+    {
+      "id": "C03",
+      "name": "early_stage_watch.csv 主键唯一且全部属于冻结 1,054 主表",
+      "result": "PASS",
+      "detail": "rows=54, unique=54"
+    },
+    {
+      "id": "C04",
+      "name": "early_stage_watch.csv 与 S05 278 主线 0 重叠（严格去重）",
+      "result": "PASS",
+      "detail": "overlap_278=0"
+    },
+    {
+      "id": "C05",
+      "name": "missing_data_watch.csv 主键唯一且全部属于冻结 1,054 主表",
+      "result": "PASS",
+      "detail": "rows=379, unique=379"
+    },
+    {
+      "id": "C06",
+      "name": "missing_data_watch.csv 与 S05 277 quality_pass 0 重叠；仅含 1 家 S05_OBSERVE 结转并显式标注",
+      "result": "PASS",
+      "detail": "overlap_pass=0, overlap_obs=['SZ:000856']"
+    },
+    {
+      "id": "C07",
+      "name": "4 家截止日后隔离守卫完整保留",
+      "result": "PASS",
+      "detail": "cutoff_ids=['SH:603448', 'SH:688836', 'SZ:301348', 'SZ:301699']"
+    },
+    {
+      "id": "C08",
+      "name": "1 家锚点待重选守卫完整保留",
+      "result": "PASS",
+      "detail": "anchor_ids=['SZ:002083']"
+    },
+    {
+      "id": "C09",
+      "name": "15 家质量来源未知守卫完整保留",
+      "result": "PASS",
+      "detail": "pending_ce_source=15"
+    },
+    {
+      "id": "C10",
+      "name": "328 家 S04 HOLD_FOR_DATA 完整保留",
+      "result": "PASS",
+      "detail": "hold_for_data=328"
+    },
+    {
+      "id": "C11",
+      "name": "6 家已核查概念/意向/证据不足公司与 1 家主表外公司未混入 early_stage_watch",
+      "result": "PASS",
+      "detail": "leaked=[]"
+    },
+    {
+      "id": "C12",
+      "name": "early_stage_watch 每行具备观察理由、来源定位、重进条件且辅助观察缺披露记 UNKNOWN 不填零",
+      "result": "PASS",
+      "detail": "checked=54 rows"
+    },
+    {
+      "id": "C13",
+      "name": "missing_data_watch 每行具备观察理由、来源定位与可验证重进条件",
+      "result": "PASS",
+      "detail": "checked=379 rows"
+    },
+    {
+      "id": "C14",
+      "name": "early_stage_watch 所有 evidence_id 均可在权威源登记表解析",
+      "result": "PASS",
+      "detail": "unresolved=[]"
+    },
+    {
+      "id": "C15",
+      "name": "两表交集标记 in_early_stage_watch 与实际主键交集完全一致",
+      "result": "PASS",
+      "detail": "overlap=33"
+    },
+    {
+      "id": "C16",
+      "name": "watch_reentry_rules.md 与 handoff.md 核心计数与口径版本和 CSV 实算一致",
+      "result": "PASS",
+      "detail": "early=54, missing=379"
+    }
+  ],
+  "limits": [
+    "执行方自检（SELF_CHECK）不等同独立验收，须由 Codex 独立复核后决定是否验收与放行 S07。",
+    "仅复用已有可追溯证据（archive 53 家旧采用附限制、10 家早期样本局部断言、B00/C00/D00）与 S02/S05 冻结快照，未扩大全池采集或逐家企业深研。",
+    "合同负债不在 P04/S00 冻结标准化字段内，且无全池结构化在手订单台账；非主线观察行在 S06_AUX_LEAD_V1 中统一记 UNKNOWN，不填 0、不据此淘汰。",
+    "观察名单不是买入推荐、投资候选或已商业化认定，不得跳过 S07/S08 进入估值。",
+    "S00 勘误 #53 与 8 项未采用父链提议、15 家质量来源未知、4 家截止日后隔离、1 家锚点待重选及 S05 专门待核均原样结转，本次未闭合 #53。"
+  ],
+  "release_S07": false,
+  "release_S08": false,
+  "issue_53_touched": false
+}
