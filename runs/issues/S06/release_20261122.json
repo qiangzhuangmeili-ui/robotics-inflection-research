@@ -1,0 +1,88 @@
+{
+  "artifact": "S06_SCOPED_RELEASE_AND_HANDOFF",
+  "issue_key": "S06",
+  "issue_number": 41,
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "APPROVED_TO_START_S06_WITH_LIMITS",
+  "release_S06": true,
+  "recorded_at": "2026-11-22T23:29:38+08:00",
+  "approved_by": "USER",
+  "executor_handoff": {
+    "recommended_executor": "Antigravity",
+    "reviewer": "Codex",
+    "status": "READY",
+    "claim_receipt": "PENDING",
+    "claimed": false,
+    "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md"
+  },
+  "input_scope": {
+    "S01": {
+      "issue_number": 36,
+      "review_path": "runs/issues/S01/acceptance_20261029.json",
+      "review_blob": "da7b585f8ce69e1aa5248e01e2f08eace49621cf",
+      "use": "Frozen rules and recorded methodology supplements."
+    },
+    "S02": {
+      "issue_number": 37,
+      "review_path": "runs/issues/S02/acceptance_20261106/review.json",
+      "review_blob": "867a5c771a930525ade52877c1bbe1748e0336c7",
+      "snapshot": "S02_FINAL_SNAPSHOT_20261102",
+      "cutoff_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+      "metrics_path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+      "metrics_sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+      "use": "States, periods and gaps for S06 watchlists only. Original technical review limits remain."
+    },
+    "S05": {
+      "issue_number": 40,
+      "review_path": "runs/issues/S05/acceptance_s05_r1_20261121.json",
+      "review_blob": "35005442019e296b0db04a3f692faf337dc3d5b1",
+      "passes": {
+        "path": "runs/issues/S05/quality_pass.csv",
+        "count": 277
+      },
+      "hold": {
+        "path": "runs/issues/S05/quality_observe.csv",
+        "count": 1
+      },
+      "carryover": {
+        "path": "runs/issues/S05/observe_pool_preserved_776.csv",
+        "count": 776
+      },
+      "use": "Cross-reference and deduplicate 1,054 unique primary keys; early-stage admission requires traceable evidence."
+    }
+  },
+  "knowledge_as_of": "2026-10-25",
+  "evidence_scope": "Reuse existing traceable evidence. Targeted reads of already archived pages are in scope for specific observation subjects. An index is a locator. Insufficient evidence stays UNKNOWN.",
+  "method": {
+    "id": "METHOD_20261107_LEADING_INDICATORS",
+    "path": "data/methodology_decision_20261107.json",
+    "receipt": "Read by Antigravity in preflight; recheck latest version before use.",
+    "use": "Contract liabilities and evidenced order backlog as auxiliary observation only, after versioned definition and source registration. Missing or undisclosed stays UNKNOWN; contract assets are separate."
+  },
+  "guards": {
+    "after_cutoff_companies": 4,
+    "anchor_reselection_pending": 1,
+    "quality_source_unknown_companies": 15,
+    "unadopted_parent_members": 8,
+    "preserve_S05_pending": true,
+    "S00_errata_issue_53": "OPEN",
+    "historical_44_231_378": "NON_AUTHORITATIVE_HISTORY"
+  },
+  "outputs": [
+    "early_stage_watch.csv",
+    "missing_data_watch.csv",
+    "watch_reentry_rules.md",
+    "manifest.json",
+    "handoff.md",
+    "review.json"
+  ],
+  "online_base": {
+    "main": "eb2d32f3a4ea9f34c2c81bf9ea14d46ddb5307e9",
+    "active_issue_blob": "4a1264becd7710d2ab05ed9814f70f661ebaf9ca"
+  },
+  "downstream": {
+    "S06_completed": false,
+    "S07_released": false,
+    "S08_released": false
+  }
+}

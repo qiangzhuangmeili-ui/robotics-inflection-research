@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S05_ACCEPTED_WITH_LIMITS_S06_LOCKED",
+  "status": "S06_RELEASED_READY_FOR_CLAIM",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -220,7 +220,7 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": null,
+    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/41",
     "execution_started": true,
     "last_completed_issue": {
       "issue_key": "S05",
@@ -415,7 +415,7 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "S05_ACCEPTED_WITH_LIMITS_S06_LOCKED",
+    "current_gate": "S06_RELEASED_READY_FOR_CLAIM",
     "release_S00": false,
     "last_review": {
       "issue_key": "S03",
@@ -593,6 +593,24 @@
       "claim_receipt": "PENDING",
       "release_file": "runs/issues/S05/release_20261120.json",
       "handoff_file": "runs/issues/S05/handoff_from_s04_20261120.md"
+    },
+    "release_S06": true,
+    "s06_release": {
+      "issue_number": 41,
+      "decision": "APPROVED_TO_START_S06_WITH_LIMITS",
+      "release_file": "runs/issues/S06/release_20261122.json",
+      "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md",
+      "approved_at": "2026-11-22T23:29:38+08:00",
+      "scope": "Existing evidence for early-stage and missing-data watchlists only."
+    },
+    "handoff_to_s06": {
+      "issue_number": 41,
+      "issue_key": "S06",
+      "status": "READY",
+      "recommended_executor": "Antigravity",
+      "claim_receipt": "PENDING",
+      "release_file": "runs/issues/S06/release_20261122.json",
+      "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md"
     }
   },
   "pre_issue_breakdown_first_actions": [
@@ -1128,7 +1146,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S05_ACCEPTED_WITH_LIMITS_S06_LOCKED",
+  "current_gate": "S06_RELEASED_READY_FOR_CLAIM",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1173,7 +1191,7 @@
     "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除摘要/非财报更正/冻结范围外期间",
     "correction_discovery_rows": 223
   },
-  "next_recommended_issue": null,
+  "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/41",
   "s00_stage": {
     "issue": "S00 / #35",
     "decision": "ACCEPTED_WITH_LIMITS",
@@ -1270,9 +1288,9 @@
     }
   },
   "next_issue": {
-    "key": "S05",
-    "number": 40,
-    "reason": "用户已批准 S05 限范围开工。#53 占用释放，残余勘误保持开放。#40 READY，等待接任执行者单卡领取，建议 WorkBuddy。"
+    "key": "S06",
+    "number": 41,
+    "reason": "用户已批准 #41。S01/S02 限范围复用，S05 对照已验收。S06 READY，等待 Antigravity 按最新调度领取。"
   },
   "s01_stage": {
     "issue": "S01 / #36",
@@ -1703,7 +1721,7 @@
     "source_acceptance": "runs/issues/S02/acceptance_20261106/review.json",
     "input_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json"
   },
-  "release_S06": false,
+  "release_S06": true,
   "release_S07": false,
   "release_S08": false,
   "s05_stage": {

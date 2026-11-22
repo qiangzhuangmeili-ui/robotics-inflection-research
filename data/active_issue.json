@@ -4,8 +4,8 @@
   "active_issue_key": null,
   "executor": null,
   "started_at": "2026-11-20T21:32:06+08:00",
-  "status": "S05_ACCEPTED_WITH_LIMITS_RELEASED",
-  "claim_note": "按 S05 放行记录单卡领取 #40。领取前在线 active_issue 无执行者（blob 82ef676b），V2.2 五份冻结指纹与冻结 B 逐项匹配，控制文件已同步在线权威版本。",
+  "status": "S06_RELEASED_READY_FOR_CLAIM",
+  "claim_note": "用户已批准 #41。S01/S02 限范围复用，S05 对照已验收。S06 READY，等待 Antigravity 按最新调度领取。",
   "last_completed": {
     "issue_key": "S05",
     "issue_number": 40,
@@ -23,9 +23,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": null,
-  "next_recommended_issue_key": null,
-  "next_recommended_reason": "S05 已验收。S06 未放行（release_S06=false），等新增明确 release 记录后再推荐派工。",
+  "next_recommended_issue_number": 41,
+  "next_recommended_issue_key": "S06",
+  "next_recommended_reason": "用户已批准 #41。S01/S02 限范围复用，S05 对照已验收。S06 READY，等待 Antigravity 按最新调度领取。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -568,7 +568,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-21T13:20:34+08:00",
+  "updated_at": "2026-11-22T23:29:38+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -826,5 +826,23 @@
     "release_S07": false,
     "release_S08": false,
     "issue_53_touched": false
+  },
+  "release_S06": true,
+  "s06_release": {
+    "issue_number": 41,
+    "decision": "APPROVED_TO_START_S06_WITH_LIMITS",
+    "release_file": "runs/issues/S06/release_20261122.json",
+    "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md",
+    "approved_at": "2026-11-22T23:29:38+08:00",
+    "scope": "Existing evidence for early-stage and missing-data watchlists only."
+  },
+  "handoff_to_s06": {
+    "issue_number": 41,
+    "issue_key": "S06",
+    "status": "READY",
+    "recommended_executor": "Antigravity",
+    "claim_receipt": "PENDING",
+    "release_file": "runs/issues/S06/release_20261122.json",
+    "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md"
   }
 }
