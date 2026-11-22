@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
-  "executor": null,
-  "started_at": "2026-11-20T21:32:06+08:00",
-  "status": "S06_RELEASED_READY_FOR_CLAIM",
-  "claim_note": "用户已批准 #41。S01/S02 限范围复用，S05 对照已验收。S06 READY，等待 Antigravity 按最新调度领取。",
+  "active_issue_number": 41,
+  "active_issue_key": "S06",
+  "executor": "Antigravity",
+  "started_at": "2026-11-22T23:35:03+08:00",
+  "status": "IN_PROGRESS",
+  "claim_note": "Antigravity 按 runs/issues/S06/release_20261122.json 单卡领取 #41（S06）。领取前在线 active_issue 占用为空（blob c20316d2，main d0d017a8），S02 all_pool_metrics.csv SHA-256 匹配。",
   "last_completed": {
     "issue_key": "S05",
     "issue_number": 40,
@@ -568,7 +568,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-22T23:29:38+08:00",
+  "updated_at": "2026-11-22T23:35:03+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -839,10 +839,65 @@
   "handoff_to_s06": {
     "issue_number": 41,
     "issue_key": "S06",
-    "status": "READY",
+    "status": "IN_PROGRESS",
     "recommended_executor": "Antigravity",
-    "claim_receipt": "PENDING",
+    "claim_receipt": "CONFIRMED",
     "release_file": "runs/issues/S06/release_20261122.json",
-    "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md"
+    "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md",
+    "claimed_at": "2026-11-22T23:35:03+08:00",
+    "claimed_by": "Antigravity"
+  },
+  "s06_claim": {
+    "claimed_at": "2026-11-22T23:35:03+08:00",
+    "issue_number": 41,
+    "issue_key": "S06",
+    "executor": "Antigravity",
+    "review_nature": "SELF_CHECK",
+    "reviewer": "Codex",
+    "single_card": true,
+    "claim_basis": {
+      "online_main_ref_at_claim": "d0d017a8e94efcf81af5e3ed6623d8acb04fb23f",
+      "online_active_issue_blob_sha_before_claim": "c20316d2be40f3584c0ba8a12b2c2b9ef5b7701b",
+      "release_record": "runs/issues/S06/release_20261122.json",
+      "release_record_sha256": "93945284875ec715c2a68d7e5e41c4d8de1ecea6f78ed851e306e58c3587585c",
+      "handoff_file": "runs/issues/S06/handoff_from_s05_20261122.md",
+      "handoff_sha256": "690582087124dc7c5065e9d4f745c887a16d749bca800f424b07763ab8e56c04",
+      "verified_inputs_sha256": {
+        "runs/issues/S06/release_20261122.json": "93945284875ec715c2a68d7e5e41c4d8de1ecea6f78ed851e306e58c3587585c",
+        "runs/issues/S06/handoff_from_s05_20261122.md": "690582087124dc7c5065e9d4f745c887a16d749bca800f424b07763ab8e56c04",
+        "runs/issues/S01/acceptance_20261029.json": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+        "runs/issues/S02/acceptance_20261106/review.json": "70cc489c8514f0a19b80aa467fc79f430618fc2571e6ea566e5f54347a853ed2",
+        "runs/issues/S02/acceptance_20261106/s03_input_contract.json": "edaf2b10c1fc7fee5fb8fb6108439257dfed8be59879165e8d95e4e2a35713f5",
+        "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+        "runs/issues/S05/acceptance_s05_r1_20261121.json": "aec3f4002335f3ed1a6b3285fe1cb327ce2f8120eb9025f094a0221f316014e0",
+        "runs/issues/S05/quality_pass.csv": "cab7ddc7bbae1f70f08ae9b4e9eebfe22fed6b236efc76d2ba3927957b93374e",
+        "runs/issues/S05/quality_observe.csv": "66b47a39a9b47867aa3ebd47f5ad46a0924f1dd52616eaa4f0f8eafebfa14650",
+        "runs/issues/S05/observe_pool_preserved_776.csv": "dedc1a7fa907a84ca74d15ddeeb857a6092658dc854d1de5edcdeb54f2d75fce",
+        "data/methodology_decision_20261107.json": "92fac7454acf827b2bb0ed8c4a8e1a58ecb0759e06b8454c38bb8ae2f2c9b4ed"
+      },
+      "control_files_sha256_before_claim": {
+        "data/active_issue.json": "4305b4eeb903a87835c8a803fb51aa95d441b3fdf2ae2b60d8faf4fa5018f69b",
+        "data/issue_execution_plan.csv": "cbda18207bc5a0ee6cdbe063e6ad5ee110275864236cf0ca3316941877ae1940",
+        "data/issue_execution_plan.json": "f9d4ff95ddfc93d0fcc5def03b198561d668028471c4bc507814a1bb541909a3",
+        "PROJECT_STATE.json": "81c5495b47b4dd769d35d56c3db1d9fd6379471811305957fb273447eb785805"
+      }
+    },
+    "scope": {
+      "universe": 1054,
+      "s05_mainline_pass": 277,
+      "s05_mainline_observe": 1,
+      "s05_carryover_observe": 776,
+      "knowledge_as_of": "2026-10-25",
+      "output_directory": "runs/issues/S06/",
+      "deliverables": [
+        "early_stage_watch.csv",
+        "missing_data_watch.csv",
+        "watch_reentry_rules.md",
+        "manifest.json",
+        "handoff.md",
+        "review.json"
+      ]
+    },
+    "environment_note": "本机 git 默认代理 127.0.0.1:7890 未启动，执行 git fetch/push 时临时清代理直连；gh api 正常。"
   }
 }
