@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S06_IN_PROGRESS_ANTIGRAVITY",
+  "status": "S06_ACCEPTED_WITH_LIMITS_S07_LOCKED",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -220,17 +220,17 @@
     "controller": "data/active_issue.json",
     "main_issue_url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/1",
     "new_issues_created": 39,
-    "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/41",
+    "next_recommended_issue": null,
     "execution_started": true,
     "last_completed_issue": {
-      "issue_key": "S05",
-      "issue_number": 40,
+      "issue_key": "S06",
+      "issue_number": 41,
       "decision": "ACCEPTED_WITH_LIMITS",
-      "review_file": "runs/issues/S05/acceptance_s05_r1_20261121.json",
+      "review_file": "runs/issues/S06/acceptance_s06_r2_20261123.json",
       "reviewer": "Codex",
-      "reviewed_commit": "4682a1129ac89d39e5038a98864bbec9eb2de367",
-      "manifest_root_digest": "b6485ea7ceda1bd3bb8e927b16a8dbb5059460f5891fbec61aec2e3e4a1ccc85",
-      "coverage": 278
+      "reviewed_commit": "7097827cacc0090a24549f7c61c78148cf0e1696",
+      "manifest_root_digest": "61651e3d43fbb8ee97d80328b02b2a84bdbe1a569c55320144aaf0b4ea982f74",
+      "coverage": 1054
     },
     "frozen_by_p00": {
       "knowledge_as_of": "2026-10-25",
@@ -242,13 +242,7 @@
       "scope_file": "runs/issues/P00/collection_scope.json"
     },
     "legacy_issues": "#2-#9 deferred historical work; new company research after S08/R00",
-    "active_issue": {
-      "issue_number": 41,
-      "issue_key": "S06",
-      "executor": "Antigravity",
-      "started_at": "2026-11-22T23:35:03+08:00",
-      "status": "IN_PROGRESS"
-    },
+    "active_issue": null,
     "p02_drive_followup": {
       "completed_at": "2026-10-26T06:56:46.362Z",
       "decision": "SELF_CHECK_PASS",
@@ -421,7 +415,7 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "S06_RELEASED_READY_FOR_CLAIM",
+    "current_gate": "S06_ACCEPTED_WITH_LIMITS_S07_LOCKED",
     "release_S00": false,
     "last_review": {
       "issue_key": "S03",
@@ -1152,7 +1146,7 @@
       "AC12 改为发现范围对账（223 行逐条处置）+ 逐项文件/哈希/关联核验（305 份，违规 0）"
     ]
   },
-  "current_gate": "S06_RELEASED_READY_FOR_CLAIM",
+  "current_gate": "S06_ACCEPTED_WITH_LIMITS_S07_LOCKED",
   "release_S00": true,
   "a04r_stage": {
     "issue_key": "A04R",
@@ -1197,7 +1191,7 @@
     "version_discovery_rule": "REP + (更正|重述|勘误|修订)，排除摘要/非财报更正/冻结范围外期间",
     "correction_discovery_rows": 223
   },
-  "next_recommended_issue": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/41",
+  "next_recommended_issue": null,
   "s00_stage": {
     "issue": "S00 / #35",
     "decision": "ACCEPTED_WITH_LIMITS",
@@ -1785,5 +1779,43 @@
       "This accepts the S05 technical quality check; business confirmation and later-stage screening retain their project gates."
     ],
     "prior_review": "runs/issues/S05/codex_review_s05_20261121.md"
+  },
+  "s06_stage": {
+    "issue_key": "S06",
+    "issue_number": 41,
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "S06_completed": true,
+    "executor": "Antigravity",
+    "reviewer": "Codex",
+    "reviewed_on": "2026-11-23",
+    "review_round": "R2",
+    "review_file": "runs/issues/S06/acceptance_s06_r2_20261123.json",
+    "reviewed_commit": "7097827cacc0090a24549f7c61c78148cf0e1696",
+    "manifest_root_digest": "61651e3d43fbb8ee97d80328b02b2a84bdbe1a569c55320144aaf0b4ea982f74",
+    "counts": {
+      "universe": 1054,
+      "s05_quality_pass": 277,
+      "s05_observe": 1,
+      "s05_preserved_watch_pool": 776,
+      "early_stage_watch": 54,
+      "early_stage_buckets": {
+        "EARLY_RD_PROTOTYPE_SAMPLING": 15,
+        "EARLY_PILOT_SMALL_BATCH": 6,
+        "COMMERCIAL_NON_MAINLINE_RESERVE": 11,
+        "EVIDENCED_PRODUCT_STAGE_UNKNOWN": 22
+      },
+      "missing_data_watch": 379,
+      "missing_data_non_mainline": 378,
+      "missing_data_s05_observe": 1,
+      "early_and_missing_intersection": 33,
+      "non_mainline_watch_union": 399,
+      "early_overlap_with_s05_mainline_278": 0,
+      "missing_overlap_with_s05_quality_pass": 0,
+      "s02_metric_cells_recomputed_for_routing": 12648
+    },
+    "allows_next_stage": false,
+    "release_S07": false,
+    "release_S08": false,
+    "issue_53_touched": false
   }
 }

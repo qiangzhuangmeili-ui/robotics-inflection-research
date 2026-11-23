@@ -1,20 +1,20 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 41,
-  "active_issue_key": "S06",
-  "executor": "Antigravity",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
   "started_at": "2026-11-22T23:35:03+08:00",
-  "status": "IN_PROGRESS",
+  "status": "S06_ACCEPTED_WITH_LIMITS_RELEASED",
   "claim_note": "Antigravity 按 runs/issues/S06/release_20261122.json 单卡领取 #41（S06）。领取前在线 active_issue 占用为空（blob c20316d2，main d0d017a8），S02 all_pool_metrics.csv SHA-256 匹配。",
   "last_completed": {
-    "issue_key": "S05",
-    "issue_number": 40,
+    "issue_key": "S06",
+    "issue_number": 41,
     "decision": "ACCEPTED_WITH_LIMITS",
-    "review_file": "runs/issues/S05/acceptance_s05_r1_20261121.json",
+    "review_file": "runs/issues/S06/acceptance_s06_r2_20261123.json",
     "reviewer": "Codex",
-    "reviewed_commit": "4682a1129ac89d39e5038a98864bbec9eb2de367",
-    "manifest_root_digest": "b6485ea7ceda1bd3bb8e927b16a8dbb5059460f5891fbec61aec2e3e4a1ccc85",
-    "coverage": 278
+    "reviewed_commit": "7097827cacc0090a24549f7c61c78148cf0e1696",
+    "manifest_root_digest": "61651e3d43fbb8ee97d80328b02b2a84bdbe1a569c55320144aaf0b4ea982f74",
+    "coverage": 1054
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -23,9 +23,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 41,
-  "next_recommended_issue_key": "S06",
-  "next_recommended_reason": "用户已批准 #41。S01/S02 限范围复用，S05 对照已验收。S06 READY，等待 Antigravity 按最新调度领取。",
+  "next_recommended_issue_number": null,
+  "next_recommended_issue_key": null,
+  "next_recommended_reason": "S06 已验收。S07 未放行（release_S07=false），等新增明确 release 记录后再推荐派工。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -568,7 +568,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-23T00:22:20+08:00",
+  "updated_at": "2026-11-23T10:13:25+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -792,8 +792,8 @@
     "rh06_data_trigger": 38,
     "rh06_pending_companies": 7
   },
-  "released_at": "2026-11-21T13:20:34+08:00",
-  "release_note": "S05 已由 Codex 独立复核为 ACCEPTED_WITH_LIMITS；#40 执行占用已释放。S06/S07/S08 未放行，需新增明确 release 记录后再派工。",
+  "released_at": "2026-11-23T10:13:25+08:00",
+  "release_note": "S06 已由 Codex 独立复核为 ACCEPTED_WITH_LIMITS；#41 执行占用已释放。S07/S08 未放行，需新增明确 release 记录后再派工。",
   "s05_acceptance": {
     "issue_key": "S05",
     "issue_number": 40,
@@ -839,7 +839,7 @@
   "handoff_to_s06": {
     "issue_number": 41,
     "issue_key": "S06",
-    "status": "IN_PROGRESS",
+    "status": "ACCEPTED_WITH_LIMITS",
     "recommended_executor": "Antigravity",
     "claim_receipt": "CONFIRMED",
     "release_file": "runs/issues/S06/release_20261122.json",
@@ -898,7 +898,9 @@
         "review.json"
       ]
     },
-    "environment_note": "本机 git 默认代理 127.0.0.1:7890 未启动，执行 git fetch/push 时临时清代理直连；gh api 正常。"
+    "environment_note": "本机 git 默认代理 127.0.0.1:7890 未启动，执行 git fetch/push 时临时清代理直连；gh api 正常。",
+    "lease_released_at": "2026-11-23T10:13:25+08:00",
+    "lease_release_basis": "runs/issues/S06/acceptance_s06_r2_20261123.json"
   },
   "s06_delivery": {
     "delivered_at": "2026-11-22T23:45:32+08:00",
@@ -951,6 +953,48 @@
     "aux_method_version": "S06_AUX_LEAD_V1",
     "awaiting": "Codex R2 独立复核（干净提交树重放验证与埃夫特 P32/P25/P19 原页绑定）",
     "status_unchanged": "IN_PROGRESS（交付不等于验收；本轮不释放 S07/S08，不改 #53 结论）",
+    "release_S07": false,
+    "release_S08": false,
+    "issue_53_touched": false
+  },
+  "s06_acceptance": {
+    "issue_key": "S06",
+    "issue_number": 41,
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "S06_completed": true,
+    "reviewer": "Codex",
+    "reviewed_on": "2026-11-23",
+    "review_file": "runs/issues/S06/acceptance_s06_r2_20261123.json",
+    "review_round": "R2",
+    "reviewed_commit": "7097827cacc0090a24549f7c61c78148cf0e1696",
+    "manifest_root_digest": "61651e3d43fbb8ee97d80328b02b2a84bdbe1a569c55320144aaf0b4ea982f74",
+    "manifest_sha256": "942f0f2d30be7876bea6f11fdfe016038ff73b3e1dd28b0d2851153e1ea63494",
+    "counts": {
+      "universe": 1054,
+      "s05_quality_pass": 277,
+      "s05_observe": 1,
+      "s05_preserved_watch_pool": 776,
+      "early_stage_watch": 54,
+      "early_stage_buckets": {
+        "EARLY_RD_PROTOTYPE_SAMPLING": 15,
+        "EARLY_PILOT_SMALL_BATCH": 6,
+        "COMMERCIAL_NON_MAINLINE_RESERVE": 11,
+        "EVIDENCED_PRODUCT_STAGE_UNKNOWN": 22
+      },
+      "missing_data_watch": 379,
+      "missing_data_non_mainline": 378,
+      "missing_data_s05_observe": 1,
+      "early_and_missing_intersection": 33,
+      "non_mainline_watch_union": 399,
+      "early_overlap_with_s05_mainline_278": 0,
+      "missing_overlap_with_s05_quality_pass": 0,
+      "s02_metric_cells_recomputed_for_routing": 12648
+    },
+    "limits": [
+      "早期和缺数据观察保留截止日、主体、来源和原采用限制。R2 回读埃夫特原页，其他案例沿用上轮已核证据与采纳范围。",
+      "4 家截止日后隔离、1 家锚定期待重选、15 家质量来源未知、8 项未采用父链及冀东装备观察按上游守卫结转。#53 保持开放。",
+      "合同负债与可信在手订单缺可采用来源时保留 UNKNOWN，合同资产继续单列。S06 观察用于 S07 抽样和补证。"
+    ],
     "release_S07": false,
     "release_S08": false,
     "issue_53_touched": false
