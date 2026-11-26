@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
-  "executor": null,
-  "started_at": "2026-11-22T23:35:03+08:00",
-  "status": "S06_ACCEPTED_WITH_LIMITS_RELEASED",
-  "claim_note": "Antigravity 按 runs/issues/S06/release_20261122.json 单卡领取 #41（S06）。领取前在线 active_issue 占用为空（blob c20316d2，main d0d017a8），S02 all_pool_metrics.csv SHA-256 匹配。",
+  "active_issue_number": 42,
+  "active_issue_key": "S07",
+  "executor": "Antigravity (orchestrator) -> CodeBuddy (executor)",
+  "started_at": "2026-11-26T12:58:00+08:00",
+  "status": "IN_PROGRESS",
+  "claim_note": "用户批准放行 S07 (#42)。Antigravity 登记放行并统筹领取单卡，委派 CodeBuddy 执行小样本抽查与复算，交付后由 Codex (sol 6.2 low; 遇系统性口径争议升档 high) 独立复核。",
   "last_completed": {
     "issue_key": "S06",
     "issue_number": 41,
@@ -23,9 +23,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": null,
-  "next_recommended_issue_key": null,
-  "next_recommended_reason": "S06 已验收。S07 未放行（release_S07=false），等新增明确 release 记录后再推荐派工。",
+  "next_recommended_issue_number": 42,
+  "next_recommended_issue_key": "S07",
+  "next_recommended_reason": "S07 已获用户批准放行并领取执行中；S08 保持锁定待 S07 独立复核验收。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -568,7 +568,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-23T10:13:25+08:00",
+  "updated_at": "2026-11-26T12:58:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -998,5 +998,29 @@
     "release_S07": false,
     "release_S08": false,
     "issue_53_touched": false
+  },
+  "release_S07": true,
+  "s07_release": {
+    "issue_number": 42,
+    "decision": "APPROVED_TO_START_S07_WITH_LIMITS",
+    "approved_by": "USER",
+    "approved_at": "2026-11-26T12:56:47+08:00",
+    "release_file": "runs/issues/S07/release_20261126.json",
+    "release_sha256_lf": "8b56fe6397754d4c34808f568214826ff251234613ac38ce0ec7c44b30a3d206",
+    "handoff_file": "runs/issues/S07/handoff_from_s06_20261126.md",
+    "handoff_sha256_lf": "8e8f207025e11ed19f78d8b1e2cdd24bea028ebce881e58eb7e39beb0a3b3af0",
+    "scope": "Small-sample threshold boundary, missed-screen and missing-data bias audit only."
+  },
+  "s07_claim": {
+    "claimed_at": "2026-11-26T12:58:00+08:00",
+    "issue_number": 42,
+    "issue_key": "S07",
+    "orchestrator": "Antigravity",
+    "executor": "CodeBuddy",
+    "reviewer": "Codex",
+    "reviewer_tier_policy": "sol 6.2 low (escalate to high on systemic discrepancy)",
+    "single_card": true,
+    "online_main_at_claim": "7b7c4b70bfb5b55ca587e84ba6a5c0e5c481231a",
+    "online_active_issue_blob_before_claim": "5ac6293cbebdf2bbe6286dd64345be2c73ad1dc9"
   }
 }

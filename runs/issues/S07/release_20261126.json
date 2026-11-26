@@ -1,0 +1,119 @@
+{
+  "artifact": "S07_SCOPED_RELEASE_AND_HANDOFF",
+  "issue_key": "S07",
+  "issue_number": 42,
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "APPROVED_TO_START_S07_WITH_LIMITS",
+  "release_S07": true,
+  "recorded_at": "2026-11-26T12:58:00+08:00",
+  "approved_by": "USER",
+  "approved_at": "2026-11-26T12:56:47+08:00",
+  "executor_handoff": {
+    "orchestrator": "Antigravity",
+    "recommended_executor": "CodeBuddy",
+    "reviewer": "Codex",
+    "reviewer_tier_policy": "sol 6.2 low for standard independent review; escalate to sol 6.2 high only if systemic口径/rule discrepancy requires arbitration",
+    "status": "IN_PROGRESS",
+    "claim_receipt": "CONFIRMED",
+    "claimed": true,
+    "claimed_at": "2026-11-26T12:58:00+08:00",
+    "handoff_file": "runs/issues/S07/handoff_from_s06_20261126.md"
+  },
+  "input_scope": {
+    "S00": {
+      "authoritative_path": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+      "sha256": "fc312c52ace51feb37593c08cb8077c8a47012a7a239ef639d0fe8b745fe2025",
+      "use": "Authoritative normalized financial base for independent arithmetic recomputation of sampled cases."
+    },
+    "S01": {
+      "issue_number": 36,
+      "review_path": "runs/issues/S01/acceptance_20261029.json",
+      "review_sha256_lf": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058",
+      "rules_v3_path": "runs/issues/S01/screen_rules_v3.json",
+      "rules_v3_sha256_lf": "bf7e68893833b472615f00ab7d14804db4537a9d0936c027a52bc4ef9e26c884",
+      "rules_v4_path": "runs/issues/S01/screen_rules_v4.json",
+      "rules_v4_sha256_lf": "3ab824591ff18f51ea72cbf80f106151d7baeb6782d6e5b03e178d309464307f",
+      "use": "Frozen thresholds, formulas, loss/missing rules, and low-base confirmation rules. Do not modify thresholds."
+    },
+    "S02": {
+      "issue_number": 37,
+      "review_path": "runs/issues/S02/acceptance_20261106/review.json",
+      "review_sha256_lf": "85813450236d4bf2b70238a1f470c25199595110204a69f3fd4e0344a56ea561",
+      "cutoff_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+      "cutoff_contract_sha256_lf": "a18b915ce0db154b070b5064ace6cbe1a9917f7ac14ce8fd557595dedcbabe31",
+      "metrics_path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+      "metrics_sha256_lf": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953",
+      "use": "All-pool 12,648 metric cells and statuses for boundary, missing-data, and recomputation audit."
+    },
+    "S03": {
+      "issue_number": 38,
+      "review_path": "runs/issues/S03/review.json",
+      "review_sha256_lf": "30031862769afa62d69e647dc427ae6339f1f9989cb08602403bda5bbb5518ea",
+      "results_path": "runs/issues/S03/rerun_20261106/l1_screen_results.csv",
+      "results_sha256_lf": "a9b0c6edc0ecc1ab549b41ea5bc2c598889c0977380f7f221832b8e4f68b8f77",
+      "use": "L1 wide-screen partitions (wide_pass=777, wide_defer=149, wide_unknown=128) and cutoff guard audit."
+    },
+    "S04": {
+      "issue_number": 39,
+      "review_path": "runs/issues/S04/codex_ruling_s05_v22_20261120.md",
+      "decision_log_path": "runs/issues/S04/tight_decision_log.csv",
+      "decision_log_sha256_lf": "aac3071ffbe4f0de6514578d4b6ace78640b6014c2a88e602e06c7ce70256366",
+      "use": "L2 tightening decisions, dual-channel qualification, and low-base confirmation boundaries."
+    },
+    "S05": {
+      "issue_number": 40,
+      "review_path": "runs/issues/S05/acceptance_s05_r1_20261121.json",
+      "review_sha256_lf": "aec3f4002335f3ed1a6b3285fe1cb327ce2f8120eb9025f094a0221f316014e0",
+      "quality_pass_path": "runs/issues/S05/quality_pass.csv",
+      "quality_pass_sha256_lf": "9d488f50b86523fd89f1d0dc6d4b0fa010ad2cf3c2d86fc5bfc96d8040b69480",
+      "quality_observe_path": "runs/issues/S05/quality_observe.csv",
+      "quality_observe_sha256_lf": "62253de55980e9c15406d703ac9da6ab420e6d6ac1083dbaf22d17516b7e07eb",
+      "quality_decision_log_path": "runs/issues/S05/quality_decision_log.csv",
+      "quality_decision_log_sha256_lf": "ba6cf6474496eabdf17cfe8f5e2e1c9e2ea10288bcb412ce3d64f2ed9c7591b2",
+      "quality_flags_path": "runs/issues/S05/quality_flags.csv",
+      "quality_flags_sha256_lf": "38addb2c08ebb89ffa1ed56bae82be1120d18f61984a3afc5fd965469998ae77",
+      "observe_pool_776_path": "runs/issues/S05/observe_pool_preserved_776.csv",
+      "observe_pool_776_sha256_lf": "528c451f551d21ca7c3453a49738af6ec7a7217fd04658c5de4c7de6f26574b1",
+      "use": "277 QUALITY_PASS + 1 QUALITY_HOLD (Jidong) + 776 preserved observe pool; RH01-RH06 and out-of-valid-range boundary audit."
+    },
+    "S06": {
+      "issue_number": 41,
+      "review_path": "runs/issues/S06/acceptance_s06_r2_20261123.json",
+      "review_sha256_lf": "58de96ef6d0c0f34ca8e553202222a7233b079b9b1f7853f5ff26a9f1c306e6f",
+      "early_stage_watch_path": "runs/issues/S06/early_stage_watch.csv",
+      "early_stage_watch_sha256_lf": "19ac5224397b7a0a7e34958cfc47a3108bb10c5a78333d2cd57842188c4b57be",
+      "missing_data_watch_path": "runs/issues/S06/missing_data_watch.csv",
+      "missing_data_watch_sha256_lf": "067c2b591f9a82665b1f13ef253b4fa46947a4695de808dc4a26a9c35580ed1e",
+      "watch_reentry_rules_path": "runs/issues/S06/watch_reentry_rules.md",
+      "watch_reentry_rules_sha256_lf": "6912628b5ff0890db8b153207cc37db05bd8d570e215b2fe49eb1763f8eb3a8e",
+      "use": "54 early-stage reserve and 379 missing-data watchlists for missed-screen and missing-data bias audit."
+    }
+  },
+  "knowledge_as_of": "2026-10-25",
+  "audit_scope": "Small-sample rule and arithmetic audit only: freeze deterministic stratified sampling covering near-threshold pass/fail (S03/S04/S05), Beijing Stock Exchange (BJ), loss-making/low-base/undefined-base, missing-data watch (S06), early-stage watch (S06), and reverse-omission checks (known prior-adopted/early-stage companies not in S05 pass). Independently recompute sampled metrics from s00_v10 and diagnose rule/period/base/mode/missing-data biases. Do NOT conduct full-pool re-research, do NOT tune thresholds, and do NOT manually add back companies.",
+  "guards": {
+    "after_cutoff_companies": 4,
+    "anchor_reselection_pending": 1,
+    "quality_source_unknown_companies": 15,
+    "unadopted_parent_members": 8,
+    "jidong_quality_hold": "SZ:000856",
+    "S00_errata_issue_53": "OPEN",
+    "preserve_upstream_inputs": true
+  },
+  "outputs": [
+    "runs/issues/S07/screen_audit_sample.csv",
+    "runs/issues/S07/screen_audit_findings.md",
+    "runs/issues/S07/screen_audit_review.json",
+    "runs/issues/S07/manifest.json",
+    "runs/issues/S07/handoff.md",
+    "runs/issues/S07/review.json"
+  ],
+  "online_base": {
+    "main": "7b7c4b70bfb5b55ca587e84ba6a5c0e5c481231a",
+    "active_issue_blob": "5ac6293cbebdf2bbe6286dd64345be2c73ad1dc9"
+  },
+  "downstream": {
+    "S07_completed": false,
+    "S08_released": false
+  }
+}
