@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "R02_ACCEPTED_WITH_LIMITS_R00_LOCKED",
+  "status": "R00_IN_PROGRESS",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -250,7 +250,15 @@
       "scope_file": "runs/issues/P00/collection_scope.json"
     },
     "legacy_issues": "#2-#9 deferred historical work; new company research after S08/R00",
-    "active_issue": null,
+    "active_issue": {
+      "issue_number": 44,
+      "issue_key": "R00",
+      "child_issues": [
+        57
+      ],
+      "started_at": "2026-11-26T16:00:00+08:00",
+      "executor": "Antigravity + External AI-1/AI-2 + CodeBuddy"
+    },
     "p02_drive_followup": {
       "completed_at": "2026-10-26T06:56:46.362Z",
       "decision": "SELF_CHECK_PASS",
@@ -423,7 +431,7 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "R02_ACCEPTED_WITH_LIMITS_R00_LOCKED",
+    "current_gate": "R00_IN_PROGRESS_BATCH_01",
     "release_S00": false,
     "last_review": {
       "issue_key": "S03",
@@ -662,6 +670,22 @@
         56
       ],
       "scope": "Verify industry-level signals and same-period comparable benchmarks across 3 topics covering 277 frozen R00 mainline companies."
+    },
+    "release_R00": true,
+    "r00_release": {
+      "issue_number": 44,
+      "decision": "APPROVED_TO_START_R00_WITH_LIMITS",
+      "approved_by": "USER",
+      "approved_at": "2026-11-26T15:55:36+08:00",
+      "release_file": "runs/issues/R00/release_20261126.json",
+      "release_sha256_lf": "15e63dee9204b5d93d31b628d897bfbda1a46627aa6c8c30284298db3a466a58",
+      "handoff_file": "runs/issues/R00/handoff_from_s08_r02_20261126.md",
+      "handoff_sha256_lf": "de364677d7b4a3016cd596e75a157b034d596db479fbf8460db1d2b2ef31470e",
+      "codex_sandbox_authorized": "danger-full-access",
+      "child_issues": [
+        57
+      ],
+      "scope": "First fixed 5-company business verification batch R00_BATCH_01 (#57) from S08 frozen TIER_1."
     }
   },
   "pre_issue_breakdown_first_actions": [

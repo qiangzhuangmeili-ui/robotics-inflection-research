@@ -1,0 +1,153 @@
+{
+  "artifact": "R00_SCOPED_RELEASE_AND_HANDOFF",
+  "issue_key": "R00",
+  "issue_number": 44,
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "APPROVED_TO_START_R00_WITH_LIMITS",
+  "release_R00": true,
+  "recorded_at": "2026-11-26T16:00:00+08:00",
+  "approved_by": "USER",
+  "approved_at": "2026-11-26T15:55:36+08:00",
+  "executor_handoff": {
+    "orchestrator": "Antigravity",
+    "executors": {
+      "external_ai_1": {
+        "line": "T02 整机与集成线",
+        "companies": [
+          "SZ:300607",
+          "SZ:002747"
+        ]
+      },
+      "external_ai_2": {
+        "line": "T01 核心零部件线",
+        "companies": [
+          "SZ:002472",
+          "SZ:002979"
+        ]
+      },
+      "codebuddy": {
+        "line": "T01 核心零部件 + 资料摸底 + 汇总建表与自检",
+        "companies": [
+          "BJ:920593"
+        ]
+      }
+    },
+    "reviewer": "Codex",
+    "reviewer_tier_policy": "gpt-6.2-sol low for standard independent review with user-authorized --sandbox danger-full-access for live py clean-worktree replay; escalate to high only if hard business-authenticity dispute arises",
+    "codex_sandbox_authorized": "danger-full-access",
+    "status": "IN_PROGRESS",
+    "claim_receipt": "CONFIRMED",
+    "claimed": true,
+    "claimed_at": "2026-11-26T16:00:00+08:00",
+    "handoff_file": "runs/issues/R00/handoff_from_s08_r02_20261126.md"
+  },
+  "input_scope": {
+    "company_master": "data/company_master.csv",
+    "document_registry": "data/document_registry.csv",
+    "collection_index": "runs/collection/collection_index.csv",
+    "S08_acceptance": "runs/issues/S08/acceptance_s08_20261126.json",
+    "S08_candidates": "runs/issues/S08/business_verification_candidates.csv",
+    "S08_reuse_map": "runs/issues/S08/candidate_reuse_map.csv",
+    "R02_acceptance": "runs/issues/R02/acceptance_r02_20261126.json",
+    "S05_quality_flags": "runs/issues/S05/quality_flags.csv"
+  },
+  "knowledge_as_of": "2026-10-25",
+  "scope": "Execute first fixed 5-company business verification batch R00_BATCH_01 (#57) drawn strictly from S08 frozen TIER_1 mainline candidates: SZ:300607 (拓斯达), SZ:002472 (双环传动), SZ:002979 (雷赛智能), SZ:002747 (埃斯顿), BJ:920593 (鼎智科技). Verify concrete product lines, consolidated entities, actual robotics applications, realized revenue vs prototypes/plans, verbatim short quotes and physical pages from official filings disclosed <= 2026-10-25, plus targeted checks on S05/S08 quality alerts (RH04/RH06/RH02). Legacy assets are reused as leads only and never auto-promoted.",
+  "guards": {
+    "knowledge_as_of": "2026-10-25",
+    "max_companies_per_batch": 5,
+    "fixed_batch_no_substitution": true,
+    "legacy_auto_promoted": false,
+    "unknown_or_hold_on_gap": true,
+    "company_total_revenue_neq_robot_revenue": true,
+    "no_cross_period_merge_h1_vs_9m": true,
+    "S00_errata_issue_53": "OPEN",
+    "R01_released": false,
+    "R03_released": false,
+    "preserve_upstream_inputs": true
+  },
+  "outputs": [
+    "runs/issues/R00/business_batch_dispatch.csv",
+    "runs/issues/R00/business_review_register.csv",
+    "runs/issues/R00/child_issue_manifest.json",
+    "runs/issues/R00/manifest.json",
+    "runs/issues/R00/handoff.md",
+    "runs/issues/R00/review.json"
+  ],
+  "online_base": {
+    "main": "cd41087d5b695f2123d351b58b795ae759b81131",
+    "active_issue_blob": "aa4b84969a9306355404f212e12f4d593f3160ff"
+  },
+  "downstream": {
+    "R00_completed": false,
+    "R01_released": false,
+    "R03_released": false
+  },
+  "child_issues": [
+    {
+      "batch_id": "R00_BATCH_01",
+      "issue_number": 57,
+      "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/57",
+      "title": "R00_BATCH_01｜后期业务核验第01批：固定5家TIER_1核心公司",
+      "companies": [
+        {
+          "security_id": "SZ:300607",
+          "stock_name": "拓斯达",
+          "topic": "R02_T02",
+          "anchor_period": "20260630",
+          "s05_triggers": [],
+          "s05_pending": [],
+          "assigned_to": "external_ai_1"
+        },
+        {
+          "security_id": "SZ:002472",
+          "stock_name": "双环传动",
+          "topic": "R02_T01",
+          "anchor_period": "20260630",
+          "s05_triggers": [],
+          "s05_pending": [
+            "RH02"
+          ],
+          "assigned_to": "external_ai_2"
+        },
+        {
+          "security_id": "SZ:002979",
+          "stock_name": "雷赛智能",
+          "topic": "R02_T01",
+          "anchor_period": "20260930",
+          "s05_triggers": [
+            "RH04"
+          ],
+          "s05_pending": [
+            "RH02"
+          ],
+          "assigned_to": "external_ai_2"
+        },
+        {
+          "security_id": "SZ:002747",
+          "stock_name": "埃斯顿",
+          "topic": "R02_T02",
+          "anchor_period": "20260630",
+          "s05_triggers": [
+            "RH04",
+            "RH06"
+          ],
+          "s05_pending": [],
+          "assigned_to": "external_ai_1"
+        },
+        {
+          "security_id": "BJ:920593",
+          "stock_name": "鼎智科技",
+          "topic": "R02_T01",
+          "anchor_period": "20260630",
+          "s05_triggers": [],
+          "s05_pending": [
+            "RH02"
+          ],
+          "assigned_to": "codebuddy"
+        }
+      ],
+      "company_count": 5
+    }
+  ]
+}

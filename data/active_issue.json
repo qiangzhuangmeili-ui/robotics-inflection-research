@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
-  "executor": null,
-  "started_at": "2026-11-26T14:55:00+08:00",
-  "status": "R02_ACCEPTED_WITH_LIMITS_RELEASED",
-  "claim_note": "用户批准放行 R02 (#46) 并授权独立复核方 Codex 开启 --sandbox danger-full-access。Antigravity 统筹领取单卡并已建 3 个主题子 issue (#54/#55/#56)，委派 CodeBuddy 执行行业信号核验与同口径比较，交付后由 Codex (gpt-6.2-sol low) 实跑干净树重放独立复核。",
+  "active_issue_number": 44,
+  "active_issue_key": "R00",
+  "executor": "Antigravity (orchestrator) + External AI-1/AI-2 + CodeBuddy (inventory/BJ:920593/aggregation)",
+  "started_at": "2026-11-26T16:00:00+08:00",
+  "status": "IN_PROGRESS",
+  "claim_note": "用户正式批准放行 R00 (#44) 与首批固定 5 家名单 R00_BATCH_01 (#57)，继续授权 Codex 开启 --sandbox danger-full-access（默认 gpt-6.2-sol low，硬争议升 high）。Antigravity 统筹领取单卡，采用三线并行（外部 AI-1 负责拓斯达+埃斯顿，外部 AI-2 负责双环传动+雷赛智能，本机 CodeBuddy 负责资料摸底+鼎智科技+汇总建表与自检）。",
   "last_completed": {
     "issue_key": "R02",
     "issue_number": 46,
@@ -576,7 +576,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-26T15:21:00+08:00",
+  "updated_at": "2026-11-26T16:00:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -1183,5 +1183,26 @@
     "signal_rows": 201,
     "coverage": 1054,
     "r00_mainline_covered": 277
+  },
+  "r00_claim": {
+    "claimed_at": "2026-11-26T16:00:00+08:00",
+    "issue_number": 44,
+    "issue_key": "R00",
+    "child_issues": [
+      57
+    ],
+    "batch_id": "R00_BATCH_01",
+    "fixed_companies": [
+      "SZ:300607",
+      "SZ:002472",
+      "SZ:002979",
+      "SZ:002747",
+      "BJ:920593"
+    ],
+    "release_file": "runs/issues/R00/release_20261126.json",
+    "release_sha256_lf": "15e63dee9204b5d93d31b628d897bfbda1a46627aa6c8c30284298db3a466a58",
+    "handoff_file": "runs/issues/R00/handoff_from_s08_r02_20261126.md",
+    "handoff_sha256_lf": "de364677d7b4a3016cd596e75a157b034d596db479fbf8460db1d2b2ef31470e",
+    "codex_sandbox_authorized": "danger-full-access"
   }
 }
