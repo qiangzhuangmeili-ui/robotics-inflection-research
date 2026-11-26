@@ -1,0 +1,79 @@
+{
+  "artifact": "R01_SCOPED_RELEASE_AND_HANDOFF",
+  "issue_key": "R01",
+  "issue_number": 45,
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "APPROVED_TO_START_R01_WITH_LIMITS",
+  "release_R01": true,
+  "recorded_at": "2026-11-26T22:48:00+08:00",
+  "approved_by": "USER",
+  "approved_at": "2026-11-26T22:45:54+08:00",
+  "executor_handoff": {
+    "orchestrator": "Antigravity",
+    "executor": "CodeBuddy",
+    "reviewer": "Codex",
+    "reviewer_tier_policy": "gpt-6.2-sol low for standard independent review with user-authorized --sandbox danger-full-access; escalate to high only on hard attribution conflict",
+    "codex_sandbox_authorized": "danger-full-access",
+    "status": "IN_PROGRESS",
+    "claim_receipt": "CONFIRMED",
+    "claimed": true,
+    "claimed_at": "2026-11-26T22:48:00+08:00",
+    "handoff_file": "runs/issues/R01/handoff_from_r00_20261126.md"
+  },
+  "knowledge_as_of": "2026-10-25",
+  "methodology_ref": "METHOD_20261107_LEADING_INDICATORS",
+  "upstream_acceptance": {
+    "R00": "runs/issues/R00/acceptance_r00_batch01_02_20261126.json",
+    "S08": "runs/issues/S08/acceptance_s08_20261126.json",
+    "R02": "runs/issues/R02/acceptance_r02_20261126.json"
+  },
+  "child_issues": [
+    {
+      "batch_id": "R01_BATCH_01",
+      "issue_number": 59,
+      "r00_child_issue_number": 57,
+      "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/59",
+      "companies": [
+        "SZ:300607",
+        "SZ:002472",
+        "SZ:002979",
+        "SZ:002747",
+        "BJ:920593"
+      ]
+    },
+    {
+      "batch_id": "R01_BATCH_02",
+      "issue_number": 60,
+      "r00_child_issue_number": 58,
+      "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/60",
+      "companies": [
+        "BJ:920510",
+        "BJ:920491",
+        "SH:688003",
+        "SZ:002698",
+        "BJ:920578"
+      ]
+    }
+  ],
+  "guards": {
+    "knowledge_as_of": "2026-10-25",
+    "max_companies_per_batch": 5,
+    "no_cross_period_merge_h1_vs_9m": true,
+    "company_total_or_mixed_neq_pure_robot": true,
+    "unknown_preserved_no_backcalc_from_orders": true,
+    "S00_errata_issue_53": "OPEN",
+    "R03_released": false,
+    "R04_started": false,
+    "preserve_upstream_inputs": true
+  },
+  "outputs": [
+    "runs/issues/R01/financial_attribution_dispatch.csv",
+    "runs/issues/R01/robot_revenue_scope.csv",
+    "runs/issues/R01/attribution_review.json",
+    "runs/issues/R01/manifest.json",
+    "runs/issues/R01/handoff.md",
+    "runs/issues/R01/review.json",
+    "runs/issues/R01/step_r01_build.py",
+    "runs/issues/R01/step_r01_verify.py"
+  ]
+}

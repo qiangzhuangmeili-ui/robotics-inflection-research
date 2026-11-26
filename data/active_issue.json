@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
-  "executor": null,
-  "started_at": "2026-11-26T16:00:00+08:00",
-  "status": "R00_BATCH01_02_ACCEPTED_WITH_LIMITS_RELEASED",
-  "claim_note": "用户正式批准放行 R00 (#44) 与首批固定 5 家名单 R00_BATCH_01 (#57)，继续授权 Codex 开启 --sandbox danger-full-access（默认 gpt-6.2-sol low，硬争议升 high）。Antigravity 统筹领取单卡，采用三线并行（外部 AI-1 负责拓斯达+埃斯顿，外部 AI-2 负责双环传动+雷赛智能，本机 CodeBuddy 负责资料摸底+鼎智科技+汇总建表与自检）。",
+  "active_issue_number": 45,
+  "active_issue_key": "R01",
+  "executor": "Antigravity (orchestrator) + CodeBuddy (execution)",
+  "started_at": "2026-11-26T22:48:00+08:00",
+  "status": "IN_PROGRESS",
+  "claim_note": "用户批准方案 A，放行 #45 R01（覆盖 R00 已验收的 10 家 TIER_1 核心公司，分设 #59 R01_BATCH_01 与 #60 R01_BATCH_02 两个 5 家子卡）。Antigravity 统筹领取单卡并委派 CodeBuddy 执行财务归因与收入范围核验，完成后交 Codex (gpt-6.2-sol low, danger-full-access) 干净树独立复核。",
   "last_completed": {
     "issue_key": "R00",
     "issue_number": 44,
@@ -579,7 +579,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-26T22:42:00+08:00",
+  "updated_at": "2026-11-26T22:48:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -1207,5 +1207,18 @@
     "handoff_file": "runs/issues/R00/handoff_from_s08_r02_20261126.md",
     "handoff_sha256_lf": "de364677d7b4a3016cd596e75a157b034d596db479fbf8460db1d2b2ef31470e",
     "codex_sandbox_authorized": "danger-full-access"
+  },
+  "r01_claim": {
+    "claimed_at": "2026-11-26T22:48:00+08:00",
+    "issue_number": 45,
+    "issue_key": "R01",
+    "child_issues": [
+      59,
+      60
+    ],
+    "release_file": "runs/issues/R01/release_20261126.json",
+    "release_sha256_lf": "49eebba0f1cb5d5482e89e6296015c2b45cc2247cb62d7bb286a4e12061e2247",
+    "handoff_file": "runs/issues/R01/handoff_from_r00_20261126.md",
+    "handoff_sha256_lf": "8c850bc78be51a0721b845527a1ca0fc4ca26d722903b2454c155ff81119e29a"
   }
 }
