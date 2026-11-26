@@ -1,21 +1,28 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 46,
-  "active_issue_key": "R02",
-  "executor": "Antigravity (orchestrator) -> CodeBuddy (executor) / Codex (reviewer)",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
   "started_at": "2026-11-26T14:55:00+08:00",
-  "status": "IN_PROGRESS",
+  "status": "R02_ACCEPTED_WITH_LIMITS_RELEASED",
   "claim_note": "用户批准放行 R02 (#46) 并授权独立复核方 Codex 开启 --sandbox danger-full-access。Antigravity 统筹领取单卡并已建 3 个主题子 issue (#54/#55/#56)，委派 CodeBuddy 执行行业信号核验与同口径比较，交付后由 Codex (gpt-6.2-sol low) 实跑干净树重放独立复核。",
   "last_completed": {
-    "issue_key": "S08",
-    "issue_number": 43,
+    "issue_key": "R02",
+    "issue_number": 46,
+    "child_issues": [
+      54,
+      55,
+      56
+    ],
     "decision": "ACCEPTED_WITH_LIMITS",
-    "review_file": "runs/issues/S08/acceptance_s08_20261126.json",
+    "review_file": "runs/issues/R02/acceptance_r02_20261126.json",
     "reviewer": "Codex (gpt-6.2-sol low, danger-full-access)",
-    "reviewed_commit": "96ba00f5052a62bd34301ba5919463539b066dc2",
-    "manifest_root_digest": "a9efa92d97a9d45070b0e84f5ee074581b869774a3f19e6b49e76581b0b4ad4e",
+    "reviewed_commit": "da87e6446c4db75e93b4ee1350feea5ab45b6a72",
+    "manifest_root_digest": "05653f172d0a14c05d44222f925fdc98bfd13a0cd266bc6149d1fb34f4c1857e",
+    "nbs_pages": 9,
+    "signal_rows": 201,
     "coverage": 1054,
-    "r00_mainline_frozen": 277
+    "r00_mainline_covered": 277
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -24,9 +31,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 46,
-  "next_recommended_issue_key": "R02",
-  "next_recommended_reason": "R02 (#46) 已获用户批准放行并单卡领取执行中；R00 (#44) 保持锁定待用户另行批准。",
+  "next_recommended_issue_number": 44,
+  "next_recommended_issue_key": "R00",
+  "next_recommended_reason": "S08 与 R02 均已独立验收。建议用户批准放行 R00 (#44) 并开启首批 5 家 TIER_1 核心公司小包（聚焦 R02 景气最强的工业机器人本体与核心零部件主线）。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -569,7 +576,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-26T14:55:00+08:00",
+  "updated_at": "2026-11-26T15:21:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -793,8 +800,8 @@
     "rh06_data_trigger": 38,
     "rh06_pending_companies": 7
   },
-  "released_at": "2026-11-26T14:26:00+08:00",
-  "release_note": "S08 已由 Codex 实跑干净树重放与独立对账验收为 ACCEPTED_WITH_LIMITS；指标筛选阶段（S00-S08）全线收官，#43 执行占用已释放。R00/R02 保持锁定，待用户批准并新增明确 release 记录后再派工。",
+  "released_at": "2026-11-26T15:21:00+08:00",
+  "release_note": "R02 (#46) 及 3 个主题子卡 (#54/#55/#56) 已由 Codex (gpt-6.2-sol low, danger-full-access) 在 R1 干净 worktree 重放验收为 ACCEPTED_WITH_LIMITS；#46 执行占用已释放。R00 (#44) 保持锁定，待用户批准首批 5 家公司小包后放行。",
   "s05_acceptance": {
     "issue_key": "S05",
     "issue_number": 40,
@@ -1158,5 +1165,23 @@
       56
     ],
     "scope": "Verify industry-level signals and same-period comparable benchmarks across 3 topics covering 277 frozen R00 mainline companies."
+  },
+  "r02_acceptance": {
+    "issue_key": "R02",
+    "issue_number": 46,
+    "child_issues": [
+      54,
+      55,
+      56
+    ],
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "review_file": "runs/issues/R02/acceptance_r02_20261126.json",
+    "reviewer": "Codex (gpt-6.2-sol low, danger-full-access)",
+    "reviewed_commit": "da87e6446c4db75e93b4ee1350feea5ab45b6a72",
+    "manifest_root_digest": "05653f172d0a14c05d44222f925fdc98bfd13a0cd266bc6149d1fb34f4c1857e",
+    "nbs_pages": 9,
+    "signal_rows": 201,
+    "coverage": 1054,
+    "r00_mainline_covered": 277
   }
 }
