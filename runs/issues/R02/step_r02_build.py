@@ -154,6 +154,17 @@ def fmt_nbs(v, unit=None):
     return s
 
 
+def fmt_yoy(v):
+    """同比百分比按国家统计局公布精度（1 位小数）输出。
+
+    与 fmt_nbs 的区别：yoy_pct 恒为百分比，不继承指标主体单位；
+    产量单位为“套”时只对产量值取整，同比必须保留公布小数（如 29.1、-17.8）。
+    """
+    if v is None:
+        return "UNKNOWN"
+    return "%.1f" % v
+
+
 def fmt_stat(v):
     if v is None:
         return "UNKNOWN"
@@ -274,7 +285,7 @@ def layer1_rows():
                 "base_period_key": m["base_period_key"],
                 "value": fmt_nbs(m["value"], m["unit"]),
                 "unit": m["unit"],
-                "yoy_pct": fmt_nbs(m["yoy_pct"], m["unit"]),
+                "yoy_pct": fmt_yoy(m["yoy_pct"]),
                 "mom_change_pp": fmt_nbs(m["mom_change_pp"], "pp"),
                 "sample_scope": m["sample_scope"],
                 "valid_paired_count": "",

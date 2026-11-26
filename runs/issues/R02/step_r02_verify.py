@@ -207,6 +207,13 @@ def fmt_unit(v, unit):
     return ("%.6f" % v).rstrip("0").rstrip(".")
 
 
+def fmt_yoy_pct(v):
+    """独立实现：同比百分比按公布精度（1 位小数）比对，不继承指标单位。"""
+    if v is None:
+        return "UNKNOWN"
+    return "%.1f" % v
+
+
 def tracked(root: Path, rel: str):
     try:
         p = subprocess.run(["git", "ls-files", "--error-unmatch", rel], cwd=str(root),
@@ -266,14 +273,27 @@ def run_checks(ctx: Ctx):
     missing = sorted(k for k in snap_rows if k not in csv_keys)
     extra = sorted(k for k in csv_keys if k not in snap_rows)
     val_bad = []
+    yoy_bad = []
     for r in l1:
         key = (r["metric_id"], r["period_key"])
         if key not in snap_rows:
             continue
         d, m = snap_rows[key]
         exp_mom = "%.1f" % m["mom_change_pp"] if m["mom_change_pp"] is not None else "UNKNOWN"
+        # 同比直接比对快照原值：按公布精度（1 位小数）字符串比对 + 数值等值校验，
+        # 不复用构建器对“套”单位取整的逻辑。
+        exp_yoy = fmt_yoy_pct(m["yoy_pct"])
+        yoy_num_bad = False
+        if m["yoy_pct"] is not None:
+            try:
+                yoy_num_bad = abs(float(r["yoy_pct"]) - float(m["yoy_pct"])) > 1e-9
+            except (TypeError, ValueError):
+                yoy_num_bad = True
+        if r["yoy_pct"] != exp_yoy or yoy_num_bad:
+            yoy_bad.append(r["signal_id"])
         if (r["value"] != fmt_unit(m["value"], m["unit"])
-                or r["yoy_pct"] != fmt_unit(m["yoy_pct"], m["unit"])
+                or r["yoy_pct"] != exp_yoy
+                or yoy_num_bad
                 or r["mom_change_pp"] != exp_mom
                 or r["disclosure_date"] != d
                 or r["unit"] != m["unit"]):
@@ -281,8 +301,9 @@ def run_checks(ctx: Ctx):
     add("V03", "LAYER_1 披露日/FACT/期数/原值/单位与快照一一对应",
         not late and not notfact and (not per_metric or min(per_metric.values()) >= 2)
         and not missing and not extra and not val_bad,
-        "rows=%d metrics=%d late=%d notfact=%d missing=%d extra=%d val_bad=%d" % (
-            len(l1), len(per_metric), len(late), len(notfact), len(missing), len(extra), len(val_bad)))
+        "rows=%d metrics=%d late=%d notfact=%d missing=%d extra=%d val_bad=%d yoy_bad=%d" % (
+            len(l1), len(per_metric), len(late), len(notfact), len(missing), len(extra),
+            len(val_bad), len(yoy_bad)))
 
     # V04 LAYER_2 独立重算
     diffs = []
