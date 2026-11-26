@@ -1,0 +1,114 @@
+{
+  "artifact": "R02_DELIVERY_MANIFEST",
+  "issue_key": "R02",
+  "issue_number": 46,
+  "plan_version": "20261026_collection_first_v2",
+  "knowledge_as_of": "2026-10-25",
+  "executor": "CodeBuddy",
+  "orchestrator": "Antigravity",
+  "review_nature": "SELF_CHECK",
+  "generated_at": "2026-11-26T15:00:00+08:00",
+  "input_hash_basis": "CANONICAL_LF_BYTES",
+  "input_hash_basis_note": "文本输入按 CRLF->LF 规范化后计算字节数与 SHA-256。",
+  "deliverable_hash_basis": "EXACT_BYTES_LF",
+  "root_digest_basis": "按交付物 path 排序后以 'path:sha256' 以 \\n 连接再取 SHA-256；不含 review.json 与 manifest.json 自身以避免循环依赖。",
+  "replay_note": "离线运行 step_r02_build.py 与 step_r02_verify.py；R02_FIXED_NOW 固定时间戳。nbs_official_sources_snapshot.json 为一次性联网采集后的固化快照，复现时不再联网。",
+  "manifest_root_digest": "d9f50212cd5cd662e7589984f2ef032752bd93ec789d5d44bdb8ccd1ac15f597",
+  "input_count": 11,
+  "deliverable_count": 7,
+  "inputs": [
+    {
+      "path": "runs/issues/R02/release_20261126.json",
+      "bytes": 4933,
+      "sha256": "9cd9896314140e31bedeb83343f514efade91cfd1041c653b16a5185280f7ece"
+    },
+    {
+      "path": "runs/issues/R02/handoff_from_s08_20261126.md",
+      "bytes": 3800,
+      "sha256": "511ef24b450b02a34c88e9810e9dee7515f8bd24f50da9f4554599d5c2a54b73"
+    },
+    {
+      "path": "runs/issues/R02/nbs_official_sources_snapshot.json",
+      "bytes": 93497,
+      "sha256": "e92d16f45da33ccf7f5b0e30644451cba733537df2496c74cdda29210764deef"
+    },
+    {
+      "path": "data/company_master.csv",
+      "bytes": 705999,
+      "sha256": "6596f05fbc4f65e2f66ec26edd9726e4049854d697feab968c8b1360e40560fe"
+    },
+    {
+      "path": "data/group_summary.csv",
+      "bytes": 1056,
+      "sha256": "ef0dd6c44fa3885436bfff6e48ad17126a344c6fb8a8a152e6e6b984e95684b9"
+    },
+    {
+      "path": "runs/issues/S08/acceptance_s08_20261126.json",
+      "bytes": 3615,
+      "sha256": "c3ce9eb9821005802b23e8e8a555e81961770004ce47b46c6b7a2742cd453f73"
+    },
+    {
+      "path": "runs/issues/S08/business_verification_candidates.csv",
+      "bytes": 434102,
+      "sha256": "01db73477ce9b6815aef440610db72114333f0784d92fb379d53ad429da500f7"
+    },
+    {
+      "path": "runs/issues/S08/screen_acceptance.json",
+      "bytes": 16785,
+      "sha256": "154cd33605cb096b9ce1ba7e30897606c15987556d007dfab1ae157ec422f119"
+    },
+    {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+      "bytes": 4346250,
+      "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953"
+    },
+    {
+      "path": "runs/issues/S05/quality_flags.csv",
+      "bytes": 324254,
+      "sha256": "38addb2c08ebb89ffa1ed56bae82be1120d18f61984a3afc5fd965469998ae77"
+    },
+    {
+      "path": "runs/issues/S05/quality_decision_log.csv",
+      "bytes": 189331,
+      "sha256": "ba6cf6474496eabdf17cfe8f5e2e1c9e2ea10288bcb412ce3d64f2ed9c7591b2"
+    }
+  ],
+  "deliverables": [
+    {
+      "path": "runs/issues/R02/industry_topic_dispatch.csv",
+      "bytes": 4062,
+      "sha256": "3c266a2dfc97a1a45e2e31208d7382ae4807b9dd62c637a301db300795b6fb37"
+    },
+    {
+      "path": "runs/issues/R02/industry_signals.csv",
+      "bytes": 131254,
+      "sha256": "b0f57f30938d6abc85dddcf76836d37655231b13e9d25cf8514007606d12f22b"
+    },
+    {
+      "path": "runs/issues/R02/industry_limits.md",
+      "bytes": 6006,
+      "sha256": "7fb449dd63be50a2ba8f37db0e53cda4b79c30d800fd9e3de150aca5bf9e5e62"
+    },
+    {
+      "path": "runs/issues/R02/handoff.md",
+      "bytes": 6262,
+      "sha256": "f966c02c9fd9962077f9cab3b3718d8e981a491a7d2073922a44e9c900885d21"
+    },
+    {
+      "path": "runs/issues/R02/step_r02_build.py",
+      "bytes": 47633,
+      "sha256": "c7327874707b953f9b6d07c48d2977c05d71cbda23e4dcce1a5d57fe9b290483"
+    },
+    {
+      "path": "runs/issues/R02/step_r02_verify.py",
+      "bytes": 22403,
+      "sha256": "3245263422162bf7740ffd4a6b5b633f3f70aa83e87c74216655e3d3de1214eb"
+    },
+    {
+      "path": "runs/issues/R02/collect_nbs_snapshot.py",
+      "bytes": 18189,
+      "sha256": "b57ee26c0fba9378be55caee3b043a02c3b8bdd3580ac042103a2a97803c0fbb"
+    }
+  ],
+  "anomaly_count": 0
+}
