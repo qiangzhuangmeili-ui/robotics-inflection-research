@@ -39,6 +39,7 @@ FORBIDDEN_PHRASES = [
     "参股灵博12%",
     "均为参股不并表",
     "思哲睿/灵博（权益法）",
+    "上限近似",
 ]
 
 # Structured attribution & revenue scope facts strictly traced to R00 accepted evidence (knowledge_as_of=2026-10-25).
@@ -61,7 +62,7 @@ COMPANY_ATTRIBUTION = {
         "margin_attribution": "合并毛利率同比改善(M04=+1.68pp)，得益于低毛利智能能源收缩；但工业机器人及自动化应用系统板块自身毛利率同比下降10.46pp至30.75%，反映集成项目占比提高",
         "recurring_profit_attribution": "2026H1利润改善由主营规模增长、低毛利能源业务收缩及应收回款改善带来信用减值减少共同驱动，无RH06低基数/非经常性预警",
         "cash_flow_attribution": "2026H1经营现金流净额146.92M，经营现金流/归母净利M08=1.4087(正常，RH04未触发)，回款与利润匹配度良好",
-        "contract_liabilities": "项目制模式下合同资产占比同比显著下降(M12=-23.94pp)，RH02按项目制豁免；合同负债变化需结合自动化系统交付验收节奏跟踪",
+        "contract_liabilities": "UNKNOWN（本轮R00已核页未单列拓斯达2026H1合并合同负债余额及同比变化，按METHOD_20261107保留UNKNOWN不填0；合同资产占比M12=-23.94pp见S05质量指标）",
         "backlog_orders": "2026H1披露工业机器人签单约6,800台、出货约5,500台（工业机器人整体台数口径，非人形机器人小拓订单，不可折算金额）；人形小拓仅处客户场景小批量验证",
         "cip_robot_capacity": "UNKNOWN（本轮R00已核页未单列在建工程机器人产能明细，留R03专项核查）",
         "attribution_verdict": "CORE_ROBOT_DRIVER_WITH_MIXED_SCOPE",
@@ -86,7 +87,7 @@ COMPANY_ATTRIBUTION = {
         "margin_attribution": "合并毛利率微降(M04=-0.29pp，RH05未触发)；“减速器及其他”自算毛利率由FY2025的38.47%升至2026H1的47.47%，但因含非机器人项且环动单体未披露，纯RV盈利能力留待核",
         "recurring_profit_attribution": "主业盈利稳健，无RH06触发；但环动科技单体净利润未披露，机器人板块对合并扣非净利的实际贡献比例UNKNOWN",
         "cash_flow_attribution": "2026H1经营现金流净额1,111.59M(+13.38%)，M08=1.8948(优异，RH04未触发)，整体造血能力强",
-        "contract_liabilities": "合同资产连续两期报表空白(REPORTED_BLANK，RH02待核)；存货2,413.44M(+8.43%)，周转天数由117.3天微升至125.8天，幅度温和",
+        "contract_liabilities": "UNKNOWN（本轮R00已核页未单列双环传动2026H1合并合同负债余额及同比变化，按METHOD_20261107保留UNKNOWN不填0；合同资产空白与存货2,413.44M见S05质量指标）",
         "backlog_orders": "UNKNOWN（2025年报与2026半年报未披露机器人减速器在手订单金额或台数，不填0）",
         "cip_robot_capacity": "UNKNOWN（环动科技分拆募投及在建工程产能对应需待分拆招股/问询回复核查）",
         "attribution_verdict": "MIXED_OR_UNQUANTIFIED_DRIVER",
@@ -111,7 +112,7 @@ COMPANY_ATTRIBUTION = {
         "margin_attribution": "9M合并毛利率同比微升(M04=+0.13pp，RH05未触发)；2026H1伺服系统类毛利率28.97%(+1.34pp)，低于步进(43.85%)和控制技术(63.80%)",
         "recurring_profit_attribution": "2026Q1-Q3归母净利299.18M(+86.80%)、Q3单季105.56M(+156.10%)，盈利弹性强且未触发RH06；但机器人子公司独立盈利未直接披露（上海雷赛机器人按少数股东损益推算H1净利约1,195万，非原文直列）",
         "cash_flow_attribution": "RH04显著触发：9M经营现金流转负至-51.53M(M08=-0.1722)，Q3单季-94.89M；主因收现增速(+19.46%)远慢于收入(+46.77%)、策略性备货付现大增(+66.46%)及减少票据贴现（票据+款项融资增2.81亿、存货增2.07亿）",
-        "contract_liabilities": "合同资产空白(REPORTED_BLANK，RH02待核)；存货623.67M(较年初+49.75%，三季报p2变动率列33.22%存复算差异，仅采绝对额)",
+        "contract_liabilities": "UNKNOWN（本轮R00已核页未单列雷赛智能2026Q3合并合同负债余额及同比变化，按METHOD_20261107保留UNKNOWN不填0；合同资产空白与存货623.67M见S05质量指标）",
         "backlog_orders": "2026H1披露无框力矩电机在手订单超100万台（单位数口径，未折金额，严禁换算收入）；关节模组与灵巧手获近百家主流机器人客户订单",
         "cip_robot_capacity": "2026H1披露正在建设年产300万台无框力矩电机自动化产能（产能建设不等于已实现收入，在建工程明细未单列金额，留R03跟踪转固与产能利用率）",
         "attribution_verdict": "CORE_ROBOT_DRIVER_WITH_MIXED_SCOPE",
@@ -186,7 +187,7 @@ COMPANY_ATTRIBUTION = {
         "margin_attribution": "2026H1合并毛利率29.65%(M04=+2.59pp)，主要由加工收入毛利率大升(+15.28pp至42.65%)拉动，产品收入毛利率反降0.65pp至25.01%",
         "recurring_profit_attribution": "2025全年亏损(-15.55M)，2026H1扭亏至3.50M（上年同期-1.50M，低基数扭亏），盈利基础仍偏薄",
         "cash_flow_attribution": "2026H1经营现金流20.38M(M08=5.8301，RH04未触发)，但同比-21.78%；另因收购唯实深蓝预付并购款8,040万并新增并购贷5,624万",
-        "contract_liabilities": "合同资产连续两期空白(REPORTED_BLANK，RH02待核)；存货63.09M(+10.53%)，周转天数115.8天较FY2025加快",
+        "contract_liabilities": "UNKNOWN（本轮R00已核页未单列丰光精密2026H1合并合同负债余额及同比变化，按METHOD_20261107保留UNKNOWN不填0；合同资产空白与存货63.09M见S05质量指标）",
         "backlog_orders": "UNKNOWN（未披露谐波减速器量化在手订单金额或台数，不填0）",
         "cip_robot_capacity": "UNKNOWN（具备03-32型谐波量产能力，但未单列在建工程对应谐波产能投入金额）",
         "attribution_verdict": "NON_ROBOT_OR_QUALITY_CAVEAT",
@@ -211,7 +212,7 @@ COMPANY_ATTRIBUTION = {
         "margin_attribution": "RH05触发：2026H1综合毛利率降2.53pp至32.89%(M04=-2.54pp)，传感器毛利率降2.43pp至34.84%，系服务机器人供应链降价压力、贵金属涨价与汇兑损失共同所致",
         "recurring_profit_attribution": "2026H1净利润29.05M(-42.44%)，营收微降叠加毛利承压与参股公司亏损(-277万权益法投资损失)放大净利降幅",
         "cash_flow_attribution": "2026H1经营现金流47.89M(+7.71%)，M08=1.6484(正常，RH04未触发)，回款纪律保持稳健",
-        "contract_liabilities": "合同资产连续两期空白(REPORTED_BLANK，RH02待核)；存货85.24M(+7.07%)，周转天数69.6天无积压",
+        "contract_liabilities": "UNKNOWN（本轮R00已核页未单列奥迪威2026H1合并合同负债余额及同比变化，按METHOD_20261107保留UNKNOWN不填0；合同资产空白与存货85.24M见S05质量指标）",
         "backlog_orders": "UNKNOWN（未披露量化在手订单金额，不填0）",
         "cip_robot_capacity": "UNKNOWN（电子皮肤主体奥感微不并表，母体未单列人形/工业机器人传感器在建产能）",
         "attribution_verdict": "NON_ROBOT_OR_QUALITY_CAVEAT",
@@ -236,8 +237,8 @@ COMPANY_ATTRIBUTION = {
         "margin_attribution": "9M合并毛利率微升(M04=+0.27pp，RH05未触发)；但具身智能方案FY2025毛利率仅21.03%(-8.54pp)，2026H1未披露该分部毛利率（天准星智H1净利率约4.1%），盈利能力偏薄",
         "recurring_profit_attribution": "RH06触发：9M归母净利66.46M中扣非仅21.47M(占32.31%)，非经常性损益44.98M(占67.69%，含金融资产公允价值变动+51.32M)；Q3单季归母亏32.03M主因金融资产公允价值变动-44.89M（期间费用增长亦被原文提及），Q3扣非仍为正+11.13M",
         "cash_flow_attribution": "9M合并经营现金流96.99M(+209.89%，M08=1.4594，RH04未触发)；但须注意核心具身子公司天准星智2026H1单体经营现金流为-105.29M，具身业务资金占用高",
-        "contract_liabilities": "RH02触发：9M末存货飙升至2,083.13M(较年初+75.01%，M11=+37.36天，三季报未说明增幅原因)，合同资产73.25M(+40.03%，质保金性质)；公司自认2023-2025存货周转率1.02处于低位",
-        "backlog_orders": "2026H1披露集团新签订单21.04亿(+62.20%)、期末在手订单23.75亿(+49.61%)；其中具身大脑新签315.24M(+229.74%)，订单数据明确但未拆分人形 vs 商用车占比",
+        "contract_liabilities": "UNKNOWN（本轮R00已核页未单列天准科技2026Q3合并合同负债余额及同比变化，按METHOD_20261107保留UNKNOWN不填0；9M存货2,083.13M/+75.01%与合同资产73.25M见S05 RH02质量指标）",
+        "backlog_orders": "2026H1（2026-06-30，半年报p14）披露集团新签订单21.04亿(+62.20%)、期末在手订单23.75亿(+49.61%)；同页“具身大脑方案业务增长”段并列提及无人物流车域控制器与人形机器人大脑域控制器并披露报告期新签订单31,523.79万元(+229.74%)，属具身大脑方案混合新签订单口径（未拆分人形与商用车占比，不等于已实现收入）；9M三季报未披露订单",
         "cip_robot_capacity": "UNKNOWN（本轮R00未单列在建工程对应具身域控产能明细，留R03跟踪）",
         "attribution_verdict": "CORE_ROBOT_DRIVER_WITH_MIXED_SCOPE",
         "r03_priority_bucket": "R03_PRIORITY_A",
@@ -261,7 +262,7 @@ COMPANY_ATTRIBUTION = {
         "margin_attribution": "RH05触发(M04=-2.28pp)：2026H1智能制造装备毛利率降2.90pp、环保降26.84pp，“机器人+”因新品类出炉机器人成本过高亏损将毛利率拉低至14.87%(-3.71pp)；仅工业服务毛利率修复至27.80%",
         "recurring_profit_attribution": "2026H1归母净利234.54M(-15.44%)、扣非218.47M(-16.02%)，主业盈利呈下行态势",
         "cash_flow_attribution": "2026H1经营现金流239.83M(+1,585.27%，M08=1.0225，RH04未触发)，现金流改善主要来自主业装备回款，与机器人业务无关",
-        "contract_liabilities": "S05 M12=-4.89pp、M11=-23.33天，存货与合同资产未触发警报，但主要对应石化后处理成套装备",
+        "contract_liabilities": "UNKNOWN（本轮R00已核页未单列博实股份2026H1合并合同负债余额及同比变化，按METHOD_20261107保留UNKNOWN不填0；存货与合同资产M11/M12见S05质量指标）",
         "backlog_orders": "UNKNOWN（未单列“机器人+”在手订单金额，不填0）",
         "cip_robot_capacity": "UNKNOWN（哈工大人形联合研发项目已终止，无量产产能建设）",
         "attribution_verdict": "NON_ROBOT_OR_QUALITY_CAVEAT",
@@ -484,7 +485,11 @@ def main() -> int:
             "attribution_verdict": ca["attribution_verdict"],
             "r03_priority_bucket": ca["r03_priority_bucket"],
             "r03_watch_points": ca["r03_watch_points"],
-            "attribution_limits": rr["key_unknowns_and_limits"],
+            "attribution_limits": (
+                rr["key_unknowns_and_limits"]
+                .replace("只能作为机器人相关收入的上限近似", "保留原文“超过1.1亿元”披露方向及适用范围（未拆分服务/工业/人形）")
+                .replace("“人形机器人大脑域控新签订单3.15亿元”", "2026H1半年报p14“具身大脑方案业务增长”段新签订单31,523.79万元（同句并列提及无人物流车与人形机器人域控，属混合新签口径）")
+            ),
         }
         companies_json.append(entry)
         if ca["r03_priority_bucket"] == "R03_PRIORITY_A":

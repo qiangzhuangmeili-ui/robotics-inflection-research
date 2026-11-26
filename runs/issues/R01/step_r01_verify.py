@@ -20,6 +20,7 @@ FORBIDDEN_PHRASES = [
     "参股灵博12%",
     "均为参股不并表",
     "思哲睿/灵博（权益法）",
+    "上限近似",
 ]
 
 
@@ -136,8 +137,12 @@ def main() -> int:
         sid = c["security_id"]
         li = c["leading_indicators_check"]
         for k in ("contract_liabilities", "backlog_orders", "cip_robot_capacity"):
-            if not str(li.get(k, "")).strip():
+            val = str(li.get(k, "")).strip()
+            if not val:
                 li_bad.append(f"{sid}:{k}")
+        cl_val = str(li.get("contract_liabilities", "")).strip()
+        if not (cl_val.startswith("UNKNOWN") or ("合同负债" in cl_val and any(ch.isdigit() for ch in cl_val))):
+            li_bad.append(f"{sid}:contract_liabilities_ungrounded")
         for kw in must_excl.get(sid, []):
             combined = scope_by_id[sid]["non_consolidated_excluded"] + " " + scope_by_id[sid]["consolidation_boundary_note"]
             if kw not in combined:
