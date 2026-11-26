@@ -1,0 +1,512 @@
+{
+  "artifact": "R00_BATCH_01 单公司业务核验底稿（草稿）",
+  "issue": "#57 R00_BATCH_01",
+  "parent_issue": "#44 R00",
+  "plan_version": "20261026_collection_first_v2",
+  "security_id": "BJ:920593",
+  "stock_name": "鼎智科技",
+  "company_full_name": "江苏鼎智智能控制科技股份有限公司",
+  "exchange": "北京证券交易所",
+  "topic": "R02_T01 核心零部件",
+  "anchor_period": "20260630",
+  "knowledge_as_of": "2026-10-25",
+  "prepared_by": "本机 CodeBuddy",
+  "prepared_at": "2026-11-26",
+  "review_status": "REVIEW_PENDING",
+  "check_nature": "SELF_CHECK",
+  "scope_note": "仅做业务核验（产品线/并表主体/商业化阶段/收入口径/RH02 质量项），不做估值、不做买卖建议、不改上游冻结表与 S05 状态。",
+  "sources_read": [
+    {
+      "slot": "annual_2025",
+      "title": "江苏鼎智智能控制科技股份有限公司2025年年度报告",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "period": "FY2025",
+      "disclosure_date": "2026-04-28",
+      "pages": 183,
+      "local_path": "sources/collection/originals/920593/annual_2025/DOC-8FA98ADF95410D91.pdf",
+      "read_mode": "全文文本层读取并逐页核对页码（1-based 物理页码）",
+      "audited": "是（关键审计事项：收入确认）"
+    },
+    {
+      "slot": "h1_2026",
+      "title": "江苏鼎智智能控制科技股份有限公司2026年半年度报告",
+      "document_id": "DOC-AD06545817CDD238",
+      "period": "2026H1",
+      "disclosure_date": "2026-08-27",
+      "pages": 121,
+      "local_path": "sources/collection/originals/920593/h1_2026/DOC-AD06545817CDD238.pdf",
+      "read_mode": "全文文本层读取并逐页核对页码（1-based 物理页码）",
+      "audited": "否（半年度报告未经审计）"
+    },
+    {
+      "slot": "h1_2025",
+      "title": "江苏鼎智智能控制科技股份有限公司2025年半年度报告",
+      "document_id": "DOC-D76D38EB26040724",
+      "period": "2025H1",
+      "disclosure_date": "2025-08-27",
+      "pages": 123,
+      "local_path": "sources/collection/originals/920593/h1_2025/DOC-D76D38EB26040724.pdf",
+      "read_mode": "仅作对照检索（伺服驱动器用途表述），不单独作为当期事实来源",
+      "audited": "否"
+    }
+  ],
+  "product_lines": [
+    {
+      "product": "线性执行器",
+      "fy2025_revenue_cny": 142925568.09,
+      "fy2025_share_pct": 53.36,
+      "h1_2026_revenue_cny": 76264188.27,
+      "h1_2026_share_pct": 38.85,
+      "disclosed_application": "医疗诊断设备、生命科学仪器等医疗器械；机器人、半导体、智能产线、精密电子设备等工业自动化（H1 2026 第12页；年报第14页）",
+      "robot_use": "公司层面未按下游拆分；年报研发项目称高精度滚珠丝杠/线性传动组件“应用在国内医疗设备、自动化设备、人形机器人关键线性执行器上”，该项目标注“研究阶段”（年报第27页）",
+      "robot_stage": "RESEARCH_AND_PROTOTYPE（人形机器人用丝杠/线性传动）",
+      "consolidation": "母公司（合并口径含子公司）"
+    },
+    {
+      "product": "混合式步进电机",
+      "fy2025_revenue_cny": 42794763.59,
+      "fy2025_share_pct": 15.98,
+      "h1_2026_revenue_cny": 26059261.66,
+      "h1_2026_share_pct": 13.27,
+      "disclosed_application": "下游客户主要为医疗器械、工业自动化等领域企业（H1 2026 第10页；年报第11页），未单列机器人用途",
+      "robot_use": "未披露机器人专用型号或机器人收入",
+      "robot_stage": "NO_ROBOT_USE_DISCLOSED",
+      "consolidation": "母公司（合并口径含子公司）"
+    },
+    {
+      "product": "直流电机及组件（含减速电机及驱控一体化产品）",
+      "fy2025_revenue_cny": 42276210.55,
+      "fy2025_share_pct": 15.78,
+      "h1_2026_revenue_cny": 40236521.58,
+      "h1_2026_share_pct": 20.50,
+      "disclosed_application": "工业设备领域项目 + 机器人项目；年报称“其中包含减速电机及驱控的一体化产品，主要因为机器人项目由样件逐步转化为批量生产，该单项业务实现收入增长687.23%”（年报第19页）；H1 2026 称“机器人项目逐步由送样转为批量生产”（第11页）",
+      "robot_use": "机器人（未区分工业机器人/人形机器人）；以减速电机+驱控一体化模组形态销售",
+      "robot_stage": "REVENUE_REALIZED_NOT_SEPARATELY_DISCLOSED（已批量生产，金额并入大类）",
+      "consolidation": "母公司为主；海外机器人项目另在美国鼎智（100%子公司）体现（年报第24页）"
+    },
+    {
+      "product": "音圈电机",
+      "fy2025_revenue_cny": 11142589.61,
+      "fy2025_share_pct": 4.16,
+      "h1_2026_revenue_cny": 7401016.75,
+      "h1_2026_share_pct": 3.77,
+      "disclosed_application": "医用有创呼吸机为主（年报第13页：“用于有创呼吸机的音圈电机市场需求逐步增加”），医疗器械零部件国产化",
+      "robot_use": "报告未披露机器人用途；归为医疗器械（非机器人）",
+      "robot_stage": "NOT_ROBOT_MEDICAL",
+      "consolidation": "母公司（合并口径含子公司）"
+    },
+    {
+      "product": "传动部件（赛仑特：精密小模数齿轮、微型精密行星减速箱、减速电机）",
+      "fy2025_revenue_cny": null,
+      "fy2025_share_pct": null,
+      "h1_2026_revenue_cny": 36964989.33,
+      "h1_2026_share_pct": 18.83,
+      "disclosed_application": "年报分产品口径未单列“传动部件”；H1 2026 因赛仑特并表新增该分类（+933.94%），赛仑特主营“精密小模数齿轮、微型精密行星减速箱及减速电机等精密机械”（H1 2026 第17页）",
+      "robot_use": "赛仑特自身产品未在报告中明确机器人用途；公司自研“斜齿集成化传动结构”研发项目称适用于“工业自动化、机器人传动、精密机床”，标注研究阶段（年报第27页）",
+      "robot_stage": "ROBOT_USE_NOT_DISCLOSED（赛仑特）；RESEARCH_AND_PROTOTYPE（自研斜齿传动）",
+      "consolidation": "赛仑特（持股51%，2025年12月起并表，H1 2026 第17、99页）"
+    },
+    {
+      "product": "无框电机 / 空心杯电机 / 关节模组 / 伺服电缸",
+      "fy2025_revenue_cny": null,
+      "fy2025_share_pct": null,
+      "h1_2026_revenue_cny": null,
+      "h1_2026_share_pct": null,
+      "disclosed_application": "年报研发项目“微型直流电机及其集成装置的研发”：开发系列无框电机、空心杯电机、关节模组、伺服电缸等，可用于机器人领域；应用人形机器人旋转关节模组和伺服电缸；标注“研究阶段”（年报第27页）",
+      "robot_use": "人形机器人旋转关节模组、伺服电缸（研发阶段）",
+      "robot_stage": "RESEARCH_AND_PROTOTYPE",
+      "consolidation": "母公司研发项目，无收入披露"
+    },
+    {
+      "product": "伺服驱动器",
+      "fy2025_revenue_cny": null,
+      "fy2025_share_pct": null,
+      "h1_2026_revenue_cny": null,
+      "h1_2026_share_pct": null,
+      "disclosed_application": "年报：低压伺服通用驱动器“广泛应用于半导体、3C 组装、锂电、自动化、机器人、医疗等领域”（第13页）；2025H1 报告：可广泛用于“机器人关节、灵巧手等领域”（2025半年报第12页，仅对照）",
+      "robot_use": "机器人关节/灵巧手（公司表述），无机器人收入拆分；年报称其他业务收入增长部分来自“驱动器等电机配件销售业务增长”（第19页）",
+      "robot_stage": "REVENUE_REALIZED_UNQUANTIFIED_ROBOT_SHARE",
+      "consolidation": "母公司及韦尔智能（57%）"
+    }
+  ],
+  "consolidated_entities": {
+    "consolidation_scope_changed_in_h1_2026": false,
+    "scope_quote_page": 18,
+    "subsidiaries_10": [
+      {"name": "常州墨新机电有限公司", "holding": "100%", "nature": "同一控制下企业合并", "business": "商业"},
+      {"name": "常州市鼎精微丝杆制造有限公司", "holding": "100%", "nature": "设立", "business": "精密丝杆研发、生产、销售"},
+      {"name": "DINGS' KOREA Co.,Ltd（韩国鼎智）", "holding": "100%", "nature": "设立", "business": "商业"},
+      {"name": "常州鼎智新能源有限公司", "holding": "100%", "nature": "设立", "business": "新能源电机/微特电机及组件"},
+      {"name": "江苏斯特斯电机有限公司", "holding": "70%", "nature": "设立", "business": "新能源领域电机"},
+      {"name": "鼎智韦尔智能控制系统（深圳）有限公司", "holding": "57%", "nature": "设立", "business": "驱动器、电机、运动控制系统及组件"},
+      {"name": "DINGS MOTION USA CORPORATION（美国鼎智）", "holding": "100%", "nature": "设立", "business": "销售微电机；海外机器人项目批量生产（年报第24页）"},
+      {"name": "Dings intelligent Control technology (Thailand) Co., Ltd（泰国鼎智）", "holding": "99%+1%", "nature": "设立", "business": "微特电机、工业自动控制系统生产与销售"},
+      {"name": "DINGS MOTION EUROPE（欧洲鼎智）", "holding": "65%", "nature": "设立", "business": "机械和机电元件采购与销售"},
+      {"name": "东莞市赛仑特实业有限公司", "holding": "51%", "nature": "收购（2025年12月起并表）", "business": "精密小模数齿轮、微型精密行星减速箱及减速电机"}
+    ],
+    "equity_participations_not_consolidated": [
+      {"name": "苏州脉塔智能科技有限公司", "type": "联营企业", "note": "长期股权投资 14,179,098.27 元（H1 2026 第77页）；同时为第一大供应商（年报第20页，采购占比10.02%）"},
+      {"name": "宁波锚点驱动技术有限公司", "type": "联营企业", "note": "长期股权投资 4,361,865.29 元（H1 2026 第77页）"},
+      {"name": "上海联融域智能科技有限公司", "type": "联营企业", "note": "长期股权投资 13,956,147.80 元（H1 2026 第77页）"},
+      {"name": "华传智感（上海）技术有限公司", "type": "持股10%（其他非流动金融资产）", "note": "H1 2026 第106页关联方说明"},
+      {"name": "安徽中科灵犀科技有限公司", "type": "持股5%（参股）", "note": "年报第21页投资表：投资1,000,000元、持股5%；主营工业机器人制造/服务消费机器人销售；H1 2026 第105页列为“控股股东控股的企业”关联方"}
+    ],
+    "key_judgement": "机器人相关收入只在合并报表主体（母公司+美国鼎智+赛仑特）内确认；5家参股/联营公司一律不得当作并表机器人业务，也不得按持股比例折算收入。"
+  },
+  "robot_exposure_verdict": {
+    "verdict": "DIRECT_UNDISCLOSED_CONFIRMED",
+    "legacy_label_checked": "DIRECT_UNDISCLOSED",
+    "legacy_label_result": "原文可支持，维持；不因旧底稿自动提级",
+    "basis": [
+      "直流电机及组件含“减速电机及驱控的一体化产品”，年报明确“机器人项目由样件逐步转化为批量生产”，H1 2026 再次表述“机器人项目逐步由送样转为批量生产”",
+      "海外机器人项目在控股子公司美国鼎智体现，年报称其收入与净利润大幅上涨源于海外机器人项目批量生产",
+      "机器人收入未单列：分产品表只有线性执行器/混合式步进/直流电机及组件/音圈电机/传动部件/其他"
+    ],
+    "robot_revenue_separately_disclosed": false,
+    "robot_revenue_quantifiable": false,
+    "quantification_obstacle": "年报仅披露“该单项业务实现收入增长687.23%”，未给绝对额；且该增速与附注“减速电机及驱控”行（20,628,094.59 元，同比+127.7%）不一致，无法把687.23%对应到任一披露行，按未知处理。",
+    "entity_caveat": "不得把苏州脉塔、宁波锚点、上海联融域、华传智感、安徽中科灵犀的机器人业务并入鼎智科技机器人暴露。"
+  },
+  "commercial_stage_verdict": {
+    "overall": "REVENUE_REALIZED_NOT_SEPARATELY_DISCLOSED",
+    "summary": "公司存在真实的机器人相关批量供货收入，但并入“直流电机及组件”大类，未单列、未给金额；另有多个机器人新品处于研究/样机阶段。",
+    "stage_by_item": [
+      {"item": "减速电机+驱控一体化（机器人项目）", "stage": "已实现收入且批量生产，并入大类未单列", "evidence": "年报第13、19页；H1 2026 第11、16页"},
+      {"item": "美国鼎智海外机器人项目", "stage": "已实现收入，未单列（子公司层面）", "evidence": "年报第24页；H1 2026 第17页（美国鼎智营收39,356,735.52元、净利4,236,077.14元，未拆机器人占比）"},
+      {"item": "伺服驱动器（机器人关节/灵巧手）", "stage": "已实现收入（并入其他业务），机器人占比未披露", "evidence": "年报第13、19页；2025半年报第12页（对照）"},
+      {"item": "无框电机/空心杯电机/关节模组/伺服电缸", "stage": "研究/样机阶段，无收入", "evidence": "年报第27页“研究阶段”"},
+      {"item": "人形机器人用高精度丝杠/线性传动组件", "stage": "研究阶段，无收入", "evidence": "年报第27页“研究阶段”"},
+      {"item": "参股公司机器人业务（中科灵犀等）", "stage": "不并表，不计入本公司商业化阶段", "evidence": "年报第21页；H1 2026 第18、105页"}
+    ],
+    "order_or_design_win_disclosed": false,
+    "major_contract_disclosed": false,
+    "major_contract_evidence": "H1 2026 第21页“是否存在应当披露的重大合同：否”"
+  },
+  "revenue_breakdown": {
+    "fy2025": {
+      "total_revenue_cny": 267847958.21,
+      "total_yoy_pct": 19.73,
+      "gross_margin_pct": 49.20,
+      "net_profit_attributable_cny": 29924726.20,
+      "net_profit_yoy_pct": -22.68,
+      "by_product": [
+        {"product": "线性执行器", "revenue_cny": 142925568.09, "share_pct": 53.36, "yoy_pct": 5.83, "gross_margin_pct": 59.32},
+        {"product": "混合式步进电机", "revenue_cny": 42794763.59, "share_pct": 15.98, "yoy_pct": 8.68, "gross_margin_pct": 43.82},
+        {"product": "直流电机及组件", "revenue_cny": 42276210.55, "share_pct": 15.78, "yoy_pct": 118.39, "gross_margin_pct": 31.50},
+        {"product": "音圈电机", "revenue_cny": 11142589.61, "share_pct": 4.16, "yoy_pct": 103.74, "gross_margin_pct": 25.79},
+        {"product": "其他", "revenue_cny": 28708826.37, "share_pct": 10.72, "yoy_pct": 17.35, "gross_margin_pct": 41.99}
+      ],
+      "note_breakdown_by_product_note": [
+        {"product": "直流电机", "revenue_cny": 21648115.96, "share_pct": 8.08, "prior_year_cny": 10299366.70},
+        {"product": "减速电机及驱控", "revenue_cny": 20628094.59, "share_pct": 7.70, "prior_year_cny": 9058561.28, "yoy_pct_computed": 127.72}
+      ],
+      "by_region": [
+        {"region": "境内", "revenue_cny": 135510712.19, "share_pct": 50.59, "yoy_pct": 13.79},
+        {"region": "境外", "revenue_cny": 132337246.02, "share_pct": 49.41, "yoy_pct": 26.48}
+      ],
+      "robot_revenue_cny": null,
+      "robot_share_pct": null
+    },
+    "h1_2026": {
+      "total_revenue_cny": 196311538.02,
+      "total_yoy_pct": 58.92,
+      "gross_margin_pct": 45.91,
+      "net_profit_attributable_cny": 17738404.16,
+      "net_profit_yoy_pct": -11.61,
+      "net_profit_excl_share_payment_cny": null,
+      "net_profit_excl_share_payment_yoy_pct": 27.69,
+      "net_profit_excl_share_payment_note": "原文仅给“扣除股份支付影响后的归属于上市公司股东的净利润为2,751.15 万元”（第11页），未给精确到元的金额，故不登记精确值。",
+      "by_product": [
+        {"product": "线性执行器", "revenue_cny": 76264188.27, "share_pct": 38.85, "yoy_pct": 1.84, "gross_margin_pct": 59.88},
+        {"product": "混合式步进电机", "revenue_cny": 26059261.66, "share_pct": 13.27, "yoy_pct": 24.70, "gross_margin_pct": 38.59},
+        {"product": "直流电机及组件", "revenue_cny": 40236521.58, "share_pct": 20.50, "yoy_pct": 202.29, "gross_margin_pct": 30.43},
+        {"product": "音圈电机", "revenue_cny": 7401016.75, "share_pct": 3.77, "yoy_pct": 83.14, "gross_margin_pct": 30.09},
+        {"product": "传动部件", "revenue_cny": 36964989.33, "share_pct": 18.83, "yoy_pct": 933.94, "gross_margin_pct": 39.94},
+        {"product": "其他", "revenue_cny": 9385560.43, "share_pct": 4.78, "yoy_pct": 37.60, "gross_margin_pct": 55.11}
+      ],
+      "by_region": [
+        {"region": "境内", "revenue_cny": 113553118.37, "share_pct": 57.84, "yoy_pct": 75.59},
+        {"region": "境外", "revenue_cny": 82758419.65, "share_pct": 42.16, "yoy_pct": 40.60}
+      ],
+      "incremental_from_sailunte_consolidation_cny": 47206600.00,
+      "robot_revenue_cny": null,
+      "robot_share_pct": null,
+      "note": "H1 2026 分产品不再单列“减速电机及驱控”，机器人相关收入无法从披露中拆出；营收增长含赛仑特并表新增4,720.66万元。"
+    },
+    "subsidiary_revenue_h1_2026": [
+      {"entity": "赛仑特", "revenue_cny": 47603704.41, "net_profit_cny": 9143188.71, "type": "子公司51%"},
+      {"entity": "美国鼎智", "revenue_cny": 39356735.52, "net_profit_cny": 4236077.14, "type": "子公司100%"}
+    ],
+    "discipline_note": "公司总收入不等于机器人收入；本表只登记原文披露金额，机器人相关金额一律留空（null），不按增速反推。"
+  },
+  "s05_alert_check": {
+    "flag": "RH02",
+    "s05_status_carried": "M11=UNKNOWN_CA_BLANK / Q02 PENDING_APPLICABILITY（待核）",
+    "contract_asset": {
+      "fy2025_consolidated": "REPORTED_BLANK（合并资产负债表“合同资产”行，2025-12-31 与 2024-12-31 两栏均空白，年报第79页）",
+      "fy2025_parent": "REPORTED_BLANK（母公司资产负债表，年报第81页）",
+      "h1_2026_consolidated": "REPORTED_BLANK（合并资产负债表“合同资产”行，2026-06-30 与 2025-12-31 两栏均空白，H1 2026 第33页）",
+      "h1_2026_parent": "REPORTED_BLANK（母公司资产负债表，H1 2026 第35页）",
+      "note_item_exists": false,
+      "note_item_evidence": "附注仅见会计政策段落提及“合同资产”（H1 2026 第55、56、57页），无“合同资产”金额附注条目；亦无合同资产减值明细。",
+      "business_explanation": "公司收入全部为“在某一时点确认收入”（H1 2026 第88页：196,311,538.02 元全部计入“在某一时点确认收入”；年报第147页同口径 267,847,958.21 元），并按“以销定产”模式收取客户预收款（合同负债 25,696,495.94 元，较期初+330.86%，H1 2026 第13、14页）。在该模式下不产生按履约进度确认的合同资产，空白与业务模式一致，属于“报表无此科目余额”，而非漏披。",
+      "conclusion": "REPORTED_BLANK_CONFIRMED_BY_ORIGINAL；不得按0处理，不得据此推定机器人订单或收入；RH02 的适用性判断仍留 S05/复核方，本底稿只提供业务解释。"
+    },
+    "inventory": {
+      "fy2025_net_cny": 63271327.32,
+      "fy2025_gross_cny": 70155460.77,
+      "fy2025_provision_cny": 6884133.45,
+      "fy2025_provision_ratio_pct": 9.81,
+      "fy2025_provision_charge_cny": 2675877.82,
+      "fy2025_yoy_pct": 110.34,
+      "fy2025_turnover_ratio": 2.64,
+      "fy2024_turnover_ratio": 3.37,
+      "fy2025_driver": "收购赛仑特新增年末存货1,455万元，以及母/子公司标准品、驱动器、滚珠丝杠备货（年报第17页）",
+      "h1_2026_net_cny": 85576126.39,
+      "h1_2026_provision_cny": 8021070.81,
+      "h1_2026_provision_ratio_pct": 8.57,
+      "h1_2026_provision_charge_cny": 2614933.02,
+      "h1_2026_provision_writeoff_cny": 1477995.66,
+      "h1_2026_yoy_pct": 35.25,
+      "h1_2026_turnover_ratio": 1.30,
+      "h1_2025_turnover_ratio": 1.54,
+      "h1_2026_driver": "营业收入增加，相应订单备货同步增加（H1 2026 第14页）",
+      "asset_impairment_loss_h1_2026_cny": -2006895.74,
+      "asset_impairment_yoy_pct": 369.44,
+      "company_risk_statement": "两期报告均自述“报告期公司存货周转时间变长”（年报第34页；H1 2026 第19页）",
+      "objective_reading": "存货绝对额与跌价准备同步上升，周转率连续两期下降（2.64→、1.30），但跌价准备覆盖率由9.81%降至8.57%，计提绝对额仍同比增长（2.68M→2.61M半年）；属于“备货扩张+周转放缓”，尚不能判定为呆滞积压，需 R01 结合订单与库龄跟踪。",
+      "data_limit": "H1 2026 附注“存货（1）明细情况”分类账面余额表未在文本层呈现（第76页仅有跌价准备明细），故分类余额与库龄未登记；上表 H1 2026 拨备率的分母为净额+准备推算值。"
+    },
+    "other_quality_notes": [
+      "H1 2026 经营现金流净额 50,987,725.86 元（+313.66%），主因营收增加及预收货款增加（第16页），与合同负债大增互相印证。",
+      "H1 2026 毛利率 45.91%，同比下降6.31个百分点，公司归因于低毛利直流电机及组件、传动部件占比提升（第11页）。",
+      "H1 2026 归母净利 -11.61%，扣除股份支付后归母净利 2,751.15 万元、+27.69%（第11页），利润质量需 R01 复核。"
+    ]
+  },
+  "evidence_quotes": [
+    {
+      "id": "E01",
+      "claim": "2025年直流电机及组件增长由机器人项目样件转批量驱动",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 13,
+      "quote": "其中，直流电机及组件同比增长118.39%，主要为工业设备领域项目增加、机器人项目逐步由送样转为批量生产"
+    },
+    {
+      "id": "E02",
+      "claim": "机器人相关单项业务增速687.23%，但未给绝对金额",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 19,
+      "quote": "直流电机及组件收入增加118.39%，其中包含减速电机及驱控的一体化产品，主要因为机器人项目由样件逐步转化为批量生产，该单项业务实现收入增长687.23%。"
+    },
+    {
+      "id": "E03",
+      "claim": "附注将直流电机及组件拆为“直流电机”和“减速电机及驱控”两行",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 147,
+      "quote": "与客户之间的合同产生的收入按商品或服务类型分解",
+      "data_excerpt": "直流电机 21,648,115.96（上期10,299,366.70）；减速电机及驱控 20,628,094.59（上期9,058,561.28）"
+    },
+    {
+      "id": "E04",
+      "claim": "海外机器人项目在控股子公司美国鼎智体现",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 24,
+      "quote": "控股子公司美国鼎智主要因为海外市场机器人项目逐步转化为批量生产及工业自动化应用需求增加，导致营业收入和净利润大幅上涨。"
+    },
+    {
+      "id": "E05",
+      "claim": "无框/空心杯/关节模组/伺服电缸仍处研究阶段",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 27,
+      "quote": "开发系列无框电机、空心杯电机、关节模组、伺服电缸等，可用于机器人领域。"
+    },
+    {
+      "id": "E06",
+      "claim": "人形机器人用线性执行器/丝杠亦为研究阶段",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 27,
+      "quote": "应用在国内医疗设备、自动化设备、人形机器人关键线性执行器上，以实现高精度、长寿命的线性传动控制。"
+    },
+    {
+      "id": "E07",
+      "claim": "中科灵犀为5%参股，不并表",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 21,
+      "quote": "工业机器人制造；服务消费机器人销售；人工智能应用软件开发",
+      "data_excerpt": "安徽中科灵犀科技有限公司：投资金额1,000,000.00元，持股比例5%"
+    },
+    {
+      "id": "E08",
+      "claim": "公司获智元优秀合作伙伴奖（仅荣誉，无订单/收入披露）",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 14,
+      "quote": "2025 年3 月26 日，公司获“智元优秀合作伙伴奖”，在业务方面进一步彰显了在机器人核心零部件供应领域的专业能力。"
+    },
+    {
+      "id": "E09",
+      "claim": "音圈电机主要用于有创呼吸机（医疗，非机器人）",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 13,
+      "quote": "随着市场的逐步恢复以及医疗器械零部件国产化加速，用于有创呼吸机的音圈电机市场需求逐步增加"
+    },
+    {
+      "id": "E10",
+      "claim": "公司自述存货周转时间变长（2025年报）",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 34,
+      "quote": "报告期公司存货周转时间变长。公司已结合存货的实际状况，计提了存货跌价准备"
+    },
+    {
+      "id": "E11",
+      "claim": "2025年末存货增加主因赛仑特并表与备货",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 17,
+      "quote": "存货比期初增加110.34%，主要是由于本期收购东莞赛仑特，增加年末存货1,455 万元以及母、子公司标准品、驱动器、滚珠丝杠备货所致。"
+    },
+    {
+      "id": "E12",
+      "claim": "2025年末存货分类余额与跌价准备",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 133,
+      "quote": "存货跌价准备",
+      "data_excerpt": "账面余额70,155,460.77；跌价准备6,884,133.45；账面价值63,271,327.32（期初32,857,602.53/2,777,636.53/30,079,966.00）"
+    },
+    {
+      "id": "E13",
+      "claim": "2025年末合并资产负债表“合同资产”行两期均空白",
+      "document_id": "DOC-8FA98ADF95410D91",
+      "report": "2025年年度报告",
+      "page": 79,
+      "quote": "合同资产",
+      "data_excerpt": "该行“2025年12月31日/2024年12月31日”两栏均为空白，无金额；母公司报表同（第81页）"
+    },
+    {
+      "id": "E14",
+      "claim": "2026H1机器人项目由送样转批量，直流电机及组件+202.29%",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 11,
+      "quote": "其中，直流电机及组件同比增长202.29%，主要为工业设备领域项目增加、机器人项目逐步由送样转为批量生产"
+    },
+    {
+      "id": "E15",
+      "claim": "2026H1分产品收入表（机器人未单列）",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 15,
+      "quote": "按产品分类分析",
+      "data_excerpt": "线性执行器76,264,188.27；混合式步进26,059,261.66；直流电机及组件40,236,521.58；音圈电机7,401,016.75；传动部件36,964,989.33；其他9,385,560.43（表续第16页）"
+    },
+    {
+      "id": "E16",
+      "claim": "2026H1收入全部在某一时点确认（合同资产不产生）",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 88,
+      "quote": "与客户之间的合同产生的收入按商品或服务转让时间分解",
+      "data_excerpt": "在某一时点确认收入 196,311,538.02（上期123,531,382.30），无按时段确认收入"
+    },
+    {
+      "id": "E17",
+      "claim": "2026H1合并范围10家子公司，未含参股公司",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 99,
+      "quote": "公司将墨新机电、常州鼎精微、韩国鼎智、鼎智新能源、斯特斯、韦尔智能、美国鼎智、泰国鼎智、欧洲鼎智、赛仑特公司10 家子公司纳入合并财务报表范围。"
+    },
+    {
+      "id": "E18",
+      "claim": "2026H1合并范围未变，参股5家单列",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 18,
+      "quote": "合并财务报表的合并范围是否发生变化",
+      "data_excerpt": "勾选“否”；同页列示5家参股公司（华传智感、宁波锚点驱动、苏州脉塔智能、上海联融域智能、安徽中科灵犀），仅注“业务互补”"
+    },
+    {
+      "id": "E19",
+      "claim": "2026H1合并资产负债表“合同资产”行两期均空白",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 33,
+      "quote": "合同资产",
+      "data_excerpt": "该行“2026年6月30日/2025年12月31日”两栏均为空白，无金额；母公司报表同（第35页）"
+    },
+    {
+      "id": "E20",
+      "claim": "2026H1存货增加主因订单备货",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 14,
+      "quote": "存货比期初增加35.25%，主要是营收收入增加，相应订单备货同步增加所致。"
+    },
+    {
+      "id": "E21",
+      "claim": "2026H1存货跌价准备变动",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 76,
+      "quote": "存货跌价准备",
+      "data_excerpt": "期初6,884,133.45；本期计提2,614,933.02；转销1,477,995.66；期末8,021,070.81"
+    },
+    {
+      "id": "E22",
+      "claim": "2026H1仍自述存货周转时间变长",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 19,
+      "quote": "报告期公司存货周转时间变长。公司已结合存货的实际状况，计提了存货跌价准备"
+    },
+    {
+      "id": "E23",
+      "claim": "赛仑特为51%控股并表的传动部件主体",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 17,
+      "quote": "精密小模数齿轮、微型精密行星减速箱及减速电机等精密机械的研发、生产及销售",
+      "data_excerpt": "赛仑特：子公司，注册资本1000万元，总资产96,916,163.98，净资产67,073,026.38，营业收入47,603,704.41，净利润9,143,188.71"
+    },
+    {
+      "id": "E24",
+      "claim": "2026H1无应披露重大合同",
+      "document_id": "DOC-AD06545817CDD238",
+      "report": "2026年半年度报告",
+      "page": 21,
+      "quote": "是否存在应当披露的重大合同",
+      "data_excerpt": "勾选“否”"
+    },
+    {
+      "id": "E25",
+      "claim": "伺服驱动器机器人关节/灵巧手表述（对照期）",
+      "document_id": "DOC-D76D38EB26040724",
+      "report": "2025年半年度报告（对照）",
+      "page": 12,
+      "quote": "可广泛用于半导体贴装、半导体分选、半导体检测、3C 组装、机器人关节、灵巧手等领域。"
+    }
+  ],
+  "limits_and_unknowns": [
+    "机器人收入金额未知：两期均未单列，年报“该单项业务+687.23%”无绝对额，且与附注“减速电机及驱控”行同比+127.72%不一致，口径无法对齐，按未知保留，不反推、不补零。",
+    "2026H1 分产品不再拆“减速电机及驱控”，H1 机器人相关收入彻底不可量化。",
+    "机器人下游未区分工业机器人/人形机器人/服务机器人；公司仅表述“机器人项目”，未披露客户名称（智元仅为获奖表述，无订单金额）。",
+    "美国鼎智机器人项目收入未拆分，仅有子公司整体营收39,356,735.52元、净利4,236,077.14元。",
+    "赛仑特减速箱/齿轮的机器人用途未在原文披露，不能因其“减速”属性推定机器人暴露。",
+    "5家参股/联营公司（脉塔、锚点、联融域、华传智感、中科灵犀）业务不并表；中科灵犀5%持股且为控股股东控股企业，双重关联，严禁折算收入。",
+    "2026H1 存货分类账面余额明细未在PDF文本层呈现（第76页仅跌价准备明细），分类结构与库龄无法登记；拨备率分母为净额+准备推算。",
+    "合同资产空白已核实为原文状态，但“是否适用RH02”属 S05 口径判断，本底稿不改状态、不替代复核。",
+    "知识截止2026-10-25：未采用该日之后披露的任何报告；2026年三季报未在本次核验范围内（如已披露需另行登记）。",
+    "半年度报告未经审计；2025年报关键审计事项为收入确认，但未对机器人分类收入单独发表意见。"
+  ],
+  "handoff_note": "本文件为单公司草稿，仅供 R00 汇总与独立复核；不改 S05 冻结状态、不改 company_master、不启动 R01/R03/R04。"
+}

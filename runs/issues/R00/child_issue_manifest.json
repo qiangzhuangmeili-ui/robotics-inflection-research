@@ -1,0 +1,273 @@
+{
+  "artifact": "R00_BATCH_01_CHILD_ISSUE_MANIFEST",
+  "issue_number": 57,
+  "issue_key": "R00_BATCH_01",
+  "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/57",
+  "title": "R00_BATCH_01｜后期业务核验第01批：固定5家TIER_1核心公司",
+  "parent_issue": {
+    "issue_number": 44,
+    "issue_key": "R00",
+    "release_file": "runs/issues/R00/release_20261126.json"
+  },
+  "plan_version": "20261026_collection_first_v2",
+  "knowledge_as_of": "2026-10-25",
+  "fixed_now": "2026-11-26T19:20:00+08:00",
+  "batch_size": 5,
+  "fixed_no_substitution": true,
+  "companies": [
+    {
+      "security_id": "SZ:300607",
+      "stock_name": "拓斯达",
+      "topic": "R02_T02",
+      "anchor_period": "20260630",
+      "s08_priority_tier": "TIER_1_EVIDENCED_AND_CLEAN_OR_LOW_RISK",
+      "s05_rh_triggers": [],
+      "s05_pending_flags": [],
+      "has_legacy_asset": true,
+      "legacy_sources": "archive/R1_batch01_parent_reviewed_20261024/classification_reviewed.csv;packages/D01_DETAIL_08/assignment.csv",
+      "legacy_auto_promoted": false,
+      "assigned_executor": "external_ai_1",
+      "executor_line": "T02 整机与集成线",
+      "source_file": "runs/issues/R00/inputs_batch01/ai1_300607_002747_business_review.yaml",
+      "evidence_quote_count": 12,
+      "sources_verified_count": 2
+    },
+    {
+      "security_id": "SZ:002472",
+      "stock_name": "双环传动",
+      "topic": "R02_T01",
+      "anchor_period": "20260630",
+      "s08_priority_tier": "TIER_1_EVIDENCED_AND_CLEAN_OR_LOW_RISK",
+      "s05_rh_triggers": [],
+      "s05_pending_flags": [
+        "RH02"
+      ],
+      "has_legacy_asset": true,
+      "legacy_sources": "archive/early_sample_proposals.csv",
+      "legacy_auto_promoted": false,
+      "assigned_executor": "external_ai_2",
+      "executor_line": "T01 核心零部件线",
+      "source_file": "runs/issues/R00/inputs_batch01/ai2_002472_002979_business_review.yaml",
+      "evidence_quote_count": 15,
+      "sources_verified_count": 2
+    },
+    {
+      "security_id": "SZ:002979",
+      "stock_name": "雷赛智能",
+      "topic": "R02_T01",
+      "anchor_period": "20260930",
+      "s08_priority_tier": "TIER_1_EVIDENCED_AND_CLEAN_OR_LOW_RISK",
+      "s05_rh_triggers": [
+        "RH04"
+      ],
+      "s05_pending_flags": [
+        "RH02"
+      ],
+      "has_legacy_asset": true,
+      "legacy_sources": "archive/R1_batch01_parent_reviewed_20261024/classification_reviewed.csv;packages/D01_DETAIL_03/assignment.csv",
+      "legacy_auto_promoted": false,
+      "assigned_executor": "external_ai_2",
+      "executor_line": "T01 核心零部件线",
+      "source_file": "runs/issues/R00/inputs_batch01/ai2_002472_002979_business_review.yaml",
+      "evidence_quote_count": 21,
+      "sources_verified_count": 3
+    },
+    {
+      "security_id": "SZ:002747",
+      "stock_name": "埃斯顿",
+      "topic": "R02_T02",
+      "anchor_period": "20260630",
+      "s08_priority_tier": "TIER_1_EVIDENCED_AND_CLEAN_OR_LOW_RISK",
+      "s05_rh_triggers": [
+        "RH04",
+        "RH06"
+      ],
+      "s05_pending_flags": [],
+      "has_legacy_asset": true,
+      "legacy_sources": "archive/early_sample_proposals.csv",
+      "legacy_auto_promoted": false,
+      "assigned_executor": "external_ai_1",
+      "executor_line": "T02 整机与集成线",
+      "source_file": "runs/issues/R00/inputs_batch01/ai1_300607_002747_business_review.yaml",
+      "evidence_quote_count": 14,
+      "sources_verified_count": 4
+    },
+    {
+      "security_id": "BJ:920593",
+      "stock_name": "鼎智科技",
+      "topic": "R02_T01",
+      "anchor_period": "20260630",
+      "s08_priority_tier": "TIER_1_EVIDENCED_AND_CLEAN_OR_LOW_RISK",
+      "s05_rh_triggers": [],
+      "s05_pending_flags": [
+        "RH02"
+      ],
+      "has_legacy_asset": true,
+      "legacy_sources": "archive/R1_batch01_parent_reviewed_20261024/classification_reviewed.csv;packages/D01_DETAIL_02/assignment.csv",
+      "legacy_auto_promoted": false,
+      "assigned_executor": "codebuddy",
+      "executor_line": "T01 核心零部件 + 资料摸底 + 汇总建表与自检",
+      "source_file": "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.json",
+      "evidence_quote_count": 25,
+      "sources_verified_count": 3
+    }
+  ],
+  "executor_lines": {
+    "external_ai_1": {
+      "line": "T02 整机与集成线",
+      "companies": [
+        "SZ:300607",
+        "SZ:002747"
+      ],
+      "input_files": [
+        "runs/issues/R00/inputs_batch01/ai1_300607_002747_business_review.yaml",
+        "runs/issues/R00/inputs_batch01/ai1_300607_002747_evidence_notes.md",
+        "runs/issues/R00/inputs_batch01/ai1_manifest.json"
+      ]
+    },
+    "external_ai_2": {
+      "line": "T01 核心零部件线",
+      "companies": [
+        "SZ:002472",
+        "SZ:002979"
+      ],
+      "input_files": [
+        "runs/issues/R00/inputs_batch01/ai2_002472_002979_business_review.yaml"
+      ]
+    },
+    "codebuddy": {
+      "line": "T01 核心零部件 + 资料摸底 + 汇总建表与自检",
+      "companies": [
+        "BJ:920593"
+      ],
+      "input_files": [
+        "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.json",
+        "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.md"
+      ]
+    }
+  },
+  "inputs": [
+    {
+      "path": "runs/issues/S08/business_verification_candidates.csv",
+      "bytes": 434102,
+      "sha256": "01db73477ce9b6815aef440610db72114333f0784d92fb379d53ad429da500f7"
+    },
+    {
+      "path": "runs/issues/S08/candidate_reuse_map.csv",
+      "bytes": 41650,
+      "sha256": "485e6918bc0b8ba0a7692e9992b8e57fee927476d551fdbeacea85eda6a8e232"
+    },
+    {
+      "path": "runs/issues/S08/acceptance_s08_20261126.json",
+      "bytes": 3615,
+      "sha256": "c3ce9eb9821005802b23e8e8a555e81961770004ce47b46c6b7a2742cd453f73"
+    },
+    {
+      "path": "runs/issues/R02/acceptance_r02_20261126.json",
+      "bytes": 3628,
+      "sha256": "2c1e72f36d2356553e7208aa46cb8708fcaa371536f33c3c71d821dd15449034"
+    },
+    {
+      "path": "runs/issues/S05/quality_flags.csv",
+      "bytes": 324254,
+      "sha256": "38addb2c08ebb89ffa1ed56bae82be1120d18f61984a3afc5fd965469998ae77"
+    },
+    {
+      "path": "runs/issues/S05/quality_decision_log.csv",
+      "bytes": 189331,
+      "sha256": "ba6cf6474496eabdf17cfe8f5e2e1c9e2ea10288bcb412ce3d64f2ed9c7591b2"
+    },
+    {
+      "path": "runs/issues/R00/release_20261126.json",
+      "bytes": 5381,
+      "sha256": "15e63dee9204b5d93d31b628d897bfbda1a46627aa6c8c30284298db3a466a58"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/ai1_300607_002747_business_review.yaml",
+      "bytes": 29441,
+      "sha256": "d7253b85104cb9b63293223d33524d5cb8057987bbb9984742c85978941d1b5d"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/ai1_300607_002747_evidence_notes.md",
+      "bytes": 9818,
+      "sha256": "c4c6b5f545620beee85b870f9da0994a78956c74f03d9c393d85c3f3c50bfafe"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/ai1_manifest.json",
+      "bytes": 820,
+      "sha256": "cb68bca841017ac2a76eca3c2bb7e1db516da84660901e445594a5a40530d509"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/ai2_002472_002979_business_review.yaml",
+      "bytes": 23385,
+      "sha256": "becde4cba3af270e76eba850df70456e0c32647c06ee9bf28e42b32003868c11"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.json",
+      "bytes": 33118,
+      "sha256": "63c16e14ac827d8c5fabb33311b914df7950f0514cabfafa5b880357d3581571"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.md",
+      "bytes": 14744,
+      "sha256": "882e4cb67a07a7a21df6a1ff0525e900a83f718cc85992cca752838279e7c554"
+    }
+  ],
+  "deliverables": [
+    {
+      "path": "runs/issues/R00/business_batch_dispatch.csv",
+      "role": "5 家固定派包"
+    },
+    {
+      "path": "runs/issues/R00/business_review_register.csv",
+      "role": "5 家结构化业务核验总表"
+    },
+    {
+      "path": "runs/issues/R00/batch01_evidence_quotes.csv",
+      "role": "逐字短引文与物理页码"
+    },
+    {
+      "path": "runs/issues/R00/child_issue_manifest.json",
+      "role": "本文件：子卡清单"
+    },
+    {
+      "path": "runs/issues/R00/manifest.json",
+      "role": "输入/交付哈希与根摘要"
+    },
+    {
+      "path": "runs/issues/R00/handoff.md",
+      "role": "独立复核交接"
+    },
+    {
+      "path": "runs/issues/R00/review.json",
+      "role": "SELF_CHECK 自检结果"
+    },
+    {
+      "path": "runs/issues/R00/step_r00_build.py",
+      "role": "可复现构建脚本"
+    },
+    {
+      "path": "runs/issues/R00/step_r00_verify.py",
+      "role": "独立校验脚本"
+    }
+  ],
+  "guards": {
+    "knowledge_as_of": "2026-10-25",
+    "max_companies_per_batch": 5,
+    "fixed_batch_no_substitution": true,
+    "legacy_auto_promoted": false,
+    "unknown_or_hold_on_gap": true,
+    "company_total_revenue_neq_robot_revenue": true,
+    "no_cross_period_merge_h1_vs_9m": true,
+    "S00_errata_issue_53": "OPEN",
+    "R01_released": false,
+    "R03_released": false,
+    "R04_started": false
+  },
+  "review": {
+    "review_nature": "SELF_CHECK",
+    "independent_reviewer": "Codex",
+    "independent_review_status": "PENDING",
+    "note": "执行方自检不等于独立复核；业务结论最终采用仍需 Codex 原文复核。"
+  }
+}

@@ -1,0 +1,305 @@
+# R00_BATCH_01 业务核验回传（GitHub #57）
+# 核验人：业务核验专员 | knowledge_as_of: 2026-10-25
+# 说明：页码均为PDF物理页（1-based），已与页眉印刷页码逐页比对一致；引文按原文断行合并，未改动任何字符，引文中的“／”用于标记原文表格换行或分栏位置。
+
+---
+
+company:
+  security_id: "SZ:002472"
+  stock_name: "双环传动"
+  knowledge_as_of: "2026-10-25"
+  sources_actually_read:
+    - doc_id: "DOC-4C864890A91654C6"
+      report_name: "2025年报"
+      disclosure_date: "2026-04-23"
+      total_pages: 175
+      read_status: "FULL_PDF_VERIFIED"
+    - doc_id: "DOC-5CF373BAD33AF333"
+      report_name: "2026半年报"
+      disclosure_date: "2026-08-25"
+      total_pages: 132
+      read_status: "FULL_PDF_VERIFIED"
+  consolidated_entities:
+    - entity_name: "浙江双环传动机械股份有限公司"
+      consolidation_status: "CONSOLIDATED(并表)"
+      role_in_robotics: "母公司；齿轮传动总业务平台，本身不单独披露机器人收入"
+    - entity_name: "浙江环动机器人关节科技股份有限公司（环动科技）"
+      consolidation_status: "CONSOLIDATED(并表)"
+      role_in_robotics: "机器人减速器（RV）实际经营主体，双环持股61.29%，董事长吴长鸿、副总蒋亦卿兼任其董事"
+    - entity_name: "浙江环动技术研发有限公司"
+      consolidation_status: "CONSOLIDATED(并表)"
+      role_in_robotics: "减速器相关研发平台，环动体系61.29%持股"
+  product_lines:
+    - line_name: "RV精密减速器（含重载RV）"
+      robot_application: "工业机器人/重载机器人关节减速器（真实机器人用途）"
+      commercial_stage: "REVENUE_BUNDLED"
+      evidence_ref: "2025年报 p17：“报告期内，公司机器人减速器业务运行稳健，实现稳步增长。”；p18 该部分收入并入“减速器及其他”795,052,336.68元，未单列为机器人减速器"
+    - line_name: "电机减速器一体化旋转关节模组"
+      robot_application: "机器人一体化智能关节执行器"
+      commercial_stage: "PLAN_OR_CONCEPT"
+      evidence_ref: "2025年报 p17：“其二，在机电一体化领域，同步推进电机减速器一体 化旋转关节模组项目”"
+    - line_name: "新型重载RV减速器（新产品）"
+      robot_application: "重载型机器人高精密关节"
+      commercial_stage: "PLAN_OR_CONCEPT"
+      evidence_ref: "2025年报 p21 募投/研发项目表：项目“新型重载 RV 减速器研 发及应用”，进度栏为“研发阶段”"
+    - line_name: "智能执行机构（注塑及复合材料传动）"
+      robot_application: "非机器人：扫地机、电动助力车(eBike)、智能汽车、割草机等"
+      commercial_stage: "REVENUE_DISCLOSED"
+      evidence_ref: "2025年报 p18：“智能执行机构 797,617,149.85 8.75% 642,352,297.31 7.31% 24.17%”"
+  revenue_breakdown:
+    fy2025_total_rev_cny: "9,112,171,720.39元（91.12亿元）"
+    fy2025_robot_related_line: "“减速器及其他”795,052,336.68元，占营业收入8.73%，同比+21.18%（p18）；其中含其他业务收入2,086,800.12元，主营口径为792,965,536.56元、对应成本487,942,309.59元、毛利率38.47%（p145，自算）。该行同时包含非机器人减速器与其他传动产品，并非纯净机器人减速器口径"
+    anchor_period: "2026H1"
+    anchor_total_rev_cny: "4,558,950,064.86元（45.59亿元），同比+7.80%"
+    anchor_robot_related_line: "“减速器及其他”440,341,985.30元，占9.67%，同比+26.18%（p15）；对应成本231,286,312.42元，毛利率47.47%（p106，自算）。半年报未拆分机器人减速器单项，亦未披露该行毛利率"
+  s05_alert_investigation:
+    rh04_check: "NA（双环不属于本轮RH04适用对象；2026H1经营活动现金流净额1,111,585,788.77元，同比+13.38%，为正）"
+    rh06_check: "NA"
+    rh02_check: "已核实为真实空白：2026半年报合并资产负债表（p42）“合同资产”行无任何金额，母公司资产负债表（p45）同样空白；2025年报合并资产负债表（p80）该行亦空白，属连续期间一贯无合同资产，非本期异常。存货：期末2,413,442,330.03元 vs 期初2,225,853,720.78元，+8.43%（p42）；按营业成本3,338,705,570.00元测算H1存货周转天数约125.8天，2025全年约117.3天（自算），周转略放缓但幅度有限；存货占总资产11.87%。注意：p15资产构成表“上年末”存货列2,126,798,406.43元，与本表期初2,225,853,720.78元不一致，本报告采用资产负债表期初数"
+  business_verdict:
+    robot_exposure: "DIRECT_UNDISCLOSED"
+    overall_commercial_stage: "MASS_PRODUCTION_REVENUE"
+    one_sentence_summary: "RV减速器确实已量产并在2026H1贡献约4.40亿元收入，但被并入“减速器及其他”无法单独验证机器人占比，且环动科技单体利润不披露、科创板分拆两年仍停在“受理后尚在进行中”，是最大的不确定项。"
+  evidence_quotes:
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 5
+      topic: "并表主体"
+      verbatim_quote: "环动科技 指 浙江环动机器人关节科技股份有限公司"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 155
+      topic: "并表/持股"
+      verbatim_quote: "浙江环动机器人关节科技股份有限公司 170,660,000.00 玉环 玉环 制造业 61.29% 设立"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 66
+      topic: "并表/分拆"
+      verbatim_quote: "本次分拆完成后，环动科技仍为公司控股子公司，环动科技的财务状况和盈利能力仍将反映在公司的合并报表中。"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 66
+      topic: "分拆进度"
+      verbatim_quote: "截至本报告期末，本次分拆上市相关工作正在有序推进中。"
+    - doc_id: "DOC-5CF373BAD33AF333"
+      physical_page: 35
+      topic: "分拆进度"
+      verbatim_quote: "截至本报告期末，本次分拆上市相关工作尚在进行中。"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 17
+      topic: "产品/收入"
+      verbatim_quote: "报告期内，公司机器人减速器业务运行稳健，实现稳步增长。"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 17
+      topic: "产品/RV"
+      verbatim_quote: "其一，在重载 RV 精密减速器领域，采用理论建模、数据驱动、仿真分析与实验验证相结 合的闭环研究方法"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 10
+      topic: "产品"
+      verbatim_quote: "车齿轮和电动工具齿轮、智能执行机构、工业机器人减速器及其他产品"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 18
+      topic: "收入"
+      verbatim_quote: "减速器及其他 795,052,336.68 8.73% 656,103,940.95 7.47% 21.18%"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 145
+      topic: "收入/毛利"
+      verbatim_quote: "减速器及其他 792,965,536.56 487,942,309.59"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 21
+      topic: "产品/研发阶段"
+      verbatim_quote: "新型重载 RV 减速器研 发及应用 研发重载型机器人高精密关节减速器系列化成套解决方案"
+    - doc_id: "DOC-5CF373BAD33AF333"
+      physical_page: 15
+      topic: "收入"
+      verbatim_quote: "减速器及其他 440,341,985.30 9.67% 348,990,082.38 8.25% 26.18%"
+    - doc_id: "DOC-5CF373BAD33AF333"
+      physical_page: 106
+      topic: "收入/毛利"
+      verbatim_quote: "减速器及其他 440,341,985.30 231,286,312.42"
+    - doc_id: "DOC-5CF373BAD33AF333"
+      physical_page: 42
+      topic: "RH02"
+      verbatim_quote: "存货 2,413,442,330.03 2,225,853,720.78；其中：数据资源／合同资产／持有待售资产（合同资产行无任何金额）"
+    - doc_id: "DOC-4C864890A91654C6"
+      physical_page: 26
+      topic: "并表/未披露"
+      verbatim_quote: "主要子公司及对公司净利润影响达 10%以上的参股公司情况"
+  unknowns_and_limits:
+    - "环动科技单体营业收入与净利润未在双环年报/半年报披露：2025年报p26“主要子公司”表仅列江苏双环、嘉兴双环两家100%子公司，环动科技不在表内，故RV减速器业务的盈利能力无法从公开原文单独验证，留HOLD待环动招股书/问询回复核对"
+    - "机器人减速器收入未单列，无法量化机器人业务占比；“减速器及其他”含非机器人减速器与其他传动产品，不可整体视作机器人收入"
+    - "分拆上市进度：仅披露2024-11-25受理（上证科审﹝2024﹞375号）及“正在推进/尚在进行中”，截至knowledge_as_of未见上市委审议、注册或中止的正式披露，进度判断留HOLD"
+    - "2026半年报p15“资产构成重大变动表”上年末列与资产负债表期初不一致（存货2,126,798,406.43 vs 2,225,853,720.78；应收账款2,522,569,433.19 vs 2,758,115,414.50），判断为上年同期口径误标，本报告统一采用资产负债表期初数"
+    - "2026半年报分地区两处口径不一致：p15国内销售3,605,252,754.13元 vs p106国内销售3,624,891,454.20元，差额19,638,700.07元，原因未在原文说明"
+    - "谐波减速器是否为公司自产未披露：2025年报p14仅作行业趋势表述（“RV、谐波减速器国产化率稳步提升”），不构成公司产品事实"
+    - "双环传动2026年三季报披露日晚于2026-10-25，按铁律未检索、未引用、未混入H1口径"
+    - "核验方式：五份PDF均本地下载并逐页抽取文本层（页数175/132/181/161/11与清单一致），关键结论逐条回溯至具体物理页；未逐页通读全部正文，但全文已可全文检索，不存在未打开的PDF"
+
+---
+
+company:
+  security_id: "SZ:002979"
+  stock_name: "雷赛智能"
+  knowledge_as_of: "2026-10-25"
+  sources_actually_read:
+    - doc_id: "DOC-D3C1FD19472CC127"
+      report_name: "2025年报"
+      disclosure_date: "2026-04-23"
+      total_pages: 181
+      read_status: "FULL_PDF_VERIFIED"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      report_name: "2026半年报"
+      disclosure_date: "2026-08-26"
+      total_pages: 161
+      read_status: "FULL_PDF_VERIFIED"
+    - doc_id: "DOC-FF9FF939F811355B"
+      report_name: "2026三季报"
+      disclosure_date: "2026-10-22"
+      total_pages: 11
+      read_status: "FULL_PDF_VERIFIED"
+  consolidated_entities:
+    - entity_name: "深圳市雷赛智能控制股份有限公司"
+      consolidation_status: "CONSOLIDATED(并表)"
+      role_in_robotics: "母公司；伺服/步进/控制技术主业平台，机器人核心部件收入在母公司体系内归集，未单列"
+    - entity_name: "上海雷赛机器人科技有限公司"
+      consolidation_status: "CONSOLIDATED(并表)"
+      role_in_robotics: "机器人关节模组解决方案；注册资本4,000万元，持股70.00%（控股二级子公司），少数股东持股30%"
+    - entity_name: "深圳市灵巧驱控技术有限公司"
+      consolidation_status: "CONSOLIDATED(并表)"
+      role_in_robotics: "灵巧手解决方案；注册资本5,000万元，持股100.00%（全资子公司）"
+    - entity_name: "东莞雷赛机器人科技有限公司"
+      consolidation_status: "CONSOLIDATED(并表)"
+      role_in_robotics: "人形机器人核心零部件解决方案；注册资本1,000万元，持股100.00%（全资子公司）"
+  product_lines:
+    - line_name: "高密度无框力矩电机（FM1/FM2）"
+      robot_application: "人形机器人/协作机器人关节电机（真实机器人用途）"
+      commercial_stage: "REVENUE_BUNDLED"
+      evidence_ref: "2025年报 p18：交付超12万台、20倍以上增长；2026半年报 p13：在手订单超100万台、在建年产300万台；但分产品收入表无此科目，收入并入“伺服系统类”（该推断非原文明确表述）"
+    - line_name: "空心杯电机及配套微型伺服系统"
+      robot_application: "人形机器人灵巧手/小型关节驱动"
+      commercial_stage: "REVENUE_BUNDLED"
+      evidence_ref: "2025年报 p14 产品清单列示“空心杯电机 标准型、高转速型、大转矩型”；未披露交付量或收入金额"
+    - line_name: "谐波关节模组/行星关节模组"
+      robot_application: "人形机器人旋转关节模组"
+      commercial_stage: "ORDER_OR_SMALL_BATCH"
+      evidence_ref: "2026半年报 p13：“行星关节模组、谐波关节模组以及高自由度灵巧手研发成功并实现批量供应，目前已经获得近百家主流机器人客户订单，并开始规模化供货”"
+    - line_name: "高/中/低自由度灵巧手"
+      robot_application: "人形机器人末端执行器"
+      commercial_stage: "ORDER_OR_SMALL_BATCH"
+      evidence_ref: "2026半年报 p13 同上句；2025年报 p18 表述为“数十家主流机器人客户订单”"
+    - line_name: "伺服系统类（通用工控为主）"
+      robot_application: "非机器人为主（通用工业自动化）；该科目同时承载未单列的机器人核心部件收入，不可整体计为机器人收入"
+      commercial_stage: "REVENUE_DISCLOSED"
+      evidence_ref: "2026半年报 p14：“伺服系统类 661,198,536.16 53.02% 427,079,767.82 47.91% 54.82%”"
+    - line_name: "步进系统类"
+      robot_application: "非机器人（通用工业自动化）"
+      commercial_stage: "REVENUE_DISCLOSED"
+      evidence_ref: "2026半年报 p14：“步进系统类 381,549,442.08 30.59% 311,475,115.91 34.94% 22.50%”"
+    - line_name: "控制技术类（PLC/运动控制卡/控制器）"
+      robot_application: "非机器人（通用工业自动化；公司另提“运动控制小脑”布局但未量化）"
+      commercial_stage: "REVENUE_DISCLOSED"
+      evidence_ref: "2026半年报 p14：“控制技术类 197,669,594.11 15.85% 144,201,618.53 16.18% 37.08%”"
+  revenue_breakdown:
+    fy2025_total_rev_cny: "1,873,838,550.29元（18.74亿元），同比+18.28%"
+    fy2025_robot_related_line: "无单列科目。分产品仅四行：控制技术类286,940,436.40元(15.31%)、步进系统类652,578,669.74元(34.83%)、伺服系统类921,586,745.82元(49.18%)、其他12,732,698.33元(0.68%)。机器人核心部件收入未单列，推断并入伺服系统类，但年报正文称其为“四大核心品类”之一，与收入表仅三类的口径自相矛盾"
+    anchor_period: "2026Q1-Q3"
+    anchor_total_rev_cny: "1,908,592,895.71元（19.09亿元），同比+46.77%；Q3单季661,448,176.53元，同比+61.70%"
+    anchor_robot_related_line: "三季报未拆产品结构，仅披露“伺服系统1-9月累计营业收入10.08亿元，同比+58.64%”（占9M营收52.81%，自算），未给毛利率，机器人部件金额不可得。补H1拆分：伺服系统类661,198,536.16元(+54.82%，毛利率28.97%)、步进系统类381,549,442.08元(+22.50%，毛利率43.85%)、控制技术类197,669,594.11元(+37.08%，毛利率63.80%)"
+  s05_alert_investigation:
+    rh04_check: "成立且已查清。9M经营活动现金流净额-51,525,866.57元（去年同期+190,737,930.57元，-127.01%），归母净利299,184,569.06元，比值-0.172（自算复核一致，p1）。官方三条原因（p3）：①业务回款及放账质量保持良性；②基于业务高速增长预期与原材料价格上行，实施策略性备货导致当期现金支出增幅较大；③货币资金储备充足，主动减少银行承兑汇票贴现，带来现金流入降低。逐项交叉验证：销售商品收到现金1,431,814,687.09元仅+19.46%，显著低于营收+46.77%；购买商品支付现金951,534,464.32元大增+66.46%（p10）；应收票据+应收款项融资合计由238,536,671.66元增至519,090,398.16元，增加280,553,726.50元（p6）；存货增加207,183,026.65元；应付票据增161,529,157.31元部分对冲。结论：现金流转负主因是“收现增速远低于收入增速＋备货付现大增＋票据未贴现”，属营运资金占用，非利润造假，但Q3单季经营现金流实为-94,892,155.76元（9M -5,152.59万 减去 H1 +4,336.63万，自算），单季恶化幅度需持续跟踪"
+    rh06_check: "NA"
+    rh02_check: "已核实：2026三季报合并资产负债表（p6）“合同资产”行无任何金额，确为空白无余额；2026半年报（p15）及2025年报均未见合同资产余额。存货期末623,670,106.67元 vs 期初416,487,080.02元，实际+49.75%（自算）。注意：三季报p2变动表标注“+33.22%”，与同行列示的两个金额无法复算（差额207,183,026.65元），同类问题还有应收票据标+40.49%实为+68.03%、应收款项融资标+69.70%实为+230.02%，该表增减率疑按其他基数计算，本报告不采用该表增减率，仅采信绝对金额。存货占款上升的官方解释为“为应对原材料供应紧张及价格上涨，公司进行了策略性备货”（p2）"
+  business_verdict:
+    robot_exposure: "DIRECT_UNDISCLOSED"
+    overall_commercial_stage: "MASS_PRODUCTION_REVENUE"
+    one_sentence_summary: "无框力矩电机已是万台级真实量产（2025年交付超12万台）并拉动整体收入，但机器人部件收入被并进伺服系统类、金额无法单独验证，叠加Q3单季经营现金流-0.95亿元与存货/票据占款激增，是最大风险点。"
+  evidence_quotes:
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 1
+      topic: "收入/利润"
+      verbatim_quote: "营业收入（元） 661,448,176.53 61.70% 1,908,592,895.71 46.77%"
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 1
+      topic: "RH04"
+      verbatim_quote: "归属于上市公司股东的净利润（元） 105,558,788.78 156.10% 299,184,569.06 86.80%"
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 3
+      topic: "RH04"
+      verbatim_quote: "基于业务高速增长预期、原材料价格上行趋势，公司实施策略性备货，使得当期现金支出"
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 3
+      topic: "RH04"
+      verbatim_quote: "得益于公司整体货币资金储备较为充足，主动减少银行承兑汇票贴现操作，属于常规财务管理安排"
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 10
+      topic: "RH04"
+      verbatim_quote: "购买商品、接受劳务支付的现金 951,534,464.32 571,620,484.89"
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 10
+      topic: "RH04"
+      verbatim_quote: "销售商品、提供劳务收到的现金 1,431,814,687.09 1,198,576,052.63"
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 3
+      topic: "收入结构"
+      verbatim_quote: "服系统 1-9 月累计实现营业收入 10.08 亿元，同比增长58.64%"
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 6
+      topic: "RH02"
+      verbatim_quote: "存货 623,670,106.67 416,487,080.02；其中：数据资源／合同资产／持有待售资产（合同资产行无任何金额）"
+    - doc_id: "DOC-FF9FF939F811355B"
+      physical_page: 2
+      topic: "RH02"
+      verbatim_quote: "存货 623,670,106.67 416,487,080.02 33.22% 为应对原材料供应紧张及价格上涨，公司进行 了策略性备货。"
+    - doc_id: "DOC-D3C1FD19472CC127"
+      physical_page: 19
+      topic: "收入"
+      verbatim_quote: "伺服系统类 921,586,745.82 49.18% 708,735,867.89 44.70% 30.03%"
+    - doc_id: "DOC-D3C1FD19472CC127"
+      physical_page: 12
+      topic: "收入/口径"
+      verbatim_quote: "覆盖伺服系统、步进系统、控制技术类、机器人核心 部件四大核心品类"
+    - doc_id: "DOC-D3C1FD19472CC127"
+      physical_page: 18
+      topic: "产品/出货"
+      verbatim_quote: "报告期内，公司的无框力矩电机产品交付超过 12万台，取得 20 倍以上的增长"
+    - doc_id: "DOC-D3C1FD19472CC127"
+      physical_page: 18
+      topic: "产品/订单"
+      verbatim_quote: "目前已经获得数十家主流机器人客户订单，并 开始规模化供货"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      physical_page: 13
+      topic: "产品/订单"
+      verbatim_quote: "公司无框力矩电机在手订单超过 100万台，正在建设年产 300万台的自动化生产制造能力"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      physical_page: 13
+      topic: "收入/归因"
+      verbatim_quote: "无框力矩电机等移动机器人相关业务继续快 速增长"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      physical_page: 14
+      topic: "收入"
+      verbatim_quote: "伺服系统类 661,198,536.16 53.02% 427,079,767.82 47.91% 54.82%"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      physical_page: 15
+      topic: "收入/毛利"
+      verbatim_quote: "伺服系统类 661,198,536.16 469,677,895.51 28.97% 54.82% 51.96% 1.34%"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      physical_page: 137
+      topic: "并表"
+      verbatim_quote: "上海雷赛机器人科技有限公 司 40,000,000.00 上海 上海 机器人关节模组 解决方案 70.00%设立"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      physical_page: 137
+      topic: "并表"
+      verbatim_quote: "深圳市灵巧驱控技术有限公 司 50,000,000.00 深圳 深圳 灵巧手解决方案 100.00% 设立"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      physical_page: 138
+      topic: "并表/利润"
+      verbatim_quote: "上海雷赛机器人科技有限公司 30.00% 3,585,301.22 0.00 14,692,271.39"
+    - doc_id: "DOC-0DEF2DF2FA7FA643"
+      physical_page: 19
+      topic: "风险"
+      verbatim_quote: "公司机器人核心部件业务也 还处于产业化发展初期，人形机器人技术路线尚未完全收敛"
+  unknowns_and_limits:
+    - "机器人核心部件收入未单列：2025年报与2026半年报的分产品收入表均只有控制技术类/步进系统类/伺服系统类/其他四行，无“机器人核心部件”科目；正文称其为“四大核心品类”之一，属口径自相矛盾，机器人收入金额留HOLD"
+    - "推断“机器人核心部件并入伺服系统类”缺少原文直接表述支撑，仅为按产品对应关系的合理推断，不可当作公司披露事实入库"
+    - "2026三季报未拆产品结构，9M机器人部件收入与占比不可得；仅有伺服系统类9M累计10.08亿元这一含机器人与通用工控的混合口径"
+    - "上海雷赛机器人净利润为推算值：按少数股东损益3,585,301.22元/30%=11,951,004.07元（约1,195.10万元，H1 2026），原文未直接列示该子公司净利润，仅列少数股东损益与少数股东权益"
+    - "灵巧驱控、东莞雷赛机器人均为全资子公司且未列入“重要非全资子公司”，单体收入与利润未披露，其灵巧手/关节模组业务的盈亏不可验证"
+    - "三季报p2资产负债表变动表增减率与同行列示金额不符（存货标+33.22%实为+49.75%、应收票据标+40.49%实为+68.03%、应收款项融资标+69.70%实为+230.02%），本报告不采用该表增减率"
+    - "“在手订单超过100万台”为单位数口径，未折金额，且与2025年交付12万台不同口径，不可作为收入前瞻直接换算"
+    - "未检索2026-10-25之后的任何公告；三季报为2026-10-22披露，属可采信范围，已纳入9M锚定"

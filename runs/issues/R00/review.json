@@ -1,0 +1,105 @@
+{
+  "artifact": "R00_SELF_CHECK_REVIEW",
+  "issue_key": "R00",
+  "issue_number": 44,
+  "child_issue_number": 57,
+  "batch_id": "R00_BATCH_01",
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-26",
+  "timezone": "Asia/Shanghai",
+  "review_nature": "SELF_CHECK",
+  "executor": "CodeBuddy",
+  "orchestrator": "Antigravity",
+  "reviewer_assigned": "Codex",
+  "review_method": "从原始 Git 跟踪输入独立重算名单/锚定期/披露日/历史复用/质量项排查/引文页码/哈希与口径不变量，逐项比对交付物；不信任构建器布尔值。",
+  "decision_rule": "anomalies 为空 -> SELF_CHECK_PASS_WITH_LIMITS；任一阻塞异常 -> NOT_ACCEPTED_PENDING_FIX",
+  "anomalies": [],
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "checks_summary": "10/10 PASS",
+  "checks": [
+    {
+      "id": "C01",
+      "name": "固定 5 家名单与 release/#57/S08 TIER_1 零增删零换人",
+      "result": "PASS",
+      "detail": "release=['SZ:300607', 'SZ:002472', 'SZ:002979', 'SZ:002747', 'BJ:920593'] register=['SZ:300607', 'SZ:002472', 'SZ:002979', 'SZ:002747', 'BJ:920593'] all_tier1=True"
+    },
+    {
+      "id": "C02",
+      "name": "knowledge_as_of=2026-10-25 且全部引用披露日<=截止日，非 9M 公司不混入三季报",
+      "result": "PASS",
+      "detail": "late=[] q3_outside=[]"
+    },
+    {
+      "id": "C03",
+      "name": "锚定期 4×H1 + 1×9M（雷赛）与 S08/S05 一致",
+      "result": "PASS",
+      "detail": "anchors={'SZ:300607': '20260630', 'SZ:002472': '20260630', 'SZ:002979': '20260930', 'SZ:002747': '20260630', 'BJ:920593': '20260630'} s05_anchor={'SZ:300607': '20260630', 'SZ:002472': '20260630', 'SZ:002979': '20260930', 'SZ:002747': '20260630', 'BJ:920593': '20260630'}"
+    },
+    {
+      "id": "C04",
+      "name": "五家均保留 legacy_sources 且 legacy_auto_promoted=False",
+      "result": "PASS",
+      "detail": "bad=[]"
+    },
+    {
+      "id": "C05",
+      "name": "埃斯顿 RH04+RH06、雷赛 RH04+RH02、双环/鼎智 RH02 均有原文页码引文",
+      "result": "PASS",
+      "detail": "miss=[] flags={'SZ:300607': ('', ''), 'SZ:002472': ('', 'RH02'), 'SZ:002979': ('RH04', 'RH02'), 'SZ:002747': ('RH04;RH06', ''), 'BJ:920593': ('', 'RH02')}"
+    },
+    {
+      "id": "C06",
+      "name": "未知项齐备、混合口径明示、参股不并表（酷卓/鼎智五家参股）",
+      "result": "PASS",
+      "detail": "contam=[]"
+    },
+    {
+      "id": "C07",
+      "name": "引文表覆盖 5 家、每家>=10 条、页码 1-based>0 且逐字非空",
+      "result": "PASS",
+      "detail": "per_company={'SZ:300607': 12, 'SZ:002472': 15, 'SZ:002979': 21, 'SZ:002747': 14, 'BJ:920593': 25} rows=87 bad=0"
+    },
+    {
+      "id": "C08",
+      "name": "manifest 输入/交付哈希与根摘要精确匹配，全部纯 LF 无 BOM",
+      "result": "PASS",
+      "detail": "input_bad=[] deliv_bad=[] root=True crlf=[] bom=[]"
+    },
+    {
+      "id": "C09",
+      "name": "放行边界：SELF_CHECK 不冒充独立复核，不越权放行 R01/R03，不触碰 #53",
+      "result": "PASS",
+      "detail": "release=APPROVED_TO_START_R00_WITH_LIMITS r01=False r03=False issue53=OPEN"
+    },
+    {
+      "id": "C10",
+      "name": "全部输入存在且位于 Git 工作树内，无越界路径",
+      "result": "PASS",
+      "detail": "inputs=13 missing=[] escaped=[]"
+    }
+  ],
+  "counts": {
+    "companies": 5,
+    "dispatch_rows": 5,
+    "register_rows": 5,
+    "evidence_quote_rows": 87,
+    "quotes_per_company": {
+      "SZ:300607": 12,
+      "SZ:002472": 15,
+      "SZ:002979": 21,
+      "SZ:002747": 14,
+      "BJ:920593": 25
+    },
+    "h1_anchor": 4,
+    "m9_anchor": 1
+  },
+  "R01_released": false,
+  "R03_released": false,
+  "R04_started": false,
+  "issue_53_touched": false,
+  "issue_53_status": "OPEN",
+  "delivery_complete": true,
+  "independent_review_required": true,
+  "independent_review_status": "PENDING_CODEX_INDEPENDENT_REVIEW",
+  "known_limits_ref": "runs/issues/R00/business_review_register.csv#key_unknowns_and_limits"
+}

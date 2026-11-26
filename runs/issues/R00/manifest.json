@@ -1,0 +1,126 @@
+{
+  "artifact": "R00_DELIVERY_MANIFEST",
+  "issue_key": "R00",
+  "issue_number": 44,
+  "child_issue_number": 57,
+  "batch_id": "R00_BATCH_01",
+  "plan_version": "20261026_collection_first_v2",
+  "knowledge_as_of": "2026-10-25",
+  "executor": "CodeBuddy",
+  "orchestrator": "Antigravity",
+  "review_nature": "SELF_CHECK",
+  "fixed_now": "2026-11-26T19:20:00+08:00",
+  "input_hash_basis": "CANONICAL_LF_BYTES",
+  "input_hash_basis_note": "文本输入按 CRLF->LF 规范化后计算字节数与 SHA-256。",
+  "deliverable_hash_basis": "EXACT_BYTES_LF",
+  "root_digest_basis": "按交付物 path 排序后以 'path:sha256' 以 \\n 连接再取 SHA-256；不含 manifest.json 与 review.json 自身，避免循环依赖。",
+  "replay_note": "离线运行 step_r00_build.py 与 step_r00_verify.py；R00_FIXED_NOW 固定时间戳。",
+  "manifest_root_digest": "a8f56e19dee42404c363bb32fab046832c55994c2ccaf51cf0552e2717f30289",
+  "input_count": 13,
+  "deliverable_count": 7,
+  "inputs": [
+    {
+      "path": "runs/issues/S08/business_verification_candidates.csv",
+      "bytes": 434102,
+      "sha256": "01db73477ce9b6815aef440610db72114333f0784d92fb379d53ad429da500f7"
+    },
+    {
+      "path": "runs/issues/S08/candidate_reuse_map.csv",
+      "bytes": 41650,
+      "sha256": "485e6918bc0b8ba0a7692e9992b8e57fee927476d551fdbeacea85eda6a8e232"
+    },
+    {
+      "path": "runs/issues/S08/acceptance_s08_20261126.json",
+      "bytes": 3615,
+      "sha256": "c3ce9eb9821005802b23e8e8a555e81961770004ce47b46c6b7a2742cd453f73"
+    },
+    {
+      "path": "runs/issues/R02/acceptance_r02_20261126.json",
+      "bytes": 3628,
+      "sha256": "2c1e72f36d2356553e7208aa46cb8708fcaa371536f33c3c71d821dd15449034"
+    },
+    {
+      "path": "runs/issues/S05/quality_flags.csv",
+      "bytes": 324254,
+      "sha256": "38addb2c08ebb89ffa1ed56bae82be1120d18f61984a3afc5fd965469998ae77"
+    },
+    {
+      "path": "runs/issues/S05/quality_decision_log.csv",
+      "bytes": 189331,
+      "sha256": "ba6cf6474496eabdf17cfe8f5e2e1c9e2ea10288bcb412ce3d64f2ed9c7591b2"
+    },
+    {
+      "path": "runs/issues/R00/release_20261126.json",
+      "bytes": 5381,
+      "sha256": "15e63dee9204b5d93d31b628d897bfbda1a46627aa6c8c30284298db3a466a58"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/ai1_300607_002747_business_review.yaml",
+      "bytes": 29441,
+      "sha256": "d7253b85104cb9b63293223d33524d5cb8057987bbb9984742c85978941d1b5d"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/ai1_300607_002747_evidence_notes.md",
+      "bytes": 9818,
+      "sha256": "c4c6b5f545620beee85b870f9da0994a78956c74f03d9c393d85c3f3c50bfafe"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/ai1_manifest.json",
+      "bytes": 820,
+      "sha256": "cb68bca841017ac2a76eca3c2bb7e1db516da84660901e445594a5a40530d509"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/ai2_002472_002979_business_review.yaml",
+      "bytes": 23385,
+      "sha256": "becde4cba3af270e76eba850df70456e0c32647c06ee9bf28e42b32003868c11"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.json",
+      "bytes": 33118,
+      "sha256": "63c16e14ac827d8c5fabb33311b914df7950f0514cabfafa5b880357d3581571"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.md",
+      "bytes": 14744,
+      "sha256": "882e4cb67a07a7a21df6a1ff0525e900a83f718cc85992cca752838279e7c554"
+    }
+  ],
+  "deliverables": [
+    {
+      "path": "runs/issues/R00/business_batch_dispatch.csv",
+      "bytes": 1397,
+      "sha256": "482900d8743fe4b4a18e4f2adca755952de5016c334a0359b274d34cbc20f288"
+    },
+    {
+      "path": "runs/issues/R00/business_review_register.csv",
+      "bytes": 23669,
+      "sha256": "7aa129bb73c9a763657a44e30b285e0099758cad5ebd86e312fd0631b892a5da"
+    },
+    {
+      "path": "runs/issues/R00/batch01_evidence_quotes.csv",
+      "bytes": 17640,
+      "sha256": "afea2dcbaeafd481854321712351afa8de854bf36730b97be79bdd2119be843b"
+    },
+    {
+      "path": "runs/issues/R00/child_issue_manifest.json",
+      "bytes": 9350,
+      "sha256": "42dabc4d617eb9a8ecc62ad992b6c7dc94abb67b8c83e1017fed742548d1c526"
+    },
+    {
+      "path": "runs/issues/R00/handoff.md",
+      "bytes": 19708,
+      "sha256": "90384cfd945f66f0ffe5f52b70a6a20b4c1584dfdb702a47af26d89bb6af939f"
+    },
+    {
+      "path": "runs/issues/R00/step_r00_build.py",
+      "bytes": 45672,
+      "sha256": "8337ef4cf5493adcfc3d88f2aed6e4d4f9f6047f4eb3cd8ea5a24a4d4063333a"
+    },
+    {
+      "path": "runs/issues/R00/step_r00_verify.py",
+      "bytes": 28697,
+      "sha256": "6019421ec07291aa1623fc7d3cfb7e310cb4a0854d11a6dae055bfbc16b20810"
+    }
+  ],
+  "anomaly_count": 0
+}
