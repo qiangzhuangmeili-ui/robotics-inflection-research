@@ -147,7 +147,7 @@ def money(v):
 
 
 def is_excluded_entity(status, role):
-    if "EQUITY_METHOD" in status or "不并表" in status or "NOT_CONSOLIDATED" in status:
+    if "EQUITY_METHOD" in status or "不并表" in status or "NOT_CONSOLIDATED" in status or "PROPOSED_INVESTMENT" in status or "拟投资" in status:
         return True
     return any(k in role for k in ("未并表", "尚未并表", "无并表主体", "非股权主体"))
 
