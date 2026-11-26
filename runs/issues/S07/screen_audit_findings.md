@@ -1,7 +1,8 @@
 # S07 / #42 抽查阈值边界、漏筛和缺数据偏差｜审计报告
 
-生成时间：2026-11-26T13:30:00+08:00（北京时间）。计划版本 `20261026_collection_first_v2`，知识截止日 `2026-10-25`。
+生成时间：2026-11-26T13:45:00+08:00（北京时间）。计划版本 `20261026_collection_first_v2`，知识截止日 `2026-10-25`。
 执行方：CodeBuddy；统筹方：Antigravity；独立复核指派：Codex。本报告为 `SELF_CHECK`，不释放 S08。
+返修轮次：`R1`；返修依据：`runs/issues/S07/codex_review_s07_r0_20261126.md`（Codex R0 独立复核 `RETURN_FOR_REWORK`）。
 
 ## 1. 审计范围与方法
 
@@ -73,18 +74,58 @@
 
 ## 2. 路由复算与边界核对
 
-- S03 L1：由复算指标重新触发 SG01–SG09、重算四维与 bucket/subtag，**57 家 CONSISTENT**，5 家为底稿/截止日 `FROZEN_OVERRIDE`，不一致 **0** 家。
-- S04 L2：维度计数与 `qualified_dims` 内部一致 **62 家**，不一致 **0** 家；对 `B_ABS_CHANNEL` 与 `C_LOW_BASE_CONFIRMED` 另做输入级复核（见 2.1、2.2）。
+- S03 L1：由复算指标重新触发 SG01–SG09、重算四维与 bucket/subtag，**57 家规则重推一致（CONSISTENT）**；**5 家为冻结覆盖（FROZEN_OVERRIDE）**，覆盖原因逐家见 2.3；不一致 **0** 家。
+- S04 L2：维度计数与 `qualified_dims` 内部一致 **62 家**，不一致 **0** 家；另对样本内 `B_ABS_CHANNEL` **11 条**、`C_LOW_BASE_CONFIRMED` **6 条**逐条回查 `s00_v10` 原值（见 2.1、2.2），失败条数 **0**。
 - S05 质量闸门：样本中进入 S05 278 的 **21 家**，RH01–RH05 阈值判定与 `quality_flags.csv` 一致 **21 家**，不一致 **0** 家；RH06 的 `one_off` 标记与 Q09 复算一致。
-- S06 观察名单：样本中进入缺失观察的 **30 家**，`s02_hold/missing/undefined_base/provisional/not_comparable` 五项计数与 S02 状态逐家一致 **30 家**，不一致 **0** 家。
+- S06 观察名单：样本中进入缺失观察的 **30 家**，`s02_hold/missing/undefined_base/provisional/not_comparable` 五项计数与已存 S02 状态逐家一致 **30 家**，不一致 **0** 家；缺失一律保持未知，未填 0。
 
-### 2.1 绝对额通道 `B_ABS_CHANNEL`
+### 2.1 绝对额通道 `B_ABS_CHANNEL`（逐条可复算）
 
-全池 S04 中共 **104 家**登记绝对额通道。对样本内每家逐一回查 `s00_v10`：SG06 的 `FIN.NPDEDT.YTD`、SG08 的 `FIN.OCF.YTD` 在 t 与 t−1y 两侧均为 usable 状态、有金额、同期间可比。样本内未发现“比率通道 UNDEFINED_BASE 导致绝对额通道失效”的情况，也未发现沿用上游 CLEAN 标签直接放行。
+全池 S04 中共 **104 家**登记绝对额通道；样本内命中 **11 条**（公司×信号），逐条从 `s00_v10.csv.gz` 取原值复算，通过 **11 条**、失败 **0 条**。
 
-### 2.2 低基数确认 `C_LOW_BASE_CONFIRMED`
+| 证券 | 名称 | 信号 | 字段 | 当期 | 金额(万元) | 状态 | 基期 | 金额(万元) | 状态 | 可比性 | 增量(万元) | 门槛判定 | 通过 |
+|---|---|---|---|---|---:|---|---|---:|---|---|---:|---|---|
+| BJ:920207 | 众诚科技 | SG08 | `FIN.OCF.YTD` | 20260630 | 147.51 | EXTRACTED | 20250630 | -946.06 | EXTRACTED | SAME_PERIOD_COMPARABLE | 1,093.57 | OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比 | PASS |
+| BJ:920289 | 华汇智能 | SG08 | `FIN.OCF.YTD` | 20260630 | 1,835.61 | EXTRACTED | 20250630 | -4,170.03 | EXTRACTED | SAME_PERIOD_COMPARABLE | 6,005.64 | OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比 | PASS |
+| BJ:920469 | 富恒新材 | SG08 | `FIN.OCF.YTD` | 20260630 | 2,003.08 | EXTRACTED | 20250630 | -11,353.02 | EXTRACTED | SAME_PERIOD_COMPARABLE | 13,356.11 | OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比 | PASS |
+| SH:603219 | 富佳股份 | SG08 | `FIN.OCF.YTD` | 20260630 | 20,007.75 | EXTRACTED | 20250630 | -8,387.05 | EXTRACTED | SAME_PERIOD_COMPARABLE | 28,394.80 | OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比 | PASS |
+| SH:603296 | 华勤技术 | SG08 | `FIN.OCF.YTD` | 20260630 | 64,261.23 | EXTRACTED | 20250630 | -152,247.59 | EXTRACTED | SAME_PERIOD_COMPARABLE | 216,508.82 | OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比 | PASS |
+| SH:605358 | 立昂微 | SG06 | `FIN.NPDEDT.YTD` | 20260930 | 13,265.32 | EXTRACTED_KEY_TABLE | 20250930 | -14,105.80 | EXTRACTED_KEY_TABLE | SAME_PERIOD_COMPARABLE | 27,371.12 | 基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比 | PASS |
+| SH:688003 | 天准科技 | SG06 | `FIN.NPDEDT.YTD` | 20260930 | 2,147.36 | EXTRACTED_KEY_TABLE | 20250930 | -2,455.79 | EXTRACTED_KEY_TABLE | SAME_PERIOD_COMPARABLE | 4,603.15 | 基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比 | PASS |
+| SZ:000856 | 冀东装备 | SG08 | `FIN.OCF.YTD` | 20260630 | 2,783.28 | EXTRACTED | 20250630 | -4,518.41 | EXTRACTED | SAME_PERIOD_COMPARABLE | 7,301.69 | OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比 | PASS |
+| SZ:000948 | 南天信息 | SG06 | `FIN.NPDEDT.YTD` | 20260930 | 1,524.22 | EXTRACTED_KEY_TABLE | 20250930 | -2,064.36 | EXTRACTED_KEY_TABLE | SAME_PERIOD_COMPARABLE | 3,588.58 | 基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比 | PASS |
+| SZ:000967 | 盈峰环境 | SG08 | `FIN.OCF.YTD` | 20260630 | 144,689.76 | EXTRACTED | 20250630 | -169,285.05 | EXTRACTED | SAME_PERIOD_COMPARABLE | 313,974.81 | OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比 | PASS |
+| SZ:300270 | 中威电子 | SG06 | `FIN.NPDEDT.YTD` | 20260930 | 1,062.24 | EXTRACTED_KEY_TABLE | 20250930 | -4,433.49 | EXTRACTED_KEY_TABLE | SAME_PERIOD_COMPARABLE | 5,495.73 | 基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比 | PASS |
 
-全池 S04 中共 **40 家**登记低基数确认。按冻结映射（SG01/SG04/SG06/SG08 用 YTD、SG09 用 SQ）回查同口径绝对额增量，样本内全部满足 **增量 ≥ 1,000 万元且方向为正**；未发现用任意金额替代、跨期相减或把未确认低基数信号计入维度。S03 中仅低基数信号的 `OQ_LOW_BASE_PROVISIONAL` 共 **11 家**，带低基数命中标记的公司 **94 家**。
+**口径**：SG06 要求基期<0、当期>0、当期≥1,000 万元；SG08 要求 OCF(t)>0 且 OCF(t−1y)≤0；两侧均须为 usable 状态、同期间可比（同 `period_type`、`period_key` 差 10,000、同合并范围、非上市前、无未决重述）。**未发现**比率通道 `UNDEFINED_BASE` 导致绝对额通道失效，也未发现直接沿用上游 CLEAN 标签放行。
+
+### 2.2 低基数确认 `C_LOW_BASE_CONFIRMED`（逐条可复算）
+
+全池 S04 中共 **40 家**登记低基数确认；样本内命中 **6 条**（公司×信号），按冻结映射（SG01/SG04/SG06/SG08 用 YTD、SG09 用 SQ）回查同口径绝对额增量，通过 **6 条**、失败 **0 条**，与 S04 `low_base_detail` 逐条对账一致 **6 条**。
+
+| 证券 | 名称 | 信号 | 字段/口径 | 当期 | 金额(万元) | 状态 | 基期 | 金额(万元) | 状态 | 可比性 | 增量(万元) | S04 登记 | 一致 | 通过 |
+|---|---|---|---|---|---:|---|---|---:|---|---|---:|---|---|---|
+| BJ:920066 | 科拜尔 | SG09 | `FIN.NPDEDT.SQ`/SQ | 20260630 | 1,382.00 | DERIVED_CUMULATIVE_DIFF | 20250630 | 359.64 | DERIVED_CUMULATIVE_DIFF | SAME_PERIOD_COMPARABLE | 1,022.36 | SG09=CONFIRMED(1022.36W) | YES | PASS |
+| BJ:920198 | 微创光电 | SG01 | `FIN.REV.YTD`/YTD | 20260630 | 5,357.88 | EXTRACTED | 20250630 | 3,539.36 | EXTRACTED | SAME_PERIOD_COMPARABLE | 1,818.52 | SG01=CONFIRMED(1818.52W);SG02=NO_CONFIRM_RULE;SG07=NO_CONFIRM_RULE | YES | PASS |
+| BJ:920249 | 利尔达 | SG04 | `FIN.NPDEDT.YTD`/YTD | 20260630 | 5,040.72 | EXTRACTED_KEY_TABLE | 20250630 | 644.72 | EXTRACTED_KEY_TABLE | SAME_PERIOD_COMPARABLE | 4,396.00 | SG04=CONFIRMED(4396.00W);SG09=CONFIRMED(3141.57W) | YES | PASS |
+| BJ:920641 | 格利尔 | SG04 | `FIN.NPDEDT.YTD`/YTD | 20260930 | 2,509.61 | EXTRACTED_KEY_TABLE | 20250930 | 106.07 | EXTRACTED_KEY_TABLE | SAME_PERIOD_COMPARABLE | 2,403.53 | SG04=CONFIRMED(2403.53W) | YES | PASS |
+| SH:600288 | 大恒科技 | SG06 | `FIN.NPDEDT.YTD`/YTD | 20260630 | 5,668.00 | EXTRACTED_KEY_TABLE | 20250630 | -180.39 | EXTRACTED_KEY_TABLE | SAME_PERIOD_COMPARABLE | 5,848.39 | SG06=CONFIRMED(5848.39W);SG09=CONFIRMED(2220.40W) | YES | PASS |
+| SH:603386 | 骏亚科技 | SG04 | `FIN.NPDEDT.YTD`/YTD | 20260930 | 7,528.68 | EXTRACTED_KEY_TABLE | 20250930 | 853.01 | EXTRACTED_KEY_TABLE | SAME_PERIOD_COMPARABLE | 6,675.67 | SG04=CONFIRMED(6675.67W) | YES | PASS |
+
+**口径**：增量 ≥ 1,000 万元且方向为正；SG06 另须当期 ≥ 1,000 万元；两侧 usable、同期间可比、无未决重述。**未发现**用任意金额替代、跨期相减或把未确认低基数信号计入维度。
+
+### 2.3 S03 冻结覆盖逐家说明
+
+57 家为**规则重推一致**；以下 **5 家**为**冻结覆盖**，不参与规则重推比对，原因如下：
+
+| 证券 | 名称 | workpaper_status | l0_status | 冻结 bucket/subtag | 覆盖原因 |
+|---|---|---|---|---|---|
+| SH:603448 | 天博智能 | POST_CUTOFF_INPUT | WATCH_AFTER_CUTOFF | OBSERVE_QUEUE/WATCH_AFTER_CUTOFF | L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag |
+| SH:688836 | 宇树科技 | POST_CUTOFF_INPUT | WATCH_AFTER_CUTOFF | OBSERVE_QUEUE/WATCH_AFTER_CUTOFF | L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag |
+| SZ:002083 | 孚日股份 | WORKPAPER_ADOPTED | EVALUABLE | OBSERVE_QUEUE/REF_ONLY_SCOPE_CHANGE | WORKPAPER_ADOPTED（底稿仅参考/范围变更），沿用冻结 bucket/subtag |
+| SZ:301348 | 蓝箭电子 | OVERRIDDEN_BY_CUTOFF | WATCH_AFTER_CUTOFF | OBSERVE_QUEUE/WATCH_AFTER_CUTOFF | L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag |
+| SZ:301699 | 洛轴股份 | POST_CUTOFF_INPUT | WATCH_AFTER_CUTOFF | OBSERVE_QUEUE/WATCH_AFTER_CUTOFF | L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag |
+
 
 ## 3. 偏差诊断
 
@@ -140,11 +181,19 @@ S05 RH02 状态：{'PENDING_APPLICABILITY': 127, 'TRIGGERED': 21, 'NOT_APPLICABL
 
 ### 3.6 反向漏筛检验
 
-以 `robot_exposure ∈ DIRECT_DISCLOSED / DIRECT_UNDISCLOSED / INDIRECT_VERIFIED` 定义“已有较强机器人业务线索”，全池 **45 家**，其中 **9 家**进入 S05 277 主线，**36 家**未进入。未进入者的 S04 基线判定：{'L2_NOT_IN_SCOPE': 12, 'L2_NOT_SHORTLISTED': 11, 'L2_SHORTLIST_CANDIDATE': 12, 'WATCH_AFTER_CUTOFF': 1}；S06 冻结复核判定：{'L2_NOT_IN_SCOPE': 12, 'HOLD_FOR_DATA': 19, 'NOT_SHORTLISTED': 4, 'WATCH_AFTER_CUTOFF': 1}。
+**（A）全池路由汇总对账（仅统计，未逐家重推）**：以 `robot_exposure ∈ DIRECT_DISCLOSED / DIRECT_UNDISCLOSED / INDIRECT_VERIFIED` 定义“已有较强机器人业务线索”，全池 **45 家**，其中 **9 家**进入 S05 277 主线，**36 家**未进入。未进入者的 S04 基线判定分布：{'L2_NOT_IN_SCOPE': 12, 'L2_NOT_SHORTLISTED': 11, 'L2_SHORTLIST_CANDIDATE': 12, 'WATCH_AFTER_CUTOFF': 1}；S06 冻结复核判定分布：{'L2_NOT_IN_SCOPE': 12, 'HOLD_FOR_DATA': 19, 'NOT_SHORTLISTED': 4, 'WATCH_AFTER_CUTOFF': 1}。此段只做路由分布对账，**未对全部 36 家逐一重推**。
 
-抽样 5 家的判定分布：{'RULE_CONSISTENT_SCOPE': 2, 'RULE_CONSISTENT_HOLD_FOR_DATA': 2, 'RULE_CONSISTENT_DIMS_LT2': 1}；计算/口径漏筛 **0** 家。
+**（B）抽样 5 家逐家独立重推（不继承 S06 标签）**：从 `s00_v10` 独立重算 S03 信号/维度、S04 合格维度数、阻断/待核指标与状态，结果如下（判定分布：{'RULE_CONSISTENT_SCOPE': 2, 'RULE_CONSISTENT_DIMS_LT2': 2, 'REVIEWED_HOLD_BASELINE_CANDIDATE': 1}；计算漏筛 **0** 家）：
 
-**结论**：未进入主线的强线索公司均为规则性结果——`L2_NOT_IN_SCOPE`（L1 未进观察队列）、`HOLD_FOR_DATA`（S05 适用性复核后有效维度不足 2，保留重进）、`NOT_SHORTLISTED`（有效维度不足 2）或 `WATCH_AFTER_CUTOFF`（截止日隔离）。复算未发现“指标算错导致被排除”的案例，也未手工加回任何公司。
+| 证券 | 名称 | 复算 S03 | 复算信号 | 合格维度 | 阻断/待核指标 | 冻结 S04 | S06 复核 | 重推结论 | 重进条件 |
+|---|---|---|---|---:|---|---|---|---|---|
+| BJ:920418 | 苏轴股份 | NO_SIGNAL/NS_CONFIRMED | 无 | 0（无） | M12=NOT_APPLICABLE(Q02) | L2_NOT_IN_SCOPE | L2_NOT_IN_SCOPE | RULE_CONSISTENT_SCOPE | 需 S03 由 NO_SIGNAL/RISK_WATCH 进入 OBSERVE_QUEUE（出现 CLEAN 信号）后才进入 L2 |
+| SH:601689 | 拓普集团 | OBSERVE_QUEUE/OQ_CLEAN_OK | SG07=CLEAN | 1（CASH） | M03=PROVISIONAL(Q06)；M07=NOT_COMPARABLE(Q08)；M12=NOT_APPLICABLE(Q02) | L2_NOT_SHORTLISTED | HOLD_FOR_DATA | RULE_CONSISTENT_DIMS_LT2 | 当前复算仅 1 个不同维度有 CLEAN 信号（CASH），需第 2 个维度出现 CLEAN 信号；或规则升版时全池重算 |
+| SH:603296 | 华勤技术 | OBSERVE_QUEUE/OQ_CLEAN_OK | SG01=CLEAN、SG08=CLEAN | 2（GROWTH;CASH） | M12=NOT_APPLICABLE(Q02) | L2_SHORTLIST_CANDIDATE | HOLD_FOR_DATA | REVIEWED_HOLD_BASELINE_CANDIDATE | 基线复算已达 2 个合格维度；重进需 S04/S05 复核版适用性放行（补齐复核版 tight_pass 逐家映射）或补齐待核输入消除 HOLD_FOR_DATA |
+| SH:603666 | 亿嘉和 | RISK_WATCH/RW_CLEAN | 无 | 0（无） | M05=UNDEFINED_BASE(Q03)；M07=UNDEFINED_BASE(Q03)；M08=NOT_APPLICABLE(Q03,Q05) | L2_NOT_IN_SCOPE | L2_NOT_IN_SCOPE | RULE_CONSISTENT_SCOPE | 需 S03 由 NO_SIGNAL/RISK_WATCH 进入 OBSERVE_QUEUE（出现 CLEAN 信号）后才进入 L2 |
+| SZ:002527 | 新时达 | OBSERVE_QUEUE/OQ_CLEAN_OK | SG01=CLEAN、SG02=CLEAN | 1（GROWTH） | M05=UNDEFINED_BASE(Q03,Q09)；M07=UNDEFINED_BASE(Q03,Q05,Q09)；M08=NOT_APPLICABLE(Q03,Q05) | L2_NOT_SHORTLISTED | NOT_SHORTLISTED | RULE_CONSISTENT_DIMS_LT2 | 当前复算仅 1 个不同维度有 CLEAN 信号（GROWTH），需第 2 个维度出现 CLEAN 信号；或规则升版时全池重算 |
+
+**结论（严格限定范围）**：在**抽样的 5 家**反向样本中，逐家独立重推**未见计算漏筛（0 家）**：4 家为规则性排除/待核（维度不足 2 或 S03 未进观察队列），1 家为**基线已达 2 维但被 S04/S05 复核版适用性 HOLD**（复核版 `tight_pass` 未纳入 Git 跟踪，见 F10），同样不是计算漏筛。**该结论不外推为“全池 36 家均已排除计算漏筛”**——全池仅完成上述（A）的路由分布汇总，未逐一重推。未手工加回任何公司。
 
 ### 3.7 S04 基线与 S05 冻结池的口径差
 
@@ -163,20 +212,35 @@ RH06 采用台账：{'QUALIFIED_NOT_TRIGGERED': 234, 'QUALIFIED_TRIGGERED': 37, 
 | 编号 | 发现 | 归因层 | 定级 | 处置 |
 |---|---|---|---|---|
 | F01 | 样本 12 项指标逐格复算与 S02 完全一致（状态+数值） | S02 计算 | INFO | 无需处置 |
-| F02 | S03 L1 信号/维度/bucket 可由复算指标完整重放 | S03 规则 | INFO | 无需处置 |
-| F03 | S04 维度计数、绝对额通道、低基数确认边界成立 | S04 规则 | INFO | 无需处置 |
-| F04 | 缺失保持未知、未填 0；S06 五项计数与 S02 一致 | S02/S06 | INFO | 继续按未知处理 |
+| F02 | S03 L1 **57 家规则重推一致**；**5 家冻结覆盖**已逐家说明（见 2.3） | S03 规则 | INFO | 无需处置 |
+| F03 | S04 维度计数、绝对额通道 11 条、低基数确认 6 条逐条可复算且全部通过 | S04 规则 | INFO | 无需处置 |
+| F04 | S06 缺失观察五项计数与已存 S02 状态逐家一致，缺失保持未知未填 0（结论仅限该范围） | S02/S06 | INFO | 继续按未知处理 |
 | F05 | H1/9M 混合锚点影响横截面解释，不影响同比 | S02/S05 | LOW | S08 按锚点分层 |
 | F06 | 项目模式 RH02 豁免使存货风险信号规则性关闭 | S05 规则 | LOW | S08 以应收/合同资产为主 |
 | F07 | 低基数确认抑制增长率放大，可能保守推迟真实改善 | S01/S04 | LOW | 保持冻结阈值，不回调 |
 | F08 | BJ 通过率高于非 BJ，但证据不足以归因披露差异 | 数据/结构 | LOW | 不做跨市场通过率对比 |
-| F09 | 强线索未进主线均为规则性排除/待核，无计算漏筛 | S04/S05/S06 | INFO | 保留观察与重进 |
+| F09 | 抽样 5 家反向样本逐家独立重推，0 家计算漏筛；全池 36 家仅路由汇总未逐家重推 | S04/S05/S06 | INFO | 保留观察与重进 |
 | F10 | S04 基线 445 候选 vs S05 冻结 278，复核版映射不可在干净树重放 | S04/S05 版本 | MEDIUM | 结转 S08 资料治理 |
 | F11 | 20 格越界值状态 OK，冻结规则无处置动作 | S01 规则 | LOW | 结转 S08 定义处置 |
 | F12 | RH06 7 家待核（缺 NPP / 开放争议），未强行采用 | S05 规则 | LOW | 保持待核 |
 | F13 | 4 家截止日隔离、1 家锚点待重选、冀东 QUALITY_HOLD、#53 开放均保留 | 守卫 | INFO | 原样结转 |
 
-**系统性阻断判定：不存在 `SYSTEMIC_BLOCKER`。** 样本内 12 项指标的状态与数值、S03 信号与维度、S04 边界属性、S05 RH 阈值、S06 计数均可由 `s00_v10` 与冻结规则独立重放；没有发现需要回退 S00/S01 重算的系统性口径错误。
+**系统性阻断判定（由异常清单动态推导，非硬编码）**：
+
+| 阻断性异常清单 | 计数 |
+|---|---:|
+| `recomputation_status_or_value_mismatches` | 0 |
+| `anchor_derivation_mismatches` | 0 |
+| `s03_mismatches` | 0 |
+| `s04_mismatches` | 0 |
+| `s05_mismatches` | 0 |
+| `s06_mismatches` | 0 |
+| `abs_channel_evidence_failures` | 0 |
+| `low_base_evidence_failures` | 0 |
+| `reverse_omission_calc_leaks` | 0 |
+| `guard_violations` | 0 |
+
+**结论：不存在 `SYSTEMIC_BLOCKER`。** 上述 10 项阻断性异常计数全部为 0，故 `systemic_blocker=False`、`requires_s00_s01_rollback=False`；样本内 12 项指标状态与数值、S03 信号与维度、S04 边界属性（含绝对额/低基数逐条证据）、S05 RH 阈值、S06 计数均可由 `s00_v10` 与冻结规则独立重放。
 
 **可结转 S08 的已知受限**：F05 混合锚点、F06 RH02 项目模式豁免、F07 低基数保守偏差、F08 BJ 结构差异、F10 S04→S05 版本映射缺口、F11 越界处置未定义、F12 RH06 待核。上述限制均已在 S05/S06 冻结件中登记，S08 不得把它们当作已解决。
 

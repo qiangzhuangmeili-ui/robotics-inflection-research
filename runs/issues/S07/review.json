@@ -2,6 +2,8 @@
   "artifact": "S07_SELF_CHECK_REVIEW",
   "issue_key": "S07",
   "issue_number": 42,
+  "rework_round": "R1",
+  "rework_basis": "runs/issues/S07/codex_review_s07_r0_20261126.md",
   "plan_version": "20261026_collection_first_v2",
   "knowledge_as_of": "2026-10-25",
   "executor": "CodeBuddy",
@@ -9,7 +11,7 @@
   "reviewer_assigned": "Codex",
   "review_nature": "SELF_CHECK",
   "independent_review_complete": false,
-  "reviewed_at": "2026-11-26T13:30:00+08:00",
+  "reviewed_at": "2026-11-26T13:45:00+08:00",
   "decision": "SELF_CHECK_PASS_WITH_LIMITS",
   "counts": {
     "universe": 1054,
@@ -30,7 +32,7 @@
     "early_stage_watch": 54,
     "reverse_omission_sample": 5
   },
-  "checks_summary": "20/20 PASS",
+  "checks_summary": "22/22 PASS",
   "checks": [
     {
       "id": "C01",
@@ -76,9 +78,9 @@
     },
     {
       "id": "C08",
-      "name": "S04 维度计数/候选判定内部一致",
+      "name": "S04 维度计数/候选判定内部一致，且绝对额通道/低基数确认逐条证据 check_pass 全部为真",
       "result": "PASS",
-      "detail": "mismatch=[]"
+      "detail": "mismatch=[], abs_fail=[], low_base_fail=[]"
     },
     {
       "id": "C09",
@@ -88,9 +90,9 @@
     },
     {
       "id": "C10",
-      "name": "反向漏筛样本全部为规则性排除/待核，且无一家被手工加入 S05 277 主线",
+      "name": "5 家反向漏筛样本逐家独立重推（含阻断指标与重进条件），0 家计算漏筛，且无一家手工加入 S05 277 主线",
       "result": "PASS",
-      "detail": "reverse_rows=5, non_rule=[], in_mainline=[]"
+      "detail": "reverse_rows=5, audit_rows=5, calc_leaks=[], in_mainline=[], ids_match=True"
     },
     {
       "id": "C11",
@@ -106,9 +108,9 @@
     },
     {
       "id": "C13",
-      "name": "全部运行时输入存在且 100% 位于 Git 跟踪文件树内",
+      "name": "全部运行时输入存在且 100% 位于 Git 跟踪文件树内（无 .git 的纯归档按冻结清单 SHA 逐份核对）",
       "result": "PASS",
-      "detail": "inputs=29, missing=[], untracked=[]"
+      "detail": "git_index_check=ENFORCED, inputs=29, missing=[], untracked=[]"
     },
     {
       "id": "C14",
@@ -136,9 +138,9 @@
     },
     {
       "id": "C18",
-      "name": "结构化审计结论无 SYSTEMIC_BLOCKER、无需回退 S00/S01、不释放 S08",
+      "name": "结构化定级由异常清单独立重推：全部阻断项为 0、systemic_blocker=False、无需回退 S00/S01、不释放 S08",
       "result": "PASS",
-      "detail": "grading={'systemic_blocker': False, 'systemic_blocker_ids': [], 'requires_s00_s01_rollback': False, 'carry_forward_to_s08': ['F05', 'F06', 'F07', 'F08', 'F10', 'F11', 'F12'], 'conclusion': 'NO_SYSTEMIC_BLOCKER. Arithmetic and routing replicate exactly on the sample. Known limits are registered and carried to S08; no threshold tuning and no manual add-back.'}"
+      "detail": "systemic=False, expected_systemic=False, rollback=False, expected_rollback=False, counts_match=True, ids_match=True"
     },
     {
       "id": "C19",
@@ -151,11 +153,24 @@
       "name": "manifest 根摘要、输入/交付数量与逐份交付哈希自洽且全部交付为纯 LF",
       "result": "PASS",
       "detail": "root_match=True, inputs=29, deliverables=7, bad=[], crlf=[]"
+    },
+    {
+      "id": "C21",
+      "name": "绝对额通道证据覆盖样本内全部 (公司,信号)，字段完整且 check_pass 全为真",
+      "result": "PASS",
+      "detail": "expected_pairs=11, evidence_rows=11, pairs_match=True, schema_bad=[]"
+    },
+    {
+      "id": "C22",
+      "name": "低基数确认证据覆盖样本内全部 (公司,信号)，字段完整、check_pass 与 S04 登记对账全为真",
+      "result": "PASS",
+      "detail": "expected_pairs=6, evidence_rows=6, pairs_match=True, schema_bad=[]"
     }
   ],
   "limits": [
     "执行方自检（SELF_CHECK）不等同独立验收；须由 Codex 独立复核后决定是否验收与放行 S08。",
     "仅做小样本规则与计算审计，未重研全池、未逐家深读公告、未调整冻结阈值、未手工加回公司。",
+    "反向漏筛仅对抽样 5 家逐家独立重推；全池 36 家强线索非主线公司只做路由分布汇总，未逐一重推，结论不得外推。",
     "S04 复核版 tight_pass（278）未纳入 Git 跟踪，445→278 的逐家映射不可在干净树内完全重放；登记为 F10 结转 S08。",
     "20 格越界值在冻结规则中无处置动作（F11），只登记、不阻断、不改值。",
     "S00 勘误 #53 与既有守卫原样结转，本次未闭合 #53。"

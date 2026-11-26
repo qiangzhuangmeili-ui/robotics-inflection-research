@@ -2,9 +2,11 @@
   "artifact": "S07_SCREEN_AUDIT_REVIEW",
   "issue_key": "S07",
   "issue_number": 42,
+  "rework_round": "R1",
+  "rework_basis": "runs/issues/S07/codex_review_s07_r0_20261126.md",
   "plan_version": "20261026_collection_first_v2",
   "knowledge_as_of": "2026-10-25",
-  "generated_at": "2026-11-26T13:30:00+08:00",
+  "generated_at": "2026-11-26T13:45:00+08:00",
   "executor": "CodeBuddy",
   "orchestrator": "Antigravity",
   "reviewer_assigned": "Codex",
@@ -529,10 +531,13 @@
       },
       "sample_verdicts": {
         "RULE_CONSISTENT_SCOPE": 2,
-        "RULE_CONSISTENT_HOLD_FOR_DATA": 2,
-        "RULE_CONSISTENT_DIMS_LT2": 1
+        "RULE_CONSISTENT_DIMS_LT2": 2,
+        "REVIEWED_HOLD_BASELINE_CANDIDATE": 1
       },
-      "calc_leaks": []
+      "calc_leaks": [],
+      "reviewed_holds": [
+        "SH:603296"
+      ]
     },
     "s04_s05_pool_divergence": {
       "s04_candidates": 445,
@@ -573,24 +578,24 @@
     },
     {
       "id": "F02",
-      "title": "S03 L1 route fully re-derivable",
+      "title": "S03 L1 rule replay exact on 57, 5 frozen overrides explained",
       "layer": "S03",
       "severity": "INFO",
-      "evidence": "57 consistent, 5 frozen override, 0 mismatch"
+      "evidence": "57 rule-replayed CONSISTENT, 5 frozen override (individually justified), 0 mismatch"
     },
     {
       "id": "F03",
-      "title": "S04 boundary attributes hold",
+      "title": "S04 boundary attributes and signal evidence hold",
       "layer": "S04",
       "severity": "INFO",
-      "evidence": "62 consistent, 0 mismatch; abs-channel and low-base inputs re-checked"
+      "evidence": "62 consistent, 0 mismatch; abs-channel evidence=11 rows / 11 pass; low-base evidence=6 rows / 6 pass"
     },
     {
       "id": "F04",
       "title": "Missing data preserved as unknown",
       "layer": "S02/S06",
       "severity": "INFO",
-      "evidence": "379 watch companies, 7 categories; 30 count-consistent"
+      "evidence": "379 watch companies, 7 categories; 30 five-count-consistent with stored S02 status, no zero-fill"
     },
     {
       "id": "F05",
@@ -622,10 +627,10 @@
     },
     {
       "id": "F09",
-      "title": "Reverse omission is rule-consistent",
+      "title": "Reverse omission: 5 sampled companies re-derived, no calculation leak",
       "layer": "S04/S05/S06",
       "severity": "INFO",
-      "evidence": "36 strong-exposure companies outside mainline; calc leaks=0"
+      "evidence": "5 sampled companies independently re-derived; calc leaks=0; reviewed holds=1; full-pool 36 covered by route reconciliation only"
     },
     {
       "id": "F10",
@@ -656,10 +661,543 @@
       "evidence": "{'after_cutoff': 4, 'anchor_pending': 1, 'quality_source_unknown': 15, 'jidong_hold': True, 'issue_53': 'OPEN'}"
     }
   ],
+  "s03_frozen_override_audit": [
+    {
+      "security_id": "SH:603448",
+      "stock_name": "天博智能",
+      "workpaper_status": "POST_CUTOFF_INPUT",
+      "l0_status": "WATCH_AFTER_CUTOFF",
+      "frozen_bucket": "OBSERVE_QUEUE",
+      "frozen_subtag": "WATCH_AFTER_CUTOFF",
+      "override_reason": "L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag"
+    },
+    {
+      "security_id": "SH:688836",
+      "stock_name": "宇树科技",
+      "workpaper_status": "POST_CUTOFF_INPUT",
+      "l0_status": "WATCH_AFTER_CUTOFF",
+      "frozen_bucket": "OBSERVE_QUEUE",
+      "frozen_subtag": "WATCH_AFTER_CUTOFF",
+      "override_reason": "L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag"
+    },
+    {
+      "security_id": "SZ:002083",
+      "stock_name": "孚日股份",
+      "workpaper_status": "WORKPAPER_ADOPTED",
+      "l0_status": "EVALUABLE",
+      "frozen_bucket": "OBSERVE_QUEUE",
+      "frozen_subtag": "REF_ONLY_SCOPE_CHANGE",
+      "override_reason": "WORKPAPER_ADOPTED（底稿仅参考/范围变更），沿用冻结 bucket/subtag"
+    },
+    {
+      "security_id": "SZ:301348",
+      "stock_name": "蓝箭电子",
+      "workpaper_status": "OVERRIDDEN_BY_CUTOFF",
+      "l0_status": "WATCH_AFTER_CUTOFF",
+      "frozen_bucket": "OBSERVE_QUEUE",
+      "frozen_subtag": "WATCH_AFTER_CUTOFF",
+      "override_reason": "L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag"
+    },
+    {
+      "security_id": "SZ:301699",
+      "stock_name": "洛轴股份",
+      "workpaper_status": "POST_CUTOFF_INPUT",
+      "l0_status": "WATCH_AFTER_CUTOFF",
+      "frozen_bucket": "OBSERVE_QUEUE",
+      "frozen_subtag": "WATCH_AFTER_CUTOFF",
+      "override_reason": "L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag"
+    }
+  ],
+  "abs_channel_evidence": [
+    {
+      "security_id": "BJ:920207",
+      "stock_name": "众诚科技",
+      "signal_id": "SG08",
+      "field_id": "FIN.OCF.YTD",
+      "period_key": "20260630",
+      "value_cny": 1475123.9,
+      "status": "EXTRACTED",
+      "base_period_key": "20250630",
+      "base_value_cny": -9460587.39,
+      "base_status": "EXTRACTED",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 10935711.29,
+      "delta_wan": 1093.57,
+      "threshold_check": "OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "BJ:920289",
+      "stock_name": "华汇智能",
+      "signal_id": "SG08",
+      "field_id": "FIN.OCF.YTD",
+      "period_key": "20260630",
+      "value_cny": 18356099.94,
+      "status": "EXTRACTED",
+      "base_period_key": "20250630",
+      "base_value_cny": -41700344.38,
+      "base_status": "EXTRACTED",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 60056444.32,
+      "delta_wan": 6005.64,
+      "threshold_check": "OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "BJ:920469",
+      "stock_name": "富恒新材",
+      "signal_id": "SG08",
+      "field_id": "FIN.OCF.YTD",
+      "period_key": "20260630",
+      "value_cny": 20030823.22,
+      "status": "EXTRACTED",
+      "base_period_key": "20250630",
+      "base_value_cny": -113530242.19,
+      "base_status": "EXTRACTED",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 133561065.41,
+      "delta_wan": 13356.11,
+      "threshold_check": "OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "SH:603219",
+      "stock_name": "富佳股份",
+      "signal_id": "SG08",
+      "field_id": "FIN.OCF.YTD",
+      "period_key": "20260630",
+      "value_cny": 200077497.48,
+      "status": "EXTRACTED",
+      "base_period_key": "20250630",
+      "base_value_cny": -83870470.6,
+      "base_status": "EXTRACTED",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 283947968.08,
+      "delta_wan": 28394.8,
+      "threshold_check": "OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "SH:603296",
+      "stock_name": "华勤技术",
+      "signal_id": "SG08",
+      "field_id": "FIN.OCF.YTD",
+      "period_key": "20260630",
+      "value_cny": 642612299.3,
+      "status": "EXTRACTED",
+      "base_period_key": "20250630",
+      "base_value_cny": -1522475863.18,
+      "base_status": "EXTRACTED",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 2165088162.48,
+      "delta_wan": 216508.82,
+      "threshold_check": "OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "SH:605358",
+      "stock_name": "立昂微",
+      "signal_id": "SG06",
+      "field_id": "FIN.NPDEDT.YTD",
+      "period_key": "20260930",
+      "value_cny": 132653200.0,
+      "status": "EXTRACTED_KEY_TABLE",
+      "base_period_key": "20250930",
+      "base_value_cny": -141058000.0,
+      "base_status": "EXTRACTED_KEY_TABLE",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 273711200.0,
+      "delta_wan": 27371.12,
+      "threshold_check": "基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "SH:688003",
+      "stock_name": "天准科技",
+      "signal_id": "SG06",
+      "field_id": "FIN.NPDEDT.YTD",
+      "period_key": "20260930",
+      "value_cny": 21473628.37,
+      "status": "EXTRACTED_KEY_TABLE",
+      "base_period_key": "20250930",
+      "base_value_cny": -24557910.92,
+      "base_status": "EXTRACTED_KEY_TABLE",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 46031539.29,
+      "delta_wan": 4603.15,
+      "threshold_check": "基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "SZ:000856",
+      "stock_name": "冀东装备",
+      "signal_id": "SG08",
+      "field_id": "FIN.OCF.YTD",
+      "period_key": "20260630",
+      "value_cny": 27832809.81,
+      "status": "EXTRACTED",
+      "base_period_key": "20250630",
+      "base_value_cny": -45184097.16,
+      "base_status": "EXTRACTED",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 73016906.97,
+      "delta_wan": 7301.69,
+      "threshold_check": "OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "SZ:000948",
+      "stock_name": "南天信息",
+      "signal_id": "SG06",
+      "field_id": "FIN.NPDEDT.YTD",
+      "period_key": "20260930",
+      "value_cny": 15242245.18,
+      "status": "EXTRACTED_KEY_TABLE",
+      "base_period_key": "20250930",
+      "base_value_cny": -20643574.25,
+      "base_status": "EXTRACTED_KEY_TABLE",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 35885819.43,
+      "delta_wan": 3588.58,
+      "threshold_check": "基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "SZ:000967",
+      "stock_name": "盈峰环境",
+      "signal_id": "SG08",
+      "field_id": "FIN.OCF.YTD",
+      "period_key": "20260630",
+      "value_cny": 1446897580.66,
+      "status": "EXTRACTED",
+      "base_period_key": "20250630",
+      "base_value_cny": -1692850539.78,
+      "base_status": "EXTRACTED",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 3139748120.44,
+      "delta_wan": 313974.81,
+      "threshold_check": "OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比",
+      "check_pass": true
+    },
+    {
+      "security_id": "SZ:300270",
+      "stock_name": "中威电子",
+      "signal_id": "SG06",
+      "field_id": "FIN.NPDEDT.YTD",
+      "period_key": "20260930",
+      "value_cny": 10622377.81,
+      "status": "EXTRACTED_KEY_TABLE",
+      "base_period_key": "20250930",
+      "base_value_cny": -44334888.46,
+      "base_status": "EXTRACTED_KEY_TABLE",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 54957266.27,
+      "delta_wan": 5495.73,
+      "threshold_check": "基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比",
+      "check_pass": true
+    }
+  ],
+  "low_base_evidence": [
+    {
+      "security_id": "BJ:920066",
+      "stock_name": "科拜尔",
+      "signal_id": "SG09",
+      "field_id": "FIN.NPDEDT.SQ",
+      "basis": "SQ",
+      "period_key": "20260630",
+      "value_cny": 13819984.27,
+      "status": "DERIVED_CUMULATIVE_DIFF",
+      "base_period_key": "20250630",
+      "base_value_cny": 3596402.32,
+      "base_status": "DERIVED_CUMULATIVE_DIFF",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 10223581.95,
+      "delta_wan": 1022.36,
+      "threshold_check": "同口径增量>=1,000 万元且方向为正；两侧 usable 且同期间可比",
+      "s04_recorded_detail": "SG09=CONFIRMED(1022.36W)",
+      "s04_detail_match": true,
+      "check_pass": true
+    },
+    {
+      "security_id": "BJ:920198",
+      "stock_name": "微创光电",
+      "signal_id": "SG01",
+      "field_id": "FIN.REV.YTD",
+      "basis": "YTD",
+      "period_key": "20260630",
+      "value_cny": 53578796.59,
+      "status": "EXTRACTED",
+      "base_period_key": "20250630",
+      "base_value_cny": 35393645.41,
+      "base_status": "EXTRACTED",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 18185151.18,
+      "delta_wan": 1818.52,
+      "threshold_check": "同口径增量>=1,000 万元且方向为正；两侧 usable 且同期间可比",
+      "s04_recorded_detail": "SG01=CONFIRMED(1818.52W);SG02=NO_CONFIRM_RULE;SG07=NO_CONFIRM_RULE",
+      "s04_detail_match": true,
+      "check_pass": true
+    },
+    {
+      "security_id": "BJ:920249",
+      "stock_name": "利尔达",
+      "signal_id": "SG04",
+      "field_id": "FIN.NPDEDT.YTD",
+      "basis": "YTD",
+      "period_key": "20260630",
+      "value_cny": 50407183.39,
+      "status": "EXTRACTED_KEY_TABLE",
+      "base_period_key": "20250630",
+      "base_value_cny": 6447153.27,
+      "base_status": "EXTRACTED_KEY_TABLE",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 43960030.12,
+      "delta_wan": 4396.0,
+      "threshold_check": "同口径增量>=1,000 万元且方向为正；两侧 usable 且同期间可比",
+      "s04_recorded_detail": "SG04=CONFIRMED(4396.00W);SG09=CONFIRMED(3141.57W)",
+      "s04_detail_match": true,
+      "check_pass": true
+    },
+    {
+      "security_id": "BJ:920641",
+      "stock_name": "格利尔",
+      "signal_id": "SG04",
+      "field_id": "FIN.NPDEDT.YTD",
+      "basis": "YTD",
+      "period_key": "20260930",
+      "value_cny": 25096063.97,
+      "status": "EXTRACTED_KEY_TABLE",
+      "base_period_key": "20250930",
+      "base_value_cny": 1060742.69,
+      "base_status": "EXTRACTED_KEY_TABLE",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 24035321.28,
+      "delta_wan": 2403.53,
+      "threshold_check": "同口径增量>=1,000 万元且方向为正；两侧 usable 且同期间可比",
+      "s04_recorded_detail": "SG04=CONFIRMED(2403.53W)",
+      "s04_detail_match": true,
+      "check_pass": true
+    },
+    {
+      "security_id": "SH:600288",
+      "stock_name": "大恒科技",
+      "signal_id": "SG06",
+      "field_id": "FIN.NPDEDT.YTD",
+      "basis": "YTD",
+      "period_key": "20260630",
+      "value_cny": 56680013.16,
+      "status": "EXTRACTED_KEY_TABLE",
+      "base_period_key": "20250630",
+      "base_value_cny": -1803901.66,
+      "base_status": "EXTRACTED_KEY_TABLE",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 58483914.82,
+      "delta_wan": 5848.39,
+      "threshold_check": "同口径增量>=1,000 万元且方向为正，且当期>=1,000 万元；两侧 usable 且同期间可比",
+      "s04_recorded_detail": "SG06=CONFIRMED(5848.39W);SG09=CONFIRMED(2220.40W)",
+      "s04_detail_match": true,
+      "check_pass": true
+    },
+    {
+      "security_id": "SH:603386",
+      "stock_name": "骏亚科技",
+      "signal_id": "SG04",
+      "field_id": "FIN.NPDEDT.YTD",
+      "basis": "YTD",
+      "period_key": "20260930",
+      "value_cny": 75286810.16,
+      "status": "EXTRACTED_KEY_TABLE",
+      "base_period_key": "20250930",
+      "base_value_cny": 8530102.37,
+      "base_status": "EXTRACTED_KEY_TABLE",
+      "comparability": "SAME_PERIOD_COMPARABLE",
+      "delta_cny": 66756707.79,
+      "delta_wan": 6675.67,
+      "threshold_check": "同口径增量>=1,000 万元且方向为正；两侧 usable 且同期间可比",
+      "s04_recorded_detail": "SG04=CONFIRMED(6675.67W)",
+      "s04_detail_match": true,
+      "check_pass": true
+    }
+  ],
+  "reverse_omission_audit": [
+    {
+      "security_id": "BJ:920418",
+      "stock_name": "苏轴股份",
+      "anchor_period": "20260630",
+      "frozen_s04_l2_decision": "L2_NOT_IN_SCOPE",
+      "frozen_s06_reviewed_decision": "L2_NOT_IN_SCOPE",
+      "recomputed_s03_bucket": "NO_SIGNAL",
+      "recomputed_s03_subtag": "NS_CONFIRMED",
+      "recomputed_signals": {},
+      "recomputed_clean_dimensions": [],
+      "recomputed_dimension_count": 0,
+      "blocking_or_pending_metrics": [
+        "M12=NOT_APPLICABLE(Q02)"
+      ],
+      "baseline_route_consistent": true,
+      "verdict": "RULE_CONSISTENT_SCOPE",
+      "attribution_layer": "S03",
+      "reentry_condition": "需 S03 由 NO_SIGNAL/RISK_WATCH 进入 OBSERVE_QUEUE（出现 CLEAN 信号）后才进入 L2"
+    },
+    {
+      "security_id": "SH:601689",
+      "stock_name": "拓普集团",
+      "anchor_period": "20260630",
+      "frozen_s04_l2_decision": "L2_NOT_SHORTLISTED",
+      "frozen_s06_reviewed_decision": "HOLD_FOR_DATA",
+      "recomputed_s03_bucket": "OBSERVE_QUEUE",
+      "recomputed_s03_subtag": "OQ_CLEAN_OK",
+      "recomputed_signals": {
+        "SG07": "CLEAN"
+      },
+      "recomputed_clean_dimensions": [
+        "CASH"
+      ],
+      "recomputed_dimension_count": 1,
+      "blocking_or_pending_metrics": [
+        "M03=PROVISIONAL(Q06)",
+        "M07=NOT_COMPARABLE(Q08)",
+        "M12=NOT_APPLICABLE(Q02)"
+      ],
+      "baseline_route_consistent": true,
+      "verdict": "RULE_CONSISTENT_DIMS_LT2",
+      "attribution_layer": "S04",
+      "reentry_condition": "当前复算仅 1 个不同维度有 CLEAN 信号（CASH），需第 2 个维度出现 CLEAN 信号；或规则升版时全池重算"
+    },
+    {
+      "security_id": "SH:603296",
+      "stock_name": "华勤技术",
+      "anchor_period": "20260630",
+      "frozen_s04_l2_decision": "L2_SHORTLIST_CANDIDATE",
+      "frozen_s06_reviewed_decision": "HOLD_FOR_DATA",
+      "recomputed_s03_bucket": "OBSERVE_QUEUE",
+      "recomputed_s03_subtag": "OQ_CLEAN_OK",
+      "recomputed_signals": {
+        "SG01": "CLEAN",
+        "SG08": "CLEAN"
+      },
+      "recomputed_clean_dimensions": [
+        "GROWTH",
+        "CASH"
+      ],
+      "recomputed_dimension_count": 2,
+      "blocking_or_pending_metrics": [
+        "M12=NOT_APPLICABLE(Q02)"
+      ],
+      "baseline_route_consistent": true,
+      "verdict": "REVIEWED_HOLD_BASELINE_CANDIDATE",
+      "attribution_layer": "S04/S05",
+      "reentry_condition": "基线复算已达 2 个合格维度；重进需 S04/S05 复核版适用性放行（补齐复核版 tight_pass 逐家映射）或补齐待核输入消除 HOLD_FOR_DATA"
+    },
+    {
+      "security_id": "SH:603666",
+      "stock_name": "亿嘉和",
+      "anchor_period": "20260630",
+      "frozen_s04_l2_decision": "L2_NOT_IN_SCOPE",
+      "frozen_s06_reviewed_decision": "L2_NOT_IN_SCOPE",
+      "recomputed_s03_bucket": "RISK_WATCH",
+      "recomputed_s03_subtag": "RW_CLEAN",
+      "recomputed_signals": {},
+      "recomputed_clean_dimensions": [],
+      "recomputed_dimension_count": 0,
+      "blocking_or_pending_metrics": [
+        "M05=UNDEFINED_BASE(Q03)",
+        "M07=UNDEFINED_BASE(Q03)",
+        "M08=NOT_APPLICABLE(Q03,Q05)"
+      ],
+      "baseline_route_consistent": true,
+      "verdict": "RULE_CONSISTENT_SCOPE",
+      "attribution_layer": "S03",
+      "reentry_condition": "需 S03 由 NO_SIGNAL/RISK_WATCH 进入 OBSERVE_QUEUE（出现 CLEAN 信号）后才进入 L2"
+    },
+    {
+      "security_id": "SZ:002527",
+      "stock_name": "新时达",
+      "anchor_period": "20260630",
+      "frozen_s04_l2_decision": "L2_NOT_SHORTLISTED",
+      "frozen_s06_reviewed_decision": "NOT_SHORTLISTED",
+      "recomputed_s03_bucket": "OBSERVE_QUEUE",
+      "recomputed_s03_subtag": "OQ_CLEAN_OK",
+      "recomputed_signals": {
+        "SG01": "CLEAN",
+        "SG02": "CLEAN"
+      },
+      "recomputed_clean_dimensions": [
+        "GROWTH"
+      ],
+      "recomputed_dimension_count": 1,
+      "blocking_or_pending_metrics": [
+        "M05=UNDEFINED_BASE(Q03,Q09)",
+        "M07=UNDEFINED_BASE(Q03,Q05,Q09)",
+        "M08=NOT_APPLICABLE(Q03,Q05)"
+      ],
+      "baseline_route_consistent": true,
+      "verdict": "RULE_CONSISTENT_DIMS_LT2",
+      "attribution_layer": "S04",
+      "reentry_condition": "当前复算仅 1 个不同维度有 CLEAN 信号（GROWTH），需第 2 个维度出现 CLEAN 信号；或规则升版时全池重算"
+    }
+  ],
+  "reverse_omission_scope_note": "Only the 5 sampled REVERSE_OMISSION companies were independently re-derived. The remaining strong-exposure companies outside the mainline (36 in total) are covered by route-distribution reconciliation only, NOT by per-company re-derivation.",
   "grading": {
     "systemic_blocker": false,
     "systemic_blocker_ids": [],
     "requires_s00_s01_rollback": false,
+    "derivation_basis": {
+      "blocking_rule": "systemic_blocker = any(anomaly_counts[k] > 0 for k in BLOCKING_ANOMALY_KEYS); requires_s00_s01_rollback = any(anomaly_counts[k] > 0 for k in ROLLBACK_ANOMALY_KEYS)",
+      "blocking_keys": [
+        "recomputation_status_or_value_mismatches",
+        "anchor_derivation_mismatches",
+        "s03_mismatches",
+        "s04_mismatches",
+        "s05_mismatches",
+        "s06_mismatches",
+        "abs_channel_evidence_failures",
+        "low_base_evidence_failures",
+        "reverse_omission_calc_leaks",
+        "guard_violations"
+      ],
+      "rollback_keys": [
+        "recomputation_status_or_value_mismatches",
+        "anchor_derivation_mismatches",
+        "s03_mismatches",
+        "s04_mismatches",
+        "s05_mismatches",
+        "s06_mismatches",
+        "abs_channel_evidence_failures",
+        "low_base_evidence_failures",
+        "reverse_omission_calc_leaks"
+      ],
+      "anomaly_counts": {
+        "recomputation_status_or_value_mismatches": 0,
+        "anchor_derivation_mismatches": 0,
+        "s03_mismatches": 0,
+        "s04_mismatches": 0,
+        "s05_mismatches": 0,
+        "s06_mismatches": 0,
+        "abs_channel_evidence_failures": 0,
+        "low_base_evidence_failures": 0,
+        "reverse_omission_calc_leaks": 0,
+        "guard_violations": 0
+      },
+      "anomaly_ids": {
+        "recomputation_status_or_value_mismatches": [],
+        "anchor_derivation_mismatches": [],
+        "s03_mismatches": [],
+        "s04_mismatches": [],
+        "s05_mismatches": [],
+        "s06_mismatches": [],
+        "abs_channel_evidence_failures": [],
+        "low_base_evidence_failures": [],
+        "reverse_omission_calc_leaks": [],
+        "guard_violations": []
+      },
+      "all_blocking_lists_empty": true,
+      "evidence_rows": {
+        "abs_channel": 11,
+        "low_base": 6
+      },
+      "reverse_audit_rows": 5
+    },
     "carry_forward_to_s08": [
       "F05",
       "F06",
@@ -669,7 +1207,7 @@
       "F11",
       "F12"
     ],
-    "conclusion": "NO_SYSTEMIC_BLOCKER. Arithmetic and routing replicate exactly on the sample. Known limits are registered and carried to S08; no threshold tuning and no manual add-back."
+    "conclusion": "NO_SYSTEMIC_BLOCKER: every blocking anomaly list is empty after independent recomputation; known limits are registered and carried to S08."
   },
   "guards_preserved": {
     "after_cutoff": 4,

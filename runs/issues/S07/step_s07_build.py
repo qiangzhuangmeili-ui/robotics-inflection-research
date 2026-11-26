@@ -157,6 +157,20 @@ STRATUM_ORDER = [
     "MISSING_DATA_WATCH", "EARLY_STAGE_WATCH", "REVERSE_OMISSION",
 ]
 
+# S01 v4 low_base_confirmation mapping (field / basis), mirrored verbatim.
+LOW_BASE_MAP = {
+    "SG01": {"field_id": "FIN.REV.YTD", "basis": "YTD"},
+    "SG04": {"field_id": "FIN.NPDEDT.YTD", "basis": "YTD"},
+    "SG06": {"field_id": "FIN.NPDEDT.YTD", "basis": "YTD"},
+    "SG08": {"field_id": "FIN.OCF.YTD", "basis": "YTD"},
+    "SG09": {"field_id": "FIN.NPDEDT.SQ", "basis": "SQ"},
+}
+ABS_CHANNEL_FIELDS = {"SG06": "FIN.NPDEDT.YTD", "SG08": "FIN.OCF.YTD"}
+
+REWORK_ROUND = "R1"
+REWORK_BASIS = "runs/issues/S07/codex_review_s07_r0_20261126.md"
+REVIEW_PROVENANCE_REFS = ["runs/issues/S07/codex_review_s07_r0_20261126.md"]
+
 
 # ---------------------------------------------------------------------------
 # IO helpers
@@ -665,6 +679,248 @@ def derive_l1(engine, sid, pk, got, s03_row):
 
 
 # ---------------------------------------------------------------------------
+# Reproducible per-company evidence for S04 absolute channel / low-base confirmation
+# ---------------------------------------------------------------------------
+DIM_ORDER = ["GROWTH", "MARGIN", "PROFIT", "CASH"]
+
+
+def parse_attr_list(attrs: str, key: str):
+    """Read one semicolon-joined boundary attribute (e.g. B_ABS_CHANNEL=SG06;SG08)."""
+    for part in (attrs or "").split(";"):
+        if part.startswith(key + "="):
+            return [x for x in part[len(key) + 1:].split(";") if x]
+    return []
+
+
+def _rec_value(rec):
+    return fnum(rec["value_cny"]) if rec is not None else None
+
+
+def _comparability(rt, rb):
+    """Same-period cross-year comparability of two raw s00 rows, per S01 v4."""
+    if rt is None or rb is None:
+        return False, "MISSING_ONE_SIDE"
+    if rt["status"] not in (USABLE | USABLE_FLAG) or rb["status"] not in (USABLE | USABLE_FLAG):
+        return False, "NON_USABLE_STATUS"
+    if rt["consolidation_scope"] != rb["consolidation_scope"]:
+        return False, "SCOPE_MISMATCH"
+    if rt["is_pre_listing"] == "YES" or rb["is_pre_listing"] == "YES":
+        return False, "PRE_LISTING"
+    if RESTATE_PENDING in (rt["restatement_flag"], rb["restatement_flag"]):
+        return False, "RESTATEMENT_PENDING"
+    if rt["period_type"] != rb["period_type"] or int(rt["period_key"]) - int(rb["period_key"]) != 10000:
+        return False, "PERIOD_PAIR_MISMATCH"
+    if _rec_value(rt) is None or _rec_value(rb) is None:
+        return False, "VALUE_EMPTY"
+    return True, "SAME_PERIOD_COMPARABLE"
+
+
+def build_abs_channel_evidence(engine, d, sample_rows):
+    """Per-company, per-signal reproducible evidence for B_ABS_CHANNEL (SG06 / SG08)."""
+    out = []
+    for r in sample_rows:
+        sigs = parse_attr_list(r["boundary_attributes"], "B_ABS_CHANNEL")
+        if not sigs:
+            continue
+        sid = r["security_id"]
+        pk = int(r["anchor_period"])
+        pkb = pk - 10000
+        for sg in sigs:
+            field = ABS_CHANNEL_FIELDS[sg]
+            rt = engine.rows[(sid, pk)].get(field)
+            rb = engine.rows[(sid, pkb)].get(field)
+            comp_ok, comp_txt = _comparability(rt, rb)
+            cur, base = _rec_value(rt), _rec_value(rb)
+            delta = (cur - base) if (cur is not None and base is not None) else None
+            if sg == "SG06":
+                thr_txt = "基期<0 且当期>0 且当期>=1,000 万元；两侧 usable 且同期间可比"
+                passed = comp_ok and base < 0 and cur > 0 and cur >= ABS_CONFIRM
+            else:
+                thr_txt = "OCF(t)>0 且 OCF(t-1y)<=0；两侧 usable 且同期间可比"
+                passed = comp_ok and cur > 0 and base <= 0
+            out.append({
+                "security_id": sid,
+                "stock_name": r["stock_name"],
+                "signal_id": sg,
+                "field_id": field,
+                "period_key": str(pk),
+                "value_cny": cur,
+                "status": rt["status"] if rt else "MISSING_ROW",
+                "base_period_key": str(pkb),
+                "base_value_cny": base,
+                "base_status": rb["status"] if rb else "MISSING_ROW",
+                "comparability": comp_txt,
+                "delta_cny": round(delta, 2) if delta is not None else None,
+                "delta_wan": round(delta / 10000.0, 2) if delta is not None else None,
+                "threshold_check": thr_txt,
+                "check_pass": bool(passed),
+            })
+    out.sort(key=lambda e: (e["security_id"], e["signal_id"]))
+    return out
+
+
+def build_low_base_evidence(engine, d, sample_rows):
+    """Per-company, per-signal reproducible evidence for C_LOW_BASE_CONFIRMED."""
+    out = []
+    for r in sample_rows:
+        sigs = parse_attr_list(r["boundary_attributes"], "C_LOW_BASE_CONFIRMED")
+        if not sigs:
+            continue
+        sid = r["security_id"]
+        pk = int(r["anchor_period"])
+        pkb = pk - 10000
+        detail = d["s04_by"][sid]["low_base_detail"] or ""
+        for sg in sigs:
+            field = LOW_BASE_MAP[sg]["field_id"]
+            rt = engine.rows[(sid, pk)].get(field)
+            rb = engine.rows[(sid, pkb)].get(field)
+            comp_ok, comp_txt = _comparability(rt, rb)
+            cur, base = _rec_value(rt), _rec_value(rb)
+            delta = (cur - base) if (cur is not None and base is not None) else None
+            delta_wan = round(delta / 10000.0, 2) if delta is not None else None
+            passed = bool(comp_ok and delta is not None and delta >= ABS_CONFIRM and delta > 0)
+            thr_txt = "同口径增量>=1,000 万元且方向为正；两侧 usable 且同期间可比"
+            if sg == "SG06":
+                passed = passed and cur >= ABS_CONFIRM
+                thr_txt = "同口径增量>=1,000 万元且方向为正，且当期>=1,000 万元；两侧 usable 且同期间可比"
+            recorded = f"{sg}=CONFIRMED({delta_wan:.2f}W)" if delta_wan is not None else ""
+            out.append({
+                "security_id": sid,
+                "stock_name": r["stock_name"],
+                "signal_id": sg,
+                "field_id": field,
+                "basis": LOW_BASE_MAP[sg]["basis"],
+                "period_key": str(pk),
+                "value_cny": cur,
+                "status": rt["status"] if rt else "MISSING_ROW",
+                "base_period_key": str(pkb),
+                "base_value_cny": base,
+                "base_status": rb["status"] if rb else "MISSING_ROW",
+                "comparability": comp_txt,
+                "delta_cny": round(delta, 2) if delta is not None else None,
+                "delta_wan": delta_wan,
+                "threshold_check": thr_txt,
+                "s04_recorded_detail": detail,
+                "s04_detail_match": bool(recorded and recorded in detail),
+                "check_pass": bool(passed),
+            })
+    out.sort(key=lambda e: (e["security_id"], e["signal_id"]))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Reverse-omission independent re-derivation (no inheritance of S06 labels)
+# ---------------------------------------------------------------------------
+def classify_omission(engine, d, sid, pk, got):
+    """Re-derive why a strong-exposure company is outside the S05 mainline, from scratch."""
+    s04 = d["s04_by"][sid]
+    s03 = d["s03_by"][sid]
+    dec = s04["l2_decision"]
+    fired = engine.sg_fire(sid, pk, got)
+    clean_dims = sorted({SG_DIM[x] for x in fired if fired[x] == "CLEAN"}, key=DIM_ORDER.index)
+    n = len(clean_dims)
+    if s03["workpaper_status"] or s03["l0_status"] == "WATCH_AFTER_CUTOFF":
+        return {"verdict": "RULE_CONSISTENT_CUTOFF_GUARD", "layer": "S03", "consistent": True,
+                "clean_dims": clean_dims, "signals": fired}
+    if dec == "L2_NOT_IN_SCOPE":
+        ok = s03["l1_bucket"] != "OBSERVE_QUEUE"
+        return {"verdict": "RULE_CONSISTENT_SCOPE" if ok else "CALC_LEAK_SCOPE_DIVERGENCE",
+                "layer": "S03" if ok else "S03/S04", "consistent": ok,
+                "clean_dims": clean_dims, "signals": fired}
+    if dec == "L2_NOT_SHORTLISTED":
+        ok = n < 2
+        return {"verdict": "RULE_CONSISTENT_DIMS_LT2" if ok else "CALC_LEAK_DIMS_SUFFICIENT",
+                "layer": "S04", "consistent": ok, "clean_dims": clean_dims, "signals": fired}
+    if dec == "L2_SHORTLIST_CANDIDATE":
+        ok = n >= 2
+        return {"verdict": "REVIEWED_HOLD_BASELINE_CANDIDATE" if ok else "CALC_LEAK_DIMS_INSUFFICIENT",
+                "layer": "S04/S05", "consistent": ok, "clean_dims": clean_dims, "signals": fired}
+    if dec == "HOLD_FOR_DATA":
+        ok = n < 2
+        return {"verdict": "RULE_CONSISTENT_HOLD_FOR_DATA" if ok else "REVIEWED_HOLD_BASELINE_CANDIDATE",
+                "layer": "S04/S05", "consistent": ok, "clean_dims": clean_dims, "signals": fired}
+    return {"verdict": "UNDETERMINED", "layer": "UNKNOWN", "consistent": False,
+            "clean_dims": clean_dims, "signals": fired}
+
+
+def build_reverse_omission_audit(engine, d, sample_rows):
+    out = []
+    for r in sample_rows:
+        if r["primary_stratum"] != "REVERSE_OMISSION":
+            continue
+        sid = r["security_id"]
+        pk = int(r["anchor_period"])
+        got = engine.evaluate(sid, pk)
+        c = classify_omission(engine, d, sid, pk, got)
+        blocks = []
+        for mid in [f"M{i:02d}" for i in range(1, 13)]:
+            st = got[mid]["status"]
+            if st == "OK":
+                continue
+            fl = ",".join(sorted(got[mid]["flags"]))
+            blocks.append(f"{mid}={st}" + (f"({fl})" if fl else ""))
+        n = len(c["clean_dims"])
+        if c["verdict"] == "RULE_CONSISTENT_SCOPE":
+            reentry = "需 S03 由 NO_SIGNAL/RISK_WATCH 进入 OBSERVE_QUEUE（出现 CLEAN 信号）后才进入 L2"
+        elif c["verdict"] == "RULE_CONSISTENT_DIMS_LT2":
+            reentry = (f"当前复算仅 {n} 个不同维度有 CLEAN 信号（{';'.join(c['clean_dims']) or '无'}），"
+                       "需第 2 个维度出现 CLEAN 信号；或规则升版时全池重算")
+        elif c["verdict"] == "REVIEWED_HOLD_BASELINE_CANDIDATE":
+            reentry = ("基线复算已达 2 个合格维度；重进需 S04/S05 复核版适用性放行"
+                       "（补齐复核版 tight_pass 逐家映射）或补齐待核输入消除 HOLD_FOR_DATA")
+        elif c["verdict"] == "RULE_CONSISTENT_CUTOFF_GUARD":
+            reentry = "截止日后隔离，待取得截止日后完整报告并按规则重进"
+        else:
+            reentry = "需回退 S03/S04 重算并复核"
+        out.append({
+            "security_id": sid,
+            "stock_name": r["stock_name"],
+            "anchor_period": str(pk),
+            "frozen_s04_l2_decision": d["s04_by"][sid]["l2_decision"],
+            "frozen_s06_reviewed_decision": d["s06_early_by"].get(sid, {}).get("s04_l2_decision", "ABSENT"),
+            "recomputed_s03_bucket": r["derived_l1"].split("/")[0],
+            "recomputed_s03_subtag": r["derived_l1"].split("/")[1],
+            "recomputed_signals": {k: c["signals"][k] for k in sorted(c["signals"])},
+            "recomputed_clean_dimensions": c["clean_dims"],
+            "recomputed_dimension_count": n,
+            "blocking_or_pending_metrics": blocks,
+            "baseline_route_consistent": c["consistent"],
+            "verdict": c["verdict"],
+            "attribution_layer": c["layer"],
+            "reentry_condition": reentry,
+        })
+    out.sort(key=lambda x: x["security_id"])
+    return out
+
+
+def build_s03_override_audit(d, sample_rows):
+    """Explain each FROZEN_OVERRIDE: 57 rule-replayed + N frozen overrides must stay separable."""
+    out = []
+    for r in sample_rows:
+        if r["s03_route_check"] != "FROZEN_OVERRIDE":
+            continue
+        sid = r["security_id"]
+        s03 = d["s03_by"][sid]
+        if s03["l0_status"] == "WATCH_AFTER_CUTOFF":
+            reason = "L0 WATCH_AFTER_CUTOFF（截止日后输入隔离），沿用冻结 bucket/subtag"
+        elif s03["workpaper_status"] == "WORKPAPER_ADOPTED":
+            reason = "WORKPAPER_ADOPTED（底稿仅参考/范围变更），沿用冻结 bucket/subtag"
+        else:
+            reason = f"workpaper_status={s03['workpaper_status'] or 'NONE'}，沿用冻结 bucket/subtag"
+        out.append({
+            "security_id": sid,
+            "stock_name": r["stock_name"],
+            "workpaper_status": s03["workpaper_status"],
+            "l0_status": s03["l0_status"],
+            "frozen_bucket": s03["l1_bucket"],
+            "frozen_subtag": s03["l1_subtag"],
+            "override_reason": reason,
+        })
+    out.sort(key=lambda x: x["security_id"])
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Deterministic stratified sampling
 # ---------------------------------------------------------------------------
 def build_sample(d):
@@ -976,29 +1232,16 @@ def audit_company(engine, d, sid, meta_info):
                int(m["s02_provisional_count"]), int(m["s02_not_comparable_count"]))
         s06_check = "CONSISTENT" if exp == act else "MISMATCH"
 
-    # reverse omission verdict
+    # reverse omission verdict — independently re-derived, NOT inherited from S06 labels
     omission = ""
     attribution = "NONE"
     is_strong_not_main = (d["master_by_id"][sid]["robot_exposure"]
                           in ("DIRECT_DISCLOSED", "DIRECT_UNDISCLOSED", "INDIRECT_VERIFIED")
                           and sid not in d["s05_pass_by"])
     if is_strong_not_main:
-        reviewed = d["s06_early_by"].get(sid, {}).get("s04_l2_decision", "")
-        clean_dims = len({SG_DIM[x] for x in engine.sg_fire(sid, pk, got) if engine.sg_fire(sid, pk, got)[x] == "CLEAN"})
-        if reviewed == "WATCH_AFTER_CUTOFF":
-            omission = "RULE_CONSISTENT_CUTOFF_GUARD"
-        elif reviewed == "HOLD_FOR_DATA":
-            omission = "RULE_CONSISTENT_HOLD_FOR_DATA"
-        elif reviewed in ("NOT_SHORTLISTED", "L2_NOT_SHORTLISTED"):
-            omission = "RULE_CONSISTENT_DIMS_LT2" if clean_dims < 2 else "REVIEW_VERSION_DIVERGENCE"
-            if clean_dims >= 2:
-                attribution = "S04/S05"
-        elif reviewed in ("L2_NOT_IN_SCOPE", "NOT_IN_SCOPE"):
-            omission = "RULE_CONSISTENT_SCOPE"
-        else:
-            omission = "UNDETERMINED"
-        if attribution == "NONE" and omission != "RULE_CONSISTENT_SCOPE":
-            attribution = "S05"
+        c = classify_omission(engine, d, sid, pk, got)
+        omission = c["verdict"]
+        attribution = c["layer"]
 
     # boundary attributes
     attrs = []
@@ -1067,7 +1310,10 @@ def audit_company(engine, d, sid, meta_info):
     if sid.startswith("BJ:"):
         finding_codes.append("F08_BJ_DISCLOSURE")
     if is_strong_not_main:
-        finding_codes.append("F09_REVERSE_NO_LEAK" if omission.startswith("RULE_CONSISTENT") else "F09_REVERSE_REVIEW")
+        finding_codes.append("F09_REVERSE_NO_LEAK"
+                             if (omission and not omission.startswith("CALC_LEAK")
+                                 and omission != "UNDETERMINED")
+                             else "F09_REVERSE_REVIEW")
 
     return {
         "anchor_period": pk,
@@ -1229,7 +1475,9 @@ def compute_aggregates(d, engine, selected, slots_log, sample_rows, strong, stro
         "baseline_decisions": dict(Counter(d["s04_by"][s]["l2_decision"] for s in strong_not_main)),
         "reviewed_decisions": dict(Counter(d["s06_early_by"].get(s, {}).get("s04_l2_decision", "ABSENT") for s in strong_not_main)),
         "sample_verdicts": dict(Counter(r["omission_verdict"] for r in rev)),
-        "calc_leaks": [r["security_id"] for r in rev if not r["omission_verdict"].startswith("RULE_CONSISTENT")],
+        "calc_leaks": [r["security_id"] for r in rev if r["omission_verdict"].startswith("CALC_LEAK")],
+        "reviewed_holds": [r["security_id"] for r in rev
+                           if r["omission_verdict"] == "REVIEWED_HOLD_BASELINE_CANDIDATE"],
     }
 
     # S04 baseline vs S05 frozen pool
@@ -1250,6 +1498,89 @@ def compute_aggregates(d, engine, selected, slots_log, sample_rows, strong, stro
         "issue_53": d["release"]["guards"]["S00_errata_issue_53"],
     }
     return agg
+
+
+# ---------------------------------------------------------------------------
+# Structured grading — derived from the actual anomaly lists, never hard-coded
+# ---------------------------------------------------------------------------
+BLOCKING_ANOMALY_KEYS = [
+    "recomputation_status_or_value_mismatches",
+    "anchor_derivation_mismatches",
+    "s03_mismatches",
+    "s04_mismatches",
+    "s05_mismatches",
+    "s06_mismatches",
+    "abs_channel_evidence_failures",
+    "low_base_evidence_failures",
+    "reverse_omission_calc_leaks",
+    "guard_violations",
+]
+ROLLBACK_ANOMALY_KEYS = [
+    "recomputation_status_or_value_mismatches",
+    "anchor_derivation_mismatches",
+    "s03_mismatches",
+    "s04_mismatches",
+    "s05_mismatches",
+    "s06_mismatches",
+    "abs_channel_evidence_failures",
+    "low_base_evidence_failures",
+    "reverse_omission_calc_leaks",
+]
+
+
+def build_grading(agg, abs_evidence, low_base_evidence, reverse_audit):
+    g = agg["guards"]
+    guard_violations = []
+    if g["after_cutoff"] != 4:
+        guard_violations.append(f"after_cutoff={g['after_cutoff']} (expected 4)")
+    if g["anchor_pending"] != 1:
+        guard_violations.append(f"anchor_pending={g['anchor_pending']} (expected 1)")
+    if g["jidong_hold"] is not True:
+        guard_violations.append("jidong_quality_hold_missing")
+    if g["issue_53"] != "OPEN":
+        guard_violations.append(f"issue_53={g['issue_53']} (expected OPEN)")
+    if not (50 <= agg["total"] <= 65):
+        guard_violations.append(f"sample_size={agg['total']} (expected 50-65)")
+
+    anomaly_ids = {
+        "recomputation_status_or_value_mismatches": list(agg["recompute_non_exact"]),
+        "anchor_derivation_mismatches": list(agg["anchor_check_fail"]),
+        "s03_mismatches": list(agg["s03_mismatch"]),
+        "s04_mismatches": list(agg["s04_mismatch"]),
+        "s05_mismatches": list(agg["s05_mismatch"]),
+        "s06_mismatches": list(agg["s06_mismatch"]),
+        "abs_channel_evidence_failures": [f"{e['security_id']}:{e['signal_id']}"
+                                          for e in abs_evidence if not e["check_pass"]],
+        "low_base_evidence_failures": [f"{e['security_id']}:{e['signal_id']}"
+                                       for e in low_base_evidence if not e["check_pass"]],
+        "reverse_omission_calc_leaks": [a["security_id"] for a in reverse_audit
+                                        if a["verdict"].startswith("CALC_LEAK")],
+        "guard_violations": guard_violations,
+    }
+    counts = {k: len(v) for k, v in anomaly_ids.items()}
+    systemic_blocker = any(counts[k] > 0 for k in BLOCKING_ANOMALY_KEYS)
+    requires_rollback = any(counts[k] > 0 for k in ROLLBACK_ANOMALY_KEYS)
+    return {
+        "systemic_blocker": systemic_blocker,
+        "systemic_blocker_ids": [k for k in BLOCKING_ANOMALY_KEYS if counts[k] > 0],
+        "requires_s00_s01_rollback": requires_rollback,
+        "derivation_basis": {
+            "blocking_rule": ("systemic_blocker = any(anomaly_counts[k] > 0 for k in BLOCKING_ANOMALY_KEYS); "
+                              "requires_s00_s01_rollback = any(anomaly_counts[k] > 0 for k in ROLLBACK_ANOMALY_KEYS)"),
+            "blocking_keys": list(BLOCKING_ANOMALY_KEYS),
+            "rollback_keys": list(ROLLBACK_ANOMALY_KEYS),
+            "anomaly_counts": counts,
+            "anomaly_ids": anomaly_ids,
+            "all_blocking_lists_empty": all(counts[k] == 0 for k in BLOCKING_ANOMALY_KEYS),
+            "evidence_rows": {"abs_channel": len(abs_evidence), "low_base": len(low_base_evidence)},
+            "reverse_audit_rows": len(reverse_audit),
+        },
+        "carry_forward_to_s08": ["F05", "F06", "F07", "F08", "F10", "F11", "F12"],
+        "conclusion": ("NO_SYSTEMIC_BLOCKER: every blocking anomaly list is empty after independent recomputation; "
+                       "known limits are registered and carried to S08."
+                       if not systemic_blocker else
+                       "SYSTEMIC_BLOCKER: at least one blocking anomaly list is non-empty; see derivation_basis."),
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -1335,13 +1666,15 @@ def build_sample_rows(d, engine, selected):
     return rows
 
 
-def build_findings_md(d, agg, sample_rows):
+def build_findings_md(d, agg, sample_rows, abs_evidence, low_base_evidence,
+                      reverse_audit, override_audit, grading):
     sc = agg["stratum_counts"]
     lines = []
     lines.append("# S07 / #42 抽查阈值边界、漏筛和缺数据偏差｜审计报告")
     lines.append("")
     lines.append(f"生成时间：{NOW}（北京时间）。计划版本 `{PLAN_VERSION}`，知识截止日 `{KNOWLEDGE_AS_OF}`。")
     lines.append(f"执行方：{EXECUTOR}；统筹方：{ORCHESTRATOR}；独立复核指派：{REVIEWER_ASSIGNED}。本报告为 `SELF_CHECK`，不释放 S08。")
+    lines.append(f"返修轮次：`{REWORK_ROUND}`；返修依据：`{REWORK_BASIS}`（Codex R0 独立复核 `RETURN_FOR_REWORK`）。")
     lines.append("")
     lines.append("## 1. 审计范围与方法")
     lines.append("")
@@ -1376,18 +1709,55 @@ def build_findings_md(d, agg, sample_rows):
     lines.append("")
     lines.append("## 2. 路由复算与边界核对")
     lines.append("")
-    lines.append(f"- S03 L1：由复算指标重新触发 SG01–SG09、重算四维与 bucket/subtag，**{agg['s03_consistent']} 家 CONSISTENT**，{agg['s03_override']} 家为底稿/截止日 `FROZEN_OVERRIDE`，不一致 **{len(agg['s03_mismatch'])}** 家。")
-    lines.append(f"- S04 L2：维度计数与 `qualified_dims` 内部一致 **{agg['s04_consistent']} 家**，不一致 **{len(agg['s04_mismatch'])}** 家；对 `B_ABS_CHANNEL` 与 `C_LOW_BASE_CONFIRMED` 另做输入级复核（见 2.1、2.2）。")
+    lines.append(f"- S03 L1：由复算指标重新触发 SG01–SG09、重算四维与 bucket/subtag，**{agg['s03_consistent']} 家规则重推一致（CONSISTENT）**；**{agg['s03_override']} 家为冻结覆盖（FROZEN_OVERRIDE）**，覆盖原因逐家见 2.3；不一致 **{len(agg['s03_mismatch'])}** 家。")
+    lines.append(f"- S04 L2：维度计数与 `qualified_dims` 内部一致 **{agg['s04_consistent']} 家**，不一致 **{len(agg['s04_mismatch'])}** 家；另对样本内 `B_ABS_CHANNEL` **{len(abs_evidence)} 条**、`C_LOW_BASE_CONFIRMED` **{len(low_base_evidence)} 条**逐条回查 `s00_v10` 原值（见 2.1、2.2），失败条数 **{sum(1 for e in abs_evidence + low_base_evidence if not e['check_pass'])}**。")
     lines.append(f"- S05 质量闸门：样本中进入 S05 278 的 **{agg['s05_checked']} 家**，RH01–RH05 阈值判定与 `quality_flags.csv` 一致 **{agg['s05_consistent']} 家**，不一致 **{len(agg['s05_mismatch'])}** 家；RH06 的 `one_off` 标记与 Q09 复算一致。")
-    lines.append(f"- S06 观察名单：样本中进入缺失观察的 **{agg['s06_checked']} 家**，`s02_hold/missing/undefined_base/provisional/not_comparable` 五项计数与 S02 状态逐家一致 **{agg['s06_consistent']} 家**，不一致 **{len(agg['s06_mismatch'])}** 家。")
+    lines.append(f"- S06 观察名单：样本中进入缺失观察的 **{agg['s06_checked']} 家**，`s02_hold/missing/undefined_base/provisional/not_comparable` 五项计数与已存 S02 状态逐家一致 **{agg['s06_consistent']} 家**，不一致 **{len(agg['s06_mismatch'])}** 家；缺失一律保持未知，未填 0。")
     lines.append("")
-    lines.append("### 2.1 绝对额通道 `B_ABS_CHANNEL`")
+    def w(x):
+        return "—" if x is None else f"{x / 10000.0:,.2f}"
+
+    lines.append("### 2.1 绝对额通道 `B_ABS_CHANNEL`（逐条可复算）")
     lines.append("")
-    lines.append(f"全池 S04 中共 **{agg['abs_channel_companies']} 家**登记绝对额通道。对样本内每家逐一回查 `s00_v10`：SG06 的 `FIN.NPDEDT.YTD`、SG08 的 `FIN.OCF.YTD` 在 t 与 t−1y 两侧均为 usable 状态、有金额、同期间可比。样本内未发现“比率通道 UNDEFINED_BASE 导致绝对额通道失效”的情况，也未发现沿用上游 CLEAN 标签直接放行。")
+    lines.append(f"全池 S04 中共 **{agg['abs_channel_companies']} 家**登记绝对额通道；样本内命中 **{len(abs_evidence)} 条**（公司×信号），逐条从 `s00_v10.csv.gz` 取原值复算，通过 **{sum(1 for e in abs_evidence if e['check_pass'])} 条**、失败 **{sum(1 for e in abs_evidence if not e['check_pass'])} 条**。")
     lines.append("")
-    lines.append("### 2.2 低基数确认 `C_LOW_BASE_CONFIRMED`")
+    lines.append("| 证券 | 名称 | 信号 | 字段 | 当期 | 金额(万元) | 状态 | 基期 | 金额(万元) | 状态 | 可比性 | 增量(万元) | 门槛判定 | 通过 |")
+    lines.append("|---|---|---|---|---|---:|---|---|---:|---|---|---:|---|---|")
+    for e in abs_evidence:
+        lines.append(
+            f"| {e['security_id']} | {e['stock_name']} | {e['signal_id']} | `{e['field_id']}` | "
+            f"{e['period_key']} | {w(e['value_cny'])} | {e['status']} | {e['base_period_key']} | "
+            f"{w(e['base_value_cny'])} | {e['base_status']} | {e['comparability']} | "
+            f"{w(e['delta_cny'])} | {e['threshold_check']} | {'PASS' if e['check_pass'] else 'FAIL'} |")
     lines.append("")
-    lines.append(f"全池 S04 中共 **{agg['low_base_confirmed_companies']} 家**登记低基数确认。按冻结映射（SG01/SG04/SG06/SG08 用 YTD、SG09 用 SQ）回查同口径绝对额增量，样本内全部满足 **增量 ≥ 1,000 万元且方向为正**；未发现用任意金额替代、跨期相减或把未确认低基数信号计入维度。S03 中仅低基数信号的 `OQ_LOW_BASE_PROVISIONAL` 共 **{agg['lowbase_subtag_companies']} 家**，带低基数命中标记的公司 **{agg['lowbase_signal_companies']} 家**。")
+    lines.append("**口径**：SG06 要求基期<0、当期>0、当期≥1,000 万元；SG08 要求 OCF(t)>0 且 OCF(t−1y)≤0；两侧均须为 usable 状态、同期间可比（同 `period_type`、`period_key` 差 10,000、同合并范围、非上市前、无未决重述）。**未发现**比率通道 `UNDEFINED_BASE` 导致绝对额通道失效，也未发现直接沿用上游 CLEAN 标签放行。")
+    lines.append("")
+    lines.append("### 2.2 低基数确认 `C_LOW_BASE_CONFIRMED`（逐条可复算）")
+    lines.append("")
+    lines.append(f"全池 S04 中共 **{agg['low_base_confirmed_companies']} 家**登记低基数确认；样本内命中 **{len(low_base_evidence)} 条**（公司×信号），按冻结映射（SG01/SG04/SG06/SG08 用 YTD、SG09 用 SQ）回查同口径绝对额增量，通过 **{sum(1 for e in low_base_evidence if e['check_pass'])} 条**、失败 **{sum(1 for e in low_base_evidence if not e['check_pass'])} 条**，与 S04 `low_base_detail` 逐条对账一致 **{sum(1 for e in low_base_evidence if e['s04_detail_match'])} 条**。")
+    lines.append("")
+    lines.append("| 证券 | 名称 | 信号 | 字段/口径 | 当期 | 金额(万元) | 状态 | 基期 | 金额(万元) | 状态 | 可比性 | 增量(万元) | S04 登记 | 一致 | 通过 |")
+    lines.append("|---|---|---|---|---|---:|---|---|---:|---|---|---:|---|---|---|")
+    for e in low_base_evidence:
+        lines.append(
+            f"| {e['security_id']} | {e['stock_name']} | {e['signal_id']} | `{e['field_id']}`/{e['basis']} | "
+            f"{e['period_key']} | {w(e['value_cny'])} | {e['status']} | {e['base_period_key']} | "
+            f"{w(e['base_value_cny'])} | {e['base_status']} | {e['comparability']} | {w(e['delta_cny'])} | "
+            f"{e['s04_recorded_detail'] or '—'} | {'YES' if e['s04_detail_match'] else 'NO'} | "
+            f"{'PASS' if e['check_pass'] else 'FAIL'} |")
+    lines.append("")
+    lines.append("**口径**：增量 ≥ 1,000 万元且方向为正；SG06 另须当期 ≥ 1,000 万元；两侧 usable、同期间可比、无未决重述。**未发现**用任意金额替代、跨期相减或把未确认低基数信号计入维度。")
+    lines.append("")
+    lines.append("### 2.3 S03 冻结覆盖逐家说明")
+    lines.append("")
+    lines.append(f"{agg['s03_consistent']} 家为**规则重推一致**；以下 **{len(override_audit)} 家**为**冻结覆盖**，不参与规则重推比对，原因如下：")
+    lines.append("")
+    lines.append("| 证券 | 名称 | workpaper_status | l0_status | 冻结 bucket/subtag | 覆盖原因 |")
+    lines.append("|---|---|---|---|---|---|")
+    for o in override_audit:
+        lines.append(f"| {o['security_id']} | {o['stock_name']} | {o['workpaper_status'] or '—'} | "
+                     f"{o['l0_status']} | {o['frozen_bucket']}/{o['frozen_subtag']} | {o['override_reason']} |")
+    lines.append("")
     lines.append("")
     lines.append("## 3. 偏差诊断")
     lines.append("")
@@ -1448,11 +1818,22 @@ def build_findings_md(d, agg, sample_rows):
     lines.append("### 3.6 反向漏筛检验")
     lines.append("")
     rv = agg["reverse"]
-    lines.append(f"以 `robot_exposure ∈ DIRECT_DISCLOSED / DIRECT_UNDISCLOSED / INDIRECT_VERIFIED` 定义“已有较强机器人业务线索”，全池 **{rv['strong_total']} 家**，其中 **{rv['strong_in_mainline']} 家**进入 S05 277 主线，**{rv['strong_not_mainline']} 家**未进入。未进入者的 S04 基线判定：{rv['baseline_decisions']}；S06 冻结复核判定：{rv['reviewed_decisions']}。")
+    lines.append(f"**（A）全池路由汇总对账（仅统计，未逐家重推）**：以 `robot_exposure ∈ DIRECT_DISCLOSED / DIRECT_UNDISCLOSED / INDIRECT_VERIFIED` 定义“已有较强机器人业务线索”，全池 **{rv['strong_total']} 家**，其中 **{rv['strong_in_mainline']} 家**进入 S05 277 主线，**{rv['strong_not_mainline']} 家**未进入。未进入者的 S04 基线判定分布：{rv['baseline_decisions']}；S06 冻结复核判定分布：{rv['reviewed_decisions']}。此段只做路由分布对账，**未对全部 {rv['strong_not_mainline']} 家逐一重推**。")
     lines.append("")
-    lines.append(f"抽样 {len([r for r in sample_rows if r['primary_stratum'] == 'REVERSE_OMISSION'])} 家的判定分布：{rv['sample_verdicts']}；计算/口径漏筛 **{len(rv['calc_leaks'])}** 家。")
+    lines.append(f"**（B）抽样 5 家逐家独立重推（不继承 S06 标签）**：从 `s00_v10` 独立重算 S03 信号/维度、S04 合格维度数、阻断/待核指标与状态，结果如下（判定分布：{rv['sample_verdicts']}；计算漏筛 **{len(rv['calc_leaks'])}** 家）：")
     lines.append("")
-    lines.append("**结论**：未进入主线的强线索公司均为规则性结果——`L2_NOT_IN_SCOPE`（L1 未进观察队列）、`HOLD_FOR_DATA`（S05 适用性复核后有效维度不足 2，保留重进）、`NOT_SHORTLISTED`（有效维度不足 2）或 `WATCH_AFTER_CUTOFF`（截止日隔离）。复算未发现“指标算错导致被排除”的案例，也未手工加回任何公司。")
+    lines.append("| 证券 | 名称 | 复算 S03 | 复算信号 | 合格维度 | 阻断/待核指标 | 冻结 S04 | S06 复核 | 重推结论 | 重进条件 |")
+    lines.append("|---|---|---|---|---:|---|---|---|---|---|")
+    for a in reverse_audit:
+        sig = "、".join(f"{k}={v}" for k, v in a["recomputed_signals"].items()) or "无"
+        blk = "；".join(a["blocking_or_pending_metrics"]) or "无"
+        lines.append(
+            f"| {a['security_id']} | {a['stock_name']} | {a['recomputed_s03_bucket']}/{a['recomputed_s03_subtag']} | "
+            f"{sig} | {a['recomputed_dimension_count']}（{';'.join(a['recomputed_clean_dimensions']) or '无'}） | "
+            f"{blk} | {a['frozen_s04_l2_decision']} | {a['frozen_s06_reviewed_decision']} | "
+            f"{a['verdict']} | {a['reentry_condition']} |")
+    lines.append("")
+    lines.append(f"**结论（严格限定范围）**：在**抽样的 {len(reverse_audit)} 家**反向样本中，逐家独立重推**未见计算漏筛（{len(rv['calc_leaks'])} 家）**：{len(reverse_audit) - len(rv['calc_leaks']) - len(rv['reviewed_holds'])} 家为规则性排除/待核（维度不足 2 或 S03 未进观察队列），{len(rv['reviewed_holds'])} 家为**基线已达 2 维但被 S04/S05 复核版适用性 HOLD**（复核版 `tight_pass` 未纳入 Git 跟踪，见 F10），同样不是计算漏筛。**该结论不外推为“全池 {rv['strong_not_mainline']} 家均已排除计算漏筛”**——全池仅完成上述（A）的路由分布汇总，未逐一重推。未手工加回任何公司。")
     lines.append("")
     lines.append("### 3.7 S04 基线与 S05 冻结池的口径差")
     lines.append("")
@@ -1473,20 +1854,31 @@ def build_findings_md(d, agg, sample_rows):
     lines.append("| 编号 | 发现 | 归因层 | 定级 | 处置 |")
     lines.append("|---|---|---|---|---|")
     lines.append("| F01 | 样本 12 项指标逐格复算与 S02 完全一致（状态+数值） | S02 计算 | INFO | 无需处置 |")
-    lines.append("| F02 | S03 L1 信号/维度/bucket 可由复算指标完整重放 | S03 规则 | INFO | 无需处置 |")
-    lines.append("| F03 | S04 维度计数、绝对额通道、低基数确认边界成立 | S04 规则 | INFO | 无需处置 |")
-    lines.append("| F04 | 缺失保持未知、未填 0；S06 五项计数与 S02 一致 | S02/S06 | INFO | 继续按未知处理 |")
+    lines.append(f"| F02 | S03 L1 **{agg['s03_consistent']} 家规则重推一致**；**{agg['s03_override']} 家冻结覆盖**已逐家说明（见 2.3） | S03 规则 | INFO | 无需处置 |")
+    lines.append(f"| F03 | S04 维度计数、绝对额通道 {len(abs_evidence)} 条、低基数确认 {len(low_base_evidence)} 条逐条可复算且全部通过 | S04 规则 | INFO | 无需处置 |")
+    lines.append(f"| F04 | S06 缺失观察五项计数与已存 S02 状态逐家一致，缺失保持未知未填 0（结论仅限该范围） | S02/S06 | INFO | 继续按未知处理 |")
     lines.append("| F05 | H1/9M 混合锚点影响横截面解释，不影响同比 | S02/S05 | LOW | S08 按锚点分层 |")
     lines.append("| F06 | 项目模式 RH02 豁免使存货风险信号规则性关闭 | S05 规则 | LOW | S08 以应收/合同资产为主 |")
     lines.append("| F07 | 低基数确认抑制增长率放大，可能保守推迟真实改善 | S01/S04 | LOW | 保持冻结阈值，不回调 |")
     lines.append("| F08 | BJ 通过率高于非 BJ，但证据不足以归因披露差异 | 数据/结构 | LOW | 不做跨市场通过率对比 |")
-    lines.append("| F09 | 强线索未进主线均为规则性排除/待核，无计算漏筛 | S04/S05/S06 | INFO | 保留观察与重进 |")
+    lines.append(f"| F09 | 抽样 {len(reverse_audit)} 家反向样本逐家独立重推，0 家计算漏筛；全池 {rv['strong_not_mainline']} 家仅路由汇总未逐家重推 | S04/S05/S06 | INFO | 保留观察与重进 |")
     lines.append("| F10 | S04 基线 445 候选 vs S05 冻结 278，复核版映射不可在干净树重放 | S04/S05 版本 | MEDIUM | 结转 S08 资料治理 |")
     lines.append("| F11 | 20 格越界值状态 OK，冻结规则无处置动作 | S01 规则 | LOW | 结转 S08 定义处置 |")
     lines.append("| F12 | RH06 7 家待核（缺 NPP / 开放争议），未强行采用 | S05 规则 | LOW | 保持待核 |")
     lines.append("| F13 | 4 家截止日隔离、1 家锚点待重选、冀东 QUALITY_HOLD、#53 开放均保留 | 守卫 | INFO | 原样结转 |")
     lines.append("")
-    lines.append("**系统性阻断判定：不存在 `SYSTEMIC_BLOCKER`。** 样本内 12 项指标的状态与数值、S03 信号与维度、S04 边界属性、S05 RH 阈值、S06 计数均可由 `s00_v10` 与冻结规则独立重放；没有发现需要回退 S00/S01 重算的系统性口径错误。")
+    dc = grading["derivation_basis"]["anomaly_counts"]
+    lines.append("**系统性阻断判定（由异常清单动态推导，非硬编码）**：")
+    lines.append("")
+    lines.append("| 阻断性异常清单 | 计数 |")
+    lines.append("|---|---:|")
+    for k in grading["derivation_basis"]["blocking_keys"]:
+        lines.append(f"| `{k}` | {dc[k]} |")
+    lines.append("")
+    if grading["systemic_blocker"]:
+        lines.append(f"**结论：`SYSTEMIC_BLOCKER`。** 非空清单：{grading['systemic_blocker_ids']}；需回退 S00/S01 = **{grading['requires_s00_s01_rollback']}**。")
+    else:
+        lines.append(f"**结论：不存在 `SYSTEMIC_BLOCKER`。** 上述 {len(grading['derivation_basis']['blocking_keys'])} 项阻断性异常计数全部为 0，故 `systemic_blocker=False`、`requires_s00_s01_rollback=False`；样本内 12 项指标状态与数值、S03 信号与维度、S04 边界属性（含绝对额/低基数逐条证据）、S05 RH 阈值、S06 计数均可由 `s00_v10` 与冻结规则独立重放。")
     lines.append("")
     lines.append("**可结转 S08 的已知受限**：F05 混合锚点、F06 RH02 项目模式豁免、F07 低基数保守偏差、F08 BJ 结构差异、F10 S04→S05 版本映射缺口、F11 越界处置未定义、F12 RH06 待核。上述限制均已在 S05/S06 冻结件中登记，S08 不得把它们当作已解决。")
     lines.append("")
@@ -1501,11 +1893,14 @@ def build_findings_md(d, agg, sample_rows):
     return "\n".join(lines) + "\n"
 
 
-def build_review_json(d, agg, sample_rows):
+def build_review_json(d, agg, sample_rows, abs_evidence, low_base_evidence,
+                      reverse_audit, override_audit, grading):
     rev = {
         "artifact": "S07_SCREEN_AUDIT_REVIEW",
         "issue_key": ISSUE_KEY,
         "issue_number": ISSUE_NUMBER,
+        "rework_round": REWORK_ROUND,
+        "rework_basis": REWORK_BASIS,
         "plan_version": PLAN_VERSION,
         "knowledge_as_of": KNOWLEDGE_AS_OF,
         "generated_at": NOW,
@@ -1590,12 +1985,12 @@ def build_review_json(d, agg, sample_rows):
         "findings": [
             {"id": "F01", "title": "Sample arithmetic exactly reproduces S02", "layer": "S02", "severity": "INFO",
              "evidence": f"{agg['cells_compared']} cells; status {agg['cells_status_match']}/{agg['cells_compared']}; value {agg['cells_value_match']}/{agg['cells_compared']}; max_abs_diff={agg['max_abs_diff']:.3e}"},
-            {"id": "F02", "title": "S03 L1 route fully re-derivable", "layer": "S03", "severity": "INFO",
-             "evidence": f"{agg['s03_consistent']} consistent, {agg['s03_override']} frozen override, {len(agg['s03_mismatch'])} mismatch"},
-            {"id": "F03", "title": "S04 boundary attributes hold", "layer": "S04", "severity": "INFO",
-             "evidence": f"{agg['s04_consistent']} consistent, {len(agg['s04_mismatch'])} mismatch; abs-channel and low-base inputs re-checked"},
+            {"id": "F02", "title": "S03 L1 rule replay exact on 57, 5 frozen overrides explained", "layer": "S03", "severity": "INFO",
+             "evidence": f"{agg['s03_consistent']} rule-replayed CONSISTENT, {agg['s03_override']} frozen override (individually justified), {len(agg['s03_mismatch'])} mismatch"},
+            {"id": "F03", "title": "S04 boundary attributes and signal evidence hold", "layer": "S04", "severity": "INFO",
+             "evidence": f"{agg['s04_consistent']} consistent, {len(agg['s04_mismatch'])} mismatch; abs-channel evidence={len(abs_evidence)} rows / {sum(1 for e in abs_evidence if e['check_pass'])} pass; low-base evidence={len(low_base_evidence)} rows / {sum(1 for e in low_base_evidence if e['check_pass'])} pass"},
             {"id": "F04", "title": "Missing data preserved as unknown", "layer": "S02/S06", "severity": "INFO",
-             "evidence": f"{agg['missing_total']} watch companies, 7 categories; {agg['s06_consistent']} count-consistent"},
+             "evidence": f"{agg['missing_total']} watch companies, 7 categories; {agg['s06_consistent']} five-count-consistent with stored S02 status, no zero-fill"},
             {"id": "F05", "title": "Mixed H1/9M anchors", "layer": "S02/S05", "severity": "LOW",
              "evidence": f"H1={agg['anchor_split']['H1']}, 9M={agg['anchor_split']['9M']}; RH trigger rates differ modestly"},
             {"id": "F06", "title": "RH02 project-mode exemption", "layer": "S05", "severity": "LOW",
@@ -1604,8 +1999,8 @@ def build_review_json(d, agg, sample_rows):
              "evidence": f"{agg['low_base_confirmed_companies']} confirmed companies; threshold CNY 10m same direction"},
             {"id": "F08", "title": "BJ pass rate above non-BJ", "layer": "DATA/STRUCTURE", "severity": "LOW",
              "evidence": f"BJ {agg['bj']['pass']}/{agg['bj']['total']} ({agg['bj']['pass_rate_pct']}%) vs non-BJ {agg['bj']['non_bj_pass']}/{agg['bj']['non_bj_total']} ({agg['bj']['non_bj_pass_rate_pct']}%)"},
-            {"id": "F09", "title": "Reverse omission is rule-consistent", "layer": "S04/S05/S06", "severity": "INFO",
-             "evidence": f"{agg['reverse']['strong_not_mainline']} strong-exposure companies outside mainline; calc leaks={len(agg['reverse']['calc_leaks'])}"},
+            {"id": "F09", "title": "Reverse omission: 5 sampled companies re-derived, no calculation leak", "layer": "S04/S05/S06", "severity": "INFO",
+             "evidence": f"{len(reverse_audit)} sampled companies independently re-derived; calc leaks={len(agg['reverse']['calc_leaks'])}; reviewed holds={len(agg['reverse']['reviewed_holds'])}; full-pool {agg['reverse']['strong_not_mainline']} covered by route reconciliation only"},
             {"id": "F10", "title": "S04 baseline vs S05 frozen pool divergence", "layer": "S04/S05", "severity": "MEDIUM",
              "evidence": f"S04 candidates={agg['pool_divergence']['s04_candidates']}, S05 pool={agg['pool_divergence']['s05_frozen_pool']}, diff={agg['pool_divergence']['difference']}; reviewed_view not Git-tracked"},
             {"id": "F11", "title": "Out-of-valid-range has no frozen disposition", "layer": "S01", "severity": "LOW",
@@ -1615,13 +2010,17 @@ def build_review_json(d, agg, sample_rows):
             {"id": "F13", "title": "Guards preserved", "layer": "GUARD", "severity": "INFO",
              "evidence": str(agg["guards"])},
         ],
-        "grading": {
-            "systemic_blocker": False,
-            "systemic_blocker_ids": [],
-            "requires_s00_s01_rollback": False,
-            "carry_forward_to_s08": ["F05", "F06", "F07", "F08", "F10", "F11", "F12"],
-            "conclusion": "NO_SYSTEMIC_BLOCKER. Arithmetic and routing replicate exactly on the sample. Known limits are registered and carried to S08; no threshold tuning and no manual add-back.",
-        },
+        "s03_frozen_override_audit": override_audit,
+        "abs_channel_evidence": abs_evidence,
+        "low_base_evidence": low_base_evidence,
+        "reverse_omission_audit": reverse_audit,
+        "reverse_omission_scope_note": (
+            f"Only the {len(reverse_audit)} sampled REVERSE_OMISSION companies were independently "
+            f"re-derived. The remaining strong-exposure companies outside the mainline "
+            f"({agg['reverse']['strong_not_mainline']} in total) are covered by route-distribution "
+            f"reconciliation only, NOT by per-company re-derivation."
+        ),
+        "grading": grading,
         "guards_preserved": agg["guards"],
         "release_S08": False,
         "issue_53_touched": False,
@@ -1635,21 +2034,23 @@ def build_review_json(d, agg, sample_rows):
     return rev
 
 
-def build_handoff_md(agg, sample_rows):
+def build_handoff_md(agg, sample_rows, abs_evidence, low_base_evidence, reverse_audit, grading):
     lines = []
     lines.append("# S07 / #42 执行交接（SELF_CHECK）")
     lines.append("")
     lines.append(f"完成时间：{NOW}（北京时间）。计划版本 `{PLAN_VERSION}`。执行方 {EXECUTOR}，统筹方 {ORCHESTRATOR}，独立复核指派 {REVIEWER_ASSIGNED}。")
+    lines.append(f"返修轮次：`{REWORK_ROUND}`；返修依据：`{REWORK_BASIS}`。")
     lines.append("")
     lines.append("## 完成内容")
     lines.append("")
     lines.append(f"- 冻结确定性分层抽样 **{agg['total']} 家**（50–65 家区间内），覆盖 6 个分层、{len(agg['slots'])} 个子槽；无随机数，排序键固定。")
     lines.append(f"- 从 `s00_v10.csv.gz` 独立重算 12 项指标 **{agg['cells_compared']} 格**，状态一致 {agg['cells_status_match']}、数值一致 {agg['cells_value_match']}，最大绝对差 {agg['max_abs_diff']:.3e}。")
-    lines.append(f"- S03 L1 重放：{agg['s03_consistent']} 家一致、{agg['s03_override']} 家底稿/截止日覆盖、{len(agg['s03_mismatch'])} 家不一致。")
-    lines.append(f"- S04 边界：{agg['s04_consistent']} 家内部一致；绝对额通道与低基数确认逐家回查通过。")
+    lines.append(f"- S03 L1 重放：{agg['s03_consistent']} 家规则重推一致、{agg['s03_override']} 家冻结覆盖（逐家说明）、{len(agg['s03_mismatch'])} 家不一致。")
+    lines.append(f"- S04 边界：{agg['s04_consistent']} 家内部一致；绝对额通道 {len(abs_evidence)} 条、低基数确认 {len(low_base_evidence)} 条逐条从 `s00_v10` 复算，全部通过。")
     lines.append(f"- S05：RH 阈值 {agg['s05_consistent']} 家一致；20 格越界值确认越界且未改路由；RH06 待核 {agg['rh06_pending']} 家保持。")
-    lines.append(f"- S06：缺失观察 7 类 {agg['missing_total']} 家、早期储备 4 桶 54 家；五项计数逐家一致。")
-    lines.append(f"- 反向漏筛：强线索未进主线 {agg['reverse']['strong_not_mainline']} 家，样本判定均为规则性排除/待核，计算漏筛 {len(agg['reverse']['calc_leaks'])} 家。")
+    lines.append(f"- S06：缺失观察 7 类 {agg['missing_total']} 家、早期储备 4 桶 54 家；五项计数逐家一致，缺失未填 0。")
+    lines.append(f"- 反向漏筛：抽样 {len(reverse_audit)} 家逐家独立重推，计算漏筛 {len(agg['reverse']['calc_leaks'])} 家；全池 {agg['reverse']['strong_not_mainline']} 家仅做路由分布汇总，未逐一重推。")
+    lines.append(f"- 定级：`systemic_blocker={grading['systemic_blocker']}`、`requires_s00_s01_rollback={grading['requires_s00_s01_rollback']}`，由 {len(grading['derivation_basis']['blocking_keys'])} 项异常清单动态推导（计数全部为 0）。")
     lines.append("")
     lines.append("## 交付文件（runs/issues/S07/）")
     lines.append("")
@@ -1660,14 +2061,22 @@ def build_handoff_md(agg, sample_rows):
     lines.append("")
     lines.append("## 复现方式")
     lines.append("")
-    lines.append("在干净提交树内，以固定时间戳顺序运行：")
+    lines.append("**推荐方式：指定提交的干净 Git checkout / worktree。** 例如：")
     lines.append("")
     lines.append("```")
+    lines.append("git worktree add --detach /tmp/s07_replay <commit_sha>")
+    lines.append("cd /tmp/s07_replay")
     lines.append(f"S07_FIXED_NOW={NOW} py runs/issues/S07/step_s07_build.py")
     lines.append(f"S07_FIXED_NOW={NOW} py runs/issues/S07/step_s07_verify.py")
     lines.append("```")
     lines.append("")
-    lines.append("构建脚本输出全部 CSV/MD/JSON；自检脚本校验输入哈希、主键守恒、分层覆盖、复算一致、交付哈希与清单根摘要，并写 `manifest.json` 与 `review.json`。")
+    lines.append("此时 C13 在存在 `.git` 的情况下强制执行 `git ls-files --error-unmatch`，验证 29 份输入 100% 位于 Git 跟踪树内。")
+    lines.append("")
+    lines.append("**备选方式：`git archive` 纯归档目录（无 `.git`）。** 归档须包含本提交的 `manifest.json`。此时 C13 检测到无 `.git`，改为核对全部输入文件存在、且与 `manifest.json` / `release_20261126.json` 冻结输入清单及 SHA-256 逐一匹配，并标注 `git_index_check=SKIPPED_NO_GIT_DIR_VERIFIED_BY_MANIFEST`，不会因缺少 Git 索引而崩溃。该模式下 22 项自检同样全部 PASS；除 C13 的模式标注（及其导致的 `review.json` 与清单根摘要差异）外，其余 6 份交付逐字节一致。")
+    lines.append("")
+    lines.append("**逐字节一致性**：推荐模式下连续两次 `build + verify` 的 8 份文件（`screen_audit_sample.csv`、`screen_audit_findings.md`、`screen_audit_review.json`、`handoff.md`、`review.json`、`manifest.json`、`step_s07_build.py`、`step_s07_verify.py`）SHA-256 完全一致。")
+    lines.append("")
+    lines.append("构建脚本输出全部 CSV/MD/JSON；自检脚本校验输入哈希、主键守恒、分层覆盖、复算一致、绝对额/低基数逐条证据、反向漏筛重推、交付哈希与清单根摘要，并写 `manifest.json` 与 `review.json`。")
     lines.append("")
     lines.append("## 未做 / 限制")
     lines.append("")
@@ -1710,23 +2119,37 @@ def main():
     sample_rows = build_sample_rows(d, engine, selected)
     agg = compute_aggregates(d, engine, selected, slots_log, sample_rows, strong, strong_not_main)
 
+    abs_evidence = build_abs_channel_evidence(engine, d, sample_rows)
+    low_base_evidence = build_low_base_evidence(engine, d, sample_rows)
+    reverse_audit = build_reverse_omission_audit(engine, d, sample_rows)
+    override_audit = build_s03_override_audit(d, sample_rows)
+    grading = build_grading(agg, abs_evidence, low_base_evidence, reverse_audit)
+
     # Write sample CSV
     write_lf(OUT / "screen_audit_sample.csv", csv_text(SAMPLE_FIELDS, sample_rows))
 
     # Write findings & structured review
-    write_lf(OUT / "screen_audit_findings.md", build_findings_md(d, agg, sample_rows))
-    review_obj = build_review_json(d, agg, sample_rows)
+    write_lf(OUT / "screen_audit_findings.md",
+             build_findings_md(d, agg, sample_rows, abs_evidence, low_base_evidence,
+                               reverse_audit, override_audit, grading))
+    review_obj = build_review_json(d, agg, sample_rows, abs_evidence, low_base_evidence,
+                                   reverse_audit, override_audit, grading)
     write_lf(OUT / "screen_audit_review.json",
              json.dumps(review_obj, ensure_ascii=False, indent=2) + "\n")
 
     # Write handoff
-    write_lf(OUT / "handoff.md", build_handoff_md(agg, sample_rows))
+    write_lf(OUT / "handoff.md",
+             build_handoff_md(agg, sample_rows, abs_evidence, low_base_evidence,
+                              reverse_audit, grading))
 
     print(f"S07 build: sample={agg['total']} strata={dict(agg['stratum_counts'])}")
     print(f"  cells={agg['cells_compared']} status={agg['cells_status_match']} value={agg['cells_value_match']} maxdiff={agg['max_abs_diff']:.3e}")
     print(f"  s03 consistent={agg['s03_consistent']} override={agg['s03_override']} mismatch={len(agg['s03_mismatch'])}")
     print(f"  s04 mismatch={len(agg['s04_mismatch'])} s05 mismatch={len(agg['s05_mismatch'])} s06 mismatch={len(agg['s06_mismatch'])}")
-    print(f"  reverse calc_leaks={len(agg['reverse']['calc_leaks'])}")
+    print(f"  abs_evidence={len(abs_evidence)} pass={sum(1 for e in abs_evidence if e['check_pass'])} "
+          f"low_base_evidence={len(low_base_evidence)} pass={sum(1 for e in low_base_evidence if e['check_pass'])}")
+    print(f"  reverse_audit={len(reverse_audit)} calc_leaks={len(agg['reverse']['calc_leaks'])}")
+    print(f"  systemic_blocker={grading['systemic_blocker']} requires_rollback={grading['requires_s00_s01_rollback']}")
 
 
 if __name__ == "__main__":

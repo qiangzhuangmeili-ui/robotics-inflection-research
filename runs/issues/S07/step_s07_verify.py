@@ -26,6 +26,7 @@ NOW = os.environ.get("S07_FIXED_NOW") or datetime.now(timezone(timedelta(hours=8
 
 sys.path.insert(0, str(OUT))
 from step_s07_build import (  # noqa: E402
+    BLOCKING_ANOMALY_KEYS,
     EXECUTOR,
     FLOAT_TOL,
     ISSUE_KEY,
@@ -35,9 +36,14 @@ from step_s07_build import (  # noqa: E402
     PLAN_VERSION,
     READ_INPUTS,
     RELEASE_SHA,
+    REVIEW_PROVENANCE_REFS,
     REVIEWER_ASSIGNED,
+    REWORK_BASIS,
+    REWORK_ROUND,
+    ROLLBACK_ANOMALY_KEYS,
     STRATUM_ORDER,
     canonical_input_digest,
+    parse_attr_list,
     sha256_exact,
 )
 
@@ -140,9 +146,15 @@ def main():
         not s03_mis and s03_ok + s03_override == len(sample),
         f"consistent={s03_ok}, override={s03_override}, mismatch={s03_mis}")
 
-    # ---------------- C08 S04 boundary ----------------
+    # ---------------- C08 S04 boundary + per-company signal evidence ----------------
     s04_mis = [r["security_id"] for r in sample if r["s04_route_check"] == "MISMATCH"]
-    rec("C08", "S04 维度计数/候选判定内部一致", not s04_mis, f"mismatch={s04_mis}")
+    abs_ev = audit_review.get("abs_channel_evidence", [])
+    lb_ev = audit_review.get("low_base_evidence", [])
+    abs_fail = [f"{e['security_id']}:{e['signal_id']}" for e in abs_ev if not e["check_pass"]]
+    lb_fail = [f"{e['security_id']}:{e['signal_id']}" for e in lb_ev if not e["check_pass"]]
+    rec("C08", "S04 维度计数/候选判定内部一致，且绝对额通道/低基数确认逐条证据 check_pass 全部为真",
+        not s04_mis and not abs_fail and not lb_fail,
+        f"mismatch={s04_mis}, abs_fail={abs_fail}, low_base_fail={lb_fail}")
 
     # ---------------- C09 S05/S06 route ----------------
     s05_mis = [r["security_id"] for r in sample if r["s05_route_check"] == "MISMATCH"]
@@ -150,13 +162,17 @@ def main():
     rec("C09", "S05 RH 阈值与越界复核、S06 五项计数复核均无差异",
         not s05_mis and not s06_mis, f"s05_mismatch={s05_mis}, s06_mismatch={s06_mis}")
 
-    # ---------------- C10 reverse omission ----------------
+    # ---------------- C10 reverse omission (per-company re-derivation) ----------------
     rev = [r for r in sample if r["primary_stratum"] == "REVERSE_OMISSION"]
-    rev_bad = [r["security_id"] for r in rev if not r["omission_verdict"].startswith("RULE_CONSISTENT")]
+    rev_audit = audit_review.get("reverse_omission_audit", [])
+    rev_leaks = [a["security_id"] for a in rev_audit if str(a.get("verdict", "")).startswith("CALC_LEAK")]
     rev_in_main = [r["security_id"] for r in rev if r["security_id"] in pass_ids]
-    rec("C10", "反向漏筛样本全部为规则性排除/待核，且无一家被手工加入 S05 277 主线",
-        not rev_bad and not rev_in_main,
-        f"reverse_rows={len(rev)}, non_rule={rev_bad}, in_mainline={rev_in_main}")
+    rev_ids_match = (sorted(a["security_id"] for a in rev_audit) == sorted(r["security_id"] for r in rev))
+    rev_reentry_ok = all(bool(a.get("reentry_condition")) for a in rev_audit)
+    rec("C10", "5 家反向漏筛样本逐家独立重推（含阻断指标与重进条件），0 家计算漏筛，且无一家手工加入 S05 277 主线",
+        not rev_leaks and not rev_in_main and rev_ids_match and rev_reentry_ok and len(rev_audit) == len(rev),
+        f"reverse_rows={len(rev)}, audit_rows={len(rev_audit)}, calc_leaks={rev_leaks}, "
+        f"in_mainline={rev_in_main}, ids_match={rev_ids_match}")
 
     # ---------------- C11 guards ----------------
     cut = sum(1 for r in s06_missing if r["cutoff_isolated"] == "YES")
@@ -182,12 +198,40 @@ def main():
     rec("C12", "已生成的 S07 交付物均为纯 LF 换行（review.json 由 C20 复核）",
         len(existing) >= 6 and not crlf, f"existing={len(existing)}, crlf_files={crlf}")
 
-    # ---------------- C13 inputs Git-tracked ----------------
+    # ---------------- C13 inputs Git-tracked (or archive SHA-verified) ----------------
     missing_inputs = [p for p in READ_INPUTS if not (REPO / p).exists()]
-    untracked = [p for p in READ_INPUTS if not is_git_tracked(p)]
-    rec("C13", "全部运行时输入存在且 100% 位于 Git 跟踪文件树内",
-        not missing_inputs and not untracked and len(READ_INPUTS) == len(set(READ_INPUTS)),
-        f"inputs={len(READ_INPUTS)}, missing={missing_inputs}, untracked={untracked}")
+    has_git_dir = (REPO / ".git").exists()
+    if has_git_dir:
+        untracked = [p for p in READ_INPUTS if not is_git_tracked(p)]
+        c13_ok = (not missing_inputs and not untracked
+                  and len(READ_INPUTS) == len(set(READ_INPUTS)))
+        c13_detail = (f"git_index_check=ENFORCED, inputs={len(READ_INPUTS)}, "
+                      f"missing={missing_inputs}, untracked={untracked}")
+    else:
+        # Pure archive replay: verify existence + SHA-256 against the frozen manifest/release lists.
+        expected = dict(RELEASE_SHA)
+        man_path = OUT / "manifest.json"
+        if man_path.exists():
+            try:
+                prev = json.loads(man_path.read_text(encoding="utf-8"))
+                for item in prev.get("inputs", []):
+                    expected[item["path"]] = item["sha256"]
+            except Exception:
+                pass
+        uncovered = [p for p in READ_INPUTS if p not in expected]
+        sha_bad = []
+        for p in READ_INPUTS:
+            if p not in expected:
+                continue
+            _, got = canonical_input_digest(p)
+            if got != expected[p]:
+                sha_bad.append(p)
+        c13_ok = (not missing_inputs and not sha_bad and not uncovered
+                  and len(READ_INPUTS) == len(set(READ_INPUTS)))
+        c13_detail = (f"git_index_check=SKIPPED_NO_GIT_DIR_VERIFIED_BY_MANIFEST, inputs={len(READ_INPUTS)}, "
+                      f"missing={missing_inputs}, sha_mismatch={sha_bad}, uncovered={uncovered}")
+    rec("C13", "全部运行时输入存在且 100% 位于 Git 跟踪文件树内（无 .git 的纯归档按冻结清单 SHA 逐份核对）",
+        c13_ok, c13_detail)
 
     # ---------------- C14 required sub-feature coverage ----------------
     slot_ids = {r["selection_slot"] for r in sample}
@@ -247,14 +291,56 @@ def main():
     rec("C17", "报告/交接中的样本量与 S06 观察总数与 CSV 实算一致",
         counts_ok, f"sample={len(sample)}, missing={len(s06_missing)}")
 
-    # ---------------- C18 structured review grading ----------------
+    # ---------------- C18 structured review grading (independently re-derived) ----------------
     gr = audit_review.get("grading", {})
-    rec("C18", "结构化审计结论无 SYSTEMIC_BLOCKER、无需回退 S00/S01、不释放 S08",
+    basis = gr.get("derivation_basis", {})
+    ac = basis.get("anomaly_counts", {})
+    aids = basis.get("anomaly_ids", {})
+    route = audit_review.get("route_audit", {})
+    recomputation = audit_review.get("recomputation", {})
+    guards = audit_review.get("guards_preserved", {})
+
+    derived_guard_violations = []
+    if guards.get("after_cutoff") != 4:
+        derived_guard_violations.append(f"after_cutoff={guards.get('after_cutoff')} (expected 4)")
+    if guards.get("anchor_pending") != 1:
+        derived_guard_violations.append(f"anchor_pending={guards.get('anchor_pending')} (expected 1)")
+    if guards.get("jidong_hold") is not True:
+        derived_guard_violations.append("jidong_quality_hold_missing")
+    if guards.get("issue_53") != "OPEN":
+        derived_guard_violations.append(f"issue_53={guards.get('issue_53')} (expected OPEN)")
+    if not (50 <= len(sample) <= 65):
+        derived_guard_violations.append(f"sample_size={len(sample)} (expected 50-65)")
+
+    derived_ids = {
+        "recomputation_status_or_value_mismatches": list(recomputation.get("non_exact_companies", [])),
+        "anchor_derivation_mismatches": list(recomputation.get("anchor_derivation_mismatches", [])),
+        "s03_mismatches": list(route.get("s03_mismatch", [])),
+        "s04_mismatches": list(route.get("s04_mismatch", [])),
+        "s05_mismatches": list(route.get("s05_mismatch", [])),
+        "s06_mismatches": list(route.get("s06_mismatch", [])),
+        "abs_channel_evidence_failures": [f"{e['security_id']}:{e['signal_id']}" for e in abs_ev if not e["check_pass"]],
+        "low_base_evidence_failures": [f"{e['security_id']}:{e['signal_id']}" for e in lb_ev if not e["check_pass"]],
+        "reverse_omission_calc_leaks": [a["security_id"] for a in rev_audit
+                                        if str(a.get("verdict", "")).startswith("CALC_LEAK")],
+        "guard_violations": derived_guard_violations,
+    }
+    expected_systemic = any(len(derived_ids[k]) > 0 for k in BLOCKING_ANOMALY_KEYS)
+    expected_rollback = any(len(derived_ids[k]) > 0 for k in ROLLBACK_ANOMALY_KEYS)
+    counts_match = all(ac.get(k) == len(derived_ids[k]) for k in BLOCKING_ANOMALY_KEYS)
+    ids_match = all(list(aids.get(k, [])) == derived_ids[k] for k in BLOCKING_ANOMALY_KEYS)
+    rec("C18", "结构化定级由异常清单独立重推：全部阻断项为 0、systemic_blocker=False、无需回退 S00/S01、不释放 S08",
         gr.get("systemic_blocker") is False
+        and expected_systemic is False
         and gr.get("requires_s00_s01_rollback") is False
+        and expected_rollback is False
+        and counts_match and ids_match
+        and basis.get("all_blocking_lists_empty") is True
         and audit_review.get("release_S08") is False
         and audit_review.get("issue_53_touched") is False,
-        f"grading={gr}")
+        f"systemic={gr.get('systemic_blocker')}, expected_systemic={expected_systemic}, "
+        f"rollback={gr.get('requires_s00_s01_rollback')}, expected_rollback={expected_rollback}, "
+        f"counts_match={counts_match}, ids_match={ids_match}")
 
     # ---------------- C19 upstream zero mutation ----------------
     rec("C19", "冻结输入哈希零漂移（C01 已逐份核验），S07 未改写任何上游文件",
@@ -269,6 +355,8 @@ def main():
         "artifact": "S07_SELF_CHECK_REVIEW",
         "issue_key": ISSUE_KEY,
         "issue_number": ISSUE_NUMBER,
+        "rework_round": REWORK_ROUND,
+        "rework_basis": REWORK_BASIS,
         "plan_version": PLAN_VERSION,
         "knowledge_as_of": KNOWLEDGE_AS_OF,
         "executor": EXECUTOR,
@@ -295,6 +383,7 @@ def main():
         "limits": [
             "执行方自检（SELF_CHECK）不等同独立验收；须由 Codex 独立复核后决定是否验收与放行 S08。",
             "仅做小样本规则与计算审计，未重研全池、未逐家深读公告、未调整冻结阈值、未手工加回公司。",
+            "反向漏筛仅对抽样 5 家逐家独立重推；全池 36 家强线索非主线公司只做路由分布汇总，未逐一重推，结论不得外推。",
             "S04 复核版 tight_pass（278）未纳入 Git 跟踪，445→278 的逐家映射不可在干净树内完全重放；登记为 F10 结转 S08。",
             "20 格越界值在冻结规则中无处置动作（F11），只登记、不阻断、不改值。",
             "S00 勘误 #53 与既有守卫原样结转，本次未闭合 #53。",
@@ -323,6 +412,8 @@ def main():
         "artifact": "S07_DELIVERY_MANIFEST",
         "issue_key": ISSUE_KEY,
         "issue_number": ISSUE_NUMBER,
+        "rework_round": REWORK_ROUND,
+        "rework_basis": REWORK_BASIS,
         "plan_version": PLAN_VERSION,
         "knowledge_as_of": KNOWLEDGE_AS_OF,
         "executor": EXECUTOR,
@@ -337,9 +428,16 @@ def main():
         ),
         "deliverable_hash_basis": "EXACT_BYTES_LF",
         "replay_note": (
-            "在任意干净提交树内以 S07_FIXED_NOW=<generated_at> 顺序运行 "
-            "step_s07_build.py 与 step_s07_verify.py，可逐字节复现全部交付、review.json 与 manifest.json。"
+            "推荐：在指定提交的干净 Git checkout 或 `git worktree add --detach <sha>` 内，以 "
+            "S07_FIXED_NOW=<generated_at> 顺序运行 step_s07_build.py 与 step_s07_verify.py；此时 C13 执行 "
+            "git ls-files --error-unmatch 验证 29 份输入 100% 被跟踪，8 份文件（含本 manifest）逐字节一致。"
+            "备选：使用含本 manifest.json 的 git archive 纯归档目录（无 .git）时，C13 自动改为按本 manifest 与 "
+            "release_20261126.json 的冻结 SHA-256 逐份核对，并标注 "
+            "git_index_check=SKIPPED_NO_GIT_DIR_VERIFIED_BY_MANIFEST，不会因缺少 Git 索引而崩溃；"
+            "该模式下 22 项自检同样全部 PASS，除 C13 的模式标注（及其导致的 review.json 与根摘要差异）外，"
+            "其余 6 份交付逐字节一致。本 manifest 的根摘要在推荐模式下生成。"
         ),
+        "review_provenance_refs": REVIEW_PROVENANCE_REFS,
         "manifest_root_digest": root_digest,
         "input_count": len(inputs_meta),
         "deliverable_count": len(deliv_meta),
@@ -371,6 +469,46 @@ def main():
                    "detail": f"root_match={m['manifest_root_digest'] == recomputed_root}, "
                              f"inputs={m['input_count']}, deliverables={m['deliverable_count']}, "
                              f"bad={deliv_hash_bad}, crlf={crlf_all}"})
+
+    # ---------------- C21 absolute-channel evidence completeness ----------------
+    expected_abs = set()
+    for r in sample:
+        expected_abs |= {(r["security_id"], sg)
+                         for sg in parse_attr_list(r["boundary_attributes"], "B_ABS_CHANNEL")}
+    abs_pairs = {(e["security_id"], e["signal_id"]) for e in abs_ev}
+    abs_required = {"security_id", "signal_id", "field_id", "period_key", "value_cny", "status",
+                    "base_period_key", "base_value_cny", "base_status", "comparability",
+                    "delta_cny", "delta_wan", "threshold_check", "check_pass"}
+    abs_schema_bad = [f"{e.get('security_id')}:{e.get('signal_id')}"
+                      for e in abs_ev if not abs_required.issubset(e.keys())]
+    c21 = (abs_pairs == expected_abs and len(abs_ev) == len(abs_pairs) and len(abs_ev) > 0
+           and all(e["check_pass"] for e in abs_ev) and not abs_schema_bad)
+    checks.append({"id": "C21",
+                   "name": "绝对额通道证据覆盖样本内全部 (公司,信号)，字段完整且 check_pass 全为真",
+                   "result": "PASS" if c21 else "FAIL",
+                   "detail": f"expected_pairs={len(expected_abs)}, evidence_rows={len(abs_ev)}, "
+                             f"pairs_match={abs_pairs == expected_abs}, schema_bad={abs_schema_bad}"})
+
+    # ---------------- C22 low-base confirmation evidence completeness ----------------
+    expected_lb = set()
+    for r in sample:
+        expected_lb |= {(r["security_id"], sg)
+                        for sg in parse_attr_list(r["boundary_attributes"], "C_LOW_BASE_CONFIRMED")}
+    lb_pairs = {(e["security_id"], e["signal_id"]) for e in lb_ev}
+    lb_required = {"security_id", "signal_id", "field_id", "basis", "period_key", "value_cny", "status",
+                   "base_period_key", "base_value_cny", "base_status", "comparability",
+                   "delta_cny", "delta_wan", "threshold_check", "s04_recorded_detail",
+                   "s04_detail_match", "check_pass"}
+    lb_schema_bad = [f"{e.get('security_id')}:{e.get('signal_id')}"
+                     for e in lb_ev if not lb_required.issubset(e.keys())]
+    c22 = (lb_pairs == expected_lb and len(lb_ev) == len(lb_pairs) and len(lb_ev) > 0
+           and all(e["check_pass"] for e in lb_ev) and not lb_schema_bad
+           and all(e["s04_detail_match"] for e in lb_ev))
+    checks.append({"id": "C22",
+                   "name": "低基数确认证据覆盖样本内全部 (公司,信号)，字段完整、check_pass 与 S04 登记对账全为真",
+                   "result": "PASS" if c22 else "FAIL",
+                   "detail": f"expected_pairs={len(expected_lb)}, evidence_rows={len(lb_ev)}, "
+                             f"pairs_match={lb_pairs == expected_lb}, schema_bad={lb_schema_bad}"})
 
     passed_cnt = sum(1 for c in checks if c["result"] == "PASS")
     all_pass = passed_cnt == len(checks)
