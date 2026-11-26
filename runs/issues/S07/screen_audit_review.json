@@ -1,0 +1,689 @@
+{
+  "artifact": "S07_SCREEN_AUDIT_REVIEW",
+  "issue_key": "S07",
+  "issue_number": 42,
+  "plan_version": "20261026_collection_first_v2",
+  "knowledge_as_of": "2026-10-25",
+  "generated_at": "2026-11-26T13:30:00+08:00",
+  "executor": "CodeBuddy",
+  "orchestrator": "Antigravity",
+  "reviewer_assigned": "Codex",
+  "review_nature": "SELF_CHECK",
+  "scope": "Small-sample rule and arithmetic audit only; no full-pool re-research, no threshold tuning, no manual add-back.",
+  "sampling": {
+    "method": "DETERMINISTIC_STRATIFIED_NO_RNG",
+    "sort_keys": "security_id asc; RH near-threshold by absolute distance then security_id; out-of-range by fixed metric/anchor order",
+    "total_distinct_companies": 62,
+    "stratum_counts": {
+      "BOUNDARY_PASS_FAIL": 22,
+      "BJ_MARKET": 7,
+      "LOSS_AND_LOW_BASE": 8,
+      "MISSING_DATA_WATCH": 14,
+      "EARLY_STAGE_WATCH": 6,
+      "REVERSE_OMISSION": 5
+    },
+    "slots": [
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B01_S03_MIN_2DIM",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S03 wide_pass with exactly 2 clean dimensions (minimum pass); security_id asc",
+        "pool_size": 246
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B02_S03_MIN_1DIM",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S03 wide_pass with exactly 1 clean dimension (boundary pass); security_id asc",
+        "pool_size": 334
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B03_S03_DEFER_RISK",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S03 wide_defer RISK_WATCH (RH-only, no SG); security_id asc",
+        "pool_size": 130
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B04_S04_MIN2_PASS",
+        "quota": 2,
+        "filled": 2,
+        "rule": "S04 L2 candidate with exactly 2 reachable = 2 qualified dimensions (minimum pass); security_id asc",
+        "pool_size": 242
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B05_S04_ONE_DIM_FAIL",
+        "quota": 2,
+        "filled": 1,
+        "rule": "S04 L2 candidate with 3 reachable / 2 qualified (only one dimension short); security_id asc",
+        "pool_size": 1
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B06_S04_ABS_SG06",
+        "quota": 2,
+        "filled": 2,
+        "rule": "S04 L2 candidate depending on SG06 absolute-amount channel; security_id asc",
+        "pool_size": 21
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B07_S04_LOWBASE_CONFIRMED",
+        "quota": 2,
+        "filled": 2,
+        "rule": "S04 L2 candidate carrying C_LOW_BASE_CONFIRMED signal; security_id asc",
+        "pool_size": 34
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B08_RH01_NEAR",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S05 RH01 nearest-not-triggered below/at threshold (distance, security_id asc)",
+        "pool_size": 264
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B08_RH02_NEAR",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S05 RH02 nearest-not-triggered below/at threshold (distance, security_id asc)",
+        "pool_size": 97
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B08_RH03_NEAR",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S05 RH03 nearest-not-triggered below/at threshold (distance, security_id asc)",
+        "pool_size": 126
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B08_RH04_NEAR",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S05 RH04 nearest-not-triggered below/at threshold (distance, security_id asc)",
+        "pool_size": 131
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B08_RH05_NEAR",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S05 RH05 nearest-not-triggered below/at threshold (distance, security_id asc)",
+        "pool_size": 230
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B09_RH06_TRIGGER",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S05 QUALITY_PASS with RH06 (one-off) triggered; security_id asc",
+        "pool_size": 36
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B08_RH_TRIGGERED_NEAR",
+        "quota": 2,
+        "filled": 2,
+        "rule": "S05 RH04/RH05 nearest-triggered above/below threshold (distance, rh, security_id asc)",
+        "pool_size": 153
+      },
+      {
+        "stratum": "BOUNDARY_PASS_FAIL",
+        "slot": "B10_OUT_OF_VALID_RANGE",
+        "quota": 4,
+        "filled": 4,
+        "rule": "S05 out-of-valid-range representatives: M08-H1, M08-9M, M12, M10; first distinct company by file order",
+        "pool_size": 4
+      },
+      {
+        "stratum": "BJ_MARKET",
+        "slot": "J01_BJ_PASS_H1",
+        "quota": 2,
+        "filled": 2,
+        "rule": "BJ S05 QUALITY_PASS anchored 2026H1; security_id asc",
+        "pool_size": 21
+      },
+      {
+        "stratum": "BJ_MARKET",
+        "slot": "J02_BJ_PASS_9M",
+        "quota": 2,
+        "filled": 2,
+        "rule": "BJ S05 QUALITY_PASS anchored 2026Q3; security_id asc",
+        "pool_size": 4
+      },
+      {
+        "stratum": "BJ_MARKET",
+        "slot": "J03_BJ_S04_CAND_NOT_PASS",
+        "quota": 2,
+        "filled": 1,
+        "rule": "BJ S04 L2 candidate outside frozen S05 278; security_id asc",
+        "pool_size": 4
+      },
+      {
+        "stratum": "BJ_MARKET",
+        "slot": "J04_BJ_RISK_OR_NO_SIGNAL",
+        "quota": 1,
+        "filled": 1,
+        "rule": "BJ S03 RISK_WATCH / NO_SIGNAL; security_id asc",
+        "pool_size": 13
+      },
+      {
+        "stratum": "BJ_MARKET",
+        "slot": "J05_BJ_MISSING_WATCH",
+        "quota": 1,
+        "filled": 1,
+        "rule": "BJ on S06 missing-data watch; security_id asc",
+        "pool_size": 11
+      },
+      {
+        "stratum": "LOSS_AND_LOW_BASE",
+        "slot": "L01_LOSS_M05_UNDEFINED",
+        "quota": 3,
+        "filled": 3,
+        "rule": "M05 UNDEFINED_BASE (loss / negative base); security_id asc",
+        "pool_size": 242
+      },
+      {
+        "stratum": "LOSS_AND_LOW_BASE",
+        "slot": "L02_M07_UNDEFINED_BASE",
+        "quota": 2,
+        "filled": 2,
+        "rule": "M07 UNDEFINED_BASE (single-quarter negative base); security_id asc",
+        "pool_size": 252
+      },
+      {
+        "stratum": "LOSS_AND_LOW_BASE",
+        "slot": "L03_LOWBASE_PROVISIONAL",
+        "quota": 2,
+        "filled": 2,
+        "rule": "S03 OQ_LOW_BASE_PROVISIONAL; security_id asc",
+        "pool_size": 11
+      },
+      {
+        "stratum": "LOSS_AND_LOW_BASE",
+        "slot": "L04_LOWBASE_CONFIRMED_EXTRA",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S04 C_LOW_BASE_CONFIRMED not already sampled; security_id asc",
+        "pool_size": 40
+      },
+      {
+        "stratum": "MISSING_DATA_WATCH",
+        "slot": "M01_AFTER_CUTOFF",
+        "quota": 4,
+        "filled": 4,
+        "rule": "All 4 after-cutoff isolated companies (guard preserved); security_id asc",
+        "pool_size": 4
+      },
+      {
+        "stratum": "MISSING_DATA_WATCH",
+        "slot": "M02_ANCHOR_PENDING",
+        "quota": 1,
+        "filled": 1,
+        "rule": "Anchor reselection pending company; security_id asc",
+        "pool_size": 1
+      },
+      {
+        "stratum": "MISSING_DATA_WATCH",
+        "slot": "M03_QUALITY_HOLD_JIDONG",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S05 QUALITY_HOLD consolidation-scope unknown (Jidong); security_id asc",
+        "pool_size": 1
+      },
+      {
+        "stratum": "MISSING_DATA_WATCH",
+        "slot": "M04_QUALITY_SOURCE_UNKNOWN",
+        "quota": 1,
+        "filled": 1,
+        "rule": "Non-mainline quality source unknown; security_id asc",
+        "pool_size": 6
+      },
+      {
+        "stratum": "MISSING_DATA_WATCH",
+        "slot": "M05_HOLD_AND_QUALITY_UNKNOWN",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S04 HOLD_FOR_DATA + quality source unknown; security_id asc",
+        "pool_size": 9
+      },
+      {
+        "stratum": "MISSING_DATA_WATCH",
+        "slot": "M06_S04_HOLD_FOR_DATA",
+        "quota": 3,
+        "filled": 3,
+        "rule": "S04 HOLD_FOR_DATA prioritised by S02 HOLD > UNDEFINED_BASE > MISSING, then security_id",
+        "pool_size": 319
+      },
+      {
+        "stratum": "MISSING_DATA_WATCH",
+        "slot": "M07_S02_HOLD_OR_MISSING",
+        "quota": 3,
+        "filled": 3,
+        "rule": "S02 metric HOLD/MISSING non-mainline prioritised by HOLD > MISSING, then security_id",
+        "pool_size": 39
+      },
+      {
+        "stratum": "EARLY_STAGE_WATCH",
+        "slot": "E01_EARLY_RD",
+        "quota": 2,
+        "filled": 2,
+        "rule": "S06 early-stage bucket EARLY_RD_PROTOTYPE_SAMPLING; security_id asc",
+        "pool_size": 15
+      },
+      {
+        "stratum": "EARLY_STAGE_WATCH",
+        "slot": "E02_EARLY_PILOT",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S06 early-stage bucket EARLY_PILOT_SMALL_BATCH; security_id asc",
+        "pool_size": 6
+      },
+      {
+        "stratum": "EARLY_STAGE_WATCH",
+        "slot": "E03_EVIDENCED_UNKNOWN",
+        "quota": 2,
+        "filled": 2,
+        "rule": "S06 early-stage bucket EVIDENCED_PRODUCT_STAGE_UNKNOWN; security_id asc",
+        "pool_size": 22
+      },
+      {
+        "stratum": "EARLY_STAGE_WATCH",
+        "slot": "E04_COMMERCIAL_RESERVE",
+        "quota": 1,
+        "filled": 1,
+        "rule": "S06 early-stage bucket COMMERCIAL_NON_MAINLINE_RESERVE; security_id asc",
+        "pool_size": 11
+      },
+      {
+        "stratum": "REVERSE_OMISSION",
+        "slot": "R01_NOT_IN_SCOPE",
+        "quota": 2,
+        "filled": 2,
+        "rule": "Strong robot exposure, S04 L2_NOT_IN_SCOPE, not in S05 277; security_id asc",
+        "pool_size": 12
+      },
+      {
+        "stratum": "REVERSE_OMISSION",
+        "slot": "R02_HOLD_FOR_DATA",
+        "quota": 2,
+        "filled": 2,
+        "rule": "Strong robot exposure, reviewed HOLD_FOR_DATA, not in S05 277; prefer baseline candidate then security_id",
+        "pool_size": 19
+      },
+      {
+        "stratum": "REVERSE_OMISSION",
+        "slot": "R03_NOT_SHORTLISTED",
+        "quota": 1,
+        "filled": 1,
+        "rule": "Strong robot exposure, reviewed NOT_SHORTLISTED, not in S05 277; security_id asc",
+        "pool_size": 4
+      }
+    ]
+  },
+  "recomputation": {
+    "basis": "runs/issues/S02/hangcha_restated_20261101/s00_v10/s00_v10.csv.gz",
+    "metrics": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "cells_compared": 744,
+    "cells_status_match": 744,
+    "cells_value_match": 744,
+    "float_tolerance": 5e-10,
+    "max_abs_diff": 4.977e-11,
+    "exact_companies": 62,
+    "non_exact_companies": [],
+    "anchor_derivation_mismatches": []
+  },
+  "route_audit": {
+    "s03_consistent": 57,
+    "s03_frozen_override": 5,
+    "s03_mismatch": [],
+    "s04_consistent": 62,
+    "s04_mismatch": [],
+    "s05_consistent": 21,
+    "s05_checked": 21,
+    "s05_mismatch": [],
+    "s06_consistent": 30,
+    "s06_checked": 30,
+    "s06_mismatch": []
+  },
+  "bias_diagnostics": {
+    "missing_data": {
+      "total": 379,
+      "categories": {
+        "S05_QUALITY_HOLD_CONSOLIDATION_SCOPE_UNKNOWN": 1,
+        "AFTER_CUTOFF_ISOLATED": 4,
+        "PENDING_ANCHOR_RESELECTION": 1,
+        "S04_HOLD_FOR_DATA_AND_QUALITY_SOURCE_UNKNOWN": 9,
+        "QUALITY_SOURCE_UNKNOWN_NON_MAINLINE": 6,
+        "S04_HOLD_FOR_DATA": 319,
+        "S02_METRIC_HOLD_OR_MISSING_NON_MAINLINE": 39
+      },
+      "metric_prevalence_hold_or_missing": {
+        "M02": 12,
+        "M03": 13,
+        "M04": 58,
+        "M08": 13,
+        "M01": 32,
+        "M06": 25,
+        "M09": 32,
+        "M10": 32,
+        "M12": 13
+      },
+      "hold_by_metric": {
+        "M02": 5,
+        "M03": 5,
+        "M01": 32,
+        "M04": 32,
+        "M06": 25,
+        "M09": 32,
+        "M10": 32,
+        "M12": 12
+      },
+      "missing_by_metric": {
+        "M02": 7,
+        "M03": 8,
+        "M04": 26,
+        "M08": 13,
+        "M12": 1
+      },
+      "undefined_base_by_metric": {
+        "M05": 76,
+        "M07": 76,
+        "M11": 2
+      },
+      "conclusion": "HOLD/MISSING affect M01/M04/M09/M10/M08; UNDEFINED_BASE concentrates in M05/M07. Missing values remain MISSING/HOLD/UNKNOWN with no zero-fill or imputation, so the bias is bidirectionally conservative across all four dimensions."
+    },
+    "mixed_anchor": {
+      "s05_pool": {
+        "H1": 200,
+        "9M": 78
+      },
+      "rh_by_anchor": {
+        "H1": {
+          "RH01": {
+            "applicable": 200,
+            "triggered": 11,
+            "rate_pct": 5.5
+          },
+          "RH02": {
+            "applicable": 80,
+            "triggered": 13,
+            "rate_pct": 16.2
+          },
+          "RH03": {
+            "applicable": 95,
+            "triggered": 7,
+            "rate_pct": 7.4
+          },
+          "RH04": {
+            "applicable": 168,
+            "triggered": 77,
+            "rate_pct": 45.8
+          },
+          "RH05": {
+            "applicable": 200,
+            "triggered": 36,
+            "rate_pct": 18.0
+          }
+        },
+        "9M": {
+          "RH01": {
+            "applicable": 77,
+            "triggered": 2,
+            "rate_pct": 2.6
+          },
+          "RH02": {
+            "applicable": 38,
+            "triggered": 8,
+            "rate_pct": 21.1
+          },
+          "RH03": {
+            "applicable": 38,
+            "triggered": 0,
+            "rate_pct": 0.0
+          },
+          "RH04": {
+            "applicable": 72,
+            "triggered": 32,
+            "rate_pct": 44.4
+          },
+          "RH05": {
+            "applicable": 74,
+            "triggered": 8,
+            "rate_pct": 10.8
+          }
+        }
+      },
+      "out_of_range_by_anchor": {
+        "20260630": 15,
+        "20260930": 5
+      },
+      "conclusion": "H1/9M anchors affect cross-sectional interpretation, not YoY arithmetic. Keep anchor-stratified statements in S08."
+    },
+    "loss_low_base": {
+      "m05_undefined_base": 242,
+      "m07_undefined_base": 252,
+      "low_base_confirmed_companies": 40,
+      "lowbase_only_subtag": 11,
+      "conclusion": "No ratio computed on negative/zero base; absolute-amount confirmation >= CNY 10m and same direction enforced."
+    },
+    "rh02_project_mode": {
+      "status_counts": {
+        "PENDING_APPLICABILITY": 127,
+        "TRIGGERED": 21,
+        "NOT_APPLICABLE": 31,
+        "NOT_TRIGGERED": 97,
+        "PENDING_HOLD": 2
+      },
+      "conclusion": "Project-mode exemption closes inventory-days risk signal by rule; AR days and contract-asset ratio remain observable."
+    },
+    "bj_market": {
+      "total": 62,
+      "pass": 25,
+      "pass_rate_pct": 40.3,
+      "non_bj_total": 992,
+      "non_bj_pass": 252,
+      "non_bj_pass_rate_pct": 25.4,
+      "missing_watch": 11,
+      "non_bj_missing_watch": 368,
+      "anchor_h1": 57,
+      "anchor_9m": 5,
+      "m12_not_applicable": 35
+    },
+    "reverse_omission": {
+      "strong_total": 45,
+      "strong_in_mainline": 9,
+      "strong_not_mainline": 36,
+      "baseline_decisions": {
+        "L2_NOT_IN_SCOPE": 12,
+        "L2_NOT_SHORTLISTED": 11,
+        "L2_SHORTLIST_CANDIDATE": 12,
+        "WATCH_AFTER_CUTOFF": 1
+      },
+      "reviewed_decisions": {
+        "L2_NOT_IN_SCOPE": 12,
+        "HOLD_FOR_DATA": 19,
+        "NOT_SHORTLISTED": 4,
+        "WATCH_AFTER_CUTOFF": 1
+      },
+      "sample_verdicts": {
+        "RULE_CONSISTENT_SCOPE": 2,
+        "RULE_CONSISTENT_HOLD_FOR_DATA": 2,
+        "RULE_CONSISTENT_DIMS_LT2": 1
+      },
+      "calc_leaks": []
+    },
+    "s04_s05_pool_divergence": {
+      "s04_candidates": 445,
+      "s05_frozen_pool": 278,
+      "difference": 167,
+      "s05_subset_of_s04": true
+    },
+    "valid_range": {
+      "out_of_range_cells": 20,
+      "by_anchor": {
+        "20260630": 15,
+        "20260930": 5
+      },
+      "by_metric": {
+        "M08": 15,
+        "M10": 4,
+        "M12": 1
+      },
+      "conclusion": "Frozen rules define no disposition for out-of-range values; registered only, not used to change routing."
+    },
+    "rh06_pending": {
+      "adoption_status": {
+        "QUALIFIED_NOT_TRIGGERED": 234,
+        "QUALIFIED_TRIGGERED": 37,
+        "PENDING_INPUT_GAP": 6,
+        "PENDING_EXISTING_HINT": 1
+      },
+      "pending_companies": 7
+    }
+  },
+  "findings": [
+    {
+      "id": "F01",
+      "title": "Sample arithmetic exactly reproduces S02",
+      "layer": "S02",
+      "severity": "INFO",
+      "evidence": "744 cells; status 744/744; value 744/744; max_abs_diff=4.977e-11"
+    },
+    {
+      "id": "F02",
+      "title": "S03 L1 route fully re-derivable",
+      "layer": "S03",
+      "severity": "INFO",
+      "evidence": "57 consistent, 5 frozen override, 0 mismatch"
+    },
+    {
+      "id": "F03",
+      "title": "S04 boundary attributes hold",
+      "layer": "S04",
+      "severity": "INFO",
+      "evidence": "62 consistent, 0 mismatch; abs-channel and low-base inputs re-checked"
+    },
+    {
+      "id": "F04",
+      "title": "Missing data preserved as unknown",
+      "layer": "S02/S06",
+      "severity": "INFO",
+      "evidence": "379 watch companies, 7 categories; 30 count-consistent"
+    },
+    {
+      "id": "F05",
+      "title": "Mixed H1/9M anchors",
+      "layer": "S02/S05",
+      "severity": "LOW",
+      "evidence": "H1=200, 9M=78; RH trigger rates differ modestly"
+    },
+    {
+      "id": "F06",
+      "title": "RH02 project-mode exemption",
+      "layer": "S05",
+      "severity": "LOW",
+      "evidence": "{'PENDING_APPLICABILITY': 127, 'TRIGGERED': 21, 'NOT_APPLICABLE': 31, 'NOT_TRIGGERED': 97, 'PENDING_HOLD': 2}"
+    },
+    {
+      "id": "F07",
+      "title": "Low-base confirmation is conservative",
+      "layer": "S01/S04",
+      "severity": "LOW",
+      "evidence": "40 confirmed companies; threshold CNY 10m same direction"
+    },
+    {
+      "id": "F08",
+      "title": "BJ pass rate above non-BJ",
+      "layer": "DATA/STRUCTURE",
+      "severity": "LOW",
+      "evidence": "BJ 25/62 (40.3%) vs non-BJ 252/992 (25.4%)"
+    },
+    {
+      "id": "F09",
+      "title": "Reverse omission is rule-consistent",
+      "layer": "S04/S05/S06",
+      "severity": "INFO",
+      "evidence": "36 strong-exposure companies outside mainline; calc leaks=0"
+    },
+    {
+      "id": "F10",
+      "title": "S04 baseline vs S05 frozen pool divergence",
+      "layer": "S04/S05",
+      "severity": "MEDIUM",
+      "evidence": "S04 candidates=445, S05 pool=278, diff=167; reviewed_view not Git-tracked"
+    },
+    {
+      "id": "F11",
+      "title": "Out-of-valid-range has no frozen disposition",
+      "layer": "S01",
+      "severity": "LOW",
+      "evidence": "20 cells, all metric_status=OK, registered only"
+    },
+    {
+      "id": "F12",
+      "title": "RH06 pending cases retained",
+      "layer": "S05",
+      "severity": "LOW",
+      "evidence": "7 not adopted; no unresolved dispute used"
+    },
+    {
+      "id": "F13",
+      "title": "Guards preserved",
+      "layer": "GUARD",
+      "severity": "INFO",
+      "evidence": "{'after_cutoff': 4, 'anchor_pending': 1, 'quality_source_unknown': 15, 'jidong_hold': True, 'issue_53': 'OPEN'}"
+    }
+  ],
+  "grading": {
+    "systemic_blocker": false,
+    "systemic_blocker_ids": [],
+    "requires_s00_s01_rollback": false,
+    "carry_forward_to_s08": [
+      "F05",
+      "F06",
+      "F07",
+      "F08",
+      "F10",
+      "F11",
+      "F12"
+    ],
+    "conclusion": "NO_SYSTEMIC_BLOCKER. Arithmetic and routing replicate exactly on the sample. Known limits are registered and carried to S08; no threshold tuning and no manual add-back."
+  },
+  "guards_preserved": {
+    "after_cutoff": 4,
+    "anchor_pending": 1,
+    "quality_source_unknown": 15,
+    "jidong_hold": true,
+    "issue_53": "OPEN"
+  },
+  "release_S08": false,
+  "issue_53_touched": false,
+  "limitations": [
+    "SELF_CHECK by executor CodeBuddy; independent acceptance by Codex is still required.",
+    "Small-sample audit only; no full-pool re-research, no per-company announcement deep reading.",
+    "The S04 reviewed-view tight_pass (278) is not Git-tracked; only the tracked baseline tight_decision_log (445 candidates) and frozen S05 outputs are replayable.",
+    "Out-of-valid-range disposition is undefined in the frozen rules and is carried forward."
+  ]
+}

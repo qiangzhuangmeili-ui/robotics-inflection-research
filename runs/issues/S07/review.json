@@ -1,0 +1,165 @@
+{
+  "artifact": "S07_SELF_CHECK_REVIEW",
+  "issue_key": "S07",
+  "issue_number": 42,
+  "plan_version": "20261026_collection_first_v2",
+  "knowledge_as_of": "2026-10-25",
+  "executor": "CodeBuddy",
+  "orchestrator": "Antigravity",
+  "reviewer_assigned": "Codex",
+  "review_nature": "SELF_CHECK",
+  "independent_review_complete": false,
+  "reviewed_at": "2026-11-26T13:30:00+08:00",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "counts": {
+    "universe": 1054,
+    "s05_mainline_pass": 277,
+    "s05_mainline_observe": 1,
+    "s05_carryover_776": 776,
+    "sample_total": 62,
+    "sample_by_stratum": {
+      "BOUNDARY_PASS_FAIL": 22,
+      "BJ_MARKET": 7,
+      "LOSS_AND_LOW_BASE": 8,
+      "MISSING_DATA_WATCH": 14,
+      "EARLY_STAGE_WATCH": 6,
+      "REVERSE_OMISSION": 5
+    },
+    "metrics_cells_recomputed": 744,
+    "missing_data_watch": 379,
+    "early_stage_watch": 54,
+    "reverse_omission_sample": 5
+  },
+  "checks_summary": "20/20 PASS",
+  "checks": [
+    {
+      "id": "C01",
+      "name": "18 份冻结输入按 CANONICAL_LF_BYTES（gzip 用 EXACT_BYTES）重算 SHA-256 与放行记录一致",
+      "result": "PASS",
+      "detail": "checked=18, mismatches=[]"
+    },
+    {
+      "id": "C02",
+      "name": "全池 1,054 主键守恒 (277+1+776=1,054 且互斥) 且 S03 777+149+128 分区完整互斥",
+      "result": "PASS",
+      "detail": "master=1054, pass=277, obs=1, 776=776, wide=(777,149,128)"
+    },
+    {
+      "id": "C03",
+      "name": "抽样清单主键唯一、全部属于 1,054 主表、样本量在 50–65 家",
+      "result": "PASS",
+      "detail": "rows=62, unique=62"
+    },
+    {
+      "id": "C04",
+      "name": "六个分层均有主样本覆盖",
+      "result": "PASS",
+      "detail": "counts={'BOUNDARY_PASS_FAIL': 22, 'BJ_MARKET': 7, 'LOSS_AND_LOW_BASE': 8, 'MISSING_DATA_WATCH': 14, 'EARLY_STAGE_WATCH': 6, 'REVERSE_OMISSION': 5}"
+    },
+    {
+      "id": "C05",
+      "name": "每个子槽实取不超过配额，子槽合计等于样本量",
+      "result": "PASS",
+      "detail": "slots=38, filled_sum=62, rows=62"
+    },
+    {
+      "id": "C06",
+      "name": "全部样本 12 项指标状态与数值逐格复算一致、锚定期间独立推导一致",
+      "result": "PASS",
+      "detail": "non_exact=[], bad_counts=[], max_diff=4.977e-11, anchor_bad=[]"
+    },
+    {
+      "id": "C07",
+      "name": "S03 L1 bucket/subtag 由复算指标重放：0 不一致（底稿/截止日覆盖单列）",
+      "result": "PASS",
+      "detail": "consistent=57, override=5, mismatch=[]"
+    },
+    {
+      "id": "C08",
+      "name": "S04 维度计数/候选判定内部一致",
+      "result": "PASS",
+      "detail": "mismatch=[]"
+    },
+    {
+      "id": "C09",
+      "name": "S05 RH 阈值与越界复核、S06 五项计数复核均无差异",
+      "result": "PASS",
+      "detail": "s05_mismatch=[], s06_mismatch=[]"
+    },
+    {
+      "id": "C10",
+      "name": "反向漏筛样本全部为规则性排除/待核，且无一家被手工加入 S05 277 主线",
+      "result": "PASS",
+      "detail": "reverse_rows=5, non_rule=[], in_mainline=[]"
+    },
+    {
+      "id": "C11",
+      "name": "继承守卫完整：4 家截止日隔离、1 家锚点待重选、15 家质量来源未知、冀东 QUALITY_HOLD、#53 OPEN",
+      "result": "PASS",
+      "detail": "cutoff=4, anchor=1, ce=15, jidong=True, issue53=OPEN"
+    },
+    {
+      "id": "C12",
+      "name": "已生成的 S07 交付物均为纯 LF 换行（review.json 由 C20 复核）",
+      "result": "PASS",
+      "detail": "existing=7, crlf_files=[]"
+    },
+    {
+      "id": "C13",
+      "name": "全部运行时输入存在且 100% 位于 Git 跟踪文件树内",
+      "result": "PASS",
+      "detail": "inputs=29, missing=[], untracked=[]"
+    },
+    {
+      "id": "C14",
+      "name": "全部边界/市场/低基数/缺数据/早期/反向子槽均有代表（含 RH01–RH05 临界）",
+      "result": "PASS",
+      "detail": "missing_slots=[], missing_rh=[]"
+    },
+    {
+      "id": "C15",
+      "name": "S06 缺失观察 7 类与早期储备 4 桶在样本中全部覆盖",
+      "result": "PASS",
+      "detail": "missing_categories=['AFTER_CUTOFF_ISOLATED', 'PENDING_ANCHOR_RESELECTION', 'QUALITY_SOURCE_UNKNOWN_NON_MAINLINE', 'S02_METRIC_HOLD_OR_MISSING_NON_MAINLINE', 'S04_HOLD_FOR_DATA', 'S04_HOLD_FOR_DATA_AND_QUALITY_SOURCE_UNKNOWN', 'S05_QUALITY_HOLD_CONSOLIDATION_SCOPE_UNKNOWN'], early_buckets=['COMMERCIAL_NON_MAINLINE_RESERVE', 'EARLY_PILOT_SMALL_BATCH', 'EARLY_RD_PROTOTYPE_SAMPLING', 'EVIDENCED_PRODUCT_STAGE_UNKNOWN']"
+    },
+    {
+      "id": "C16",
+      "name": "越界样本确实来自 s05_out_of_valid_range.csv 且覆盖 M08/M10/M12",
+      "result": "PASS",
+      "detail": "pairs=[('BJ:920856', 'M08'), ('SZ:000948', 'M08'), ('SZ:300198', 'M12'), ('SZ:300270', 'M10')]"
+    },
+    {
+      "id": "C17",
+      "name": "报告/交接中的样本量与 S06 观察总数与 CSV 实算一致",
+      "result": "PASS",
+      "detail": "sample=62, missing=379"
+    },
+    {
+      "id": "C18",
+      "name": "结构化审计结论无 SYSTEMIC_BLOCKER、无需回退 S00/S01、不释放 S08",
+      "result": "PASS",
+      "detail": "grading={'systemic_blocker': False, 'systemic_blocker_ids': [], 'requires_s00_s01_rollback': False, 'carry_forward_to_s08': ['F05', 'F06', 'F07', 'F08', 'F10', 'F11', 'F12'], 'conclusion': 'NO_SYSTEMIC_BLOCKER. Arithmetic and routing replicate exactly on the sample. Known limits are registered and carried to S08; no threshold tuning and no manual add-back.'}"
+    },
+    {
+      "id": "C19",
+      "name": "冻结输入哈希零漂移（C01 已逐份核验），S07 未改写任何上游文件",
+      "result": "PASS",
+      "detail": "hash_mismatches=0, missing_inputs=0"
+    },
+    {
+      "id": "C20",
+      "name": "manifest 根摘要、输入/交付数量与逐份交付哈希自洽且全部交付为纯 LF",
+      "result": "PASS",
+      "detail": "root_match=True, inputs=29, deliverables=7, bad=[], crlf=[]"
+    }
+  ],
+  "limits": [
+    "执行方自检（SELF_CHECK）不等同独立验收；须由 Codex 独立复核后决定是否验收与放行 S08。",
+    "仅做小样本规则与计算审计，未重研全池、未逐家深读公告、未调整冻结阈值、未手工加回公司。",
+    "S04 复核版 tight_pass（278）未纳入 Git 跟踪，445→278 的逐家映射不可在干净树内完全重放；登记为 F10 结转 S08。",
+    "20 格越界值在冻结规则中无处置动作（F11），只登记、不阻断、不改值。",
+    "S00 勘误 #53 与既有守卫原样结转，本次未闭合 #53。"
+  ],
+  "release_S08": false,
+  "issue_53_touched": false
+}
