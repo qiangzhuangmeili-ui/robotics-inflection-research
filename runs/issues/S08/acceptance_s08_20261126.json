@@ -1,0 +1,73 @@
+{
+  "artifact": "S08_INDEPENDENT_ACCEPTANCE",
+  "issue_key": "S08",
+  "issue_number": 43,
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-26",
+  "timezone": "Asia/Shanghai",
+  "executor": "CodeBuddy",
+  "orchestrator": "Antigravity",
+  "reviewer": "Codex (gpt-6.2-sol low, user-authorized --sandbox danger-full-access)",
+  "review_nature": "INDEPENDENT_REVIEW",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "S08_completed": true,
+  "metric_screening_stage_completed": true,
+  "knowledge_as_of": "2026-10-25",
+  "reviewed_version": {
+    "round": "R0",
+    "commit": "96ba00f5052a62bd34301ba5919463539b066dc2",
+    "online_main_at_review": "96ba00f5052a62bd34301ba5919463539b066dc2",
+    "manifest_root_digest": "a9efa92d97a9d45070b0e84f5ee074581b869774a3f19e6b49e76581b0b4ad4e",
+    "fixed_replay_time": "2026-11-26T14:30:00+08:00",
+    "submission_comment": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/43#issuecomment-7184357809",
+    "review_record_md": "runs/issues/S08/codex_review_s08_20261126.md"
+  },
+  "verified": {
+    "clean_worktree_replay": {
+      "verifier": "Codex",
+      "input_files_sha256_match": 51,
+      "delivery_files_sha256_match": 8,
+      "manifest_exact_match": true,
+      "dirty_files_after_replay": 0,
+      "self_check_reproduced": "23/23 PASS",
+      "negative_tests": [
+        "Tampered BJ:920002 auto_promoted=True -> verifier exited 1 (C09/C10/C15 blocked)",
+        "Removed 1 row from S06 early watch and rebuilt -> anomalies=4, stage_decision flipped to NOT_ACCEPTED_PENDING_FIX"
+      ]
+    },
+    "counts": {
+      "universe": 1054,
+      "six_partitions": {
+        "R00_MAINLINE_VERIFY": 277,
+        "OBSERVE_QUALITY_HOLD": 1,
+        "OBSERVE_EARLY_AND_MISSING": 33,
+        "OBSERVE_EARLY_STAGE_ONLY": 21,
+        "OBSERVE_MISSING_DATA_ONLY": 345,
+        "NOT_SELECTED_FOR_R00": 377
+      },
+      "r00_priority_tiers": {
+        "TIER_1": 18,
+        "TIER_2": 40,
+        "TIER_3": 219
+      },
+      "s04_to_s05_bridge_445": {
+        "ADMITTED_TO_S05_QUALITY_PASS": 277,
+        "ADMITTED_TO_S05_QUALITY_HOLD": 1,
+        "DEFERRED_TO_HOLD_FOR_DATA": 167
+      },
+      "legacy_reuse_union_in_master": 80,
+      "legacy_auto_promoted": 0
+    }
+  },
+  "carry_forward_limits_to_r00_r02": [
+    "F05-F08: Interpret H1 (200) and 9M (78) anchors separately; RH02 project-mode exemption (31) keeps RH01/RH03 active; low-base rule conservative bias retained; BJ vs non-BJ pass rate difference is descriptive only.",
+    "F09-F12: Reverse-omission re-derivation covers 5 sampled companies (36 strong-exposure non-mainline are route summary only); F10 Git-reproducible 445->278 bridge frozen (Drive archive ID 1VrpWyQct6xI5PpRdGNs6KFZmubbspYEA); 20 out-of-valid-range cells keep raw values and OK status; 7 RH06 cases remain pending.",
+    "Tier semantics: TIER_1 (18) indicates verification priority only (includes 11 with quality triggers and 5 zero-trigger with pending items). Trailing prose note in screen_acceptance.json stating 71 zero-trigger pending should be read as 69 per structured fields and per-company recomputation; does not affect lists, tiers, or reconciliation.",
+    "Guards: Preserve 4 after-cutoff isolated, 1 anchor-reselection pending, 15 quality_source_unknown, 8 unadopted parent members, Jidong SZ:000856 QUALITY_HOLD, and #53 OPEN. R00 must dispatch fixed 5-company sub-issues only after explicit release; legacy business evidence retains independent review requirements."
+  ],
+  "online_control": {
+    "release_R00": false,
+    "release_R02": false,
+    "issue_53_touched": false
+  }
+}
