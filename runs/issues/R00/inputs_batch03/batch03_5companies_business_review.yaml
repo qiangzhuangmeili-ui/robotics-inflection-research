@@ -1,0 +1,671 @@
+batch_id: R00_BATCH_03
+knowledge_as_of: '2026-10-25'
+companies:
+- company:
+    security_id: SZ:301603
+    stock_name: 乔锋智能
+    knowledge_as_of: '2026-10-25'
+    sources_actually_read:
+    - doc_id: DOC-B400D2E336FEABD4
+      report_name: 2025年报
+      disclosure_date: '2026-04-26'
+      total_pages: 218
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-21B08B34593F17C2
+      report_name: 2026半年报
+      disclosure_date: '2026-08-24'
+      total_pages: 168
+      read_status: FULL_PDF_VERIFIED
+    consolidated_entities:
+    - entity_name: 乔锋智能装备股份有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 母公司，数控机床整机研发制造；不生产机器人本体，机器人仅为下游零件加工应用场景
+    - entity_name: 一工机器人银川有限公司
+      consolidation_status: EQUITY_METHOD(参股不并表)
+      role_in_robotics: 参股机器人企业（经全资子公司东莞市乔诺参股，比例未披露）；2026H1向其销售机床成品769,909.96元，属设备销售而非机器人本体
+    - entity_name: 上海开普勒机器人有限公司
+      consolidation_status: UNKNOWN
+      role_in_robotics: 人形机器人企业股权，计入其他非流动金融资产、不并表，报告称拟按交易安排处置；持股比例未披露
+    product_lines:
+    - line_name: 立式加工中心
+      robot_application: 非机器人本体；用于机器人零件模组等精密件加工（间接设备使能）
+      commercial_stage: REVENUE_DISCLOSED
+      evidence_ref: 2026半年报 第21页 “立式加工中心 1,479,369,780.96 985,939,540.55 33.35% 45.47% 44.64% 0.37%”
+    - line_name: 高速钻攻中心
+      robot_application: 非机器人本体；适配机器人零件模组、液冷散热件、半导体设备配件加工
+      commercial_stage: REVENUE_DISCLOSED
+      evidence_ref: 2026半年报 第19页 “高度适配液冷散热零部件、机器人零件模组和半导体设备配件等新兴领域生产场景”
+    - line_name: 人形机器人零部件加工机型（未单列）
+      robot_application: 向下游人形机器人零部件厂销售机床，属间接使能，不形成机器人收入
+      commercial_stage: REVENUE_BUNDLED
+      evidence_ref: 2026半年报 第20页 “如新能源汽车三电系统、液冷散热、人形机器人相关零部件的制造加工，公司已完成相应机型的技术和产品储备”
+    revenue_breakdown:
+      fy2025_total_rev_cny: 2,496,574,256.53
+      fy2025_robot_related_line: 无机器人相关分部或单列收入；按机床品类披露，立式加工中心2,045,833,079.15元、占81.95%，机器人仅为年报列举的下游应用行业之一
+      anchor_period: 2026H1
+      anchor_total_rev_cny: 1,727,766,956.38
+      anchor_robot_related_line: 无；分产品为立式加工中心1,479,369,780.96元（占85.62%，毛利率33.35%，同比+0.37个百分点）等，机器人零件加工未单列收入与毛利
+    leading_indicators_snapshot:
+      contract_liabilities: 期末293,724,928.22元/期初160,349,294.18元，+83.2%（合并资产负债表第58页；变动原因见第22页“销售订单增长、本期末预收的定金增加”）
+      backlog_orders: UNKNOWN（半年报未披露在手订单金额；仅有合同负债与合同资产口径）
+    s05_alert_investigation:
+      rh04_check: 触发：2026H1经营现金流净额72,003,518.52元，仅为归母净利273,286,547.02元的26.3%（上年同期为-169,207,613.47元）；公司在第21页归因“订单回款增加及可终止确认的应收票据贴现金额增加”。占用端：存货+203,769,067.60元、应收账款+131,548,315.59元、应收票据+76,592,360.46元、一年内到期的非流动资产+155,975,041.55元、长期应收款+49,682,354.64元、合同资产+27,503,257.88元；合同负债+133,375,634.04元部分对冲（第21-22、57-58页）
+      rh05_check: NA
+      rh06_check: NA
+      rh02_check: 本批未单列RH02；同步核查：合同资产50,820,802.27元（期初23,317,544.39元，+117.9%），存货1,238,732,103.89元（+19.7%），合同负债293,724,928.22元（+83.2%）（第57-58页、第22页）
+    business_verdict:
+      robot_exposure: INDIRECT_ENABLING
+      overall_commercial_stage: NOT_ROBOT
+      one_sentence_summary: 乔锋是卖机床给机器人零件厂的“卖铲人”，机床收入真实但机器人相关收入一分未单列；唯一机器人股权（开普勒）还挂在金融资产且准备处置，最大风险是被市场把设备使能当成机器人收入。
+    evidence_quotes:
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 10
+      topic: 产品/主业
+      verbatim_quote: 公司主营业务为数控机床的研发、生产及销售
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 19
+      topic: 产品/机器人应用
+      verbatim_quote: 公司主营的立式加工中心、高速钻攻中心等产品，精准匹配下游中小型精密件加工需求，高度适配液冷散热零部件、机器人零件模组和半导体设备配件等新兴领域生产场景
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 20
+      topic: 产品/机器人应用
+      verbatim_quote: 针对发展潜力较大的细分领域，如新能源汽车三电系统、液冷散热、人形机器人相关零部件的制造加工，公司已完成相应机型的技术和产品储备
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 21
+      topic: 收入/分产品
+      verbatim_quote: 立式加工中心 1,479,369,780.96 985,939,540.55 33.35% 45.47% 44.64% 0.37%
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 21
+      topic: RH04/现金流
+      verbatim_quote: 经营活动产生的现金 流量净额 72,003,518.52 -169,207,613.47 142.55% 主要系订单回款增加及可终止确认的应收票据贴现金额增加
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 22
+      topic: 合同负债
+      verbatim_quote: 合同负债 293,724,928.22 6.17% 160,349,294.18 4.13% 2.04% 主要系销售订单增长、本期末 预收的定金增加所致
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 22
+      topic: RH04/应收账款
+      verbatim_quote: 应收账款 485,458,835.70 10.20% 353,910,520.11 9.12% 1.08%
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 22
+      topic: RH04/存货
+      verbatim_quote: 存货 1,238,732,103.89 26.01% 1,034,963,036.29 26.67% -0.66% 主要系订单备货存量增加，资 产总额亦增加所致
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 58
+      topic: 合同负债
+      verbatim_quote: 合同负债 293,724,928.22 160,349,294.18
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 63
+      topic: 净利
+      verbatim_quote: 净利润（净亏损以“—”号填列） 268,426,422.54 177,623,087.77
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 156
+      topic: 并表/股权
+      verbatim_quote: 本公司持有的上海开普勒机器人有限公司股权，预计后续根据相关交易安排予以处置
+    - doc_id: DOC-21B08B34593F17C2
+      physical_page: 157
+      topic: 关联交易/机器人
+      verbatim_quote: 一工机器人银川有限公司 销售成品 769,909.96 274,336.28
+    - doc_id: DOC-B400D2E336FEABD4
+      physical_page: 11
+      topic: 产品/机器人应用
+      verbatim_quote: 应用于人形机器人、液冷散热、航空航天、新能源汽车、造船、发电、重机、机车、机床、纺织机械、印刷机械、模具制造等行业及自动化等行业的零部件精密加工
+    - doc_id: DOC-B400D2E336FEABD4
+      physical_page: 21
+      topic: 收入
+      verbatim_quote: 营业收入合计 2,496,574,256.53 100% 1,759,599,141.78 100% 41.88%
+    - doc_id: DOC-B400D2E336FEABD4
+      physical_page: 21
+      topic: 收入/分产品
+      verbatim_quote: 立式加工中心 2,045,833,079.15 81.95% 1,404,277,624.82 79.81% 45.69%
+    - doc_id: DOC-B400D2E336FEABD4
+      physical_page: 203
+      topic: 关联交易/机器人
+      verbatim_quote: 一工机器人银川有限公司 数控机床产品 274,336.28 2,831,858.40
+    unknowns_and_limits:
+    - 机器人相关收入/订单未单列，机器人零件加工对应的机床销售额UNKNOWN
+    - 一工机器人、上海开普勒持股比例均未披露
+    - 全页文本层已抽取且页数与清单一致；业务核验聚焦相关章节，未逐页撰写引文
+    - 未采用任何2026-10-25之后披露的资料
+- company:
+    security_id: BJ:920346
+    stock_name: 威贸电子
+    knowledge_as_of: '2026-10-25'
+    sources_actually_read:
+    - doc_id: DOC-B1A264FBF83965F1
+      report_name: 2025年报
+      disclosure_date: '2026-04-26'
+      total_pages: 155
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-12242AF88E83AFA6
+      report_name: 2026半年报
+      disclosure_date: '2026-08-26'
+      total_pages: 127
+      read_status: FULL_PDF_VERIFIED
+    consolidated_entities:
+    - entity_name: 上海威贸电子股份有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 母公司，线束组件/注塑集成件制造，客户集中于汽车、家电、工业自动化等，非机器人本体
+    - entity_name: 嘉兴长松创业投资合伙企业（有限合伙）
+      consolidation_status: UNKNOWN
+      role_in_robotics: 公司作为有限合伙人认缴1,900万元、占37.99%（半年报表列20%份额），基金投向含机器人上下游；按其他非流动金融资产核算、不并表，不构成机器人业务收入
+    product_lines:
+    - line_name: 线束组件
+      robot_application: 非机器人；主要用于汽车、家电、工业自动化等，2026H1无机器人客户或订单披露
+      commercial_stage: REVENUE_DISCLOSED
+      evidence_ref: 2026半年报 第14页 “主营业务-线束组件 62,954,838.78 43,156,879.52 31.45% 8.86% 10.65% 减少1.11 个百分点”
+    - line_name: 注塑集成件
+      robot_application: 非机器人；报告未披露机器人用途
+      commercial_stage: REVENUE_DISCLOSED
+      evidence_ref: 2026半年报 第14页 “主营业务-注塑集成件 73,257,997.68 55,264,328.70 24.56% 1.54% 7.50% 减少4.19 个百分点”
+    - line_name: 机器人线束/部件（未获证实）
+      robot_application: 仅有“积极布局工业机器人”的展望与基金投资，未见批量供货、送样或客户披露
+      commercial_stage: PLAN_OR_CONCEPT
+      evidence_ref: 2025年报 第28页 “在工业领域中，公司与客户在热泵、电机、光伏和储能系统等开展了全方位的合作，并积极布局工业机器人等新领域”
+    revenue_breakdown:
+      fy2025_total_rev_cny: 288,240,286.26
+      fy2025_robot_related_line: 无机器人相关分部或单列收入；线束组件126,380,746.11元（占43.85%，毛利率32.91%）、注塑集成件132,290,442.27元（占45.90%，毛利率27.07%），未按机器人应用拆分
+      anchor_period: 2026H1
+      anchor_total_rev_cny: 145,522,745.10
+      anchor_robot_related_line: 无机器人相关收入；线束组件62,954,838.78元（占43.26%，毛利率31.45%，-1.11pp）、注塑集成件73,257,997.68元（占50.34%，毛利率24.56%，-4.19pp）
+    leading_indicators_snapshot:
+      contract_liabilities: 期末767,226.27元/期初447,913.05元，+71.29%（合并资产负债表第34页；第13页说明为预收货款增加）
+      backlog_orders: UNKNOWN（未披露在手订单；无机器人订单披露）
+    s05_alert_investigation:
+      rh04_check: NA
+      rh05_check: 触发：2026H1毛利率27.52%，同比30.07%下降2.55个百分点；营业成本+4.82%快于收入+1.13%。可量化归因：注塑集成件毛利率24.56%（-4.19pp）且收入占比升至50.34%，线束组件毛利率31.45%（-1.11pp）；报告未单列毛利率变动原因（第13-14页）
+      rh06_check: NA
+      rh02_check: 触发核实：合同资产在合并资产负债表两期均空白（第33页）；存货37,874,366.82元（期初37,173,188.54元，+1.89%）；合同负债767,226.27元（+71.29%）（第33-34页、第12-13页）
+    business_verdict:
+      robot_exposure: CONCEPT_OR_UNVERIFIED
+      overall_commercial_stage: NOT_ROBOT
+      one_sentence_summary: 威贸的机器人成色目前只是“基金投了一点机器人上下游+年报两句积极布局”，2026半年报全文找不到“机器人”三个字，最大风险是把LP出资和行业展望当成线束供货。
+    evidence_quotes:
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 10
+      topic: 收入
+      verbatim_quote: 报告期内，公司营业收入为14,552.27 万元，同比增长162.68 万元，增幅为1.13%
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 10
+      topic: 产品/工业领域
+      verbatim_quote: 工业领域，受益于AI 算力建设带来的液冷需求爆发，公司数据中心散热系统线束收入取得大幅增长
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 12
+      topic: 合同负债
+      verbatim_quote: 合同负债 767,226.27 0.14% 447,913.05 0.08% 71.29%
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 13
+      topic: 合同负债
+      verbatim_quote: 合同负债较上年期末增加31.93 万元，增幅为71.29%
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 13
+      topic: 收入
+      verbatim_quote: 营业收入 145,522,745.10 - 143,895,973.27 - 1.13%
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 13
+      topic: RH05/毛利率
+      verbatim_quote: 营业成本 105,481,804.48 72.48% 100,631,848.39 69.93% 4.82%
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 14
+      topic: RH05/分产品
+      verbatim_quote: 主营业务-线束组件 62,954,838.78 43,156,879.52 31.45% 8.86% 10.65% 减少1.11 个百分点
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 14
+      topic: RH05/分产品
+      verbatim_quote: 主营业务-注塑集成件 73,257,997.68 55,264,328.70 24.56% 1.54% 7.50% 减少4.19 个百分点
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 33
+      topic: RH02/存货
+      verbatim_quote: 存货 六、7 37,874,366.82 37,173,188.54
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 34
+      topic: RH02/合同负债
+      verbatim_quote: 合同负债 六、21 767,226.27 447,913.05
+    - doc_id: DOC-12242AF88E83AFA6
+      physical_page: 16
+      topic: 并表/基金
+      verbatim_quote: 嘉兴长松创业投资合伙企业（有 限合伙） 借助专业投资机 构的投资经验及 资金优势深化公 司产业布局 19,000,000 3,800,000 3,800,000 有限合 伙人 20%
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 22
+      topic: 基金/机器人
+      verbatim_quote: 该基金的投资将重点围绕汽车零部件（特别是新能源 汽车核心部件）、机器人上下游产业链（包括但不限于传感器、执行器、控制器及具身智能解决方案）
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 22
+      topic: 基金/机器人
+      verbatim_quote: 2025年公司作为有限合伙人以现金方式认缴出资1,900万元（占合伙企业认缴出资总额37.99%）
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 28
+      topic: 机器人布局
+      verbatim_quote: 近年来也在积极布局数据中心、飞行汽车、工业机器人等新兴领域
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 28
+      topic: 机器人布局
+      verbatim_quote: 在工业领域中，公司与客户在热泵、电机、光伏和储能系统等开展了全方位的合作，并积极布局工业机器人等新领域
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 28
+      topic: 机器人布局
+      verbatim_quote: 除此 前已取得突破的低空经济、工业机器人等新兴领域外
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 16
+      topic: 收入
+      verbatim_quote: 营业收入 288,240,286.26 - 260,157,690.79 - 10.79%
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 17
+      topic: 分产品
+      verbatim_quote: 主营业务-线 束组件 126,380,746.11 84,788,860.21 32.91% 9.69% 8.91% 增加0.48 个百 分点
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 17
+      topic: 分产品
+      verbatim_quote: 主营业务-注 塑集成件 132,290,442.27 96,480,613.13 27.07% 11.74% 13.65% 减少1.22 个百 分点
+    - doc_id: DOC-B1A264FBF83965F1
+      physical_page: 16
+      topic: 毛利率
+      verbatim_quote: 毛利率 29.90% - 30.32% - -
+    unknowns_and_limits:
+    - 2026半年报文本层检索“机器人”0次，无机器人客户、订单、收入或送样披露；不排除图表/图片中存在未识别文字
+    - 基金认缴比例年报37.99%、半年报表列20%，两处口径不一致，按原样并存不合并计算
+    - 机器人线束是否量产供货UNKNOWN
+    - 全页文本层已抽取且页数与清单一致；业务核验聚焦相关章节，未逐页撰写引文
+- company:
+    security_id: SZ:002768
+    stock_name: 国恩股份
+    knowledge_as_of: '2026-10-25'
+    sources_actually_read:
+    - doc_id: DOC-7089B8B65F522CBB
+      report_name: 2025年报
+      disclosure_date: '2026-03-31'
+      total_pages: 226
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      report_name: 2026半年报
+      disclosure_date: '2026-08-28'
+      total_pages: 158
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-7CBCD88BC53B696E
+      report_name: 2026三季报
+      disclosure_date: '2026-10-23'
+      total_pages: 11
+      read_status: FULL_PDF_VERIFIED
+    consolidated_entities:
+    - entity_name: 青岛国恩科技股份有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 母公司，化工新材料/改性塑料，非机器人本体
+    - entity_name: 国恩未来（深圳）科技有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 持股70%，承担具身智能与智能服务机器人整机研发（双足人形、轮式双臂、四足、家用AI陪伴），H1无机器人收入披露
+    - entity_name: 国恩九尺科技（上海）有限公司
+      consolidation_status: UNKNOWN
+      role_in_robotics: 2026年7月（H1期后）设立的控股子公司，方向为AI算力/智能科技；H1合并范围未含，三季报未披露合并范围，是否并表UNKNOWN
+    product_lines:
+    - line_name: 有机高分子改性材料/复合材料
+      robot_application: 非机器人产品；机器人轻量化材料仅为拓展应用方向，未单列机器人材料收入
+      commercial_stage: REVENUE_DISCLOSED
+      evidence_ref: 2026半年报 第17页 “拓展公司高性能工程塑料产品在机器人、航空航天、医疗、新能源汽车等领域的应用”
+    - line_name: PEEK材料
+      robot_application: 机器人轻量化/关节潜在材料；舟山1,000吨/年PEEK产线在建，尚未披露量产供货
+      commercial_stage: PLAN_OR_CONCEPT
+      evidence_ref: 2026半年报 第17页 “项目建成后将实现1,000 吨/年的 PEEK 材料生产能力”
+    - line_name: 双足人形/轮式双臂/四足/家用AI陪伴机器人
+      robot_application: 机器人整机自研；完成全系整机架构自主设计，处于样机试制与工程验证
+      commercial_stage: PROTOTYPE_OR_SAMPLE
+      evidence_ref: 2026半年报 第20页 “已完成双足人形机器人、轮式双臂机器人、工业级四足机器人、家用AI 陪伴机器人全系整机架构自主设计”
+    - line_name: 直驱五指灵巧手
+      robot_application: 人形机器人执行部件；进入样机试制筹备
+      commercial_stage: PROTOTYPE_OR_SAMPLE
+      evidence_ref: 2026半年报 第21页 “已进入样机试制筹备阶段”
+    - line_name: 电子皮肤
+      robot_application: 机器人触觉传感；产出初代功能样品
+      commercial_stage: PROTOTYPE_OR_SAMPLE
+      evidence_ref: 2026半年报 第21页 “成功产出初代功能样品”
+    revenue_breakdown:
+      fy2025_total_rev_cny: 21,251,230,845.63
+      fy2025_robot_related_line: 无机器人相关分部或单列收入；按行业化工新材料19,564,220,072.57元、占92.06%，机器人材料与整机均未单列
+      anchor_period: 2026Q1-Q3
+      anchor_total_rev_cny: 17,793,204,541.09
+      anchor_robot_related_line: 三季报不分部、不拆分机器人；H1化工新材料10,415,694,668.15元、占90.46%（毛利率未单列），机器人相关收入UNKNOWN
+    leading_indicators_snapshot:
+      contract_liabilities: 期末66,618,809.92元/期初147,226,506.73元，-54.75%（2026三季报合并资产负债表第7页；第3页说明“预收客户货款减少”）
+      backlog_orders: UNKNOWN（三季报未披露在手订单）
+    s05_alert_investigation:
+      rh04_check: 触发：2026Q1-Q3经营现金流净额-464,740,514.15元，对比归母净利982,456,243.46元，同比-215.37%；公司归因“算力业务经营流出增加”（三季报第3页）；同期存货+34.15%至5,198,774,062.60元（第3、6页）
+      rh05_check: NA
+      rh06_check: NA
+      rh02_check: 触发核实：三季报合同资产在合并资产负债表两期均空白（第6页）；存货5,198,774,062.60元（+34.15%，算力业务存货增加）；合同负债66,618,809.92元（-54.75%）（第3、6、7页）
+    business_verdict:
+      robot_exposure: DIRECT_UNDISCLOSED
+      overall_commercial_stage: PROTOTYPE
+      one_sentence_summary: 国恩确有并表的机器人整机团队，但到三季报仍是“架构设计完成、灵巧手在筹备样机、电子皮肤只有初样”，未披露一分钱机器人收入；当期现金流被算力业务拖成-4.65亿元，最大风险是把PEEK/改性塑料的行业展望当机器人材料放量。
+    evidence_quotes:
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 18
+      topic: 机器人布局
+      verbatim_quote: 公司充分发挥纵向一体化产业平台优势，同时依托在机器人、具身智能领域的前瞻布局
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 20
+      topic: 并表/机器人整机
+      verbatim_quote: 公司通过子公司国恩未来（深圳）科技有限公司全面布局具身智能与智能服务机器人产业
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 20
+      topic: 机器人整机
+      verbatim_quote: 报告期内，公司已完成双足人形机器人、轮式双臂机器人、工业级四足机器人、家用AI 陪伴机器人全系整机架构自主设计
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 21
+      topic: 样机
+      verbatim_quote: 直驱五指灵巧手完成多轮力学仿真、结构迭代优化，已进入样机试制筹备阶段
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 21
+      topic: 样机
+      verbatim_quote: 电子皮肤项目完成多轮技术路线论证、材料配方迭代、工艺适配预研，成功产出初代功能样品
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 17
+      topic: 材料/机器人
+      verbatim_quote: 拓展公司高性能工程塑料产品在机器人、航空航天、医疗、新能源汽车等领域的应用
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 17
+      topic: PEEK
+      verbatim_quote: 报告期内，公司积极推进舟山基地PEEK 聚合生产线建设，项目建成后将实现1,000 吨/年的 PEEK 材料生产能力
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 21
+      topic: 收入
+      verbatim_quote: 营业收入 11,514,439,419.46 9,753,671,915.54 18.05%
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 135
+      topic: 并表
+      verbatim_quote: 九、合并范围的变更 1、其他原因的合并范围变动
+    - doc_id: DOC-CB50ABB2C87B8CE9
+      physical_page: 138
+      topic: 并表
+      verbatim_quote: 国恩未来 （深圳）科 技有限公司 20,000,000 .00 深圳 深圳 制造业 70.00% 设立
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 2
+      topic: 收入
+      verbatim_quote: 营业收入（元） 6,278,765,121.63 9.33% 17,793,204,541.09 14.82%
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 2
+      topic: 净利
+      verbatim_quote: 归属于上市公司股东 的净利润（元） 327,646,812.32 21.70% 982,456,243.46 59.73%
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 2
+      topic: RH04/现金流
+      verbatim_quote: 经营活动产生的现金 流量净额（元） — — -464,740,514.15 -215.37%
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 3
+      topic: RH04/现金流
+      verbatim_quote: 经营活动产生的 现金流量净额 -464,740,514.15 402,812,683.33 -215.37% 主要系公司算力业务经营流出增加所致
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 3
+      topic: RH02/存货
+      verbatim_quote: 存货 5,198,774,062.60 3,875,221,554.71 34.15% 主要系公司算力业务存货增加所致
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 3
+      topic: RH02/合同负债
+      verbatim_quote: 合同负债 66,618,809.92 147,226,506.73 -54.75% 主要系预收客户货款减少所致
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 6
+      topic: 存货
+      verbatim_quote: 存货 5,198,774,062.60 3,875,221,554.71
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 7
+      topic: 合同负债
+      verbatim_quote: 合同负债 66,618,809.92 147,226,506.73
+    - doc_id: DOC-7CBCD88BC53B696E
+      physical_page: 10
+      topic: RH04/现金流
+      verbatim_quote: 经营活动产生的现金流量净额 -464,740,514.15 402,812,683.33
+    unknowns_and_limits:
+    - 机器人整机、灵巧手、电子皮肤均无收入/订单/客户披露，金额UNKNOWN
+    - 三季报无分部拆分，H1机器人材料收入未单列
+    - 国恩九尺为2026年7月期后设立，H1未并表；三季报未披露合并范围变化
+    - 三季报另披露2026-10-10完成收购四川中氟能新材料80%股权（15.04亿元），属期后非机器人事项，Q4合并范围或变动
+    - 全页文本层已抽取且页数与清单一致；业务核验聚焦相关章节，未逐页撰写引文
+- company:
+    security_id: BJ:920207
+    stock_name: 众诚科技
+    knowledge_as_of: '2026-10-25'
+    sources_actually_read:
+    - doc_id: DOC-42A96A84780EB94B
+      report_name: 2025年报
+      disclosure_date: '2026-04-26'
+      total_pages: 178
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-AE99FE37594584BF
+      report_name: 2026半年报
+      disclosure_date: '2026-08-05'
+      total_pages: 129
+      read_status: FULL_PDF_VERIFIED
+    consolidated_entities:
+    - entity_name: 河南众诚信息科技股份有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 母公司，政企数智化解决方案/ICT集成运维，非机器人本体制造
+    - entity_name: 郑州元体智能机器人有限责任公司
+      consolidation_status: EQUITY_METHOD(参股不并表)
+      role_in_robotics: 持股23%，工业机器人制造/智能机器人研发与销售；H1权益法确认投资损失457,252.81元，期末账面3,168,451.00元，不并表
+    product_lines:
+    - line_name: 数字化解决方案/信息技术服务
+      robot_application: 非机器人；政企ICT、数字孪生、运维服务
+      commercial_stage: REVENUE_DISCLOSED
+      evidence_ref: 2026半年报 第19页 “数字化 解决方案 137,358,857.41 107,377,625.53 21.83% 99.39% 102.22% 减少1.09 个百分点”
+    - line_name: 具身智能产业基地数据采集中心设备配套及运营服务
+      robot_application: 机器人使能服务（数据采集/运营），非机器人本体销售；合同已签，H1未见收入确认披露
+      commercial_stage: ORDER_OR_SMALL_BATCH
+      evidence_ref: 2026半年报 第11页 “中标金额83,123,260.00 元/年，服务期限36 个月”
+    - line_name: 人形机器人代理销售/租赁
+      robot_application: 代理头部具身智能企业全系列人形机器人，做销售、租赁、运维与场景集成；未披露销量与收入
+      commercial_stage: PLAN_OR_CONCEPT
+      evidence_ref: 2026半年报 第11页 “全面承接该企业全系列人形机器人产品的市场推广、销售、租赁、运维及场景化解决方案落地工作”
+    revenue_breakdown:
+      fy2025_total_rev_cny: 416,652,615.00
+      fy2025_robot_related_line: 无机器人相关分部或单列收入；数字化解决方案273,011,937.59元、占65.53%（毛利率21.56%，+3.12pp）
+      anchor_period: 2026H1
+      anchor_total_rev_cny: 189,056,439.79
+      anchor_robot_related_line: 无机器人相关收入；数字化解决方案137,358,857.41元、占72.65%（+99.39%，毛利率21.83%，-1.09pp），机器人项目与代理销售未单列
+    leading_indicators_snapshot:
+      contract_liabilities: 期末165,405,919.46元/期初110,298,122.94元，+49.96%（合并资产负债表第41页；第17页说明为按合同收到客户预付款增加）
+      backlog_orders: 具身智能数据采集中心项目中标金额83,123,260.00元/年、服务期36个月、已签合同（第11页）；该合同未列入第31-32页“重大合同”明细，按实际订单结算机制未披露，UNKNOWN
+    s05_alert_investigation:
+      rh04_check: 触发：2026H1经营现金流净额1,475,123.90元，仅为归母净利7,018,911.55元的21.0%；应收账款+74,453,361.99元、存货+117,593,226.98元、合同资产+664,833.45元，合同负债+55,107,796.52元与应付账款+98,870,184.74元对冲；信用减值损失-2,282,192.02元为计提（同比减少85.11%），并非转回（第16-18、20页）
+      rh05_check: NA
+      rh06_check: NA
+      rh02_check: 触发核实：合同资产非空白，期末1,992,733.06元（期初1,327,899.61元，+50.07%，系一年内质量保证金）；存货331,541,700.27元（+54.96%，在手订单备货）；合同负债165,405,919.46元（+49.96%）（第16-17、40-41页）
+    business_verdict:
+      robot_exposure: DIRECT_UNDISCLOSED
+      overall_commercial_stage: PLAN_ONLY
+      one_sentence_summary: 众诚拿到的是“卖机器人+替机器人采数据”的渠道与运营合同，8,312万元/年是客户合同额而不是公司机器人收入，H1未见该项目收入确认披露；最大风险是把中标金额当成已落地机器人营收。
+    evidence_quotes:
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 11
+      topic: 项目/合同
+      verbatim_quote: 公司于2026 年4 月成功中标“新郑市中部具身智能产业基地数 据采集中心设备配套及运营服务项目”，中标金额83,123,260.00 元/年，服务期限36 个月
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 11
+      topic: 项目/合同
+      verbatim_quote: 该项目若顺利实施，将显著增强公司在规模化数据采集、全流程运营管理及标准化数据治理等领域的核心能力
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 11
+      topic: 机器人代理
+      verbatim_quote: 全面承接该企业全系列人形机器人产品的市场推广、销售、租赁、运维及场景化解决方案落地工作
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 17
+      topic: RH02/合同资产
+      verbatim_quote: 合同资产：期末金额1,992,733.06 元，较期初增长50.07%，主要系报告期确认收入，所对应合同约定一年内质量保证金增加所致
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 17
+      topic: RH02/存货
+      verbatim_quote: 存货：期末金额331,541,700.27 元，较期初增长54.96%，主要系报告期在手订单增加，备货及库存商品相应增加所致
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 17
+      topic: 合同负债
+      verbatim_quote: 合同负债：期末金额165,405,919.46 元，较期初增长49.96%，主要系按照合同约定收到客户预付款项增加所致
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 17
+      topic: 并表/元体
+      verbatim_quote: 公司持有元体 智能公司23%股权，报告期内新增了实缴出资额460.00 万元所致
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 20
+      topic: RH04/现金流
+      verbatim_quote: 本期经营活动产生的现金流量净额1,475,123.90 元，较上期增加115.59%
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 18
+      topic: 收入
+      verbatim_quote: 营业收入 189,056,439.79 - 133,595,386.07 - 41.51%
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 18
+      topic: RH04/信用减值
+      verbatim_quote: 信用减值损失 -2,282,192.02 -1.21% -15,328,914.27 -11.47% -85.11%
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 41
+      topic: 合同负债
+      verbatim_quote: 合同负债 五、（一）22 165,405,919.46 110,298,122.94
+    - doc_id: DOC-AE99FE37594584BF
+      physical_page: 40
+      topic: 合同资产
+      verbatim_quote: 合同资产 五、（一）7 1,992,733.06 1,327,899.61
+    - doc_id: DOC-42A96A84780EB94B
+      physical_page: 13
+      topic: 机器人代理
+      verbatim_quote: 负责该企业全系列人形机器人产品的市场推广、销售、租赁、运维及场景化解决方案落地
+    - doc_id: DOC-42A96A84780EB94B
+      physical_page: 19
+      topic: 收入
+      verbatim_quote: 数字化解 决方案 273,011,937.59 214,158,339.09 21.56% 20.84% 16.23% 增加3.12 个 百分点
+    - doc_id: DOC-42A96A84780EB94B
+      physical_page: 162
+      topic: 关联交易/元体
+      verbatim_quote: 元体智能公司 销售商品 1,656,886.79
+    unknowns_and_limits:
+    - 具身智能项目“按实际订单结算”条款在两份PDF中未见披露，结算机制UNKNOWN
+    - 该项目是否已在2026H1确认收入未披露；重大合同章节未列该项目
+    - 人形机器人代理销售/租赁无销量、无收入披露
+    - 半年报物理页与印刷页相差3页（如物理第16页=印刷第13页），引文页码均为PDF物理页
+    - 全页文本层已抽取且页数与清单一致；业务核验聚焦相关章节，未逐页撰写引文
+- company:
+    security_id: BJ:920199
+    stock_name: 倍益康
+    knowledge_as_of: '2026-10-25'
+    sources_actually_read:
+    - doc_id: DOC-4571C3EC90DAFCCE
+      report_name: 2025年报
+      disclosure_date: '2026-04-14'
+      total_pages: 168
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-AA59142EDFCB12CA
+      report_name: 2026半年报
+      disclosure_date: '2026-08-24'
+      total_pages: 113
+      read_status: FULL_PDF_VERIFIED
+    consolidated_entities:
+    - entity_name: 四川千里倍益康医疗科技股份有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 母公司，康复理疗设备/筋膜枪/制氧机制造，非机器人本体
+    - entity_name: 东莞市倍露康电子科技有限公司
+      consolidation_status: EQUITY_METHOD(参股不并表)
+      role_in_robotics: 持股30%，塑胶制品/模具/五金上游配套，非机器人
+    product_lines:
+    - line_name: 康复医疗产品
+      robot_application: 非机器人；院端康复理疗设备
+      commercial_stage: REVENUE_DISCLOSED
+      evidence_ref: 2026半年报 第14页 “康复医疗产品 24,446,524.06 13,930,623.49 43.02% 41.83% 43.05% 减少0.48 个百分点”
+    - line_name: 康复科技产品（筋膜枪等）
+      robot_application: 非机器人；家用健康消费硬件
+      commercial_stage: REVENUE_DISCLOSED
+      evidence_ref: 2026半年报 第14页 “康复科技产品 97,104,155.80 62,566,370.77 35.57% -0.41% -3.83% 增加2.29 个百分点”
+    - line_name: 多功能理疗机器人
+      robot_application: 六轴协作机器人+多物理因子协同理疗；2025年报“研发项目情况”表标注“小批量生产”，无销量/收入披露，2026半年报未提及
+      commercial_stage: PROTOTYPE_OR_SAMPLE
+      evidence_ref: 2025年报 第31页 “多功能理疗机器人 融合多种物理因子和六轴 协作机器人协同理疗”
+    - line_name: 全自动艾灸仪（六轴机械臂）
+      robot_application: 中医理疗机器人化，六轴协作机械臂自动定位循经；处于型式检验
+      commercial_stage: PROTOTYPE_OR_SAMPLE
+      evidence_ref: 2025年报 第30页 “搭载六轴协作机械臂，实现AI 精准定位、 智能循经、路径自动规划与中医手法模拟”
+    revenue_breakdown:
+      fy2025_total_rev_cny: 273,101,254.76
+      fy2025_robot_related_line: 无机器人相关分部或单列收入；康复医疗产品40,128,744.96元（占14.69%，毛利率44.76%）、康复科技产品232,972,509.80元（占85.31%，毛利率33.84%）
+      anchor_period: 2026H1
+      anchor_total_rev_cny: 121,550,679.86
+      anchor_robot_related_line: 无机器人相关收入；康复医疗产品24,446,524.06元（占20.11%，+41.83%，毛利率43.02%）、康复科技产品97,104,155.80元（占79.89%，-0.41%，毛利率35.57%）
+    leading_indicators_snapshot:
+      contract_liabilities: 期末10,672,618.24元/期初5,133,706.02元，+107.89%（合并资产负债表第33页；第13页说明为预收外销客户货款、订单暂未交付）
+      backlog_orders: UNKNOWN（未披露在手订单）
+    s05_alert_investigation:
+      rh04_check: NA（本批未触发；供参考：2026H1经营现金流净额-15,494,594.69元，归母净利-2,725,833.04元，第8页）
+      rh05_check: NA
+      rh06_check: NA
+      rh02_check: 触发核实：合同资产在合并资产负债表两期均空白（第32页）；存货112,847,884.66元（期初94,590,863.72元，+19.30%）；合同负债10,672,618.24元（+107.89%）（第12-13、32-33页）
+    business_verdict:
+      robot_exposure: DIRECT_UNDISCLOSED
+      overall_commercial_stage: PROTOTYPE
+      one_sentence_summary: 倍益康的“理疗机器人”只是年报研发项目表里一款标着“小批量生产”的六轴协作理疗设备，2026半年报全文不再提机器人、也未披露机器人收入；最大风险是把普通理疗仪的智能化升级当成机器人产品放量。
+    evidence_quotes:
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 8
+      topic: 收入
+      verbatim_quote: 营业收入 121,550,679.86 114,737,596.69 5.94%
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 8
+      topic: 净利
+      verbatim_quote: 归属于上市公司股东的净利润 -2,725,833.04 -6,507,067.37 58.11%
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 8
+      topic: 现金流
+      verbatim_quote: 经营活动产生的现金流量净额 -15,494,594.69 -5,430,444.63 -185.33%
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 12
+      topic: 合同负债
+      verbatim_quote: 合同负债 10,672,618.24 1.49% 5,133,706.02 0.72% 107.89%
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 13
+      topic: 合同负债
+      verbatim_quote: 合同负债，本期末较上期末增加553.89 万元，增幅为107.89%，主要系公司预收外销客户货款， 相关订单暂未交付的影响
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 14
+      topic: 分产品
+      verbatim_quote: 康复医疗产品 24,446,524.06 13,930,623.49 43.02% 41.83% 43.05% 减少0.48 个百分点
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 14
+      topic: 分产品
+      verbatim_quote: 康复科技产品 97,104,155.80 62,566,370.77 35.57% -0.41% -3.83% 增加2.29 个百分点
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 32
+      topic: RH02/存货
+      verbatim_quote: 存货 五、6 112,847,884.66 94,590,863.72
+    - doc_id: DOC-AA59142EDFCB12CA
+      physical_page: 33
+      topic: 合同负债
+      verbatim_quote: 合同负债 五、19 10,672,618.24 5,133,706.02
+    - doc_id: DOC-4571C3EC90DAFCCE
+      physical_page: 26
+      topic: 研发项目
+      verbatim_quote: 4、 研发项目情况：
+    - doc_id: DOC-4571C3EC90DAFCCE
+      physical_page: 31
+      topic: 理疗机器人
+      verbatim_quote: 多功能理疗机器人 融合多种物理因子和六轴 协作机器人协同理疗，形 成高精度、智能化的医疗 级康复方案
+    - doc_id: DOC-4571C3EC90DAFCCE
+      physical_page: 31
+      topic: 理疗机器人
+      verbatim_quote: 融合多种物理因子，结合六轴协作机器人技 术实现协同理疗；依托精密运动控制技术， 保障物理因子作用精准，确保治疗有效性
+    - doc_id: DOC-4571C3EC90DAFCCE
+      physical_page: 30
+      topic: 艾灸机器人
+      verbatim_quote: 搭载六轴协作机械臂，实现AI 精准定位、 智能循经、路径自动规划与中医手法模拟
+    - doc_id: DOC-4571C3EC90DAFCCE
+      physical_page: 17
+      topic: 分产品
+      verbatim_quote: 康复医疗产品 40,128,744.96 22,166,850.55 44.76% 18.01% 25.03% 减少3.10 个 百分点
+    - doc_id: DOC-4571C3EC90DAFCCE
+      physical_page: 17
+      topic: 分产品
+      verbatim_quote: 康复科技产品 232,972,509.80 154,145,957.99 33.84% -8.92% -4.18% 减少3.28 个 百分点
+    - doc_id: DOC-4571C3EC90DAFCCE
+      physical_page: 17
+      topic: 收入
+      verbatim_quote: 合计 273,101,254.76 176,312,808.54
+    - doc_id: DOC-4571C3EC90DAFCCE
+      physical_page: 11
+      topic: 主业
+      verbatim_quote: 公司系集研发、生产、销售及服务于一体的智能康复设备制造商
+    unknowns_and_limits:
+    - 多功能理疗机器人仅见2025年报“研发项目情况”表，标注“小批量生产”，无销量、售价、收入或客户披露
+    - 2026半年报文本层检索“机器人”0次；不排除图片中存在未识别文字
+    - 全自动艾灸仪处于型式检验，未披露上市时间与收入
+    - 全页文本层已抽取且页数与清单一致；业务核验聚焦相关章节，未逐页撰写引文

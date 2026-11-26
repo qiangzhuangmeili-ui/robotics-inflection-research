@@ -1,0 +1,60 @@
+{
+  "artifact": "R00_TIER1_COMPLETION_SELF_CHECK",
+  "issue_key": "R00",
+  "issue_number": 44,
+  "child_issues": [
+    61,
+    62
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-27",
+  "review_nature": "SELF_CHECK",
+  "decision": "NOT_ACCEPTED_PENDING_FIX",
+  "anomalies": [
+    "C02: late=['SZ:002117:DOC-A84622A47448402B:2026-10-26'] q3_bad=[]"
+  ],
+  "checks_summary": "4/5 PASS",
+  "checks": [
+    {
+      "id": "C01",
+      "name": "Batch 03+04 共 8 家与 Batch 01+02 零交集，合并 100% 等于 S08 冻结 18 家 TIER_1",
+      "result": "PASS",
+      "detail": "b12=10 b34=8 overlap=0 match_s08=True"
+    },
+    {
+      "id": "C02",
+      "name": "知识截止日 2026-10-25 无越界，7 家 H1 公司不混入三季报",
+      "result": "FAIL",
+      "detail": "late=['SZ:002117:DOC-A84622A47448402B:2026-10-26'] q3_bad=[]"
+    },
+    {
+      "id": "C03",
+      "name": "8 家公司每家引文>=10 条且 physical_page>0、逐字非空",
+      "result": "PASS",
+      "detail": "total=148 min=15 bad=0"
+    },
+    {
+      "id": "C04",
+      "name": "全部 8 家 legacy_auto_promoted=False 且无单列纯机器人收入误标",
+      "result": "PASS",
+      "detail": "legacy_auto_promoted=0 separately_disclosed=0"
+    },
+    {
+      "id": "C05",
+      "name": "全部 9 份输入存在且位于 Git 工作树内",
+      "result": "PASS",
+      "detail": "missing=[]"
+    }
+  ],
+  "counts": {
+    "batch03_companies": 5,
+    "batch04_companies": 3,
+    "tier1_total_verified": 18,
+    "batch03_quotes": 87,
+    "batch04_quotes": 61,
+    "tier1_total_quotes": 308
+  },
+  "R03_released": false,
+  "issue_53_touched": false,
+  "issue_53_status": "OPEN"
+}

@@ -1,0 +1,458 @@
+batch_id: R00_BATCH_04
+knowledge_as_of: '2026-10-25'
+companies:
+- company:
+    security_id: SZ:002117
+    stock_name: 东港股份
+    knowledge_as_of: '2026-10-25'
+    sources_actually_read:
+    - doc_id: DOC-12913B474F43ED9B
+      report_name: 2025年报
+      disclosure_date: '2026-03-31'
+      total_pages: 134
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-A84622A47448402B
+      report_name: 2026半年报
+      disclosure_date: '2026-08-21'
+      total_pages: 105
+      read_status: FULL_PDF_VERIFIED
+    consolidated_entities:
+    - entity_name: 东港股份有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 母公司；主业为票证印刷、智能卡与无线射频、技术服务（电子票证、档案存储与数字化、机器人与AI技术服务）。机器人属‘技术服务’项下的业务板块，不是独立法人，也不单列收入
+    - entity_name: 北京瑞宏具身智能机器人科技有限公司（报告简称‘东港瑞宏’）
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 全资子公司，承担政务机器人、党建机器人、政务数字人及AIYA陪伴型机器人的研发与交付；商誉1,245,159.28元计入服务业经营分部资产组；其机器人收入并入合并报表‘技术服务’，未单列
+    - entity_name: 东港瑞云数据技术有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 全资子公司，数据技术服务，非机器人
+    product_lines:
+    - line_name: 政务机器人／党建机器人／政务数字人
+      robot_application: 面向政府机构、学校、展览馆的交互服务型机器人及数字人，属具身/交互终端
+      commercial_stage: REVENUE_BUNDLED
+      evidence_ref: 2026半年报 第9页 “推出了政务机器人、党建机器人、政务数字人、AI陪伴机器人等产品，多项机器人产品已实现项目落地”
+    - line_name: AI陪伴型机器人 AIYA
+      robot_application: 家用情感陪伴机器人，报告称含‘机器人本体、机器人大脑、APP和AIYA平台’
+      commercial_stage: REVENUE_BUNDLED
+      evidence_ref: 2026半年报 第12页 “AIYA已于2026年6月底开始正式销售，开始To C新赛道业务拓展”；收入并入‘技术服务’，未单列
+    - line_name: 技术服务（电子票证＋档案存储与数字化＋机器人与AI技术服务）
+      robot_application: 合并口径内含机器人收入，但机器人未单列，无法从分部表拆分
+      commercial_stage: REVENUE_BUNDLED
+      evidence_ref: 2026半年报 第14页 “技术服务 93,222,493.04 16.29% 110,389,882.77 18.99% -15.55%”
+    - line_name: 印刷产品／智能卡和无线射频产品
+      robot_application: 非机器人；票证、彩印、智能卡、RFID标签
+      commercial_stage: NOT_ROBOT
+      evidence_ref: 2026半年报 第14页 “印刷产品 269,547,881.72 47.09% 298,718,844.60 51.38% -9.77%”
+    revenue_breakdown:
+      fy2025_total_rev_cny: 1,185,658,616.90
+      fy2025_robot_related_line: 无机器人相关分部或单列收入。分行业为印刷业966,752,928.52元（81.54%）、服务业197,590,906.78元（16.67%）、其他21,314,781.60元；其中服务业/技术服务197,590,906.78元（毛利率40.89%）含AI具身机器人，年报仅称‘AI机器人产品收入有所提升，但是在整体销售收入的占比仍然较低’，未给出金额（2025年报第16-17页）
+      anchor_period: 2026H1
+      anchor_total_rev_cny: 572,418,017.12
+      anchor_robot_related_line: 无机器人单列分部。技术服务93,222,493.04元（占16.29%，同比-15.55%，毛利率43.13%，同比+0.11个百分点），机器人收入并入该口径未单列；印刷产品269,547,881.72元（47.09%，-9.77%）、智能卡和无线射频197,737,534.21元（34.54%，+21.92%）（2026半年报第14页）
+    leading_indicators_snapshot:
+      contract_liabilities: 期末114,808,392.55元／期初128,256,935.59元，变动-10.48%（合并资产负债表第31页；资产构成表第15页；附注‘合同负债—预收货款’第87页）
+      backlog_orders: UNKNOWN（2025年报与2026半年报均未披露在手订单金额；仅‘重大销售合同’栏勾选不适用，第17页）
+    s05_alert_investigation:
+      rh04_check: 触发：2026H1经营活动现金流量净额-81,114,037.06元，归母净利润98,584,757.64元，现金流/净利为-82.3%（2025H1亦为-109,584,689.08元，季节性为负；2025全年+228,334,447.26元）。公司未在半年报解释原因；报表可见销售商品提供劳务收到的现金503,886,841.00元低于营业收入572,418,017.12元，同期应收账款+80,837,353.14元、合同资产+19,400,280.36元、合同负债-13,448,543.04元（第13、15、30、31、38页）
+      rh05_check: NA
+      rh06_check: NA
+      rh02_check: 适用：合同资产非空白，期末41,270,753.01元／期初21,870,472.65元（+88.71%，合并资产负债表第30页、资产构成第15页）；附注列示账面余额44,379,207.26元、坏账准备2,277,924.34元、账面价值42,101,282.92元（第74页），与资产负债表相差830,529.91元，差异原因未披露。存货148,200,541.83元／期初155,303,709.97元（-4.57%），存货未随收入下滑而积压，但合同资产增速显著快于收入（第15、30、74页）
+    business_verdict:
+      robot_exposure: DIRECT_UNDISCLOSED
+      overall_commercial_stage: SMALL_BATCH
+      one_sentence_summary: 东港确有自研机器人产品线（政务/党建机器人、数字人、AIYA陪伴机器人）并由全资子公司瑞宏并表交付，但机器人收入被并进‘技术服务’且该口径2026H1同比-15.55%，公司自己承认‘占比仍然较低’，最大风险是把‘技术服务’整体当成机器人收入。
+    evidence_quotes:
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 9
+      topic: 产品/机器人业务
+      verbatim_quote: 机器人与AI 技术服务：公司把握人工智能的发展机遇，不断推进技术创新和场景落地，推出了政务机器人、党建机器人、政务数字人、AI 陪伴机器人等产品
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 9
+      topic: 产品/落地
+      verbatim_quote: 多项机器人产品已实现项目落地，为政府机构、学校、展览馆等单位、以及个人消费者提供服务
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 10
+      topic: 产品/商业化
+      verbatim_quote: 公司的政务机器人、党建机器人、政务数字人等产品成功落地，进一步提高了在行业中的影响力
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 12
+      topic: 产品/新品销售
+      verbatim_quote: AIYA 已于2026 年6 月底开始正式销售，开始To C 新赛道业务拓展
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 12
+      topic: 产品/收入确认
+      verbatim_quote: 2026 年新开发的AI 陪伴机器人AIYA，已正式开始进入市场销售
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 48
+      topic: 收入口径/并表
+      verbatim_quote: 技术服务类业务包括：电子票证服务，AI 具身机器人，档案存储与数字化服务等
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 70
+      topic: 并表/子公司
+      verbatim_quote: 本公司之全资子公司北京瑞宏具身智能机器人科技有限公司取得了编号为GR202211001924 的高新技术企业证书
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 14
+      topic: 收入/分产品
+      verbatim_quote: 技术服务 93,222,493.04 16.29% 110,389,882.77 18.99% -15.55%
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 14
+      topic: 收入/毛利率
+      verbatim_quote: 服务业 93,222,493.04 53,018,319.66 43.13% -15.55% -15.71% 0.11%
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 13
+      topic: RH04/现金流
+      verbatim_quote: 经营活动产生的现金流量净额 -81,114,037.06 -109,584,689.08 25.98%
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 7
+      topic: RH04/净利
+      verbatim_quote: 归属于上市公司股东的净利润（元） 98,584,757.64 78,495,668.11 25.59%
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 15
+      topic: 合同负债
+      verbatim_quote: 合同负债 114,808,392.55 6.09% 128,256,935.59 6.30% -0.21%
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 31
+      topic: 合同负债/资产负债表
+      verbatim_quote: 合同负债 114,808,392.55 128,256,935.59
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 87
+      topic: 合同负债/附注
+      verbatim_quote: 预收货款 114,808,392.55 128,256,935.59
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 15
+      topic: RH02/合同资产
+      verbatim_quote: 合同资产 41,270,753.01 2.19% 21,870,472.65 1.07% 1.12%
+    - doc_id: DOC-A84622A47448402B
+      physical_page: 15
+      topic: RH02/存货
+      verbatim_quote: 存货 148,200,541.83 7.86% 155,303,709.97 7.63% 0.23%
+    - doc_id: DOC-12913B474F43ED9B
+      physical_page: 16
+      topic: 产品/机器人收入
+      verbatim_quote: 年度交付项目较以前大幅度提升，AI 机器人产品收入有所提升，但是在整体销售收入的占比仍然较低
+    - doc_id: DOC-12913B474F43ED9B
+      physical_page: 16
+      topic: 产品/新品未形成收入
+      verbatim_quote: 该产品目前尚未形成收入，未来业绩贡献能力尚有较大不确定性
+    - doc_id: DOC-12913B474F43ED9B
+      physical_page: 17
+      topic: 收入/技术服务
+      verbatim_quote: 技术服务 197,590,906.78 116,805,807.12 40.89% 1.96% -4.17% 3.78%
+    - doc_id: DOC-12913B474F43ED9B
+      physical_page: 17
+      topic: 成本/委托外部
+      verbatim_quote: 技术服务 委托外部 57,871,724.35 49.55% 44,001,053.30 36.10% 13.45%
+    - doc_id: DOC-12913B474F43ED9B
+      physical_page: 23
+      topic: 研发/本体
+      verbatim_quote: 目前已完成工程原型机开发，正在进行软件算法与
+    - doc_id: DOC-12913B474F43ED9B
+      physical_page: 111
+      topic: 商誉/并表
+      verbatim_quote: 北京瑞宏具身智能机器人科技有限公司 1,245,159.28
+    - doc_id: DOC-12913B474F43ED9B
+      physical_page: 24
+      topic: RH04/年度现金流
+      verbatim_quote: 经营活动产生的现金流量净额 228,334,447.26 260,865,756.58 -12.47%
+    unknowns_and_limits:
+    - 机器人收入金额未披露，只能确认并入‘技术服务’93,222,493.04元且该口径同比-15.55%，无法拆分机器人与电子票证/档案各自贡献
+    - AIYA的销售台数、单价、确认收入金额与订单均未披露，‘已开始正式销售’不等于已确认收入
+    - 机器人本体是否完全自产未披露；技术服务成本中‘委托外部’57,871,724.35元占49.55%，存在较大外包/集成成分
+    - 持股100%的并表依据为第70页‘全资子公司’文字表述、第84页商誉资产组及第103页母公司长期股权投资；但第98页‘企业集团构成’子公司表未列示瑞宏，披露口径不一致
+    - 2026半年报未经审计（第30页‘半年度财务报告未经审计’）
+    - RH04原因公司未作说明，本回传中的现金流缺口归因为报表科目推算，非公司口径
+- company:
+    security_id: SZ:002354
+    stock_name: 天娱数科
+    knowledge_as_of: '2026-10-25'
+    sources_actually_read:
+    - doc_id: DOC-F021797A4095EC06
+      report_name: 2025年报
+      disclosure_date: '2026-04-20'
+      total_pages: 180
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-12669E18AED7897C
+      report_name: 2026半年报
+      disclosure_date: '2026-08-21'
+      total_pages: 154
+      read_status: FULL_PDF_VERIFIED
+    consolidated_entities:
+    - entity_name: 天娱数字科技集团股份有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 母公司；主业为数据流量、智能营销、智慧能源、空间智能（MaaS/具身数据/3D大模型），不生产机器人本体
+    - entity_name: 天娱机器人（深圳）有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 全资子公司（持股100.00%），注册资本1,000万元，主要业务登记为‘信息技术服务’；2026H1营业收入8,897,383.96元、净利润-5,118,398.73元。名称含‘机器人’，但报告未披露任何机器人硬件/本体业务，不能等同于机器人收入
+    product_lines:
+    - line_name: 数据流量业务（智能营销＋AI应用分发＋电竞）
+      robot_application: 非机器人；广告投放、应用分发、数字竞技
+      commercial_stage: NOT_ROBOT
+      evidence_ref: 2026半年报 第13页 “数据流量行业 1,081,822,142.43 98.91% 967,054,972.96 97.93% 11.87%”
+    - line_name: 空间智能／Behavision 空间智能大模型与MaaS平台
+      robot_application: 为具身智能提供3D铰接数据、VLA抓取数据、仿真训练与MCP工具接口，可适配人形/双臂/轮式本体（上游数据与模型使能）
+      commercial_stage: PLAN_OR_CONCEPT
+      evidence_ref: 2025年报 第16页 “平台基于MCP构建工具化接口体系，可适配人形机器人、双臂机器人、轮式机器人等多类本体”
+    - line_name: 具身智能数据集（含‘多模态VLA具身机器人抓取数据’）
+      robot_application: 机器人训练数据资产，已完成北京国际大数据交易所数据资产登记
+      commercial_stage: PLAN_OR_CONCEPT
+      evidence_ref: 2026半年报 第9页 “多模态VLA具身机器人抓取数据”等多个具身智能数据集已在北京国际大数据交易所完成数据资产登记
+    - line_name: 具身智能助教机器人（智慧教育场景）
+      robot_application: 语言教学场景的助教机器人应用探索
+      commercial_stage: PLAN_OR_CONCEPT
+      evidence_ref: 2026半年报 第11页 “报告期内，公司积极探索具身智能助教机器人在语言教学等场景中的应用”
+    revenue_breakdown:
+      fy2025_total_rev_cny: 2,076,978,524.51
+      fy2025_robot_related_line: 无机器人／空间智能分部或单列收入。分行业仅‘数据流量行业’2,049,381,497.77元（98.67%，毛利率24.46%）、‘电竞游戏行业’25,552,842.70元（1.23%）、‘其他’2,044,184.04元（0.10%）；空间智能MaaS未形成单列收入（2025年报第17页）
+      anchor_period: 2026H1
+      anchor_total_rev_cny: 1,093,814,390.25
+      anchor_robot_related_line: 无。分行业‘数据流量行业’1,081,822,142.43元（98.91%，同比+11.87%，毛利率30.40%，同比+8.70个百分点）、‘电竞游戏行业’11,206,704.12元（1.02%，-43.47%）、‘其他’785,543.70元；分产品表同样没有空间智能/具身智能科目，即机器人相关收入为0披露（2026半年报第13页）
+    leading_indicators_snapshot:
+      contract_liabilities: 期末114,863,335.12元／期初64,230,916.55元，变动+78.82%（资产负债表第36页；资产构成表第14页；附注‘合同负债—预收广告款和合作款’第117页）
+      backlog_orders: UNKNOWN（未披露在手订单；‘重大销售合同’栏不适用，2026半年报第13页后）
+    s05_alert_investigation:
+      rh04_check: NA（未触发：2026H1经营现金流净额87,564,540.26元，为归母净利40,722,436.58元的2.15倍，第7页）
+      rh05_check: NA
+      rh06_check: NA
+      rh02_check: 适用：合并资产负债表‘合同资产’科目期末、期初均无金额，即无合同资产（2026半年报第35页；2025年报第71页同样空白）；存货19,481,987.44元／期初23,789,028.13元（-18.11%，占总资产0.82%），存货规模小且下降；合同负债+78.82%主要系预收广告款和合作款增加，与机器人业务无关
+    business_verdict:
+      robot_exposure: INDIRECT_ENABLING
+      overall_commercial_stage: PLAN_ONLY
+      one_sentence_summary: 天娱是给机器人公司‘卖数据和模型’的上游服务商（3D铰接数据、VLA抓取数据、Behavision空间智能大模型+MCP多本体适配），两期分部表都没有空间智能/具身收入科目，公司自认仍处‘技术研发和场景验证的探索阶段’，最大风险是把数据资产登记和平台发布当成机器人收入。
+    evidence_quotes:
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 9
+      topic: 业务板块
+      verbatim_quote: 公司坚持“数字化、智能化、全球化”发展战略，依托数据流量优势，构建了智能营销、智慧能源、空间智能等业务板块
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 9
+      topic: 具身数据
+      verbatim_quote: “多模态VLA 具身机器人抓取数据”等多个具身智能数据集已在北京国际大数据交易所完成数据资产登记
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 11
+      topic: 场景验证
+      verbatim_quote: 推动空间智能、具身智能等技术由基础能力建设向具体场景验证和应用落地延伸
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 11
+      topic: 助教机器人
+      verbatim_quote: 报告期内，公司积极探索具身智能助教机器人在语言教学等场景中的应用
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 17
+      topic: 风险/商业化阶段
+      verbatim_quote: 空间智能业务目前仍处于技术研发和场景验证的探索阶段，在商业模式成熟度、客户需求释放节奏、场景验证周期和市场接受度等方面仍存在较大不确定性
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 13
+      topic: 收入/分行业
+      verbatim_quote: 数据流量行业 1,081,822,142.43 98.91% 967,054,972.96 97.93% 11.87%
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 13
+      topic: 收入/合计
+      verbatim_quote: 营业收入合计 1,093,814,390.25 100% 987,505,268.62 100% 10.77%
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 14
+      topic: 合同负债
+      verbatim_quote: 合同负债 114,863,335.12 4.84% 64,230,916.55 3.55% 1.29%
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 117
+      topic: 合同负债/附注
+      verbatim_quote: 预收广告款和合作款 114,863,335.12 64,230,916.55
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 35
+      topic: RH02/合同资产空白
+      verbatim_quote: 存货 19,481,987.44 23,789,028.13 其中：数据资源 合同资产
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 16
+      topic: 子公司/机器人实体
+      verbatim_quote: 33,383,692.60 1,625,658.25 8,897,383.96 -4,644,338.76 -5,118,398.73
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 56
+      topic: 并表/持股
+      verbatim_quote: 天娱机器人(深圳)有限公司 全资子公司 1 100.00 100.00
+    - doc_id: DOC-12669E18AED7897C
+      physical_page: 7
+      topic: 净利/现金流
+      verbatim_quote: 经营活动产生的现金流量净额（元） 87,564,540.26 88,023,060.68 -0.52%
+    - doc_id: DOC-F021797A4095EC06
+      physical_page: 17
+      topic: 收入/分行业
+      verbatim_quote: 数据流量行业 2,049,381,497.77 98.67% 1,536,679,764.56 97.35% 33.36%
+    - doc_id: DOC-F021797A4095EC06
+      physical_page: 15
+      topic: 业务/空间智能
+      verbatim_quote: 空间智能 MaaS：强化数据与平台能力，推动多场景探索验证
+    - doc_id: DOC-F021797A4095EC06
+      physical_page: 16
+      topic: 技术/多本体适配
+      verbatim_quote: 平台基于MCP 构建工具化接口体系，可适配人形机器人、双臂机器人、轮式机器人等多类本体
+    - doc_id: DOC-F021797A4095EC06
+      physical_page: 16
+      topic: 平台/阶段性成果
+      verbatim_quote: 公司Behavision平台亮相CES 2025，展示了公司在3D具身智能数据集和空间智能大模型等方面的阶段性探索成果
+    - doc_id: DOC-F021797A4095EC06
+      physical_page: 7
+      topic: 净利/亏损
+      verbatim_quote: 归属于上市公司股东的净利润（元） -48,851,287.01 -117,947,982.33 58.58%
+    - doc_id: DOC-F021797A4095EC06
+      physical_page: 13
+      topic: 口径/主营盈利说法
+      verbatim_quote: 公司主营业务在实际经营层面实现盈利约2,195.50 万元
+    unknowns_and_limits:
+    - 空间智能/具身智能收入未单列，两期分部表均无对应科目，无法量化；数据资产登记金额、平台授权/服务收费均未披露
+    - 天娱机器人（深圳）2026H1收入8,897,383.96元属登记为‘信息技术服务’的业务，报告未说明是否含机器人相关交付，不能据此认定为机器人收入
+    - 2026半年报第100页另列含天娱机器人（深圳）20%在内的持股名单，页首表头缺失、性质不明（疑为其他关联方/少数股东），本回传未据此改变并表判断；并表依据取第56页‘全资子公司100.00%’及第135页‘投资设立100.00%’
+    - ‘主营业务在实际经营层面实现盈利约2,195.50万元’为公司自述的非报表口径，2025年报表归母净利为-48,851,287.01元
+    - 2026半年报未经审计（第35页‘半年度财务报告未经审计’）
+    - 第13页分产品表仅列‘数字竞技平台／数据流量业务／其他’，未见任何机器人或空间智能产品科目
+- company:
+    security_id: SZ:300031
+    stock_name: 宝通科技
+    knowledge_as_of: '2026-10-25'
+    sources_actually_read:
+    - doc_id: DOC-3D332E4C35A0C69C
+      report_name: 2025年报
+      disclosure_date: '2026-04-29'
+      total_pages: 242
+      read_status: FULL_PDF_VERIFIED
+    - doc_id: DOC-678304EEC89B7F61
+      report_name: 2026半年报
+      disclosure_date: '2026-08-28'
+      total_pages: 195
+      read_status: FULL_PDF_VERIFIED
+    consolidated_entities:
+    - entity_name: 无锡宝通科技股份有限公司
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 母公司；双主业为工业互联网（工业散货物料智能输送全栈式服务）与移动互联网（游戏发行），机器人作为工业场景智能装备的一环，不单列收入
+    - entity_name: 百年通（智能输送数字化产品子公司）
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 子公司，主营智能输送数字化产品（输送带）；2026H1营业收入864,000,595.20元、净利润46,786,694.54元；非机器人本体
+    - entity_name: 宝通智能物联（智能输送系统服务子公司）
+      consolidation_status: CONSOLIDATED(并表)
+      role_in_robotics: 子公司，主营智能输送系统服务；经营范围含‘工业机器人制造／工业机器人销售／智能机器人销售’，2026H1营业收入130,366,229.99元、净利润-22,688,966.35元；巡检／清扫机器人相关交付应在该口径内，但未单列
+    - entity_name: 无锡泰利斯电力传动科技有限公司
+      consolidation_status: EQUITY_METHOD(参股不并表)
+      role_in_robotics: 机器人零部件（微电机）相关主体；2026H1‘部分股权转让、引入团队’后由子公司转为参股/联营企业（释义页称‘宝通科技参股公司’），不再并表，其收入不计入合并报表
+    - entity_name: 无锡宝光物理人工智能科技有限公司
+      consolidation_status: UNKNOWN
+      role_in_robotics: 与光轮智能共同设立的合资公司，聚焦工业／矿业／深空场景的工业机器人持续学习基础设施与物理AI；报告仅述‘共同设立’，未披露持股比例、注册资本与并表状态，且未列入合并范围子公司清单
+    product_lines:
+    - line_name: 智能输送数字化产品（输送带）
+      robot_application: 非机器人本体；为矿山/钢铁/港口散料输送提供输送带及配套
+      commercial_stage: NOT_ROBOT
+      evidence_ref: 2026半年报 第32页 “智能输送数字化产品 830,352,641.17 675,953,326.60 18.59% 18.93% 20.64% -1.15%”
+    - line_name: 智能输送系统服务（含智能监测、智能运维、工业巡检机器人、清扫机器人）
+      robot_application: 工业场景巡检/清扫机器人及智能监测系统，随系统服务打包交付，未单列机器人收入
+      commercial_stage: REVENUE_BUNDLED
+      evidence_ref: 2026半年报 第29页 “工业巡检机器人、清扫机器人等场景，并持续在矿山、钢铁、港口、水泥等复杂工业环境中开展应用与验证”
+    - line_name: 工业散料输送场景AI四足智能巡检机器人系统
+      robot_application: 基于外购四足机器人平台深度定制开发（二次开发），面向矿业/钢铁/水泥/港口巡检
+      commercial_stage: PROTOTYPE_OR_SAMPLE
+      evidence_ref: 2025年报 第37页 “基于四足机器人平台深度定制开发”……“已进入客户现场验证阶段”
+    - line_name: AI清扫机器人
+      robot_application: 工业散料场景清扫作业，已在客户现场运行
+      commercial_stage: REVENUE_BUNDLED
+      evidence_ref: 2025年报 第3页 “AI清扫机器人已经在客户现场稳定运行，智能巡检机器人进入实地验证阶段”
+    - line_name: 移动游戏产品
+      robot_application: 非机器人；海外手游发行与运营
+      commercial_stage: NOT_ROBOT
+      evidence_ref: 2026半年报 第32页 “移动游戏产品 857,292,430.73 290,008,767.34 66.17% 22.09% 4.44% 5.72%”
+    revenue_breakdown:
+      fy2025_total_rev_cny: 3,458,111,953.63
+      fy2025_robot_related_line: 无机器人单列分部或收入。分行业‘工业散货物料智能输送全栈式服务’2,001,415,058.37元（57.88%，毛利率21.66%）、‘移动游戏’1,456,696,895.26元（42.12%，毛利率59.91%）；分产品为移动游戏1,456,696,895.26元、智能输送数字化产品制造1,604,417,383.55元（毛利率19.56%）、智能输送系统产品服务396,997,674.82元（毛利率30.16%），机器人未单列（2025年报第33、35页）
+      anchor_period: 2026H1
+      anchor_total_rev_cny: 1,965,519,910.21
+      anchor_robot_related_line: 无机器人单列科目。分产品：移动游戏产品857,292,430.73元（毛利率66.17%，同比+22.09%）、智能输送数字化产品830,352,641.17元（毛利率18.59%，+18.93%）、智能输送系统服务277,874,838.31元（毛利率32.00%，+34.39%，毛利率同比+1.26个百分点）；巡检/清扫机器人归入系统服务口径，未单列（2026半年报第32页）
+    leading_indicators_snapshot:
+      contract_liabilities: 期末117,173,702.67元／期初99,483,401.67元，变动+17.78%（合并资产负债表第60页；资产构成表第34页；附注‘合同负债—预收销售款’第138页）
+      backlog_orders: UNKNOWN（未披露在手订单金额；必和必拓仅表述‘认可／进入供应链’，2025年报第2、3页未给订单金额；第147页对必和必拓集团及其关联方应收账款34,864,815.35元属输送业务客户应收，不能当作机器人订单）
+    s05_alert_investigation:
+      rh04_check: NA（未触发：2026H1经营现金流净额197,915,106.56元，为归母净利191,996,190.06元的103.1%，第31页）
+      rh05_check: NA
+      rh06_check: NA
+      rh02_check: NA（S05为0触发0待核；同步核查：合同资产65,589,817.66元／期初43,907,889.13元（+49.38%），存货483,119,721.60元／期初419,227,261.96元（+15.24%），均低于营业收入+22.30%的增速，未见明显积压，第31、33页）
+    business_verdict:
+      robot_exposure: DIRECT_UNDISCLOSED
+      overall_commercial_stage: SMALL_BATCH
+      one_sentence_summary: 宝通的机器人是‘买宇树等四足平台＋自己做场景二次开发’的工业巡检/清扫装备，已有客户现场运行和必和必拓认可，但两期报表都没有机器人收入科目、也没披露订单金额，最大风险是把现场验证和供应链认可当成已规模化销售的机器人收入。
+    evidence_quotes:
+    - doc_id: DOC-3D332E4C35A0C69C
+      physical_page: 3
+      topic: 机器人/客户认可
+      verbatim_quote: 经迭代升级的四足及二足机器人成功获必和必拓的认可，助力中国自主机器人解决方案成功跻身国际顶级矿业市场
+    - doc_id: DOC-3D332E4C35A0C69C
+      physical_page: 3
+      topic: 机器人/运行阶段
+      verbatim_quote: AI 清扫机器人已经在客户现场稳定运行，智能巡检机器人进入实地验证阶段
+    - doc_id: DOC-3D332E4C35A0C69C
+      physical_page: 37
+      topic: 研发/二次开发
+      verbatim_quote: 基于四足机器人平台深度定制开发
+    - doc_id: DOC-3D332E4C35A0C69C
+      physical_page: 37
+      topic: 研发/阶段
+      verbatim_quote: 已进入客户现场验证阶段
+    - doc_id: DOC-3D332E4C35A0C69C
+      physical_page: 33
+      topic: 收入/分行业
+      verbatim_quote: 工业散货物料智能输送全栈式服务 2,001,415,058.37 57.88% 1,865,643,183.23 56.50% 7.28%
+    - doc_id: DOC-3D332E4C35A0C69C
+      physical_page: 35
+      topic: 收入/分产品
+      verbatim_quote: 智能输送数字化产品制造 1,604,417,383.55 1,290,617,025.83 19.56% 15.24% 20.03% -3.21%
+    - doc_id: DOC-3D332E4C35A0C69C
+      physical_page: 2
+      topic: 客户/供应链
+      verbatim_quote: 智能产品成功进入力拓、必和必拓等全球矿业巨头的供应链
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 11
+      topic: 业务/双主业
+      verbatim_quote: 深耕工业互联网（工业散货物料智能输送全栈式服务）、移动互联网两大核心业务
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 27
+      topic: 机器人/现场应用
+      verbatim_quote: 随着巡检机器人、清扫机器人等产品在真实生产场景中的持续应用
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 27
+      topic: 合资/光轮智能
+      verbatim_quote: 携手战略投资伙伴光轮智能（北京）科技股份有限公司（以下简称“光轮智能”）共同设立合资公司
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 29
+      topic: 机器人/应用验证
+      verbatim_quote: 工业巡检机器人、清扫机器人等场景，并持续在矿山、钢铁、港口、水泥等复杂工业环境中开展应用与验证
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 32
+      topic: 收入/分产品
+      verbatim_quote: 智能输送系统服务 277,874,838.31 188,941,092.40 32.00% 34.39% 31.93% 1.26%
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 31
+      topic: 收入/合计
+      verbatim_quote: 营业收入 1,965,519,910.21 1,607,108,948.28 22.30%
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 31
+      topic: RH04/现金流
+      verbatim_quote: 经营活动产生的现金流量净额 197,915,106.56 181,887,945.23 8.81%
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 34
+      topic: 合同负债
+      verbatim_quote: 合同负债 117,173,702.67 1.77% 99,483,401.67 1.54% 0.23%
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 138
+      topic: 合同负债/附注
+      verbatim_quote: 预收销售款 117,173,702.67 99,483,401.67
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 33
+      topic: RH02/合同资产存货
+      verbatim_quote: 合同资产 65,589,817.66 0.99% 43,907,889.13 0.68% 0.31%
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 6
+      topic: 参股/泰利斯
+      verbatim_quote: 无锡泰利斯电力传动科技有限公司，宝通科技参股公司
+    - doc_id: DOC-678304EEC89B7F61
+      physical_page: 38
+      topic: 股权变动/泰利斯
+      verbatim_quote: 无锡泰利斯电力传动科技有限公司 部分股权转让 引入团队
+    unknowns_and_limits:
+    - 机器人收入未单列，无法确认巡检/清扫机器人是自用服务、随系统打包，还是整机对外销售；2025年报第52页投资者明确问‘向宇树采购价、整机销售价、毛利率’，但年报正文未见公司答复
+    - 宇树科技在2026半年报全文0次提及，仅2025年报投资者关系问答中出现；合作关系的最新状态无法从半年报确认
+    - 必和必拓的机器人订单金额、台数、交付时间均未披露；‘获认可’和‘进入供应链’不等于已实现机器人销售收入
+    - 无锡宝光物理人工智能科技有限公司的持股比例、注册资本、并表状态未披露，也未列入合并范围子公司清单
+    - 无锡泰利斯已由子公司转为参股/联营企业，微电机业务不再并表，不能计入宝通机器人零部件收入
+    - 2026半年报未经审计（‘半年度财务报告未经审计’）
