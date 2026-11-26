@@ -1,0 +1,486 @@
+{
+  "artifact": "S08_METRIC_STAGE_ACCEPTANCE_AND_R00_CANDIDATE_FREEZE",
+  "issue_key": "S08",
+  "issue_number": 43,
+  "plan_version": "20261026_collection_first_v2",
+  "knowledge_as_of": "2026-10-25",
+  "generated_at": "2026-11-26T14:30:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "executor": "CodeBuddy",
+  "orchestrator": "Antigravity",
+  "review_nature": "SELF_CHECK",
+  "reviewer_assigned": "Codex",
+  "stage_decision": "ACCEPTED_WITH_LIMITS",
+  "stage_decision_basis": {
+    "rule": "anomalies 为空 -> ACCEPTED_WITH_LIMITS；存在任一异常 -> NOT_ACCEPTED_PENDING_FIX",
+    "anomaly_count": 0,
+    "anomalies": []
+  },
+  "stage_versions": {
+    "S00": {
+      "status": "ERRATA_53_OPEN",
+      "note": "S00 勘误 #53 原样结转，未闭合"
+    },
+    "S01": {
+      "rules": [
+        "v3",
+        "v4"
+      ],
+      "acceptance": "runs/issues/S01/acceptance_20261029.json"
+    },
+    "S02": {
+      "metrics": "s02_v10",
+      "acceptance": "runs/issues/S02/acceptance_20261106/review.json"
+    },
+    "S03": {
+      "round": "rerun_20261106",
+      "review": "runs/issues/S03/review.json"
+    },
+    "S04": {
+      "ruling": "v2.2",
+      "review": "runs/issues/S04/codex_ruling_s05_v22_20261120.md"
+    },
+    "S05": {
+      "round": "R1",
+      "acceptance": "runs/issues/S05/acceptance_s05_r1_20261121.json"
+    },
+    "S06": {
+      "round": "R2",
+      "acceptance": "runs/issues/S06/acceptance_s06_r2_20261123.json"
+    },
+    "S07": {
+      "round": "R3",
+      "acceptance": "runs/issues/S07/acceptance_s07_r3_20261126.json"
+    }
+  },
+  "input_fingerprints": [
+    {
+      "path": "runs/issues/S08/release_20261126.json",
+      "bytes": 5527,
+      "sha256": "39ddebbfa8e34f2c96dfb4521836343a51fd3e360740c70c563ee68b08db74e4"
+    },
+    {
+      "path": "runs/issues/S08/handoff_from_s07_20261126.md",
+      "bytes": 3739,
+      "sha256": "0edb9b29cc1b78e69ed6e7ab10370273b5bb811a5d6633a1b59defca68190c6f"
+    },
+    {
+      "path": "data/company_master.csv",
+      "bytes": 705999,
+      "sha256": "6596f05fbc4f65e2f66ec26edd9726e4049854d697feab968c8b1360e40560fe"
+    },
+    {
+      "path": "runs/issues/S01/acceptance_20261029.json",
+      "bytes": 6167,
+      "sha256": "376dc407a7c24873433d6e8024fa962b80016cb5e6a1f7a98ba8acc04452e058"
+    },
+    {
+      "path": "runs/issues/S01/screen_rules_v3.json",
+      "bytes": 42139,
+      "sha256": "bf7e68893833b472615f00ab7d14804db4537a9d0936c027a52bc4ef9e26c884"
+    },
+    {
+      "path": "runs/issues/S01/screen_rules_v4.json",
+      "bytes": 44323,
+      "sha256": "3ab824591ff18f51ea72cbf80f106151d7baeb6782d6e5b03e178d309464307f"
+    },
+    {
+      "path": "runs/issues/S02/acceptance_20261106/review.json",
+      "bytes": 2209,
+      "sha256": "85813450236d4bf2b70238a1f470c25199595110204a69f3fd4e0344a56ea561"
+    },
+    {
+      "path": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+      "bytes": 2589,
+      "sha256": "a18b915ce0db154b070b5064ace6cbe1a9917f7ac14ce8fd557595dedcbabe31"
+    },
+    {
+      "path": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+      "bytes": 4346250,
+      "sha256": "3091b0bb82a3e3114d7f338595c40d82c842ce47aa8802b141a6ce8ec2232953"
+    },
+    {
+      "path": "runs/issues/S03/review.json",
+      "bytes": 2987,
+      "sha256": "30031862769afa62d69e647dc427ae6339f1f9989cb08602403bda5bbb5518ea"
+    },
+    {
+      "path": "runs/issues/S03/rerun_20261106/l1_screen_results.csv",
+      "bytes": 160775,
+      "sha256": "a9b0c6edc0ecc1ab549b41ea5bc2c598889c0977380f7f221832b8e4f68b8f77"
+    },
+    {
+      "path": "runs/issues/S03/rerun_20261106/wide_pass.csv",
+      "bytes": 118297,
+      "sha256": "859fbaeddf38655c90c44e6a7151aa0bd7b5cf31749c12be5bd4a7d2f04d63ca"
+    },
+    {
+      "path": "runs/issues/S03/rerun_20261106/wide_defer.csv",
+      "bytes": 19382,
+      "sha256": "1c20e6878631fccb62e28b865c9a1fffbc030035e4d7ea5da7428d08e196b6b6"
+    },
+    {
+      "path": "runs/issues/S03/rerun_20261106/wide_unknown.csv",
+      "bytes": 23932,
+      "sha256": "e352a8fdad7bf9c569ca9bfce77563f40f937a7d418dd32fb1f3236f7ec9ca58"
+    },
+    {
+      "path": "runs/issues/S04/codex_ruling_s05_v22_20261120.md",
+      "bytes": 4491,
+      "sha256": "751148bd9d000dd910605d7fd471671d8f81e9fd430522de8951d67bf61102a2"
+    },
+    {
+      "path": "runs/issues/S04/tight_decision_log.csv",
+      "bytes": 450302,
+      "sha256": "aac3071ffbe4f0de6514578d4b6ace78640b6014c2a88e602e06c7ce70256366"
+    },
+    {
+      "path": "runs/issues/S05/acceptance_s05_r1_20261121.json",
+      "bytes": 3385,
+      "sha256": "aec3f4002335f3ed1a6b3285fe1cb327ce2f8120eb9025f094a0221f316014e0"
+    },
+    {
+      "path": "runs/issues/S05/quality_pass.csv",
+      "bytes": 105115,
+      "sha256": "9d488f50b86523fd89f1d0dc6d4b0fa010ad2cf3c2d86fc5bfc96d8040b69480"
+    },
+    {
+      "path": "runs/issues/S05/quality_observe.csv",
+      "bytes": 553,
+      "sha256": "62253de55980e9c15406d703ac9da6ab420e6d6ac1083dbaf22d17516b7e07eb"
+    },
+    {
+      "path": "runs/issues/S05/quality_decision_log.csv",
+      "bytes": 189331,
+      "sha256": "ba6cf6474496eabdf17cfe8f5e2e1c9e2ea10288bcb412ce3d64f2ed9c7591b2"
+    },
+    {
+      "path": "runs/issues/S05/quality_flags.csv",
+      "bytes": 324254,
+      "sha256": "38addb2c08ebb89ffa1ed56bae82be1120d18f61984a3afc5fd965469998ae77"
+    },
+    {
+      "path": "runs/issues/S05/observe_pool_preserved_776.csv",
+      "bytes": 88240,
+      "sha256": "528c451f551d21ca7c3453a49738af6ec7a7217fd04658c5de4c7de6f26574b1"
+    },
+    {
+      "path": "runs/issues/S05/rh06_adoption.csv",
+      "bytes": 80478,
+      "sha256": "686abf8e39d9a1f2fb2855af95a6c09a14266bb403adbe1dffb56dc9be5b6e6d"
+    },
+    {
+      "path": "runs/issues/S05/s05_out_of_valid_range.csv",
+      "bytes": 2917,
+      "sha256": "90eb365f77d44d45212981dc4f4daacad632ef489791e3b270bcfaded436a9f7"
+    },
+    {
+      "path": "runs/issues/S06/acceptance_s06_r2_20261123.json",
+      "bytes": 3736,
+      "sha256": "58de96ef6d0c0f34ca8e553202222a7233b079b9b1f7853f5ff26a9f1c306e6f"
+    },
+    {
+      "path": "runs/issues/S06/early_stage_watch.csv",
+      "bytes": 130095,
+      "sha256": "19ac5224397b7a0a7e34958cfc47a3108bb10c5a78333d2cd57842188c4b57be"
+    },
+    {
+      "path": "runs/issues/S06/missing_data_watch.csv",
+      "bytes": 277428,
+      "sha256": "067c2b591f9a82665b1f13ef253b4fa46947a4695de808dc4a26a9c35580ed1e"
+    },
+    {
+      "path": "runs/issues/S06/watch_reentry_rules.md",
+      "bytes": 9802,
+      "sha256": "6912628b5ff0890db8b153207cc37db05bd8d570e215b2fe49eb1763f8eb3a8e"
+    },
+    {
+      "path": "runs/issues/S07/acceptance_s07_r3_20261126.json",
+      "bytes": 4713,
+      "sha256": "c779cfaf7f9d938677c6b2d23e713408cee426a1aaafbebc47914c8290f4bd42"
+    },
+    {
+      "path": "runs/issues/S07/screen_audit_review.json",
+      "bytes": 40904,
+      "sha256": "74096a33d56319d749abfec47c2d96e47c9ed9ea6d1a77bf2fb3aeaa4aa444a1"
+    },
+    {
+      "path": "runs/issues/S07/screen_audit_findings.md",
+      "bytes": 27383,
+      "sha256": "39cd3a5c5f9b5087d7395f8df96b83a4bb5d116e812346267cc989aef14e2a36"
+    },
+    {
+      "path": "archive/latest_universe.csv",
+      "bytes": 552525,
+      "sha256": "4c1b5cc3b31288417194cfd607570d92aed1b80286e47150610ffde418f1b703"
+    },
+    {
+      "path": "archive/R1_batch01_parent_reviewed_20261024/classification_reviewed.csv",
+      "bytes": 17883,
+      "sha256": "b5f4a90d9f4ad2b8c8e6e4fef3f759cfaf894b6d856f429548f5565b8c90f75b"
+    },
+    {
+      "path": "archive/R1_02A_parent_reviewed_20261024/classification_reviewed.csv",
+      "bytes": 15386,
+      "sha256": "f24509e4e9cbc58391813c99fe4e00b062463f4f8a2d6683cd299541138daaf9"
+    },
+    {
+      "path": "archive/02A_supplement/classification_reviewed.csv",
+      "bytes": 4408,
+      "sha256": "96be0cc64c28034e5abdec82a25049eafbc825a7eb33eeaa6e58291eb71f52ed"
+    },
+    {
+      "path": "archive/02B/classification_reviewed.csv",
+      "bytes": 8988,
+      "sha256": "1f2d0757fc9fe2392ab138b65055a28a8c355955e12e12d0260097fa5a51bdd0"
+    },
+    {
+      "path": "archive/early_sample_proposals.csv",
+      "bytes": 1454,
+      "sha256": "bb4d579f868cdb46e101c9daf3cd4055ab225c7b9f318f9ab966363b656403ba"
+    },
+    {
+      "path": "packages/B00_SOURCE_01/results/screening.csv",
+      "bytes": 2983,
+      "sha256": "44af35d9658b8993af4554021c5246dbf10a6bbed14d92885538de968af553c8"
+    },
+    {
+      "path": "packages/B00_SOURCE_02/results/screening.csv",
+      "bytes": 2517,
+      "sha256": "10189276e81cebd21a6c04faf7bec335e39f179e9a2279712c253688ae1f1fec"
+    },
+    {
+      "path": "packages/C00_PILOT_01/results/screening.csv",
+      "bytes": 8206,
+      "sha256": "6ca52e626296cdd22a9869fe6eae81868cbc8f7bb9614921ddc5137ae5de4099"
+    },
+    {
+      "path": "packages/D00_B00_ADVANCE_01/results/evidence.csv",
+      "bytes": 19979,
+      "sha256": "5cbf8e9afa108a029b94c5b5802243a88342d97fc7a1f1426d17e082bb8e4381"
+    },
+    {
+      "path": "data/package_index.csv",
+      "bytes": 33383,
+      "sha256": "068872d158f5ce782fd2ea3dbce2efa5cc023ca7bb814aa423a3f6ed7e84bf28"
+    },
+    {
+      "path": "packages/D01_DETAIL_01/assignment.csv",
+      "bytes": 2136,
+      "sha256": "11d062bfecaf3c01fe72d73f3fec6c3215ed705eb6c8758df8af7bee470ee3b7"
+    },
+    {
+      "path": "packages/D01_DETAIL_02/assignment.csv",
+      "bytes": 2176,
+      "sha256": "143df930f08e896c021d6dc60820c6766e784929d67c34d4f003f7069fbb22e6"
+    },
+    {
+      "path": "packages/D01_DETAIL_03/assignment.csv",
+      "bytes": 2134,
+      "sha256": "517ba332c98ca1e2487671013736b372898e6f4986fdcf69d664a808d707a141"
+    },
+    {
+      "path": "packages/D01_DETAIL_04/assignment.csv",
+      "bytes": 2143,
+      "sha256": "7bb27c65db48c14c5d5f2eef5ba746e6c96993daf207cea2c388c48a28051fbf"
+    },
+    {
+      "path": "packages/D01_DETAIL_05/assignment.csv",
+      "bytes": 2085,
+      "sha256": "9b6516941856528c66d940f0d2bc05022969e58a0c4a4914b4d6fd8317b05d8d"
+    },
+    {
+      "path": "packages/D01_DETAIL_06/assignment.csv",
+      "bytes": 2030,
+      "sha256": "5d20c68a33f249991f902e69b5a703472cbbd11fb5d48fca9bef30c48364ac18"
+    },
+    {
+      "path": "packages/D01_DETAIL_07/assignment.csv",
+      "bytes": 2119,
+      "sha256": "46321693e3a24f9f03844df1e230cc3089a182c2149f3aa51c684da8fbba704d"
+    },
+    {
+      "path": "packages/D01_DETAIL_08/assignment.csv",
+      "bytes": 2202,
+      "sha256": "c26c97dabf43de5f173122ef81cf2bedecda9e02eff61920e257b006ec7621b4"
+    },
+    {
+      "path": "packages/D01_DETAIL_09/assignment.csv",
+      "bytes": 2087,
+      "sha256": "f1f3d0e9e8bf62c18b27ce9910e3f309b4ebcd9d7d5a8ea013ed206a95e5e788"
+    }
+  ],
+  "reconciliation": {
+    "universe": {
+      "primary_keys": 1054,
+      "source": "data/company_master.csv"
+    },
+    "S03": {
+      "wide_pass": 777,
+      "wide_defer": 149,
+      "wide_unknown": 128,
+      "sum": 1054
+    },
+    "S04": {
+      "l2_shortlist_candidate": 445,
+      "within_wide_pass": 445
+    },
+    "S04_to_S05": {
+      "baseline_445": 445,
+      "frozen_278": 278,
+      "deferred_167": 167
+    },
+    "S05": {
+      "quality_pass": 277,
+      "quality_hold": 1,
+      "observe_pool_776": 776,
+      "sum": 1054
+    },
+    "S06": {
+      "early_stage_watch": 54,
+      "missing_data_watch": 379,
+      "intersection": 33,
+      "nonmainline_union": 399,
+      "missing_mainline_jidong": [
+        "SZ:000856"
+      ]
+    },
+    "bridge_445_to_278": {
+      "baseline_445": 445,
+      "admitted_quality_pass": 277,
+      "admitted_quality_hold": 1,
+      "deferred_hold_for_data": 167,
+      "sum": 445
+    },
+    "final_queue_partition": {
+      "counts": {
+        "R00_MAINLINE_VERIFY": 277,
+        "OBSERVE_QUALITY_HOLD": 1,
+        "OBSERVE_EARLY_AND_MISSING": 33,
+        "OBSERVE_EARLY_STAGE_ONLY": 21,
+        "OBSERVE_MISSING_DATA_ONLY": 345,
+        "NOT_SELECTED_FOR_R00": 377
+      },
+      "sum": 1054,
+      "sort_key": "final_queue 顺序 -> r00_priority_tier 顺序 -> TIER_2 内按(锚定期, -撤维后维度数, security_id)，其余按 security_id"
+    },
+    "r00_priority_tiers": {
+      "counts": {
+        "TIER_1_EVIDENCED_AND_CLEAN_OR_LOW_RISK": 18,
+        "TIER_2_CLEAN_NO_QUALITY_TRIGGER": 40,
+        "TIER_3_TRIGGERED_OR_PENDING_QUALITY": 219,
+        "NOT_IN_R00_MAINLINE": 777
+      },
+      "r00_total": 277,
+      "zero_trigger_total": 111,
+      "zero_trigger_with_rh02_rh03_rh06_pending": 69,
+      "zero_trigger_tier_breakdown": {
+        "TIER_1": 7,
+        "TIER_2": 40,
+        "TIER_3": 64,
+        "TIER_1_with_pending": 5,
+        "TIER_3_pending": 64
+      },
+      "note": "零触发 111 家中，69 家存在 RH02/RH03/RH06 待核：5 家历史资产进入 TIER_1，64 家进入 TIER_3；另有 2 家零触发历史资产（无待核）进入 TIER_1，40 家零触发无待核非历史资产进入 TIER_2"
+    }
+  },
+  "carry_forward_limits": {
+    "F05": {
+      "status": "CARRIED_AS_ANCHOR_STRATIFICATION",
+      "detail": "H1 与 9M 锚定期分层解释，禁止跨期合并触发率",
+      "H1_companies": 200,
+      "M9_companies": 78
+    },
+    "F06": {
+      "status": "CARRIED_AS_RULE_EXEMPTION",
+      "detail": "RH02 项目制豁免按规则关闭存货周转风险；继续监控 RH01 应收与 RH03 合同资产",
+      "rh02_not_applicable_companies": 31
+    },
+    "F07": {
+      "status": "CARRIED_AS_FROZEN_THRESHOLD",
+      "detail": "低基数确认门槛保持冻结，不为凑数调整；保守延迟偏差保留"
+    },
+    "F08": {
+      "status": "CARRIED_AS_DESCRIPTIVE_ONLY",
+      "detail": "BJ 与主板通过率差异仅描述，不作披露/结构/基数归因",
+      "bj_universe": 62,
+      "bj_pass": 25,
+      "nonbj_universe": 992,
+      "nonbj_pass": 252
+    },
+    "F09": {
+      "status": "CARRIED_AS_SAMPLE_LIMIT",
+      "detail": "反向漏筛仅 5 家抽样独立重推；36 家强线索非主线公司仅路由汇总，不外推"
+    },
+    "F10": {
+      "status": "CLOSED_BY_GIT_REPLAYABLE_BRIDGE",
+      "detail": "445 家 S04 基线逐家映射至 S05 277+1+167，100% 基于 Git 跟踪冻结表",
+      "bridge_file": "runs/issues/S08/s04_to_s05_bridge_445_to_278.csv",
+      "drive_archive_id": "1VrpWyQct6xI5PpRdGNs6KFZmubbspYEA"
+    },
+    "F11": {
+      "status": "CARRIED_AS_RAW_VALUE_RETENTION",
+      "detail": "越界值保留原值与 OK 状态，冻结路由不改值、不阻断",
+      "out_of_valid_range_cells": 20,
+      "companies": 19
+    },
+    "F12": {
+      "status": "CARRIED_AS_PENDING_RH06",
+      "detail": "RH06 待核公司继续待核，不因 S08 冻结而视为已解决",
+      "rh06_pending_companies": 7
+    }
+  },
+  "guards": {
+    "after_cutoff_companies": 4,
+    "anchor_reselection_pending": 1,
+    "quality_source_unknown_companies": 15,
+    "unadopted_parent_members": 8,
+    "jidong_quality_hold": "SZ:000856",
+    "S00_errata_issue_53": "OPEN",
+    "no_threshold_tuning": true,
+    "no_manual_add_back": true,
+    "no_legacy_auto_promotion": true
+  },
+  "legacy_reuse": {
+    "prior_adopted_53": 53,
+    "conditional_detail_45": 45,
+    "early_sample_10": 10,
+    "b00_source": 7,
+    "c00_pilot": 10,
+    "d00_advance": 2,
+    "union_in_universe": 80,
+    "auto_promoted": 0,
+    "excluded_not_in_universe": [
+      {
+        "security_id": "BJ:920007",
+        "stock_name": "酉立智能",
+        "reason": "出现在 R1_batch01 parent-reviewed boundary/evidence/product-line 文件，但不在 1,054 冻结主表",
+        "sources": [
+          "archive/R1_batch01_parent_reviewed_20261024/boundary_reviewed.csv",
+          "archive/R1_batch01_parent_reviewed_20261024/evidence_register.csv",
+          "archive/R1_batch01_parent_reviewed_20261024/parent_corrections.csv",
+          "archive/R1_batch01_parent_reviewed_20261024/product_line_stages.csv"
+        ]
+      }
+    ]
+  },
+  "legacy_sequence_policy": {
+    "old_concept_pre_screen_20_pdf_first": "NOT_EXECUTED_EARLY",
+    "statement": "旧“概念粗筛 20 家先读 PDF”的顺序不再提前执行；后续 R00 只按本冻结名单分 5 家小包执行。",
+    "r00_package_size": 5
+  },
+  "release_control": {
+    "release_R00": false,
+    "release_R02": false,
+    "issue_53_touched": false,
+    "issue_53_status": "OPEN",
+    "S08_completed": true
+  },
+  "limits": [
+    "本文件为执行方 SELF_CHECK 结论，不等同 Codex 独立验收；业务采用仍须独立复核。",
+    "仅完成指标轮总对账与 R00 候选名单冻结，未启动公司业务深研、未做估值、未放行 R00/R02。",
+    "TIER_1 仅表示存在可追溯历史线索，复用旧证据不自动提升任何验收状态。",
+    "零触发 111 家中 71 家仍有 RH02/RH03/RH06 待核，按规则进入 TIER_3 或 TIER_1，不视为已清洁。",
+    "BJ:920007 不在 1,054 冻结主表，已从复用映射剔除并登记。"
+  ]
+}

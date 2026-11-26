@@ -1,0 +1,165 @@
+{
+  "artifact": "S08_SELF_CHECK_REVIEW",
+  "issue_key": "S08",
+  "issue_number": 43,
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-26",
+  "timezone": "Asia/Shanghai",
+  "review_nature": "SELF_CHECK",
+  "executor": "CodeBuddy",
+  "orchestrator": "Antigravity",
+  "reviewer_assigned": "Codex",
+  "review_method": "独立重算 S03/S04/S05/S06 分区、1,054 六分区、277 家 R00 优先级、445→278 逐家映射、80 家历史复用桶位与非提级规则；不信任构建器布尔值。",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "checks_summary": "23/23 PASS",
+  "checks": [
+    {
+      "id": "C01",
+      "name": "全部运行时输入存在，且 screen_acceptance 的 CANONICAL_LF_BYTES 指纹可逐份重算一致",
+      "result": "PASS",
+      "detail": "inputs=51, fingerprints=51, bad=[]"
+    },
+    {
+      "id": "C02",
+      "name": "1,054 家主键唯一；S03 宽筛 777+149+128 互斥且并集等于全池",
+      "result": "PASS",
+      "detail": "universe=1054, unique=1054, pass=777, defer=149, unknown=128, union=1054"
+    },
+    {
+      "id": "C03",
+      "name": "S04 基线 L2_SHORTLIST_CANDIDATE 严格 445 家且全部来自 wide_pass",
+      "result": "PASS",
+      "detail": "baseline=445, outside_wide_pass=0"
+    },
+    {
+      "id": "C04",
+      "name": "S05 277+1+776 互斥且并集等于全池；278 质量池为 S04 445 的子集",
+      "result": "PASS",
+      "detail": "pass=277, hold=1, observe=776, union=1054, 278_subset=True"
+    },
+    {
+      "id": "C05",
+      "name": "S06 早期 54 / 缺数据 379 / 交集 33 / 非主线并集 399；唯一主线缺数据为冀东",
+      "result": "PASS",
+      "detail": "early=54, missing=379, inter=33, nonmainline_union=399, mainline_missing=['SZ:000856']"
+    },
+    {
+      "id": "C06",
+      "name": "六分区逐家重算一致、互斥且合计严格 1,054（277/1/33/21/345/377）",
+      "result": "PASS",
+      "detail": "rows=1054, unique=1054, bad=0, counts={'R00_MAINLINE_VERIFY': 277, 'OBSERVE_QUALITY_HOLD': 1, 'OBSERVE_EARLY_AND_MISSING': 33, 'OBSERVE_EARLY_STAGE_ONLY': 21, 'OBSERVE_MISSING_DATA_ONLY': 345, 'NOT_SELECTED_FOR_R00': 377}"
+    },
+    {
+      "id": "C07",
+      "name": "R00 优先级逐家重算一致；277 家分层合计 277，非 R00 全为 NOT_IN_R00_MAINLINE",
+      "result": "PASS",
+      "detail": "r00=277, bad=0, tiers={'TIER_1_EVIDENCED_AND_CLEAN_OR_LOW_RISK': 18, 'TIER_2_CLEAN_NO_QUALITY_TRIGGER': 40, 'TIER_3_TRIGGERED_OR_PENDING_QUALITY': 219, 'NOT_IN_R00_MAINLINE': 777}"
+    },
+    {
+      "id": "C08",
+      "name": "445→278 桥表逐家重算一致：277 通过 + 1 质量观察 + 167 转 HOLD_FOR_DATA",
+      "result": "PASS",
+      "detail": "rows=445, unique=445, bad=[], counts={'DEFERRED_TO_HOLD_FOR_DATA': 167, 'ADMITTED_TO_S05_QUALITY_PASS': 277, 'ADMITTED_TO_S05_QUALITY_HOLD': 1}"
+    },
+    {
+      "id": "C09",
+      "name": "历史复用映射 80 家逐家桶位/队列/优先级重算一致，auto_promoted 全为 False",
+      "result": "PASS",
+      "detail": "rows=80, unique=80, bad=[], 53=53, 45=45, 10=10, b00=7, c00=10, d00=2"
+    },
+    {
+      "id": "C10",
+      "name": "无历史资产自动提级；BJ:920007 已从复用映射剔除并在验收文件登记",
+      "result": "PASS",
+      "detail": "promoted=[], excluded_recorded=['BJ:920007']"
+    },
+    {
+      "id": "C11",
+      "name": "F05–F12 结转数值独立重算一致（H1 200/9M 78、RH02 31、越界 20 格/19 家、RH06 7、BJ 25/62）",
+      "result": "PASS",
+      "detail": "H1=200, 9M=78, rh02_na=31, oor=20/19, rh06_pending=7, BJ=25/62, nonBJ=252/992"
+    },
+    {
+      "id": "C12",
+      "name": "继承守卫完整：4 截止日隔离、1 锚点待重选、15 质量来源未知、8 未采用父链、冀东 HOLD、#53 OPEN",
+      "result": "PASS",
+      "detail": "cutoff=4, anchor=1, qsu=15, jidong=True, unadopted=8, issue53=OPEN"
+    },
+    {
+      "id": "C13",
+      "name": "全部运行时输入存在且 100% 位于 Git 跟踪树内（无 .git 归档按冻结 SHA 兜底）",
+      "result": "PASS",
+      "detail": "git_index_check=ENFORCED, inputs=51, missing=[], untracked=[]"
+    },
+    {
+      "id": "C14",
+      "name": "全部已生成的 S08 交付物为纯 LF 换行（review.json 由 C20 复核）",
+      "result": "PASS",
+      "detail": "existing=8/8, crlf=[]"
+    },
+    {
+      "id": "C15",
+      "name": "stage_decision 由实际对账异常清单动态推导，与独立重算的异常清单一致",
+      "result": "PASS",
+      "detail": "expected=ACCEPTED_WITH_LIMITS, actual=ACCEPTED_WITH_LIMITS, anomalies=[]"
+    },
+    {
+      "id": "C16",
+      "name": "release_R00=false、release_R02=false、issue_53_touched=false、#53 保持 OPEN",
+      "result": "PASS",
+      "detail": "release_control={'release_R00': False, 'release_R02': False, 'issue_53_touched': False, 'issue_53_status': 'OPEN', 'S08_completed': True}"
+    },
+    {
+      "id": "C17",
+      "name": "候选表 21 列完整、理由非空且逐家包含队列/锚定/BJ/F06/F11/F12/复用/HOLD 必要标记",
+      "result": "PASS",
+      "detail": "schema_bad=[], token_bad=[]"
+    },
+    {
+      "id": "C18",
+      "name": "桥表字段完整、理由非空、100% 关联 Drive 归档 ID，167 家均标记 CARRIED_FORWARD_UNCHANGED",
+      "result": "PASS",
+      "detail": "schema_bad=[], basis_bad=[], deferred_bad=[]"
+    },
+    {
+      "id": "C19",
+      "name": "显式声明旧“概念粗筛 20 家先读 PDF”不再提前执行，R00 只按 5 家小包执行",
+      "result": "PASS",
+      "detail": "policy={'old_concept_pre_screen_20_pdf_first': 'NOT_EXECUTED_EARLY', 'statement': '旧“概念粗筛 20 家先读 PDF”的顺序不再提前执行；后续 R00 只按本冻结名单分 5 家小包执行。', 'r00_package_size': 5}"
+    },
+    {
+      "id": "C21",
+      "name": "验收文件完整记录阶段版本、输入指纹与各阶段 1,054/445 守恒",
+      "result": "PASS",
+      "detail": "stage_versions=['S00', 'S01', 'S02', 'S03', 'S04', 'S05', 'S06', 'S07'], fingerprints=51, s03_sum=1054, s05_sum=1054, queue_sum=1054, bridge_sum=445"
+    },
+    {
+      "id": "C22",
+      "name": "三张交付表按固定排序键排列且主键无重复",
+      "result": "PASS",
+      "detail": "cand_order_ok=True, bridge_sorted=True, reuse_sorted=True"
+    },
+    {
+      "id": "C23",
+      "name": "零触发 111 家的 TIER 分解与待核归属独立重算一致",
+      "result": "PASS",
+      "detail": "zero=111, pending=69, breakdown={'TIER_1': 7, 'TIER_2': 40, 'TIER_3': 64, 'TIER_1_with_pending': 5, 'TIER_3_pending': 64}, recomputed={'TIER_1_EVIDENCED_AND_CLEAN_OR_LOW_RISK': 7, 'TIER_3_TRIGGERED_OR_PENDING_QUALITY': 64, 'TIER_2_CLEAN_NO_QUALITY_TRIGGER': 40}"
+    },
+    {
+      "id": "C20",
+      "name": "manifest 根摘要、输入/交付数量与逐份交付哈希自洽且全部交付为纯 LF",
+      "result": "PASS",
+      "detail": "root_match=True, inputs=51, deliverables=8, bad=[], crlf=[]"
+    }
+  ],
+  "limits": [
+    "执行方自检（SELF_CHECK）不等同独立验收；须由 Codex 独立复核后决定是否验收。",
+    "仅完成指标轮总对账与 R00 候选冻结，未启动业务深研、未估值、未放行 R00/R02。",
+    "历史 53/45/10/B00/C00/D00 仅复用线索与原文入口，不自动提升验收状态。",
+    "零触发 111 家中 71 家仍有 RH02/RH03/RH06 待核，按规则进入 TIER_3 或 TIER_1。",
+    "BJ:920007 不在 1,054 冻结主表，已从复用映射剔除并登记。"
+  ],
+  "release_R00": false,
+  "release_R02": false,
+  "issue_53_touched": false
+}
