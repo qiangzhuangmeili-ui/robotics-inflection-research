@@ -1,0 +1,92 @@
+{
+  "artifact": "R01_INDEPENDENT_ACCEPTANCE",
+  "issue_key": "R01",
+  "issue_number": 45,
+  "child_issues": [
+    59,
+    60
+  ],
+  "batches": [
+    "R01_BATCH_01",
+    "R01_BATCH_02"
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-26",
+  "timezone": "Asia/Shanghai",
+  "executor": "Antigravity (direct intervention)",
+  "orchestrator": "Antigravity",
+  "reviewer": "Codex (gpt-6.2-sol low, user-authorized --sandbox danger-full-access)",
+  "review_nature": "INDEPENDENT_REVIEW",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "R01_completed": true,
+  "companies_attributed_count": 10,
+  "knowledge_as_of": "2026-10-25",
+  "reviewed_version": {
+    "round": "R1",
+    "commit": "06579c1b9b2b3b09fe66521d52dee8f31d2dfcab",
+    "online_main_at_review": "06579c1b9b2b3b09fe66521d52dee8f31d2dfcab",
+    "manifest_root_digest": "5d77b5db5aa41d8aeaceb42097a04c453da755589dd9ebf8cf88cb4e93f5de7d",
+    "fixed_replay_time": "2026-11-26T22:50:00+08:00",
+    "prior_r0_review_record_md": "runs/issues/R01/codex_review_r01_20261126.md",
+    "review_record_md": "runs/issues/R01/codex_review_r01_r1_20261126.md"
+  },
+  "verified": {
+    "clean_worktree_replay": {
+      "verifier": "Codex",
+      "input_files_sha256_match": 15,
+      "delivery_files_sha256_match": 6,
+      "manifest_exact_match": true,
+      "dirty_files_after_replay": 0,
+      "build_self_check_reproduced": "7/7 PASS",
+      "verify_reproduced": "10/10 PASS",
+      "s05_cells_reconciled": 50,
+      "s05_diffs": 0,
+      "negative_tests": [
+        "R0: Tampered anchor_pure_robot_rev_cny -> verifier exited 1",
+        "R1: Tampered contract_liabilities to contract-asset-only -> V06 failed, verifier exited 1"
+      ],
+      "worktree_cleaned": true,
+      "main_tracked_files_untouched": true
+    },
+    "counts": {
+      "companies_total": 10,
+      "h1_anchor_companies": 8,
+      "m9_anchor_companies": 2,
+      "r03_priority_a": 6,
+      "r03_observe_or_defer": 4
+    },
+    "r0_defects_closed": [
+      "Contract liabilities: 7 companies without R00-cited contract-liability balances explicitly marked UNKNOWN; 3 companies (埃斯顿/鼎智/巨能) retain verified 2026H1 balances; V06 upgraded and negative-tested.",
+      "Evidence interpretation: 奥迪威 removed '上限近似' and preserved FY2025 '超过1.1亿元' direction; 天准科技 unified to 2026H1 p14 mixed 具身大脑方案 new orders 31,523.79万元."
+    ]
+  },
+  "r03_candidate_tiering_summary": {
+    "disclaimer": "Research dispatch priority only; NOT investment rating or trade recommendation.",
+    "R03_PRIORITY_A": [
+      "SZ:300607 拓斯达",
+      "SZ:002472 双环传动",
+      "SZ:002979 雷赛智能",
+      "SZ:002747 埃斯顿",
+      "BJ:920593 鼎智科技",
+      "SH:688003 天准科技"
+    ],
+    "R03_OBSERVE_OR_DEFER": [
+      "BJ:920510 丰光精密",
+      "BJ:920491 奥迪威",
+      "SZ:002698 博实股份",
+      "BJ:920578 巨能股份"
+    ]
+  },
+  "carry_forward_limits_to_r03_r04": [
+    "All 10 companies have anchor_pure_robot_rev_cny=UNKNOWN (FY2025 only 拓斯达 disclosed pure robot body 300,432,856.32 CNY); never equate mixed segment revenue or company total revenue with pure robot body revenue.",
+    "Strictly separate H1 (8 companies) and 9M (2 companies: 雷赛智能, 天准科技); 天准 2026H1 157.69M & 315.24M orders are H1 mixed 具身大脑方案 figures (including commercial vehicle L4), not 9M or pure humanoid.",
+    "Preserve leading-indicator boundaries (METHOD_20261107): 7 companies' contract liabilities are UNKNOWN; never back-calculate revenue from unit order counts (雷赛 100万台) or planned capacity (300万台).",
+    "Carry forward 鼎智科技 M04 (+15.22pp frozen S02 vs -6.31pp H1 report text) margin-basis reconciliation, 埃斯顿 RH04/RH06, 雷赛 Q3 cash flow -94.89M, and 天准 9M inventory +75% / RH06 into R03.",
+    "R03 (#47) and R04 (#48) remain locked pending explicit user release; #53 remains OPEN and untouched."
+  ],
+  "online_control": {
+    "release_R03": false,
+    "release_R04": false,
+    "issue_53_touched": false
+  }
+}

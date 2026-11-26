@@ -1,31 +1,30 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 45,
-  "active_issue_key": "R01",
-  "executor": "Antigravity (orchestrator) + CodeBuddy (execution)",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
   "started_at": "2026-11-26T22:48:00+08:00",
-  "status": "IN_PROGRESS",
+  "status": "R01_ACCEPTED_WITH_LIMITS_RELEASED",
   "claim_note": "用户批准方案 A，放行 #45 R01（覆盖 R00 已验收的 10 家 TIER_1 核心公司，分设 #59 R01_BATCH_01 与 #60 R01_BATCH_02 两个 5 家子卡）。Antigravity 统筹领取单卡并委派 CodeBuddy 执行财务归因与收入范围核验，完成后交 Codex (gpt-6.2-sol low, danger-full-access) 干净树独立复核。",
   "last_completed": {
-    "issue_key": "R00",
-    "issue_number": 44,
+    "issue_key": "R01",
+    "issue_number": 45,
     "child_issues": [
-      57,
-      58
+      59,
+      60
     ],
     "batches": [
-      "R00_BATCH_01",
-      "R00_BATCH_02"
+      "R01_BATCH_01",
+      "R01_BATCH_02"
     ],
     "decision": "ACCEPTED_WITH_LIMITS",
-    "review_file": "runs/issues/R00/acceptance_r00_batch01_02_20261126.json",
+    "review_file": "runs/issues/R01/acceptance_r01_20261126.json",
     "reviewer": "Codex (gpt-6.2-sol low, danger-full-access)",
-    "reviewed_commit": "6ccd19f5e23be8342c4ac0d71c265b473d53d833",
-    "manifest_root_digest": "088ea20b886deb06c60a6537be54feac83e1e46362f8dd92a16945dfff6730c9",
-    "companies_verified": 10,
-    "h1_anchor": 8,
-    "m9_anchor": 2,
-    "evidence_quotes": 160
+    "reviewed_commit": "06579c1b9b2b3b09fe66521d52dee8f31d2dfcab",
+    "manifest_root_digest": "5d77b5db5aa41d8aeaceb42097a04c453da755589dd9ebf8cf88cb4e93f5de7d",
+    "companies_attributed": 10,
+    "r03_priority_a": 6,
+    "r03_observe_or_defer": 4
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -34,9 +33,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 45,
-  "next_recommended_issue_key": "R01",
-  "next_recommended_reason": "R00 前两批 10 家核心 TIER_1 公司（#57 Batch 01 + #58 Batch 02）均已由 Codex R2 独立验收 ACCEPTED_WITH_LIMITS，单卡占用已释放。建议用户拍板：方案 A 对已验收的 10 家核心公司放行 R01 (#45) 财务归因与收入范围核验；或方案 B 先继续推进 R00_BATCH_03/04（剩余 8 家 TIER_1 公司）。",
+  "next_recommended_issue_number": 47,
+  "next_recommended_issue_key": "R03",
+  "next_recommended_reason": "R01 (#45) 与 R02 (#46) 均已独立验收 ACCEPTED_WITH_LIMITS，单卡占用已释放。建议用户批准放行 R03 (#47 公司与行业拐点研究，每包最多3家公司)，优先对 R03_PRIORITY_A 的 6 家核心公司分 2 个 3 家小包开展拐点研判（建议升档 Codex high 做拐点硬争议把关）。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -579,7 +578,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-26T22:48:00+08:00",
+  "updated_at": "2026-11-26T23:05:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
