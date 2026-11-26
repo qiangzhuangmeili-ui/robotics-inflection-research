@@ -1,0 +1,90 @@
+{
+  "artifact": "R00_BATCH01_02_INDEPENDENT_ACCEPTANCE",
+  "issue_key": "R00",
+  "issue_number": 44,
+  "child_issues": [
+    57,
+    58
+  ],
+  "batches": [
+    "R00_BATCH_01",
+    "R00_BATCH_02"
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-26",
+  "timezone": "Asia/Shanghai",
+  "executors": [
+    "External AI-1 (SZ:300607, SZ:002747)",
+    "External AI-2 (SZ:002472, SZ:002979)",
+    "External AI-Batch02 (BJ:920510, BJ:920491, SH:688003, SZ:002698, BJ:920578)",
+    "CodeBuddy (BJ:920593 + 10-company consolidation & verify)"
+  ],
+  "orchestrator": "Antigravity",
+  "reviewer": "Codex (gpt-6.2-sol low, user-authorized --sandbox danger-full-access)",
+  "review_nature": "INDEPENDENT_REVIEW",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "batches_completed": [
+    "R00_BATCH_01",
+    "R00_BATCH_02"
+  ],
+  "companies_verified_count": 10,
+  "tier1_remaining_count": 8,
+  "knowledge_as_of": "2026-10-25",
+  "reviewed_version": {
+    "round": "R2",
+    "commit": "6ccd19f5e23be8342c4ac0d71c265b473d53d833",
+    "online_main_at_review": "6ccd19f5e23be8342c4ac0d71c265b473d53d833",
+    "manifest_root_digest": "088ea20b886deb06c60a6537be54feac83e1e46362f8dd92a16945dfff6730c9",
+    "fixed_replay_time": "2026-11-26T22:25:00+08:00",
+    "prior_r0_review_record_md": "runs/issues/R00/codex_review_r00_batch01_02_20261126.md",
+    "prior_r1_review_record_md": "runs/issues/R00/codex_review_r00_r1_20261126.md",
+    "review_record_md": "runs/issues/R00/codex_review_r00_r2_20261126.md"
+  },
+  "verified": {
+    "clean_worktree_replay": {
+      "verifier": "Codex",
+      "input_files_sha256_match": 15,
+      "delivery_files_sha256_match": 8,
+      "manifest_exact_match": true,
+      "dirty_files_after_replay": 0,
+      "build_self_check_reproduced": "10/10 PASS",
+      "verify_reproduced": "11/11 PASS",
+      "negative_tests": [
+        "R0: Tampered SZ:300607 DOC-82DD061D1A766CCA disclosure_date 2026-03-31 -> 2026-10-26 -> verifier exited 1 (V02/V08/V09/V11 blocked)",
+        "R1: Tampered manifest_root_digest -> verifier exited 1",
+        "R2: Tampered handoff.md -> verifier exited 1"
+      ],
+      "worktree_cleaned": true,
+      "main_tracked_files_untouched": true
+    },
+    "counts": {
+      "companies_total": 10,
+      "batch01_companies": 5,
+      "batch02_companies": 5,
+      "overlap_between_batches": 0,
+      "h1_anchor_companies": 8,
+      "m9_anchor_companies": 2,
+      "evidence_quotes_total": 160,
+      "batch01_quotes": 87,
+      "batch02_quotes": 73,
+      "legacy_auto_promoted": 0
+    },
+    "r0_r1_defects_closed": [
+      "SZ:002472 双环传动: 2026H1 4.40亿元归回“减速器及其他”混合科目，RV减速器单独收入保留未知",
+      "BJ:920510 丰光精密: 源YAML/登记表/handoff/脚本彻底清除“收入下限”字面残留，保留对意优机器人客户销售额1,234.21万元(5.89%)，谐波及机器人单独收入留未知",
+      "SZ:002698 博实股份: 灵博在源YAML/登记表/handoff一致标为PROPOSED_INVESTMENT_NOT_YET_CLOSED（截至H1未出资未参股，交割及会计处理待核），彻底清除“均为参股不并表”冲突句"
+    ]
+  },
+  "carry_forward_limits_to_r01_r03": [
+    "Scope: Covers 10/18 frozen TIER_1 companies (#57 Batch 01 + #58 Batch 02); remaining 8 TIER_1 and TIER_2/TIER_3 companies are not yet verified.",
+    "Revenue boundaries: Do not equate company total revenue or mixed segment revenue (e.g., 双环减速器及其他, 雷赛伺服系统类, 天准具身大脑含商用车域控, 埃斯顿机器人及智能制造系统, 拓斯达机器人及自动化应用系统, 博实机器人+含整线, 巨能自动化产线含外购本体) with pure robotics revenue; keep unseparated robotics amounts as UNKNOWN.",
+    "Consolidation & period separation: Strictly separate H1 (8 companies) and 9M (2 companies: 雷赛智能, 天准科技); preserve non-consolidated boundaries (鼎智5家参股, 埃斯顿酷卓H1 13.95%参股 vs 2026-09-08交割并表, 奥迪威奥感微联营, 博实思哲睿参股/灵博拟增资未交割, 丰光唯实深蓝尚未并表).",
+    "Provenance limits: Official PDF binary SHA-256 and Google Drive readback archiving remain pending; 拓斯达 2025年报 DOC-82DD061D1A766CCA vs DOC-8AA65D8C6F87227B ID alignment, 雷赛三季报 p2 变动率复算差异, 博实印刷页=物理页-1偏移, 天准/巨能部分归因限制均结转下游。",
+    "Release guards: R01 (#45) and R03 (#47) remain locked pending explicit user release; #53 remains OPEN and untouched."
+  ],
+  "online_control": {
+    "release_R01": false,
+    "release_R03": false,
+    "issue_53_touched": false
+  }
+}
