@@ -560,10 +560,11 @@ def main():
         mapping = LOW_BASE_MAP.get(sg) or {}
         field_ok = (e.get("field_id") == mapping.get("field_id")
                     and e.get("basis") == mapping.get("basis"))
-        delta_ok = (cur is not None and base is not None and delta is not None
-                    and abs(delta - (cur - base)) <= 0.01)
-        rule_ok = (cur is not None and base is not None and delta is not None
-                   and comp_ok and delta >= ABS_CONFIRM and delta > 0)
+        raw_delta = (cur - base) if (cur is not None and base is not None) else None
+        delta_ok = (raw_delta is not None and delta is not None
+                    and abs(delta - raw_delta) <= 0.01)
+        rule_ok = (raw_delta is not None
+                   and comp_ok and raw_delta >= ABS_CONFIRM and raw_delta > 0)
         if sg == "SG06":
             rule_ok = rule_ok and cur >= ABS_CONFIRM
         recomputed_pass = bool(usable and comp_ok and rule_ok)

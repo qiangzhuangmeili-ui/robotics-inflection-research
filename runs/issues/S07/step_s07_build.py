@@ -167,11 +167,12 @@ LOW_BASE_MAP = {
 }
 ABS_CHANNEL_FIELDS = {"SG06": "FIN.NPDEDT.YTD", "SG08": "FIN.OCF.YTD"}
 
-REWORK_ROUND = "R2"
-REWORK_BASIS = "runs/issues/S07/codex_review_s07_r1_20261126.md"
+REWORK_ROUND = "R3"
+REWORK_BASIS = "runs/issues/S07/codex_review_s07_r2_20261126.md"
 REVIEW_PROVENANCE_REFS = [
     "runs/issues/S07/codex_review_s07_r0_20261126.md",
     "runs/issues/S07/codex_review_s07_r1_20261126.md",
+    "runs/issues/S07/codex_review_s07_r2_20261126.md",
 ]
 
 

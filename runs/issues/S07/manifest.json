@@ -2,23 +2,24 @@
   "artifact": "S07_DELIVERY_MANIFEST",
   "issue_key": "S07",
   "issue_number": 42,
-  "rework_round": "R2",
-  "rework_basis": "runs/issues/S07/codex_review_s07_r1_20261126.md",
+  "rework_round": "R3",
+  "rework_basis": "runs/issues/S07/codex_review_s07_r2_20261126.md",
   "plan_version": "20261026_collection_first_v2",
   "knowledge_as_of": "2026-10-25",
   "executor": "CodeBuddy",
   "orchestrator": "Antigravity",
   "review_nature": "SELF_CHECK",
-  "generated_at": "2026-11-26T13:55:00+08:00",
+  "generated_at": "2026-11-26T14:00:00+08:00",
   "input_hash_basis": "CANONICAL_LF_BYTES",
   "input_hash_basis_note": "28 份文本输入统一按 CRLF->LF 规范化后计算字节数与 SHA-256；s00_v10.csv.gz 为二进制 gzip，按 EXACT_BYTES 计算（bytes=5907837, sha256=fc312c52...），与 S02 calculation_manifest 的输入指纹一致。",
   "deliverable_hash_basis": "EXACT_BYTES_LF",
   "replay_note": "推荐：在指定提交的干净 Git checkout 或 `git worktree add --detach <sha>` 内，以 S07_FIXED_NOW=<generated_at> 顺序运行 step_s07_build.py 与 step_s07_verify.py；此时 C13 执行 git ls-files --error-unmatch 验证 29 份输入 100% 被跟踪，8 份文件（含本 manifest）逐字节一致。备选：使用含本 manifest.json 的 git archive 纯归档目录（无 .git）时，C13 自动改为按本 manifest 与 release_20261126.json 的冻结 SHA-256 逐份核对，并标注 git_index_check=SKIPPED_NO_GIT_DIR_VERIFIED_BY_MANIFEST，不会因缺少 Git 索引而崩溃；该模式下 22 项自检同样全部 PASS，除 C13 的模式标注（及其导致的 review.json 与根摘要差异）外，其余 6 份交付逐字节一致。本 manifest 的根摘要在推荐模式下生成。",
   "review_provenance_refs": [
     "runs/issues/S07/codex_review_s07_r0_20261126.md",
-    "runs/issues/S07/codex_review_s07_r1_20261126.md"
+    "runs/issues/S07/codex_review_s07_r1_20261126.md",
+    "runs/issues/S07/codex_review_s07_r2_20261126.md"
   ],
-  "manifest_root_digest": "9a3364dd86797403d687078eb3574b8b8dbced85d5a5e03c9c363225f4841064",
+  "manifest_root_digest": "a38bfb4b96a845d3e66fd6f37679b779533b2a8bc42b02ed9f377afb8594d7d2",
   "input_count": 29,
   "deliverable_count": 7,
   "inputs": [
@@ -177,32 +178,32 @@
     {
       "path": "runs/issues/S07/screen_audit_findings.md",
       "bytes": 27383,
-      "sha256": "daf6d9fb5190194f4844703462274fb017d091dec60935f6bdb6bbb87783c125"
+      "sha256": "39cd3a5c5f9b5087d7395f8df96b83a4bb5d116e812346267cc989aef14e2a36"
     },
     {
       "path": "runs/issues/S07/screen_audit_review.json",
       "bytes": 40904,
-      "sha256": "3cd7b73c16a673a9c60ff5f8fea899c1f6e64ca80bbb12aa0538681b43c28a3a"
+      "sha256": "74096a33d56319d749abfec47c2d96e47c9ed9ea6d1a77bf2fb3aeaa4aa444a1"
     },
     {
       "path": "runs/issues/S07/handoff.md",
       "bytes": 3967,
-      "sha256": "b3ab144145315718d6dcc6fb3f1ce5db0ee4f47aa14cc57ffe7104a645b60856"
+      "sha256": "c3b9cec68f7ffce813757fb287db7cfdd4fe7148dcb51f1d08e60c3060b8c4ed"
     },
     {
       "path": "runs/issues/S07/review.json",
       "bytes": 7672,
-      "sha256": "ae6241632e75da206293a71582e72ff0573884d5359c351a80c5556e26d91c4f"
+      "sha256": "b10ca66e15f034540c2ca580130f8d111eea1708d97fd6f52adbf8878ffd56cf"
     },
     {
       "path": "runs/issues/S07/step_s07_build.py",
-      "bytes": 123698,
-      "sha256": "4faf93f9f1d6f3e3a6e75a49eb7639da9f63249985c57fc75bc441ae09630791"
+      "bytes": 123753,
+      "sha256": "82ccb5281282a1a1bf271687ed57351a7538550037922170ebe728547f83e0c1"
     },
     {
       "path": "runs/issues/S07/step_s07_verify.py",
-      "bytes": 33651,
-      "sha256": "0ea3ce3a5ce0518a4992e88bef6669d1c823eaf957548e24bca20e91da53a006"
+      "bytes": 33689,
+      "sha256": "c1e226bc2ead05654124bed984049874935310b217af12da15ac58f2aa18631a"
     }
   ],
   "self_check": {
