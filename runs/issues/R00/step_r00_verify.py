@@ -1,26 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""R00 / #44 / #57 独立校验（完全离线，不信任构建器布尔值）。
+"""R00 / #44 / #57 + #58 独立校验（完全离线，不信任构建器布尔值）。
 
-从原始 Git 跟踪输入从零重算，独立校验交付表与 manifest.json / review.json。
+从原始 Git 跟踪输入从零重算，独立校验两批交付表与 manifest.json / review.json。
 
 校验内容
 --------
-V01 固定 5 家名单与 release_20261126.json、S08 冻结 TIER_1 100% 一致（零增删零换人）
-V02 knowledge_as_of=2026-10-25，全部引用披露日 <= 截止日，非 9M 公司不混入三季报
-V03 锚定期严格分离（4 家 H1 20260630 + 1 家 9M 20260930 雷赛），与 S08/S05 对齐
-V04 历史复用边界：五家保留 legacy_sources，legacy_auto_promoted=False
-V05 质量预警排查完备：埃斯顿 RH04+RH06、雷赛 RH04+RH02、双环 RH02、鼎智 RH02 均有原文页码引文
-V06 口径防污染：未知项齐备、混合口径明示、参股不并表（酷卓 / 鼎智五家参股）
-V07 逐字短引文与物理页码完整（5 家、每家 >= 10 条、1-based page > 0、doc 属于已读来源）
+V01 两批固定 5+5 家名单与 release/#57/#58/S08 冻结 TIER_1 100% 一致，两批互斥零重复
+V02 knowledge_as_of=2026-10-25，全部引用披露日 <= 截止日，8 家非 9M 公司不混入三季报
+V03 锚定期严格分层（8 家 H1 20260630 + 2 家 9M 20260930 雷赛/天准），与 S08/S05 对齐
+V04 历史复用边界：十家保留 legacy_sources，legacy_auto_promoted=False
+V05 质量预警排查完备：全部触发/待核项（含 Batch 02 的 RH02/RH04/RH05/RH06）均有原文页码引文
+V06 口径防污染：未知项齐备、混合口径明示、参股不并表（酷卓/鼎智/唯实深蓝/奥感微/矽行/思哲睿/灵博）
+V07 逐字短引文与物理页码完整（10 家、每家 >= 10 条、1-based page > 0、doc 属于已读来源）
 V08 manifest.json 全部输入/输出 sha256 与根摘要精确匹配，全部纯 LF 无 BOM
 V09 review.json 性质为 SELF_CHECK，decision 与实测一致，不越权放行 R01/R03，不触碰 #53
-V10 固定时间戳连续两次构建逐字节一致且与仓库交付同步
-V11 活体负例篡改测试（--negative-test）：3 个独立篡改场景，均须退出码 1
+V10 dispatch/register 各 10 行，child_issue_manifest 登记两子卡且互斥校验成立
+V11 固定时间戳连续两次构建逐字节一致且与仓库交付同步
+V12 活体负例篡改测试（--negative-test）：4 个独立篡改场景，均须退出码 1
 
 用法
 ----
-    R00_FIXED_NOW=2026-11-26T19:20:00+08:00 py runs/issues/R00/step_r00_verify.py
+    R00_FIXED_NOW=2026-11-26T22:25:00+08:00 py runs/issues/R00/step_r00_verify.py
     py runs/issues/R00/step_r00_verify.py --negative-test
     py runs/issues/R00/step_r00_verify.py --root <临时树> --skip-replay
 """
@@ -30,6 +31,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import io
 import json
 import os
 import re
@@ -37,17 +39,20 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from datetime import datetime
 from pathlib import Path
 
 import yaml
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-NOW = os.environ.get("R00_FIXED_NOW") or "2026-11-26T19:20:00+08:00"
+NOW = os.environ.get("R00_FIXED_NOW") or "2026-11-26T22:25:00+08:00"
 CUTOFF = "2026-10-25"
-BATCH_ID = "R00_BATCH_01"
-CHILD_ISSUE = 57
+BATCH1 = "R00_BATCH_01"
+BATCH2 = "R00_BATCH_02"
+CHILD_ISSUES = {BATCH1: 57, BATCH2: 58}
+NINE_MONTH = {"SZ:002979", "SH:688003"}
+ANCHOR_H1 = "20260630"
+ANCHOR_9M = "20260930"
 
 INPUTS = [
     "runs/issues/S08/business_verification_candidates.csv",
@@ -63,15 +68,21 @@ INPUTS = [
     "runs/issues/R00/inputs_batch01/ai2_002472_002979_business_review.yaml",
     "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.json",
     "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.md",
+    "runs/issues/R00/release_batch02_20261126.json",
+    "runs/issues/R00/inputs_batch02/batch02_5companies_business_review.yaml",
 ]
 
 DELIVERABLES = ["business_batch_dispatch.csv", "business_review_register.csv",
-                "batch01_evidence_quotes.csv", "child_issue_manifest.json", "handoff.md"]
+                "batch01_evidence_quotes.csv", "batch02_evidence_quotes.csv",
+                "child_issue_manifest.json", "handoff.md"]
 SCRIPTS = ["step_r00_build.py", "step_r00_verify.py"]
 MANIFEST_DELIVERABLES = DELIVERABLES + SCRIPTS
 ALL_OUT = DELIVERABLES + ["review.json", "manifest.json"]
 
-ALERT_KEY = {"RH04": "rh04_check", "RH06": "rh06_check", "RH02": "rh02_check"}
+QUOTES_FILE = {BATCH1: "batch01_evidence_quotes.csv", BATCH2: "batch02_evidence_quotes.csv"}
+
+ALERT_KEY = {"RH02": "rh02_check", "RH04": "rh04_check",
+             "RH05": "rh05_check", "RH06": "rh06_check"}
 STATUS_TOKENS = ("TRIGGERED_CONFIRMED_BY_ORIGINAL", "PENDING_RESOLVED_REAL_BLANK")
 
 
@@ -135,6 +146,12 @@ def money(v):
     return "%.2f" % float(m.group(0).replace(",", ""))
 
 
+def is_excluded_entity(status, role):
+    if "EQUITY_METHOD" in status or "不并表" in status or "NOT_CONSOLIDATED" in status:
+        return True
+    return any(k in role for k in ("未并表", "尚未并表", "无并表主体", "非股权主体"))
+
+
 class Ctx:
     """独立上下文：只读原始输入与交付物。"""
 
@@ -150,6 +167,7 @@ class Ctx:
         self.release = rd_json(r / INPUTS[6])
         self.ai1_manifest = rd_json(r / INPUTS[9])
         self.cb = rd_json(r / INPUTS[11])
+        self.release_b2 = rd_json(r / INPUTS[13])
 
         ai1 = yaml.safe_load((r / INPUTS[7]).read_text(encoding="utf-8"))
         self.ai1 = {c["company"]["security_id"]: c["company"] for c in ai1["companies"]}
@@ -157,18 +175,34 @@ class Ctx:
         for doc in yaml.safe_load_all((r / INPUTS[10]).read_text(encoding="utf-8")):
             if isinstance(doc, dict) and "company" in doc:
                 self.ai2[doc["company"]["security_id"]] = doc["company"]
+        b2 = yaml.safe_load((r / INPUTS[14]).read_text(encoding="utf-8"))
+        self.b2 = {w["company"]["security_id"]: w["company"] for w in b2["companies"]}
+        self.b2_batch_id = b2.get("batch_id")
 
         self.dispatch = rd_csv(r / "runs/issues/R00/business_batch_dispatch.csv")
         self.register = rd_csv(r / "runs/issues/R00/business_review_register.csv")
-        self.quotes = rd_csv(r / "runs/issues/R00/batch01_evidence_quotes.csv")
+        self.quotes_of = {b: rd_csv(r / "runs/issues/R00" / f) for b, f in QUOTES_FILE.items()}
         self.child = rd_json(r / "runs/issues/R00/child_issue_manifest.json")
         self.review = rd_json(r / "runs/issues/R00/review.json")
         self.manifest = rd_json(r / "runs/issues/R00/manifest.json")
         self.handoff = (r / "runs/issues/R00/handoff.md").read_text(encoding="utf-8")
 
         self.spec = self.release["child_issues"][0]
-        self.order = [c["security_id"] for c in self.spec["companies"]]
+        self.spec_b2 = self.release_b2
+        self.order_b = {
+            BATCH1: [c["security_id"] for c in self.spec["companies"]],
+            BATCH2: [c["security_id"] for c in self.spec_b2["companies"]],
+        }
+        self.order = self.order_b[BATCH1] + self.order_b[BATCH2]
         self.assigned = {c["security_id"]: c["assigned_to"] for c in self.spec["companies"]}
+        self.assigned.update({c["security_id"]: c["assigned_to"]
+                              for c in self.spec_b2["companies"]})
+        self.topic = {c["security_id"]: c["topic"] for c in self.spec["companies"]}
+        self.topic.update({c["security_id"]: c["topic"] for c in self.spec_b2["companies"]})
+        self.batch_of = {}
+        for b, ids in self.order_b.items():
+            for s in ids:
+                self.batch_of[s] = b
         self.tier1 = {s for s, x in self.cand.items()
                       if x["r00_priority_tier"].startswith("TIER_1")}
         self.anchor_s05 = {}
@@ -183,6 +217,9 @@ class Ctx:
         if sid in self.ai2:
             return [{"doc_id": s["doc_id"], "name": s["report_name"],
                      "date": s["disclosure_date"]} for s in self.ai2[sid]["sources_actually_read"]]
+        if sid in self.b2:
+            return [{"doc_id": s["doc_id"], "name": s["report_name"],
+                     "date": s["disclosure_date"]} for s in self.b2[sid]["sources_actually_read"]]
         return [{"doc_id": s["document_id"], "name": s["title"],
                  "date": s["disclosure_date"]} for s in self.cb["sources_read"]]
 
@@ -193,6 +230,9 @@ class Ctx:
         if sid in self.ai2:
             return [(q["doc_id"], int(q["physical_page"]), q["verbatim_quote"])
                     for q in self.ai2[sid]["evidence_quotes"]]
+        if sid in self.b2:
+            return [(q["doc_id"], int(q["physical_page"]), q["verbatim_quote"])
+                    for q in self.b2[sid]["evidence_quotes"]]
         return [(q["document_id"], int(q["page"]), q["quote"],
                  q.get("data_excerpt", "")) for q in self.cb["evidence_quotes"]]
 
@@ -201,16 +241,18 @@ class Ctx:
             return dict(self.ai1[sid]["s05_alert_investigation"])
         if sid in self.ai2:
             return dict(self.ai2[sid]["s05_alert_investigation"])
+        if sid in self.b2:
+            return dict(self.b2[sid]["s05_alert_investigation"])
         ca = self.cb["s05_alert_check"]["contract_asset"]
         return {"rh02_check": " ".join(str(v) for v in ca.values())}
 
     def entities(self, sid):
         """-> (consolidated names, excluded names)"""
         cons, exc = [], []
-        if sid in self.ai1 or sid in self.ai2:
-            src = (self.ai1.get(sid) or self.ai2.get(sid))["consolidated_entities"]
+        if sid in self.ai1 or sid in self.ai2 or sid in self.b2:
+            src = (self.ai1.get(sid) or self.ai2.get(sid) or self.b2.get(sid))["consolidated_entities"]
             for e in src:
-                if "未并表" in e["role_in_robotics"] or "NOT_CONSOLIDATED" in e["consolidation_status"]:
+                if is_excluded_entity(e["consolidation_status"], e["role_in_robotics"]):
                     exc.append(e["entity_name"])
                 else:
                     cons.append(e["entity_name"])
@@ -225,6 +267,8 @@ class Ctx:
             return money(self.ai1[sid]["revenue_breakdown"]["fy2025_total_rev_cny"])
         if sid in self.ai2:
             return money(self.ai2[sid]["revenue_breakdown"]["fy2025_total_rev_cny"])
+        if sid in self.b2:
+            return money(self.b2[sid]["revenue_breakdown"]["fy2025_total_rev_cny"])
         return money(self.cb["revenue_breakdown"]["fy2025"]["total_revenue_cny"])
 
     def anchor_total(self, sid):
@@ -232,6 +276,8 @@ class Ctx:
             return money(self.ai1[sid]["revenue_breakdown"]["h1_2026_total_rev_cny"])
         if sid in self.ai2:
             return money(self.ai2[sid]["revenue_breakdown"]["anchor_total_rev_cny"])
+        if sid in self.b2:
+            return money(self.b2[sid]["revenue_breakdown"]["anchor_total_rev_cny"])
         return money(self.cb["revenue_breakdown"]["h1_2026"]["total_revenue_cny"])
 
     def knowledge_as_of(self, sid):
@@ -239,6 +285,8 @@ class Ctx:
             return self.ai1[sid]["knowledge_as_of"]
         if sid in self.ai2:
             return self.ai2[sid]["knowledge_as_of"]
+        if sid in self.b2:
+            return self.b2[sid]["knowledge_as_of"]
         return self.cb["knowledge_as_of"]
 
     def input_anchor_hint(self, sid):
@@ -247,6 +295,8 @@ class Ctx:
             return self.ai1[sid].get("knowledge_as_of") and "H1"
         if sid in self.ai2:
             return self.ai2[sid]["revenue_breakdown"].get("anchor_period", "")
+        if sid in self.b2:
+            return self.b2[sid]["revenue_breakdown"].get("anchor_period", "")
         return self.cb["anchor_period"]
 
 
@@ -263,17 +313,25 @@ def run_checks(ctx: Ctx, replay_res=None):
     reg_ids = [r["security_id"] for r in ctx.register]
     dis_ids = [r["security_id"] for r in ctx.dispatch]
     rel_ids = ctx.order
+    b1, b2 = set(ctx.order_b[BATCH1]), set(ctx.order_b[BATCH2])
 
-    # V01 固定名单
+    # V01 固定名单 + 两批互斥
     name_ok = all(r["stock_name"] == ctx.cand[r["security_id"]]["stock_name"] for r in ctx.register)
-    topic_ok = all(d["topic"] == next(c["topic"] for c in ctx.spec["companies"]
-                                      if c["security_id"] == d["security_id"]) for d in ctx.dispatch)
-    v01 = (reg_ids == rel_ids and dis_ids == rel_ids and len(set(rel_ids)) == 5
-           and set(reg_ids) <= ctx.tier1 and name_ok and topic_ok
-           and all(d["child_issue_number"] == str(CHILD_ISSUE) for d in ctx.dispatch))
-    add("V01", "固定 5 家名单与 release/#57/S08 TIER_1 零增删零换人", v01,
-        "release=%s register=%s dispatch=%s all_tier1=%s name_ok=%s topic_ok=%s" % (
-            rel_ids, reg_ids, dis_ids, set(reg_ids) <= ctx.tier1, name_ok, topic_ok))
+    topic_ok = all(d["topic"] == ctx.topic[d["security_id"]] for d in ctx.dispatch)
+    batch_ok = all(d["batch_id"] == ctx.batch_of[d["security_id"]] for d in ctx.dispatch) \
+        and all(r["batch_id"] == ctx.batch_of[r["security_id"]] for r in ctx.register) \
+        and all(d["child_issue_number"] == str(CHILD_ISSUES[ctx.batch_of[d["security_id"]]])
+                for d in ctx.dispatch) \
+        and all(r["child_issue_number"] == str(CHILD_ISSUES[ctx.batch_of[r["security_id"]]])
+                for r in ctx.register)
+    v01 = (reg_ids == rel_ids and dis_ids == rel_ids and len(set(rel_ids)) == 10
+           and not (b1 & b2) and len(b1) == 5 and len(b2) == 5
+           and set(reg_ids) <= ctx.tier1 and name_ok and topic_ok and batch_ok
+           and all(ctx.cand[s]["r00_priority_tier"].startswith("TIER_1") for s in ctx.order))
+    add("V01", "两批 5+5 家名单与 release/#57/#58/S08 TIER_1 零增删零换人且互斥零重复", v01,
+        "release=%s register=%s dispatch=%s overlap=%s all_tier1=%s name_ok=%s topic_ok=%s batch_ok=%s" % (
+            rel_ids, reg_ids, dis_ids, sorted(b1 & b2), set(reg_ids) <= ctx.tier1,
+            name_ok, topic_ok, batch_ok))
 
     # V02 知识截止日
     late, q3_bad, kas_bad, cnt_bad = [], [], [], []
@@ -289,9 +347,9 @@ def run_checks(ctx: Ctx, replay_res=None):
         for s in srcs:
             if s["date"] > CUTOFF:
                 late.append("%s:%s@%s" % (sid, s["doc_id"], s["date"]))
-            if ("三季" in s["name"] or "第三季度" in s["name"]) and sid != "SZ:002979":
+            if ("三季" in s["name"] or "第三季度" in s["name"]) and sid not in NINE_MONTH:
                 q3_bad.append("%s:%s" % (sid, s["doc_id"]))
-    add("V02", "knowledge_as_of=2026-10-25、披露日<=截止日、非 9M 公司不混入三季报", 
+    add("V02", "knowledge_as_of=2026-10-25、披露日<=截止日、8 家非 9M 公司不混入三季报",
         not late and not q3_bad and not kas_bad and not cnt_bad,
         "late=%s q3=%s kas=%s src_count=%s" % (late[:3], q3_bad, kas_bad, cnt_bad))
 
@@ -302,17 +360,17 @@ def run_checks(ctx: Ctx, replay_res=None):
     hint_bad = []
     for sid in ctx.order:
         h = ctx.input_anchor_hint(sid)
-        if sid == "SZ:002979" and h not in ("2026Q1-Q3", "20260930"):
+        if sid in NINE_MONTH and h not in ("2026Q1-Q3", "20260930"):
             hint_bad.append("%s:input_hint=%s" % (sid, h))
-        if sid != "SZ:002979" and h in ("2026Q1-Q3", "20260930"):
+        if sid not in NINE_MONTH and h in ("2026Q1-Q3", "20260930"):
             hint_bad.append("%s:input_hint=%s" % (sid, h))
+    nine = {s for s, v in reg_anchor.items() if v == ANCHOR_9M}
     v03 = (reg_anchor == dis_anchor == s08_anchor
            and all(ctx.anchor_s05.get(s) == s08_anchor[s] for s in ctx.order)
-           and sum(1 for v in reg_anchor.values() if v == "20260630") == 4
-           and sum(1 for v in reg_anchor.values() if v == "20260930") == 1
-           and reg_anchor.get("SZ:002979") == "20260930"
+           and sum(1 for v in reg_anchor.values() if v == ANCHOR_H1) == 8
+           and len(nine) == 2 and nine == NINE_MONTH
            and not hint_bad)
-    add("V03", "锚定期 4×H1(20260630)+1×9M(20260930 雷赛) 与 S08/S05/原始输入一致", v03,
+    add("V03", "锚定期 8×H1(20260630)+2×9M(20260930 雷赛/天准) 与 S08/S05/原始输入一致", v03,
         "register=%s dispatch=%s s08=%s s05=%s hint_bad=%s" % (
             reg_anchor, dis_anchor, s08_anchor,
             {s: ctx.anchor_s05.get(s) for s in ctx.order}, hint_bad))
@@ -331,14 +389,15 @@ def run_checks(ctx: Ctx, replay_res=None):
             legacy_bad.append(sid + ":dispatch_legacy_mismatch")
         if d["legacy_auto_promoted"] != "False":
             legacy_bad.append(sid + ":dispatch_auto_promoted")
-    add("V04", "五家均保留 legacy_sources 复用映射且 legacy_auto_promoted=False", not legacy_bad,
+    add("V04", "十家均保留 legacy_sources 复用映射且 legacy_auto_promoted=False", not legacy_bad,
         "bad=%s" % legacy_bad)
 
     # V05 质量项排查完备
     miss = []
     qpages = {}
-    for q in ctx.quotes:
-        qpages.setdefault(q["security_id"], set()).add(int(q["physical_page"]))
+    for rows in ctx.quotes_of.values():
+        for q in rows:
+            qpages.setdefault(q["security_id"], set()).add(int(q["physical_page"]))
     for sid in ctx.order:
         r = next(x for x in ctx.register if x["security_id"] == sid)
         summ = r["s05_alert_check_summary"]
@@ -361,12 +420,15 @@ def run_checks(ctx: Ctx, replay_res=None):
             if not any(str(v).strip() and str(v) != "NA"
                        for k, v in ctx.alerts(sid).items() if k in ALERT_KEY.values()):
                 miss.append(sid + ":no_original_check_text")
-    # 必须覆盖的四类组合（从 S08 重算，不读交付表）
+    # 必须覆盖的组合（从 S08 重算，不读交付表）
     combos = {s: (ctx.cand[s]["s05_rh_triggers"], ctx.cand[s]["s05_pending_flags"]) for s in ctx.order}
     need = {"SZ:002747": ("RH04;RH06", ""), "SZ:002979": ("RH04", "RH02"),
-            "SZ:002472": ("", "RH02"), "BJ:920593": ("", "RH02")}
+            "SZ:002472": ("", "RH02"), "BJ:920593": ("", "RH02"),
+            "BJ:920510": ("", "RH02"), "BJ:920491": ("RH05", "RH02"),
+            "SH:688003": ("RH02;RH06", ""), "SZ:002698": ("RH05", ""),
+            "BJ:920578": ("RH04", "")}
     combo_ok = all(combos[k] == v for k, v in need.items())
-    add("V05", "埃斯顿 RH04+RH06、雷赛 RH04+RH02、双环/鼎智 RH02 均有原文页码引文", 
+    add("V05", "全部 S05 触发/待核项（含 Batch 02 RH02/RH04/RH05/RH06）均有原文页码引文",
         not miss and combo_ok, "miss=%s combos=%s" % (miss, combos))
 
     # V06 口径防污染
@@ -397,33 +459,38 @@ def run_checks(ctx: Ctx, replay_res=None):
 
     # V07 引文完整
     per, qbad, docbad = {}, [], []
-    for sid in ctx.order:
-        rows = [q for q in ctx.quotes if q["security_id"] == sid]
-        per[sid] = len(rows)
-        src_ids = {s["doc_id"] for s in ctx.sources(sid)}
-        raw = ctx.raw_quotes(sid)
-        for q in rows:
-            if int(q["physical_page"]) <= 0 or not q["verbatim_quote"].strip() or not q["doc_id"].strip():
-                qbad.append("%s:%s" % (sid, q["doc_id"]))
-            if q["doc_id"] not in src_ids:
-                docbad.append("%s:%s" % (sid, q["doc_id"]))
-        # 条数与逐字对应
-        if len(rows) != len(raw):
-            qbad.append("%s:count(%d!=%d)" % (sid, len(rows), len(raw)))
-            continue
-        for q, rq in zip(rows, raw):
-            doc, page, quote = rq[0], rq[1], rq[2]
-            if q["doc_id"] != doc or int(q["physical_page"]) != page:
-                qbad.append("%s:doc/page_mismatch" % sid)
+    for b, rows_all in ctx.quotes_of.items():
+        expect_sids = set(ctx.order_b[b])
+        got_sids = {q["security_id"] for q in rows_all}
+        if not got_sids <= expect_sids:
+            qbad.append("%s:foreign_company:%s" % (b, sorted(got_sids - expect_sids)))
+        for sid in ctx.order_b[b]:
+            rows = [q for q in rows_all if q["security_id"] == sid]
+            per[sid] = len(rows)
+            src_ids = {s["doc_id"] for s in ctx.sources(sid)}
+            raw = ctx.raw_quotes(sid)
+            for q in rows:
+                if int(q["physical_page"]) <= 0 or not q["verbatim_quote"].strip() or not q["doc_id"].strip():
+                    qbad.append("%s:%s" % (sid, q["doc_id"]))
+                if q["doc_id"] not in src_ids:
+                    docbad.append("%s:%s" % (sid, q["doc_id"]))
+            if len(rows) != len(raw):
+                qbad.append("%s:count(%d!=%d)" % (sid, len(rows), len(raw)))
                 continue
-            if not q["verbatim_quote"].startswith(quote):
-                qbad.append("%s:quote_not_verbatim" % sid)
-            if len(rq) == 4 and rq[3] and rq[3] not in q["verbatim_quote"]:
-                qbad.append("%s:excerpt_missing" % sid)
-    v07 = all(v >= 10 for v in per.values()) and not qbad and not docbad \
-        and len(ctx.quotes) == sum(per.values())
-    add("V07", "引文表覆盖 5 家、每家>=10 条、页码 1-based>0、逐字可回溯且 doc 属于已读来源",
-        v07, "per=%s rows=%d qbad=%s docbad=%s" % (per, len(ctx.quotes), qbad[:4], docbad[:3]))
+            for q, rq in zip(rows, raw):
+                doc, page, quote = rq[0], rq[1], rq[2]
+                if q["doc_id"] != doc or int(q["physical_page"]) != page:
+                    qbad.append("%s:doc/page_mismatch" % sid)
+                    continue
+                if not q["verbatim_quote"].startswith(quote):
+                    qbad.append("%s:quote_not_verbatim" % sid)
+                if len(rq) == 4 and rq[3] and rq[3] not in q["verbatim_quote"]:
+                    qbad.append("%s:excerpt_missing" % sid)
+    total_rows = sum(len(v) for v in ctx.quotes_of.values())
+    v07 = (len(per) == 10 and all(v >= 10 for v in per.values()) and not qbad and not docbad
+           and total_rows == sum(per.values()))
+    add("V07", "引文表覆盖 10 家、每家>=10 条、页码 1-based>0、逐字可回溯且 doc 属于已读来源",
+        v07, "per=%s rows=%d qbad=%s docbad=%s" % (per, total_rows, qbad[:4], docbad[:3]))
 
     # V08 manifest
     inp_bad, del_bad = [], []
@@ -468,6 +535,7 @@ def run_checks(ctx: Ctx, replay_res=None):
            and ctx.release["guards"]["R01_released"] is False
            and ctx.release["guards"]["R03_released"] is False
            and ctx.release["guards"]["S00_errata_issue_53"] == "OPEN"
+           and ctx.release_b2["decision"] == "APPROVED_TO_START_R00_BATCH_02_WITH_LIMITS"
            and "SELF_CHECK" in ctx.handoff and "R01_released=false" in ctx.handoff)
     add("V09", "review/handoff 性质为 SELF_CHECK，不越权放行 R01/R03，不触碰 #53", v09,
         "review=%s derived=%s nature=%s r01=%s r03=%s issue53=%s replay_ok=%s" % (
@@ -481,16 +549,26 @@ def run_checks(ctx: Ctx, replay_res=None):
         if not ok:
             bad.append("V11 逐字节复现失败: " + detail)
 
-    # 交付表结构
-    v10 = (len(ctx.dispatch) == 5 and len(ctx.register) == 5
-           and len(ctx.child["companies"]) == 5 and ctx.child["batch_size"] == 5
-           and ctx.child["fixed_no_substitution"] is True
-           and ctx.child["issue_number"] == CHILD_ISSUE
-           and [c["security_id"] for c in ctx.child["companies"]] == ctx.order
-           and all(c["legacy_auto_promoted"] is False for c in ctx.child["companies"]))
-    add("V10", "dispatch/register 各 5 行，child_issue_manifest 固定名单与复用边界一致", v10,
-        "dispatch=%d register=%d child=%d" % (len(ctx.dispatch), len(ctx.register),
-                                              len(ctx.child["companies"])))
+    # V10 交付表结构与两子卡登记
+    children = ctx.child.get("children") or []
+    child_ok = (len(children) == 2
+                and [c["issue_number"] for c in children] == [57, 58]
+                and [c["issue_key"] for c in children] == [BATCH1, BATCH2]
+                and all(c["batch_size"] == 5 and c["fixed_no_substitution"] is True for c in children)
+                and all([x["security_id"] for x in c["companies"]] == ctx.order_b[c["issue_key"]]
+                        for c in children)
+                and all(x["legacy_auto_promoted"] is False for c in children for x in c["companies"]))
+    me = ctx.child.get("mutual_exclusion") or {}
+    me_ok = (me.get("overlap") == [] and me.get("verified_zero_overlap") is True
+             and set(me.get("batch01_companies") or []) == b1
+             and set(me.get("batch02_companies") or []) == b2)
+    v10 = (len(ctx.dispatch) == 10 and len(ctx.register) == 10 and child_ok and me_ok
+           and ctx.child.get("total_companies") == 10
+           and ctx.child.get("child_issue_count") == 2)
+    add("V10", "dispatch/register 各 10 行，child_issue_manifest 登记 #57+#58 且互斥校验成立", v10,
+        "dispatch=%d register=%d children=%s me_ok=%s" % (
+            len(ctx.dispatch), len(ctx.register),
+            [c["issue_number"] for c in children], me_ok))
     return checks, bad
 
 
@@ -548,9 +626,7 @@ def _tamper_auto_promoted(tmp: Path):
             r["legacy_auto_promoted"] = "True"
             hit = True
     assert hit, "tamper target not found"
-    buf = []
-    import io as _io
-    s = _io.StringIO(newline="")
+    s = io.StringIO(newline="")
     w = csv.DictWriter(s, fieldnames=fields, lineterminator="\n")
     w.writeheader()
     w.writerows(rows)
@@ -562,8 +638,25 @@ def _tamper_quote_page(tmp: Path):
     rows = rd_csv(p)
     fields = list(rows[0].keys())
     rows[0]["physical_page"] = "0"
-    import io as _io
-    s = _io.StringIO(newline="")
+    s = io.StringIO(newline="")
+    w = csv.DictWriter(s, fieldnames=fields, lineterminator="\n")
+    w.writeheader()
+    w.writerows(rows)
+    p.write_bytes(s.getvalue().encode("utf-8"))
+
+
+def _tamper_b2_anchor(tmp: Path):
+    """把天准 9M 锚定期改成 H1，应被 V03 拦截。"""
+    p = tmp / "runs/issues/R00/business_review_register.csv"
+    rows = rd_csv(p)
+    fields = list(rows[0].keys())
+    hit = False
+    for r in rows:
+        if r["security_id"] == "SH:688003":
+            r["anchor_period"] = "20260630"
+            hit = True
+    assert hit, "tamper target not found"
+    s = io.StringIO(newline="")
     w = csv.DictWriter(s, fieldnames=fields, lineterminator="\n")
     w.writeheader()
     w.writerows(rows)
@@ -575,6 +668,7 @@ def negative_test(root: Path):
         ("disclosure_date_2026-10-26", _tamper_disclosure_date, "V02"),
         ("legacy_auto_promoted=True", _tamper_auto_promoted, "V04"),
         ("physical_page=0", _tamper_quote_page, "V07"),
+        ("b2_anchor_9m_to_h1", _tamper_b2_anchor, "V03"),
     ]
     results = []
     ok_all = True

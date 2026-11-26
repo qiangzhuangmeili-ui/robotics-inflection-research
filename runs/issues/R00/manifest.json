@@ -2,22 +2,29 @@
   "artifact": "R00_DELIVERY_MANIFEST",
   "issue_key": "R00",
   "issue_number": 44,
-  "child_issue_number": 57,
-  "batch_id": "R00_BATCH_01",
+  "child_issue_numbers": [
+    57,
+    58
+  ],
+  "batch_ids": [
+    "R00_BATCH_01",
+    "R00_BATCH_02"
+  ],
   "plan_version": "20261026_collection_first_v2",
   "knowledge_as_of": "2026-10-25",
   "executor": "CodeBuddy",
   "orchestrator": "Antigravity",
   "review_nature": "SELF_CHECK",
-  "fixed_now": "2026-11-26T19:20:00+08:00",
+  "fixed_now": "2026-11-26T22:25:00+08:00",
   "input_hash_basis": "CANONICAL_LF_BYTES",
   "input_hash_basis_note": "文本输入按 CRLF->LF 规范化后计算字节数与 SHA-256。",
   "deliverable_hash_basis": "EXACT_BYTES_LF",
   "root_digest_basis": "按交付物 path 排序后以 'path:sha256' 以 \\n 连接再取 SHA-256；不含 manifest.json 与 review.json 自身，避免循环依赖。",
   "replay_note": "离线运行 step_r00_build.py 与 step_r00_verify.py；R00_FIXED_NOW 固定时间戳。",
-  "manifest_root_digest": "a8f56e19dee42404c363bb32fab046832c55994c2ccaf51cf0552e2717f30289",
-  "input_count": 13,
-  "deliverable_count": 7,
+  "manifest_root_digest": "70ce562a6e404dc6482f06222d4f2424a2793e187988faab78d93d29d505d731",
+  "input_count": 15,
+  "deliverable_count": 8,
+  "company_count": 10,
   "inputs": [
     {
       "path": "runs/issues/S08/business_verification_candidates.csv",
@@ -83,18 +90,28 @@
       "path": "runs/issues/R00/inputs_batch01/codebuddy_920593_draft.md",
       "bytes": 14744,
       "sha256": "882e4cb67a07a7a21df6a1ff0525e900a83f718cc85992cca752838279e7c554"
+    },
+    {
+      "path": "runs/issues/R00/release_batch02_20261126.json",
+      "bytes": 1999,
+      "sha256": "89ad902f21523e171a695c848180bec8a7b5d3b13cf5e792722134d4d8238fa6"
+    },
+    {
+      "path": "runs/issues/R00/inputs_batch02/batch02_5companies_business_review.yaml",
+      "bytes": 65686,
+      "sha256": "e12c2ea6c1150449f13bd04415eb17548f996d5d04644b7a0cc65f5aad779812"
     }
   ],
   "deliverables": [
     {
       "path": "runs/issues/R00/business_batch_dispatch.csv",
-      "bytes": 1397,
-      "sha256": "482900d8743fe4b4a18e4f2adca755952de5016c334a0359b274d34cbc20f288"
+      "bytes": 2722,
+      "sha256": "81b1b46638c178ac543edb052e14b6c3fa7fedb2356bba6e35f7ea513b1c9206"
     },
     {
       "path": "runs/issues/R00/business_review_register.csv",
-      "bytes": 23669,
-      "sha256": "7aa129bb73c9a763657a44e30b285e0099758cad5ebd86e312fd0631b892a5da"
+      "bytes": 48386,
+      "sha256": "b1de3d189fc3f1ca939a9b19de34a6b9fa594a5b11302af5b01d9208aca06fc3"
     },
     {
       "path": "runs/issues/R00/batch01_evidence_quotes.csv",
@@ -102,24 +119,29 @@
       "sha256": "afea2dcbaeafd481854321712351afa8de854bf36730b97be79bdd2119be843b"
     },
     {
+      "path": "runs/issues/R00/batch02_evidence_quotes.csv",
+      "bytes": 13188,
+      "sha256": "cc7b43ee523bc8f286f928735cc58afb55cb64895396f869cd41faf28186a48b"
+    },
+    {
       "path": "runs/issues/R00/child_issue_manifest.json",
-      "bytes": 9350,
-      "sha256": "42dabc4d617eb9a8ecc62ad992b6c7dc94abb67b8c83e1017fed742548d1c526"
+      "bytes": 16393,
+      "sha256": "659bb24e2086a0add9ef35f1d982b62633040f61933b3c83066e643bbdce3fe7"
     },
     {
       "path": "runs/issues/R00/handoff.md",
-      "bytes": 19708,
-      "sha256": "90384cfd945f66f0ffe5f52b70a6a20b4c1584dfdb702a47af26d89bb6af939f"
+      "bytes": 40345,
+      "sha256": "ee24f575d1d72717e93e49ceda96ac48048c5610aceb5196133909e9eef92507"
     },
     {
       "path": "runs/issues/R00/step_r00_build.py",
-      "bytes": 45672,
-      "sha256": "8337ef4cf5493adcfc3d88f2aed6e4d4f9f6047f4eb3cd8ea5a24a4d4063333a"
+      "bytes": 58148,
+      "sha256": "50f14d31b257417c923abfafcd27c391452317979663570fd646d83c87e7df54"
     },
     {
       "path": "runs/issues/R00/step_r00_verify.py",
-      "bytes": 28697,
-      "sha256": "6019421ec07291aa1623fc7d3cfb7e310cb4a0854d11a6dae055bfbc16b20810"
+      "bytes": 33870,
+      "sha256": "508e9556e29aecb4d3a7d6164d6121030d0f8e2e67e80877046f509bef700a45"
     }
   ],
   "anomaly_count": 0
