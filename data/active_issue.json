@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
-  "executor": null,
-  "started_at": "2026-11-26T12:58:00+08:00",
-  "status": "S07_ACCEPTED_WITH_LIMITS_RELEASED",
-  "claim_note": "用户批准放行 S07 (#42)。Antigravity 登记放行并统筹领取单卡，委派 CodeBuddy 执行小样本抽查与复算，交付后由 Codex (sol 6.2 low; 遇系统性口径争议升档 high) 独立复核。",
+  "active_issue_number": 43,
+  "active_issue_key": "S08",
+  "executor": "Antigravity (orchestrator) -> CodeBuddy (executor)",
+  "started_at": "2026-11-26T14:11:00+08:00",
+  "status": "IN_PROGRESS",
+  "claim_note": "用户批准放行 S08 (#43) 并授权 Codex 使用 --sandbox danger-full-access 实跑独立重放。Antigravity 统筹领取单卡，委派 CodeBuddy 构建全池对账、445->278 映射固化、冻结名单与历史复用映射，交付后由 Codex 实跑重放独立复核。",
   "last_completed": {
     "issue_key": "S07",
     "issue_number": 42,
@@ -24,9 +24,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": null,
-  "next_recommended_issue_key": null,
-  "next_recommended_reason": "S07 已验收（无 SYSTEMIC_BLOCKER）。S08 未放行（release_S08=false），等用户批准并新增明确 release 记录后再推荐派工。",
+  "next_recommended_issue_number": 43,
+  "next_recommended_issue_key": "S08",
+  "next_recommended_reason": "S08 已获用户批准放行并领取执行中；R00/R02 保持锁定待 S08 验收。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -569,7 +569,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-26T14:03:00+08:00",
+  "updated_at": "2026-11-26T14:11:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -1074,5 +1074,30 @@
     ],
     "release_S08": false,
     "issue_53_touched": false
+  },
+  "release_S08": true,
+  "s08_release": {
+    "issue_number": 43,
+    "decision": "APPROVED_TO_START_S08_WITH_LIMITS",
+    "approved_by": "USER",
+    "approved_at": "2026-11-26T14:09:26+08:00",
+    "release_file": "runs/issues/S08/release_20261126.json",
+    "release_sha256_lf": "39ddebbfa8e34f2c96dfb4521836343a51fd3e360740c70c563ee68b08db74e4",
+    "handoff_file": "runs/issues/S08/handoff_from_s07_20261126.md",
+    "handoff_sha256_lf": "0edb9b29cc1b78e69ed6e7ab10370273b5bb811a5d6633a1b59defca68190c6f",
+    "codex_sandbox_authorized": "danger-full-access",
+    "scope": "Accept metric screening stage and freeze downstream business verification candidate list & reuse map."
+  },
+  "s08_claim": {
+    "claimed_at": "2026-11-26T14:11:00+08:00",
+    "issue_number": 43,
+    "issue_key": "S08",
+    "orchestrator": "Antigravity",
+    "executor": "CodeBuddy",
+    "reviewer": "Codex",
+    "reviewer_tier_policy": "gpt-6.2-sol low (danger-full-access authorized by USER for live py replay; escalate to high on complex conflict)",
+    "single_card": true,
+    "online_main_at_claim": "41eef8ddfe6c444448d2c28ad4be7e72c7423ad6",
+    "online_active_issue_blob_before_claim": "3a02774d06b578565e2f825affba8cad4c5dd896"
   }
 }

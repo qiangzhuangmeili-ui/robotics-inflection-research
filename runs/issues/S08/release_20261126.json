@@ -1,0 +1,120 @@
+{
+  "artifact": "S08_SCOPED_RELEASE_AND_HANDOFF",
+  "issue_key": "S08",
+  "issue_number": 43,
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "APPROVED_TO_START_S08_WITH_LIMITS",
+  "release_S08": true,
+  "recorded_at": "2026-11-26T14:11:00+08:00",
+  "approved_by": "USER",
+  "approved_at": "2026-11-26T14:09:26+08:00",
+  "executor_handoff": {
+    "orchestrator": "Antigravity",
+    "recommended_executor": "CodeBuddy",
+    "reviewer": "Codex",
+    "reviewer_tier_policy": "gpt-6.2-sol low for standard independent review with user-authorized --sandbox danger-full-access for live py clean-worktree replay; escalate to high only if complex mapping/acceptance conflict arises",
+    "status": "IN_PROGRESS",
+    "claim_receipt": "CONFIRMED",
+    "claimed": true,
+    "claimed_at": "2026-11-26T14:11:00+08:00",
+    "handoff_file": "runs/issues/S08/handoff_from_s07_20261126.md"
+  },
+  "input_scope": {
+    "company_master": "data/company_master.csv",
+    "S01": {
+      "issue_number": 36,
+      "acceptance": "runs/issues/S01/acceptance_20261029.json",
+      "rules_v3": "runs/issues/S01/screen_rules_v3.json",
+      "rules_v4": "runs/issues/S01/screen_rules_v4.json"
+    },
+    "S02": {
+      "issue_number": 37,
+      "acceptance": "runs/issues/S02/acceptance_20261106/review.json",
+      "cutoff_contract": "runs/issues/S02/acceptance_20261106/s03_input_contract.json",
+      "metrics": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv"
+    },
+    "S03": {
+      "issue_number": 38,
+      "review": "runs/issues/S03/review.json",
+      "results": "runs/issues/S03/rerun_20261106/l1_screen_results.csv",
+      "wide_pass": "runs/issues/S03/rerun_20261106/wide_pass.csv",
+      "wide_defer": "runs/issues/S03/rerun_20261106/wide_defer.csv",
+      "wide_unknown": "runs/issues/S03/rerun_20261106/wide_unknown.csv"
+    },
+    "S04": {
+      "issue_number": 39,
+      "ruling": "runs/issues/S04/codex_ruling_s05_v22_20261120.md",
+      "baseline_decision_log": "runs/issues/S04/tight_decision_log.csv",
+      "verified_drive_archive_id": "1VrpWyQct6xI5PpRdGNs6KFZmubbspYEA"
+    },
+    "S05": {
+      "issue_number": 40,
+      "acceptance": "runs/issues/S05/acceptance_s05_r1_20261121.json",
+      "quality_pass": "runs/issues/S05/quality_pass.csv",
+      "quality_observe": "runs/issues/S05/quality_observe.csv",
+      "quality_decision_log": "runs/issues/S05/quality_decision_log.csv",
+      "quality_flags": "runs/issues/S05/quality_flags.csv",
+      "observe_pool_776": "runs/issues/S05/observe_pool_preserved_776.csv",
+      "rh06_adoption": "runs/issues/S05/rh06_adoption.csv",
+      "out_of_valid_range": "runs/issues/S05/s05_out_of_valid_range.csv"
+    },
+    "S06": {
+      "issue_number": 41,
+      "acceptance": "runs/issues/S06/acceptance_s06_r2_20261123.json",
+      "early_stage_watch": "runs/issues/S06/early_stage_watch.csv",
+      "missing_data_watch": "runs/issues/S06/missing_data_watch.csv",
+      "watch_reentry_rules": "runs/issues/S06/watch_reentry_rules.md"
+    },
+    "S07": {
+      "issue_number": 42,
+      "acceptance": "runs/issues/S07/acceptance_s07_r3_20261126.json",
+      "audit_review": "runs/issues/S07/screen_audit_review.json",
+      "audit_findings": "runs/issues/S07/screen_audit_findings.md"
+    },
+    "legacy_reuse_sources": [
+      "archive/latest_universe.csv",
+      "archive/R1_batch01_parent_reviewed_20261024/classification_reviewed.csv",
+      "archive/R1_02A_parent_reviewed_20261024/classification_reviewed.csv",
+      "archive/02A_supplement/classification_reviewed.csv",
+      "archive/02B/classification_reviewed.csv",
+      "archive/early_sample_proposals.csv",
+      "packages/B00_SOURCE_01/results/screening.csv",
+      "packages/B00_SOURCE_02/results/screening.csv",
+      "packages/C00_PILOT_01/results/screening.csv",
+      "packages/D00_B00_ADVANCE_01/results/evidence.csv",
+      "data/package_index.csv"
+    ]
+  },
+  "knowledge_as_of": "2026-10-25",
+  "scope": "Accept the metric-screening stage (S00-S07) with explicit limits and freeze the downstream business-verification candidate list and priority tiers. Reconcile all 1,054 primary keys across S03/S04/S05/S06/S07, freeze the Git-reproducible 445->278 S04-to-S05 bridge (closing S07 F10 traceability gap), map legacy 53 adopted / 45 conditional detail / 10 early samples / B00 / C00 / D00 assets for reuse WITHOUT automatic promotion, and define verification budget priority tiers without promising a fixed final count. Do NOT begin company business deep-dives or valuation; do NOT release R00/R02 yet.",
+  "guards": {
+    "after_cutoff_companies": 4,
+    "anchor_reselection_pending": 1,
+    "quality_source_unknown_companies": 15,
+    "unadopted_parent_members": 8,
+    "jidong_quality_hold": "SZ:000856",
+    "S00_errata_issue_53": "OPEN",
+    "no_threshold_tuning": true,
+    "no_manual_add_back": true,
+    "no_legacy_auto_promotion": true,
+    "preserve_upstream_inputs": true
+  },
+  "outputs": [
+    "runs/issues/S08/screen_acceptance.json",
+    "runs/issues/S08/business_verification_candidates.csv",
+    "runs/issues/S08/candidate_reuse_map.csv",
+    "runs/issues/S08/s04_to_s05_bridge_445_to_278.csv",
+    "runs/issues/S08/manifest.json",
+    "runs/issues/S08/handoff.md",
+    "runs/issues/S08/review.json"
+  ],
+  "online_base": {
+    "main": "41eef8ddfe6c444448d2c28ad4be7e72c7423ad6",
+    "active_issue_blob": "3a02774d06b578565e2f825affba8cad4c5dd896"
+  },
+  "downstream": {
+    "S08_completed": false,
+    "R00_released": false,
+    "R02_released": false
+  }
+}
