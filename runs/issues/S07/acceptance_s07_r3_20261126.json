@@ -1,0 +1,89 @@
+{
+  "artifact": "S07_R3_JOINT_INDEPENDENT_ACCEPTANCE",
+  "issue_key": "S07",
+  "issue_number": 42,
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-26",
+  "timezone": "Asia/Shanghai",
+  "executor": "CodeBuddy (R0-R2) + Antigravity (R3 1-line C22 fix)",
+  "reviewers": {
+    "code_and_logic_reviewer": "Codex (gpt-6.2-sol low, read-only static review)",
+    "replay_and_arithmetic_verifier": "Antigravity (clean git worktree py replay, cross-threshold negative test, and independent 6-company s00_v10 arithmetic check)"
+  },
+  "review_nature": "JOINT_INDEPENDENT_REVIEW",
+  "sandbox_boundary_note": "Codex CLI local Windows read-only sandbox policy blocked powershell.exe/py execution; Codex performed independent read-only code, logic, finding, and guard audits across R0-R3, while Antigravity independently ran the clean-worktree py replay, negative-case failure tests, and 6-company s00_v10 arithmetic verification.",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "S07_completed": true,
+  "knowledge_as_of": "2026-10-25",
+  "reviewed_version": {
+    "round": "R3",
+    "commit": "c19f75038324d3f0b36df015b6f6bf7e70926929",
+    "online_main_at_review": "c19f75038324d3f0b36df015b6f6bf7e70926929",
+    "manifest_root_digest": "a38bfb4b96a845d3e66fd6f37679b779533b2a8bc42b02ed9f377afb8594d7d2",
+    "fixed_replay_time": "2026-11-26T14:00:00+08:00",
+    "submission_comment": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/42#issuecomment-7184002099",
+    "prior_reviews": [
+      "runs/issues/S07/codex_review_s07_r0_20261126.md",
+      "runs/issues/S07/codex_review_s07_r1_20261126.md",
+      "runs/issues/S07/codex_review_s07_r2_20261126.md"
+    ]
+  },
+  "verified": {
+    "scope": "Small-sample rule, boundary, missed-screen, and missing-data bias audit only; no full-pool re-research, no threshold tuning, no manual add-back.",
+    "clean_worktree_replay": {
+      "verifier": "Antigravity",
+      "input_files_sha256_match": 29,
+      "delivery_files_sha256_match": 7,
+      "dirty_files_after_replay": 0,
+      "self_check_reproduced": "22/22 PASS",
+      "cross_threshold_negative_test": "PASS (tampered BJ:920066:SG09 cur-base=9,999,999.995 vs delta_cny=10,000,000.00 -> C22 FAIL, exit code 1)"
+    },
+    "independent_6_company_arithmetic": {
+      "verifier": "Antigravity",
+      "companies_verified": [
+        "BJ:920055",
+        "BJ:920207",
+        "BJ:920066",
+        "SH:601689",
+        "SZ:000856",
+        "BJ:920856"
+      ],
+      "all_match": true,
+      "max_m01_abs_diff": 4.48e-11
+    },
+    "counts": {
+      "universe": 1054,
+      "sample_distinct_companies": 62,
+      "strata": {
+        "BOUNDARY_PASS_FAIL": 22,
+        "BJ_MARKET": 7,
+        "LOSS_AND_LOW_BASE": 8,
+        "MISSING_DATA_WATCH": 14,
+        "EARLY_STAGE_WATCH": 6,
+        "REVERSE_OMISSION": 5
+      },
+      "metric_cells_recomputed": 744,
+      "metric_cells_status_and_value_match": 744,
+      "abs_channel_evidence_rows": 11,
+      "low_base_evidence_rows": 6,
+      "reverse_omission_recomputed": 5,
+      "reverse_omission_calc_leaks": 0,
+      "systemic_blocker": false,
+      "requires_s00_s01_rollback": false
+    }
+  },
+  "carry_forward_limits_to_s08": [
+    "F05: H1 (200) and 9M (78) anchors must be interpreted in anchor-stratified form in S08; do not pool cross-sectional trigger rates as a single period.",
+    "F06: RH02 project-mode exemption (31 NOT_APPLICABLE) closes inventory-days risk by rule; continue monitoring AR days (RH01) and contract-asset ratio (RH03).",
+    "F07: Low-base confirmation (>= CNY 10m positive delta) carries a conservative delay bias; keep frozen thresholds unchanged.",
+    "F08: BJ pass rate (25/62, 40.3%) vs non-BJ (252/992, 25.4%) is descriptive only; attribution to disclosure/structure/base remains unverified.",
+    "F09: Independent reverse-omission re-derivation covers the 5 sampled companies (0 calc leaks); the 36 strong-exposure non-mainline companies are route-level summary only.",
+    "F10 (MEDIUM): Git-tracked S04 baseline tight_decision_log has 445 candidates vs S05 frozen 278 (167 difference all in S06 HOLD_FOR_DATA). Before freezing S08, bind the accepted S04 reviewed view or freeze a versioned 445->278 per-company mapping with reasons.",
+    "F11/F12: 20 out-of-valid-range cells retain raw values, OK status, and frozen routing (disposition undefined in frozen rules); 7 RH06 pending cases remain pending.",
+    "Guards: Preserve 4 after-cutoff isolated companies, 1 anchor-reselection pending, 15 quality_source_unknown, 8 unadopted parent members, Jidong SZ:000856 QUALITY_HOLD, and #53 OPEN."
+  ],
+  "online_control": {
+    "release_S08": false,
+    "issue_53_touched": false
+  }
+}

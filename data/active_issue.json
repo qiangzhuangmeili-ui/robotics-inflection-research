@@ -1,20 +1,21 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 42,
-  "active_issue_key": "S07",
-  "executor": "Antigravity (orchestrator) -> CodeBuddy (executor)",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
   "started_at": "2026-11-26T12:58:00+08:00",
-  "status": "IN_PROGRESS",
+  "status": "S07_ACCEPTED_WITH_LIMITS_RELEASED",
   "claim_note": "用户批准放行 S07 (#42)。Antigravity 登记放行并统筹领取单卡，委派 CodeBuddy 执行小样本抽查与复算，交付后由 Codex (sol 6.2 low; 遇系统性口径争议升档 high) 独立复核。",
   "last_completed": {
-    "issue_key": "S06",
-    "issue_number": 41,
+    "issue_key": "S07",
+    "issue_number": 42,
     "decision": "ACCEPTED_WITH_LIMITS",
-    "review_file": "runs/issues/S06/acceptance_s06_r2_20261123.json",
-    "reviewer": "Codex",
-    "reviewed_commit": "7097827cacc0090a24549f7c61c78148cf0e1696",
-    "manifest_root_digest": "61651e3d43fbb8ee97d80328b02b2a84bdbe1a569c55320144aaf0b4ea982f74",
-    "coverage": 1054
+    "review_file": "runs/issues/S07/acceptance_s07_r3_20261126.json",
+    "reviewer": "Codex (code/logic) + Antigravity (replay/arithmetic)",
+    "reviewed_commit": "c19f75038324d3f0b36df015b6f6bf7e70926929",
+    "manifest_root_digest": "a38bfb4b96a845d3e66fd6f37679b779533b2a8bc42b02ed9f377afb8594d7d2",
+    "coverage": 1054,
+    "sample_size": 62
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -23,9 +24,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 42,
-  "next_recommended_issue_key": "S07",
-  "next_recommended_reason": "S07 已获用户批准放行并领取执行中；S08 保持锁定待 S07 独立复核验收。",
+  "next_recommended_issue_number": null,
+  "next_recommended_issue_key": null,
+  "next_recommended_reason": "S07 已验收（无 SYSTEMIC_BLOCKER）。S08 未放行（release_S08=false），等用户批准并新增明确 release 记录后再推荐派工。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -568,7 +569,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-26T12:58:00+08:00",
+  "updated_at": "2026-11-26T14:03:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -792,8 +793,8 @@
     "rh06_data_trigger": 38,
     "rh06_pending_companies": 7
   },
-  "released_at": "2026-11-23T10:13:25+08:00",
-  "release_note": "S06 已由 Codex 独立复核为 ACCEPTED_WITH_LIMITS；#41 执行占用已释放。S07/S08 未放行，需新增明确 release 记录后再派工。",
+  "released_at": "2026-11-26T14:03:00+08:00",
+  "release_note": "S07 已按联合独立复核（Codex 代码与逻辑复核 + Antigravity 干净树重放与 6 家底座算术复核）验收为 ACCEPTED_WITH_LIMITS；#42 执行占用已释放。S08 未放行，待用户批准并新增明确 release 记录后再派工。",
   "s05_acceptance": {
     "issue_key": "S05",
     "issue_number": 40,
@@ -1021,6 +1022,57 @@
     "reviewer_tier_policy": "sol 6.2 low (escalate to high on systemic discrepancy)",
     "single_card": true,
     "online_main_at_claim": "7b7c4b70bfb5b55ca587e84ba6a5c0e5c481231a",
-    "online_active_issue_blob_before_claim": "5ac6293cbebdf2bbe6286dd64345be2c73ad1dc9"
+    "online_active_issue_blob_before_claim": "5ac6293cbebdf2bbe6286dd64345be2c73ad1dc9",
+    "lease_released_at": "2026-11-26T14:03:00+08:00",
+    "lease_release_basis": "runs/issues/S07/acceptance_s07_r3_20261126.json"
+  },
+  "s07_acceptance": {
+    "issue_key": "S07",
+    "issue_number": 42,
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "S07_completed": true,
+    "reviewers": {
+      "code_and_logic_reviewer": "Codex (gpt-6.2-sol low, read-only static review)",
+      "replay_and_arithmetic_verifier": "Antigravity (clean git worktree py replay, cross-threshold negative test, and independent 6-company s00_v10 arithmetic check)"
+    },
+    "review_nature": "JOINT_INDEPENDENT_REVIEW",
+    "reviewed_on": "2026-11-26",
+    "review_file": "runs/issues/S07/acceptance_s07_r3_20261126.json",
+    "review_round": "R3",
+    "reviewed_commit": "c19f75038324d3f0b36df015b6f6bf7e70926929",
+    "manifest_root_digest": "a38bfb4b96a845d3e66fd6f37679b779533b2a8bc42b02ed9f377afb8594d7d2",
+    "manifest_sha256": "3212436a94371289cf96cd163e69855a6cc4b305837a3497340e3bbfae10f115",
+    "counts": {
+      "universe": 1054,
+      "sample_distinct_companies": 62,
+      "strata": {
+        "BOUNDARY_PASS_FAIL": 22,
+        "BJ_MARKET": 7,
+        "LOSS_AND_LOW_BASE": 8,
+        "MISSING_DATA_WATCH": 14,
+        "EARLY_STAGE_WATCH": 6,
+        "REVERSE_OMISSION": 5
+      },
+      "metric_cells_recomputed": 744,
+      "metric_cells_status_and_value_match": 744,
+      "abs_channel_evidence_rows": 11,
+      "low_base_evidence_rows": 6,
+      "reverse_omission_recomputed": 5,
+      "reverse_omission_calc_leaks": 0,
+      "systemic_blocker": false,
+      "requires_s00_s01_rollback": false
+    },
+    "carry_forward_limits_to_s08": [
+      "F05: H1 (200) and 9M (78) anchors must be interpreted in anchor-stratified form in S08; do not pool cross-sectional trigger rates as a single period.",
+      "F06: RH02 project-mode exemption (31 NOT_APPLICABLE) closes inventory-days risk by rule; continue monitoring AR days (RH01) and contract-asset ratio (RH03).",
+      "F07: Low-base confirmation (>= CNY 10m positive delta) carries a conservative delay bias; keep frozen thresholds unchanged.",
+      "F08: BJ pass rate (25/62, 40.3%) vs non-BJ (252/992, 25.4%) is descriptive only; attribution to disclosure/structure/base remains unverified.",
+      "F09: Independent reverse-omission re-derivation covers the 5 sampled companies (0 calc leaks); the 36 strong-exposure non-mainline companies are route-level summary only.",
+      "F10 (MEDIUM): Git-tracked S04 baseline tight_decision_log has 445 candidates vs S05 frozen 278 (167 difference all in S06 HOLD_FOR_DATA). Before freezing S08, bind the accepted S04 reviewed view or freeze a versioned 445->278 per-company mapping with reasons.",
+      "F11/F12: 20 out-of-valid-range cells retain raw values, OK status, and frozen routing (disposition undefined in frozen rules); 7 RH06 pending cases remain pending.",
+      "Guards: Preserve 4 after-cutoff isolated companies, 1 anchor-reselection pending, 15 quality_source_unknown, 8 unadopted parent members, Jidong SZ:000856 QUALITY_HOLD, and #53 OPEN."
+    ],
+    "release_S08": false,
+    "issue_53_touched": false
   }
 }
