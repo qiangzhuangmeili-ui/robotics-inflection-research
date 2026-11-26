@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "S08_ACCEPTED_WITH_LIMITS_R00_R02_LOCKED",
+  "status": "R02_IN_PROGRESS_R00_LOCKED",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -243,7 +243,18 @@
       "scope_file": "runs/issues/P00/collection_scope.json"
     },
     "legacy_issues": "#2-#9 deferred historical work; new company research after S08/R00",
-    "active_issue": null,
+    "active_issue": {
+      "issue_number": 46,
+      "issue_key": "R02",
+      "executor": "Antigravity (orchestrator) -> CodeBuddy (executor) / Codex (reviewer)",
+      "started_at": "2026-11-26T14:55:00+08:00",
+      "status": "IN_PROGRESS",
+      "child_issues": [
+        54,
+        55,
+        56
+      ]
+    },
     "p02_drive_followup": {
       "completed_at": "2026-10-26T06:56:46.362Z",
       "decision": "SELF_CHECK_PASS",
@@ -416,7 +427,7 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "S08_ACCEPTED_WITH_LIMITS_R00_R02_LOCKED",
+    "current_gate": "R02_IN_PROGRESS_R00_LOCKED",
     "release_S00": false,
     "last_review": {
       "issue_key": "S03",
@@ -637,6 +648,24 @@
       "handoff_sha256_lf": "0edb9b29cc1b78e69ed6e7ab10370273b5bb811a5d6633a1b59defca68190c6f",
       "codex_sandbox_authorized": "danger-full-access",
       "scope": "Accept metric screening stage and freeze downstream business verification candidate list & reuse map."
+    },
+    "release_R02": true,
+    "r02_release": {
+      "issue_number": 46,
+      "decision": "APPROVED_TO_START_R02_WITH_LIMITS",
+      "approved_by": "USER",
+      "approved_at": "2026-11-26T14:49:58+08:00",
+      "release_file": "runs/issues/R02/release_20261126.json",
+      "release_sha256_lf": "9cd9896314140e31bedeb83343f514efade91cfd1041c653b16a5185280f7ece",
+      "handoff_file": "runs/issues/R02/handoff_from_s08_20261126.md",
+      "handoff_sha256_lf": "511ef24b450b02a34c88e9810e9dee7515f8bd24f50da9f4554599d5c2a54b73",
+      "codex_sandbox_authorized": "danger-full-access",
+      "child_issues": [
+        54,
+        55,
+        56
+      ],
+      "scope": "Verify industry-level signals and same-period comparable benchmarks across 3 topics covering 277 frozen R00 mainline companies."
     }
   },
   "pre_issue_breakdown_first_actions": [

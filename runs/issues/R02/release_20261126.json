@@ -1,0 +1,109 @@
+{
+  "artifact": "R02_SCOPED_RELEASE_AND_HANDOFF",
+  "issue_key": "R02",
+  "issue_number": 46,
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "APPROVED_TO_START_R02_WITH_LIMITS",
+  "release_R02": true,
+  "recorded_at": "2026-11-26T14:55:00+08:00",
+  "approved_by": "USER",
+  "approved_at": "2026-11-26T14:49:58+08:00",
+  "executor_handoff": {
+    "orchestrator": "Antigravity",
+    "recommended_executor": "CodeBuddy",
+    "reviewer": "Codex",
+    "reviewer_tier_policy": "gpt-6.2-sol low for standard independent review with user-authorized --sandbox danger-full-access for live py clean-worktree replay; escalate to high only if complex industry-scope or reconciliation conflict arises",
+    "codex_sandbox_authorized": "danger-full-access",
+    "status": "IN_PROGRESS",
+    "claim_receipt": "CONFIRMED",
+    "claimed": true,
+    "claimed_at": "2026-11-26T14:55:00+08:00",
+    "handoff_file": "runs/issues/R02/handoff_from_s08_20261126.md"
+  },
+  "input_scope": {
+    "company_master": "data/company_master.csv",
+    "group_summary": "data/group_summary.csv",
+    "S08_acceptance": "runs/issues/S08/acceptance_s08_20261126.json",
+    "S08_candidates": "runs/issues/S08/business_verification_candidates.csv",
+    "S08_screen_acceptance": "runs/issues/S08/screen_acceptance.json",
+    "S02_metrics": "runs/issues/S02/hangcha_restated_20261101/s02_v10/all_pool_metrics.csv",
+    "S05_quality_flags": "runs/issues/S05/quality_flags.csv",
+    "S05_quality_decision_log": "runs/issues/S05/quality_decision_log.csv",
+    "nbs_official_snapshot": "runs/issues/R02/nbs_official_sources_snapshot.json"
+  },
+  "knowledge_as_of": "2026-10-25",
+  "scope": "Verify industry-level signals and same-period comparable benchmarks strictly scoped to the 3 industry/business-model topics covering the S08 frozen 277 R00 mainline companies (max 3 topics per package): R02_T01 Core Components (G01-G04, 92 companies), R02_T02 Equipment Integration & End-Machines (G05-G06, 61 companies), R02_T03 Cross-Industry Manufacturing & Upstream Materials (G07-G10, 124 companies). Combine official NBS macro/industry releases (disclosed <= 2026-10-25, >= 2 comparable periods) with same-period intra-pool financial benchmarks from frozen S02/S05/S08 tables (strictly separated by H1 vs 9M anchor, displaying valid paired company count, denominator, median/IQR, and top-1 contributor sensitivity). Strictly separate industry boom from company-specific robotics revenue; preserve unknown on scope conflicts; do NOT expand to all policies/news or launch R00 company deep-dives or valuation.",
+  "guards": {
+    "knowledge_as_of": "2026-10-25",
+    "max_topics_per_package": 3,
+    "no_cross_period_merge_h1_vs_9m": true,
+    "sw_industry_neq_nbs_industry": true,
+    "ppi_neq_company_selling_price": true,
+    "industry_boom_neq_company_robot_revenue": true,
+    "facts_separated_from_forecasts": true,
+    "preserve_unknown_on_scope_conflict": true,
+    "S00_errata_issue_53": "OPEN",
+    "R00_released": false,
+    "preserve_upstream_inputs": true
+  },
+  "outputs": [
+    "runs/issues/R02/nbs_official_sources_snapshot.json",
+    "runs/issues/R02/industry_topic_dispatch.csv",
+    "runs/issues/R02/industry_signals.csv",
+    "runs/issues/R02/industry_limits.md",
+    "runs/issues/R02/manifest.json",
+    "runs/issues/R02/handoff.md",
+    "runs/issues/R02/review.json"
+  ],
+  "online_base": {
+    "main": "4ac2faa83f69c99664cb38c48f2dcf5528cabf9e",
+    "active_issue_blob": "f246978f21fad33ab2e619a0523c6a07b965e3f0"
+  },
+  "downstream": {
+    "R02_completed": false,
+    "R00_released": false,
+    "R03_released": false
+  },
+  "child_issues": [
+    {
+      "topic_id": "R02_T01",
+      "issue_number": 54,
+      "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/54",
+      "title": "R02_T01｜行业信号主题子包：核心零部件（传动/驱动/感知与运动控制）",
+      "routing_groups": [
+        "G01",
+        "G02",
+        "G03",
+        "G04"
+      ],
+      "r00_mainline_count": 92,
+      "universe_count": 407
+    },
+    {
+      "topic_id": "R02_T02",
+      "issue_number": 55,
+      "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/55",
+      "title": "R02_T02｜行业信号主题子包：装备集成与整机应用（自动化/母机/专用与服务机器人）",
+      "routing_groups": [
+        "G05",
+        "G06"
+      ],
+      "r00_mainline_count": 61,
+      "universe_count": 246
+    },
+    {
+      "topic_id": "R02_T03",
+      "issue_number": 56,
+      "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/56",
+      "title": "R02_T03｜行业信号主题子包：跨界制造与上游材料（汽车电子/材料加工/人形与宽泛概念）",
+      "routing_groups": [
+        "G07",
+        "G08",
+        "G09",
+        "G10"
+      ],
+      "r00_mainline_count": 124,
+      "universe_count": 401
+    }
+  ]
+}
