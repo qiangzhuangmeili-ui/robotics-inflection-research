@@ -1,0 +1,63 @@
+{
+  "artifact": "R00_TIER1_18_OF_18_INDEPENDENT_ACCEPTANCE",
+  "issue_key": "R00",
+  "issue_number": 44,
+  "child_issues_this_round": [
+    61,
+    62
+  ],
+  "all_tier1_child_issues": [
+    57,
+    58,
+    61,
+    62
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-27",
+  "timezone": "Asia/Shanghai",
+  "reviewer": "Codex (gpt-6.2-sol low, user-authorized --sandbox danger-full-access)",
+  "review_nature": "INDEPENDENT_REVIEW",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "tier1_18_of_18_complete": true,
+  "knowledge_as_of": "2026-10-25",
+  "reviewed_version": {
+    "round": "R1",
+    "commit": "4cb89e0f2f983b19784cac9c1edc447510ef11d1",
+    "online_main_at_review": "4cb89e0f2f983b19784cac9c1edc447510ef11d1",
+    "manifest_root_digest": "63009cdbbb220fad1e865506616523d4c51be631c8074d9d06494cb62e1a27f1",
+    "fixed_replay_time": "2026-11-27T00:08:00+08:00",
+    "prior_r0_review_record_md": "runs/issues/R00/tier1_completion/codex_review_tier1_complete_20261127.md",
+    "review_record_md": "runs/issues/R00/tier1_completion/codex_review_tier1_complete_r1_20261127.md"
+  },
+  "verified": {
+    "clean_worktree_replay": {
+      "verifier": "Codex",
+      "dirty_files_after_replay": 0,
+      "build_self_check_reproduced": "5/5 PASS",
+      "verify_reproduced": "7/7 PASS",
+      "negative_tests": [
+        "R0: Tampered legacy_auto_promoted False->True -> V04/V05/V07 exited 1",
+        "R1: Tampered manifest_root_digest -> V05/V07 exited 1"
+      ],
+      "worktree_cleaned": true,
+      "main_tracked_files_untouched": true,
+      "prior_batch01_02_files_untouched": true
+    },
+    "counts": {
+      "tier1_total_verified": 18,
+      "prior_accepted_batch01_02": 10,
+      "newly_accepted_batch03_04": 8,
+      "overlap": 0,
+      "h1_total_in_tier1": 15,
+      "m9_total_in_tier1": 3,
+      "new_quotes": 148,
+      "tier1_total_quotes": 308,
+      "r03_priority_a_final": 6,
+      "observe_or_defer_final": 12
+    }
+  },
+  "online_control": {
+    "release_R03": false,
+    "issue_53_touched": false
+  }
+}
