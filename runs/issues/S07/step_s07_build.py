@@ -167,9 +167,12 @@ LOW_BASE_MAP = {
 }
 ABS_CHANNEL_FIELDS = {"SG06": "FIN.NPDEDT.YTD", "SG08": "FIN.OCF.YTD"}
 
-REWORK_ROUND = "R1"
-REWORK_BASIS = "runs/issues/S07/codex_review_s07_r0_20261126.md"
-REVIEW_PROVENANCE_REFS = ["runs/issues/S07/codex_review_s07_r0_20261126.md"]
+REWORK_ROUND = "R2"
+REWORK_BASIS = "runs/issues/S07/codex_review_s07_r1_20261126.md"
+REVIEW_PROVENANCE_REFS = [
+    "runs/issues/S07/codex_review_s07_r0_20261126.md",
+    "runs/issues/S07/codex_review_s07_r1_20261126.md",
+]
 
 
 # ---------------------------------------------------------------------------
@@ -823,10 +826,23 @@ def classify_omission(engine, d, sid, pk, got):
         return {"verdict": "RULE_CONSISTENT_CUTOFF_GUARD", "layer": "S03", "consistent": True,
                 "clean_dims": clean_dims, "signals": fired}
     if dec == "L2_NOT_IN_SCOPE":
-        ok = s03["l1_bucket"] != "OBSERVE_QUEUE"
-        return {"verdict": "RULE_CONSISTENT_SCOPE" if ok else "CALC_LEAK_SCOPE_DIVERGENCE",
-                "layer": "S03" if ok else "S03/S04", "consistent": ok,
-                "clean_dims": clean_dims, "signals": fired}
+        # F09 R2: judge on the s00_v10 re-derived S03 bucket, not the frozen table.
+        rb, rsub, rcheck = derive_l1(engine, sid, pk, got, s03)
+        scope_ok = rb != "OBSERVE_QUEUE"
+        frozen_match = (rb == s03["l1_bucket"] and rsub == s03["l1_subtag"])
+        ok = scope_ok and frozen_match
+        if not scope_ok:
+            verdict, layer = "CALC_LEAK_SCOPE_DIVERGENCE", "S03/S04"
+        elif not frozen_match:
+            verdict, layer = "CALC_LEAK_SCOPE_FROZEN_MISMATCH", "S03/S04"
+        else:
+            verdict, layer = "RULE_CONSISTENT_SCOPE", "S03"
+        return {"verdict": verdict, "layer": layer, "consistent": ok,
+                "clean_dims": clean_dims, "signals": fired,
+                "recomputed_bucket": rb, "recomputed_subtag": rsub,
+                "recomputed_route_check": rcheck,
+                "frozen_bucket": s03["l1_bucket"],
+                "frozen_bucket_match": frozen_match}
     if dec == "L2_NOT_SHORTLISTED":
         ok = n < 2
         return {"verdict": "RULE_CONSISTENT_DIMS_LT2" if ok else "CALC_LEAK_DIMS_SUFFICIENT",
@@ -880,6 +896,16 @@ def build_reverse_omission_audit(engine, d, sample_rows):
             "frozen_s06_reviewed_decision": d["s06_early_by"].get(sid, {}).get("s04_l2_decision", "ABSENT"),
             "recomputed_s03_bucket": r["derived_l1"].split("/")[0],
             "recomputed_s03_subtag": r["derived_l1"].split("/")[1],
+            "scope_rejudge_basis": (
+                {
+                    "recomputed_bucket": c.get("recomputed_bucket"),
+                    "recomputed_subtag": c.get("recomputed_subtag"),
+                    "recomputed_route_check": c.get("recomputed_route_check"),
+                    "frozen_bucket": c.get("frozen_bucket"),
+                    "frozen_bucket_match": c.get("frozen_bucket_match"),
+                }
+                if "recomputed_bucket" in c else None
+            ),
             "recomputed_signals": {k: c["signals"][k] for k in sorted(c["signals"])},
             "recomputed_clean_dimensions": c["clean_dims"],
             "recomputed_dimension_count": n,
@@ -1674,7 +1700,7 @@ def build_findings_md(d, agg, sample_rows, abs_evidence, low_base_evidence,
     lines.append("")
     lines.append(f"生成时间：{NOW}（北京时间）。计划版本 `{PLAN_VERSION}`，知识截止日 `{KNOWLEDGE_AS_OF}`。")
     lines.append(f"执行方：{EXECUTOR}；统筹方：{ORCHESTRATOR}；独立复核指派：{REVIEWER_ASSIGNED}。本报告为 `SELF_CHECK`，不释放 S08。")
-    lines.append(f"返修轮次：`{REWORK_ROUND}`；返修依据：`{REWORK_BASIS}`（Codex R0 独立复核 `RETURN_FOR_REWORK`）。")
+    lines.append(f"返修轮次：`{REWORK_ROUND}`；返修依据：`{REWORK_BASIS}`（Codex 独立复核 `RETURN_FOR_REWORK`）。")
     lines.append("")
     lines.append("## 1. 审计范围与方法")
     lines.append("")

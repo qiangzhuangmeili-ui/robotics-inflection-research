@@ -1,8 +1,8 @@
 # S07 / #42 抽查阈值边界、漏筛和缺数据偏差｜审计报告
 
-生成时间：2026-11-26T13:45:00+08:00（北京时间）。计划版本 `20261026_collection_first_v2`，知识截止日 `2026-10-25`。
+生成时间：2026-11-26T13:55:00+08:00（北京时间）。计划版本 `20261026_collection_first_v2`，知识截止日 `2026-10-25`。
 执行方：CodeBuddy；统筹方：Antigravity；独立复核指派：Codex。本报告为 `SELF_CHECK`，不释放 S08。
-返修轮次：`R1`；返修依据：`runs/issues/S07/codex_review_s07_r0_20261126.md`（Codex R0 独立复核 `RETURN_FOR_REWORK`）。
+返修轮次：`R2`；返修依据：`runs/issues/S07/codex_review_s07_r1_20261126.md`（Codex 独立复核 `RETURN_FOR_REWORK`）。
 
 ## 1. 审计范围与方法
 

@@ -2,8 +2,8 @@
   "artifact": "S07_SELF_CHECK_REVIEW",
   "issue_key": "S07",
   "issue_number": 42,
-  "rework_round": "R1",
-  "rework_basis": "runs/issues/S07/codex_review_s07_r0_20261126.md",
+  "rework_round": "R2",
+  "rework_basis": "runs/issues/S07/codex_review_s07_r1_20261126.md",
   "plan_version": "20261026_collection_first_v2",
   "knowledge_as_of": "2026-10-25",
   "executor": "CodeBuddy",
@@ -11,7 +11,7 @@
   "reviewer_assigned": "Codex",
   "review_nature": "SELF_CHECK",
   "independent_review_complete": false,
-  "reviewed_at": "2026-11-26T13:45:00+08:00",
+  "reviewed_at": "2026-11-26T13:55:00+08:00",
   "decision": "SELF_CHECK_PASS_WITH_LIMITS",
   "counts": {
     "universe": 1054,
@@ -156,15 +156,15 @@
     },
     {
       "id": "C21",
-      "name": "绝对额通道证据覆盖样本内全部 (公司,信号)，字段完整且 check_pass 全为真",
+      "name": "绝对额通道证据覆盖样本内全部 (公司,信号)，字段完整、check_pass 全为真，且由两期原值独立重算增量与门槛一致",
       "result": "PASS",
-      "detail": "expected_pairs=11, evidence_rows=11, pairs_match=True, schema_bad=[]"
+      "detail": "expected_pairs=11, evidence_rows=11, pairs_match=True, schema_bad=[], recompute_bad=[]"
     },
     {
       "id": "C22",
-      "name": "低基数确认证据覆盖样本内全部 (公司,信号)，字段完整、check_pass 与 S04 登记对账全为真",
+      "name": "低基数确认证据覆盖样本内全部 (公司,信号)，字段完整、check_pass 与 S04 登记对账全为真，且由两期原值独立重算增量与门槛一致",
       "result": "PASS",
-      "detail": "expected_pairs=6, evidence_rows=6, pairs_match=True, schema_bad=[]"
+      "detail": "expected_pairs=6, evidence_rows=6, pairs_match=True, schema_bad=[], recompute_bad=[]"
     }
   ],
   "limits": [

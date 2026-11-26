@@ -26,12 +26,15 @@ NOW = os.environ.get("S07_FIXED_NOW") or datetime.now(timezone(timedelta(hours=8
 
 sys.path.insert(0, str(OUT))
 from step_s07_build import (  # noqa: E402
+    ABS_CHANNEL_FIELDS,
+    ABS_CONFIRM,
     BLOCKING_ANOMALY_KEYS,
     EXECUTOR,
     FLOAT_TOL,
     ISSUE_KEY,
     ISSUE_NUMBER,
     KNOWLEDGE_AS_OF,
+    LOW_BASE_MAP,
     ORCHESTRATOR,
     PLAN_VERSION,
     READ_INPUTS,
@@ -42,6 +45,8 @@ from step_s07_build import (  # noqa: E402
     REWORK_ROUND,
     ROLLBACK_ANOMALY_KEYS,
     STRATUM_ORDER,
+    USABLE,
+    USABLE_FLAG,
     canonical_input_digest,
     parse_attr_list,
     sha256_exact,
@@ -60,6 +65,21 @@ def is_git_tracked(rel: str) -> bool:
         return r.returncode == 0
     except Exception:
         return False
+
+
+def _num(x):
+    """Parse an evidence numeric field; empty/None -> None (never coerced to 0)."""
+    if x is None or x == "":
+        return None
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        return None
+
+
+def _usable_pair(e) -> bool:
+    """Both sides must be usable statuses (S01 USABLE plus the LEGACY_SNAPSHOT flag)."""
+    return e.get("status") in (USABLE | USABLE_FLAG) and e.get("base_status") in (USABLE | USABLE_FLAG)
 
 
 def main():
@@ -481,13 +501,40 @@ def main():
                     "delta_cny", "delta_wan", "threshold_check", "check_pass"}
     abs_schema_bad = [f"{e.get('security_id')}:{e.get('signal_id')}"
                       for e in abs_ev if not abs_required.issubset(e.keys())]
+    abs_recompute_bad = []
+    for e in abs_ev:
+        tag = f"{e.get('security_id')}:{e.get('signal_id')}"
+        sg = e.get("signal_id")
+        cur = _num(e.get("value_cny"))
+        base = _num(e.get("base_value_cny"))
+        delta = _num(e.get("delta_cny"))
+        comp_ok = e.get("comparability") == "SAME_PERIOD_COMPARABLE"
+        usable = _usable_pair(e)
+        field_ok = sg in ABS_CHANNEL_FIELDS and e.get("field_id") == ABS_CHANNEL_FIELDS.get(sg)
+        delta_ok = (cur is not None and base is not None and delta is not None
+                    and abs(delta - (cur - base)) <= 0.01)
+        if sg == "SG06":
+            rule_ok = (cur is not None and base is not None
+                       and comp_ok and base < 0 and cur > 0 and cur >= ABS_CONFIRM)
+        elif sg == "SG08":
+            rule_ok = (cur is not None and base is not None
+                       and comp_ok and cur > 0 and base <= 0)
+        else:
+            rule_ok = False
+        recomputed_pass = bool(usable and comp_ok and rule_ok)
+        if not (usable and comp_ok and field_ok and delta_ok and rule_ok
+                and recomputed_pass == bool(e.get("check_pass"))):
+            abs_recompute_bad.append(tag)
+
     c21 = (abs_pairs == expected_abs and len(abs_ev) == len(abs_pairs) and len(abs_ev) > 0
-           and all(e["check_pass"] for e in abs_ev) and not abs_schema_bad)
+           and all(e["check_pass"] for e in abs_ev) and not abs_schema_bad
+           and not abs_recompute_bad)
     checks.append({"id": "C21",
-                   "name": "绝对额通道证据覆盖样本内全部 (公司,信号)，字段完整且 check_pass 全为真",
+                   "name": "绝对额通道证据覆盖样本内全部 (公司,信号)，字段完整、check_pass 全为真，且由两期原值独立重算增量与门槛一致",
                    "result": "PASS" if c21 else "FAIL",
                    "detail": f"expected_pairs={len(expected_abs)}, evidence_rows={len(abs_ev)}, "
-                             f"pairs_match={abs_pairs == expected_abs}, schema_bad={abs_schema_bad}"})
+                             f"pairs_match={abs_pairs == expected_abs}, schema_bad={abs_schema_bad}, "
+                             f"recompute_bad={abs_recompute_bad}"})
 
     # ---------------- C22 low-base confirmation evidence completeness ----------------
     expected_lb = set()
@@ -501,14 +548,38 @@ def main():
                    "s04_detail_match", "check_pass"}
     lb_schema_bad = [f"{e.get('security_id')}:{e.get('signal_id')}"
                      for e in lb_ev if not lb_required.issubset(e.keys())]
+    lb_recompute_bad = []
+    for e in lb_ev:
+        tag = f"{e.get('security_id')}:{e.get('signal_id')}"
+        sg = e.get("signal_id")
+        cur = _num(e.get("value_cny"))
+        base = _num(e.get("base_value_cny"))
+        delta = _num(e.get("delta_cny"))
+        comp_ok = e.get("comparability") == "SAME_PERIOD_COMPARABLE"
+        usable = _usable_pair(e)
+        mapping = LOW_BASE_MAP.get(sg) or {}
+        field_ok = (e.get("field_id") == mapping.get("field_id")
+                    and e.get("basis") == mapping.get("basis"))
+        delta_ok = (cur is not None and base is not None and delta is not None
+                    and abs(delta - (cur - base)) <= 0.01)
+        rule_ok = (cur is not None and base is not None and delta is not None
+                   and comp_ok and delta >= ABS_CONFIRM and delta > 0)
+        if sg == "SG06":
+            rule_ok = rule_ok and cur >= ABS_CONFIRM
+        recomputed_pass = bool(usable and comp_ok and rule_ok)
+        if not (usable and comp_ok and field_ok and delta_ok and rule_ok
+                and recomputed_pass == bool(e.get("check_pass"))):
+            lb_recompute_bad.append(tag)
+
     c22 = (lb_pairs == expected_lb and len(lb_ev) == len(lb_pairs) and len(lb_ev) > 0
            and all(e["check_pass"] for e in lb_ev) and not lb_schema_bad
-           and all(e["s04_detail_match"] for e in lb_ev))
+           and all(e["s04_detail_match"] for e in lb_ev) and not lb_recompute_bad)
     checks.append({"id": "C22",
-                   "name": "低基数确认证据覆盖样本内全部 (公司,信号)，字段完整、check_pass 与 S04 登记对账全为真",
+                   "name": "低基数确认证据覆盖样本内全部 (公司,信号)，字段完整、check_pass 与 S04 登记对账全为真，且由两期原值独立重算增量与门槛一致",
                    "result": "PASS" if c22 else "FAIL",
                    "detail": f"expected_pairs={len(expected_lb)}, evidence_rows={len(lb_ev)}, "
-                             f"pairs_match={lb_pairs == expected_lb}, schema_bad={lb_schema_bad}"})
+                             f"pairs_match={lb_pairs == expected_lb}, schema_bad={lb_schema_bad}, "
+                             f"recompute_bad={lb_recompute_bad}"})
 
     passed_cnt = sum(1 for c in checks if c["result"] == "PASS")
     all_pass = passed_cnt == len(checks)
