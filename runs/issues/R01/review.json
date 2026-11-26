@@ -1,0 +1,76 @@
+{
+  "artifact": "R01_SELF_CHECK_REVIEW",
+  "issue_key": "R01",
+  "issue_number": 45,
+  "child_issues": [
+    59,
+    60
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-26",
+  "timezone": "Asia/Shanghai",
+  "review_nature": "SELF_CHECK",
+  "executor": "Antigravity (direct intervention)",
+  "reviewer_assigned": "Codex",
+  "decision_rule": "anomalies 为空 -> SELF_CHECK_PASS_WITH_LIMITS；任一阻塞异常 -> NOT_ACCEPTED_PENDING_FIX",
+  "anomalies": [],
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "checks_summary": "7/7 PASS",
+  "checks": [
+    {
+      "id": "C01",
+      "name": "10 家名单与 #59/#60 及 R00 验收名单完全一致且互斥零重复",
+      "result": "PASS",
+      "detail": "count=10 unique=10"
+    },
+    {
+      "id": "C02",
+      "name": "8 家 H1 与 2 家 9M 锚定期严格分离并与 S08/R00 一致",
+      "result": "PASS",
+      "detail": "h1=8 m9=2"
+    },
+    {
+      "id": "C03",
+      "name": "锚定期纯机器人本体收入全部 UNKNOWN，FY2025 仅拓斯达单列 300432856.32",
+      "result": "PASS",
+      "detail": "bad_anchor=[] fy25_disclosed={'SZ:300607': '300432856.32'}"
+    },
+    {
+      "id": "C04",
+      "name": "口径零回退守卫（双环/丰光/博实禁用表述 0 命中）",
+      "result": "PASS",
+      "detail": "hits=[]"
+    },
+    {
+      "id": "C05",
+      "name": "10 家公司 S05 五项质量指标(M04/M08/M10/M11/M12)完整挂接",
+      "result": "PASS",
+      "detail": "missing=[]"
+    },
+    {
+      "id": "C06",
+      "name": "需求先行指标(合同负债/在手订单/在建工程)按 METHOD_20261107 完整登记",
+      "result": "PASS",
+      "detail": "missing=[]"
+    },
+    {
+      "id": "C07",
+      "name": "全部 15 份输入存在且位于 Git 工作树内",
+      "result": "PASS",
+      "detail": "inputs=15 missing=[]"
+    }
+  ],
+  "counts": {
+    "companies": 10,
+    "h1_anchor": 8,
+    "m9_anchor": 2,
+    "r03_priority_a": 6,
+    "r03_observe_or_defer": 4
+  },
+  "R03_released": false,
+  "R04_started": false,
+  "issue_53_touched": false,
+  "issue_53_status": "OPEN",
+  "independent_review_required": true,
+  "independent_review_status": "PENDING_CODEX_INDEPENDENT_REVIEW"
+}

@@ -1,0 +1,1636 @@
+{
+  "artifact": "R01_FINANCIAL_ATTRIBUTION_AND_REVENUE_SCOPE",
+  "issue_key": "R01",
+  "issue_number": 45,
+  "child_issues": [
+    59,
+    60
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "knowledge_as_of": "2026-10-25",
+  "fixed_now": "2026-11-26T22:50:00+08:00",
+  "upstream_r00_acceptance": {
+    "file": "runs/issues/R00/acceptance_r00_batch01_02_20261126.json",
+    "decision": "ACCEPTED_WITH_LIMITS",
+    "reviewed_commit": "6ccd19f5e23be8342c4ac0d71c265b473d53d833"
+  },
+  "methodology_ref": "METHOD_20261107_LEADING_INDICATORS",
+  "anchor_separation": {
+    "h1_20260630_count": 8,
+    "m9_20260930_count": 2,
+    "h1_companies": [
+      "SZ:300607",
+      "SZ:002472",
+      "SZ:002747",
+      "BJ:920593",
+      "BJ:920510",
+      "BJ:920491",
+      "SZ:002698",
+      "BJ:920578"
+    ],
+    "m9_companies": [
+      "SZ:002979",
+      "SH:688003"
+    ],
+    "cross_period_merge_prohibited": true
+  },
+  "r03_candidate_tiering": {
+    "disclaimer": "仅用于 R03（行业与公司拐点研究）排包优先序，不构成投资评级或买卖建议。",
+    "R03_PRIORITY_A": [
+      "SZ:300607 拓斯达",
+      "SZ:002472 双环传动",
+      "SZ:002979 雷赛智能",
+      "SZ:002747 埃斯顿",
+      "BJ:920593 鼎智科技",
+      "SH:688003 天准科技"
+    ],
+    "R03_OBSERVE_OR_DEFER": [
+      "BJ:920510 丰光精密",
+      "BJ:920491 奥迪威",
+      "SZ:002698 博实股份",
+      "BJ:920578 巨能股份"
+    ]
+  },
+  "companies": [
+    {
+      "security_id": "SZ:300607",
+      "stock_name": "拓斯达",
+      "batch_id": "R01_BATCH_01",
+      "child_issue_number": 59,
+      "r00_child_issue_number": 57,
+      "anchor_period": "20260630",
+      "anchor_group": "H1_20260630",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "MIXED_SEGMENT_DISCLOSED",
+        "fy2025_total_rev_cny": "2510080513.47",
+        "fy2025_mixed_or_disclosed_rev_cny": "685138644.55",
+        "fy2025_pure_robot_rev_cny": "300432856.32",
+        "anchor_total_rev_cny": "1288243896.10",
+        "anchor_mixed_or_disclosed_rev_cny": "707279751.48",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "母公司及江苏拓斯达机器人、矩阵智拓(51%)并表；矩阵智拓2025年净亏343.11万元且未单列收入",
+        "non_consolidated_excluded": "NONE_DISCLOSED",
+        "limit": "FY2025单列机器人本体300,432,856.32元(自制284.58M+贸易15.86M)；2026H1 707.28M为本体与自动化应用系统合并口径，纯本体金额未拆分；注塑装备/数控机床/智能能源不计入机器人收入"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "1.681550",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7DD4A10CCA435879;DOC-DA095DC3F6B58ACC",
+            "evidence_pages": "64;73"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "1.408688",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7DD4A10CCA435879;DOC-DA095DC3F6B58ACC",
+            "evidence_pages": "65;67;74;76"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "-58.443878",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7DD4A10CCA435879;DOC-DA095DC3F6B58ACC",
+            "evidence_pages": "59;64;68;73"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "",
+            "metric_unit": "days",
+            "metric_status": "NOT_APPLICABLE_PROJECT_MODE",
+            "rh_status": "NOT_APPLICABLE",
+            "evidence_document_ids": "",
+            "evidence_pages": ""
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "-23.937197",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7DD4A10CCA435879;DOC-DA095DC3F6B58ACC",
+            "evidence_pages": "59;64;68;73"
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "0.1861443672",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.0365962169",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "-44.865885452",
+            "unit": "pp",
+            "metric_status": "PROVISIONAL"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "1.68155",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "3.243666358",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "4.8484765896",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "1.6258174557",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "1.408688382",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "-58.443877752",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "",
+            "unit": "days",
+            "metric_status": "NOT_APPLICABLE"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "-23.9371971906",
+            "unit": "pp",
+            "metric_status": "OK"
+          }
+        },
+        "s05_surviving_dimensions": "CASH;GROWTH;MARGIN;PROFIT",
+        "s05_rh_triggers": "",
+        "s05_pending_flags": ""
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026H1工业机器人及自动化应用系统707.28M(+121.62%)拉动收入结构大幅转向机器人及自动化，同时收缩低毛利智能能源业务；但公司明确增长主要由自动化应用系统与3C客户合作驱动，非纯本体放量",
+        "margin_attribution": "合并毛利率同比改善(M04=+1.68pp)，得益于低毛利智能能源收缩；但工业机器人及自动化应用系统板块自身毛利率同比下降10.46pp至30.75%，反映集成项目占比提高",
+        "recurring_profit_attribution": "2026H1利润改善由主营规模增长、低毛利能源业务收缩及应收回款改善带来信用减值减少共同驱动，无RH06低基数/非经常性预警",
+        "cash_flow_attribution": "2026H1经营现金流净额146.92M，经营现金流/归母净利M08=1.4087(正常，RH04未触发)，回款与利润匹配度良好"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "项目制模式下合同资产占比同比显著下降(M12=-23.94pp)，RH02按项目制豁免；合同负债变化需结合自动化系统交付验收节奏跟踪",
+        "backlog_orders": "2026H1披露工业机器人签单约6,800台、出货约5,500台（工业机器人整体台数口径，非人形机器人小拓订单，不可折算金额）；人形小拓仅处客户场景小批量验证",
+        "cip_robot_capacity": "UNKNOWN（本轮R00已核页未单列在建工程机器人产能明细，留R03专项核查）"
+      },
+      "attribution_verdict": "CORE_ROBOT_DRIVER_WITH_MIXED_SCOPE",
+      "r03_priority_bucket": "R03_PRIORITY_A",
+      "r03_watch_points": "跟踪机器人本体与自动化系统拆分毛利率走势、自产多关节占比及人形小拓能否由验证转为正式订单",
+      "attribution_limits": "2026H1的707,279,751.48元是“工业机器人及自动化应用系统”合并口径，不是纯机器人本体收入；本体与自动化系统H1绝对金额未完整拆分。 | 2026H1工业机器人签单约6,800台、出货约5,500台是工业机器人整体口径，不能解读为人形机器人“小拓”的订单或出货。 | “小拓”仅确认客户场景小批量验证；截至知识截止日未找到其单独收入、正式批量订单或批量交付披露。 | X5控制平台已研发并推出，但未单独披露销售收入、订单或装机量，商业化收入状态记UNKNOWN。 | 矩阵智拓51%控股并表，但其算法服务/工业场景应用收入未单独披露；2025年净亏损，不得将其估值或合作概念当作机器人收入。 | 数控机床受人形机器人零部件加工需求带动，但相关机床收入占比未披露，数控机床收入不计入机器人收入。 | GitHub document_registry.csv将拓斯达2025年报登记为DOC-82DD061D1A766CCA，与用户提供的DOC-8AA65D8C6F87227B不一致；官方PDF URL相同，需后续做二进制哈希和登记ID对齐。 | 拓斯达2026H1 DOC-7DD4A10CCA435879未在当前document_registry.csv中找到对应登记行；本轮只确认官方PDF可读和关键页物理页码，未完成Drive二进制SHA-256/回读归档验收。 | 未检索、引用或采用2026-10-25之后披露的任何报告或公告；本结论不包含2026三季报。"
+    },
+    {
+      "security_id": "SZ:002472",
+      "stock_name": "双环传动",
+      "batch_id": "R01_BATCH_01",
+      "child_issue_number": 59,
+      "r00_child_issue_number": 57,
+      "anchor_period": "20260630",
+      "anchor_group": "H1_20260630",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "UNDISCLOSED_IN_BROADER_LINE",
+        "fy2025_total_rev_cny": "9112171720.39",
+        "fy2025_mixed_or_disclosed_rev_cny": "795052336.68",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "4558950064.86",
+        "anchor_mixed_or_disclosed_rev_cny": "440341985.30",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "环动科技持股61.29%并表（母公司年报/半年报未单列环动单体营收与利润）；科创板分拆尚在进行中",
+        "non_consolidated_excluded": "NONE_DISCLOSED",
+        "limit": "机器人RV减速器未单列，并入“减速器及其他”混合科目（2026H1 440.34M，+26.18%）；智能执行机构（扫地机/eBike/汽车）与汽车齿轮均非工业机器人业务"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "-0.292767",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-59DC0F5AC7CF3394;DOC-5CF373BAD33AF333",
+            "evidence_pages": "44;47"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "1.894788",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-59DC0F5AC7CF3394;DOC-5CF373BAD33AF333",
+            "evidence_pages": "44;47;50"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "8.855098",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-59DC0F5AC7CF3394;DOC-5CF373BAD33AF333",
+            "evidence_pages": "39;42;44;47"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "",
+            "metric_unit": "days",
+            "metric_status": "UNKNOWN_CA_BLANK",
+            "rh_status": "PENDING_APPLICABILITY",
+            "evidence_document_ids": "DOC-59DC0F5AC7CF3394;DOC-5CF373BAD33AF333",
+            "evidence_pages": "39;42;44;47"
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "",
+            "metric_unit": "pp",
+            "metric_status": "BOTH_BLANK_NO_USABLE_AMOUNT",
+            "rh_status": "NOT_APPLICABLE",
+            "evidence_document_ids": "",
+            "evidence_pages": ""
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "0.0779956019",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.1382070832",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "12.3327420324",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "-0.292767",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "-0.0375529142",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "-1.4068595869",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "-0.034858802",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "1.894788348",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "8.8550976519",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "6.0480028396",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "",
+            "unit": "pp",
+            "metric_status": "NOT_APPLICABLE"
+          }
+        },
+        "s05_surviving_dimensions": "CASH;GROWTH",
+        "s05_rh_triggers": "",
+        "s05_pending_flags": "RH02"
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026H1总营收4,558.95M(+7.80%)，“减速器及其他”440.34M(+26.18%，占比9.67%)增速显著快于整体，但占总盘不足一成且含非机器人减速器，不能将公司整体增长全归机器人",
+        "margin_attribution": "合并毛利率微降(M04=-0.29pp，RH05未触发)；“减速器及其他”自算毛利率由FY2025的38.47%升至2026H1的47.47%，但因含非机器人项且环动单体未披露，纯RV盈利能力留待核",
+        "recurring_profit_attribution": "主业盈利稳健，无RH06触发；但环动科技单体净利润未披露，机器人板块对合并扣非净利的实际贡献比例UNKNOWN",
+        "cash_flow_attribution": "2026H1经营现金流净额1,111.59M(+13.38%)，M08=1.8948(优异，RH04未触发)，整体造血能力强"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "合同资产连续两期报表空白(REPORTED_BLANK，RH02待核)；存货2,413.44M(+8.43%)，周转天数由117.3天微升至125.8天，幅度温和",
+        "backlog_orders": "UNKNOWN（2025年报与2026半年报未披露机器人减速器在手订单金额或台数，不填0）",
+        "cip_robot_capacity": "UNKNOWN（环动科技分拆募投及在建工程产能对应需待分拆招股/问询回复核查）"
+      },
+      "attribution_verdict": "MIXED_OR_UNQUANTIFIED_DRIVER",
+      "r03_priority_bucket": "R03_PRIORITY_A",
+      "r03_watch_points": "跟踪环动科技科创板分拆进展及单体营收/毛利披露，核实RV减速器在“减速器及其他”中的真实占比与谐波自产情况",
+      "attribution_limits": "环动科技单体营业收入与净利润未在双环年报/半年报披露：2025年报p26“主要子公司”表仅列江苏双环、嘉兴双环两家100%子公司，环动科技不在表内，故RV减速器业务的盈利能力无法从公开原文单独验证，留HOLD待环动招股书/问询回复核对 | 机器人减速器收入未单列，无法量化机器人业务占比；“减速器及其他”含非机器人减速器与其他传动产品，不可整体视作机器人收入 | 分拆上市进度：仅披露2024-11-25受理（上证科审﹝2024﹞375号）及“正在推进/尚在进行中”，截至knowledge_as_of未见上市委审议、注册或中止的正式披露，进度判断留HOLD | 2026半年报p15“资产构成重大变动表”上年末列与资产负债表期初不一致（存货2,126,798,406.43 vs 2,225,853,720.78；应收账款2,522,569,433.19 vs 2,758,115,414.50），判断为上年同期口径误标，本报告统一采用资产负债表期初数 | 2026半年报分地区两处口径不一致：p15国内销售3,605,252,754.13元 vs p106国内销售3,624,891,454.20元，差额19,638,700.07元，原因未在原文说明 | 谐波减速器是否为公司自产未披露：2025年报p14仅作行业趋势表述（“RV、谐波减速器国产化率稳步提升”），不构成公司产品事实 | 双环传动2026年三季报披露日晚于2026-10-25，按铁律未检索、未引用、未混入H1口径 | 核验方式：五份PDF均本地下载并逐页抽取文本层（页数175/132/181/161/11与清单一致），关键结论逐条回溯至具体物理页；未逐页通读全部正文，但全文已可全文检索，不存在未打开的PDF"
+    },
+    {
+      "security_id": "SZ:002979",
+      "stock_name": "雷赛智能",
+      "batch_id": "R01_BATCH_01",
+      "child_issue_number": 59,
+      "r00_child_issue_number": 57,
+      "anchor_period": "20260930",
+      "anchor_group": "9M_20260930",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "UNDISCLOSED_IN_BROADER_LINE",
+        "fy2025_total_rev_cny": "1873838550.29",
+        "fy2025_mixed_or_disclosed_rev_cny": "921586745.82",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "1908592895.71",
+        "anchor_mixed_or_disclosed_rev_cny": "1008000000.00",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "上海雷赛机器人(70%)、深圳灵巧驱控(100%)、东莞雷赛机器人(100%)均并表；三家子公司单体收入均未披露",
+        "non_consolidated_excluded": "NONE_DISCLOSED",
+        "limit": "9M独立锚定(20260930)；机器人核心部件未在分产品表单独列示，伺服系统类(9M 10.08亿/+58.64%)为通用工控+机器人混合口径，纯机器人收入金额UNKNOWN"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "0.129741",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-372509BD7D3D9313;DOC-FF9FF939F811355B",
+            "evidence_pages": "8;9"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "-0.172221",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "TRIGGERED",
+            "evidence_document_ids": "DOC-FF9FF939F811355B",
+            "evidence_pages": "10;9"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "-9.955659",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-372509BD7D3D9313;DOC-FF9FF939F811355B",
+            "evidence_pages": "6;7;8;9"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "",
+            "metric_unit": "days",
+            "metric_status": "UNKNOWN_CA_BLANK",
+            "rh_status": "PENDING_APPLICABILITY",
+            "evidence_document_ids": "DOC-372509BD7D3D9313;DOC-FF9FF939F811355B",
+            "evidence_pages": "6;7;8;9"
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "",
+            "metric_unit": "pp",
+            "metric_status": "BOTH_BLANK_NO_USABLE_AMOUNT",
+            "rh_status": "NOT_APPLICABLE",
+            "evidence_document_ids": "",
+            "evidence_pages": ""
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "0.4676956585",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.6170249161",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "17.6005756285",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "0.129741",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "0.8781023712",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "3.3373651518",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "1.6584398486",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "-0.172221003",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "-9.955658804",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "11.0512174444",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "",
+            "unit": "pp",
+            "metric_status": "NOT_APPLICABLE"
+          }
+        },
+        "s05_surviving_dimensions": "GROWTH;PROFIT",
+        "s05_rh_triggers": "RH04",
+        "s05_pending_flags": "RH02"
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026Q1-Q3营收1,908.59M(+46.77%)、Q3单季661.45M(+61.70%)，伺服系统类1-9月10.08亿(+58.64%)为主力增长引擎；无框力矩电机2025年交付超12万台(+20倍)印证机器人增量真实，但不可由台数反推收入占比",
+        "margin_attribution": "9M合并毛利率同比微升(M04=+0.13pp，RH05未触发)；2026H1伺服系统类毛利率28.97%(+1.34pp)，低于步进(43.85%)和控制技术(63.80%)",
+        "recurring_profit_attribution": "2026Q1-Q3归母净利299.18M(+86.80%)、Q3单季105.56M(+156.10%)，盈利弹性强且未触发RH06；但机器人子公司独立盈利未直接披露（上海雷赛机器人按少数股东损益推算H1净利约1,195万，非原文直列）",
+        "cash_flow_attribution": "RH04显著触发：9M经营现金流转负至-51.53M(M08=-0.1722)，Q3单季-94.89M；主因收现增速(+19.46%)远慢于收入(+46.77%)、策略性备货付现大增(+66.46%)及减少票据贴现（票据+款项融资增2.81亿、存货增2.07亿）"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "合同资产空白(REPORTED_BLANK，RH02待核)；存货623.67M(较年初+49.75%，三季报p2变动率列33.22%存复算差异，仅采绝对额)",
+        "backlog_orders": "2026H1披露无框力矩电机在手订单超100万台（单位数口径，未折金额，严禁换算收入）；关节模组与灵巧手获近百家主流机器人客户订单",
+        "cip_robot_capacity": "2026H1披露正在建设年产300万台无框力矩电机自动化产能（产能建设不等于已实现收入，在建工程明细未单列金额，留R03跟踪转固与产能利用率）"
+      },
+      "attribution_verdict": "CORE_ROBOT_DRIVER_WITH_MIXED_SCOPE",
+      "r03_priority_bucket": "R03_PRIORITY_A",
+      "r03_watch_points": "9M口径单独跟踪；首要盯紧Q3经营现金流转负(-9,489万)与存货/票据占款是否在高增速下持续恶化，以及机器人部件何时单列收入",
+      "attribution_limits": "机器人核心部件收入未单列：2025年报与2026半年报的分产品收入表均只有控制技术类/步进系统类/伺服系统类/其他四行，无“机器人核心部件”科目；正文称其为“四大核心品类”之一，属口径自相矛盾，机器人收入金额留HOLD | 推断“机器人核心部件并入伺服系统类”缺少原文直接表述支撑，仅为按产品对应关系的合理推断，不可当作公司披露事实入库 | 2026三季报未拆产品结构，9M机器人部件收入与占比不可得；仅有伺服系统类9M累计10.08亿元这一含机器人与通用工控的混合口径 | 上海雷赛机器人净利润为推算值：按少数股东损益3,585,301.22元/30%=11,951,004.07元（约1,195.10万元，H1 2026），原文未直接列示该子公司净利润，仅列少数股东损益与少数股东权益 | 灵巧驱控、东莞雷赛机器人均为全资子公司且未列入“重要非全资子公司”，单体收入与利润未披露，其灵巧手/关节模组业务的盈亏不可验证 | 三季报p2资产负债表变动表增减率与同行列示金额不符（存货标+33.22%实为+49.75%、应收票据标+40.49%实为+68.03%、应收款项融资标+69.70%实为+230.02%），本报告不采用该表增减率 | “在手订单超过100万台”为单位数口径，未折金额，且与2025年交付12万台不同口径，不可作为收入前瞻直接换算 | 未检索2026-10-25之后的任何公告；三季报为2026-10-22披露，属可采信范围，已纳入9M锚定"
+    },
+    {
+      "security_id": "SZ:002747",
+      "stock_name": "埃斯顿",
+      "batch_id": "R01_BATCH_01",
+      "child_issue_number": 59,
+      "r00_child_issue_number": 57,
+      "anchor_period": "20260630",
+      "anchor_group": "H1_20260630",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "MIXED_SEGMENT_DISCLOSED",
+        "fy2025_total_rev_cny": "4888010963.64",
+        "fy2025_mixed_or_disclosed_rev_cny": "3996827901.69",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "2577506515.40",
+        "anchor_mixed_or_disclosed_rev_cny": "2138349707.72",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "Cloos(100%)、江苏鼎汇具身创新中心(54.17%)并表；埃斯顿酷卓在2026-06-30仅持股13.95%参股不并表，2026-09-08交割完成后才100%并表，严禁将酷卓1-4月收入倒算进H1",
+        "non_consolidated_excluded": "南京埃斯顿酷卓科技有限公司（时间分段：截至2026-06-30，埃斯顿直接持股13.95%，公告明确称其为参股公司，未并表；截至2026-09-08交割完成公告披露时工商变更登记已完成，埃斯顿通过全资子公司间接持有100%，并纳入合并报表。主营协作机器人、具身智能机器人及核心部件。）",
+        "limit": "工业机器人及智能制造系统(82.96%)含智能制造系统集成及Cloos，核心部件(17.04%)含通用自动化，均非纯机器人本体口径；酷卓两代人形无单列收入"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "4.171910",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7A3C5B75B36F58EF;DOC-B6CC94DFCEE6BFA8",
+            "evidence_pages": "43;45"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "0.276009",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "TRIGGERED",
+            "evidence_document_ids": "DOC-B6CC94DFCEE6BFA8",
+            "evidence_pages": "46;49"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "3.450571",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7A3C5B75B36F58EF;DOC-B6CC94DFCEE6BFA8",
+            "evidence_pages": "38;40;43;45"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "-23.168161",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7A3C5B75B36F58EF;DOC-B6CC94DFCEE6BFA8",
+            "evidence_pages": "38;40;43;45"
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "0.306778",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7A3C5B75B36F58EF;DOC-B6CC94DFCEE6BFA8",
+            "evidence_pages": "38;40;43;45"
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "0.0113514179",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.0433175236",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "6.5481939361",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "4.17191",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "",
+            "unit": "ratio",
+            "metric_status": "UNDEFINED_BASE"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "3.4131538969",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "",
+            "unit": "ratio",
+            "metric_status": "UNDEFINED_BASE"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "0.276008679",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "3.4505713226",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "-23.1681608892",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "0.3067777027",
+            "unit": "pp",
+            "metric_status": "OK"
+          }
+        },
+        "s05_surviving_dimensions": "CASH;GROWTH;MARGIN;PROFIT",
+        "s05_rh_triggers": "RH04;RH06",
+        "s05_pending_flags": ""
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026H1总营收2,577.51M，其中工业机器人及智能制造系统2,138.35M(+2.21%，占82.96%)、核心部件439.16M(-3.78%)；收入体量稳固但H1增速平缓，核心改善在毛利率而非收入放量",
+        "margin_attribution": "2026H1合并毛利率同比显著提升(M04=+4.17pp，RH05未触发)；工业机器人及智能制造系统毛利率升至31.69%(+4.69pp)、核心部件升至32.40%(+1.82pp)",
+        "recurring_profit_attribution": "RH06触发：2026H1归母净利161.33M中，非经常性损益高达91.15M(占56.50%)，主要为南京工艺置换南京化纤股权带来的99.50M非现金公允价值变动收益；扣非净利70.17M虽由负转正(去年同期-17.60M，改善+87.77M)，但负基数下498.64%增速不可外推",
+        "cash_flow_attribution": "RH04触发：2026H1经营现金流净额44.53M，M08=0.2760；现金流调节表显示经营性应收增加(-144.94M)、经营性应付减少(-287.20M)及合同负债下降186.65M压低现金流，存货去化(+163.16M)部分对冲"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "2026H1合同负债由586.31M降至399.65M(-186.65M)，应收账款增至2,201.15M(+15.48%)，需在R03重点核查订单结转与回款节奏",
+        "backlog_orders": "UNKNOWN（H1未披露量化在手订单金额，不填0）",
+        "cip_robot_capacity": "UNKNOWN（本轮R00未单列在建工程机器人产能明细；酷卓9月并表后的整合投入留R03跟踪）"
+      },
+      "attribution_verdict": "CORE_ROBOT_DRIVER_WITH_MIXED_SCOPE",
+      "r03_priority_bucket": "R03_PRIORITY_A",
+      "r03_watch_points": "双警报(RH04+RH06)带入R03：剥离9,950万公允价值收益后跟踪扣非净利与毛利率持续性、应收/合同负债与现金流修复，以及酷卓并表后的实际盈亏影响",
+      "attribution_limits": "2025FY及2026H1“工业机器人及智能制造系统”收入包含机器人本体、机器人工作站/应用方案及智能制造系统，未把机器人本体收入单独拆净。 | 自动化核心部件及运动控制系统含通用运动控制与工业自动化产品，不能将该板块全部计作机器人专用部件收入。 | Cloos为并表的海外焊接机器人/焊接自动化主体，但集团未单列Cloos收入、毛利或净利润。 | 埃斯顿酷卓2025年收入50,167,900元、2026年1—4月收入14,867,400元均为标的公司总营业收入，不是协作机器人、人形机器人或关节产品的分项收入。 | 埃斯顿酷卓在2026H1仅持股13.95%参股不并表；截至2026-09-08交割完成公告披露时工商变更登记完成后，才成为间接全资子公司。不得将其2026年1—4月收入倒算为埃斯顿H1合并收入。 | 本轮未找到可将酷卓2026年并表后收入与埃斯顿H1收入相连接的正式披露；并表后的实际贡献应留待后续合并报表验证。 | 埃斯顿酷卓两代人形机器人已完成研发，但公告未提供人形机器人单独销售收入、批量订单或交付数量；不能将标的公司总收入等同于人形机器人收入。 | 江苏鼎汇具身智能机器人创新中心虽为54.17%控股子公司，但截至知识截止日未披露其独立机器人产品收入或量产订单。 | RH04中应收账款增加的具体客户/项目成因未在已核原文中逐项解释；本报告只采用现金流量表调节项和资产负债表变动，不补造原因。 | 本轮通过CNINFO在线PDF全文及关键页截图核验物理页码，未完成四份报告PDF二进制SHA-256和Google Drive回读归档验收。 | 未检索、引用或采用2026-10-25之后披露的任何报告或公告；本结论不包含2026三季报。"
+    },
+    {
+      "security_id": "BJ:920593",
+      "stock_name": "鼎智科技",
+      "batch_id": "R01_BATCH_01",
+      "child_issue_number": 59,
+      "r00_child_issue_number": 57,
+      "anchor_period": "20260630",
+      "anchor_group": "H1_20260630",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "UNDISCLOSED_IN_BROADER_LINE",
+        "fy2025_total_rev_cny": "267847958.21",
+        "fy2025_mixed_or_disclosed_rev_cny": "42276210.55",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "196311538.02",
+        "anchor_mixed_or_disclosed_rev_cny": "40236521.58",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "10家子公司并表（含美国鼎智100%、赛仑特51%自2025-12并表）；5家参股/联营公司（脉塔/锚点/联融域/华传智感/中科灵犀5%）均不并表",
+        "non_consolidated_excluded": "苏州脉塔智能科技有限公司（联营企业）; 宁波锚点驱动技术有限公司（联营企业）; 上海联融域智能科技有限公司（联营企业）; 华传智感（上海）技术有限公司（持股10%（其他非流动金融资产））; 安徽中科灵犀科技有限公司（持股5%（参股））",
+        "limit": "机器人收入未单列；年报正文“单项+687.23%”与附注“减速电机及驱控20.63M/+127.72%”口径无法对齐，保留UNKNOWN；H1总营收+58.92%含赛仑特并表新增47.21M（未披露机器人用途）；无框/空心杯/人形丝杠均处研究阶段"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "15.215689",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-AD06545817CDD238;DOC-D76D38EB26040724",
+            "evidence_pages": "37;39"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "2.874426",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-AD06545817CDD238;DOC-D76D38EB26040724",
+            "evidence_pages": "38;40;42"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "-5.733707",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-AD06545817CDD238;DOC-D76D38EB26040724",
+            "evidence_pages": "33;35;37;39"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "",
+            "metric_unit": "days",
+            "metric_status": "UNKNOWN_CA_BLANK",
+            "rh_status": "PENDING_APPLICABILITY",
+            "evidence_document_ids": "DOC-AD06545817CDD238;DOC-D76D38EB26040724",
+            "evidence_pages": "33;35;39"
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "",
+            "metric_unit": "pp",
+            "metric_status": "BOTH_BLANK_NO_USABLE_AMOUNT",
+            "rh_status": "NOT_APPLICABLE",
+            "evidence_document_ids": "",
+            "evidence_pages": ""
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "0.5891632909",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.6623411023",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "15.3750539179",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "15.215689",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "-0.1536213131",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "-7.1435756688",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "0.393870852",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "2.8744257601",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "-5.7337069449",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "116.6178768895",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "",
+            "unit": "pp",
+            "metric_status": "NOT_APPLICABLE"
+          }
+        },
+        "s05_surviving_dimensions": "CASH;GROWTH;MARGIN",
+        "s05_rh_triggers": "",
+        "s05_pending_flags": "RH02"
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026H1总营收196.31M(+58.92%)由三部分驱动：赛仑特并表新增47.21M（传动部件36.96M）、直流电机及组件40.24M(+202.29%，含机器人项目送样转批量)及传统电机修复；严禁把赛仑特并表增量全部归因于机器人",
+        "margin_attribution": "2026H1报告披露综合毛利率45.91%(同比-6.31pp，主因低毛利直流电机30.43%与传动部件39.94%占比上升)；注：S05 M04=+15.22pp系冻结S02基期口径，R01并列呈现报告原文与冻结表差异供R03复核",
+        "recurring_profit_attribution": "2026H1归母净利17.74M(-11.61%)，报告称扣除股份支付影响后归母净利2,751.15万元(+27.69%)，盈利端受股权激励费用与结构毛利下行双重影响",
+        "cash_flow_attribution": "2026H1经营现金流净额50.99M(+313.66%)，M08=2.8744(优异，RH04未触发)，主因营收增加及客户预收货款大幅增加"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "2026H1合同负债25.70M(较期初+330.86%)，与100%时点确认收入+预收款模式及合同资产空白(RH02待核)互相印证；但两期自述存货周转时间变长（存货85.58M/+35.25%、周转率1.30）",
+        "backlog_orders": "2026H1确认无应披露重大合同；未披露量化在手订单金额，留UNKNOWN",
+        "cip_robot_capacity": "UNKNOWN（年报研发项目列示无框/空心杯/关节模组/人形丝杠处研究阶段，在建工程机器人产能未单列）"
+      },
+      "attribution_verdict": "MIXED_OR_UNQUANTIFIED_DRIVER",
+      "r03_priority_bucket": "R03_PRIORITY_A",
+      "r03_watch_points": "跟踪直流电机及组件（机器人批量供货）与美国鼎智海外机器人放量持续性、赛仑特并表满周年后的内生增速及存货周转放缓风险",
+      "attribution_limits": "机器人收入金额未知：两期均未单列，年报“该单项业务+687.23%”无绝对额，且与附注“减速电机及驱控”行同比+127.72%不一致，口径无法对齐，按未知保留，不反推、不补零。 | 2026H1 分产品不再拆“减速电机及驱控”，H1 机器人相关收入彻底不可量化。 | 机器人下游未区分工业机器人/人形机器人/服务机器人；公司仅表述“机器人项目”，未披露客户名称（智元仅为获奖表述，无订单金额）。 | 美国鼎智机器人项目收入未拆分，仅有子公司整体营收39,356,735.52元、净利4,236,077.14元。 | 赛仑特减速箱/齿轮的机器人用途未在原文披露，不能因其“减速”属性推定机器人暴露。 | 5家参股/联营公司（脉塔、锚点、联融域、华传智感、中科灵犀）业务不并表；中科灵犀5%持股且为控股股东控股企业，双重关联，严禁折算收入。 | 2026H1 存货分类账面余额明细未在PDF文本层呈现（第76页仅跌价准备明细），分类结构与库龄无法登记；拨备率分母为净额+准备推算。 | 合同资产空白已核实为原文状态，但“是否适用RH02”属 S05 口径判断，本底稿不改状态、不替代复核。 | 知识截止2026-10-25：未采用该日之后披露的任何报告；2026年三季报未在本次核验范围内（如已披露需另行登记）。 | 半年度报告未经审计；2025年报关键审计事项为收入确认，但未对机器人分类收入单独发表意见。"
+    },
+    {
+      "security_id": "BJ:920510",
+      "stock_name": "丰光精密",
+      "batch_id": "R01_BATCH_02",
+      "child_issue_number": 60,
+      "r00_child_issue_number": 58,
+      "anchor_period": "20260630",
+      "anchor_group": "H1_20260630",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "UNDISCLOSED_IN_BROADER_LINE",
+        "fy2025_total_rev_cny": "209635220.16",
+        "fy2025_mixed_or_disclosed_rev_cny": "181389268.35",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "132806101.91",
+        "anchor_mixed_or_disclosed_rev_cny": "108888649.05",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "母公司及美/日全资子公司并表；拟收购51%股权的北京唯实深蓝截至2026-06-30仅付预付并购款，尚未并表",
+        "non_consolidated_excluded": "北京唯实深蓝科技有限公司（2026年6月股东会通过收购51%股权，切入惯性导航与智能控制；截至2026-06-30合并范围未变更、款项列其他非流动资产（预付并购款），尚未并表）",
+        "limit": "谐波减速器未单列，并入“产品收入”；2025年对江苏意优机器人客户销售额12,342,054.97元(占5.89%)仅保留为客户销售额事实，无交易级品类拆分，谐波及机器人单独收入留UNKNOWN"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "2.594664",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-434229D789E89A9E;DOC-6BDF2D64C39A2407",
+            "evidence_pages": "41;43"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "5.830094",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-6BDF2D64C39A2407",
+            "evidence_pages": "44;47"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "-7.990786",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-434229D789E89A9E;DOC-6BDF2D64C39A2407",
+            "evidence_pages": "37;39;41;43"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "",
+            "metric_unit": "days",
+            "metric_status": "UNKNOWN_CA_BLANK",
+            "rh_status": "PENDING_APPLICABILITY",
+            "evidence_document_ids": "DOC-434229D789E89A9E;DOC-6BDF2D64C39A2407",
+            "evidence_pages": "37;39;41;43"
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "",
+            "metric_unit": "pp",
+            "metric_status": "BOTH_BLANK_NO_USABLE_AMOUNT",
+            "rh_status": "NOT_APPLICABLE",
+            "evidence_document_ids": "",
+            "evidence_pages": ""
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "0.3085718466",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.426322029",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "23.4534482991",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "2.594664",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "",
+            "unit": "ratio",
+            "metric_status": "UNDEFINED_BASE"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "7.3320367344",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "",
+            "unit": "ratio",
+            "metric_status": "UNDEFINED_BASE"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "5.8300936429",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "-7.9907864991",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "3.1168352398",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "",
+            "unit": "pp",
+            "metric_status": "NOT_APPLICABLE"
+          }
+        },
+        "s05_surviving_dimensions": "GROWTH;MARGIN;PROFIT",
+        "s05_rh_triggers": "",
+        "s05_pending_flags": "RH02"
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026H1营收132.81M(+30.86%)主因半导体装备景气及加工收入恢复(+71.72%)；公司明确表述机器人板块“由试样送样向小批量稳定供货转型、板块整体经营规模保持平稳”，本期收入改善不能归因于机器人",
+        "margin_attribution": "2026H1合并毛利率29.65%(M04=+2.59pp)，主要由加工收入毛利率大升(+15.28pp至42.65%)拉动，产品收入毛利率反降0.65pp至25.01%",
+        "recurring_profit_attribution": "2025全年亏损(-15.55M)，2026H1扭亏至3.50M（上年同期-1.50M，低基数扭亏），盈利基础仍偏薄",
+        "cash_flow_attribution": "2026H1经营现金流20.38M(M08=5.8301，RH04未触发)，但同比-21.78%；另因收购唯实深蓝预付并购款8,040万并新增并购贷5,624万"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "合同资产连续两期空白(REPORTED_BLANK，RH02待核)；存货63.09M(+10.53%)，周转天数115.8天较FY2025加快",
+        "backlog_orders": "UNKNOWN（未披露谐波减速器量化在手订单金额或台数，不填0）",
+        "cip_robot_capacity": "UNKNOWN（具备03-32型谐波量产能力，但未单列在建工程对应谐波产能投入金额）"
+      },
+      "attribution_verdict": "NON_ROBOT_OR_QUALITY_CAVEAT",
+      "r03_priority_bucket": "R03_OBSERVE_OR_DEFER",
+      "r03_watch_points": "观察列：待谐波减速器从小批量进入放量且单列收入、以及唯实深蓝并表落地后再重估进R03",
+      "attribution_limits": "谐波减速器收入未单列：2025年报与2026半年报分产品表均只有“产品收入/加工收入”两行，谐波金额无法验证；2025年对意优机器人客户销售额1,234.21万元（占5.89%）仅保留为客户销售额事实，因无交易级品类拆分，谐波及机器人收入金额留未知 | 北京唯实深蓝51%收购截至2026-06-30未并表：p19明确“合并范围是否发生变化 √否”，但已付预付并购款（其他非流动资产由2,973,187.80元增至83,374,516.80元，+8,040.13万元，p16）并新增并购贷5,623.81万元，并表时点、对价与标的财务数据均未披露，留HOLD | 分下游行业（半导体/机器人自动化/汽车/轨道交通）收入金额未披露，仅有2026H1定性描述：半导体同比增长、机器人自动化“温和修复”、汽车与轨交回落（p11），无法量化机器人自动化板块规模 | 2026半年报披露日以清单所给2026-08-13列示，但CNINFO静态文件路径日期为2026-08-14；PDF正文仅见公告编号2026-059，未见披露日期字样，两日期差异未在原文说明 | 2025年报称“已在人形机器人、工业机器人等领域取得订单”，2026半年报又称“由试样送样向小批量稳定供货转型”，两处阶段表述不一致，本报告按较保守的“小批量/试样转小批量”入档 | 未检索2026-10-25之后任何公告；丰光截至knowledge_as_of未披露2026三季报，未混入9M口径 | FOF：2025年净利润为负（-15,549,151.13元），2026H1虽盈利但基数低（上年同期-1,502,191.90元），盈利改善的可持续性未获订单/在手订单数据支撑"
+    },
+    {
+      "security_id": "BJ:920491",
+      "stock_name": "奥迪威",
+      "batch_id": "R01_BATCH_02",
+      "child_issue_number": 60,
+      "r00_child_issue_number": 58,
+      "anchor_period": "20260630",
+      "anchor_group": "H1_20260630",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "MIXED_SEGMENT_DISCLOSED",
+        "fy2025_total_rev_cny": "683315916.15",
+        "fy2025_mixed_or_disclosed_rev_cny": "573346877.74",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "317600534.77",
+        "anchor_mixed_or_disclosed_rev_cny": "259908040.51",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "肇庆/香港/江西奥迪威并表；“广州奥迪威机器人”实为专用自动化设备(非机器人本体)；电子皮肤主体奥感微为联营参股不并表(2026H1营收仅12,648.14元、净亏315.95万)",
+        "non_consolidated_excluded": "奥感微（广州）科技有限公司（柔性传感器（即“电子皮肤”）研发生产销售，2025年报长期股权投资附注列为“联营企业”、期末账面价值10,845,090.67元（p156）；2026H1营业收入仅12,648.14元、净利润-3,159,529.63元（p19），机器人触觉业务基本无收入）",
+        "limit": "FY2025文本称机器人传感器超1.1亿元(主体为扫地/服务机器人超声波传感器，非表格科目)；2026H1未披露机器人传感器金额；柔性电子皮肤在参股公司奥感微不并表且基本无收入"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "-2.538147",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "TRIGGERED",
+            "evidence_document_ids": "DOC-3A48D31B44C112E1;DOC-F9F209A561691A02",
+            "evidence_pages": "40;41"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "1.648444",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-3A48D31B44C112E1;DOC-F9F209A561691A02",
+            "evidence_pages": "41;42;44;45"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "6.495687",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-3A48D31B44C112E1;DOC-F9F209A561691A02",
+            "evidence_pages": "36;37;40;41"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "",
+            "metric_unit": "days",
+            "metric_status": "UNKNOWN_CA_BLANK",
+            "rh_status": "PENDING_APPLICABILITY",
+            "evidence_document_ids": "DOC-3A48D31B44C112E1;DOC-F9F209A561691A02",
+            "evidence_pages": "36;37;40;41"
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "",
+            "metric_unit": "pp",
+            "metric_status": "BOTH_BLANK_NO_USABLE_AMOUNT",
+            "rh_status": "NOT_APPLICABLE",
+            "evidence_document_ids": "",
+            "evidence_pages": ""
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "-0.0379699875",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.0057779765",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "9.2023264701",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "-2.538147",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "-0.4358956914",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "-5.8460909411",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "-0.4280178597",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "1.6484435251",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "6.4956869246",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "-8.9524882662",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "",
+            "unit": "pp",
+            "metric_status": "NOT_APPLICABLE"
+          }
+        },
+        "s05_surviving_dimensions": "CASH;GROWTH",
+        "s05_rh_triggers": "RH05",
+        "s05_pending_flags": "RH02"
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026H1总营收317.60M(-3.80%)，传感器大类259.91M(-5.73%)，公司归因下游服务机器人竞争加剧降价及智能仪表海外客户订单减少；虽服务机器人Q2环比+58.11%，但H1整体呈负增长",
+        "margin_attribution": "RH05触发：2026H1综合毛利率降2.53pp至32.89%(M04=-2.54pp)，传感器毛利率降2.43pp至34.84%，系服务机器人供应链降价压力、贵金属涨价与汇兑损失共同所致",
+        "recurring_profit_attribution": "2026H1净利润29.05M(-42.44%)，营收微降叠加毛利承压与参股公司亏损(-277万权益法投资损失)放大净利降幅",
+        "cash_flow_attribution": "2026H1经营现金流47.89M(+7.71%)，M08=1.6484(正常，RH04未触发)，回款纪律保持稳健"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "合同资产连续两期空白(REPORTED_BLANK，RH02待核)；存货85.24M(+7.07%)，周转天数69.6天无积压",
+        "backlog_orders": "UNKNOWN（未披露量化在手订单金额，不填0）",
+        "cip_robot_capacity": "UNKNOWN（电子皮肤主体奥感微不并表，母体未单列人形/工业机器人传感器在建产能）"
+      },
+      "attribution_verdict": "NON_ROBOT_OR_QUALITY_CAVEAT",
+      "r03_priority_bucket": "R03_OBSERVE_OR_DEFER",
+      "r03_watch_points": "观察列：服务机器人传感器面临降价压力且电子皮肤在参股公司尚未起量，暂不优先进入R03",
+      "attribution_limits": "“应用于机器人的传感器全年营业收入超过1.1亿元”为文本表述而非表格科目，且句子在2025年报p20末至p21首跨页，本报告以p21为落点；该口径未拆分服务机器人/工业机器人/人形机器人，也未说明是否含扫地机整机厂以外的协作机器人客户，只能作为机器人相关收入的上限近似 | 2026H1未披露机器人传感器收入金额，仅有“Q1承压、Q2环比+58.11%”的定性表述；1.1亿元为2025年全年数，不可外推至H1 | 工业/人形机器人柔性触觉（电子皮肤）的实际经营主体奥感微为联营企业（权益法，不并表），其收入不进入奥迪威合并收入；原文未列示奥迪威对奥感微的持股比例（仅见2025年追加投资7,600,000元、期末账面10,845,090.67元），持股比例留HOLD | 奥感微2026H1净亏损3,159,529.63元与投资收益-2,769,559.28元（p16）不能直接相除得出持股比例，因权益法损益分摊可能含内部交易抵销，持股比例不可由此反推 | 服务机器人与“协作机器人”两个用词在2025年报与2026半年报中混用（p20称“智能家居协作机器人”、p16-17称“服务机器人”），是否为同一客户群原文未说明 | 未检索2026-10-25之后任何公告；奥迪威截至knowledge_as_of未披露2026三季报，未混入9M口径"
+    },
+    {
+      "security_id": "SH:688003",
+      "stock_name": "天准科技",
+      "batch_id": "R01_BATCH_02",
+      "child_issue_number": 60,
+      "r00_child_issue_number": 58,
+      "anchor_period": "20260930",
+      "anchor_group": "9M_20260930",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "MIXED_SEGMENT_DISCLOSED",
+        "fy2025_total_rev_cny": "1789803456.66",
+        "fy2025_mixed_or_disclosed_rev_cny": "177957098.78",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "1485588803.39",
+        "anchor_mixed_or_disclosed_rev_cny": "UNKNOWN_9M_SEE_H1_157691400.00",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "苏州天准星智持股76.40%并表（2026H1营收152.29M、净利6.32M、经营现金流-105.29M）；苏州矽行半导体参股不并表",
+        "non_consolidated_excluded": "苏州矽行半导体技术有限公司（非机器人：半导体明场检测设备（TB2000/TB1500/TB1100），参股公司；2026H1营收-6,254.29万元、净利-6,256.38万元（p33），半导体收入体量与亏损均不进入合并报表）",
+        "limit": "9M独立锚定(20260930)，三季报全篇未提具身/机器人；2026H1具身大脑方案157.69M(+141.60%)混含无人物流车/Robotaxi/重卡等商用车L4域控，纯人形机器人收入UNKNOWN"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "0.271245",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-4269E39168853994;DOC-8A42110589679413",
+            "evidence_pages": "10"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "1.459406",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-8A42110589679413",
+            "evidence_pages": "11;13"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "-36.010529",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-4269E39168853994;DOC-8A42110589679413",
+            "evidence_pages": "10;7"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "37.355521",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "TRIGGERED",
+            "evidence_document_ids": "DOC-4269E39168853994;DOC-8A42110589679413",
+            "evidence_pages": "10;7"
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "-2.805495",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-4269E39168853994;DOC-8A42110589679413",
+            "evidence_pages": "10;7"
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "0.5206513456",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.5746119225",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "24.4262756477",
+            "unit": "pp",
+            "metric_status": "PROVISIONAL"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "0.271245",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "",
+            "unit": "ratio",
+            "metric_status": "UNDEFINED_BASE"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "3.9592145904",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "",
+            "unit": "ratio",
+            "metric_status": "UNDEFINED_BASE"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "1.4594061041",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "-36.0105287561",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "37.3555205271",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "-2.8054949796",
+            "unit": "pp",
+            "metric_status": "OK"
+          }
+        },
+        "s05_surviving_dimensions": "GROWTH;PROFIT",
+        "s05_rh_triggers": "RH02;RH06",
+        "s05_pending_flags": ""
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026Q1-Q3营收1,485.59M(+52.07%)、Q3单季598.45M(+57.46%)；按H1分部看AI量检测(42.24%/+28.85%)、AI制程(39.99%/+47.31%)与具身大脑(17.77%/+141.60%)三线齐升，具身是高弹性增量但非唯一驱动",
+        "margin_attribution": "9M合并毛利率微升(M04=+0.27pp，RH05未触发)；但具身智能方案FY2025毛利率仅21.03%(-8.54pp)，2026H1未披露该分部毛利率（天准星智H1净利率约4.1%），盈利能力偏薄",
+        "recurring_profit_attribution": "RH06触发：9M归母净利66.46M中扣非仅21.47M(占32.31%)，非经常性损益44.98M(占67.69%，含金融资产公允价值变动+51.32M)；Q3单季归母亏32.03M主因金融资产公允价值变动-44.89M（期间费用增长亦被原文提及），Q3扣非仍为正+11.13M",
+        "cash_flow_attribution": "9M合并经营现金流96.99M(+209.89%，M08=1.4594，RH04未触发)；但须注意核心具身子公司天准星智2026H1单体经营现金流为-105.29M，具身业务资金占用高"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "RH02触发：9M末存货飙升至2,083.13M(较年初+75.01%，M11=+37.36天，三季报未说明增幅原因)，合同资产73.25M(+40.03%，质保金性质)；公司自认2023-2025存货周转率1.02处于低位",
+        "backlog_orders": "2026H1披露集团新签订单21.04亿(+62.20%)、期末在手订单23.75亿(+49.61%)；其中具身大脑新签315.24M(+229.74%)，订单数据明确但未拆分人形 vs 商用车占比",
+        "cip_robot_capacity": "UNKNOWN（本轮R00未单列在建工程对应具身域控产能明细，留R03跟踪）"
+      },
+      "attribution_verdict": "CORE_ROBOT_DRIVER_WITH_MIXED_SCOPE",
+      "r03_priority_bucket": "R03_PRIORITY_A",
+      "r03_watch_points": "9M口径单独跟踪；带入R03三项硬观察：纯人形与商用车域控拆分、9M存货暴增75%与天准星智现金流(-1.05亿)周转压力、以及金融资产波动对归母净利的干扰",
+      "attribution_limits": "纯人形机器人（不含商用车）收入不可得：“具身大脑方案”分部同时含无人物流车、Robotaxi、重卡、清扫车L4域控（p17-18）；公司仅给具身分部合计15,769.14万元与“人形机器人大脑域控新签订单3.15亿元”，未给机器人单项收入。若按经营主体近似，天准星智H1营收15,229.24万元≈分部的96.6%，但星智本身也同时做商用车域控，仍不可视为纯机器人口径 | 2026三季报完全未披露分部与具身业务：全篇未出现“具身/机器人/星智”，9M具身收入、毛利率、订单均不可得，本报告9M仅用于总量与RH02/RH06核查，机器人结论以H1（20260630）为依据并明确标注期间 | 具身大脑方案毛利率未披露：2025年报为21.03%（p30），2026半年报分部表只给收入与同比，未给毛利率；天准星智H1净利率约4.1%（631.69/15,229.24，自算） | 天准星智注册资本在半年报内部不一致：p33主要子公司表列“21,678.01”，同报告合并范围表列“26,178.01 万人民币”，差450万元，原因未说明，本报告不采用注册资本作规模判断 | 存货自年初再增75%（三季报p7）的原因未披露：2025年报解释的是当年+34.67%（发出商品增加），三季报无任何存货变动说明；且三季报未披露9M营业成本，无法计算9M周转天数，只能引用公司自认的2023-2025周转率1.02处于低位 | 合同资产非空白：天准三季报合同资产73,247,383.98元（年初52,308,850.23元），与丰光/奥迪威的空白情形不同；2025年报p37称合同资产下降30.83%系“光伏行业收入减少，对应质保金减少”，说明其余额为质保金性质，与工程类合同资产口径不同 | 9M同比栏均标“不适用”：营业收入与利润的同比栏在扣非/归母行显示“不适用”，结合2025年归母76,128,306.46元(-38.95%)、扣非56,872,556.29元(-44.74%)的低基数，2026年9M的+52%营收增长与利润改善含明显基数效应，同比幅度不可直接年化 | 未检索2026-10-25之后任何公告；三季报2026-10-23披露，在knowledge_as_of之内，已纳入9M锚定，未与其他4家H1数据混比"
+    },
+    {
+      "security_id": "SZ:002698",
+      "stock_name": "博实股份",
+      "batch_id": "R01_BATCH_02",
+      "child_issue_number": 60,
+      "r00_child_issue_number": 58,
+      "anchor_period": "20260630",
+      "anchor_group": "H1_20260630",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "MIXED_SEGMENT_DISCLOSED",
+        "fy2025_total_rev_cny": "2828078579.62",
+        "fy2025_mixed_or_disclosed_rev_cny": "33145372.72",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "1368574570.01",
+        "anchor_mixed_or_disclosed_rev_cny": "48166263.71",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "“机器人+”在母公司体系确认；医疗手术机器人思哲睿(13.43%)权益法参股不并表；灵博机器人属2026-08拟增资2,000万元拟持股12%未交割事项（截至H1尚未出资、尚未参股，交割及会计处理待核）；哈工大人形合作项目已终止",
+        "non_consolidated_excluded": "哈尔滨思哲睿智能医疗设备股份有限公司（医疗手术机器人（康多腹腔镜手术机器人SR1000/1500/2000），持股13.43%；属医疗机器人、非工业机器人，且不并表）; 哈尔滨灵博机器人有限公司（多感知灵巧手、轻量化机械臂、力控关节、人形机器人及具身算法；2026年8月签投资协议、拟以2,000万元增资后拟持股12%，截至2026-06-30尚未参股、尚未出资，交割及会计处理待核）; 人形机器人关键技术及原理样机产业化研发项目（与哈尔滨工业大学合作，非股权主体）（2023-08-18签《战略合作框架协议》设立的联合研发项目，无独立法人；2026H1已明确终止后续工作，无收入、无并表主体）",
+        "limit": "“机器人+”虽单列但含电石智能工厂整线等，且体量仅占总收入1.17%(FY25)/3.52%(H1)，纯本体未拆；与哈工大合作人形项目2026H1已终止，无收入、无并表主体"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "-2.278841",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "TRIGGERED",
+            "evidence_document_ids": "DOC-7293467631F1C0CA;DOC-8ED1E6F608C27696",
+            "evidence_pages": "50;52"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "1.022531",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7293467631F1C0CA;DOC-8ED1E6F608C27696",
+            "evidence_pages": "51;53;55"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "6.741655",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7293467631F1C0CA;DOC-8ED1E6F608C27696",
+            "evidence_pages": "46;48;50;52"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "-23.327483",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7293467631F1C0CA;DOC-8ED1E6F608C27696",
+            "evidence_pages": "46;48;50;52"
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "-4.893951",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-7293467631F1C0CA;DOC-8ED1E6F608C27696",
+            "evidence_pages": "46;48;50;52"
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "0.0048964825",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "0.197260388",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "37.4245972412",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "-2.278841",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "-0.1602028258",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "-3.1383611278",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "0.2483055405",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "1.02253085",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "6.7416550177",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "-23.327483375",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "-4.8939505021",
+            "unit": "pp",
+            "metric_status": "OK"
+          }
+        },
+        "s05_surviving_dimensions": "CASH;GROWTH",
+        "s05_rh_triggers": "RH05",
+        "s05_pending_flags": ""
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "2026H1总营收1,368.57M(+0.49%)几乎持平，主业为石化/化工后处理智能制造装备(66.78%)与工业服务(27.35%)；“机器人+”仅48.17M(占3.52%)，对公司整体营收几乎无实质拉动",
+        "margin_attribution": "RH05触发(M04=-2.28pp)：2026H1智能制造装备毛利率降2.90pp、环保降26.84pp，“机器人+”因新品类出炉机器人成本过高亏损将毛利率拉低至14.87%(-3.71pp)；仅工业服务毛利率修复至27.80%",
+        "recurring_profit_attribution": "2026H1归母净利234.54M(-15.44%)、扣非218.47M(-16.02%)，主业盈利呈下行态势",
+        "cash_flow_attribution": "2026H1经营现金流239.83M(+1,585.27%，M08=1.0225，RH04未触发)，现金流改善主要来自主业装备回款，与机器人业务无关"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "S05 M12=-4.89pp、M11=-23.33天，存货与合同资产未触发警报，但主要对应石化后处理成套装备",
+        "backlog_orders": "UNKNOWN（未单列“机器人+”在手订单金额，不填0）",
+        "cip_robot_capacity": "UNKNOWN（哈工大人形联合研发项目已终止，无量产产能建设）"
+      },
+      "attribution_verdict": "NON_ROBOT_OR_QUALITY_CAVEAT",
+      "r03_priority_bucket": "R03_OBSERVE_OR_DEFER",
+      "r03_watch_points": "观察/延后列：人形项目已明确终止、“机器人+”占比仅3.5%且毛利率跌至14.87%，不建议作为R03核心拐点标的",
+      "attribution_limits": "页码偏移：博实股份两份PDF的印刷页码均为物理页-1（如物理第29页页眉印“28”、物理第24页印“23”、物理第36页印“35”），本文件physical_page按PDF物理页给出，引用时需注意与公司印刷页差1 | “机器人+”为混合科目：含炉前作业机器人、电石智能工厂（整线而非单机）、高温特种作业机器人、圆盘浇铸机等，公司未拆分单机与整线、未拆分机器人本体与外购集成，不可整体视为机器人本体收入 | 人形机器人项目终止后的资产与人员处置未披露：仅称“终止后续工作”、4项发明专利为共有申请权且“相关专利申请权变更申请登记处于办理中”，是否形成损失、样机是否减值未说明 | 灵博机器人参股尚未落地：2026年8月签投资协议、拟增资2,000万元持12%，但截至2026-06-30未出资、未参股（H1参股公司表无灵博），且该事项发生在6月30日之后，属期后事项，不构成本期并表或损益影响 | 思哲睿为医疗手术机器人、持股13.43%且不并表，与工业机器人/人形机器人不是同一赛道，不可计入工业机器人敞口 | 分产品毛利率仅披露到“10%以上”门槛科目，环保工艺与装备因占比仅2.03%但毛利率59.75%仍列示，其他小额科目未列全 | 未检索2026-10-25之后任何公告；博实截至knowledge_as_of未披露2026三季报，未混入9M口径"
+    },
+    {
+      "security_id": "BJ:920578",
+      "stock_name": "巨能股份",
+      "batch_id": "R01_BATCH_02",
+      "child_issue_number": 60,
+      "r00_child_issue_number": 58,
+      "anchor_period": "20260630",
+      "anchor_group": "H1_20260630",
+      "knowledge_as_of": "2026-10-25",
+      "revenue_scope": {
+        "tier": "MIXED_SEGMENT_DISCLOSED",
+        "fy2025_total_rev_cny": "165348469.22",
+        "fy2025_mixed_or_disclosed_rev_cny": "142296714.12",
+        "fy2025_pure_robot_rev_cny": "UNKNOWN",
+        "anchor_total_rev_cny": "100212170.10",
+        "anchor_mixed_or_disclosed_rev_cny": "84703834.75",
+        "anchor_pure_robot_rev_cny": "UNKNOWN",
+        "consolidation_boundary_note": "母公司为主体，蓝杰公司(钣金)与巨能未来(软件)全资并表；2025年前五大供应商含上海发那科机器人8.03M(占8.63%)，印证存在本体外购",
+        "non_consolidated_excluded": "NONE_DISCLOSED",
+        "limit": "84.52%收入为项目制系统集成产线，未拆分外购本体、自制桁架与集成服务，纯自产机器人本体收入UNKNOWN"
+      },
+      "financial_metrics_from_s02_s05": {
+        "s05_quality_flags": {
+          "M04": {
+            "rh": "RH05",
+            "metric_value": "5.591675",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-1BB402DC10023D46;DOC-C31AF94FE5BC0D85",
+            "evidence_pages": "30;31"
+          },
+          "M08": {
+            "rh": "RH04",
+            "metric_value": "0.165826",
+            "metric_unit": "ratio",
+            "metric_status": "OK",
+            "rh_status": "TRIGGERED",
+            "evidence_document_ids": "DOC-1BB402DC10023D46",
+            "evidence_pages": "32;34"
+          },
+          "M10": {
+            "rh": "RH01",
+            "metric_value": "-1.669676",
+            "metric_unit": "days",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-1BB402DC10023D46;DOC-C31AF94FE5BC0D85",
+            "evidence_pages": "26;27;30;31"
+          },
+          "M11": {
+            "rh": "RH02",
+            "metric_value": "",
+            "metric_unit": "days",
+            "metric_status": "NOT_APPLICABLE_PROJECT_MODE",
+            "rh_status": "NOT_APPLICABLE",
+            "evidence_document_ids": "",
+            "evidence_pages": ""
+          },
+          "M12": {
+            "rh": "RH03",
+            "metric_value": "-28.431996",
+            "metric_unit": "pp",
+            "metric_status": "OK",
+            "rh_status": "NOT_TRIGGERED",
+            "evidence_document_ids": "DOC-1BB402DC10023D46;DOC-C31AF94FE5BC0D85",
+            "evidence_pages": "26;27;30;31"
+          }
+        },
+        "s02_anchor_metrics": {
+          "M01": {
+            "metric_name_cn": "营业收入同比（累计）",
+            "value": "-0.1229435085",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M02": {
+            "metric_name_cn": "营业收入同比（单季）",
+            "value": "-0.1809082609",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M03": {
+            "metric_name_cn": "单季营收同比加速度",
+            "value": "-18.3673445937",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M04": {
+            "metric_name_cn": "毛利率同比变动",
+            "value": "5.591675",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M05": {
+            "metric_name_cn": "扣非归母净利润同比（累计）",
+            "value": "3.1832121277",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M06": {
+            "metric_name_cn": "扣非归母净利率变动",
+            "value": "5.4983876289",
+            "unit": "pp",
+            "metric_status": "OK"
+          },
+          "M07": {
+            "metric_name_cn": "扣非归母净利润同比（单季）",
+            "value": "",
+            "unit": "ratio",
+            "metric_status": "UNDEFINED_BASE"
+          },
+          "M08": {
+            "metric_name_cn": "经营现金流/归母净利润",
+            "value": "0.1658263447",
+            "unit": "ratio",
+            "metric_status": "OK"
+          },
+          "M10": {
+            "metric_name_cn": "应收账款周转天数变动",
+            "value": "-1.6696755114",
+            "unit": "days",
+            "metric_status": "OK"
+          },
+          "M11": {
+            "metric_name_cn": "存货周转天数变动",
+            "value": "",
+            "unit": "days",
+            "metric_status": "NOT_APPLICABLE"
+          },
+          "M12": {
+            "metric_name_cn": "合同资产占营收比重变动",
+            "value": "-28.4319962156",
+            "unit": "pp",
+            "metric_status": "OK"
+          }
+        },
+        "s05_surviving_dimensions": "MARGIN;PROFIT",
+        "s05_rh_triggers": "RH04",
+        "s05_pending_flags": ""
+      },
+      "four_pillar_attribution": {
+        "revenue_attribution": "营收连续收缩：FY2025总营收-34.54%（自动线-38.98%），2026H1总营收100.21M(-12.29%)、机器人自动化生产线84.70M(-16.95%)，业务规模处于下行通道",
+        "margin_attribution": "2026H1合并毛利率28.85%(M04=+5.59pp)，机器人自动化生产线毛利率升6.79pp至29.32%，是扭亏主因，但属收入萎缩背景下的项目结构修复",
+        "recurring_profit_attribution": "2026H1归母净利10.06M(+176.27%)、扣非6.97M(+318.32%)，非经常性损益3.09M占归母30.7%(主要来自政府补助)，扭亏质量部分依赖补助与减值减少",
+        "cash_flow_attribution": "RH04触发：2026H1经营现金流仅1.67M(-94.52%)，M08=0.1658；除上年单笔超3,000万验收款高基数外，本期应收票据+38.07%、合同负债大降34.59%显示回款偏票据且新单不足"
+      },
+      "leading_indicators_check": {
+        "methodology_id": "METHOD_20261107_LEADING_INDICATORS",
+        "contract_liabilities": "2026H1合同负债24.34M(较年初-34.59%)，公司明确解释“新合同订单的增长小于订单逐步转入收入的幅度，导致预收款减少”，存量订单消耗信号明显",
+        "backlog_orders": "UNKNOWN（未披露期末在手订单金额，仅合同负债降34.59%侧面提示新签不足）",
+        "cip_robot_capacity": "UNKNOWN（无机器人本体扩产在建工程披露）"
+      },
+      "attribution_verdict": "NON_ROBOT_OR_QUALITY_CAVEAT",
+      "r03_priority_bucket": "R03_OBSERVE_OR_DEFER",
+      "r03_watch_points": "观察/延后列：营收负增长(-12.3%)、系统集成属性强、经营现金流/净利仅0.166且合同负债降34.6%，暂不优先进入R03",
+      "attribution_limits": "纯机器人本体收入不可得：“机器人自动化生产线”为系统集成科目，含外购发那科本体、自制桁架与集成服务，公司未拆分本体/集成/软件；自产桁架、第七轴虽已“研发完成”（2025年报p23），但未披露自产比例与自产本体的毛利贡献 | 前五大供应商中上海发那科机器人8,025,663.72元（占8.63%）仅能证明存在本体外购，不能据此推断全部本体外购，也不能推断外购比例 | RH04官方仅给“上年同期超3000万元大额验收款”单一基数原因，未披露本期销售商品收到现金的具体金额（H1未见现金流量表正表细项引用），故“本期回款是否偏弱”只能由应收票据+38.07%、合同负债-34.59%间接印证，不能定量归因 | 2026H1扣非6,971,759.78元与归母10,062,641.15元差额3,090,881.37元（非经常性损益）明细未逐项核对，主要来自政府补助（其他收益3,645,621.75元、同比+56.08%）；非经常性占比30.7%意味着扭亏质量部分依赖补助 | 2025年亏损（归母-2,146,336.61元、扣非-6,494,676.64元）与2026H1扭亏之间，公司归因为毛利率+5.59个百分点与减值计提减少（p13），但未给在手订单金额，订单能否支撑下半年收入未披露 | 未检索2026-10-25之后任何公告；巨能截至knowledge_as_of未披露2026三季报，未混入9M口径"
+    }
+  ]
+}
