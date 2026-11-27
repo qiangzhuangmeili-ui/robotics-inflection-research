@@ -75,11 +75,11 @@ def main() -> int:
     missing_fields = [
         f"{r['security_id']}:{k}"
         for r in cases
-        for k in ("product_line_separation", "two_period_comparable_facts", "alternative_explanations", "falsifiers", "evidence_gaps")
+        for k in ("product_line_separation", "two_period_comparable_facts", "alternative_explanations", "falsifiers", "evidence_gaps", "r04_scenario_constraints")
         if not r[k].strip()
     ]
     missing_ce = [r["security_id"] for r in cases if r["security_id"] not in ce_txt or "F1：" not in r["falsifiers"]]
-    check("V03", "6 家均具备产品线分层、两期事实、替代解释、可推翻信号与缺证条件，并写入 counter_evidence.md",
+    check("V03", "6 家均具备产品线分层、两期事实、替代解释、可推翻信号、缺证条件与R04边界，并写入 counter_evidence.md",
           not missing_fields and not missing_ce, f"missing_fields={missing_fields} missing_ce={missing_ce}")
 
     # V04: No trade advice & no fabricated pure-body claims
@@ -87,9 +87,9 @@ def main() -> int:
     hits = [w for w in forbidden if w in ce_txt or any(w in str(r.values()) for r in cases)]
     check("V04", "无买卖建议/目标价且无禁用口径回退", not hits, f"hits={hits}")
 
-    # V05: R02 industry boundary preserved
-    no_bound = [r["security_id"] for r in cases if "口径边界" not in r["r02_industry_signal_ref"]]
-    check("V05", "6 家均挂接 R02 同锚定期行业信号并保留口径边界", not no_bound, f"no_bound={no_bound}")
+    # V05: R02 industry boundary preserved & denominator separated
+    no_bound = [r["security_id"] for r in cases if "口径边界" not in r["r02_industry_signal_ref"] or "有效配对覆盖" not in r["r02_industry_signal_ref"]]
+    check("V05", "6 家均挂接 R02 同锚定期行业信号（区分改善率分母与有效配对覆盖）并保留口径边界", not no_bound, f"no_bound={no_bound}")
 
     # V06: Manifest SHA-256, root digest, pure LF, no BOM
     in_bad, deliv_bad, crlf_bad, bom_bad = [], [], [], []

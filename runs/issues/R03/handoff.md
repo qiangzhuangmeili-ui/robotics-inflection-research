@@ -1,25 +1,25 @@
 # R03（#47）公司与行业拐点研究交接说明（#63 Batch 01 + #64 Batch 02 共 6 家）
 
-- 计划版本：`20261026_collection_first_v2`；知识截止日：`2026-10-25`；固定重跑时间：`2026-11-28T00:02:00+08:00`
+- 计划版本：`20261026_collection_first_v2`；知识截止日：`2026-10-25`；固定重跑时间：`2026-11-28T00:12:00+08:00`
 - 复核性质：`SELF_CHECK`（待 Codex 干净树独立复核）；`R04_released=false`、`#53 OPEN` 未触碰。
 
 ## 1. 复现命令
 ```powershell
-$env:R03_FIXED_NOW='2026-11-28T00:02:00+08:00'; py runs/issues/R03/step_r03_build.py; py runs/issues/R03/step_r03_verify.py
+$env:R03_FIXED_NOW='2026-11-28T00:12:00+08:00'; py runs/issues/R03/step_r03_build.py; py runs/issues/R03/step_r03_verify.py
 ```
 
 ## 2. 6 家核心公司拐点研判与 R04 准入分层（仅研究排包，非投资建议）
 
-| 批次 | 代码 | 名称 | 锚定期 | 拐点判定 | R04 情景估值准入建议 |
-|---|---|---|---|---|---|
-| `R03_BATCH_01` | `SZ:300607` | 拓斯达 | `20260630` | `PARTIAL_INFLECTION_MIXED_SCOPE` | `READY_FOR_SCENARIO_VALUATION_WITH_LIMITS` |
-| `R03_BATCH_01` | `SZ:002747` | 埃斯顿 | `20260630` | `CONDITIONAL_INFLECTION_QUALITY_WATCH` | `HOLD_UNTIL_QUALITY_OR_SCOPE_CLARIFIED` |
-| `R03_BATCH_01` | `SZ:002472` | 双环传动 | `20260630` | `PARTIAL_INFLECTION_MIXED_SCOPE` | `READY_FOR_SCENARIO_VALUATION_WITH_LIMITS` |
-| `R03_BATCH_02` | `SZ:002979` | 雷赛智能 | `20260930` | `CONDITIONAL_INFLECTION_QUALITY_WATCH` | `READY_FOR_SCENARIO_VALUATION_WITH_LIMITS` |
-| `R03_BATCH_02` | `SH:688003` | 天准科技 | `20260930` | `CONDITIONAL_INFLECTION_QUALITY_WATCH` | `HOLD_UNTIL_QUALITY_OR_SCOPE_CLARIFIED` |
-| `R03_BATCH_02` | `BJ:920593` | 鼎智科技 | `20260630` | `PARTIAL_INFLECTION_MIXED_SCOPE` | `READY_FOR_SCENARIO_VALUATION_WITH_LIMITS` |
+| 批次 | 代码 | 名称 | 锚定期 | 拐点判定 | R04 情景估值准入建议 | R04 强制边界摘要 |
+|---|---|---|---|---|---|---|
+| `R03_BATCH_01` | `SZ:300607` | 拓斯达 | `20260630` | `PARTIAL_INFLECTION_MIXED_SCOPE` | `READY_FOR_SCENARIO_VALUATION_WITH_LIMITS` | 可用情景：按集团总量或工业机器人及自动化应用系统混合分部(H1 7.07亿)建情景，显式纳入板块毛利率波动；待证/禁入假设：H1纯本体金额UNKNOWN，严禁为小拓/星仔/矩阵智拓单独赋营收或估值溢价。 |
+| `R03_BATCH_01` | `SZ:002747` | 埃斯顿 | `20260630` | `CONDITIONAL_INFLECTION_QUALITY_WATCH` | `HOLD_UNTIL_QUALITY_OR_SCOPE_CLARIFIED` | 暂留HOLD（不优先入R04基准估值）：须先验证剔除9,950万公允价值收益后的扣非持续性、现金流修复及酷卓Q4并表损益；若强行纳入仅可作高不确定性压力情景。 |
+| `R03_BATCH_01` | `SZ:002472` | 双环传动 | `20260630` | `PARTIAL_INFLECTION_MIXED_SCOPE` | `READY_FOR_SCENARIO_VALUATION_WITH_LIMITS` | 可用情景：按集团总量及“减速器及其他”混合分部(占比9.67%)建分部加总敏感性情景；待证/禁入假设：纯RV收入与环动单体净利UNKNOWN，严禁把4.40亿或47.47%毛利率等同于纯RV盈利。 |
+| `R03_BATCH_02` | `SZ:002979` | 雷赛智能 | `20260930` | `CONDITIONAL_INFLECTION_QUALITY_WATCH` | `READY_FOR_SCENARIO_VALUATION_WITH_LIMITS` | RH04已触发(9M及Q3单季现金流为负)下的强制边界：①可用情景仅限集团总量(9M 19.09亿)或伺服系统混合分部(9M 10.08亿)盈利与营运资金敏感性区间，且基准/悲观情景必须显式扣减票据与存货占款对自由现金流的压制；②待证/禁入假设：在2026Q4现金流转正回补(全年M08>=0.5)及年报单列机器人部件收入/毛利前，严禁设定纯机器人独立营收基数、严禁用“100万台订单”折算收入、严禁假设高现金转化率(如OCF/净利>=1.0)。 |
+| `R03_BATCH_02` | `SH:688003` | 天准科技 | `20260930` | `CONDITIONAL_INFLECTION_QUALITY_WATCH` | `HOLD_UNTIL_QUALITY_OR_SCOPE_CLARIFIED` | 暂留HOLD（不优先入R04基准估值）：须先澄清9M存货暴增75%成因、天准星智现金流(-1.05亿)与纯人形/商用车L4域控拆分；若强行纳入仅可作高不确定性压力情景。 |
+| `R03_BATCH_02` | `BJ:920593` | 鼎智科技 | `20260630` | `PARTIAL_INFLECTION_MIXED_SCOPE` | `READY_FOR_SCENARIO_VALUATION_WITH_LIMITS` | 可用情景：按剔除赛仑特并表效应后的集团内生增速与直流电机混合分部建情景，显式反映综合毛利率下行压力；待证/禁入假设：研究阶段的无框/空心杯/人形丝杠及纯机器人金额UNKNOWN，严禁单列营收假设。 |
 
-- **可带限制进入 R04 情景估值（4 家）**：SZ:300607 拓斯达, SZ:002472 双环传动, SZ:002979 雷赛智能, BJ:920593 鼎智科技
+- **可带限制进入 R04 情景估值（4 家）**：SZ:300607 拓斯达, SZ:002472 双环传动, SZ:002979 雷赛智能, BJ:920593 鼎智科技（其中雷赛智能因 RH04 已触发且 9M/Q3 单季经营现金流为负，仅允许集团总量/伺服混合分部盈利及营运资金敏感性情景，严禁设定纯机器人独立营收基数、用“100万台订单”折算收入或直接假设高现金转化率）
 - **暂留质量/口径观察（2 家，需先验证现金流/扣非/存货或按高不确定性处理）**：SZ:002747 埃斯顿, SH:688003 天准科技
 
 ## 3. 结转至 R04 的铁律
