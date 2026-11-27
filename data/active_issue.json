@@ -1,30 +1,30 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": 47,
-  "active_issue_key": "R03",
-  "executor": "Antigravity + Doubao CLI (deepseek adversarial check)",
+  "active_issue_number": null,
+  "active_issue_key": null,
+  "executor": null,
   "started_at": "2026-11-27T23:55:00+08:00",
-  "status": "IN_PROGRESS",
-  "claim_note": "用户拍板放行 #47 R03（公司与行业拐点研究），建两个固定3家子卡 #63(R03_BATCH_01: 拓斯达/埃斯顿/双环传动) 与 #64(R03_BATCH_02: 雷赛智能/天准科技/鼎智科技)。引入 F 盘豆包 CLI (deepseek 模型) 做反方替代解释与可推翻信号压力测试，最终由 Codex 干净树独立复核。",
+  "status": "IDLE_AWAITING_USER_RELEASE",
+  "claim_note": "R03 (#47, 含子卡 #63/#64 共 6 家 R03_PRIORITY_A 核心公司) 已于 2026-11-28 由 Codex 干净 worktree 重放独立验收（ACCEPTED_WITH_LIMITS，commit cb5ac70）。单卡锁已释放，等待用户拍板是否放行 #48 R04（估值情景与假设敏感性）。",
   "last_completed": {
-    "issue_key": "R01",
-    "issue_number": 45,
+    "issue_key": "R03",
+    "issue_number": 47,
     "child_issues": [
-      59,
-      60
+      63,
+      64
     ],
     "batches": [
-      "R01_BATCH_01",
-      "R01_BATCH_02"
+      "R03_BATCH_01",
+      "R03_BATCH_02"
     ],
     "decision": "ACCEPTED_WITH_LIMITS",
-    "review_file": "runs/issues/R01/acceptance_r01_20261126.json",
+    "review_file": "runs/issues/R03/acceptance_r03_20261128.json",
     "reviewer": "Codex (gpt-6.2-sol low, danger-full-access)",
-    "reviewed_commit": "06579c1b9b2b3b09fe66521d52dee8f31d2dfcab",
-    "manifest_root_digest": "5d77b5db5aa41d8aeaceb42097a04c453da755589dd9ebf8cf88cb4e93f5de7d",
-    "companies_attributed": 10,
-    "r03_priority_a": 6,
-    "r03_observe_or_defer": 4
+    "reviewed_commit": "cb5ac70a3eb86ebaf61147961d43232c2cef9a97",
+    "manifest_root_digest": "764f6ce1e386332fa2c304c70a625d51eba1b6125627476642bb1cd7cf27f15d",
+    "companies_evaluated": 6,
+    "ready_for_r04_with_limits": 4,
+    "hold_quality_or_scope": 2
   },
   "input_baseline_after_p06": {
     "PROJECT_STATE.json": "updated_by_p06",
@@ -33,9 +33,9 @@
     "runs/issues/P06/archive_routing.csv": "d26ee51dcde6d9a01aae2b206fabd189fbed96fcfa8c5d870049a173b30dba12",
     "runs/issues/P06/transfer_receipt_schema.json": "09ad3dd66a32fc804fdea5213d5250522392fa30d7d18996bb1b95b2937b2a7f"
   },
-  "next_recommended_issue_number": 47,
-  "next_recommended_issue_key": "R03",
-  "next_recommended_reason": "全部 18/18 S08 冻结 TIER_1 公司（#57/#58/#61/#62）均已独立验收清零（新增 8 家全部排雷归入 OBSERVE_DEFER，零漏筛），且 R01 (#45) 与 R02 (#46) 均已独立验收。单卡空闲，建议用户批准放行 R03 (#47 公司与行业拐点研究，每包最多3家)，对 6 家 R03_PRIORITY_A 核心标的拆 2 个 3 家小包推进。",
+  "next_recommended_issue_number": 48,
+  "next_recommended_issue_key": "R04",
+  "next_recommended_reason": "R03 (#47) 已独立验收（ACCEPTED_WITH_LIMITS），分流出 4 家可带限制进入 R04 情景估值的标的（拓斯达、双环传动、雷赛智能、鼎智科技）及 2 家 HOLD 标的（埃斯顿、天准科技）。单卡空闲，请用户拍板是否放行 #48 R04（仅做 4 家带限制候选，或含 2 家高不确定性压力情景）。",
   "open_followups_from_p06": [
     "Drive 无 API 凭据：目录只能 RECORDED_NOT_REVERIFIED、配额 UNKNOWN、VERIFIED 路径未跑通真实闭环。",
     "季度报告字节数 UNMEASURED，容量表留空；P07 至少跑 1 个季度槽。",
@@ -578,7 +578,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-27T23:55:00+08:00",
+  "updated_at": "2026-11-28T00:21:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",

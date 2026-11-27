@@ -1,0 +1,87 @@
+{
+  "artifact": "R03_INDEPENDENT_ACCEPTANCE",
+  "issue_key": "R03",
+  "issue_number": 47,
+  "child_issues": [
+    63,
+    64
+  ],
+  "batches": [
+    "R03_BATCH_01",
+    "R03_BATCH_02"
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-28",
+  "timezone": "Asia/Shanghai",
+  "executor": "Antigravity (direct intervention; Doubao CLI unavailable pending user login)",
+  "orchestrator": "Antigravity",
+  "reviewer": "Codex (gpt-6.2-sol low, user-authorized --sandbox danger-full-access)",
+  "review_nature": "INDEPENDENT_REVIEW",
+  "decision": "ACCEPTED_WITH_LIMITS",
+  "R03_completed": true,
+  "companies_evaluated_count": 6,
+  "knowledge_as_of": "2026-10-25",
+  "reviewed_version": {
+    "round": "R2",
+    "commit": "cb5ac70a3eb86ebaf61147961d43232c2cef9a97",
+    "online_main_at_review": "cb5ac70a3eb86ebaf61147961d43232c2cef9a97",
+    "manifest_root_digest": "764f6ce1e386332fa2c304c70a625d51eba1b6125627476642bb1cd7cf27f15d",
+    "fixed_replay_time": "2026-11-28T00:17:00+08:00",
+    "prior_r0_review_record_md": "runs/issues/R03/codex_review_r03_20261128.md",
+    "prior_r1_review_record_md": "runs/issues/R03/codex_review_r03_r1_20261128.md",
+    "review_record_md": "runs/issues/R03/codex_review_r03_r2_20261128.md"
+  },
+  "verified": {
+    "clean_worktree_replay": {
+      "verifier": "Codex",
+      "input_files_sha256_match": 8,
+      "delivery_files_sha256_match": 6,
+      "manifest_exact_match": true,
+      "dirty_files_after_replay": 0,
+      "build_self_check_reproduced": "5/5 PASS",
+      "verify_reproduced": "8/8 PASS",
+      "negative_tests": [
+        "R0/R1/R2: Single-byte tamper in inflection_cases.csv ('F1：' -> 'X1：') -> V03/V06/V08 failed, verifier exited 1; restored to 8/8 PASS"
+      ],
+      "worktree_cleaned": true,
+      "main_tracked_files_untouched": true
+    },
+    "counts": {
+      "companies_total": 6,
+      "h1_anchor_companies": 4,
+      "m9_anchor_companies": 2,
+      "ready_for_r04_with_limits": 4,
+      "hold_quality_or_scope": 2
+    },
+    "defects_closed_across_r0_r1_r2": [
+      "R0-1: Separated R02 improvement-rate denominators (improved_count/valid_paired_count: T02 H1 43/48 & 32/39, T01 H1 59/70 & 32/41, T01 9M 20/22 & 14/15) from valid-pair coverage.",
+      "R0-2: Restored UNKNOWN/undisclosed status for early/R&D products across Estun, Topstar, Shuanghuan, and Dingzhi; labeled Leisai servo-segment robotics attribution as inference inherited from R01.",
+      "R0-3 & R1-3: Explicitly separated same-period 2025 vs 2026 facts (disclosed vs recalculated) for Topstar, Leisai, and Tianzhun; explicitly marked uncaptured 2025Q1-Q3/Q3 baselines (Leisai OCF, Tianzhun net/deducted profit) as UNKNOWN with G3 evidence gaps.",
+      "R0-4: Added binding r04_scenario_constraints across inflection_cases.csv, counter_evidence.md, and handoff.md, including strict RH04 boundaries for Leisai."
+    ]
+  },
+  "r04_valuation_readiness_summary": {
+    "disclaimer": "Research workflow routing only; NOT investment rating, target price, or trade advice.",
+    "READY_FOR_SCENARIO_VALUATION_WITH_LIMITS": [
+      "SZ:300607 拓斯达",
+      "SZ:002472 双环传动",
+      "SZ:002979 雷赛智能",
+      "BJ:920593 鼎智科技"
+    ],
+    "HOLD_UNTIL_QUALITY_OR_SCOPE_CLARIFIED": [
+      "SZ:002747 埃斯顿",
+      "SH:688003 天准科技"
+    ]
+  },
+  "carry_forward_limits_to_r04": [
+    "R04 (#48) remains locked pending explicit user release; #53 remains OPEN and untouched.",
+    "All 6 companies lack standalone pure-robot-body revenue at their anchor periods (UNKNOWN); R04 must use group or disclosed mixed-segment scenario bands and never fabricate pure-body revenue bases or target prices/trade advice.",
+    "Leisai (SZ:002979) remains bound by RH04 constraints: only group/servo mixed-segment earnings and working-capital sensitivity scenarios allowed; prohibit pure-robot base, 1M-unit order revenue conversion, or high cash-conversion assumptions until Q4 OCF recovery (FY M08>=0.5) and standalone disclosure.",
+    "Estun (SZ:002747, RH04/RH06 + Kuzhuo Q4 consolidation) and Tianzhun (SH:688003, RH02/RH06 + Xingzhi H1 OCF -1.05亿 + commercial L4 mix) are routed to HOLD unless user explicitly includes them as high-uncertainty stress scenarios.",
+    "Uncaptured 2025Q1-Q3/Q3 baselines (Leisai OCF, Tianzhun net/deducted profit) and Dingzhi M04 (+15.22pp frozen S02 vs -6.31pp H1 text) remain UNKNOWN/pending reconciliation."
+  ],
+  "online_control": {
+    "release_R04": false,
+    "issue_53_touched": false
+  }
+}
