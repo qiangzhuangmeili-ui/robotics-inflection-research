@@ -1,0 +1,65 @@
+{
+  "artifact": "R00_TIER2_SELF_CHECK_REVIEW",
+  "issue_key": "R00",
+  "issue_number": 44,
+  "tier": "TIER_2_CLEAN_NO_QUALITY_TRIGGER",
+  "child_issues": [
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-28",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "anomalies": [],
+  "checks_summary": "4/4 PASS",
+  "checks": [
+    {
+      "id": "C01",
+      "name": "8 批 5×8=40 家互斥零重复，100% 等于 S08 冻结 TIER_2",
+      "result": "PASS",
+      "detail": "rows=40"
+    },
+    {
+      "id": "C02",
+      "name": "27×H1 与 13×9M 锚定期严格与 S08 一致",
+      "result": "PASS",
+      "detail": "h1=27 m9=13"
+    },
+    {
+      "id": "C03",
+      "name": "40 家均具备必填研判字段且原句总数 >= 80",
+      "result": "PASS",
+      "detail": "quotes=98"
+    },
+    {
+      "id": "C04",
+      "name": "全部 11 份上游与批次输入文件存在",
+      "result": "PASS",
+      "detail": "inputs=11"
+    }
+  ],
+  "counts": {
+    "companies": 40,
+    "h1_anchor": 27,
+    "m9_anchor": 13,
+    "evidence_quotes": 98,
+    "advance_to_r01": 3,
+    "observe_hold": 27,
+    "observe_defer": 10
+  },
+  "advance_to_r01_companies": [
+    "SZ:300853 申昊科技",
+    "SZ:300161 华中数控",
+    "SZ:002997 瑞鹄模具"
+  ],
+  "R04_released": false,
+  "issue_53_touched": false,
+  "issue_53_status": "OPEN"
+}
