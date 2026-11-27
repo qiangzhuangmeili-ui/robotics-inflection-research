@@ -2,7 +2,7 @@
   "repository": "qiangzhuangmeili-ui/robotics-inflection-research",
   "organized_on": "2026-10-25",
   "knowledge_as_of": "2026-10-25",
-  "status": "R01_ACCEPTED_WITH_LIMITS_R03_LOCKED",
+  "status": "R03_IN_PROGRESS",
   "stats": {
     "candidate_count": 1054,
     "prior_adopted": 53,
@@ -252,7 +252,16 @@
       "scope_file": "runs/issues/P00/collection_scope.json"
     },
     "legacy_issues": "#2-#9 deferred historical work; new company research after S08/R00",
-    "active_issue": null,
+    "active_issue": {
+      "issue_number": 47,
+      "issue_key": "R03",
+      "child_issues": [
+        63,
+        64
+      ],
+      "started_at": "2026-11-27T23:55:00+08:00",
+      "executor": "Antigravity + Doubao(deepseek)"
+    },
     "p02_drive_followup": {
       "completed_at": "2026-10-26T06:56:46.362Z",
       "decision": "SELF_CHECK_PASS",
@@ -425,7 +434,7 @@
       "decision": "SELF_CHECK_PASS_WITH_OPEN_ITEM",
       "next": "A01 automatic recovery; A02 waits"
     },
-    "current_gate": "R01_R02_ACCEPTED_WITH_LIMITS_R03_LOCKED",
+    "current_gate": "R03_IN_PROGRESS_BATCH_01_02",
     "release_S00": false,
     "last_review": {
       "issue_key": "S03",
@@ -698,7 +707,23 @@
       "companies_count": 10
     },
     "r00_tier1_18_of_18_complete": true,
-    "r00_tier1_completion_acceptance": "runs/issues/R00/tier1_completion/acceptance_r00_tier1_complete_20261127.json"
+    "r00_tier1_completion_acceptance": "runs/issues/R00/tier1_completion/acceptance_r00_tier1_complete_20261127.json",
+    "release_R03": true,
+    "r03_release": {
+      "issue_number": 47,
+      "decision": "APPROVED_TO_START_R03_WITH_LIMITS",
+      "approved_by": "USER",
+      "approved_at": "2026-11-27T23:52:36+08:00",
+      "release_file": "runs/issues/R03/release_20261127.json",
+      "release_sha256_lf": "21b9e5db9c97c0a23b092f94e8196862c49322bf619de467f737fc5d0bcfc74d",
+      "handoff_file": "runs/issues/R03/handoff_from_r01_r02_20261127.md",
+      "handoff_sha256_lf": "77e946625c12c5d3fb713d5d0e90fd6b890da19973d8d26f8ac3c5129fb26a43",
+      "child_issues": [
+        63,
+        64
+      ],
+      "companies_count": 6
+    }
   },
   "pre_issue_breakdown_first_actions": [
     "M00：先复用现有Drive和本机资料，按1054家公司批量收集基础财务、定期报告和公告目录；暂不启动新的逐公司深读。",

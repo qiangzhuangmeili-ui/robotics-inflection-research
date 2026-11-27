@@ -1,11 +1,11 @@
 {
   "plan_version": "20261026_collection_first_v2",
-  "active_issue_number": null,
-  "active_issue_key": null,
-  "executor": null,
-  "started_at": "2026-11-26T22:48:00+08:00",
-  "status": "R01_ACCEPTED_WITH_LIMITS_RELEASED",
-  "claim_note": "用户批准方案 A，放行 #45 R01（覆盖 R00 已验收的 10 家 TIER_1 核心公司，分设 #59 R01_BATCH_01 与 #60 R01_BATCH_02 两个 5 家子卡）。Antigravity 统筹领取单卡并委派 CodeBuddy 执行财务归因与收入范围核验，完成后交 Codex (gpt-6.2-sol low, danger-full-access) 干净树独立复核。",
+  "active_issue_number": 47,
+  "active_issue_key": "R03",
+  "executor": "Antigravity + Doubao CLI (deepseek adversarial check)",
+  "started_at": "2026-11-27T23:55:00+08:00",
+  "status": "IN_PROGRESS",
+  "claim_note": "用户拍板放行 #47 R03（公司与行业拐点研究），建两个固定3家子卡 #63(R03_BATCH_01: 拓斯达/埃斯顿/双环传动) 与 #64(R03_BATCH_02: 雷赛智能/天准科技/鼎智科技)。引入 F 盘豆包 CLI (deepseek 模型) 做反方替代解释与可推翻信号压力测试，最终由 Codex 干净树独立复核。",
   "last_completed": {
     "issue_key": "R01",
     "issue_number": 45,
@@ -578,7 +578,7 @@
   },
   "self_check_version": "V21",
   "report_to_codex": "runs/issues/S00/errata_20261111_v5/report_to_codex_round24.md",
-  "updated_at": "2026-11-27T00:13:00+08:00",
+  "updated_at": "2026-11-27T23:55:00+08:00",
   "self_check": {
     "version": "V21",
     "canonical": "runs/issues/S00/errata_20261111_v5/review.json#checks",
@@ -1235,5 +1235,18 @@
     "total_quotes": 308,
     "r03_priority_a_final": 6,
     "observe_or_defer_final": 12
+  },
+  "r03_claim": {
+    "claimed_at": "2026-11-27T23:55:00+08:00",
+    "issue_number": 47,
+    "issue_key": "R03",
+    "child_issues": [
+      63,
+      64
+    ],
+    "release_file": "runs/issues/R03/release_20261127.json",
+    "release_sha256_lf": "21b9e5db9c97c0a23b092f94e8196862c49322bf619de467f737fc5d0bcfc74d",
+    "handoff_file": "runs/issues/R03/handoff_from_r01_r02_20261127.md",
+    "handoff_sha256_lf": "77e946625c12c5d3fb713d5d0e90fd6b890da19973d8d26f8ac3c5129fb26a43"
   }
 }

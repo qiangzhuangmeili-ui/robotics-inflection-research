@@ -1,0 +1,75 @@
+{
+  "artifact": "R03_SCOPED_RELEASE_AND_HANDOFF",
+  "issue_key": "R03",
+  "issue_number": 47,
+  "plan_version": "20261026_collection_first_v2",
+  "decision": "APPROVED_TO_START_R03_WITH_LIMITS",
+  "release_R03": true,
+  "recorded_at": "2026-11-27T23:55:00+08:00",
+  "approved_by": "USER",
+  "approved_at": "2026-11-27T23:52:36+08:00",
+  "executor_handoff": {
+    "orchestrator": "Antigravity",
+    "executor": "Antigravity + Doubao CLI (deepseek adversarial review)",
+    "reviewer": "Codex",
+    "reviewer_tier_policy": "gpt-6.2-sol low for standard clean-worktree replay; escalate to high on hard inflection dispute",
+    "codex_sandbox_authorized": "danger-full-access",
+    "status": "IN_PROGRESS",
+    "claim_receipt": "CONFIRMED",
+    "claimed": true,
+    "claimed_at": "2026-11-27T23:55:00+08:00",
+    "handoff_file": "runs/issues/R03/handoff_from_r01_r02_20261127.md"
+  },
+  "knowledge_as_of": "2026-10-25",
+  "upstream_acceptance": {
+    "R01": "runs/issues/R01/acceptance_r01_20261126.json",
+    "R02": "runs/issues/R02/acceptance_r02_20261126.json",
+    "R00_tier1_complete": "runs/issues/R00/tier1_completion/acceptance_r00_tier1_complete_20261127.json"
+  },
+  "child_issues": [
+    {
+      "batch_id": "R03_BATCH_01",
+      "issue_number": 63,
+      "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/63",
+      "theme": "整机龙头与RV减速器主线（全部H1锚定）",
+      "companies": [
+        "SZ:300607",
+        "SZ:002747",
+        "SZ:002472"
+      ]
+    },
+    {
+      "batch_id": "R03_BATCH_02",
+      "issue_number": 64,
+      "url": "https://github.com/qiangzhuangmeili-ui/robotics-inflection-research/issues/64",
+      "theme": "9M高弹性驱动/域控与微特电机主线（2×9M + 1×H1分期）",
+      "companies": [
+        "SZ:002979",
+        "SH:688003",
+        "BJ:920593"
+      ]
+    }
+  ],
+  "guards": {
+    "knowledge_as_of": "2026-10-25",
+    "max_companies_per_batch": 3,
+    "product_lines_separated": true,
+    "no_highest_stage_generalization": true,
+    "no_cross_period_merge_h1_vs_9m": true,
+    "alternative_explanations_required": true,
+    "falsifiers_and_evidence_gaps_required": true,
+    "S00_errata_issue_53": "OPEN",
+    "R04_released": false,
+    "preserve_upstream_inputs": true
+  },
+  "outputs": [
+    "runs/issues/R03/inflection_batch_dispatch.csv",
+    "runs/issues/R03/inflection_cases.csv",
+    "runs/issues/R03/counter_evidence.md",
+    "runs/issues/R03/manifest.json",
+    "runs/issues/R03/handoff.md",
+    "runs/issues/R03/review.json",
+    "runs/issues/R03/step_r03_build.py",
+    "runs/issues/R03/step_r03_verify.py"
+  ]
+}
