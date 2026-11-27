@@ -1,0 +1,58 @@
+{
+  "artifact": "R03_SELF_CHECK_REVIEW",
+  "issue_key": "R03",
+  "issue_number": 47,
+  "child_issues": [
+    63,
+    64
+  ],
+  "plan_version": "20261026_collection_first_v2",
+  "reviewed_on": "2026-11-28",
+  "review_nature": "SELF_CHECK",
+  "decision": "SELF_CHECK_PASS_WITH_LIMITS",
+  "anomalies": [],
+  "checks_summary": "5/5 PASS",
+  "checks": [
+    {
+      "id": "C01",
+      "name": "两批 3+3 家互斥零重复，100% 等于 R01 R03_PRIORITY_A 6 家",
+      "result": "PASS",
+      "detail": "b1=3 b2=3 overlap=0"
+    },
+    {
+      "id": "C02",
+      "name": "4×H1 与 2×9M 锚定期严格分离并与 R01 一致",
+      "result": "PASS",
+      "detail": "h1=4 m9=2"
+    },
+    {
+      "id": "C03",
+      "name": "6 家均具备产品线分层、两期可比事实、替代解释、可推翻信号与缺证条件",
+      "result": "PASS",
+      "detail": "all_6_complete"
+    },
+    {
+      "id": "C04",
+      "name": "6 家均已动态挂接同锚定期 R02 行业信号且保留口径边界",
+      "result": "PASS",
+      "detail": "r02_signals_linked"
+    },
+    {
+      "id": "C05",
+      "name": "全部 8 份输入存在且位于 Git 工作树内",
+      "result": "PASS",
+      "detail": "inputs=8"
+    }
+  ],
+  "counts": {
+    "companies": 6,
+    "h1_anchor": 4,
+    "m9_anchor": 2,
+    "ready_for_r04_with_limits": 4,
+    "hold_quality_or_scope": 2
+  },
+  "R04_released": false,
+  "issue_53_touched": false,
+  "issue_53_status": "OPEN",
+  "review_provenance_refs": []
+}
