@@ -1,11 +1,11 @@
 # R03（#47）公司与行业拐点研究交接说明（#63 Batch 01 + #64 Batch 02 共 6 家）
 
-- 计划版本：`20261026_collection_first_v2`；知识截止日：`2026-10-25`；固定重跑时间：`2026-11-28T00:12:00+08:00`
+- 计划版本：`20261026_collection_first_v2`；知识截止日：`2026-10-25`；固定重跑时间：`2026-11-28T00:17:00+08:00`
 - 复核性质：`SELF_CHECK`（待 Codex 干净树独立复核）；`R04_released=false`、`#53 OPEN` 未触碰。
 
 ## 1. 复现命令
 ```powershell
-$env:R03_FIXED_NOW='2026-11-28T00:12:00+08:00'; py runs/issues/R03/step_r03_build.py; py runs/issues/R03/step_r03_verify.py
+$env:R03_FIXED_NOW='2026-11-28T00:17:00+08:00'; py runs/issues/R03/step_r03_build.py; py runs/issues/R03/step_r03_verify.py
 ```
 
 ## 2. 6 家核心公司拐点研判与 R04 准入分层（仅研究排包，非投资建议）
